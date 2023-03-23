@@ -1,6 +1,6 @@
-package webapp.pdetails.dto;
+package com.ezticket.web.product.dto;
 
-import webapp.pdetails.pojo.PdetailsPK;
+import com.ezticket.web.product.pojo.PdetailsPK;
 import lombok.Data;
 
 @Data

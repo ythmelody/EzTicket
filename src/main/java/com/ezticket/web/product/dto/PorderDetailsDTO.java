@@ -1,8 +1,8 @@
-package webapp.porder.dto;
+package com.ezticket.web.product.dto;
 
+import com.ezticket.web.product.pojo.Pdetails;
+import com.ezticket.web.product.pojo.Product;
 import lombok.Data;
-import webapp.pdetails.pojo.Pdetails;
-import webapp.product.pojo.Product;
 import java.sql.Timestamp;
 import java.util.List;
 

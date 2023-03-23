@@ -1,11 +1,11 @@
-package webapp.pdetails.controller;
+package com.ezticket.web.product.controller;
 
+import com.ezticket.web.product.dto.PdetailsDTO;
+import com.ezticket.web.product.service.PdetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import webapp.pdetails.dto.PdetailsDTO;
-import webapp.pdetails.service.PdetailsService;
 
 import java.util.List;
 

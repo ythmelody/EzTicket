@@ -1,11 +1,11 @@
-package webapp.porder.controller;
+package com.ezticket.web.product.controller;
 
+import com.ezticket.web.product.dto.PorderDTO;
+import com.ezticket.web.product.dto.PorderDetailsDTO;
+import com.ezticket.web.product.dto.PorderStatusDTO;
+import com.ezticket.web.product.service.PorderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import webapp.porder.dto.PorderDTO;
-import webapp.porder.dto.PorderDetailsDTO;
-import webapp.porder.dto.PorderStatusDTO;
-import webapp.porder.service.PorderService;
 
 import java.util.List;
 

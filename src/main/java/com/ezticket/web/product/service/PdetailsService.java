@@ -1,12 +1,12 @@
-package webapp.pdetails.service;
+package com.ezticket.web.product.service;
 
+import com.ezticket.web.product.dto.PdetailsDTO;
+import com.ezticket.web.product.pojo.Pdetails;
+import com.ezticket.web.product.repository.PdetailsRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import webapp.pdetails.dto.PdetailsDTO;
-import webapp.pdetails.pojo.Pdetails;
-import webapp.pdetails.repository.PdetailsRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;

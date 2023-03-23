@@ -1,4 +1,4 @@
-package webapp.product.dto;
+package com.ezticket.web.product.dto;
 
 import java.sql.Timestamp;
 

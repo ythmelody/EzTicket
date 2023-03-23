@@ -1,4 +1,4 @@
-package webapp.pdetails.pojo;
+package com.ezticket.web.product.pojo;
 
 
 import jakarta.persistence.*;

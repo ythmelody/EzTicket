@@ -1,12 +1,12 @@
-package webapp.porder.service;
+package com.ezticket.web.product.service;
 
+import com.ezticket.web.product.dto.PorderDTO;
+import com.ezticket.web.product.dto.PorderDetailsDTO;
+import com.ezticket.web.product.pojo.Porder;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import webapp.porder.dto.PorderDTO;
-import webapp.porder.dto.PorderDetailsDTO;
-import webapp.porder.pojo.Porder;
 import webapp.porder.repository.PorderRepository;
 
 import java.util.List;

@@ -1,11 +1,11 @@
-package webapp.pfitcoupon.controller;
+package com.ezticket.web.product.controller;
 
+import com.ezticket.web.product.dto.PfitcouponDTO;
+import com.ezticket.web.product.service.PfitcouponService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import webapp.pfitcoupon.dto.PfitcouponDTO;
-import webapp.pfitcoupon.service.PfitcouponService;
 
 import java.util.List;
 

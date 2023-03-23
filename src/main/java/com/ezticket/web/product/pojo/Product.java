@@ -1,10 +1,9 @@
-package webapp.product.pojo;
+package com.ezticket.web.product.pojo;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import webapp.porder.pojo.Porder;
 
 import java.sql.Date;
 import java.sql.Timestamp;

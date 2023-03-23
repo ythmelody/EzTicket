@@ -1,4 +1,4 @@
-package webapp.product.service;
+package com.ezticket.web.product.service;
 
 public class ProductService {
 }

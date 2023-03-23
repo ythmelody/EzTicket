@@ -1,12 +1,12 @@
-package webapp.pfitcoupon.service;
+package com.ezticket.web.product.service;
 
+import com.ezticket.web.product.dto.PfitcouponDTO;
+import com.ezticket.web.product.pojo.Pfitcoupon;
+import com.ezticket.web.product.repository.PfitcouponRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import webapp.pfitcoupon.dto.PfitcouponDTO;
-import webapp.pfitcoupon.pojo.Pfitcoupon;
-import webapp.pfitcoupon.repository.PfitcouponRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;

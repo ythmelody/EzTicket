@@ -1,4 +1,4 @@
-package webapp.porder.dto;
+package com.ezticket.web.product.dto;
 
 
 import lombok.Data;

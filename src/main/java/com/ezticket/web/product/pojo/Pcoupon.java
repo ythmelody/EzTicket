@@ -1,4 +1,4 @@
-package webapp.pcoupon.pojo;
+package com.ezticket.web.product.pojo;
 
 
 import jakarta.persistence.Entity;

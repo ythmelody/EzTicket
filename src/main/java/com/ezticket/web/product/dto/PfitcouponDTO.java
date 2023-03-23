@@ -1,8 +1,8 @@
-package webapp.pfitcoupon.dto;
+package com.ezticket.web.product.dto;
 
 
+import com.ezticket.web.product.pojo.PfitcouponPK;
 import lombok.Data;
-import webapp.pfitcoupon.pojo.PfitcouponPK;
 
 @Data
 public class PfitcouponDTO {
