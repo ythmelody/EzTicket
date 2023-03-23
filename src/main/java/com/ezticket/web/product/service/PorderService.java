@@ -3,11 +3,11 @@ package com.ezticket.web.product.service;
 import com.ezticket.web.product.dto.PorderDTO;
 import com.ezticket.web.product.dto.PorderDetailsDTO;
 import com.ezticket.web.product.pojo.Porder;
+import com.ezticket.web.product.repository.PorderRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import webapp.porder.repository.PorderRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,4 +1,4 @@
-package webapp.porder.repository;
+package com.ezticket.web.product.repository;
 
 import com.ezticket.web.product.pojo.Porder;
 import org.springframework.data.jpa.repository.JpaRepository;
