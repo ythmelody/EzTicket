@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/html")
+@RequestMapping("/porder")
 public class PorderController {
 
     @Autowired private PorderService porderService;
 
-    @GetMapping("/porderlist")
+    @GetMapping("/list")
     public List<PorderDTO> getAllPorderlist(){
         return porderService.getAllPorder();
     }

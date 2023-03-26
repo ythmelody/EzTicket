@@ -1,0 +1,14 @@
+package com.ezticket.web.product.repository;
+
+import com.ezticket.web.product.pojo.Pcoupon;
+import com.ezticket.web.product.pojo.Pdetails;
+import com.ezticket.web.product.pojo.PdetailsPK;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface PcouponRepository extends JpaRepository<Pcoupon, Integer> {
+
+
+}
+

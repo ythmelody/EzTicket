@@ -1,17 +1,17 @@
 $(document).ready(() => {
-  fetchPorderList(`/html/porderlist`);
+  fetchPorderList(`/porder/list`);
 });
 
 $('.tab-link[data-bs-target="#orders-tab"]').click(() => {
-  fetchPorderList(`/html/porderlist`);
+  fetchPorderList(`/porder/list`);
 });
 
 $('.form-control').on('input', function () {
   if ($(this).val() !== "" && parseInt($(this).val())) {
     let memberno = $(this).val();
-    fetchPorderList(`/html/getordersbyid?id=${memberno}`);
+    fetchPorderList(`/porder/getordersbyid?id=${memberno}`);
   } else {
-    fetchPorderList(`/html/porderlist`);
+    fetchPorderList(`/porder/list`);
   };
 });
 
@@ -55,7 +55,7 @@ function fetchPorderList(e) {
                           <td><a href="invoice.html?id=${obj.porderno}">${obj.porderno}</a></td>
                           <td>${obj.memberno}</td>
                           <td>${obj.ptotal}</td>
-                          <td>${obj.porderdate}</td>
+                          <td>${moment(obj.porderdate).format('YYYY-MM-DD HH:mm:ss')}</td>
                           <td>
                             <div class="img-btn" data-bs-toggle="modal" data-bs-target="#DeliveryModal">
                               <img onclick="viewDelivery(this)" src="images/icons/truck2.png" alt="配送資訊">
@@ -110,7 +110,7 @@ function saveStatus(button) {
       dangerMode: true
     }).then((confirm) => {
       if (confirm) {
-        fetch(`/html/updatestatusbyid`, {
+        fetch(`/porder/updatestatusbyid`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ porderno: no, pprocessstatus: status }),
@@ -131,7 +131,7 @@ function saveStatus(button) {
 
 function viewDelivery(img) {
   const no = Number(img.closest('tr').querySelector('tr td').textContent);
-  fetch(`/html/getporderbyid?id=${no}`, {
+  fetch(`/porder/getporderbyid?id=${no}`, {
     method: 'GET',
   }).then(response => response.json())
     .then(data => {
@@ -141,7 +141,7 @@ function viewDelivery(img) {
         `<label class="form-label">訂單編號</label>
           <p><a href="invoice.html?id=${data.porderno}">${data.porderno}</a></p>
           <label class="form-label">出貨日期</label>
-          <p>${data.pshipdate}</p>
+          <p>${moment(data.pshipdate).format('YYYY-MM-DD HH:mm:ss')}</p>
           <label class="form-label">收貨人姓名：</label>
           <p>${data.recipient}</p>
           <label class="form-label">收貨人電話：</label>

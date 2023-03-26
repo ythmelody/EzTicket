@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/html")
+@RequestMapping("/pfitcoupon")
 public class PfitcouponController {
 
     @Autowired private PfitcouponService pfitcouponService;
 
-    @GetMapping("/pfitcouponlist")
+    @GetMapping("/list")
     public List<PfitcouponDTO> getAllPfitcouponlist(){
         return pfitcouponService.getAllPfitcoupon();
     }

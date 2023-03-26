@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/html")
+@RequestMapping("/pdetails")
 public class PdetailsController {
 
     @Autowired private PdetailsService pdetailsService;
 
-    @GetMapping("/pdetailslist")
+    @GetMapping("/list")
     public List<PdetailsDTO> getAllPdetailslist(){return pdetailsService.getAllPdetails();}
 
 }

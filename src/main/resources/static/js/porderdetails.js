@@ -2,13 +2,13 @@
 $(document).ready(() => {
   let urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get('id');
-  fetch(`/html/GetPorderDetailsByID?id=${id}`, {
+  fetch(`/porder/GetPorderDetailsByID?id=${id}`, {
     method: 'GET',
   }).then(resp => resp.json())
     .then(data => {
       document.querySelectorAll('.vdt-list')[0].textContent = "訂單編號 : " + data.porderno;
-      document.querySelectorAll('.vdt-list')[1].textContent = "訂單成立時間 : " + data.porderdate;
-      document.querySelectorAll('.vdt-list')[2].textContent = "訂單付款時間 : " + data.ppaydate;
+      document.querySelectorAll('.vdt-list')[1].textContent = "訂單成立時間 : " + (moment(data.porderdate).format('YYYY-MM-DD HH:mm:ss'));
+      document.querySelectorAll('.vdt-list')[2].textContent = "訂單付款時間 : " + (moment(data.ppaydate).format('YYYY-MM-DD HH:mm:ss'));
       const detailsbody = document.querySelector('tbody');
       detailsbody.innerHTML = '';
       let total = 0;

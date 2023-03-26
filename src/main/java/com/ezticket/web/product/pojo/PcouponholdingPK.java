@@ -8,9 +8,9 @@ import java.io.Serializable;
 
 @Data
 @Embeddable
-public class PdetailsPK implements Serializable {
-    @Column(name = "PRODUCTNO")
-    private Integer productno;
-    @Column(name = "PORDERNO")
-    private Integer porderno;
+public class PcouponholdingPK implements Serializable {
+    @Column(name = "PCOUPONNO")
+    private Integer pcouponno;
+    @Column(name = "MEMBERNO")
+    private Integer memberno;
 }
