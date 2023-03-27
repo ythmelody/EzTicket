@@ -1,7 +1,8 @@
 package com.ezticket.web.product.pojo;
 
 
-import jakarta.persistence.*;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
 import lombok.Data;
 
 

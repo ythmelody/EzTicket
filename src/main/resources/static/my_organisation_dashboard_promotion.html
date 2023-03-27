@@ -53,10 +53,10 @@
 								</div>
 							</div>
 							<div class="col-lg-12 col-md-12">
-								<div class="form-group mt-4">
+								<!-- <div class="form-group mt-4">
 									<label class="form-label">優惠券代碼</label>
 									<input class="form-control h_40" type="text" placeholder="40010" value="">
-								</div>
+								</div> -->
 							</div>
 							<div class="col-lg-6 col-md-12">
 								<div class="form-group mt-4">
@@ -308,7 +308,8 @@
 				<div class="modal-footer">
 					<button type="button" class="co-main-btn min-width btn-hover h_40" data-bs-target="#aboutModal"
 						data-bs-toggle="modal" data-bs-dismiss="modal">取消</button>
-					<button type="button" class="main-btn min-width btn-hover h_40">建立</button>
+					<button type="button" class="main-btn min-width btn-hover h_40" data-bs-target="#aboutModal"
+						data-bs-toggle="modal" data-bs-dismiss="modal">建立</button>
 				</div>
 			</div>
 		</div>
@@ -532,7 +533,8 @@
 									<div class="dashboard-date-wrap">
 										<div class="form-group">
 											<div class="relative-input position-relative">
-												<input class="form-control h_40" type="text" placeholder="Search by coupon name" value="">
+												<input id="search-coupon" class="form-control h_40" type="text"
+													placeholder="Search by coupon name" value="">
 												<i class="uil uil-search"></i>
 											</div>
 										</div>

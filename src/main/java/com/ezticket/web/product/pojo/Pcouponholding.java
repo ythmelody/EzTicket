@@ -1,10 +1,9 @@
 package com.ezticket.web.product.pojo;
 
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 
 @Data // Lombok: Gene getter/setter by @getter/@setter

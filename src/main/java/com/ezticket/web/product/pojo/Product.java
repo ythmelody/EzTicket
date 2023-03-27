@@ -1,13 +1,15 @@
 package com.ezticket.web.product.pojo;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Data // Lombok: Gene getter/setter by @getter/@setter
 @AllArgsConstructor // Lombok: Auto gene args constructor
@@ -24,8 +26,10 @@ public class Product {
     private Integer pprice;
     private Integer pspecialprice;
     private Integer pqty;
-    private Timestamp psdate;
-    private Timestamp pedate;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime psdate;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime pedate;
     private String ptag;
     private byte pstatus;
     private Integer pratetotal;

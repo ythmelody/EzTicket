@@ -3,7 +3,10 @@ package com.ezticket.web.activity.controller;
 import com.ezticket.web.activity.dto.AReportDto;
 import com.ezticket.web.activity.service.AReportService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;

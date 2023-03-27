@@ -1,29 +1,29 @@
 
 $(document).ready(() => {
-  fetchPcouponList(`/pcoupon/list`);
+	fetchPcouponList(`/pcoupon/list`);
 });
 
-$('.form-control').on('input', function () {
-  if ($(this).val() !== "" && parseInt($(this).val())) {
-    let couponno = $(this).val();
-    fetchPcouponList(`/pcoupon/getbyno?id=${couponno}`);
-  } else {
-    fetchPcouponList(`/pcoupon/list`);
-  };
+$('#search-coupon').on('input', function () {
+	if ($(this).val() !== "" && parseInt($(this).val())) {
+		let couponno = $(this).val();
+		fetchPcouponList(`/pcoupon/getbyno?id=${couponno}`);
+	} else {
+		fetchPcouponList(`/pcoupon/list`);
+	};
 });
 
 function fetchPcouponList(e) {
-  fetch(e, {
-    method: 'GET',
-  }).then(response => response.json())
-    .then(data => {
-      data.reverse();
-      const couponlist = document.querySelector('.all-promotion-list');
-      couponlist.innerHTML = "";
-      document.querySelector('.mb-4').textContent = "優惠券 (" + data.length + ")";
-      const couponbody = data.map(obj => {
+	fetch(e, {
+		method: 'GET',
+	}).then(response => response.json())
+		.then(data => {
+			data.reverse();
+			const couponlist = document.querySelector('.all-promotion-list');
+			couponlist.innerHTML = "";
+			document.querySelector('.mb-4').textContent = "優惠券 (" + data.length + ")";
+			const couponbody = data.map(obj => {
 
-        return `<div class="main-card mt-4">
+				return `<div class="main-card mt-4">
                   <div class="contact-list coupon-active">
                     <div class="top d-flex flex-wrap justify-content-between align-items-center p-4 border_bottom">
                       <div class="icon-box">
@@ -84,31 +84,52 @@ function fetchPcouponList(e) {
                     </div>
                   </div>
                 </div>`;
-      }).join('');
-      couponlist.innerHTML += couponbody;
-    })
+			}).join('');
+			couponlist.innerHTML += couponbody;
+		})
 }
 
 function changeStatus(checkbox) {
-  const boxstatus = checkbox.checked;
-  const status = checkbox.closest('.main-card').querySelector('h6');
-  if (boxstatus === false) {
-    status.textContent = "不可使用";
-  } else {
-    status.textContent = "可使用";
-  }
+	const boxstatus = checkbox.checked;
+	const status = checkbox.closest('.main-card').querySelector('h6');
+	if (boxstatus === false) {
+		status.textContent = "不可使用";
+	} else {
+		status.textContent = "可使用";
+	}
+}
+
+function addCoupon() {
+	const addCoupon = document.querySelectorAll('.modal-body .form-control');
+	console.log(addCoupon[0].val());
+	fetch('/pcoupon/add', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			pcouponname: addCoupon[0].val(),
+			pdiscount: addCoupon[2].val(),
+			preachprice: addCoupon[3].val(),
+			pcoupnsdate: '2023-03-25T10:00:00',
+			pcoupnedate: '2023-03-31T23:59:59',
+		})
+	})
+	
 }
 
 
+
+
 function editCoupon(edit) {
-  const text = edit.closest('.main-card').querySelector('h5').textContent;
-  const couponno = text.substring(0, 5);
-  fetch(`/pcoupon/getbyno?id=${couponno}`, {
-    method: 'GET',
-  }).then(response => response.json())
-    .then(data => {
-      const couponbody =
-        `<!-- Create Coupon Model Start-->
+	const text = edit.closest('.main-card').querySelector('h5').textContent;
+	const couponno = text.substring(0, 5);
+	fetch(`/pcoupon/getbyno?id=${couponno}`, {
+		method: 'GET',
+	}).then(response => response.json())
+		.then(data => {
+			const couponbody =
+				`<!-- Create Coupon Model Start-->
 	<div class="modal fade" id="couponModal" tabindex="-1" aria-labelledby="couponModalLabel" aria-hidden="false">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -387,5 +408,5 @@ function editCoupon(edit) {
 		</div>
 	</div>
 	<!-- Create Coupon Model End-->`;
-    })
+		})
 }

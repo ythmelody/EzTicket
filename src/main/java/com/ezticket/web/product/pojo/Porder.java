@@ -1,14 +1,13 @@
 package com.ezticket.web.product.pojo;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data // Lombok: Gene getter/setter by @getter/@setter
@@ -28,11 +27,16 @@ public class Porder {
     private String recipient;
     private String rephone;
     private String readdress;
-    private Timestamp porderdate;
-    private Timestamp ppaydate;
-    private Timestamp pshipdate;
-    private Timestamp parrivedate;
-    private Timestamp pclosedate;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime porderdate;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime ppaydate;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime pshipdate;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime parrivedate;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime pclosedate;
     private Integer ppaymentstatus;
     private Integer pprocessstatus;
 

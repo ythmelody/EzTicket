@@ -3,7 +3,7 @@ package com.ezticket.web.product.dto;
 
 import lombok.Data;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 public class PorderDTO {
@@ -17,11 +17,11 @@ public class PorderDTO {
     private String recipient;
     private String rephone;
     private String readdress;
-    private Timestamp porderdate;
-    private Timestamp ppaydate;
-    private Timestamp pshipdate;
-    private Timestamp parrivedate;
-    private Timestamp pclosedate;
+    private LocalDateTime porderdate;
+    private LocalDateTime ppaydate;
+    private LocalDateTime pshipdate;
+    private LocalDateTime parrivedate;
+    private LocalDateTime pclosedate;
     private Integer ppaymentstatus;
     private Integer pprocessstatus;
 }
