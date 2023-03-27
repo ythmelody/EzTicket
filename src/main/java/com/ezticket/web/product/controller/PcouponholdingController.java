@@ -1,7 +1,6 @@
 package com.ezticket.web.product.controller;
 
 import com.ezticket.web.product.dto.PcouponholdingDTO;
-import com.ezticket.web.product.repository.PcouponholdingRepository;
 import com.ezticket.web.product.service.PcouponholdingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

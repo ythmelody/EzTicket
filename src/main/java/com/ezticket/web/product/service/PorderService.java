@@ -5,7 +5,6 @@ import com.ezticket.web.product.dto.PorderDetailsDTO;
 import com.ezticket.web.product.pojo.Porder;
 import com.ezticket.web.product.repository.PorderRepository;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,8 +36,6 @@ public class PorderService {
         return EntityToDetailDTO(porder);
     }
     public PorderDetailsDTO EntityToDetailDTO(Porder porder){
-        modelMapper.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.LOOSE);
         PorderDetailsDTO porderDetailsDTO = modelMapper.map(porder, PorderDetailsDTO.class);
         porderDetailsDTO.setProducts(porder.getProducts());
         return porderDetailsDTO;
@@ -53,16 +50,9 @@ public class PorderService {
     }
 
     public PorderDTO EntityToDTO(Porder porder){
-        modelMapper.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.LOOSE);
-        PorderDTO porderDTO = new PorderDTO();
-        porderDTO = modelMapper.map(porder, PorderDTO.class);
-        return porderDTO;
+        return modelMapper.map(porder, PorderDTO.class);
     }
     public List<PorderDTO> getAllPorder(){
-    modelMapper.getConfiguration()
-            .setMatchingStrategy(MatchingStrategies.LOOSE);
-
     return porderRepository.findAll()
             .stream()
             .map(this::EntityToDTO)

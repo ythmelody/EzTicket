@@ -1,15 +1,10 @@
 package com.ezticket.web.product.service;
 
 import com.ezticket.web.product.dto.PcouponDTO;
-import com.ezticket.web.product.dto.PdetailsDTO;
-import com.ezticket.web.product.dto.PorderDTO;
+import com.ezticket.web.product.dto.PcouponStatusDTO;
 import com.ezticket.web.product.pojo.Pcoupon;
-import com.ezticket.web.product.pojo.Pdetails;
-import com.ezticket.web.product.pojo.Porder;
 import com.ezticket.web.product.repository.PcouponRepository;
-import com.ezticket.web.product.repository.PdetailsRepository;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,22 +24,28 @@ public class PcouponService {
         Pcoupon pcoupon = pcouponRepository.getReferenceById(id);
         return EntityToDTO(pcoupon);
     }
+    public List<PcouponDTO> getPcouponsByID(Integer id) {
+        return pcouponRepository.findById(id)
+                .stream()
+                .map(this::EntityToDTO)
+                .collect(Collectors.toList());
+    }
     public PcouponDTO EntityToDTO(Pcoupon pcoupon){
-        modelMapper.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.LOOSE);
-        PcouponDTO pcouponDTO = new PcouponDTO();
-        pcouponDTO = modelMapper.map(pcoupon, PcouponDTO.class);
-
-        return pcouponDTO;
+        return modelMapper.map(pcoupon, PcouponDTO.class);
     }
     public List<PcouponDTO> getAllPcoupon(){
-        modelMapper.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.LOOSE);
-
         return pcouponRepository.findAll()
                 .stream()
                 .map(this::EntityToDTO)
                 .collect(Collectors.toList());
     }
-
+    public PcouponStatusDTO updateByID(Integer id, byte processStatus) {
+        Pcoupon pcoupon = pcouponRepository.getReferenceById(id);
+        pcoupon.setPcouponstatus(processStatus);
+        Pcoupon updatedPcoupon = pcouponRepository.save(pcoupon);
+        return EntityToStatusDTO(updatedPcoupon);
+    }
+    public PcouponStatusDTO EntityToStatusDTO(Pcoupon pcoupon){
+        return modelMapper.map(pcoupon, PcouponStatusDTO.class);
+    }
 }
