@@ -8,6 +8,7 @@ import java.sql.Date;
 
 @Data
 public class AReportDto {
+    private Integer aReportNo;
     private Date aReportDate;
     private Member member;
     private String aWhy;
