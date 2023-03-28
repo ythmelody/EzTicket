@@ -47,7 +47,7 @@ function fetchPcouponList(e) {
                           </button>
                           <div class="dropdown-menu dropdown-menu-right">
                             <a href="#" class="dropdown-item" onclick="editCoupon(this)"><i class="fa-solid fa-pen me-3"></i>編輯</a>
-                            <a href="#" class="dropdown-item" onclick="saveCoupon(this)"><i class="fa-solid fa-trash-can me-3"></i>儲存</a>
+                            <a href="#" class="dropdown-item" onclick="saveCoupon(this)"><i class="fa-solid fa-floppy-disk me-3"></i>儲存</a>
                           </div>
                         </div>
                       </div>
@@ -101,7 +101,9 @@ function changeStatus(checkbox) {
 
 function addCoupon() {
 	const addCoupon = document.querySelectorAll('.modal-body .form-control');
-	console.log(addCoupon[0].val());
+	for (aa of addCoupon) {
+		console.log(aa.value);
+	}
 	fetch('/pcoupon/add', {
 		method: 'POST',
 		headers: {
@@ -115,7 +117,7 @@ function addCoupon() {
 			pcoupnedate: '2023-03-31T23:59:59',
 		})
 	})
-	
+
 }
 
 

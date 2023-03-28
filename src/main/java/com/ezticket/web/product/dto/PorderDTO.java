@@ -1,6 +1,7 @@
 package com.ezticket.web.product.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -17,10 +18,15 @@ public class PorderDTO {
     private String recipient;
     private String rephone;
     private String readdress;
+    @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
     private LocalDateTime porderdate;
+    @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
     private LocalDateTime ppaydate;
+    @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
     private LocalDateTime pshipdate;
+    @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
     private LocalDateTime parrivedate;
+    @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
     private LocalDateTime pclosedate;
     private Integer ppaymentstatus;
     private Integer pprocessstatus;
