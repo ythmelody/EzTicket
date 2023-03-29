@@ -6,6 +6,7 @@ import org.hibernate.Session;
 
 import java.util.List;
 
+
 public interface CoreDAO <V ,I> {
 	
 	void insert(V vo);
