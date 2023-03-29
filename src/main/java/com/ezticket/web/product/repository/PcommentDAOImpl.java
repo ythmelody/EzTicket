@@ -10,11 +10,14 @@ import java.util.List;
 import java.util.Map;
 
 import com.ezticket.web.product.pojo.Pcomment;
+import jakarta.persistence.PersistenceContext;
 import org.apache.coyote.http11.filters.SavedRequestInputFilter;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 public class PcommentDAOImpl implements PcommentDAO {
+	@PersistenceContext
+	private Session session;
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/db01?serverTimezone=Asia/Taipei";
 	String userid = "root";
@@ -25,7 +28,7 @@ public class PcommentDAOImpl implements PcommentDAO {
 
 	@Override
 	public void insert(Pcomment pcommentVO) {
-		getSession().persist(pcommentVO);
+		session.persist(pcommentVO);
 	}
 
 	@Override
@@ -38,7 +41,6 @@ public class PcommentDAOImpl implements PcommentDAO {
 		.append("plike = :plike ")
 		.append("WHERE pcommentno = :pcommentno");
 		
-		Session session =getSession();
 		Query<?>query=session.createQuery(hql.toString());
 		query.setParameter("pcommentcont", pcommentVO.getPcommentcont());
 		query.setParameter("prate", pcommentVO.getPrate());
@@ -51,13 +53,13 @@ public class PcommentDAOImpl implements PcommentDAO {
 
 	@Override
 	public Pcomment getByPrimaryKey(Integer pcommentno) {
-		return getSession().get(Pcomment.class, pcommentno);
+		return session.get(Pcomment.class, pcommentno);
 	}
 
 	@Override
 	public List<Pcomment> getAllByMemberno(Integer memberno) {
 		final String hql ="FROM PcommentVO WHERE memberno = :memberno ORDER BY pcommentno";
-		return getSession()
+		return session
 				.createQuery(hql,Pcomment.class)
 				.setParameter("memberno",memberno)
 				.getResultList();
@@ -177,12 +179,11 @@ public class PcommentDAOImpl implements PcommentDAO {
 	@Override
 	public List<Pcomment> getAll() {
 		final String hql ="FROM Pcomment ORDER BY pcommentno";
-		return getSession().createQuery(hql,Pcomment.class).getResultList();
+		return session.createQuery(hql,Pcomment.class).getResultList();
 	}
 
 	@Override
 	public boolean delete(Integer pcommentno) {
-		Session session = getSession();
 		Pcomment pcommentVO =session.get(Pcomment.class,pcommentno);
 		session.remove(pcommentVO);
 		return true;
@@ -191,7 +192,7 @@ public class PcommentDAOImpl implements PcommentDAO {
 	@Override
 	public List<Pcomment> getAllByProductno(Integer productno) {
 		final String hql ="FROM Pcomment WHERE productno =:productno ORDER BY plike";
-		return getSession()
+		return session
 				.createQuery(hql,Pcomment.class)
 				.setParameter("productno",productno)
 				.getResultList();

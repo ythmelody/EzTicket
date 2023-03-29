@@ -2,6 +2,9 @@ package com.ezticket.web.product.repository;
 
 import com.ezticket.core.util.Util;
 import com.ezticket.web.product.pojo.Product;
+import jakarta.persistence.PersistenceContext;
+import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,8 +14,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Repository
 public class ProductDAOImpl implements ProductDAO {
+	@PersistenceContext
+	private Session session;
 
 	@Override
 	public void insert(Product product) {
@@ -95,7 +100,7 @@ public class ProductDAOImpl implements ProductDAO {
 
 	@Override
 	public Product getByPrimaryKey(Integer productno) {
-		return getSession().get(Product.class,productno);
+		return session.get(Product.class,productno);
 		
 		//原JDBC寫法
 //		final String SELECT_BY_PK_SQL = "SELECT * FROM product WHERE productno =? ";
@@ -135,8 +140,8 @@ public class ProductDAOImpl implements ProductDAO {
 
 	@Override
 	public List<Product> getAll() {
-		final String SELECT_ALL_HQL = "FROM Product ORDER BY Productno DESC";
-		return getSession().createQuery(SELECT_ALL_HQL,Product.class).getResultList();
+		final String SELECT_ALL_HQL = "FROM Product ORDER BY productno DESC";
+		return session.createQuery(SELECT_ALL_HQL,Product.class).getResultList();
 //		final String SELECT_ALL_SQL = "SELECT * FROM PRODUCT ORDER BY PRODUCTNO DESC";
 //		try {
 //			Class.forName(Util.Driver);

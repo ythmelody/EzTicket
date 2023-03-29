@@ -3,12 +3,16 @@ package com.ezticket.web.product.repository;
 import java.util.List;
 
 import com.ezticket.web.product.pojo.Followproduct;
+import jakarta.persistence.PersistenceContext;
+import org.hibernate.Session;
 
 public class FollowproductDAOImpl implements FollowproductDAO {
+	@PersistenceContext
+	private Session session;
 
 	@Override
 	public void insert(Followproduct followproductVO) {
-		getSession().persist(followproductVO);
+		session.persist(followproductVO);
 	}
 
 	@Override
@@ -26,12 +30,12 @@ public class FollowproductDAOImpl implements FollowproductDAO {
 	@Override
 	public List<Followproduct> getAll() {
 		final String hql = "FROM Followproduct";
-		return getSession().createQuery(hql, Followproduct.class).getResultList();
+		return session.createQuery(hql, Followproduct.class).getResultList();
 	}
 
 	@Override
 	public boolean delete(Followproduct FollowproductVO) {
-		getSession().remove(FollowproductVO);
+		session.remove(FollowproductVO);
 		return true;
 
 	}

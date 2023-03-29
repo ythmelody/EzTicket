@@ -28,7 +28,7 @@ public class Product extends Core {
 	private Integer pstatus;	
 	private Integer	pratetotal;
 	private Integer	prateqty;
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name ="productno",referencedColumnName = "productno")
 	private List<Pimgt> pimgts;
 	

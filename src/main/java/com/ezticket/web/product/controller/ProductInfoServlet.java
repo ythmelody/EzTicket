@@ -16,11 +16,22 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 
 @WebServlet("/ProductInfoServlet")
 public class ProductInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private ProductService productSvc;
+
+	@Override
+	public void init() throws ServletException {
+		ApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+		productSvc = applicationContext.getBean(ProductService.class);
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -33,7 +44,6 @@ public class ProductInfoServlet extends HttpServlet {
 			// 單一商品詳情呈現
 			// 取得商品編號 => 取得單一商品資訊
 			Integer productno = Integer.valueOf(request.getParameter("productno"));
-			ProductService productSvc = new ProductService();
 			Product product = productSvc.getOneProduct(productno);
 //			System.out.println(product.getPsdate());
 			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
@@ -53,7 +63,6 @@ public class ProductInfoServlet extends HttpServlet {
 		}
 
 		// 商品列表呈現
-		ProductService productSvc = new ProductService();
 		List<Product> allProductlist = productSvc.getAllProduct();
 		for (Product p : allProductlist) {
 			System.out.println(p.getPname());
