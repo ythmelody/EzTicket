@@ -13,6 +13,7 @@ import jakarta.persistence.Table;
 public class Followproduct extends Core {
 	private static final long serialVersionUID = 1L;
 	@EmbeddedId
+
 	private FollowproductPK followproductPK;
 	@Column(insertable=false, updatable=false)
 	private Integer memberno;
