@@ -100,28 +100,51 @@ function changeStatus(checkbox) {
 }
 
 function addCoupon() {
-	const addCoupon = document.querySelectorAll('.modal-body .form-control');
-	for (aa of addCoupon) {
-		console.log(aa.value);
+	const couponbody = {
+		'pcouponname': $("#pcouponname").val(),
+		'productno': +$("#productno").val(),
+		'pdiscount': +$("#pdiscount").val(),
+		'preachprice': +$("#preachprice").val(),
+		'pcoupnsdate': formatDate($("#pcoupnsdateup").val(), $("#pcoupnsdatedown").val()),
+		'pcoupnedate': formatDate($("#pcoupnedateup").val(), $("#pcoupnedatedown").val())
 	}
-	fetch('/pcoupon/add', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			pcouponname: addCoupon[0].val(),
-			pdiscount: addCoupon[2].val(),
-			preachprice: addCoupon[3].val(),
-			pcoupnsdate: '2023-03-25T10:00:00',
-			pcoupnedate: '2023-03-31T23:59:59',
-		})
-	})
-
+	swal({
+		title: "是否新增優惠券?",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true
+	}).then((confirm) => {
+		if (confirm) {
+			fetch('/pcoupon/add', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(couponbody)
+			}).then(response => {
+				if (response.ok) {
+					swal('新增成功', { icon: "success" });
+				} else {
+					swal('新增失敗', { icon: "error" });
+				}
+			});
+		} else {
+			return Promise.reject('取消操作');
+		}
+	});
 }
 
 
-
+function formatDate(date, time) {
+	const dateTime = new Date(`${date} ${time}`);
+	const year = dateTime.getFullYear();
+	const month = ('0' + (dateTime.getMonth() + 1)).slice(-2);
+	const day = ('0' + dateTime.getDate()).slice(-2);
+	const hours = ('0' + dateTime.getHours()).slice(-2);
+	const minutes = ('0' + dateTime.getMinutes()).slice(-2);
+	const seconds = ('0' + dateTime.getSeconds()).slice(-2);
+	return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
 
 function editCoupon(edit) {
 	const text = edit.closest('.main-card').querySelector('h5').textContent;

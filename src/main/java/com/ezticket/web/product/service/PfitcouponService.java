@@ -2,6 +2,7 @@ package com.ezticket.web.product.service;
 
 import com.ezticket.web.product.dto.PfitcouponDTO;
 import com.ezticket.web.product.pojo.Pfitcoupon;
+import com.ezticket.web.product.pojo.PfitcouponPK;
 import com.ezticket.web.product.repository.PfitcouponRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,14 @@ public class PfitcouponService {
             .stream()
             .map(this::EntityToDTO)
             .collect(Collectors.toList());
-}
+    }
+
+    public PfitcouponDTO savePfitcoupon(Integer pcouponno,Integer productno){
+        PfitcouponPK pfitcouponPK = new PfitcouponPK();
+        pfitcouponPK.setPcouponno(pcouponno);
+        pfitcouponPK.setProductno(productno);
+        Pfitcoupon pfitcoupon = new Pfitcoupon(pfitcouponPK);
+        pfitcoupon = pfitcouponRepository.save(pfitcoupon);
+    return EntityToDTO(pfitcoupon);
+    }
 }
