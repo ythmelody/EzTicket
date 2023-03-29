@@ -10,6 +10,7 @@ public interface ProductDAO extends CoreDAO<Product,Integer> {
 	public void insert(Product product);
     public void update(Product product);
     public Product getByPrimaryKey(Integer productno);
+    @Override
     public List<Product> getAll();
     
 

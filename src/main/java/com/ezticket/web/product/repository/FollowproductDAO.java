@@ -7,11 +7,9 @@ import java.util.List;
 
 
 public interface FollowproductDAO extends CoreDAO<Followproduct,Integer> {
-//	public void insert(FollowproductVO followproductVO);
 	public boolean delete(Followproduct followproductVO);
 	
-	//�U���o�@�ӻݭnJoin
+
 	public List<Integer> getByMemberno(Integer memberno);
-	
-	
+
 }
