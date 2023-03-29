@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 
-@Data
 @Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "AREPORT")
