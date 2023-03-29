@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,6 +53,14 @@ public class AReportService {
                 .stream()
                 .map(this::EntityToDTO)
                 .collect(Collectors.toList());
+    }
+
+    public List getAReportAnames(){
+        return  aReportRepository.getAReportANames();
+    }
+
+    public List<AReport> getAReportBySelection(String activityNo,String aReportStatus){
+        return  aReportRepository.getAReportBySelection(activityNo, aReportStatus);
     }
 
     private AReportDto EntityToDTO(AReport aReport) {
