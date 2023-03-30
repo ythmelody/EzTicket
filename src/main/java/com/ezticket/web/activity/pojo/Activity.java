@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -43,4 +44,20 @@ public class Activity {
     private Integer aRateTotal;
     @Column(name = "ARATEQTY")
     private Integer aRateQty;
+    @Column(name = "APLACE")
+    private String Aplace;
+    @Column(name = "ANOTE")
+    private String Anote;
+    @Column(name = "ATICKETREMIND")
+    private String AticketRemind;
+
+
+    @OneToMany
+    @JoinColumn(name = "SESSIONNO", referencedColumnName = "ACTIVITYNO")
+    private List <Session> session;
+    @OneToMany
+    @JoinColumn(name = "AIMGNO", referencedColumnName = "ACTIVITYNO")
+    private List <Aimgt> aimgt;
+
+
 }
