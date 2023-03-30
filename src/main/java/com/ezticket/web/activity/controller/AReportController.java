@@ -32,9 +32,18 @@ public class AReportController {
             return aReportService.updateAReport(reportId, reportStatus);
         }
 
-        @GetMapping("/ByActName")
-        public List<AReportDto> getAReportsByActName(String actName) {
+        @GetMapping("/ByActName") public List<AReportDto> getAReportsByActName(String actName) {
             return aReportService.getAReportsByActName(actName);
+        };
+
+        @GetMapping("/AReportANames")
+        public List getAReportANames(){
+            return aReportService.getAReportAnames();
+        }
+
+        @GetMapping("/BySelection")
+        public List<AReport> getAReportsByActName(@RequestParam String activityNo, @RequestParam String aReportStatus) {
+            return aReportService.getAReportBySelection(activityNo, aReportStatus);
         };
 
 

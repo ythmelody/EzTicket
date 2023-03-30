@@ -21,5 +21,12 @@ public interface AReportRepository extends JpaRepository<AReport, Integer> {
     @Query("SELECT ar FROM AReport ar JOIN ar.aComment ac JOIN ac.activity act WHERE act.aName LIKE %?1%")
     public List<AReport> getAReportByActName(@Param("1") String actName);
 
+    @Query("SELECT DISTINCT act.activityNo, act.aName FROM AReport ar JOIN ar.aComment ac JOIN ac.activity act")
+    public List getAReportANames();
+
+//    @Query("SELECT ar FROM AReport ar JOIN ar.aComment ac JOIN ac.activity act WHERE act.activityNo = :activityNo AND ar.aReportStatus = :aReportStatus")
+    @Query(value = "SELECT ar.* FROM areport ar JOIN acomment ac ON ar.acommentno = ac.acommentno JOIN activity act ON ac.activityno = act.activityno WHERE act.activityno = :activityNo AND ar.areportstatus = :aReportStatus", nativeQuery = true)
+    public List<AReport> getAReportBySelection(@Param("activityNo") String activityNo, @Param("aReportStatus") String aReportStatus);
+
 }
 
