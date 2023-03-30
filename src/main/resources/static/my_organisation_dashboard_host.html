@@ -1,0 +1,460 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, shrink-to-fit=9">
+	<meta name="description" content="Gambolthemes">
+	<meta name="author" content="Gambolthemes">
+	<title>Barren - Simple Online Event Ticketing System</title>
+
+	<!-- Favicon Icon -->
+	<link rel="icon" type="image/png" href="images/fav.png">
+
+	<!-- Stylesheets -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+		rel="stylesheet">
+	<link href='vendor/unicons-2.0.1/css/unicons.css' rel='stylesheet'>
+	<link href="css/style.css" rel="stylesheet">
+	<link href="css/vertical-responsive-menu.min.css" rel="stylesheet">
+	<link href="css/datepicker.min.css" rel="stylesheet">
+	<link href="css/responsive.css" rel="stylesheet">
+	<link href="css/night-mode.css" rel="stylesheet">
+
+	<!-- Vendor Stylesheets -->
+	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+	<link href="vendor/OwlCarousel/assets/owl.carousel.css" rel="stylesheet">
+	<link href="vendor/OwlCarousel/assets/owl.theme.default.min.css" rel="stylesheet">
+	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBETG97fGFPBwE2djZ" 
+    crossorigin="anonymous"></script>
+	<style>
+		.host,
+		.phone,
+		.contact {
+			border: 1px solid white;
+		}
+		.contact{
+			width: 80px;
+		}
+		.phone{
+			width: 100px;
+		}
+		.host{
+			width: 230px;
+		}
+		.editbutton {
+			width: 15px;
+			height: 15px;
+			margin-top: 3px;
+		}
+	</style>
+</head>
+
+<body class="d-flex flex-column h-100">
+	<!-- Invite Team Member Model Start-->
+	<div class="modal fade" id="inviteTeamModal" tabindex="-1" aria-labelledby="inviteTeamModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="inviteTeamModalLabel">新增主辦廠商</h5>
+					<button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"><i
+							class="uil uil-multiply"></i></button>
+				</div>
+				<div class="modal-body">
+					<div class="model-content main-form">
+						<div class="form-group mt-30">
+							<label class="form-label">廠商</label>
+							<input class="form-control h_40" type="text" placeholder="請輸入廠商名稱.." value="">
+						</div>
+						<div class="form-group mt-30">
+							<label class="form-label">E-mail</label>
+							<input class="form-control h_40" type="text" placeholder="請輸入email.." value="">
+						</div>
+						<div class="form-group mt-30">
+							<label class="form-label">聯絡窗口</label>
+							<input class="form-control h_40" type="text" placeholder="請輸入窗口姓名.." value="">
+						</div>
+						<div class="form-group mt-30">
+							<label class="form-label">電話</label>
+							<input class="form-control h_40" type="phone" placeholder="請輸入聯絡電話.." value="">
+						</div>
+						<div class="form-group mt-30">
+							<label class="form-label">密碼(預設)</label>
+							<input class="form-control h_40" type="text" value="123456" readonly>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="co-main-btn min-width btn-hover h_40"
+						data-bs-dismiss="modal">Cancel</button>
+					<button type="button" class="main-btn min-width btn-hover h_40">Invite</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- -----------------------------------------以下角色權限使用------------------------------------------------------ -->
+	<!-- <div class="modal fade" id="itm" tabindex="-1" aria-labelledby="inviteTeamModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="inviteTeamModalLabel"><b>權限瀏覽</b></h5>
+					<button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"><i
+							class="uil uil-multiply"></i></button>
+				</div>
+				<div class="modal-body">
+					<div class="model-content main-form">
+						<div class="form-group mt-30">
+							<p class="form-label"><b>目前角色:</b></p>
+							<p id="result"></p>
+						</div>
+						<div class="form-group mt-30">
+							<p class="form-label"><b>負責工作:</b></p>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="co-main-btn min-width btn-hover h_40"
+						data-bs-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div> -->
+
+	<!-- Invite Team Member Model End-->
+	<!-- Header Start-->
+	<header class="header">
+		<div class="header-inner">
+			<nav
+				class="navbar navbar-expand-lg bg-barren barren-head navbar fixed-top justify-content-sm-start pt-0 pb-0 ps-lg-0 pe-2">
+				<div class="container-fluid ps-0">
+					<button type="button" id="toggleMenu" class="toggle_menu">
+						<i class="fa-solid fa-bars-staggered"></i>
+					</button>
+					<button id="collapse_menu" class="collapse_menu me-4">
+						<i class="fa-solid fa-bars collapse_menu--icon "></i>
+						<span class="collapse_menu--label"></span>
+					</button>
+					<button class="navbar-toggler order-3 ms-2 pe-0" type="button" data-bs-toggle="offcanvas"
+						data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+						<span class="navbar-toggler-icon">
+							<i class="fa-solid fa-bars"></i>
+						</span>
+					</button>
+					<a class="navbar-brand order-1 order-lg-0 ml-lg-0 ml-2 me-auto" href="index.html">
+						<div class="res-main-logo">
+							<img src="images/logo-icon.svg" alt="">
+						</div>
+						<div class="main-logo" id="logo">
+							<img src="images/logo.svg" alt="">
+							<img class="logo-inverse" src="images/dark-logo.svg" alt="">
+						</div>
+					</a>
+					<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
+						aria-labelledby="offcanvasNavbarLabel">
+						<div class="offcanvas-header">
+							<div class="offcanvas-logo" id="offcanvasNavbarLabel">
+								<img src="images/logo-icon.svg" alt="">
+							</div>
+							<button type="button" class="close-btn" data-bs-dismiss="offcanvas" aria-label="Close">
+								<i class="fa-solid fa-xmark"></i>
+							</button>
+						</div>
+						<div class="offcanvas-body">
+							<div class="offcanvas-top-area">
+								<div class="create-bg">
+									<a href="create.html" class="offcanvas-create-btn">
+										<i class="fa-solid fa-calendar-days"></i>
+										<span>Create Event</span>
+									</a>
+								</div>
+							</div>
+							<ul class="navbar-nav justify-content-end flex-grow-1 pe_5">
+								<li class="nav-item">
+									<a class="nav-link" href="backuser_profile_view.html">
+										<i class="fa-solid fa-right-left me-2"></i>使用者管理
+									</a>
+								</li>
+								<!-- <li class="nav-item">
+									<a class="nav-link" href="explore_events.html">
+										<i class="fa-solid fa-compass me-2"></i>Explore Events
+									</a>
+								</li> -->
+							</ul>
+						</div>
+						<div class="offcanvas-footer">
+							<div class="offcanvas-social">
+								<h5>Follow Us</h5>
+								<ul class="social-links">
+									<li><a href="#" class="social-link"><i class="fab fa-facebook-square"></i></a>
+									</li>
+									<li><a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+									</li>
+									<li><a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+									</li>
+									<li><a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+									</li>
+									<li><a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="right-header order-2">
+						<ul class="align-self-stretch">
+							<!-- <li>
+								<a href="create.html" class="create-btn btn-hover">
+									<i class="fa-solid fa-calendar-days"></i>
+									<span>Create Event</span>
+								</a>
+							</li> -->
+							<li class="dropdown account-dropdown order-3">
+								<a href="#" class="account-link" role="button" id="accountClick"
+									data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
+									<img src="images/profile-imgs/img-13.jpg" alt="">
+									<i class="fas fa-caret-down arrow-icon"></i>
+								</a>
+								<ul class="dropdown-menu dropdown-menu-account dropdown-menu-end"
+									aria-labelledby="accountClick">
+									<li>
+										<div class="dropdown-account-header">
+											<div class="account-holder-avatar">
+												<img src="images/profile-imgs/img-13.jpg" alt="">
+											</div>
+											<h5>John Doe</h5>
+											<p>johndoe@example.com</p>
+										</div>
+									</li>
+									<li class="profile-link">
+										<!-- <a href="backuser_profile_view.html" class="link-item">我的帳戶</a> -->
+										<a href="sign_in.html" class="link-item">登出</a>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<div class="night_mode_switch__btn">
+									<div id="night-mode" class="fas fa-moon fa-sun"></div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+			<div class="overlay"></div>
+		</div>
+	</header>
+	<!-- Header End-->
+	<!-- Left Sidebar Start -->
+	<nav class="vertical_nav">
+		<div class="left_section menu_left" id="js-menu">
+			<div class="left_section">
+				<ul>
+					<li class="menu--item">
+						<a href="my_organisation_dashboard_host.html" class="menu--link  active" title="Members"
+							data-bs-toggle="tooltip" data-bs-placement="right">
+							<!--class="active" 就是點選menu後按鈕呈現深色背景的狀態-->
+							<i class="fa-solid fa-square-plus menu--icon"></i>
+							<span class="menu--label">主辦單位管理</span>
+						</a>
+					</li>
+					<li class="menu--item">
+						<a href="my_organisation_dashboard_member.html" class="menu--link" title="Members"
+							data-bs-toggle="tooltip" data-bs-placement="right">
+							<!--class="active" 就是點選menu後按鈕呈現深色背景的狀態-->
+							<i class="fa-solid fa-user-group menu--icon"></i>
+							<span class="menu--label">會員資訊管理</span>
+						</a>
+					</li>
+					<li class="menu--item">
+						<a href="my_organisation_dashboard_my_team.html" class="menu--link team-lock" title="My Team"
+							data-bs-toggle="tooltip" data-bs-placement="right">
+							<!--class="active" 就是點選menu後按鈕呈現深色背景的狀態-->
+							<i class="fa-solid fa-user-group menu--icon"></i>
+							<span class="menu--label">後台帳號管理</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- Left Sidebar End -->
+	<!-- Body Start -->
+	<div class="wrapper wrapper-body">
+		<div class="dashboard-body">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="d-main-title">
+							<h3><i class="fa-solid fa-square-plus me-3"></i>主辦單位管理</h3>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="conversion-setup">
+							<div class="main-card mt-5">
+								<div class="dashboard-wrap-content p-4">
+									<div class="d-md-flex flex-wrap align-items-center">
+										<!-- <div class="nav custom2-tabs btn-group" role="tablist">
+											<button class="tab-link ms-0 active" data-bs-toggle="tab"
+												data-bs-target="#overview-tab" type="button" role="tab"
+												aria-controls="overview-tab" aria-selected="true">後台使用者</button>
+											<button class="tab-link" data-bs-toggle="tab" data-bs-target="#role-tab"
+												type="button" role="tab" aria-controls="role-tab"
+												aria-selected="false">權限設定</button>
+										</div> -->
+										<!-- <div class="col-lg-3 col-md-6" style="width: 100px; ">
+											<select class="selectpicker">
+												<option value="1">啟用中</option>
+												<option value="2">停用中</option>
+												<option value="0">未驗證</option>
+											</select>
+										</div> -->
+										<div style="width: 50px;">
+											<div class="form-group">
+												<div class="relative-input position-relative">
+													<input class="form-control h_40" type="text" placeholder="搜尋廠商..."
+														value="">
+													<i class="uil uil-search"></i>
+												</div>
+											</div>
+										</div>
+										<div class="rs ms-auto mt_r4">
+											<button class="main-btn btn-hover h_40 w-100" data-bs-toggle="modal"
+												data-bs-target="#inviteTeamModal">新增主辦廠商</button>
+										</div>
+
+									</div>
+
+								</div>
+
+
+							</div>
+							<div class="tab-content">
+								<div class="tab-pane fade active show" id="overview-tab" role="tabpanel">
+									<div class="table-card mt-4">
+										<div class="main-table">
+											<div class="table-responsive">
+												<table class="table">
+													<thead class="thead-dark">
+														<tr>
+															<th scope="col">編號/帳號</th>
+															<th scope="col">主辦廠商</th>
+															<th scope="col">聯絡窗口</th>
+															<th scope="col">聯絡E-mail</th>
+															<th scope="col">聯絡電話</th>
+															<th scope="col">編輯</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>5001</td>
+															<td>ezTicket娛樂</td>
+															<td><input class="contact" value="羅伯特" readonly></td>
+															<td><input class="host" value="johndoe@example.com"
+																	readonly></td>
+															<td><input class="phone" value="0912345678" readonly></td>
+															<td><input type="image" class="editbutton" img
+																	src="images/edit.png"></td>
+														</tr>
+														<tr>
+															<td>5002</td>
+															<td><input type="text" name="" id="" value="ezTicket娛樂"></td>
+															<td><input class="contact" value="羅伯特" readonly></td>
+															<td><input class="host" value="johndoe@example.com"
+																	readonly></td>
+															<td><input class="phone" value="0912345678" readonly></td>
+															<td><input type="image" class="editbutton" img
+																	src="images/edit.png"></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-pane fade" id="role-tab" role="tabpanel">
+									<div class="role-slider-content mt-4">
+										<div class="owl-carousel role-slider owl-theme">
+											<div class="item">
+												<div class="main-card">
+													<div class="role-header">
+														<h6>當前所有角色</h6>
+														<span>1 per account</span>
+													</div>
+													<div class="role-body-content">
+														<div class="menu1">
+															<div class="menu-item" data-value="1">選項1</div>
+															<div class="menu-item" data-value="2">選項2</div>
+															<div class="menu-item" data-value="3">選項3</div>
+															<div class="menu-item" data-value="4">選項4</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="item">
+												<div class="main-card">
+													<div class="role-header">
+														<h6>該角色權限</h6>
+														<span>Unlimited</span>
+													</div>
+													<div class="role-body-content">
+														<div class="menu2">
+															<div class="menu-item" data-value="5">選項1</div>
+															<div class="menu-item" data-value="6">選項2</div>
+															<div class="menu-item" data-value="7">選項3</div>
+															<div class="menu-item" data-value="8">選項4</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="item">
+												<div class="main-card">
+													<div class="role-header">
+														<h6>所有功能權限</h6>
+														<span>Unlimited</span>
+													</div>
+													<div class="role-body-content">
+														<div class="menu3">
+															<div class="menu-item" data-value="1">選項1</div>
+															<div class="menu-item" data-value="2">選項2</div>
+															<div class="menu-item" data-value="3">選項3</div>
+															<div class="menu-item" data-value="4">選項4</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Body End -->
+
+	<script src="js/vertical-responsive-menu.min.js"></script>
+	<script src="js/jquery-3.6.0.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="vendor/OwlCarousel/owl.carousel.js"></script>
+	<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+	<script src="js/custom.js"></script>
+	<script src="js/datepicker.min.js"></script>
+	<script src="js/i18n/datepicker.en.js"></script>
+	<script src="js/night-mode.js"></script>
+
+</body>
+<script>
+	
+</script>
+
+</html>

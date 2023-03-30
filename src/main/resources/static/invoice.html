@@ -1,295 +1,238 @@
 ﻿<!DOCTYPE html>
 <html lang="zh" class="h-100">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, shrink-to-fit=9" />
-    <meta name="description" content="Gambolthemes" />
-    <meta name="author" content="Gambolthemes" />
-    <title>ezTicket - Ticketing and Merchandise</title>
 
-    <!-- Favicon Icon -->
-    <link rel="icon" type="image/png" href="images/fav.png" />
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, shrink-to-fit=9">
+	<meta name="description" content="Gambolthemes">
+	<meta name="author" content="Gambolthemes">
+	<title>ezTicket - Ticketing and Merchandise</title>
 
-    <!-- Stylesheets -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <link href="vendor/unicons-2.0.1/css/unicons.css" rel="stylesheet" />
-    <link href="css/style.css" rel="stylesheet" />
-    <link href="css/responsive.css" rel="stylesheet" />
-    <link href="css/night-mode.css" rel="stylesheet" />
+	<!-- Favicon Icon -->
+	<link rel="icon" type="image/png" href="images/fav.png">
 
-    <!-- Vendor Stylesheets -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
-    <link href="vendor/OwlCarousel/assets/owl.carousel.css" rel="stylesheet" />
-    <link
-      href="vendor/OwlCarousel/assets/owl.theme.default.min.css"
-      rel="stylesheet"
-    />
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link
-      href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css"
-      rel="stylesheet"
-    />
+	<!-- Stylesheets -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+		rel="stylesheet">
+	<link href='vendor/unicons-2.0.1/css/unicons.css' rel='stylesheet'>
+	<link href="css/style.css" rel="stylesheet">
+	<link href="css/responsive.css" rel="stylesheet">
+	<link href="css/night-mode.css" rel="stylesheet">
 
-    <style>
-      /* 評星 style */
-      .starRating span {
-        color: #888888;
-        cursor: pointer;
-      }
+	<!-- Vendor Stylesheets -->
+	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+	<link href="vendor/OwlCarousel/assets/owl.carousel.css" rel="stylesheet">
+	<link href="vendor/OwlCarousel/assets/owl.theme.default.min.css" rel="stylesheet">
+	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
 
-      .starRating i {
-        transition: opacity 0.4s;
-      }
 
-      .starRating .fa-star {
-        color: #ffc000;
-        left: 0;
-        opacity: 0;
-      }
+	<style>
+		/* 評星 style */
+		.starRating span {
+			color: #888888;
+			cursor: pointer;
+		}
 
-      .starRating span:hover ~ span,
-      .starRated span.active ~ span {
-        color: #888888;
-      }
+		.starRating i {
+			transition: opacity 0.4s;
+		}
 
-      .starRating:hover .fa-star,
-      .starRating span:hover ~ span .fa-star-o {
-        opacity: 1 !important;
-      }
+		.starRating .fa-star {
+			color: #ffc000;
+			left: 0;
+			opacity: 0;
+		}
 
-      .starRating:hover .fa-star-o,
-      .starRating span:hover ~ span .fa-star {
-        opacity: 0 !important;
-      }
+		.starRating span:hover~span,
+		.starRated span.active~span {
+			color: #888888;
+		}
 
-      .starRated .fa-star,
-      .starRated span.active ~ span .fa-star-o {
-        opacity: 1;
-      }
+		.starRating:hover .fa-star,
+		.starRating span:hover~span .fa-star-o {
+			opacity: 1 !important;
+		}
 
-      .starRated .fa-star-o,
-      .starRated span.active ~ span .fa-star {
-        opacity: 0;
-      }
-    </style>
-  </head>
+		.starRating:hover .fa-star-o,
+		.starRating span:hover~span .fa-star {
+			opacity: 0 !important;
+		}
 
-  <body class="d-flex flex-column h-100">
-    <!-- 評星及評論開始 -->
-    <div
-      class="modal fade"
-      id="couponModal"
-      tabindex="-1"
-      aria-labelledby="couponModalLabel"
-      aria-hidden="false"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="couponModalLabel">評論與評星</h5>
-            <button
-              type="button"
-              class="close-model-btn"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            >
-              <i class="uil uil-multiply"></i>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="model-content main-form">
-              <div class="row">
-                <div class="col-lg-12 col-md-12">
-                  <div class="gift-coupon-icon mt-5 pb-5">
-                    <label class="form-label" style="font-weight: bold"
-                      >請為此活動評星</label
-                    >
-                    <form id="ratingForm">
-                      <div class="form-textarea">
-                        <div class="card-body">
-                          <div class="starRating">
-                            <span class="star"
-                              ><i class="fa fa-star-o fa-2x"></i
-                              ><i class="fa fa-star fa-2x"></i
-                            ></span>
-                            <span class="star"
-                              ><i class="fa fa-star-o fa-2x"></i
-                              ><i class="fa fa-star fa-2x"></i
-                            ></span>
-                            <span class="star"
-                              ><i class="fa fa-star-o fa-2x"></i
-                              ><i class="fa fa-star fa-2x"></i
-                            ></span>
-                            <span class="star"
-                              ><i class="fa fa-star-o fa-2x"></i
-                              ><i class="fa fa-star fa-2x"></i
-                            ></span>
-                            <span class="star"
-                              ><i class="fa fa-star-o fa-2x"></i
-                              ><i class="fa fa-star fa-2x"></i
-                            ></span>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-                <div class="col-lg-12 col-md-12">
-                  <div class="gift-coupon-icon mt-5 pb-5">
-                    <label class="form-label" style="font-weight: bold"
-                      >請為此活動評論</label
-                    >
-                    <textarea class="form-textarea"></textarea>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="co-main-btn min-width btn-hover h_40"
-              data-bs-target="#aboutModal"
-              data-bs-toggle="modal"
-              data-bs-dismiss="modal"
-            >
-              取消
-            </button>
-            <button class="main-btn min-width btn-hover h_40" type="submit">
-              提交
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- 評星及評論結束 -->
-    <!-- Invoice Start-->
-    <div class="invoice clearfix">
-      <div class="container">
-        <div class="row justify-content-md-center">
-          <div class="col-lg-8 col-md-10">
-            <div class="invoice-header justify-content-between">
-              <div class="invoice-header-logo">
-                <img src="images/dark-logo.svg" alt="invoice-logo" />
-              </div>
-              <div class="invoice-header-text">
-                <a href="#" class="download-link">Download</a>
-              </div>
-            </div>
-            <div class="invoice-body">
-              <div class="invoice_dts">
-                <div class="row">
-                  <div class="col-md-12">
-                    <h2 class="invoice_title">訂單明細</h2>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="vhls140">
-                      <ul>
-                        <li>
-                          <div class="vdt-list">訂單編號 : 1234567</div>
-                        </li>
-                        <li>
-                          <div class="vdt-list">訂單成立時間 : 16/02/2023</div>
-                        </li>
-                        <li>
-                          <div class="vdt-list">訂單付款時間 : 16/02/2023</div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="main-table bt_40">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead class="thead-dark">
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">活動名稱</th>
-                        <th scope="col">數量</th>
-                        <th scope="col">單價</th>
-                        <th scope="col">折扣</th>
-                        <th scope="col">小計</th>
-                        <th scope="col">
-                          <div style="text-align: center; font-weight: bold">
-                            評星與評論
-                          </div>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>
-                          <a
-                            href="online_event_detail_view.html"
-                            target="_blank"
-                            >黃明志大飛機世界巡迴演唱會》台北站</a
-                          >
-                        </td>
-                        <td>1</td>
-                        <td>$500</td>
-                        <td>$0</td>
-                        <td>$500</td>
-                        <td>
-                          <div style="text-align: center">
-                            <button
-                              style="
-                                border: none;
-                                background-color: transparent;
-                              "
-                              data-bs-toggle="modal"
-                              data-bs-target="#couponModal"
-                            >
-                              <img src="images/cmtbtn.png" />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colspan="1"></td>
-                        <td colspan="5">
-                          <div class="user_dt_trans text-end pe-xl-4">
-                            <div class="totalinv2">總金額 : TWD $500</div>
-                            <p>通過信用卡支付</p>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Invoice End-->
+		.starRated .fa-star,
+		.starRated span.active~span .fa-star-o {
+			opacity: 1;
+		}
 
-    <script src="js/jquery-3.6.0.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/OwlCarousel/owl.carousel.js"></script>
-    <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-    <script src="js/custom.js"></script>
-    <script src="js/night-mode.js"></script>
-    <script>
-      $(".starRating span").click(function () {
-        $(this).siblings().removeClass("active");
-        $(this).addClass("active");
-        $(this).parent().addClass("starRated");
+		.starRated .fa-star-o,
+		.starRated span.active~span .fa-star {
+			opacity: 0;
+		}
+	</style>
+</head>
 
-        // Added for Demo
-        let rating = $(this).index() + 1;
-        $("#currentRating").html(
-          "<small>Rating: <b>" + rating + "</b></small>"
-        );
-      });
-    </script>
-  </body>
+<body class="d-flex flex-column h-100">
+	<!-- 評星及評論開始 -->
+	<div class="modal fade" id="couponModal" tabindex="-1" aria-labelledby="couponModalLabel" aria-hidden="false">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="couponModalLabel">評論與評星</h5>
+					<button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"><i
+							class="uil uil-multiply"></i></button>
+				</div>
+				<div class="modal-body">
+					<div class="model-content main-form">
+						<div class="row">
+							<div class="col-lg-12 col-md-12">
+								<div class="gift-coupon-icon mt-5 pb-5">
+									<label class="form-label" style="font-weight: bold">請為此商品評星</label>
+									<form id="ratingForm">
+										<div class="form-textarea">
+											<div class="card-body">
+												<div class="starRating">
+													<span class="star"><i class="fa fa-star-o fa-2x"></i><i class="fa fa-star fa-2x"></i></span>
+													<span class="star"><i class="fa fa-star-o fa-2x"></i><i class="fa fa-star fa-2x"></i></span>
+													<span class="star"><i class="fa fa-star-o fa-2x"></i><i class="fa fa-star fa-2x"></i></span>
+													<span class="star"><i class="fa fa-star-o fa-2x"></i><i class="fa fa-star fa-2x"></i></span>
+													<span class="star"><i class="fa fa-star-o fa-2x"></i><i class="fa fa-star fa-2x"></i></span>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+							<div class="col-lg-12 col-md-12">
+								<div class="gift-coupon-icon mt-5 pb-5">
+									<label class="form-label" style="font-weight: bold;">請為此商品評論</label>
+									<textarea class="form-textarea"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="co-main-btn min-width btn-hover h_40" data-bs-target="#aboutModal"
+						data-bs-toggle="modal" data-bs-dismiss="modal">取消</button>
+					<button class="main-btn min-width btn-hover h_40" type="submit">提交</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 評星及評論結束 -->
+	<!-- Invoice Start-->
+	<div class="invoice clearfix">
+		<div class="container">
+			<div class="row justify-content-md-center">
+				<div class="col-lg-8 col-md-10">
+					<div class="invoice-header justify-content-between">
+						<div class="invoice-header-logo">
+							<img src="images/dark-logo.svg" alt="invoice-logo">
+						</div>
+						<div class="invoice-header-text">
+							<a href="#" class="download-link">Download</a>
+						</div>
+					</div>
+					<div class="invoice-body">
+						<div class="invoice_dts">
+							<div class="row">
+								<div class="col-md-12">
+									<h2 class="invoice_title">訂單明細</h2>
+								</div>
+								<div class="col-md-6">
+									<div class="vhls140">
+										<ul>
+											<li>
+												<div class="vdt-list">訂單編號 : 30001</div>
+											</li>
+											<li>
+												<div class="vdt-list">訂單成立時間 : 16/02/2023</div>
+											</li>
+											<li>
+												<div class="vdt-list">訂單付款時間 : 16/02/2023</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="main-table bt_40">
+							<div class="table-responsive">
+								<table class="table">
+									<thead class="thead-dark">
+										<tr>
+											<th scope="col">#</th>
+											<th scope="col">商品明細</th>
+											<th scope="col">數量</th>
+											<th scope="col">單價</th>
+											<th scope="col">折扣</th>
+											<th scope="col">小計</th>
+											<th scope="col">
+												<div style="text-align:center; font-weight: bold;">
+													評星與評論
+												</div>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>1</td>
+											<td><a href="online_event_detail_view.html" target="_blank">黑色演唱會T恤</a></td>
+											<td>1</td>
+											<td>$500</td>
+											<td>$0</td>
+											<td>$500</td>
+											<td>
+												<div style="text-align:center">
+													<button style="border: none;  background-color:transparent" data-bs-toggle="modal"
+														data-bs-target="#couponModal"><img src="images/cmtbtn.png"></button>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="1"></td>
+											<td colspan="5">
+												<div class="user_dt_trans text-end pe-xl-4">
+													<div class="totalinv2">總金額 : TWD $500</div>
+													<p>通過信用卡支付</p>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Invoice End-->
+
+
+	<script src="js/jquery-3.6.0.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="vendor/OwlCarousel/owl.carousel.js"></script>
+	<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+	<script src="js/custom.js"></script>
+	<script src="js/night-mode.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+	<script>
+		$('.starRating span').click(function () {
+			$(this).siblings().removeClass('active');
+			$(this).addClass('active');
+			$(this).parent().addClass('starRated');
+
+			// Added for Demo
+			let rating = $(this).index() + 1;
+			$('#currentRating').html("<small>Rating: <b>" + rating + "</b></small>");
+		});
+	</script>
+	<script src="/js/porderdetails.js"></script>
+</body>
+
 </html>
