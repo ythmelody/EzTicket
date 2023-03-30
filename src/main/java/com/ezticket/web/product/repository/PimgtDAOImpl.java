@@ -5,7 +5,9 @@ import java.util.List;
 import com.ezticket.web.product.pojo.Pimgt;
 import jakarta.persistence.PersistenceContext;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class PimgtDAOImpl implements PimgtDAO {
 	@PersistenceContext
 	private Session session;

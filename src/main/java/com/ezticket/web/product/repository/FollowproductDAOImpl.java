@@ -5,7 +5,9 @@ import java.util.List;
 import com.ezticket.web.product.pojo.Followproduct;
 import jakarta.persistence.PersistenceContext;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class FollowproductDAOImpl implements FollowproductDAO {
 	@PersistenceContext
 	private Session session;

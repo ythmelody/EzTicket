@@ -3,15 +3,16 @@ package com.ezticket.web.product.service;
 import com.ezticket.web.product.pojo.Pimgt;
 import com.ezticket.web.product.repository.PimgtDAO;
 import com.ezticket.web.product.repository.PimgtDAOImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class PimgtService {
+	@Autowired
 	private PimgtDAO dao;
 
-	public PimgtService() {
-		dao = new PimgtDAOImpl();
-	}
 	
 	public Pimgt addProductImg(Integer productno, byte[] pimg) {
 		Pimgt pimgt =new Pimgt();
@@ -20,8 +21,7 @@ public class PimgtService {
 		dao.insert(pimgt);
 		return pimgt;
 	}
-	
-	
+
 	public Pimgt getOneProductImg(Integer pimgno) {
 		return dao.getByPrimaryKey(pimgno);
 	}

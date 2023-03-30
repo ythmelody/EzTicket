@@ -3,15 +3,16 @@ package com.ezticket.web.product.service;
 import com.ezticket.web.product.pojo.Followproduct;
 import com.ezticket.web.product.repository.FollowproductDAO;
 import com.ezticket.web.product.repository.FollowproductDAOImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class FollowproductService {
-	private FollowproductDAO dao;
 
-	public FollowproductService() {
-		dao = new FollowproductDAOImpl();
-	}
+	@Autowired
+	private FollowproductDAO dao;
 
 	public Followproduct addFollowProduct(Integer memberno, Integer productno) {
 		Followproduct followProductVO = new Followproduct();
@@ -22,7 +23,6 @@ public class FollowproductService {
 	}
 	
 	public Followproduct getOneProductFollowOfOneMember(Integer memberno, Integer productno) {
-		//���D��զX�Ӧ���PK�p��M��?
 		return null;
 		
 	}

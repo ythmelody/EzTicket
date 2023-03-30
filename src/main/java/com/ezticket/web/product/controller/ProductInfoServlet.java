@@ -7,6 +7,7 @@ import java.util.List;
 
 
 import com.ezticket.web.product.pojo.Product;
+import com.ezticket.web.product.service.PimgtService;
 import com.ezticket.web.product.service.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -16,9 +17,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 
@@ -26,11 +25,13 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 public class ProductInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProductService productSvc;
+	private PimgtService pimgtSvc;
 
 	@Override
 	public void init() throws ServletException {
 		ApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		productSvc = applicationContext.getBean(ProductService.class);
+		pimgtSvc = applicationContext.getBean(PimgtService.class);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

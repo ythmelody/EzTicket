@@ -2,7 +2,6 @@ package com.ezticket.web.product.service;
 
 import com.ezticket.web.product.pojo.Product;
 import com.ezticket.web.product.repository.ProductDAO;
-import com.ezticket.web.product.repository.ProductDAOImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

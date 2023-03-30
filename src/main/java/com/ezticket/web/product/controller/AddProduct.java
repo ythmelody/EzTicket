@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,6 +22,15 @@ import java.util.Collection;
 @MultipartConfig
 public class AddProduct extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private ProductService productSvc;
+	private PimgtService pimgtSvc;
+
+	@Override
+	public void init() throws ServletException {
+		ApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+		productSvc = applicationContext.getBean(ProductService.class);
+		pimgtSvc =applicationContext.getBean(PimgtService.class);
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -42,8 +53,7 @@ public class AddProduct extends HttpServlet {
 		java.sql.Timestamp pedate = java.sql.Timestamp.valueOf(request.getParameter("pedate"));
 		Integer pstatus = Integer.valueOf(request.getParameter("pstatus").trim());
 		String pdiscrip = request.getParameter("pdiscrip");
-		ProductService productService =new ProductService();
-		Product product = productService.addProduct(pclassno, pname, hostno, pdiscrip, pprice, pspecialprice, pqty, psdate, pedate, ptag, pstatus);
+		Product product = productSvc.addProduct(pclassno, pname, hostno, pdiscrip, pprice, pspecialprice, pqty, psdate, pedate, ptag, pstatus);
 		
 		
 		//多張圖片上傳
@@ -61,7 +71,7 @@ public class AddProduct extends HttpServlet {
 				byte[] buf = new byte[in.available()];   // 也可以用byte[] buf = in.readAllBytes();  // Java 9 的新方法
 				in.read(buf);
 				in.close();
-				pimgtService.addProductImg(productno,buf);
+				pimgtSvc.addProductImg(productno,buf);
 			}
 
 		}
