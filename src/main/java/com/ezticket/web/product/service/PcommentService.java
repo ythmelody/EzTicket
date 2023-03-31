@@ -2,19 +2,21 @@ package com.ezticket.web.product.service;
 
 import com.ezticket.web.product.pojo.Pcomment;
 import com.ezticket.web.product.repository.PcommentDAO;
-import com.ezticket.web.product.repository.PcommentDAOImpl;
+import com.ezticket.web.product.repository.Impl.PcommentDAOImpl;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
 
+@Service
 public class PcommentService {
 
+	@Autowired
 	private PcommentDAO dao;
 
-	public PcommentService() {
-		dao = new PcommentDAOImpl();
-	}
-
+	@Transactional
 	public Pcomment addProductComment(Integer productno, String pcommentcont, Integer prate, Integer memberno) {
 		Timestamp pcommentdate = new Timestamp(System.currentTimeMillis());
 		int pcommentstatus = 0;
@@ -31,11 +33,10 @@ public class PcommentService {
 		dao.insert(pcommentVO);
 		return pcommentVO;
 	}
-	
+
+	@Transactional
 	public Pcomment updateProductComment(Pcomment pcommentVO) {
-		//���O���@�ӭn��s
 		final Pcomment oldPcommentVO =dao.getByPrimaryKey(pcommentVO.getPcommentno());
-		//�]�w��������ק�
 		pcommentVO.setPcommentno(oldPcommentVO.getPcommentno());
 		pcommentVO.setProductno(oldPcommentVO.getProductno());
 		pcommentVO.setMemberno(oldPcommentVO.getMemberno());
@@ -58,7 +59,8 @@ public class PcommentService {
 	public List<Pcomment> getAllProductCommentOfOneProduct(Integer productno){
 		return dao.getAllByProductno(productno);
 	}
-	
+
+	@Transactional
 	public boolean deleteProductComment(Integer pcommentno) {
 		return dao.delete(pcommentno);
 	}

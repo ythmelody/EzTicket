@@ -2,19 +2,21 @@ package com.ezticket.web.product.service;
 
 import com.ezticket.web.product.pojo.Preport;
 import com.ezticket.web.product.repository.PreportDAO;
-import com.ezticket.web.product.repository.PreportDAOImpl;
+import com.ezticket.web.product.repository.Impl.PreportDAOImpl;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.sql.Date;
 import java.util.List;
 
+@Service
 public class PreportService {
+
+	@Autowired
 	private PreportDAO dao;
 
-	public PreportService() {
-		dao = new PreportDAOImpl();
-	}
-
+	@Transactional
 	public Preport addProductReport(Integer pcommentno, Integer memberno, String pwhy) {
 		int preportstatus = 0;
 		Timestamp preportdate =new Timestamp(System.currentTimeMillis());
@@ -27,11 +29,10 @@ public class PreportService {
 		dao.insert(preport);
 		return preport;
 	}
-	
+
+	@Transactional
 	public Preport updateProductReport(Preport preport) {
 		final Preport oldPreportVO =dao.getByPrimaryKey(preport.getPreportno());
-		System.out.println(preport.getPreportno());
-		//�Q�n��������ק�
 		preport.setPreportno(oldPreportVO.getPreportno());
 		preport.setPcommentno(oldPreportVO.getPcommentno());
 		preport.setMemberno(oldPreportVO.getMemberno());

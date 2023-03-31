@@ -1,5 +1,6 @@
 package com.ezticket.web.product.controller;
 
+import com.ezticket.web.product.service.PimgtService;
 import com.ezticket.web.product.service.ProductService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -7,6 +8,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -16,6 +19,14 @@ import java.sql.Timestamp;
 @MultipartConfig
 public class UpdateProduct extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private ProductService productSvc;
+	private PimgtService pimgtSvc;
+
+	public void init() throws ServletException {
+		ApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+		productSvc = applicationContext.getBean(ProductService.class);
+		pimgtSvc = applicationContext.getBean(PimgtService.class);
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -40,9 +51,9 @@ public class UpdateProduct extends HttpServlet {
 		String pdiscrip = request.getParameter("pdiscrip");
 		Integer pratetotal = Integer.valueOf(request.getParameter("pratetotal"));
 		Integer prateqty = Integer.valueOf(request.getParameter("prateqty"));
-		
-		ProductService productService = new ProductService();
-		productService.updateProduct(productno, pclassno, pname, hostno, pdiscrip, pprice, pspecialprice, pqty, psdate,
+
+
+		productSvc.updateProduct(productno, pclassno, pname, hostno, pdiscrip, pprice, pspecialprice, pqty, psdate,
 				pedate, ptag, pstatus, pratetotal, prateqty);
 	}
 }

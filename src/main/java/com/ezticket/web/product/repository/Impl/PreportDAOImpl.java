@@ -1,15 +1,17 @@
-package com.ezticket.web.product.repository;
+package com.ezticket.web.product.repository.Impl;
 
 import java.util.List;
 
 import com.ezticket.web.product.pojo.Preport;
+import com.ezticket.web.product.repository.PreportDAO;
 import jakarta.persistence.PersistenceContext;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 
-
+@Repository
 public class PreportDAOImpl implements PreportDAO {
 	@PersistenceContext
 	private Session session;

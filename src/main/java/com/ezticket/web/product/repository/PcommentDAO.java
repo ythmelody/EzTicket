@@ -14,6 +14,5 @@ public interface PcommentDAO extends CoreDAO<Pcomment,Integer> {
 //    public PcommentVO findByPrimaryKey(Integer pcommentno);
     public List<Pcomment> getAllByMemberno(Integer memberno);
     public List<Pcomment> getAllByProductno(Integer productno);
-    public List<Pcomment> getAll(Map<String, String[]> map);
     public boolean delete(Integer pcommentno);
 }

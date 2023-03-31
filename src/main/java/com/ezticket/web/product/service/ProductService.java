@@ -2,6 +2,7 @@ package com.ezticket.web.product.service;
 
 import com.ezticket.web.product.pojo.Product;
 import com.ezticket.web.product.repository.ProductDAO;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,10 +10,12 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Service
+
 public class ProductService {
 	@Autowired
 	private ProductDAO dao;
 
+	@Transactional
 	public Product addProduct(Integer pclassno, String pname, Integer hostno, String pdiscrip, Integer pprice,
 							  Integer pspecialprice, Integer pqty, Timestamp psdate, Timestamp pedate, String ptag, Integer pstatus) {
 		Product productVO = new Product();
@@ -31,6 +34,7 @@ public class ProductService {
 		return productVO;
 	}
 
+	@Transactional
 	public Product updateProduct(Integer productno, Integer pclassno, String pname, Integer hostno, String pdiscrip,
 			Integer pprice, Integer pspecialprice, Integer pqty, Timestamp psdate, Timestamp pedate, String ptag,
 			Integer pstatus, Integer pratetotal, Integer prateqty) {

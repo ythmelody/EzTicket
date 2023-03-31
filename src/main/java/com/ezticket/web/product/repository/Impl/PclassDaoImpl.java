@@ -1,12 +1,15 @@
-package com.ezticket.web.product.repository;
+package com.ezticket.web.product.repository.Impl;
 
 import java.util.List;
 
 import com.ezticket.web.product.pojo.Pclass;
+import com.ezticket.web.product.repository.PclassDAO;
 import jakarta.persistence.PersistenceContext;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class PclassDaoImpl implements PclassDAO {
 	@PersistenceContext
 	private Session session;

@@ -4,12 +4,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-
-
 import com.ezticket.web.product.pojo.Product;
 import com.ezticket.web.product.service.PimgtService;
 import com.ezticket.web.product.service.ProductService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import jakarta.servlet.ServletException;
@@ -66,7 +63,7 @@ public class ProductInfoServlet extends HttpServlet {
 		// 商品列表呈現
 		List<Product> allProductlist = productSvc.getAllProduct();
 		for (Product p : allProductlist) {
-			System.out.println(p.getPname());
+//			System.out.println(p.getPname());
 		}
 
 		// 商品列表呈現(後臺商品管理需看見已下架商品)

@@ -1,8 +1,9 @@
-package com.ezticket.web.product.repository;
+package com.ezticket.web.product.repository.Impl;
 
 import java.util.List;
 
 import com.ezticket.web.product.pojo.Followproduct;
+import com.ezticket.web.product.repository.FollowproductDAO;
 import jakarta.persistence.PersistenceContext;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
@@ -19,13 +20,13 @@ public class FollowproductDAOImpl implements FollowproductDAO {
 
 	@Override
 	public void update(Followproduct followproductVO) {
-		// TODO �Pı�Τ���o�@�ӥ\��...
+		// TODO
 
 	}
 
 	@Override
 	public Followproduct getByPrimaryKey(Integer pk) {
-		// TODO �o�@�ӬO�ƦX�D��Ӧp��B�z?
+		// TODO
 		return null;
 	}
 

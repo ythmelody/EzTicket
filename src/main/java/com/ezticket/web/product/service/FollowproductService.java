@@ -2,7 +2,7 @@ package com.ezticket.web.product.service;
 
 import com.ezticket.web.product.pojo.Followproduct;
 import com.ezticket.web.product.repository.FollowproductDAO;
-import com.ezticket.web.product.repository.FollowproductDAOImpl;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +14,7 @@ public class FollowproductService {
 	@Autowired
 	private FollowproductDAO dao;
 
+	@Transactional
 	public Followproduct addFollowProduct(Integer memberno, Integer productno) {
 		Followproduct followProductVO = new Followproduct();
 		followProductVO.setMemberno(memberno);
