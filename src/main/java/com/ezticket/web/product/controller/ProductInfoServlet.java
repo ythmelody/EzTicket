@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import com.ezticket.web.product.pojo.Product;
 import com.ezticket.web.product.service.PimgtService;
 import com.ezticket.web.product.service.ProductService;
@@ -75,11 +77,8 @@ public class ProductInfoServlet extends HttpServlet {
 				String ujson = gson.toJson(allProductlist);
 				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
-				response.setHeader("Cache-Control", "no-store"); // HTTP 1.1
-				response.setHeader("Pragma", "no-cache"); // HTTP 1.0
-				response.setDateHeader("Expires", 0);
 				PrintWriter pw = response.getWriter();
-				pw.print(ujson);  
+				pw.print(ujson);
 				pw.flush();
 				return;
 			}
@@ -90,19 +89,36 @@ public class ProductInfoServlet extends HttpServlet {
 		}
 
 		// 商品列表呈現(過濾掉未上架商品)
-		List<Product> launchProduct = new ArrayList<>();
-		for (Product product : allProductlist) {
-			if (product.getPstatus() == 1) {
-				launchProduct.add(product);
-			}
+//		List<Product> launchProduct = new ArrayList<>();
+//		for (Product product : allProductlist) {
+//			if (product.getPstatus() == 1) {
+//				launchProduct.add(product);
+//			}
+//		}
+//		Gson gson = new Gson();
+//		String ujson = gson.toJson(launchProduct);
+//		response.setContentType("application/json");
+//		response.setCharacterEncoding("UTF-8");
+//		PrintWriter pw = response.getWriter();
+//		pw.print(ujson);
+//		pw.flush();
+
+		//商品查詢
+		String action =request.getParameter("action");
+		System.out.println(action);
+		if("ProductSearchForm".equals(action)){
+			Map<String,String[]> map=request.getParameterMap(); //將得到的資料轉成map
+			System.out.println(map);
+			List<Product> productList =productSvc.getAllByproductSearch(map); //轉交進行複合查詢
+			Gson gson = new Gson();
+			String ujson = gson.toJson(productList);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter pw = response.getWriter();
+			pw.print(ujson);
+			pw.flush();
 		}
-		Gson gson = new Gson();
-		String ujson = gson.toJson(launchProduct);
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		PrintWriter pw = response.getWriter();
-		pw.print(ujson);
-		pw.flush();
 	}
+
 
 }

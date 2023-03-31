@@ -245,6 +245,10 @@
 						<div class="d-main-title">
 							<h3><i class="fa-solid fa-box-open-full"></i> 周邊商品</h3>
 						</div>
+						<div class="ocard-left" style="margin-left: 5px;">
+							<button class="esv-btn me-2"
+								onclick="window.location.href='back_product_create_product.html'">新增商品</button>
+						</div>
 					</div>
 					<div class="col-md-12">
 						<div class="main-card mt-5">
@@ -253,18 +257,33 @@
 								<div class="d-md-flex flex-wrap align-items-center">
 									<div class="dashboard-date-wrap">
 										<div class="form-group">
-											<div class="relative-input position-relative">
-												<input class="form-control h_40" type="text" placeholder="搜尋商品名稱"
-													value="">
-												<i class="uil uil-search"></i>
+											<!-- action="ProductInfoServlet" method=post -->
+											<FORM id="ProductSearchForm">
+												<div class="relative-input position-relative">
+													<label for="pname">商品名稱：</label>
+													<input class="form-control h_40" type="text" placeholder="搜尋商品名稱"
+														value="" id="pname" name="pname">
+													<i class="uil uil-search"></i>
+												</div>
+												<div class="relative-input position-relative">
+													<label for="ptag">商品標籤：</label>
+													<input class="form-control h_40" type="text" placeholder="搜尋標籤"
+														value="" id="ptag" name="ptag">
+													<i class="uil uil-search"></i>
 
-											</div>
+												</div>
+												<div class="relative-input position-relative">
+													<label for="productno">商品編號：</label>
+													<input class="form-control h_40" type="text" placeholder="搜尋商品編號"
+														value="" id="productno" name="productno">
+													<i class="uil uil-search"></i>
+													<button class="esv-btn me-2">查詢</button>
+													<input type="hidden" name="action" value="ProductSearchForm">
+												</div>
+											</FORM>
 										</div>
 									</div>
-									<div class="ocard-left" style="margin-left: 5px;">
-										<button class="esv-btn me-2"
-											onclick="window.location.href='back_product_create_product.html'">新增商品</button>
-									</div>
+
 									<div class="rs ms-auto mt_r4">
 										<div class="nav custom2-tabs btn-group" role="tablist">
 											<button class="tab-link active" data-bs-toggle="tab"
@@ -315,18 +334,18 @@
 		</div>
 	</div>
 	<!-- Body End -->
-	<script>
+	<!-- <script>
 		const productList_off = document.querySelector('#productList_off');
 		const productList_on = document.querySelector('#productList_on');
 		let urlParams = new URLSearchParams(window.location.search);
 		const allProduct = urlParams.get('allProduct');
 
-		fetch("ProductInfoServlet?allProduct="+1)
+		fetch("ProductInfoServlet?allProduct=" + 1)
 			.then(resp => resp.json())
 			.then(list => {
 				for (let item of list) {
 					let image = item.pimgts && item.pimgts[0] && item.pimgts[0].pimgno;
-						if (image === undefined) { image = 70001; }
+					if (image === undefined) { image = 70001; }
 					if (item.pstatus === 1) {
 						productList_on.innerHTML += `<div
 												class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between">
@@ -345,11 +364,11 @@
 														aria-haspopup="true" aria-expanded="false"><i
 															class="fa-solid fa-ellipsis-vertical"></i></button>
 													<div class="dropdown-menu dropdown-menu-right">
-														<a href="back-product-update_product.html?productno=${item.productno}" class="dropdown-item"><i
+														<a href="back-product-update_product.html?productno=${item.productno} target="_blank"" class="dropdown-item"><i
 																class="fa-solid fa-gear me-3"></i>編輯商品</a>
-														<a href="front-product-product_detail.html?productno=${item.productno}" class="dropdown-item"><i
+														<a href="front-product-product_detail.html?productno=${item.productno} target="_blank"" class="dropdown-item"><i
 																class="fa-solid fa-eye me-3"></i>前台預覽</a>
-														<a href="back_product_create_product.html?productno=${item.productno}" class="dropdown-item"><i
+														<a href="back_product_create_product.html?productno=${item.productno} target="_blank"" class="dropdown-item"><i
 																class="fa-solid fa-clone me-3"></i>複製商品</a>
 													</div>
 												</div>
@@ -361,7 +380,7 @@
 														<i class="fa-solid fa-location-dot"></i>
 													</span>
 													<p>商品狀態</p>
-													<h6 class="coupon-status">${item.pstatus}</h6>
+													<h6 class="coupon-status">${item.pstatus === 1 ? '上架中' : '已下架'}</h6>
 												</div>
 												<div class="icon-box">
 													<span class="icon">
@@ -401,9 +420,9 @@
 												<div class="dropdown">
 													<button class="option-btn" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
 													<div class="dropdown-menu dropdown-menu-right">
-														<a href="back-product-update_product.html?productno=${item.productno}" class="dropdown-item"><i class="fa-solid fa-gear me-3"></i>編輯商品</a>
-														<a href="front-product-product_detail.html?productno=${item.productno}" class="dropdown-item"><i class="fa-solid fa-eye me-3"></i>前台預覽</a>
-														<a href="back_product_create_product.html?productno=${item.productno}" class="dropdown-item"><i class="fa-solid fa-clone me-3"></i>複製商品</a>
+														<a href="back-product-update_product.html?productno=${item.productno} target="_blank"" class="dropdown-item"><i class="fa-solid fa-gear me-3"></i>編輯商品</a>
+														<a href="front-product-product_detail.html?productno=${item.productno} target="_blank"" class="dropdown-item"><i class="fa-solid fa-eye me-3"></i>前台預覽</a>
+														<a href="back_product_create_product.html?productno=${item.productno} target="_blank"" class="dropdown-item"><i class="fa-solid fa-clone me-3"></i>複製商品</a>
 													</div>
 
 												</div>
@@ -444,10 +463,98 @@
 
 				}
 			});
+	</script> -->
+	<script src="js/jquery-3.6.0.min.js"></script>
+	<script>
+		//商品篩選
+		$('#ProductSearchForm').on('submit', function (e) {
+			e.preventDefault(); //取消跳轉頁面
+
+			fetch("ProductInfoServlet", {
+				method: 'POST',
+				// body: formdata,
+				body: new URLSearchParams({
+					'pname': $("[name='pname']").val(),
+					'ptag':  $("[name='ptag']").val(),
+					'productno': $("[name='productno']").val(),
+					'action': $("[name='action']").val()
+				}),
+				headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+				// headers: { 'Content-Type': 'application/json' }
+				// headers: { 'Content-Type': 'multipart/form-data' }
+			})
+				.then(resp =>resp.json())
+				.then(list => {
+					for (let item of list) {
+						let image = item.pimgts && item.pimgts[0] && item.pimgts[0].pimgno;
+						if (image === undefined) { image = 70001; }
+						if (item.pstatus === 1) {
+							productList_on.innerHTML += `<div
+												class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between">
+												<div class="d-md-flex align-items-center event-top-info">
+													<div class="card-event-img">
+														<img src="ProductImg?pimgno=${image}" alt="">
+													</div>
+													<div class="card-event-dt">
+														<h5>${item.pname}</h5>
+														<h6>主辦單位：</h6>
+														<h6>${item.hostno}</h6>
+													</div>
+												</div>
+												<div class="dropdown">
+													<button class="option-btn" type="button" data-bs-toggle="dropdown"
+														aria-haspopup="true" aria-expanded="false"><i
+															class="fa-solid fa-ellipsis-vertical"></i></button>
+													<div class="dropdown-menu dropdown-menu-right">
+														<a href="back-product-update_product.html?productno=${item.productno} target="_blank"" class="dropdown-item"><i
+																class="fa-solid fa-gear me-3"></i>編輯商品</a>
+														<a href="front-product-product_detail.html?productno=${item.productno} target="_blank"" class="dropdown-item"><i
+																class="fa-solid fa-eye me-3"></i>前台預覽</a>
+														<a href="back_product_create_product.html?productno=${item.productno} target="_blank"" class="dropdown-item"><i
+																class="fa-solid fa-clone me-3"></i>複製商品</a>
+													</div>
+												</div>
+											</div>
+											<div
+												class="bottom d-flex flex-wrap justify-content-between align-items-center p-4">
+												<div class="icon-box ">
+													<span class="icon">
+														<i class="fa-solid fa-location-dot"></i>
+													</span>
+													<p>商品狀態</p>
+													<h6 class="coupon-status">${item.pstatus === 1 ? '上架中' : '已下架'}</h6>
+												</div>
+												<div class="icon-box">
+													<span class="icon">
+														<i class="fa-solid fa-calendar-days"></i>
+													</span>
+													<p>下架時間</p>
+													<h6 class="coupon-status">${item.psdate}</h6>
+													<h6 class="coupon-status">${item.pedate}</h6>
+												</div>
+												<div class="icon-box">
+													<span class="icon">
+														<i class="fa-solid fa-ticket"></i>
+													</span>
+													<p>可售數量</p>
+													<h6 class="coupon-status">${item.pqty}</h6>
+												</div>
+												<div class="icon-box">
+													<span class="icon">
+														<i class="fa-solid fa-tag"></i>
+													</span>
+													<p>已售數量</p>
+													<h6 class="coupon-status">20</h6>
+												</div>
+											</div>`;
+						}
+
+					}
+				})
+		})
 	</script>
 
 	<script src="js/vertical-responsive-menu.min.js"></script>
-	<script src="js/jquery-3.6.0.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="vendor/OwlCarousel/owl.carousel.js"></script>
 	<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
