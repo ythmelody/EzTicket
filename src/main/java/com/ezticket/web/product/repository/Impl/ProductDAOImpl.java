@@ -1,7 +1,5 @@
 package com.ezticket.web.product.repository.Impl;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
-import com.ezticket.core.util.Util;
 import com.ezticket.web.product.pojo.Product;
 import com.ezticket.web.product.repository.ProductDAO;
 import jakarta.persistence.PersistenceContext;
@@ -10,11 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

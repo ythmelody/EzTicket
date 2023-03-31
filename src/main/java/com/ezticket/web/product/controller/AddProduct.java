@@ -41,7 +41,7 @@ public class AddProduct extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
-		//上傳資料
+		//上傳一筆新的資料
 		String pname = request.getParameter("pname");
 		String ptag = request.getParameter("ptag");
 		Integer pclassno = Integer.valueOf(request.getParameter("pclassno"));
