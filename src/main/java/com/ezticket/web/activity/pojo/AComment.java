@@ -18,9 +18,9 @@ public class AComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ACOMMENTNO")
     private Integer aCommentNo;
-    @Column(name = "ACTIVITYNO", insertable = false, updatable = false)
+    @Column(name = "ACTIVITYNO")
     private Integer activityNo;
-    @Column(name = "MEMBERNO", insertable = false, updatable = false)
+    @Column(name = "MEMBERNO")
     private Integer memberNo;
     @Column(name = "ACOMMENTIMG")
     private byte[] aCommentImg;
@@ -36,10 +36,10 @@ public class AComment {
     private Integer aLike;
 
     @ManyToOne
-    @JoinColumn(name = "MEMBERNO")
+    @JoinColumn(name = "MEMBERNO", insertable = false, updatable = false)
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "ACTIVITYNO")
+    @JoinColumn(name = "ACTIVITYNO", insertable = false, updatable = false)
     private Activity activity;
 }

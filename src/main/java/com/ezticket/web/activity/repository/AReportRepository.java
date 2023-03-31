@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface AReportRepository extends JpaRepository<AReport, Integer> {
@@ -23,10 +24,6 @@ public interface AReportRepository extends JpaRepository<AReport, Integer> {
 
     @Query("SELECT DISTINCT act.activityNo, act.aName FROM AReport ar JOIN ar.aComment ac JOIN ac.activity act")
     public List getAReportANames();
-
-//    @Query("SELECT ar FROM AReport ar JOIN ar.aComment ac JOIN ac.activity act WHERE act.activityNo = :activityNo AND ar.aReportStatus = :aReportStatus")
-    @Query(value = "SELECT ar.* FROM areport ar JOIN acomment ac ON ar.acommentno = ac.acommentno JOIN activity act ON ac.activityno = act.activityno WHERE act.activityno = :activityNo AND ar.areportstatus = :aReportStatus", nativeQuery = true)
-    public List<AReport> getAReportBySelection(@Param("activityNo") String activityNo, @Param("aReportStatus") String aReportStatus);
 
 }
 

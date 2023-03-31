@@ -2,6 +2,7 @@ package com.ezticket.web.activity.service;
 
 import com.ezticket.web.activity.dto.AReportDto;
 import com.ezticket.web.activity.pojo.AReport;
+import com.ezticket.web.activity.repository.AReportDao;
 import com.ezticket.web.activity.repository.AReportRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -10,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -19,6 +22,8 @@ import java.util.stream.Collectors;
 public class AReportService {
     @Autowired
     private AReportRepository aReportRepository;
+    @Autowired
+    private AReportDao aReportDao;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -37,11 +42,6 @@ public class AReportService {
         return aReportRepository.findById(reportId);
     }
 
-    public Optional<AReport> getAReportById(Integer reportId){
-        return aReportRepository.findById(reportId);
-    }
-
-
     public int updateAReport(int reportId, int reportStatus){
         return aReportRepository.update(reportId, reportStatus);
     }
@@ -59,8 +59,15 @@ public class AReportService {
         return  aReportRepository.getAReportANames();
     }
 
-    public List<AReport> getAReportBySelection(String activityNo,String aReportStatus){
-        return  aReportRepository.getAReportBySelection(activityNo, aReportStatus);
+    public List<AReport> getAReportsBySelection(Map map){
+        return  aReportDao.getByCompositeQuery(map);
+    }
+
+    public boolean inserAReport(AReport aReport){
+        aReport.setAReportDate(new Date(System.currentTimeMillis()));
+        aReport.setAReportStatus(0);
+        aReportRepository.save(aReport);
+        return true;
     }
 
     private AReportDto EntityToDTO(AReport aReport) {
@@ -70,5 +77,6 @@ public class AReportService {
         aReportDto = modelMapper.map(aReport, AReportDto.class);
         return aReportDto;
     }
+
 
 }
