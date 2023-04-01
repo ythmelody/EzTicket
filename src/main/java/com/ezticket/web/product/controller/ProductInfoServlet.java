@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import com.ezticket.web.product.pojo.Product;
 import com.ezticket.web.product.service.PimgtService;
 import com.ezticket.web.product.service.ProductService;
@@ -75,11 +77,8 @@ public class ProductInfoServlet extends HttpServlet {
 				String ujson = gson.toJson(allProductlist);
 				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
-				response.setHeader("Cache-Control", "no-store"); // HTTP 1.1
-				response.setHeader("Pragma", "no-cache"); // HTTP 1.0
-				response.setDateHeader("Expires", 0);
 				PrintWriter pw = response.getWriter();
-				pw.print(ujson);  
+				pw.print(ujson);
 				pw.flush();
 				return;
 			}
@@ -103,6 +102,20 @@ public class ProductInfoServlet extends HttpServlet {
 		PrintWriter pw = response.getWriter();
 		pw.print(ujson);
 		pw.flush();
+
+		//商品複合查詢
+		String action =request.getParameter("action");
+		if("ProductSearchForm".equals(action)){
+			Map<String,String[]> map=request.getParameterMap(); //將得到的資料轉成map
+			System.out.println("我有跑進來ProductSearchForm"+map);
+			List<Product> productList =productSvc.getAllByproductSearch(map); //轉交進行複合查詢
+			String productListJson = gson.toJson(productList);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			pw.print(productListJson);
+			pw.flush();
+		}
 	}
+
 
 }
