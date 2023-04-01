@@ -202,7 +202,7 @@ public class ProductDAOImpl implements ProductDAO {
 
     public static Predicate getPredicateForDB(CriteriaBuilder builder, Root<Product> root, String columnName, String value) {
         Predicate predicate = null;
-        if ("productno".equals(columnName) || "pclassno".equals(columnName) || "hostno".equals(columnName) || "hostno".equals(columnName) || "pstatus".equals(columnName))
+        if ("productno".equals(columnName) || "pclassno".equals(columnName) || "hostno".equals(columnName)  || "pstatus".equals(columnName))
             predicate = builder.equal(root.get(columnName), Integer.valueOf(value));
         else if ("pname".equals(columnName) || "ptag".equals(columnName)) {
             predicate = builder.like(root.get(columnName), "%" + value + "%");

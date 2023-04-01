@@ -89,33 +89,30 @@ public class ProductInfoServlet extends HttpServlet {
 		}
 
 		// 商品列表呈現(過濾掉未上架商品)
-//		List<Product> launchProduct = new ArrayList<>();
-//		for (Product product : allProductlist) {
-//			if (product.getPstatus() == 1) {
-//				launchProduct.add(product);
-//			}
-//		}
-//		Gson gson = new Gson();
-//		String ujson = gson.toJson(launchProduct);
-//		response.setContentType("application/json");
-//		response.setCharacterEncoding("UTF-8");
-//		PrintWriter pw = response.getWriter();
-//		pw.print(ujson);
-//		pw.flush();
+		List<Product> launchProduct = new ArrayList<>();
+		for (Product product : allProductlist) {
+			if (product.getPstatus() == 1) {
+				launchProduct.add(product);
+			}
+		}
+		Gson gson = new Gson();
+		String ujson = gson.toJson(launchProduct);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter pw = response.getWriter();
+		pw.print(ujson);
+		pw.flush();
 
-		//商品查詢
+		//商品複合查詢
 		String action =request.getParameter("action");
-		System.out.println(action);
 		if("ProductSearchForm".equals(action)){
 			Map<String,String[]> map=request.getParameterMap(); //將得到的資料轉成map
-			System.out.println(map);
+			System.out.println("我有跑進來ProductSearchForm"+map);
 			List<Product> productList =productSvc.getAllByproductSearch(map); //轉交進行複合查詢
-			Gson gson = new Gson();
-			String ujson = gson.toJson(productList);
+			String productListJson = gson.toJson(productList);
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
-			PrintWriter pw = response.getWriter();
-			pw.print(ujson);
+			pw.print(productListJson);
 			pw.flush();
 		}
 	}
