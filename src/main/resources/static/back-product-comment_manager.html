@@ -260,43 +260,38 @@
 						<div class="main-card mt-5">
 							<div class="dashboard-wrap-content p-4">
 								<div class="nav custom2-tabs btn-group" role="tablist">
-									<button class="tab-link ms-0 active" data-bs-toggle="tab"
+									<button id="allCommentTab" class="tab-link ms-0 active" data-bs-toggle="tab"
 										data-bs-target="#orders-tab" type="button" role="tab" aria-controls="orders-tab"
-										aria-selected="true">所有評論 (<span class="total_event_counter">1</span>)</button>
-									<!-- <button class="tab-link" data-bs-toggle="tab" data-bs-target="#customers-tab"
-										type="button" role="tab" aria-controls="customers-tab"
-										aria-selected="false">Customers (<span
-											class="total_event_counter">0</span>)</button> -->
-									<button class="tab-link" data-bs-toggle="tab" data-bs-target="#tickets-tab"
-										type="button" role="tab" aria-controls="tickets-tab" aria-selected="false">受檢舉評論
-										(<span class="total_event_counter">1</span>)</button>
-									<!-- <button class="tab-link" data-bs-toggle="tab" data-bs-target="#payouts-tab"
-										type="button" role="tab" aria-controls="payouts-tab"
-										aria-selected="false">Payouts (<span
-											class="total_event_counter">1</span>)</button> -->
+										aria-selected="true" onclick="commentbtn()"><span
+											class="total_event_counter">商品評論</span>
+									</button>
+									<button id="allReportTab" class="tab-link" data-bs-toggle="tab"
+										data-bs-target="#tickets-tab" type="button" role="tab"
+										aria-controls="tickets-tab" aria-selected="false" onclick="reportbtn()">受檢舉評論
+									</button>
 								</div>
 								<div class="d-md-flex flex-wrap align-items-center">
 									<div class="dashboard-date-wrap mt-4">
 										<div class="form-group">
 											<div class="relative-input position-relative">
-												<input class="form-control h_40" type="text" placeholder="搜尋商品"
-													value="">
+												<input id="showName" class="form-control h_40" type="text"
+													placeholder="搜尋商品" value="" onblur="search()">
 												<i class="uil uil-search"></i>
 											</div>
 										</div>
 									</div>
 									<div class="rs ms-auto mt-4 mt_r4" id="reload">
-										<a href="#"
-											class="pe-4 w-100 ps-4 text-center co-main-btn h_40 d-inline-block"><i
-												class="fa-solid fa-arrow-rotate-right me-3"></i>重新整理</a>
+										<a href="#" class="pe-4 w-100 ps-4 text-center co-main-btn h_40 d-inline-block"
+											onclick="refresh()">
+											<i class="fa-solid fa-arrow-rotate-right me-3"></i>重新整理</a>
 									</div>
 								</div>
 								<div class="main-form mt-4">
 									<div class="row g-3">
 										<div class="col-lg-3 col-md-6">
 											<div class="form-group">
-												<select class="selectpicker" data-size="5" data-live-search="true">
-													<option value="all events" selected>所有商品</option>
+												<select id="showSelector" class="form-select" data-size="5"
+													data-live-search="true" name="productno">
 												</select>
 											</div>
 										</div>
@@ -323,74 +318,17 @@
 												<table class="table">
 													<thead class="thead-dark">
 														<tr>
-															<th scope="col">評論日期</th>
-															<th scope="col">會員姓名</th>
-															<th scope="col">商品名稱</th>
-															<th scope="col">評論內容</th>
-															<th scope="col">評論星等</th>
-															<th scope="col">評論讚數</th>
-															<th scope="col">評論狀態</th>
+															<th scope="col" style="width: 15%">評論日期</th>
+															<th scope="col" style="width: 15%">會員姓名</th>
+															<th scope="col" style="width: 15%">商品名稱</th>
+															<th scope="col" style="width: 20%">評論內容</th>
+															<th scope="col" style="width: 10%">評論星等</th>
+															<th scope="col" style="width: 10%">評論讚數</th>
+															<th scope="col" style="width: 15%">評論狀態</th>
 														</tr>
 													</thead>
 													<tbody id="productComment">
-														<tr>
-															<td>2020/09/20</td>
-															<td>林大賢</td>
-															<td>
-																<!-- <a href="#" target="_blank"> -->
-																<div style="width: 150px; height: 50px;">
-																	<p class="ellipsis" style="font-weight: 500;
-																		color: #000 !important; line-height: 50px;">
-																		田馥甄一一巡迴演唱會</p>
-																</div>
-																<!-- </a> -->
-															</td>
-															<td>
-																<button
-																	style="border: none; background-color: transparent;"
-																	data-bs-toggle="modal"
-																	data-bs-target="#inviteTeamModal">
-																	<div style="width: 200px; height: 50px;">
-																		<p class="ellipsis" style="font-weight: 500;
-																		color: #000 !important; line-height: 50px;">
-																			演唱會氣氛熱烈，歌手和觀眾互動很棒，非常難忘</p>
-																	</div>
-																</button>
-															</td>
-															<td>5</td>
-															<td>92</td>
-															<td><span class="status-circle blue-circle"></span>置頂
-															</td>
-														</tr>
-														<tr>
-															<td>2022/05/31</td>
-															<td>張小美</td>
-															<td>
-																<!-- <a href="#" target="_blank"> -->
-																<div style="width: 150px; height: 50px;">
-																	<p class="ellipsis" style="font-weight: 500;
-																		color: #000 !important; line-height: 50px;">
-																		保時捷姊新歌演唱會</p>
-																</div>
-																<!-- </a> -->
-															</td>
-															<td>
-																<button
-																	style="border: none; background-color: transparent;"
-																	data-bs-toggle="modal"
-																	data-bs-target="#inviteTeamModal">
-																	<div style="width: 200px; height: 50px;">
-																		<p class="ellipsis" style="font-weight: 500;
-																		color: #000 !important; line-height: 50px;">
-																			演唱會音效糟糕，歌手唱歌走音，讓人十分失望</p>
-																	</div>
-																</button>
-															</td>
-															<td>1</td>
-															<td>2</td>
-															<td><span class="status-circle red-circle"></span>不顯示
-															</td>
-														</tr>
+														<!-- productComment顯示的位置 -->
 													</tbody>
 												</table>
 											</div>
@@ -405,16 +343,17 @@
 												<table class="table">
 													<thead class="thead-dark">
 														<tr>
-															<th scope="col">受評論日期</th>
-															<th scope="col">檢舉者</th>
-															<th scope="col">被檢舉者</th>
-															<th scope="col">商品名稱</th>
-															<th scope="col">檢舉原因</th>
-															<th scope="col">評論內容</th>
-															<th scope="col">處理狀態</th>
+															<th scope="col" style="width: 15%">受評論日期</th>
+															<th scope="col" style="width: 12.5%">檢舉者</th>
+															<th scope="col" style="width: 12.5%">被檢舉者</th>
+															<th scope="col" style="width: 10%">商品名稱</th>
+															<th scope="col" style="width: 15%">檢舉原因</th>
+															<th scope="col" style="width: 15%">評論內容</th>
+															<th scope="col" style="width: 20%">處理狀態</th>
 														</tr>
 													</thead>
-													<tbody>
+													<tbody id="reportbody">
+														<!-- 檢舉評論頁面在這裡 -->
 														<tr>
 															<td>2022/05/31</td>
 															<td>黃小藍</td>
@@ -472,28 +411,29 @@
 	</div>
 	<!-- Body End -->
 
+	<!-- aria-labelledby="inviteTeamModalLabel" -->
 	<!-- 顯示評論內容開始-->
-	<div class="modal fade" id="inviteTeamModal" tabindex="-1" aria-labelledby="inviteTeamModalLabel"
-		aria-hidden="true">
+	<div class="modal fade" id="inviteTeamModal_good" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="inviteTeamModalLabel">評論內容</h5>
+					<h5 class="modal-title">評論內容</h5>
 					<button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"><i
 							class="uil uil-multiply"></i></button>
 				</div>
 				<div class="modal-body">
 					<div class="model-content main-form">
+						<input id="pcommentno" type="text" value="" style="display: none">
 						<div class="form-group mt-30">
 							<label class="form-label">評論內容：</label>
-							<textarea class="form-textarea" disabled>演唱會氣氛熱烈，歌手和觀眾互動很棒，非常難忘</textarea>
+							<textarea id="ccontent" class="form-textarea" disabled></textarea>
 						</div>
 						<div class="form-group mt-30">
 							<label class="form-label">評論狀態：</label>
-							<select class="selectpicker" title="Select Role">
-								<option value="-1">不顯示</option>
-								<option value="0" selected>顯示</option>
-								<option value="1">置頂</option>
+							<select id="cstatus" class="form-select text-bg-light p-3">
+								<option value="0">取消顯示</option>
+								<option value="1" selected>正常顯示</option>
+								<option value="2">置頂</option>
 							</select>
 						</div>
 
@@ -501,49 +441,50 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="co-main-btn min-width btn-hover h_40"
-						data-bs-dismiss="modal">Cancel</button>
-					<button type="button" class="main-btn min-width btn-hover h_40">Invite</button>
+						data-bs-dismiss="modal">取消修改</button>
+					<button type="button" class="main-btn min-width btn-hover h_40">確認修改</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- 顯示評論內容結束-->
 
+	<!-- aria-labelledby="inviteTeamModalLabel" -->
 	<!-- 顯示受檢舉評論內容開始-->
-	<div class="modal fade" id="inviteTeamModal_bad" tabindex="-1" aria-labelledby="inviteTeamModalLabel"
-		aria-hidden="true">
+	<div class="modal fade" id="inviteTeamModal_bad" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="inviteTeamModalLabel">檢舉原因/評論內容</h5>
+					<h5 class="modal-title">檢舉原因/評論內容</h5>
 					<button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"><i
 							class="uil uil-multiply"></i></button>
 				</div>
 				<div class="modal-body">
 					<div class="model-content main-form">
+						<input id="productno" type="text" value="" style="display: none">
 						<div class="form-group mt-30">
 							<label class="form-label">檢舉原因：</label>
-							<textarea class="form-textarea" disabled>評論含有不當言詞或攻擊性的言論</textarea>
+							<textarea id="rreason" class="form-textarea" disabled></textarea>
 						</div>
 						<div class="form-group mt-30">
 							<label class="form-label">評論內容：</label>
-							<textarea class="form-textarea" disabled>演唱會音效糟糕，歌手唱歌走音，讓人十分失望</textarea>
+							<textarea id="rcomment" class="form-textarea" disabled></textarea>
 						</div>
 						<div class="form-group mt-30">
 							<label class="form-label">評論狀態：</label>
-							<select class="selectpicker" title="Select Role">
-								<option value="-1">已處理 (不顯示)</option>
+							<select id="rstatus" class="form-select text-bg-light p-3">
 								<option value="0" selected>未處理</option>
 								<option value="1">已處理 (顯示)</option>
+								<option value="2">已處理 (不顯示)</option>
 							</select>
 						</div>
-
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="co-main-btn min-width btn-hover h_40"
-						data-bs-dismiss="modal">Cancel</button>
-					<button type="button" class="main-btn min-width btn-hover h_40">Invite</button>
+						data-bs-dismiss="modal">取消修改</button>
+					<button type="button" class="main-btn min-width btn-hover h_40" data-bs-dismiss="modal"
+						onclick="confirm_bad()">確認修改</button>
 				</div>
 			</div>
 		</div>
@@ -561,14 +502,19 @@
 
 
 	<script>
+
+		// 當網頁載入時先呈現所有商品評論
 		$(document).ready(() => {
 			fetchPcommentList('ProductCommentServlet');
 		});
 
+
+		//點選重新載入顯示新的頁面
 		$('#reload').click(() => {
 			fetchPcommentList(`ProductCommentServlet`);
 		});
 
+		//載入所有評論
 		function fetchPcommentList(url) {
 			fetch(url, {
 				method: 'POST',
@@ -576,25 +522,37 @@
 					'action': "productCommentList"
 				})
 			}).then(resp => resp.json())
-				.then(list =>{
-					for(let item of list){
-						$('#productComment').append(`<tr>
+				.then(list => {
+					for (let item of list) {
+						switch (item.pcommentstatus) {
+							case 1:
+								pcommentstatus = '<span class="status-circle blue-circle"></span>置頂';
+								break;
+							case 0:
+								pcommentstatus = '<span class="status-circle blue-circle"></span>顯示';
+								break;
+							case -1:
+								pcommentstatus = '<span class="status-circle red-circle"></span>不顯示';
+								break;
+						}
+
+						$('#productComment').append(`<tr>   
 															<td>${item.pcommentdate}</td>
-															<td>${item.memberno}</td>
+															<td>${item.member.mname}</td>
 															<td>
-																<!-- <a href="front-product-product_detail.html?productno=${item.productno}" target="_blank"> -->
+																<a href="#" target="_blank">
 																<div style="width: 150px; height: 50px;">
 																	<p class="ellipsis" style="font-weight: 500;
 																		color: #000 !important; line-height: 50px;">
-																		${item.productno}</p>
+																		${item.product.pname}</p>
 																</div>
-																<!-- </a> -->
+																</a>
 															</td>
 															<td>
-																<button
+																<button name="${item.pcommentno}"
 																	style="border: none; background-color: transparent;"
 																	data-bs-toggle="modal"
-																	data-bs-target="#inviteTeamModal">
+																	data-bs-target="#inviteTeamModal_good" onclick="showcomment(this.name)">
 																	<div style="width: 200px; height: 50px;">
 																		<p class="ellipsis" style="font-weight: 500;
 																		color: #000 !important; line-height: 50px;">
@@ -604,14 +562,42 @@
 															</td>
 															<td>${item.prate}</td>
 															<td>${item.plike}</td>
-															<td><span class="status-circle blue-circle"></span>${item.pcommentstatus}
-															</td>
+															<td>${pcommentstatus}</td>
 														</tr>`);
-					$('#inviteTeamModal').append
-
 					}
 				})
 
+		}
+
+
+		// 點擊單一評論並顯示
+		function showcomment(commentno) {
+			fetch('ProductCommentServlet', {
+				method: 'POST',
+				body: new URLSearchParams({
+					'pcommentno': commentno,
+					'action': "getOneproductComment"
+				})
+			}).then(resp => resp.json())
+				.then(item => {
+					console.log(item);
+					//把前面有的值先清空避免吃到舊值
+					$('#pcommentno').val("");
+					$('#ccontent').text("");
+
+					$('#pcommentno').val(item.pcommentno);
+					$('#ccontent').text(item.pcommentcont);
+
+					if (item.pcommentstatus === 0) {
+						$("#cstatus>option[value='0']").prop("selected", true);
+					} else if (Number(jsondata.acommentStatus) === 1) {
+						$("#cstatus>option[value='1']").prop("selected", true);
+					} else {
+						$("#cstatus>option[value='2']").prop("selected", true);
+
+					}
+				})
+			return commentno;
 		}
 
 	</script>

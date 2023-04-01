@@ -57,7 +57,7 @@ public class AddProduct extends HttpServlet {
 		
 		
 		//多張圖片上傳
-		PimgtService pimgtService =new PimgtService();
+//		PimgtService pimgtService =new PimgtService();
 		Integer productno = product.getProductno();
 		Collection<Part> parts = request.getParts();
 //		System.out.println(parts);

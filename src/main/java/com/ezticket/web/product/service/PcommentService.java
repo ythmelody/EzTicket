@@ -22,16 +22,16 @@ public class PcommentService {
 		int pcommentstatus = 0;
 		int plike = 0;
 		
-		Pcomment pcommentVO = new Pcomment();
-		pcommentVO.setProductno(productno);
-		pcommentVO.setPcommentcont(pcommentcont);
-		pcommentVO.setPrate(prate);
-		pcommentVO.setPcommentdate(pcommentdate);
-		pcommentVO.setMemberno(memberno);
-		pcommentVO.setPcommentstatus(pcommentstatus);
-		pcommentVO.setPlike(plike);
-		dao.insert(pcommentVO);
-		return pcommentVO;
+		Pcomment pcomment = new Pcomment();
+		pcomment.setProductno(productno);
+		pcomment.setPcommentcont(pcommentcont);
+		pcomment.setPrate(prate);
+		pcomment.setPcommentdate(pcommentdate);
+		pcomment.setMemberno(memberno);
+		pcomment.setPcommentstatus(pcommentstatus);
+		pcomment.setPlike(plike);
+		dao.insert(pcomment);
+		return pcomment;
 	}
 
 	@Transactional

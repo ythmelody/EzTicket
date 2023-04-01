@@ -4,6 +4,7 @@ package com.ezticket.web.product.controller;
 import com.ezticket.web.product.pojo.Pcomment;
 import com.ezticket.web.product.service.PcommentService;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -41,16 +42,42 @@ public class ProductCommentServlet extends HttpServlet {
             list2json(pcommentList, response);
 
         }
+
+        //前台還沒改成這個寫法
         if ("oneProductCommentList".equals(action)) {
             Integer productno = Integer.valueOf(request.getParameter("productno"));
             List<Pcomment> pcommentList = pcommentSvc.getAllProductCommentOfOneProduct(productno);
             list2json(pcommentList, response);
         }
+
+        //新增商品評論
+        if ("addProductComment".equals(action)) {
+            Integer productno = Integer.valueOf(request.getParameter("productno"));
+            Integer memberno = Integer.valueOf(request.getParameter("memberno"));
+            Integer prate = Integer.valueOf(request.getParameter("prate"));
+            String pcommentcont = request.getParameter("pcommentcont");
+            pcommentSvc.addProductComment(productno,pcommentcont,prate,memberno);
+        }
+
+        //取得單一筆評論
+        if("getOneproductComment".equals(action)){
+            Integer pcommentno = Integer.valueOf(request.getParameter("pcommentno"));
+            Pcomment pcomment = pcommentSvc.getOneProductComment(pcommentno);
+            Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
+            String json = gson.toJson(pcomment);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter pw = response.getWriter();
+            pw.print(json);
+            pw.flush();
+        }
+
+
     }
 
     public void list2json(List<Pcomment> pcommentList, HttpServletResponse response) throws IOException {
         //轉換成json格式寫出
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
         String json = gson.toJson(pcommentList);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

@@ -696,7 +696,7 @@
 			.then(resp => resp.json())
 			.then(item => {
 				pname.textContent = item.pname;
-				pclass.textContent = item.pclass;
+				pclass.textContent = item.pclass.pclassname;
 				psdate.textContent = item.psdate;
 				hostno.textContent = item.hostno;
 				pimg.innerHTML = `<img src="ProductImg?pimgno=${item.pimgts[0].pimgno}" alt="">`;

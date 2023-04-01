@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.ezticket.web.product.pojo.Pclass;
 import com.ezticket.web.product.pojo.Product;
 import com.ezticket.web.product.service.PimgtService;
 import com.ezticket.web.product.service.ProductService;
@@ -45,14 +46,21 @@ public class ProductInfoServlet extends HttpServlet {
 			// 取得商品編號 => 取得單一商品資訊
 			Integer productno = Integer.valueOf(request.getParameter("productno"));
 			Product product = productSvc.getOneProduct(productno);
+//			Pclass pclass = product.getPclass();
+//			System.out.println("getPname"+product.getPname());
+//			System.out.println("getPclassno"+pclass.getPclassno());
+//			System.out.println("getPclassname"+pclass.getPclassname());
+//			System.out.println("getPclass"+product.getPsdate());
+//			System.out.println(product.getHostno());
+//			System.out.println(product.getPimgts());
+//			System.out.println(product.getPdiscrip());
+//			System.out.println(product.getPprice());
+//			System.out.println(product.getPspecialprice());
 //			System.out.println(product.getPsdate());
 			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 			String ujson = gson.toJson(product);
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
-			response.setHeader("Cache-Control", "no-store"); // HTTP 1.1
-			response.setHeader("Pragma", "no-cache"); // HTTP 1.0
-			response.setDateHeader("Expires", 0);
 			PrintWriter pw = response.getWriter();
 			pw.print(ujson);
 			pw.flush();
