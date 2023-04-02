@@ -1,5 +1,6 @@
 package com.ezticket.web.product.service;
 
+import com.ezticket.web.product.pojo.Pcomment;
 import com.ezticket.web.product.pojo.Preport;
 import com.ezticket.web.product.repository.PreportDAO;
 import com.ezticket.web.product.repository.Impl.PreportDAOImpl;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PreportService {
@@ -55,6 +57,9 @@ public class PreportService {
         return dao.getAll();
     }
 
+    public List<Preport> getAllBySearch(Map<String, String[]> map) {
+        return dao.getAll(map);
+    }
 
 
 

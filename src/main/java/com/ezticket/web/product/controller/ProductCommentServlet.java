@@ -95,8 +95,6 @@ public class ProductCommentServlet extends HttpServlet {
             List<Pcomment> commentList = pcommentSvc.getAllBySearch(map); //轉交進行複合查詢
             list2json(commentList, response);
         }
-
-
     }
 
     public void list2json(List<Pcomment> pcommentList, HttpServletResponse response) throws IOException {

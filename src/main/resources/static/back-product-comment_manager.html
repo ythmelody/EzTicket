@@ -262,7 +262,7 @@
 								<div class="nav custom2-tabs btn-group" role="tablist">
 									<button id="allCommentTab" class="tab-link ms-0 active" data-bs-toggle="tab"
 										data-bs-target="#orders-tab" type="button" role="tab" aria-controls="orders-tab"
-										aria-selected="true" onclick="commentbtn()"><span
+										aria-selected="true" onclick="fetchPcommentRoportList()"><span
 											class="total_event_counter">商品評論</span>
 									</button>
 									<button id="allReportTab" class="tab-link" data-bs-toggle="tab"
@@ -533,35 +533,71 @@
 				})
 
 			$('#showName').keypress(function () {
-				fetch('ProductCommentServlet', {
-					method: "POST",
-					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-					body: new URLSearchParams({
-						'pname': $("[name='pname']").val(),
-						'pcommentstatus': $("[name='pcommentstatus']").val(),
-						'action': "CommentSearch"
-					}),
-				})
-					.then((resp) => resp.json())
-					.then((list) => {
-						displayPcomments(list);
+				if ($('div .tab-pane.fade.active.show').attr('id') === 'tickets-tab') {
+					fetch('ProductCommentReportServlet', {
+						method: "POST",
+						headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+						body: new URLSearchParams({
+							'pname': $("[name='pname']").val(),
+							'preportstatus': $("[name='pcommentstatus']").val(),
+							'action': "CommentReportSearch"
+						}),
 					})
+						.then((resp) => resp.json())
+						.then((list) => {
+							displayPcommentReport(list);
+						})
+				}
+				if ($('div .tab-pane.fade.active.show').attr('id') === 'orders-tab') {
+					fetch('ProductCommentServlet', {
+						method: "POST",
+						headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+						body: new URLSearchParams({
+							'pname': $("[name='pname']").val(),
+							'pcommentstatus': $("[name='pcommentstatus']").val(),
+							'action': "CommentSearch"
+						}),
+					})
+						.then((resp) => resp.json())
+						.then((list) => {
+							displayPcomments(list);
+						})
+
+				}
+
 			});
 
 			$('#statusSelector').change(function () {
-				fetch('ProductCommentServlet', {
-					method: "POST",
-					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-					body: new URLSearchParams({
-						'pname': $("[name='pname']").val(),
-						'pcommentstatus': $("[name='pcommentstatus']").val(),
-						'action': "CommentSearch"
-					}),
-				})
-					.then((resp) => resp.json())
-					.then((list) => {
-						displayPcomments(list);
+				if ($('div .tab-pane.fade.active.show').attr('id') === 'tickets-tab') {
+					fetch('ProductCommentReportServlet', {
+						method: "POST",
+						headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+						body: new URLSearchParams({
+							'pname': $("[name='pname']").val(),
+							'preportstatus': $("[name='pcommentstatus']").val(),
+							'action': "CommentReportSearch"
+						}),
 					})
+						.then((resp) => resp.json())
+						.then((list) => {
+							displayPcommentReport(list);
+						})
+				} if ($('div .tab-pane.fade.active.show').attr('id') === 'orders-tab') {
+					fetch('ProductCommentServlet', {
+						method: "POST",
+						headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+						body: new URLSearchParams({
+							'pname': $("[name='pname']").val(),
+							'pcommentstatus': $("[name='pcommentstatus']").val(),
+							'action': "CommentSearch"
+						}),
+					})
+						.then((resp) => resp.json())
+						.then((list) => {
+							displayPcomments(list);
+						})
+				}
+
 			});
 
 		}
@@ -674,7 +710,7 @@
 
 			// 選單(狀態)呈現
 			$('#statusSelector').html(`
-				<option value="all" selected>所有狀態</option>
+				<option value="" selected>所有狀態</option>
 				<option value="0">未處理</option>
 				<option value="1">已處理(顯示)</option>
 				<option value="2">未處理(不顯示)</option>
@@ -697,6 +733,48 @@
 			// 	})
 
 
+
+			// $('#showName').keypress(function () {
+			// 	if ($('div .tab-pane.fade.active.show').attr('id') === 'tickets-tab') {
+			// 		fetch('ProductCommentReportServlet', {
+			// 			method: "POST",
+			// 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			// 			body: new URLSearchParams({
+			// 				'pname': $("[name='pname']").val(),
+			// 				'preportstatus': $("[name='pcommentstatus']").val(),
+			// 				'action': "CommentReportSearch"
+			// 			}),
+			// 		})
+			// 			.then((resp) => resp.json())
+			// 			.then((list) => {
+			// 				displayPcommentReport(list);
+			// 			})
+			// 	}
+			// 	if ($('div .tab-pane.fade.active.show').attr('id') === 'orders-tab') {
+
+			// 	}
+
+
+
+			// });
+
+			// $('#statusSelector').change(function () {
+			// 	fetch('ProductCommentReportServlet', {
+			// 		method: "POST",
+			// 		headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			// 		body: new URLSearchParams({
+			// 			'pname': $("[name='pname']").val(),
+			// 			'preportstatus': $("[name='pcommentstatus']").val(),
+			// 			'action': "CommentReportSearch"
+			// 		}),
+			// 	})
+			// 		.then((resp) => resp.json())
+			// 		.then((list) => {
+			// 			displayPcommentReport(list);
+			// 		})
+			// });
+
+
 			fetch('ProductCommentReportServlet', {
 				method: 'POST',
 				body: new URLSearchParams({
@@ -708,6 +786,8 @@
 				})
 
 		}
+
+
 
 
 		function displayPcommentReport(list) {
