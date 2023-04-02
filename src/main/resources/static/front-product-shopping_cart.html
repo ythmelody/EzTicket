@@ -29,7 +29,20 @@
 	<link href="vendor/OwlCarousel/assets/owl.theme.default.min.css" rel="stylesheet">
 	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+	<style>
+		.number-cell {
+			display: flex;
+			flex-direction: column;
+		}
 
+		.number-top {
+			font-size: 0.8rem;
+		}
+
+		.number-bottom {
+			font-size: 1.2rem;
+		}
+	</style>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -245,7 +258,47 @@
 							<h3>訂單資訊</h3>
 						</div>
 					</div>
-					<div class="col-xl-8 col-lg-12 col-md-12">
+					<!-- 購物車明細 START -->
+					<div class="main-table bt_40">
+						<div class="table-responsive">
+							<table class="table">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">商品名稱</th>
+										<th scope="col">單價</th>
+										<th scope="col">數量</th>
+										<th scope="col">小計</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1</td>
+										<td><a href="online_event_detail_view.html" target="_blank">黑色演唱會T恤</a></td>
+										<td>1</td>
+										<td>$500</td>
+										<td>$500</td>
+									</tr>
+									<tr>
+										<td colspan="4">
+											<label class="form-label">優惠券代碼</label>
+											<div class="position-relative">
+												<input class="form-control h_50" type="text" placeholder="Code" value="">
+												<button class="apply-btn btn-hover" type="button">使用</button>
+											</div>
+										</td>
+										<td colspan="5">
+											<div class="user_dt_trans text-end pe-xl-4">
+												<div class="totalinv2">總金額 : TWD $500</div>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!-- 購物車明細 END -->
+					<div class="col-xl-12 col-lg-12 col-md-12">
 						<div class="checkout-block">
 							<div class="main-card">
 								<div class="bp-title">
@@ -313,18 +366,6 @@
 												<input class="form-control h_50" type="text" placeholder="" value="">
 											</div>
 										</div>
-										<!-- <div class="col-lg-6 col-md-12">
-											<div class="form-group mt-4">
-												<label class="form-label">State*</label>
-												<input class="form-control h_50" type="text" placeholder="" value="">
-											</div>
-										</div>
-										<div class="col-lg-6 col-md-12">
-											<div class="form-group mt-4">
-												<label class="form-label">City/Suburb*</label>
-												<input class="form-control h_50" type="text" placeholder="" value="">
-											</div>
-										</div> -->
 									</div>
 								</div>
 							</div>
@@ -354,49 +395,7 @@
 										</div>
 										<div class="col-lg-12 col-md-12">
 											<button class="main-btn btn-hover h_50 w-100 mt-5" type="button"
-												onclick="window.location.href='booking_confirmed.html'">確認並付款</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-4 col-lg-12 col-md-12">
-						<div class="main-card order-summary">
-							<div class="bp-title">
-								<h4>帳單資訊</h4>
-							</div>
-							<div class="order-summary-content p_30">
-								<div class="event-order-dt">
-									<div class="event-thumbnail-img">
-										<img src="images/event-imgs/img-7.jpg" alt="">
-									</div>
-									<div class="event-order-dt-content">
-										<h5>黑色演唱會T恤</h5>
-										<span>16/02/2023</span>
-									</div>
-								</div>
-								<div class="order-total-block">
-									<div class="order-total-dt">
-										<div class="order-text">數量</div>
-										<div class="order-number">1</div>
-									</div>
-									<div class="order-total-dt">
-										<div class="order-text">小計</div>
-										<div class="order-number">$500</div>
-									</div>
-									<div class="divider-line"></div>
-									<div class="order-total-dt">
-										<div class="order-text">總金額</div>
-										<div class="order-number ttl-clr">TWD $500</div>
-									</div>
-								</div>
-								<div class="coupon-code-block">
-									<div class="form-group mt-4">
-										<label class="form-label">優惠券代碼</label>
-										<div class="position-relative">
-											<input class="form-control h_50" type="text" placeholder="Code" value="">
-											<button class="apply-btn btn-hover" type="button">使用</button>
+												onclick="window.location.href='front-product-order_confirmed.html'">確認並付款</button>
 										</div>
 									</div>
 								</div>
@@ -488,6 +487,7 @@
 	<script src="js/custom.js"></script>
 	<script src="js/night-mode.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+	<script src="js/shopping-cart.js"></script>
 </body>
 
 </html>

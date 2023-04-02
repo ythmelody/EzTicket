@@ -52,7 +52,7 @@ function fetchPorderList(e) {
         }
 
         return `<tr>
-                          <td><a href="invoice.html?id=${obj.porderno}">${obj.porderno}</a></td>
+                          <td><a href="front-product-order_detail.html?id=${obj.porderno}">${obj.porderno}</a></td>
                           <td>${obj.memberno}</td>
                           <td>${obj.ptotal}</td>
                           <td>${moment(obj.porderdate).format('YYYY-MM-DD HH:mm:ss')}</td>
@@ -139,7 +139,7 @@ function viewDelivery(img) {
       deliverybody.innerHTML = '';
       const deliverylist =
         `<label class="form-label">訂單編號</label>
-          <p><a href="invoice.html?id=${data.porderno}">${data.porderno}</a></p>
+          <p><a href="front-product-order_detail.html?id=${data.porderno}">${data.porderno}</a></p>
           <label class="form-label">出貨日期</label>
           <p>${moment(data.pshipdate).format('YYYY-MM-DD HH:mm:ss')}</p>
           <label class="form-label">收貨人姓名：</label>
