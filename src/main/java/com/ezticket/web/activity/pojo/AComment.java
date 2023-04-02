@@ -22,8 +22,6 @@ public class AComment {
     private Integer activityNo;
     @Column(name = "MEMBERNO")
     private Integer memberNo;
-    @Column(name = "ACOMMENTIMG")
-    private byte[] aCommentImg;
     @Column(name = "ACOMMENTCONT")
     private String aCommentCont;
     @Column(name = "ARATE")

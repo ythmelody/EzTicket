@@ -1,6 +1,5 @@
 package com.ezticket.web.activity.dto;
 
-import com.ezticket.web.activity.pojo.AComment;
 import com.ezticket.web.activity.pojo.Activity;
 import com.ezticket.web.users.pojo.Member;
 import lombok.Data;

@@ -54,6 +54,7 @@ public class ACommentController {
 
     @GetMapping("/ActAComments")
     public List<ACommentDto> getACommentByActNo(@RequestParam Integer actNo){ return aCommentService.getACommentByActNo(actNo); }
+
     @PostMapping("/insert")
     public Boolean insertAComment(@RequestBody String jsonData){
         Gson gson = new Gson();

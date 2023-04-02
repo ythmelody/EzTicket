@@ -1,7 +1,6 @@
 package com.ezticket.web.activity.repository;
 
 import com.ezticket.web.activity.pojo.AComment;
-import com.ezticket.web.activity.pojo.AReport;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

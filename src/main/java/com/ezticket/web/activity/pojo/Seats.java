@@ -33,6 +33,11 @@ public class Seats {
     @Column(name = "SEATSTATUS")
     private Integer seatStatus;
 
-//    private Sessin session;
-//    private Blockprice blockPrice;
+//    @ManyToOne
+//    @JoinColumn(name = "sessionNo", insertable = false, updatable = false)
+//    private Session session;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "blockNo", insertable = false, updatable = false)
+//    private BlockPrice blockPrice;
 }
