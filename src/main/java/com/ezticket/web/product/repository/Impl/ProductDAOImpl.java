@@ -25,7 +25,7 @@ public class ProductDAOImpl implements ProductDAO {
     @Transactional
     @Override
     public void insert(Product product) {
-        session.persist(product); //差了取回自增鍵
+        session.persist(product);
         // JDBC版本寫法
 //        final String INSERT_SQL = "insert into Product (pclassno,pname,hostno,pdiscrip,pprice,pspecialprice,pqty,psdate,pedate,ptag,pstatus)"
 //                + " values (?,?,?,?,?,?,?,?,?,?,?);";
@@ -202,10 +202,25 @@ public class ProductDAOImpl implements ProductDAO {
 
     public static Predicate getPredicateForDB(CriteriaBuilder builder, Root<Product> root, String columnName, String value) {
         Predicate predicate = null;
-        if ("productno".equals(columnName) || "pclassno".equals(columnName) || "hostno".equals(columnName)  || "pstatus".equals(columnName))
+        if ("productno".equals(columnName) || "pclassno".equals(columnName) || "hostno".equals(columnName) || "pstatus".equals(columnName))
             predicate = builder.equal(root.get(columnName), Integer.valueOf(value));
         else if ("pname".equals(columnName) || "ptag".equals(columnName)) {
             predicate = builder.like(root.get(columnName), "%" + value + "%");
+        }
+        else if ("start_date".equals(columnName)) {
+            System.out.println("input start_date: " + value);
+            System.out.println("start_date to timestamp: " + java.sql.Timestamp.valueOf(value));
+            predicate = builder.or(
+                    builder.greaterThanOrEqualTo(root.get("psdate"), java.sql.Timestamp.valueOf(value))
+//                    builder.greaterThanOrEqualTo(root.get("pedate"), java.sql.Timestamp.valueOf(value))
+            );
+        } else if ("end_date".equals(columnName)) {
+            System.out.println("input end_date: " + value);
+            System.out.println("end_date to timestamp: " + java.sql.Timestamp.valueOf(value));
+            predicate = builder.or(
+//                    builder.lessThanOrEqualTo(root.get("psdate"), java.sql.Timestamp.valueOf(value)),
+                    builder.lessThanOrEqualTo(root.get("pedate"), java.sql.Timestamp.valueOf(value))
+            );
         }
         return predicate;
     }

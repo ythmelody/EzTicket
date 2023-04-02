@@ -260,54 +260,47 @@
 						<div class="main-card mt-5">
 							<div class="dashboard-wrap-content p-4">
 								<div class="nav custom2-tabs btn-group" role="tablist">
-									<button class="tab-link ms-0 active" data-bs-toggle="tab"
+									<button id="allCommentTab" class="tab-link ms-0 active" data-bs-toggle="tab"
 										data-bs-target="#orders-tab" type="button" role="tab" aria-controls="orders-tab"
-										aria-selected="true">所有評論 (<span class="total_event_counter">1</span>)</button>
-									<!-- <button class="tab-link" data-bs-toggle="tab" data-bs-target="#customers-tab"
-										type="button" role="tab" aria-controls="customers-tab"
-										aria-selected="false">Customers (<span
-											class="total_event_counter">0</span>)</button> -->
-									<button class="tab-link" data-bs-toggle="tab" data-bs-target="#tickets-tab"
-										type="button" role="tab" aria-controls="tickets-tab" aria-selected="false">受檢舉評論
-										(<span class="total_event_counter">1</span>)</button>
-									<!-- <button class="tab-link" data-bs-toggle="tab" data-bs-target="#payouts-tab"
-										type="button" role="tab" aria-controls="payouts-tab"
-										aria-selected="false">Payouts (<span
-											class="total_event_counter">1</span>)</button> -->
+										aria-selected="true" onclick="fetchPcommentRoportList()"><span
+											class="total_event_counter">商品評論</span>
+									</button>
+									<button id="allReportTab" class="tab-link" data-bs-toggle="tab"
+										data-bs-target="#tickets-tab" type="button" role="tab"
+										aria-controls="tickets-tab" aria-selected="false"
+										onclick="fetchPcommentRoportList()">受檢舉評論
+									</button>
 								</div>
 								<div class="d-md-flex flex-wrap align-items-center">
 									<div class="dashboard-date-wrap mt-4">
 										<div class="form-group">
 											<div class="relative-input position-relative">
-												<input class="form-control h_40" type="text" placeholder="搜尋商品"
-													value="">
+												<input id="showName" class="form-control h_40" type="text"
+													placeholder="搜尋商品" value="" name="pname">
 												<i class="uil uil-search"></i>
 											</div>
 										</div>
 									</div>
-									<div class="rs ms-auto mt-4 mt_r4" id="reload">
-										<a href="#"
-											class="pe-4 w-100 ps-4 text-center co-main-btn h_40 d-inline-block"><i
-												class="fa-solid fa-arrow-rotate-right me-3"></i>重新整理</a>
-									</div>
+									<!-- <div class="rs ms-auto mt-4 mt_r4" id="reload">
+										<a href="#" class="pe-4 w-100 ps-4 text-center co-main-btn h_40 d-inline-block"
+											onclick="refresh()">
+											<i class="fa-solid fa-arrow-rotate-right me-3"></i>重新整理</a>
+									</div> -->
 								</div>
 								<div class="main-form mt-4">
 									<div class="row g-3">
-										<div class="col-lg-3 col-md-6">
+										<!-- <div class="col-lg-3 col-md-6">
 											<div class="form-group">
-												<select class="selectpicker" data-size="5" data-live-search="true">
-													<option value="all events" selected>所有商品</option>
+												<select id="showSelector" class="form-select" data-size="5"
+													data-live-search="true" name="productno">
 												</select>
 											</div>
-										</div>
+										</div> -->
 										<div class="col-lg-3 col-md-6">
 											<div class="form-group">
-												<select class="selectpicker">
-													<option value="all">所有狀態</option>
-													<option value="1">置頂</option>
-													<option value="0">顯示</option>
-													<option value="-1">不顯示</option>
-												</select>
+												<select id="statusSelector" name="pcommentstatus"
+													class="form-select"></select>
+												<!-- 評論狀態選單顯示 -->
 											</div>
 										</div>
 									</div>
@@ -323,74 +316,17 @@
 												<table class="table">
 													<thead class="thead-dark">
 														<tr>
-															<th scope="col">評論日期</th>
-															<th scope="col">會員姓名</th>
-															<th scope="col">商品名稱</th>
-															<th scope="col">評論內容</th>
-															<th scope="col">評論星等</th>
-															<th scope="col">評論讚數</th>
-															<th scope="col">評論狀態</th>
+															<th scope="col" style="width: 15%">評論日期</th>
+															<th scope="col" style="width: 15%">會員姓名</th>
+															<th scope="col" style="width: 15%">商品名稱</th>
+															<th scope="col" style="width: 20%">評論內容</th>
+															<th scope="col" style="width: 10%">評論星等</th>
+															<th scope="col" style="width: 10%">評論讚數</th>
+															<th scope="col" style="width: 15%">評論狀態</th>
 														</tr>
 													</thead>
 													<tbody id="productComment">
-														<tr>
-															<td>2020/09/20</td>
-															<td>林大賢</td>
-															<td>
-																<!-- <a href="#" target="_blank"> -->
-																<div style="width: 150px; height: 50px;">
-																	<p class="ellipsis" style="font-weight: 500;
-																		color: #000 !important; line-height: 50px;">
-																		田馥甄一一巡迴演唱會</p>
-																</div>
-																<!-- </a> -->
-															</td>
-															<td>
-																<button
-																	style="border: none; background-color: transparent;"
-																	data-bs-toggle="modal"
-																	data-bs-target="#inviteTeamModal">
-																	<div style="width: 200px; height: 50px;">
-																		<p class="ellipsis" style="font-weight: 500;
-																		color: #000 !important; line-height: 50px;">
-																			演唱會氣氛熱烈，歌手和觀眾互動很棒，非常難忘</p>
-																	</div>
-																</button>
-															</td>
-															<td>5</td>
-															<td>92</td>
-															<td><span class="status-circle blue-circle"></span>置頂
-															</td>
-														</tr>
-														<tr>
-															<td>2022/05/31</td>
-															<td>張小美</td>
-															<td>
-																<!-- <a href="#" target="_blank"> -->
-																<div style="width: 150px; height: 50px;">
-																	<p class="ellipsis" style="font-weight: 500;
-																		color: #000 !important; line-height: 50px;">
-																		保時捷姊新歌演唱會</p>
-																</div>
-																<!-- </a> -->
-															</td>
-															<td>
-																<button
-																	style="border: none; background-color: transparent;"
-																	data-bs-toggle="modal"
-																	data-bs-target="#inviteTeamModal">
-																	<div style="width: 200px; height: 50px;">
-																		<p class="ellipsis" style="font-weight: 500;
-																		color: #000 !important; line-height: 50px;">
-																			演唱會音效糟糕，歌手唱歌走音，讓人十分失望</p>
-																	</div>
-																</button>
-															</td>
-															<td>1</td>
-															<td>2</td>
-															<td><span class="status-circle red-circle"></span>不顯示
-															</td>
-														</tr>
+														<!-- productComment顯示的位置 -->
 													</tbody>
 												</table>
 											</div>
@@ -405,16 +341,17 @@
 												<table class="table">
 													<thead class="thead-dark">
 														<tr>
-															<th scope="col">受評論日期</th>
-															<th scope="col">檢舉者</th>
-															<th scope="col">被檢舉者</th>
-															<th scope="col">商品名稱</th>
-															<th scope="col">檢舉原因</th>
-															<th scope="col">評論內容</th>
-															<th scope="col">處理狀態</th>
+															<th scope="col" style="width: 15%">受評論日期</th>
+															<th scope="col" style="width: 12.5%">檢舉者</th>
+															<th scope="col" style="width: 12.5%">被檢舉者</th>
+															<th scope="col" style="width: 10%">商品名稱</th>
+															<th scope="col" style="width: 15%">檢舉原因</th>
+															<th scope="col" style="width: 15%">評論內容</th>
+															<th scope="col" style="width: 20%">處理狀態</th>
 														</tr>
 													</thead>
-													<tbody>
+													<tbody id="productCommentReport">
+														<!-- 檢舉評論頁面在這裡 -->
 														<tr>
 															<td>2022/05/31</td>
 															<td>黃小藍</td>
@@ -472,27 +409,28 @@
 	</div>
 	<!-- Body End -->
 
+	<!-- aria-labelledby="inviteTeamModalLabel" -->
 	<!-- 顯示評論內容開始-->
-	<div class="modal fade" id="inviteTeamModal" tabindex="-1" aria-labelledby="inviteTeamModalLabel"
-		aria-hidden="true">
+	<div class="modal fade" id="inviteTeamModal_good" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="inviteTeamModalLabel">評論內容</h5>
+					<h5 class="modal-title">評論內容</h5>
 					<button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"><i
 							class="uil uil-multiply"></i></button>
 				</div>
 				<div class="modal-body">
 					<div class="model-content main-form">
+						<input id="pcommentno" type="text" value="" style="display: none">
 						<div class="form-group mt-30">
 							<label class="form-label">評論內容：</label>
-							<textarea class="form-textarea" disabled>演唱會氣氛熱烈，歌手和觀眾互動很棒，非常難忘</textarea>
+							<textarea id="ccontent" class="form-textarea" disabled></textarea>
 						</div>
 						<div class="form-group mt-30">
 							<label class="form-label">評論狀態：</label>
-							<select class="selectpicker" title="Select Role">
-								<option value="-1">不顯示</option>
-								<option value="0" selected>顯示</option>
+							<select id="cstatus" class="form-select text-bg-light p-3">
+								<option value="-1">取消顯示(不顯示)</option>
+								<option value="0" selected>正常顯示</option>
 								<option value="1">置頂</option>
 							</select>
 						</div>
@@ -500,50 +438,54 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="co-main-btn min-width btn-hover h_40"
-						data-bs-dismiss="modal">Cancel</button>
-					<button type="button" class="main-btn min-width btn-hover h_40">Invite</button>
+					<button type="button" class="co-main-btn min-width btn-hover h_40" data-bs-dismiss="modal">取消修改
+					</button>
+					<button type="button" class="main-btn min-width btn-hover h_40" data-bs-dismiss="modal"
+						onclick="confirm_good()">確認修改
+					</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- 顯示評論內容結束-->
 
+	<!-- aria-labelledby="inviteTeamModalLabel" -->
 	<!-- 顯示受檢舉評論內容開始-->
-	<div class="modal fade" id="inviteTeamModal_bad" tabindex="-1" aria-labelledby="inviteTeamModalLabel"
-		aria-hidden="true">
+	<div class="modal fade" id="inviteTeamModal_bad" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="inviteTeamModalLabel">檢舉原因/評論內容</h5>
+					<h5 class="modal-title">檢舉原因/評論內容</h5>
 					<button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"><i
 							class="uil uil-multiply"></i></button>
 				</div>
 				<div class="modal-body">
 					<div class="model-content main-form">
+						<input id="preportno" type="text" value="" style="display: none">
 						<div class="form-group mt-30">
 							<label class="form-label">檢舉原因：</label>
-							<textarea class="form-textarea" disabled>評論含有不當言詞或攻擊性的言論</textarea>
+							<textarea id="rreason" class="form-textarea" disabled></textarea>
 						</div>
 						<div class="form-group mt-30">
 							<label class="form-label">評論內容：</label>
-							<textarea class="form-textarea" disabled>演唱會音效糟糕，歌手唱歌走音，讓人十分失望</textarea>
+							<textarea id="rcomment" class="form-textarea" disabled></textarea>
 						</div>
 						<div class="form-group mt-30">
 							<label class="form-label">評論狀態：</label>
-							<select class="selectpicker" title="Select Role">
-								<option value="-1">已處理 (不顯示)</option>
+							<select id="rstatus" class="form-select text-bg-light p-3">
 								<option value="0" selected>未處理</option>
 								<option value="1">已處理 (顯示)</option>
+								<option value="2">已處理 (不顯示)</option>
 							</select>
 						</div>
-
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="co-main-btn min-width btn-hover h_40"
-						data-bs-dismiss="modal">Cancel</button>
-					<button type="button" class="main-btn min-width btn-hover h_40">Invite</button>
+					<button type="button" class="co-main-btn min-width btn-hover h_40" data-bs-dismiss="modal">取消修改
+					</button>
+					<button type="button" class="main-btn min-width btn-hover h_40" data-bs-dismiss="modal"
+						onclick="confirm_bad()">確認修改
+					</button>
 				</div>
 			</div>
 		</div>
@@ -561,58 +503,404 @@
 
 
 	<script>
+
+		// 當網頁載入時先呈現所有商品評論
 		$(document).ready(() => {
-			fetchPcommentList('ProductCommentServlet');
+			fetchPcommentList();
 		});
 
-		$('#reload').click(() => {
-			fetchPcommentList(`ProductCommentServlet`);
-		});
 
-		function fetchPcommentList(url) {
-			fetch(url, {
+		//載入所有評論
+		function fetchPcommentList() {
+
+			// 選單(狀態)呈現
+			$('#statusSelector').html(`
+                <option value="" selected>所有狀態</option>
+                <option value="-1">取消顯示</option>
+                <option value="0">正常顯示</option>
+                <option value="1">置頂</option>
+            `);
+
+
+			fetch('ProductCommentServlet', {
 				method: 'POST',
 				body: new URLSearchParams({
-					'action': "productCommentList"
+					'action': "CommentSearch"
 				})
 			}).then(resp => resp.json())
-				.then(list =>{
-					for(let item of list){
-						$('#productComment').append(`<tr>
-															<td>${item.pcommentdate}</td>
-															<td>${item.memberno}</td>
+				.then(list => {
+					displayPcomments(list);
+				})
+
+			$('#showName').keypress(function () {
+				if ($('div .tab-pane.fade.active.show').attr('id') === 'tickets-tab') {
+					fetch('ProductCommentReportServlet', {
+						method: "POST",
+						headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+						body: new URLSearchParams({
+							'pname': $("[name='pname']").val(),
+							'preportstatus': $("[name='pcommentstatus']").val(),
+							'action': "CommentReportSearch"
+						}),
+					})
+						.then((resp) => resp.json())
+						.then((list) => {
+							displayPcommentReport(list);
+						})
+				}
+				if ($('div .tab-pane.fade.active.show').attr('id') === 'orders-tab') {
+					fetch('ProductCommentServlet', {
+						method: "POST",
+						headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+						body: new URLSearchParams({
+							'pname': $("[name='pname']").val(),
+							'pcommentstatus': $("[name='pcommentstatus']").val(),
+							'action': "CommentSearch"
+						}),
+					})
+						.then((resp) => resp.json())
+						.then((list) => {
+							displayPcomments(list);
+						})
+
+				}
+
+			});
+
+			$('#statusSelector').change(function () {
+				if ($('div .tab-pane.fade.active.show').attr('id') === 'tickets-tab') {
+					fetch('ProductCommentReportServlet', {
+						method: "POST",
+						headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+						body: new URLSearchParams({
+							'pname': $("[name='pname']").val(),
+							'preportstatus': $("[name='pcommentstatus']").val(),
+							'action': "CommentReportSearch"
+						}),
+					})
+						.then((resp) => resp.json())
+						.then((list) => {
+							displayPcommentReport(list);
+						})
+				} if ($('div .tab-pane.fade.active.show').attr('id') === 'orders-tab') {
+					fetch('ProductCommentServlet', {
+						method: "POST",
+						headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+						body: new URLSearchParams({
+							'pname': $("[name='pname']").val(),
+							'pcommentstatus': $("[name='pcommentstatus']").val(),
+							'action': "CommentSearch"
+						}),
+					})
+						.then((resp) => resp.json())
+						.then((list) => {
+							displayPcomments(list);
+						})
+				}
+
+			});
+
+		}
+
+
+		// 點擊單一評論並顯示
+		function showcomment(commentno) {
+			fetch('ProductCommentServlet', {
+				method: 'POST',
+				body: new URLSearchParams({
+					'pcommentno': commentno,
+					'action': "getOneproductComment"
+				})
+			}).then(resp => resp.json())
+				.then(item => {
+					console.log(item);
+					//把前面有的值先清空避免吃到舊值
+					$('#pcommentno').val("");
+					$('#ccontent').text("");
+
+					$('#pcommentno').val(item.pcommentno);
+					$('#ccontent').text(item.pcommentcont);
+
+					if (item.pcommentstatus === -1) {
+						$("#cstatus>option[value='-1']").prop("selected", true);
+					} else if (item.pcommentstatus === 0) {
+						$("#cstatus>option[value='0']").prop("selected", true);
+					} else {
+						$("#cstatus>option[value='1']").prop("selected", true);
+
+					}
+				})
+			return commentno;
+		}
+
+		// 修改單一評論狀態
+		function confirm_good() {
+			fetch('ProductCommentServlet', {
+				method: 'POST',
+				body: new URLSearchParams({
+					'pcommentno': $('#pcommentno').val(),
+					'pcommentstatus': $('#cstatus').val(),
+					'action': "updateOneproductCommentStatus"
+				})
+			}).then((resp) => resp.json())
+				.then((item) => {
+					if (item === true) {
+						fetchPcommentList();
+					} else
+						alert("請重新更新狀態");
+				})
+		}
+
+		//顯示評論
+		function displayPcomments(list) {
+			//避免更新單筆資料後render出現重複資料
+			$('#productComment').html('');
+
+			//評論狀態數字→中文
+			for (let item of list) {
+				switch (item.pcommentstatus) {
+					case 1:
+						pcommentstatus = '<span class="status-circle blue-circle"></span>置頂';
+						break;
+					case 0:
+						pcommentstatus = '<span class="status-circle blue-circle"></span>顯示';
+						break;
+					case -1:
+						pcommentstatus = '<span class="status-circle red-circle"></span>不顯示(取消顯示)';
+						break;
+				}
+
+				$('#productComment').append(`<tr>   
+										<td>${item.pcommentdate}</td>
+										<td>${item.member.mname}</td>
+										<td>
+											<a href="#" target="_blank">
+											<div style="width: 150px; height: 50px;">
+												<p class="ellipsis" style="font-weight: 500;
+													color: #000 !important; line-height: 50px;">
+													${item.product.pname}</p>
+											</div>
+											</a>
+										</td>
+										<td>
+											<button name="${item.pcommentno}"
+												style="border: none; background-color: transparent;"
+												data-bs-toggle="modal"
+												data-bs-target="#inviteTeamModal_good" onclick="showcomment(this.name)">
+												<div style="width: 200px; height: 50px;">
+													<p class="ellipsis" style="font-weight: 500;
+													color: #000 !important; line-height: 50px;">
+													${item.pcommentcont}</p>
+												</div>
+											</button>
+										</td>
+										<td>${item.prate}</td>
+										<td>${item.plike}</td>
+										<td>${pcommentstatus}</td>
+									</tr>`);
+			}
+		}
+
+
+
+
+
+		//呈現被檢舉頁面
+		function fetchPcommentRoportList() {
+
+			// 選單(狀態)呈現
+			$('#statusSelector').html(`
+				<option value="" selected>所有狀態</option>
+				<option value="0">未處理</option>
+				<option value="1">已處理(顯示)</option>
+				<option value="2">未處理(不顯示)</option>
+				`);
+
+			// 選單(商品)呈現
+			// 	$('#showSelector').html(`
+			// 	<option value="all" selected>所有商品</option>
+			// `);
+
+			// 選單(節目)呈現 - 動態 →還不知道抓出來的是甚麼資料
+			// fetch('acomment/ACommentANames')
+			// 	.then((resp) => resp.json())
+			// 	.then((jsondata) => {
+			// 		for (let i of jsondata) {
+			// 			document.getElementById('showSelector').innerHTML += `
+			// 	<option value="${i[0]}">${i[1]}</option>
+			// `
+			// 		}
+			// 	})
+
+
+
+			// $('#showName').keypress(function () {
+			// 	if ($('div .tab-pane.fade.active.show').attr('id') === 'tickets-tab') {
+			// 		fetch('ProductCommentReportServlet', {
+			// 			method: "POST",
+			// 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			// 			body: new URLSearchParams({
+			// 				'pname': $("[name='pname']").val(),
+			// 				'preportstatus': $("[name='pcommentstatus']").val(),
+			// 				'action': "CommentReportSearch"
+			// 			}),
+			// 		})
+			// 			.then((resp) => resp.json())
+			// 			.then((list) => {
+			// 				displayPcommentReport(list);
+			// 			})
+			// 	}
+			// 	if ($('div .tab-pane.fade.active.show').attr('id') === 'orders-tab') {
+
+			// 	}
+
+
+
+			// });
+
+			// $('#statusSelector').change(function () {
+			// 	fetch('ProductCommentReportServlet', {
+			// 		method: "POST",
+			// 		headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			// 		body: new URLSearchParams({
+			// 			'pname': $("[name='pname']").val(),
+			// 			'preportstatus': $("[name='pcommentstatus']").val(),
+			// 			'action': "CommentReportSearch"
+			// 		}),
+			// 	})
+			// 		.then((resp) => resp.json())
+			// 		.then((list) => {
+			// 			displayPcommentReport(list);
+			// 		})
+			// });
+
+
+			fetch('ProductCommentReportServlet', {
+				method: 'POST',
+				body: new URLSearchParams({
+					'action': "productCommentRepostList"
+				})
+			}).then(resp => resp.json())
+				.then(list => {
+					displayPcommentReport(list);
+				})
+
+		}
+
+
+
+
+		function displayPcommentReport(list) {
+			$('#productCommentReport').html('');
+
+			for (let item of list) {
+				console.log(item);
+				switch (item.preportstatus) {
+					case 0:
+						preportstatus = '<span class="status-circle blue-circle"></span>未處理';
+						break;
+					case 1:
+						preportstatus = '<span class="status-circle blue-circle"></span>已處理(顯示)';
+						break;
+					case 2:
+						preportstatus = '<span class="status-circle red-circle"></span>已處理(不顯示)';
+						break;
+				}
+				$('#productCommentReport').append(`<tr>
+															<td>${item.preportdate}</td>
+															<td>${item.member.mname}</td>
+															<td>${item.pcomment.member.mname}</td>
 															<td>
-																<!-- <a href="front-product-product_detail.html?productno=${item.productno}" target="_blank"> -->
+																<!-- <a href="#" target="_blank"> -->
 																<div style="width: 150px; height: 50px;">
 																	<p class="ellipsis" style="font-weight: 500;
 																		color: #000 !important; line-height: 50px;">
-																		${item.productno}</p>
+																		${item.pcomment.product.pname}</p>
 																</div>
 																<!-- </a> -->
 															</td>
 															<td>
-																<button
+																<button name="${item.preportno}"
 																	style="border: none; background-color: transparent;"
 																	data-bs-toggle="modal"
-																	data-bs-target="#inviteTeamModal">
-																	<div style="width: 200px; height: 50px;">
+																	data-bs-target="#inviteTeamModal_bad" onclick="showreport(this.name)">
+																	<div style="width: 150px; height: 50px;">
 																		<p class="ellipsis" style="font-weight: 500;
 																		color: #000 !important; line-height: 50px;">
-																		${item.pcommentcont}</p>
+																			${item.pwhy}</p>
 																	</div>
 																</button>
 															</td>
-															<td>${item.prate}</td>
-															<td>${item.plike}</td>
-															<td><span class="status-circle blue-circle"></span>${item.pcommentstatus}
+															<td>
+																<button name="${item.preportno}"
+																	style="border: none; background-color: transparent;"
+																	data-bs-toggle="modal"
+																	data-bs-target="#inviteTeamModal_bad" onclick="showreport(this.name)">
+																	<div style="width: 150px; height: 50px;">
+																		<p class="ellipsis" style="font-weight: 500;
+																		color: #000 !important; line-height: 50px;">
+																			${item.pcomment.pcommentcont}</p>
+																	</div>
+																</button>
 															</td>
+															<td>${preportstatus}</td>
 														</tr>`);
-					$('#inviteTeamModal').append
+			}
+		}
+
+		// 點擊單一評論檢舉並顯示
+		function showreport(reportno) {
+			fetch('ProductCommentReportServlet', {
+				method: 'POST',
+				body: new URLSearchParams({
+					'preportno': reportno,
+					'action': "productOneCommentRepost"
+				})
+			}).then(resp => resp.json())
+				.then(item => {
+					//把前面有的值先清空避免吃到舊值
+					$('#preportno').val("");
+					$('#rreason').text("");
+					$('#rcomment').text("");
+
+					$('#preportno').val(item.preportno);
+					console.log(item.preportno);
+					$('#rreason').text(item.pwhy);
+					$('#rcomment').text(item.pcomment.pcommentcont);
+
+					if (item.preportstatus === 0) {
+						$("#rstatus>option[value='0']").prop("selected", true);
+					} else if (item.preportstatus === 1) {
+						$("#rstatus>option[value='1']").prop("selected", true);
+					} else {
+						$("#rstatus>option[value='2']").prop("selected", true);
 
 					}
 				})
-
+			return reportno;
 		}
+
+
+		// 修改單一檢舉狀態
+		function confirm_bad() {
+			fetch('ProductCommentReportServlet', {
+				method: 'POST',
+				body: new URLSearchParams({
+					'preportno': $('#preportno').val(),
+					'preportstatus': $('#rstatus').val(),
+					'action': "updateOneproductCommentReportStatus"
+				})
+			}).then((resp) => resp.json())
+				.then((item) => {
+					console.log(item);
+					if (item === true) {
+						fetchPcommentRoportList();
+					} else
+						alert("請重新更新狀態");
+				})
+		}
+
+
 
 	</script>
 

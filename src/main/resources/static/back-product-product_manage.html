@@ -277,39 +277,47 @@
 													<input class="form-control h_40" type="text" placeholder="搜尋商品編號"
 														value="" id="productno" name="productno">
 													<i class="uil uil-search"></i>
-													<button class="esv-btn me-2">查詢</button>
-													<input type="hidden" name="action" value="ProductSearchForm">
+
 												</div>
+												<label class="form-label mt-3 fs-6">上架日期*</label>
+												<div class="loc-group position-relative">
+													<input class="form-control h_50 datepicker-here" data-language="en"
+														type="text" placeholder="MM/DD/YYYY" value="" name="start_date"
+														data-date-format="yyyy-mm-dd 23:59:59" autocomplete="off">
+													<span class="absolute-icon"><i
+															class="fa-solid fa-calendar-days"></i></span>
+												</div>
+												<label class="form-label mt-3 fs-6">下架日期*</label>
+												<div class="loc-group position-relative">
+													<input class="form-control h_50 datepicker-here" data-language="en"
+														type="text" placeholder="MM/DD/YYYY" value="" name="end_date"
+														data-date-format="yyyy-mm-dd 23:59:59" autocomplete="off">
+													<span class="absolute-icon"><i
+															class="fa-solid fa-calendar-days"></i></span>
+												</div>
+												<label
+																				class="form-label mb-2 fs-14">選擇商品狀態*</label>
+																			<input id="c1" type="radio" name="pstatus"> 上架中
+																				<input id="c2" type="radio" name="pstatus"> 已下架
+												<input type="hidden" name="action" value="ProductSearchForm">
+												<button class="esv-btn me-2">查詢</button>
 											</FORM>
 										</div>
 									</div>
 
-									<div class="rs ms-auto mt_r4">
-										<div class="nav custom2-tabs btn-group" role="tablist">
-											<button class="tab-link active" data-bs-toggle="tab"
-												data-bs-target="#all-tab" type="button" role="tab"
-												aria-controls="all-tab" aria-selected="true">上架商品 (<span
-													class="total_event_counter">1</span>)</button>
-											<button class="tab-link" data-bs-toggle="tab" data-bs-target="#online-tab"
-												type="button" role="tab" aria-controls="online-tab"
-												aria-selected="false">已下架商品 (<span
-													class="total_event_counter">0</span>)</button>
-											<!-- <button class="tab-link" data-bs-toggle="tab" data-bs-target="#venue-tab" type="button" role="tab" aria-controls="venue-tab" aria-selected="false">Venue Event (<span class="total_event_counter">1</span>)</button> -->
-										</div>
-									</div>
 								</div>
 							</div>
 						</div>
 						<div class="event-list">
-							<div class="tab-content">
-								<div class="tab-pane fade show active" id="all-tab" role="tabpanel">
+							<!-- <div class="tab-content"> -->
+								<!-- <div class="tab-pane fade show active" id="all-tab" role="tabpanel"> -->
 									<div class="main-card mt-4">
-										<div class="contact-list" id="productList_on">
+										<div class="contact-list" id="productList">
 											<!-- 上架商品標籤顯示區 -->
 										</div>
 									</div>
-								</div>
-								<div class="tab-pane fade active" id="online-tab" role="tabpanel">
+								<!-- </div> -->
+								<!-- <div class="tab-pane fade active" id="online-tab" role="tabpanel">
 									<div class="main-card d-none mt-4">
 										<div
 											class="d-flex align-items-center justify-content-center flex-column min-height-430">
@@ -320,13 +328,13 @@
 										</div>
 									</div>
 									<div class="main-card mt-4">
-										<div class="contact-list" id="productList_off">
+										<div class="contact-list" id="productList_off"> -->
 											<!-- 下架商品標籤顯示區 -->
-										</div>
+										<!-- </div>
 									</div>
-								</div>
+								</div> -->
 
-							</div>
+							<!-- </div> -->
 						</div>
 					</div>
 				</div>
@@ -334,20 +342,18 @@
 		</div>
 	</div>
 	<!-- Body End -->
-	<!-- <script>
-		const productList_off = document.querySelector('#productList_off');
-		const productList_on = document.querySelector('#productList_on');
-		let urlParams = new URLSearchParams(window.location.search);
-		const allProduct = urlParams.get('allProduct');
-
-		fetch("ProductInfoServlet?allProduct=" + 1)
-			.then(resp => resp.json())
+	<script>
+		fetch('ProductInfoServlet', {
+			method: 'POST',
+			body: new URLSearchParams({
+				'action': "allProductList"
+			})
+		}).then(resp => resp.json())
 			.then(list => {
 				for (let item of list) {
 					let image = item.pimgts && item.pimgts[0] && item.pimgts[0].pimgno;
 					if (image === undefined) { image = 70001; }
-					if (item.pstatus === 1) {
-						productList_on.innerHTML += `<div
+					$('#productList').append(`<div
 												class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between">
 												<div class="d-md-flex align-items-center event-top-info">
 													<div class="card-event-img">
@@ -380,7 +386,7 @@
 														<i class="fa-solid fa-location-dot"></i>
 													</span>
 													<p>商品狀態</p>
-													<h6 class="coupon-status">${item.pstatus === 1 ? '上架中' : '已下架'}</h6>
+													<h6 class="coupon-status">${item.pstatus === 0 ? '上架中' : '已下架'}</h6>
 												</div>
 												<div class="icon-box">
 													<span class="icon">
@@ -404,66 +410,12 @@
 													<p>已售數量</p>
 													<h6 class="coupon-status">20</h6>
 												</div>
-											</div>`;
-					} else {
-						productList_off.innerHTML += `<div class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between">
-												<div class="d-md-flex align-items-center event-top-info">
-													<div class="card-event-img">
-														<img src="ProductImg?pimgno=${image}" alt="">
-													</div>
-													<div class="card-event-dt">
-														<h5>${item.pname}</h5>
-														<h6>主辦單位：</h6>
-														<h6>${item.hostno}</h6>
-													</div>
-												</div>
-												<div class="dropdown">
-													<button class="option-btn" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a href="back-product-update_product.html?productno=${item.productno} target="_blank"" class="dropdown-item"><i class="fa-solid fa-gear me-3"></i>編輯商品</a>
-														<a href="front-product-product_detail.html?productno=${item.productno} target="_blank"" class="dropdown-item"><i class="fa-solid fa-eye me-3"></i>前台預覽</a>
-														<a href="back_product_create_product.html?productno=${item.productno} target="_blank"" class="dropdown-item"><i class="fa-solid fa-clone me-3"></i>複製商品</a>
-													</div>
-
-												</div>
-											</div>
-											<div class="bottom d-flex flex-wrap justify-content-between align-items-center p-4">
-												<div class="icon-box ">
-													<span class="icon">
-														<i class="fa-solid fa-location-dot"></i>
-													</span>
-													<p>商品狀態</p>
-													<h6 class="coupon-status">${item.pstatus}</h6>
-												</div>
-												<div class="icon-box">
-													<span class="icon">
-														<i class="fa-solid fa-calendar-days"></i>
-													</span>
-													<p>上下架時間</p>
-													<h6 class="coupon-status">${item.psdate}</h6>
-													<h6 class="coupon-status">${item.pedate}</h6>
-												</div>
-												<div class="icon-box">
-													<span class="icon">
-														<i class="fa-solid fa-ticket"></i>
-													</span>
-													<p>可售數量</p>
-													<h6 class="coupon-status">${item.pqty}</h6>
-												</div>
-												<div class="icon-box">
-													<span class="icon">
-														<i class="fa-solid fa-tag"></i>
-													</span>
-													<p>已售數量</p>
-													<h6 class="coupon-status">20</h6>
-												</div>
-											</div>`;
-
-					}
-
+											</div>`);
 				}
-			});
-	</script> -->
+			})
+
+	</script>
+
 	<script src="js/jquery-3.6.0.min.js"></script>
 	<script>
 		//商品篩選
@@ -475,21 +427,25 @@
 				// body: formdata,
 				body: new URLSearchParams({
 					'pname': $("[name='pname']").val(),
-					'ptag':  $("[name='ptag']").val(),
+					'ptag': $("[name='ptag']").val(),
 					'productno': $("[name='productno']").val(),
+					'start_date': $("[name='start_date']").val(),
+					'end_date': $("[name='end_date']").val(),
 					'action': $("[name='action']").val()
 				}),
 				headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 				// headers: { 'Content-Type': 'application/json' }
 				// headers: { 'Content-Type': 'multipart/form-data' }
 			})
-				.then(resp =>resp.json())
+				.then(resp => resp.json())
 				.then(list => {
+					productList.innerHTML = '';
 					for (let item of list) {
+
 						let image = item.pimgts && item.pimgts[0] && item.pimgts[0].pimgno;
 						if (image === undefined) { image = 70001; }
-						if (item.pstatus === 1) {
-							productList_on.innerHTML += `<div
+
+						productList.innerHTML += `<div
 												class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between">
 												<div class="d-md-flex align-items-center event-top-info">
 													<div class="card-event-img">
@@ -547,9 +503,9 @@
 													<h6 class="coupon-status">20</h6>
 												</div>
 											</div>`;
-						}
-
 					}
+
+
 				})
 		})
 	</script>
@@ -560,6 +516,8 @@
 	<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 	<script src="js/custom.js"></script>
 	<script src="js/night-mode.js"></script>
+	<script src="js/datepicker.min.js"></script>
+	<script src="js/i18n/datepicker.en.js"></script>
 
 </body>
 

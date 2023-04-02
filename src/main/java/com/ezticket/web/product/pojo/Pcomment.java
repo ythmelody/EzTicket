@@ -1,4 +1,5 @@
 package com.ezticket.web.product.pojo;
+import com.ezticket.web.users.pojo.Member;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
@@ -10,13 +11,21 @@ public class Pcomment implements java.io.Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer pcommentno;
 	private Integer productno;
-//	private Byte[]  pcommentimg;
 	private String pcommentcont;
 	private Integer prate;
 	private Timestamp pcommentdate;
 	private Integer memberno;
 	private Integer pcommentstatus;
 	private Integer plike;
+
+
+	@ManyToOne
+	@JoinColumn(name ="memberno",insertable = false,updatable = false)
+	private Member member;
+
+	@ManyToOne
+	@JoinColumn(name ="productno",insertable = false,updatable = false)
+	private Product product;
 	
 	public Pcomment() {}
 	
@@ -32,12 +41,7 @@ public class Pcomment implements java.io.Serializable{
 	public void setProductno(Integer productno) {
 		this.productno = productno;
 	}
-//	public Byte[] getPcommentimg() {
-//		return pcommentimg;
-//	}
-//	public void setPcommentimg(Byte[] pcommentimg) {
-//		this.pcommentimg = pcommentimg;
-//	}
+
 	public String getPcommentcont() {
 		return pcommentcont;
 	}

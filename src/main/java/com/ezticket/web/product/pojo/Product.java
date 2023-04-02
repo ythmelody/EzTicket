@@ -15,6 +15,8 @@ public class Product extends Core {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer productno;
+
+
 	private Integer	pclassno;
 	private String	pname;
 	private Integer	hostno;
@@ -31,6 +33,15 @@ public class Product extends Core {
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name ="productno",referencedColumnName = "productno")
 	private List<Pimgt> pimgts;
+
+	@ManyToOne
+	@JoinColumn(name ="pclassno",insertable = false,updatable = false)
+	private Pclass pclass;
+
+	//待處理還沒有Host表格
+//	@ManyToOne
+//	@JoinColumn(name ="hostno",insertable = false,updatable = false)
+//	private Host host ;
 	
 	public Product() {}
 	
@@ -126,6 +137,12 @@ public class Product extends Core {
 	public void setPimgts(List<Pimgt> pimgts) {
 		this.pimgts = pimgts;
 	}
-	
-	
+
+	public Pclass getPclass() {
+		return pclass;
+	}
+
+	public void setPclass(Pclass pclass) {
+		this.pclass = pclass;
+	}
 }
