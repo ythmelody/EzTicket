@@ -267,7 +267,8 @@
 									</button>
 									<button id="allReportTab" class="tab-link" data-bs-toggle="tab"
 										data-bs-target="#tickets-tab" type="button" role="tab"
-										aria-controls="tickets-tab" aria-selected="false" onclick="reportbtn()">受檢舉評論
+										aria-controls="tickets-tab" aria-selected="false"
+										onclick="fetchPcommentRoportList()">受檢舉評論
 									</button>
 								</div>
 								<div class="d-md-flex flex-wrap align-items-center">
@@ -297,12 +298,9 @@
 										</div>
 										<div class="col-lg-3 col-md-6">
 											<div class="form-group">
-												<select class="selectpicker">
-													<option value="all">所有狀態</option>
-													<option value="1">置頂</option>
-													<option value="0">顯示</option>
-													<option value="-1">不顯示</option>
-												</select>
+												<select id="statusSelector" name="productno"
+													class="form-select"></select>
+												<!-- 評論狀態選單顯示 -->
 											</div>
 										</div>
 									</div>
@@ -352,7 +350,7 @@
 															<th scope="col" style="width: 20%">處理狀態</th>
 														</tr>
 													</thead>
-													<tbody id="reportbody">
+													<tbody id="productCommentReport">
 														<!-- 檢舉評論頁面在這裡 -->
 														<tr>
 															<td>2022/05/31</td>
@@ -431,18 +429,20 @@
 						<div class="form-group mt-30">
 							<label class="form-label">評論狀態：</label>
 							<select id="cstatus" class="form-select text-bg-light p-3">
-								<option value="0">取消顯示</option>
-								<option value="1" selected>正常顯示</option>
-								<option value="2">置頂</option>
+								<option value="-1">取消顯示(不顯示)</option>
+								<option value="0" selected>正常顯示</option>
+								<option value="1">置頂</option>
 							</select>
 						</div>
 
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="co-main-btn min-width btn-hover h_40"
-						data-bs-dismiss="modal">取消修改</button>
-					<button type="button" class="main-btn min-width btn-hover h_40">確認修改</button>
+					<button type="button" class="co-main-btn min-width btn-hover h_40" data-bs-dismiss="modal">取消修改
+					</button>
+					<button type="button" class="main-btn min-width btn-hover h_40" data-bs-dismiss="modal"
+						onclick="confirm_good()">確認修改
+					</button>
 				</div>
 			</div>
 		</div>
@@ -481,10 +481,11 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="co-main-btn min-width btn-hover h_40"
-						data-bs-dismiss="modal">取消修改</button>
+					<button type="button" class="co-main-btn min-width btn-hover h_40" data-bs-dismiss="modal">取消修改
+					</button>
 					<button type="button" class="main-btn min-width btn-hover h_40" data-bs-dismiss="modal"
-						onclick="confirm_bad()">確認修改</button>
+						onclick="confirm_bad()">確認修改
+					</button>
 				</div>
 			</div>
 		</div>
@@ -505,66 +506,55 @@
 
 		// 當網頁載入時先呈現所有商品評論
 		$(document).ready(() => {
-			fetchPcommentList('ProductCommentServlet');
+			fetchPcommentList();
 		});
 
 
 		//點選重新載入顯示新的頁面
-		$('#reload').click(() => {
-			fetchPcommentList(`ProductCommentServlet`);
-		});
+		function refresh() {
+			if ($('#allCommentTab').attr('aria-selected') == 'true')
+				fetchPcommentList();
+			else {
+				reportbtn();
+			}
+		}
 
 		//載入所有評論
-		function fetchPcommentList(url) {
-			fetch(url, {
+		function fetchPcommentList() {
+
+			// 選單(狀態)呈現
+			$('#statusSelector').html(`
+                <option value="all" selected>所有狀態</option>
+                <option value="-1">取消顯示</option>
+                <option value="0">正常顯示</option>
+                <option value="1">置頂</option>
+            `);
+
+			// 選單()呈現
+			$('#showSelector').html(`
+                <option value="all" selected>所有節目</option>
+            `);
+
+			// 選單(節目)呈現 - 動態 →還不知道抓出來的是甚麼資料
+			// fetch('acomment/ACommentANames')
+			// 	.then((resp) => resp.json())
+			// 	.then((jsondata) => {
+			// 		for (let i of jsondata) {
+			// 			document.getElementById('showSelector').innerHTML += `
+			//                 <option value="${i[0]}">${i[1]}</option>
+			//             `
+			// 		}
+			// 	})
+
+
+			fetch('ProductCommentServlet', {
 				method: 'POST',
 				body: new URLSearchParams({
 					'action': "productCommentList"
 				})
 			}).then(resp => resp.json())
 				.then(list => {
-					for (let item of list) {
-						switch (item.pcommentstatus) {
-							case 1:
-								pcommentstatus = '<span class="status-circle blue-circle"></span>置頂';
-								break;
-							case 0:
-								pcommentstatus = '<span class="status-circle blue-circle"></span>顯示';
-								break;
-							case -1:
-								pcommentstatus = '<span class="status-circle red-circle"></span>不顯示';
-								break;
-						}
-
-						$('#productComment').append(`<tr>   
-															<td>${item.pcommentdate}</td>
-															<td>${item.member.mname}</td>
-															<td>
-																<a href="#" target="_blank">
-																<div style="width: 150px; height: 50px;">
-																	<p class="ellipsis" style="font-weight: 500;
-																		color: #000 !important; line-height: 50px;">
-																		${item.product.pname}</p>
-																</div>
-																</a>
-															</td>
-															<td>
-																<button name="${item.pcommentno}"
-																	style="border: none; background-color: transparent;"
-																	data-bs-toggle="modal"
-																	data-bs-target="#inviteTeamModal_good" onclick="showcomment(this.name)">
-																	<div style="width: 200px; height: 50px;">
-																		<p class="ellipsis" style="font-weight: 500;
-																		color: #000 !important; line-height: 50px;">
-																		${item.pcommentcont}</p>
-																	</div>
-																</button>
-															</td>
-															<td>${item.prate}</td>
-															<td>${item.plike}</td>
-															<td>${pcommentstatus}</td>
-														</tr>`);
-					}
+					displayPcomments(list);
 				})
 
 		}
@@ -588,16 +578,188 @@
 					$('#pcommentno').val(item.pcommentno);
 					$('#ccontent').text(item.pcommentcont);
 
-					if (item.pcommentstatus === 0) {
+					if (item.pcommentstatus === -1) {
+						$("#cstatus>option[value='-1']").prop("selected", true);
+					} else if (item.pcommentstatus === 0) {
 						$("#cstatus>option[value='0']").prop("selected", true);
-					} else if (Number(jsondata.acommentStatus) === 1) {
-						$("#cstatus>option[value='1']").prop("selected", true);
 					} else {
-						$("#cstatus>option[value='2']").prop("selected", true);
+						$("#cstatus>option[value='1']").prop("selected", true);
 
 					}
 				})
 			return commentno;
+		}
+
+		// 修改單一評論狀態
+		function confirm_good() {
+			fetch('ProductCommentServlet', {
+				method: 'POST',
+				body: new URLSearchParams({
+					'pcommentno': $('#pcommentno').val(),
+					'pcommentstatus': $('#cstatus').val(),
+					'action': "updateOneproductCommentStatus"
+				})
+			}).then((resp) => resp.json())
+				.then((item) => {
+					if (item === true) {
+						fetchPcommentList();
+					} else
+						alert("請重新更新狀態");
+				})
+		}
+
+		//顯示評論
+		function displayPcomments(list) {
+			//避免更新單筆資料後render出現重複資料
+			$('#productComment').html('');
+
+			//評論狀態數字→中文
+			for (let item of list) {
+				switch (item.pcommentstatus) {
+					case 1:
+						pcommentstatus = '<span class="status-circle blue-circle"></span>置頂';
+						break;
+					case 0:
+						pcommentstatus = '<span class="status-circle blue-circle"></span>顯示';
+						break;
+					case -1:
+						pcommentstatus = '<span class="status-circle red-circle"></span>不顯示(取消顯示)';
+						break;
+				}
+
+				$('#productComment').append(`<tr>   
+										<td>${item.pcommentdate}</td>
+										<td>${item.member.mname}</td>
+										<td>
+											<a href="#" target="_blank">
+											<div style="width: 150px; height: 50px;">
+												<p class="ellipsis" style="font-weight: 500;
+													color: #000 !important; line-height: 50px;">
+													${item.product.pname}</p>
+											</div>
+											</a>
+										</td>
+										<td>
+											<button name="${item.pcommentno}"
+												style="border: none; background-color: transparent;"
+												data-bs-toggle="modal"
+												data-bs-target="#inviteTeamModal_good" onclick="showcomment(this.name)">
+												<div style="width: 200px; height: 50px;">
+													<p class="ellipsis" style="font-weight: 500;
+													color: #000 !important; line-height: 50px;">
+													${item.pcommentcont}</p>
+												</div>
+											</button>
+										</td>
+										<td>${item.prate}</td>
+										<td>${item.plike}</td>
+										<td>${pcommentstatus}</td>
+									</tr>`);
+			}
+		}
+
+
+
+
+
+		//呈現被檢舉頁面
+		function fetchPcommentRoportList() {
+
+			// 選單(狀態)呈現
+			$('#statusSelector').html(`
+				<option value="all" selected>所有狀態</option>
+				<option value="0">未處理</option>
+				<option value="1">已處理(顯示)</option>
+				<option value="2">未處理(不顯示)</option>
+				`);
+
+			// 選單(商品)呈現
+			$('#showSelector').html(`
+			<option value="all" selected>所有商品</option>
+		`);
+
+			// 選單(節目)呈現 - 動態 →還不知道抓出來的是甚麼資料
+			// fetch('acomment/ACommentANames')
+			// 	.then((resp) => resp.json())
+			// 	.then((jsondata) => {
+			// 		for (let i of jsondata) {
+			// 			document.getElementById('showSelector').innerHTML += `
+			// 	<option value="${i[0]}">${i[1]}</option>
+			// `
+			// 		}
+			// 	})
+
+
+			fetch('ProductCommentReportServlet', {
+				method: 'POST',
+				body: new URLSearchParams({
+					'action': "productCommentRepostList"
+				})
+			}).then(resp => resp.json())
+				.then(list => {
+					displayPcommentReport(list);
+				})
+
+		}
+
+
+		function displayPcommentReport(list) {
+			// $('#productCommentReport').html('');
+
+			for (let item of list) {
+				console.log(item);
+				switch (item.preportstatus) {
+					case 0:
+						preportstatus = '<span class="status-circle blue-circle"></span>未處理';
+						break;
+					case 1:
+						preportstatus = '<span class="status-circle blue-circle"></span>已處理(顯示)';
+						break;
+					case 2:
+						preportstatus = '<span class="status-circle red-circle"></span>已處理(不顯示)';
+						break;
+				}
+				$('#productCommentReport').append(`<tr>
+															<td>${item.preportdate}</td>
+															<td>${item.member.mname}</td>
+															<td>(寫死的)張小美</td>
+															<td>
+																<!-- <a href="#" target="_blank"> -->
+																<div style="width: 150px; height: 50px;">
+																	<p class="ellipsis" style="font-weight: 500;
+																		color: #000 !important; line-height: 50px;">
+																		(寫死的)保時捷姊新歌演唱會</p>
+																</div>
+																<!-- </a> -->
+															</td>
+															<td>
+																<button name="${item.preportno}"
+																	style="border: none; background-color: transparent;"
+																	data-bs-toggle="modal"
+																	data-bs-target="#inviteTeamModal_bad" onclick="showreport(this.name)">
+																	<div style="width: 150px; height: 50px;">
+																		<p class="ellipsis" style="font-weight: 500;
+																		color: #000 !important; line-height: 50px;">
+																			${item.pwhy}</p>
+																	</div>
+																</button>
+															</td>
+															<td>
+																<button name="${item.preportno}"
+																	style="border: none; background-color: transparent;"
+																	data-bs-toggle="modal"
+																	data-bs-target="#inviteTeamModal_bad" onclick="showreport(this.name)">
+																	<div style="width: 150px; height: 50px;">
+																		<p class="ellipsis" style="font-weight: 500;
+																		color: #000 !important; line-height: 50px;">
+																			${item.pcomment.pcommentcont}</p>
+																	</div>
+																</button>
+															</td>
+															<td>${preportstatus}</td>
+														</tr>`);
+
+			}
 		}
 
 	</script>

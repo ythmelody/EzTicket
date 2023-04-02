@@ -15,4 +15,6 @@ public interface PcommentDAO extends CoreDAO<Pcomment,Integer> {
     public List<Pcomment> getAllByMemberno(Integer memberno);
     public List<Pcomment> getAllByProductno(Integer productno);
     public boolean delete(Integer pcommentno);
+
+    public boolean update(Integer pcommentno ,Integer pcommentstatus);
 }

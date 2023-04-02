@@ -35,13 +35,18 @@ public class PcommentService {
 	}
 
 	@Transactional
-	public Pcomment updateProductComment(Pcomment pcommentVO) {
-		final Pcomment oldPcommentVO =dao.getByPrimaryKey(pcommentVO.getPcommentno());
-		pcommentVO.setPcommentno(oldPcommentVO.getPcommentno());
-		pcommentVO.setProductno(oldPcommentVO.getProductno());
-		pcommentVO.setMemberno(oldPcommentVO.getMemberno());
-		dao.update(pcommentVO);
-		return pcommentVO;
+	public Pcomment updateProductComment(Pcomment pcomment) {
+		final Pcomment oldPcomment =dao.getByPrimaryKey(pcomment.getPcommentno());
+		pcomment.setPcommentno(oldPcomment.getPcommentno());
+		pcomment.setProductno(oldPcomment.getProductno());
+		pcomment.setMemberno(oldPcomment.getMemberno());
+		dao.update(pcomment);
+		return pcomment;
+	}
+
+	@Transactional
+	public boolean updateProductComment(Integer pcommentno ,Integer pcommentstatus){
+		return dao.update(pcommentno,pcommentstatus);
 	}
 	
 	public Pcomment getOneProductComment(Integer pcommentno) {
@@ -64,5 +69,7 @@ public class PcommentService {
 	public boolean deleteProductComment(Integer pcommentno) {
 		return dao.delete(pcommentno);
 	}
+
+
 
 }
