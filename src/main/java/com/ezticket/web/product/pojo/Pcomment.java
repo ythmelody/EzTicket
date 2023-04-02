@@ -18,6 +18,7 @@ public class Pcomment implements java.io.Serializable{
 	private Integer pcommentstatus;
 	private Integer plike;
 
+
 	@ManyToOne
 	@JoinColumn(name ="memberno",insertable = false,updatable = false)
 	private Member member;

@@ -23,12 +23,12 @@ import java.util.List;
 @WebServlet("/ProductCommentReportServlet")
 public class ProductCommentReport extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private PreportService PreportSvc;
+	private PreportService preportSvc;
 
 	@Override
 	public void init() throws ServletException {
 		ApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
-		PreportSvc = applicationContext.getBean(PreportService.class);
+		preportSvc = applicationContext.getBean(PreportService.class);
 
 	}
        
@@ -40,10 +40,9 @@ public class ProductCommentReport extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
-		System.out.println(action);
+
 		if("productCommentRepostList".equals(action)){
-			List<Preport> preportList = PreportSvc.getAllProductReport();
-			System.out.println(preportList);
+			List<Preport> preportList = preportSvc.getAllProductReport();
 			Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
 			String json =gson.toJson(preportList);
 			response.setContentType("application/json");
@@ -52,6 +51,36 @@ public class ProductCommentReport extends HttpServlet {
 			pw.print(json);
 			pw.flush();
 		}
+
+
+		if("productOneCommentRepost".equals(action)){
+			Integer preportno =Integer.valueOf(request.getParameter("preportno"));
+			Preport preport = preportSvc.getOneProductReport(preportno);
+			Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
+			String json =gson.toJson(preport);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter pw = response.getWriter();
+			pw.print(json);
+			pw.flush();
+		}
+
+		if ("updateOneproductCommentReportStatus".equals(action)) {
+			Integer preportno = Integer.valueOf(request.getParameter("preportno"));
+			Integer preportstatus = Integer.valueOf(request.getParameter("preportstatus"));
+			Boolean updateOK =preportSvc.updateProductReport(preportno, preportstatus);
+			Gson gson = new Gson();
+			String json = gson.toJson(updateOK);
+			System.out.println("印出JSON"+json);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter pw = response.getWriter();
+			pw.print(json);
+			pw.flush();
+
+		}
+
+
 
 	}
 

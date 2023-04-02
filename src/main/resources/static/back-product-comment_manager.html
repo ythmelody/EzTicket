@@ -461,7 +461,7 @@
 				</div>
 				<div class="modal-body">
 					<div class="model-content main-form">
-						<input id="productno" type="text" value="" style="display: none">
+						<input id="preportno" type="text" value="" style="display: none">
 						<div class="form-group mt-30">
 							<label class="form-label">檢舉原因：</label>
 							<textarea id="rreason" class="form-textarea" disabled></textarea>
@@ -704,7 +704,7 @@
 
 
 		function displayPcommentReport(list) {
-			// $('#productCommentReport').html('');
+			$('#productCommentReport').html('');
 
 			for (let item of list) {
 				console.log(item);
@@ -722,13 +722,13 @@
 				$('#productCommentReport').append(`<tr>
 															<td>${item.preportdate}</td>
 															<td>${item.member.mname}</td>
-															<td>(寫死的)張小美</td>
+															<td>${item.pcomment.member.mname}</td>
 															<td>
 																<!-- <a href="#" target="_blank"> -->
 																<div style="width: 150px; height: 50px;">
 																	<p class="ellipsis" style="font-weight: 500;
 																		color: #000 !important; line-height: 50px;">
-																		(寫死的)保時捷姊新歌演唱會</p>
+																		${item.pcomment.product.pname}</p>
 																</div>
 																<!-- </a> -->
 															</td>
@@ -758,9 +758,63 @@
 															</td>
 															<td>${preportstatus}</td>
 														</tr>`);
-
 			}
 		}
+
+
+		// 點擊單一評論檢舉並顯示
+		function showreport(reportno) {
+			fetch('ProductCommentReportServlet', {
+				method: 'POST',
+				body: new URLSearchParams({
+					'preportno': reportno,
+					'action': "productOneCommentRepost"
+				})
+			}).then(resp => resp.json())
+				.then(item => {
+					//把前面有的值先清空避免吃到舊值
+					$('#preportno').val("");
+					$('#rreason').text("");
+					$('#rcomment').text("");
+
+					$('#preportno').val(item.preportno);
+					console.log(item.preportno);
+					$('#rreason').text(item.pwhy);
+					$('#rcomment').text(item.pcomment.pcommentcont);
+
+					if (item.preportstatus === 0) {
+						$("#rstatus>option[value='0']").prop("selected", true);
+					} else if (item.preportstatus === 1) {
+						$("#rstatus>option[value='1']").prop("selected", true);
+					} else {
+						$("#rstatus>option[value='2']").prop("selected", true);
+
+					}
+				})
+			return reportno;
+		}
+
+
+		// 修改單一檢舉狀態
+		function confirm_bad() {
+			fetch('ProductCommentReportServlet', {
+				method: 'POST',
+				body: new URLSearchParams({
+					'preportno': $('#preportno').val(),
+					'preportstatus': $('#rstatus').val(),
+					'action': "updateOneproductCommentReportStatus"
+				})
+			}).then((resp) => resp.json())
+				.then((item) => {
+					console.log(item);
+					if (item === true) {
+						fetchPcommentRoportList();
+					} else
+						alert("請重新更新狀態");
+				})
+		}
+
+
 
 	</script>
 

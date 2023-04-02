@@ -17,15 +17,7 @@ public class PreportDAOImpl implements PreportDAO {
 	private Session session;
 	@Override
 	public void insert(Preport preport) {
-		
-		try {
-			Transaction transaction = session.beginTransaction();
-			session.persist(preport);
-			transaction.commit();
-		} catch (Exception e) {
-			session.getTransaction().rollback();
-			e.printStackTrace();
-		}
+		session.persist(preport);
 	}
 
 	@Override
@@ -35,19 +27,11 @@ public class PreportDAOImpl implements PreportDAO {
 		   .append("preportstatus = :preportstatus ")
 		   .append("where preportno = :preportno");
 
-		
-		try {
-			Transaction transaction =session.beginTransaction();
 			Query<?> query= session.createQuery(hql.toString());
 			query.setParameter("pwhy",preport.getPwhy());
 			query.setParameter("preportstatus", preport.getPreportstatus());
 			query.setParameter("preportno", preport.getPreportno());
 			query.executeUpdate();
-			transaction.commit();
-		} catch (Exception e) {
-			session.getTransaction().rollback();
-			e.printStackTrace();
-		}
 		
 	}
 
