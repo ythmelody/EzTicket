@@ -277,39 +277,47 @@
 													<input class="form-control h_40" type="text" placeholder="搜尋商品編號"
 														value="" id="productno" name="productno">
 													<i class="uil uil-search"></i>
-													<button class="esv-btn me-2">查詢</button>
-													<input type="hidden" name="action" value="ProductSearchForm">
+
 												</div>
+												<label class="form-label mt-3 fs-6">上架日期*</label>
+												<div class="loc-group position-relative">
+													<input class="form-control h_50 datepicker-here" data-language="en"
+														type="text" placeholder="MM/DD/YYYY" value="" name="start_date"
+														data-date-format="yyyy-mm-dd 23:59:59" autocomplete="off">
+													<span class="absolute-icon"><i
+															class="fa-solid fa-calendar-days"></i></span>
+												</div>
+												<label class="form-label mt-3 fs-6">下架日期*</label>
+												<div class="loc-group position-relative">
+													<input class="form-control h_50 datepicker-here" data-language="en"
+														type="text" placeholder="MM/DD/YYYY" value="" name="end_date"
+														data-date-format="yyyy-mm-dd 23:59:59" autocomplete="off">
+													<span class="absolute-icon"><i
+															class="fa-solid fa-calendar-days"></i></span>
+												</div>
+												<label
+																				class="form-label mb-2 fs-14">選擇商品狀態*</label>
+																			<input id="c1" type="radio" name="pstatus"> 上架中
+																				<input id="c2" type="radio" name="pstatus"> 已下架
+												<input type="hidden" name="action" value="ProductSearchForm">
+												<button class="esv-btn me-2">查詢</button>
 											</FORM>
 										</div>
 									</div>
 
-									<div class="rs ms-auto mt_r4">
-										<div class="nav custom2-tabs btn-group" role="tablist">
-											<button class="tab-link active" data-bs-toggle="tab"
-												data-bs-target="#all-tab" type="button" role="tab"
-												aria-controls="all-tab" aria-selected="true">上架商品 (<span
-													class="total_event_counter">1</span>)</button>
-											<button class="tab-link" data-bs-toggle="tab" data-bs-target="#online-tab"
-												type="button" role="tab" aria-controls="online-tab"
-												aria-selected="false">已下架商品 (<span
-													class="total_event_counter">0</span>)</button>
-											<!-- <button class="tab-link" data-bs-toggle="tab" data-bs-target="#venue-tab" type="button" role="tab" aria-controls="venue-tab" aria-selected="false">Venue Event (<span class="total_event_counter">1</span>)</button> -->
-										</div>
-									</div>
 								</div>
 							</div>
 						</div>
 						<div class="event-list">
-							<div class="tab-content">
-								<div class="tab-pane fade show active" id="all-tab" role="tabpanel">
+							<!-- <div class="tab-content"> -->
+								<!-- <div class="tab-pane fade show active" id="all-tab" role="tabpanel"> -->
 									<div class="main-card mt-4">
 										<div class="contact-list" id="productList">
 											<!-- 上架商品標籤顯示區 -->
 										</div>
 									</div>
-								</div>
-								<div class="tab-pane fade active" id="online-tab" role="tabpanel">
+								<!-- </div> -->
+								<!-- <div class="tab-pane fade active" id="online-tab" role="tabpanel">
 									<div class="main-card d-none mt-4">
 										<div
 											class="d-flex align-items-center justify-content-center flex-column min-height-430">
@@ -320,13 +328,13 @@
 										</div>
 									</div>
 									<div class="main-card mt-4">
-										<div class="contact-list" id="productList_off">
+										<div class="contact-list" id="productList_off"> -->
 											<!-- 下架商品標籤顯示區 -->
-										</div>
+										<!-- </div>
 									</div>
-								</div>
+								</div> -->
 
-							</div>
+							<!-- </div> -->
 						</div>
 					</div>
 				</div>
@@ -421,6 +429,8 @@
 					'pname': $("[name='pname']").val(),
 					'ptag': $("[name='ptag']").val(),
 					'productno': $("[name='productno']").val(),
+					'start_date': $("[name='start_date']").val(),
+					'end_date': $("[name='end_date']").val(),
 					'action': $("[name='action']").val()
 				}),
 				headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
@@ -429,7 +439,9 @@
 			})
 				.then(resp => resp.json())
 				.then(list => {
+					productList.innerHTML = '';
 					for (let item of list) {
+
 						let image = item.pimgts && item.pimgts[0] && item.pimgts[0].pimgno;
 						if (image === undefined) { image = 70001; }
 
@@ -504,6 +516,8 @@
 	<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 	<script src="js/custom.js"></script>
 	<script src="js/night-mode.js"></script>
+	<script src="js/datepicker.min.js"></script>
+	<script src="js/i18n/datepicker.en.js"></script>
 
 </body>
 

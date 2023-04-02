@@ -44,6 +44,7 @@ public class ProductInfoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
 
         //前台僅顯示上架商品
@@ -76,8 +77,7 @@ public class ProductInfoServlet extends HttpServlet {
 
 
 
-        Gson gson = new Gson();
-        PrintWriter pw = response.getWriter();
+
 
 
         //商品複合查詢
@@ -85,11 +85,7 @@ public class ProductInfoServlet extends HttpServlet {
             Map<String, String[]> map = request.getParameterMap(); //將得到的資料轉成map
             System.out.println("我有跑進來ProductSearchForm" + map);
             List<Product> productList = productSvc.getAllByproductSearch(map); //轉交進行複合查詢
-            String productListJson = gson.toJson(productList);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            pw.print(productListJson);
-            pw.flush();
+            list2json(productList, response);
         }
     }
 

@@ -2,6 +2,7 @@ package com.ezticket.web.product.controller;
 
 
 import com.ezticket.web.product.pojo.Pcomment;
+import com.ezticket.web.product.pojo.Product;
 import com.ezticket.web.product.service.PcommentService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -16,6 +17,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet("/ProductCommentServlet")
 public class ProductCommentServlet extends HttpServlet {
@@ -84,7 +86,14 @@ public class ProductCommentServlet extends HttpServlet {
             PrintWriter pw = response.getWriter();
             pw.print(json);
             pw.flush();
+        }
 
+        //商品複合查詢
+        if ("CommentSearch".equals(action)) {
+            Map<String, String[]> map = request.getParameterMap(); //將得到的資料轉成map
+            System.out.println("我有跑進來CommentSearch" + map);
+            List<Pcomment> commentList = pcommentSvc.getAllBySearch(map); //轉交進行複合查詢
+            list2json(commentList, response);
         }
 
 

@@ -206,14 +206,19 @@ public class ProductDAOImpl implements ProductDAO {
             predicate = builder.equal(root.get(columnName), Integer.valueOf(value));
         else if ("pname".equals(columnName) || "ptag".equals(columnName)) {
             predicate = builder.like(root.get(columnName), "%" + value + "%");
-        } else if ("start_date".equals(columnName)) {
+        }
+        else if ("start_date".equals(columnName)) {
+            System.out.println("input start_date: " + value);
+            System.out.println("start_date to timestamp: " + java.sql.Timestamp.valueOf(value));
             predicate = builder.or(
-                    builder.greaterThanOrEqualTo(root.get("psdate"), java.sql.Timestamp.valueOf(value)),
-                    builder.greaterThanOrEqualTo(root.get("pedate"), java.sql.Timestamp.valueOf(value))
+                    builder.greaterThanOrEqualTo(root.get("psdate"), java.sql.Timestamp.valueOf(value))
+//                    builder.greaterThanOrEqualTo(root.get("pedate"), java.sql.Timestamp.valueOf(value))
             );
         } else if ("end_date".equals(columnName)) {
+            System.out.println("input end_date: " + value);
+            System.out.println("end_date to timestamp: " + java.sql.Timestamp.valueOf(value));
             predicate = builder.or(
-                    builder.lessThanOrEqualTo(root.get("psdate"), java.sql.Timestamp.valueOf(value)),
+//                    builder.lessThanOrEqualTo(root.get("psdate"), java.sql.Timestamp.valueOf(value)),
                     builder.lessThanOrEqualTo(root.get("pedate"), java.sql.Timestamp.valueOf(value))
             );
         }

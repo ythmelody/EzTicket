@@ -1,6 +1,7 @@
 package com.ezticket.web.product.service;
 
 import com.ezticket.web.product.pojo.Pcomment;
+import com.ezticket.web.product.pojo.Product;
 import com.ezticket.web.product.repository.PcommentDAO;
 import com.ezticket.web.product.repository.Impl.PcommentDAOImpl;
 import jakarta.transaction.Transactional;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PcommentService {
@@ -70,6 +72,8 @@ public class PcommentService {
 		return dao.delete(pcommentno);
 	}
 
-
+	public List<Pcomment> getAllBySearch(Map<String, String[]> map) {
+		return dao.getAll(map);
+	}
 
 }

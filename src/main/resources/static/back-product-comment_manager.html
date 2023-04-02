@@ -276,29 +276,29 @@
 										<div class="form-group">
 											<div class="relative-input position-relative">
 												<input id="showName" class="form-control h_40" type="text"
-													placeholder="搜尋商品" value="" onblur="search()">
+													placeholder="搜尋商品" value="" name="pname">
 												<i class="uil uil-search"></i>
 											</div>
 										</div>
 									</div>
-									<div class="rs ms-auto mt-4 mt_r4" id="reload">
+									<!-- <div class="rs ms-auto mt-4 mt_r4" id="reload">
 										<a href="#" class="pe-4 w-100 ps-4 text-center co-main-btn h_40 d-inline-block"
 											onclick="refresh()">
 											<i class="fa-solid fa-arrow-rotate-right me-3"></i>重新整理</a>
-									</div>
+									</div> -->
 								</div>
 								<div class="main-form mt-4">
 									<div class="row g-3">
-										<div class="col-lg-3 col-md-6">
+										<!-- <div class="col-lg-3 col-md-6">
 											<div class="form-group">
 												<select id="showSelector" class="form-select" data-size="5"
 													data-live-search="true" name="productno">
 												</select>
 											</div>
-										</div>
+										</div> -->
 										<div class="col-lg-3 col-md-6">
 											<div class="form-group">
-												<select id="statusSelector" name="productno"
+												<select id="statusSelector" name="pcommentstatus"
 													class="form-select"></select>
 												<!-- 評論狀態選單顯示 -->
 											</div>
@@ -510,52 +510,59 @@
 		});
 
 
-		//點選重新載入顯示新的頁面
-		function refresh() {
-			if ($('#allCommentTab').attr('aria-selected') == 'true')
-				fetchPcommentList();
-			else {
-				reportbtn();
-			}
-		}
-
 		//載入所有評論
 		function fetchPcommentList() {
 
 			// 選單(狀態)呈現
 			$('#statusSelector').html(`
-                <option value="all" selected>所有狀態</option>
+                <option value="" selected>所有狀態</option>
                 <option value="-1">取消顯示</option>
                 <option value="0">正常顯示</option>
                 <option value="1">置頂</option>
             `);
 
-			// 選單()呈現
-			$('#showSelector').html(`
-                <option value="all" selected>所有節目</option>
-            `);
-
-			// 選單(節目)呈現 - 動態 →還不知道抓出來的是甚麼資料
-			// fetch('acomment/ACommentANames')
-			// 	.then((resp) => resp.json())
-			// 	.then((jsondata) => {
-			// 		for (let i of jsondata) {
-			// 			document.getElementById('showSelector').innerHTML += `
-			//                 <option value="${i[0]}">${i[1]}</option>
-			//             `
-			// 		}
-			// 	})
-
 
 			fetch('ProductCommentServlet', {
 				method: 'POST',
 				body: new URLSearchParams({
-					'action': "productCommentList"
+					'action': "CommentSearch"
 				})
 			}).then(resp => resp.json())
 				.then(list => {
 					displayPcomments(list);
 				})
+
+			$('#showName').keypress(function () {
+				fetch('ProductCommentServlet', {
+					method: "POST",
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					body: new URLSearchParams({
+						'pname': $("[name='pname']").val(),
+						'pcommentstatus': $("[name='pcommentstatus']").val(),
+						'action': "CommentSearch"
+					}),
+				})
+					.then((resp) => resp.json())
+					.then((list) => {
+						displayPcomments(list);
+					})
+			});
+
+			$('#statusSelector').change(function () {
+				fetch('ProductCommentServlet', {
+					method: "POST",
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					body: new URLSearchParams({
+						'pname': $("[name='pname']").val(),
+						'pcommentstatus': $("[name='pcommentstatus']").val(),
+						'action': "CommentSearch"
+					}),
+				})
+					.then((resp) => resp.json())
+					.then((list) => {
+						displayPcomments(list);
+					})
+			});
 
 		}
 
@@ -674,9 +681,9 @@
 				`);
 
 			// 選單(商品)呈現
-			$('#showSelector').html(`
-			<option value="all" selected>所有商品</option>
-		`);
+			// 	$('#showSelector').html(`
+			// 	<option value="all" selected>所有商品</option>
+			// `);
 
 			// 選單(節目)呈現 - 動態 →還不知道抓出來的是甚麼資料
 			// fetch('acomment/ACommentANames')
@@ -760,7 +767,6 @@
 														</tr>`);
 			}
 		}
-
 
 		// 點擊單一評論檢舉並顯示
 		function showreport(reportno) {
