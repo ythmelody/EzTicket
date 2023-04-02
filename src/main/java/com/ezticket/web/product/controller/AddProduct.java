@@ -57,15 +57,12 @@ public class AddProduct extends HttpServlet {
 		
 		
 		//多張圖片上傳
-//		PimgtService pimgtService =new PimgtService();
 		Integer productno = product.getProductno();
 		Collection<Part> parts = request.getParts();
-//		System.out.println(parts);
+
 		for (Part part : parts) {
 			String filename = part.getSubmittedFileName();
-//			if (filename != null) {
-//				System.out.println("filename: " + filename + " length: " + filename.length());
-//			}
+
 			if (filename!= null  && filename.length()!=0){
 				InputStream in = part.getInputStream();
 				byte[] buf = new byte[in.available()];   // 也可以用byte[] buf = in.readAllBytes();  // Java 9 的新方法

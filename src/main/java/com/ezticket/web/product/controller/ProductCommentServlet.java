@@ -43,7 +43,7 @@ public class ProductCommentServlet extends HttpServlet {
 
         }
 
-        //前台還沒改成這個寫法
+        //取得單一商品所有評論(用於前端商品單一詳情)
         if ("oneProductCommentList".equals(action)) {
             Integer productno = Integer.valueOf(request.getParameter("productno"));
             List<Pcomment> pcommentList = pcommentSvc.getAllProductCommentOfOneProduct(productno);
