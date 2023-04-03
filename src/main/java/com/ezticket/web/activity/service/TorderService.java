@@ -25,7 +25,7 @@ public class TorderService {
                 .map(this::entityToDTO)
                 .collect(Collectors.toList());
     }
-    public Optional<TorderDto> getOneList(Integer torderNo){
+    public Optional<TorderDto> findById(Integer torderNo){
         return torderRepository.findById(torderNo).map(this::entityToDTO);
     }
 

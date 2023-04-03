@@ -19,10 +19,10 @@ public class TorderController {
 
         return torderService.findAll();
     }
-    @GetMapping("/ListOne")
-    public Optional<TorderDto> getOneList(@RequestParam Integer torderNo){
+    @GetMapping("/findById")
+    public Optional<TorderDto> findById(@RequestParam Integer torderNo){
 
-        return torderService.getOneList(torderNo);
+        return torderService.findById(torderNo);
     }
 
 

@@ -354,6 +354,7 @@
                       <div class="form-group">
                         <div class="relative-input position-relative">
                           <input
+                            id="search"
                             class="form-control h_40"
                             type="text"
                             placeholder="搜尋節目"
@@ -365,17 +366,7 @@
                     </div>
                     <div style="margin-left: 20px">
                       <div class="nav custom2-tabs btn-group" role="tablist">
-                        <button
-                          class="tab-link active"
-                          data-bs-toggle="tab"
-                          data-bs-target="#all-tab"
-                          type="button"
-                          role="tab"
-                          aria-controls="all-tab"
-                          aria-selected="true"
-                        >
-                          Search <span class="total_event_counter"></span>
-                        </button>
+             
                       </div>
                     </div>
                   </div>
@@ -388,8 +379,88 @@
                     id="all-tab"
                     role="tabpanel"
                   >
+                    <div class="main-card mt-4" id="listTab">
+                   
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="online-tab" role="tabpanel">
+                    <div class="main-card d-none mt-4">
+                      <div
+                        class="d-flex align-items-center justify-content-center flex-column min-height-430"
+                      >
+                        <div class="event-list-icon">
+                          <img src="images/calendar.png" alt="" />
+                        </div>
+                        <p class="font-16 mt-4 text-light3">No Event found</p>
+                      </div>
+                    </div>
                     <div class="main-card mt-4">
-                      <div class="contact-list">
+         
+                    </div>
+                  </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+	  <div style="display: flex; justify-content: space-evenly">
+		<input type="button" id="firstPage" value="第一頁" />
+		<input type="button" id="btnPrev" value="上一頁" />
+		<div style="display: flex; justify-content: space-evenly">
+		  <a href="">1 </a><a href="">2 </a><a href="" > 3</a>
+		</div>
+		<input type="button" id="btnNext" value="下一頁" />
+		<input  style="margin: auto;" type="button" id="lastPage" value="最後一頁" />
+	  </div>
+    </div>
+    <div style="display: flex;align-items: center;"> 
+    <!-- Body End -->
+
+    <script src="js/vertical-responsive-menu.min.js"></script>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/OwlCarousel/owl.carousel.js"></script>
+    <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="js/night-mode.js"></script>
+    <script>
+      const listTab=document.querySelector("#listTab");
+       fetch("http://localhost:8085/Session/findAll")
+        .then((Response) => Response.json())
+        .then((data) => {
+          let str="";
+           let status=" ";
+          for(i of data){
+
+          
+            // url=URL.createObjectURL(i.activity.session.aimgt);
+          //  console.log(i.activity.session.aimg);
+         
+          // const bytesStr = atob(i.aimg);
+          // let len = bytesStr.length;
+          // const u8Array = new Uint8Array(len);
+          // while (len--) {
+          //   enc
+          //   u8Array[len] = bytesStr.charCodeAt(len);
+          //           }
+          //   const blob = new Blob([u8Array]);
+          //   const url = URL.createObjectURL(blob);
+          
+         
+          switch(i.activity.astatus){
+            case 0: status="未上架";
+            break;
+            case 1: status="上架中";
+            break;
+            case 2: status="已下架";
+            break;
+          }
+          
+          str+=`<div class="contact-list" >
                         <div
                           class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between"
                         >
@@ -397,10 +468,10 @@
                             class="d-md-flex align-items-center event-top-info"
                           >
                             <div class="card-event-img">
-                              <img src="images/event-imgs/img-7.jpg" alt="" />
+                              <img src=""alt="" />
                             </div>
                             <div class="card-event-dt">
-                              <h5>《黃明志大飛機世界巡迴演唱會》台北站</h5>
+                              <h5>${i.activity.aname}</h5>
                             </div>
                           </div>
                           <div class="dropdown">
@@ -440,234 +511,170 @@
                               <i class="fa-solid fa-location-dot"></i>
                             </span>
                             <p>狀態</p>
-                            <h6 class="coupon-status">上架中</h6>
+                            <h6 class="coupon-status">${status}</h6>
+                          </div>
+                          <div class="icon-box">
+                            <span class="icon">
+                              <i class="fa-solid fa-calendar-days"></i>
+                            </span>
+                            <p>活動時間</p>
+                            <h6 class="coupon-status">${i.sessionsTime}</h6>
                           </div>
                           <div class="icon-box">
                             <span class="icon">
                               <i class="fa-solid fa-calendar-days"></i>
                             </span>
                             <p>上架日期</p>
-                            <h6 class="coupon-status">2023/7/1</h6>
-                          </div>
-						  <div class="icon-box">
+                            <h6 class="coupon-status">${i.activity.asdate}</h6>
+                          </div>         
+                                         
+						              <div class="icon-box">
                             <span class="icon">
                               <i class="fa-solid fa-calendar-days"></i>
                             </span>
                             <p>下架日期</p>
-                            <h6 class="coupon-status">2023/7/1</h6>
+                            <h6 class="coupon-status">${i.activity.aedate}</h6>
                           </div>
                           <div class="icon-box">
-                            <span class="icon">
+                            <span class="icon" >
                               <i class="fa-solid fa-ticket"></i>
                             </span>
                             <p>票券張數</p>
-                            <h6 class="coupon-status">250</h6>
+                            <h6 class="coupon-status">站${i.maxStandingQty}<br>座${i.maxSeatsQty}<br>——————<br>共${i.maxSeatsQty+i.maxStandingQty}</h6>
                           </div>
                           <div class="icon-box">
                             <span class="icon">
                               <i class="fa-solid fa-tag"></i>
                             </span>
                             <p>已售數量</p>
-                            <h6 class="coupon-status">20</h6>
+                            <h6 class="coupon-status">站${i.standingQty}<br>座${i.seatsQty}<br>——————<br>共${i.seatsQty+i.standingQty}</h6>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tab-pane fade" id="online-tab" role="tabpanel">
-                    <div class="main-card d-none mt-4">
-                      <div
-                        class="d-flex align-items-center justify-content-center flex-column min-height-430"
-                      >
-                        <div class="event-list-icon">
-                          <img src="images/calendar.png" alt="" />
-                        </div>
-                        <p class="font-16 mt-4 text-light3">No Event found</p>
-                      </div>
-                    </div>
-                    <div class="main-card mt-4">
-                      <div class="contact-list">
-                        <div
-                          class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between"
-                        >
-                          <div
-                            class="d-md-flex align-items-center event-top-info"
-                          >
-                            <div class="card-event-img">
-                              <img src="images/event-imgs/img-2.jpg" alt="" />
-                            </div>
-                            <div class="card-event-dt">
-                              <h5>Earrings Workshop with Bronwyn David</h5>
-                            </div>
-                          </div>
-                          <div class="dropdown">
-                            <button
-                              class="option-btn"
-                              type="button"
-                              data-bs-toggle="dropdown"
-                              aria-haspopup="true"
-                              aria-expanded="false"
-                            >
-                              <i class="fa-solid fa-ellipsis-vertical"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                              <a href="#" class="dropdown-item"
-                                ><i class="fa-solid fa-gear me-3"></i>Manage</a
-                              >
-                              <a href="#" class="dropdown-item"
-                                ><i class="fa-solid fa-eye me-3"></i>Preview
-                                Event</a
-                              >
-                              <a href="#" class="dropdown-item"
-                                ><i class="fa-solid fa-clone me-3"></i
-                                >Duplicate</a
-                              >
-                              <a href="#" class="dropdown-item delete-event"
-                                ><i class="fa-solid fa-trash-can me-3"></i
-                                >Delete</a
-                              >
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="bottom d-flex flex-wrap justify-content-between align-items-center p-4"
-                        >
-                          <div class="icon-box">
-                            <span class="icon">
-                              <i class="fa-solid fa-location-dot"></i>
-                            </span>
-                            <p>Status</p>
-                            <h6 class="coupon-status">Publish</h6>
-                          </div>
-                          <div class="icon-box">
-                            <span class="icon">
-                              <i class="fa-solid fa-calendar-days"></i>
-                            </span>
-                            <p>Starts on</p>
-                            <h6 class="coupon-status">30 Jun, 2022 10:00 AM</h6>
-                          </div>
-                          <div class="icon-box">
-                            <span class="icon">
-                              <i class="fa-solid fa-ticket"></i>
-                            </span>
-                            <p>Ticket</p>
-                            <h6 class="coupon-status">250</h6>
-                          </div>
-                          <div class="icon-box">
-                            <span class="icon">
-                              <i class="fa-solid fa-tag"></i>
-                            </span>
-                            <p>Tickets sold</p>
-                            <h6 class="coupon-status">20</h6>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tab-pane fade" id="venue-tab" role="tabpanel">
-                    <div class="main-card mt-4">
-                      <div class="contact-list">
-                        <div
-                          class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between"
-                        >
-                          <div
-                            class="d-md-flex align-items-center event-top-info"
-                          >
-                            <div class="card-event-img">
-                              <img src="images/event-imgs/img-7.jpg" alt="" />
-                            </div>
-                            <div class="card-event-dt">
-                              <h5>Tutorial on Canvas Painting for Beginners</h5>
-                            </div>
-                          </div>
-                          <div class="dropdown">
-                            <button
-                              class="option-btn"
-                              type="button"
-                              data-bs-toggle="dropdown"
-                              aria-haspopup="true"
-                              aria-expanded="false"
-                            >
-                              <i class="fa-solid fa-ellipsis-vertical"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                              <a href="#" class="dropdown-item"
-                                ><i class="fa-solid fa-gear me-3"></i>Manage</a
-                              >
-                              <a href="#" class="dropdown-item"
-                                ><i class="fa-solid fa-eye me-3"></i>Preview
-                                Event</a
-                              >
-                              <a href="#" class="dropdown-item"
-                                ><i class="fa-solid fa-clone me-3"></i
-                                >Duplicate</a
-                              >
-                              <a href="#" class="dropdown-item delete-event"
-                                ><i class="fa-solid fa-trash-can me-3"></i
-                                >Delete</a
-                              >
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="bottom d-flex flex-wrap justify-content-between align-items-center p-4"
-                        >
-                          <div class="icon-box">
-                            <span class="icon">
-                              <i class="fa-solid fa-location-dot"></i>
-                            </span>
-                            <p>Status</p>
-                            <h6 class="coupon-status">Publish</h6>
-                          </div>
-                          <div class="icon-box">
-                            <span class="icon">
-                              <i class="fa-solid fa-calendar-days"></i>
-                            </span>
-                            <p>Starts on</p>
-                            <h6 class="coupon-status">30 Jun, 2022 10:00 AM</h6>
-                          </div>
-                          <div class="icon-box">
-                            <span class="icon">
-                              <i class="fa-solid fa-ticket"></i>
-                            </span>
-                            <p>Ticket</p>
-                            <h6 class="coupon-status">250</h6>
-                          </div>
-                          <div class="icon-box">
-                            <span class="icon">
-                              <i class="fa-solid fa-tag"></i>
-                            </span>
-                            <p>Tickets sold</p>
-                            <h6 class="coupon-status">20</h6>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-	  <div style="display: flex; justify-content: space-evenly">
-		<input type="button" id="firstPage" value="第一頁" />
-		<input type="button" id="btnPrev" value="上一頁" />
-		<div style="display: flex; justify-content: space-evenly">
-		  <a href="">1 </a><a href="">2 </a><a href=""> 3</a>
-		</div>
-		<input type="button" id="btnNext" value="下一頁" />
-		<input type="button" id="lastPage" value="最後一頁" />
-	  </div>
-    </div>
-    <!-- Body End -->
+                      </div>`
 
-    <script src="js/vertical-responsive-menu.min.js"></script>
-    <script src="js/jquery-3.6.0.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/OwlCarousel/owl.carousel.js"></script>
-    <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-    <script src="js/custom.js"></script>
-    <script src="js/night-mode.js"></script>
+          
+        }
+          listTab.innerHTML=str;
+        })
+    
+        const search = document.querySelector("#search");
+        search.addEventListener("input", () => {
+        fetch(`http://localhost:8085/Session/findAll`)
+          .then((Response) => Response.json())
+          .then((data) => {
+            let str="";
+           let status="";
+            for(i of data){
+            if (search.value.match(i.activity.aname)){
+             
+              switch(i.activity.astatus){
+            case 0: status="未上架";
+            break;
+            case 1: status="上架中";
+            break;
+            case 2: status="已下架";
+            break;
+          }
+          
+              str+=`<div class="contact-list" >
+                        <div
+                          class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between"
+                        >
+                          <div
+                            class="d-md-flex align-items-center event-top-info"
+                          >
+                            <div class="card-event-img">
+                              <img src=""alt="" />
+                            </div>
+                            <div class="card-event-dt">
+                              <h5>${i.activity.aname}</h5>
+                            </div>
+                          </div>
+                          <div class="dropdown">
+                            <button
+                              class="option-btn"
+                              type="button"
+                              data-bs-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded="false"
+                            >
+                              <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                              <a href="#" class="dropdown-item"
+                                ><i class="fa-solid fa-gear me-3"></i>編輯活動</a
+                              >
+                              <a href="#" class="dropdown-item"
+                                ><i class="fa-solid fa-eye me-3"></i>預覽活動
+                                </a
+                              >
+                              <a href="#" class="dropdown-item"
+                                ><i class="fa-solid fa-clone me-3"></i
+                                >複製活動</a
+                              >
+                              <a href="#" class="dropdown-item delete-event"
+                                ><i class="fa-solid fa-trash-can me-3"></i
+                                >刪除活動</a
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="bottom d-flex flex-wrap justify-content-between align-items-center p-4"
+                         style="flex-wrap: nowrap!important;">
+                          <div class="icon-box">
+                            <span class="icon">
+                              <i class="fa-solid fa-location-dot"></i>
+                            </span>
+                            <p>狀態</p>
+                            <h6 class="coupon-status">${status}</h6>
+                          </div>
+                          <div class="icon-box">
+                            <span class="icon">
+                              <i class="fa-solid fa-calendar-days"></i>
+                            </span>
+                            <p>活動時間</p>
+                            <h6 class="coupon-status">${i.sessionsTime}</h6>
+                          </div>
+                          <div class="icon-box">
+                            <span class="icon">
+                              <i class="fa-solid fa-calendar-days"></i>
+                            </span>
+                            <p>上架日期</p>
+                            <h6 class="coupon-status">${i.activity.asdate}</h6>
+                          </div>         
+                                         
+						              <div class="icon-box">
+                            <span class="icon">
+                              <i class="fa-solid fa-calendar-days"></i>
+                            </span>
+                            <p>下架日期</p>
+                            <h6 class="coupon-status">${i.activity.aedate}</h6>
+                          </div>
+                          <div class="icon-box">
+                            <span class="icon" >
+                              <i class="fa-solid fa-ticket"></i>
+                            </span>
+                            <p>票券張數</p>
+                            <h6 class="coupon-status">站${i.maxStandingQty}<br>座${i.maxSeatsQty}<br>——————<br>共${i.maxSeatsQty+i.maxStandingQty}</h6>
+                          </div>
+                          <div class="icon-box">
+                            <span class="icon">
+                              <i class="fa-solid fa-tag"></i>
+                            </span>
+                            <p>已售數量</p>
+                            <h6 class="coupon-status">站${i.standingQty}<br>座${i.seatsQty}<br>——————<br>共${i.seatsQty+i.standingQty}</h6>
+                          </div>
+                        </div>
+                      </div>`
+                    }
+            }
+            listTab.innerHTML=str;
+          }
+          
+          )
+          
+        })
+    </script>
   </body>
 </html>

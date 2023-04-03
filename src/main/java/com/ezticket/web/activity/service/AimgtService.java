@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,13 +25,18 @@ public List<AimgtDto> findAll(){
             .map(this::entityToDTO)
             .collect(Collectors.toList());
 
-}
+
+    }
 
 
     private AimgtDto entityToDTO(Aimgt aimgt){
         AimgtDto aimgtDto = new AimgtDto();
         aimgtDto= modelMapper.map(aimgt,AimgtDto.class);
+//        aimgtDto.setAimg(aimgt.getAimg());
        return aimgtDto;
    }
 
+    public Optional<AimgtDto> findById(Integer aimgNo) {
+    return aimgtRepository.findById(aimgNo).map(this::entityToDTO);
+    }
 }

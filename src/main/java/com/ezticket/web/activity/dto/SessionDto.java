@@ -1,12 +1,15 @@
 package com.ezticket.web.activity.dto;
 
 import com.ezticket.web.activity.pojo.Activity;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import java.util.Calendar;
 @Data
 public class SessionDto {
     private Integer sessionNo;
-
+    @JsonFormat(pattern = "yyyy/MM/dd kk:mm", timezone = "GMT+8")
     private Calendar sessionsTime;
 
     private Calendar sessioneTime;
@@ -19,5 +22,7 @@ public class SessionDto {
 
     private Integer standingQty;
 
-    private Activity activityNo;
+    private Integer activityNo;
+
+    private Activity activity;
 }

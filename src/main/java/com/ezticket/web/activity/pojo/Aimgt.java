@@ -1,5 +1,6 @@
 package com.ezticket.web.activity.pojo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,11 +18,18 @@ public class Aimgt {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "AIMGNO")
     private  Integer aimgNo;
+    @Column(name = "ACTIVITYNO")
+    private Integer activityNo;
    @Column(name="AIMG")
-    private Blob aimg;
-//    @ManyToOne
-//    @JoinColumn(name = "AIMGNO")
-//    private Activity activity;
+    private byte[] aimg;
+    @Column(name="AIMGMAIN")
+   private Integer aimgMain;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "ACTIVITYNO",
+            insertable = false, updatable = false)
+    private Activity activity;
+
 
 
 

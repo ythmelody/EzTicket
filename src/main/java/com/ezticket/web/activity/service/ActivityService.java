@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,8 +24,14 @@ public class ActivityService {
                 .map(this::entityToDTO)
                 .collect(Collectors.toList());
     }
+    public Optional<ActivityDto> findByaName(String aName){
+        return activityRepository.findByaName(aName).map(this::entityToDTO);
 
+    }
     private ActivityDto entityToDTO(Activity activity){
-        return modelMapper.map(activity,ActivityDto.class);
+
+        ActivityDto activityDto = modelMapper.map(activity,ActivityDto.class);
+        activityDto.setActivityNo(activity.getActivityNo());
+        return activityDto;
     }
 }

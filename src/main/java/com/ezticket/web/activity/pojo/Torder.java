@@ -44,7 +44,6 @@ public class Torder {
 	private String tpaymentStatus;
 	@Column(name = "tprocessstatus")
 	private String tprocessStatus;
-
 	@ManyToOne
 	@JoinColumn(name = "MEMBERNO" ,insertable = false, updatable = false)
 	private Member member;
