@@ -210,7 +210,7 @@
 							</div>
 							<ul class="navbar-nav justify-content-end flex-grow-1 pe_5">
 								<li class="nav-item">
-									<a class="nav-link" href="backuser_profile_view.html">
+									<a class="nav-link" href="back-users-profile.html">
 										<i class="fa-solid fa-right-left me-2"></i>使用者管理
 									</a>
 								</li>
@@ -265,8 +265,8 @@
 										</div>
 									</li>
 									<li class="profile-link">
-										<!-- <a href="backuser_profile_view.html" class="link-item">我的帳戶</a> -->
-										<a href="sign_in.html" class="link-item">登出</a>
+										<!-- <a href="back-users-profile.html" class="link-item">我的帳戶</a> -->
+										<a href="front-users-mem-sign-in.html" class="link-item">登出</a>
 									</li>
 								</ul>
 							</li>
@@ -289,7 +289,7 @@
 			<div class="left_section">
 				<ul>
 					<li class="menu--item">
-						<a href="my_organisation_dashboard_host.html" class="menu--link" title="Members"
+						<a href="back-users-host.html" class="menu--link" title="Members"
 							data-bs-toggle="tooltip" data-bs-placement="right">
 							<!--class="active" 就是點選menu後按鈕呈現深色背景的狀態-->
 							<i class="fa-solid fa-square-plus menu--icon"></i>
@@ -297,7 +297,7 @@
 						</a>
 					</li>
 					<li class="menu--item">
-						<a href="my_organisation_dashboard_member.html" class="menu--link  active" title="Members"
+						<a href="back-users-member.html" class="menu--link  active" title="Members"
 							data-bs-toggle="tooltip" data-bs-placement="right">
 							<!--class="active" 就是點選menu後按鈕呈現深色背景的狀態-->
 							<i class="fa-solid fa-user-group menu--icon"></i>
@@ -305,7 +305,7 @@
 						</a>
 					</li>
 					<li class="menu--item">
-						<a href="my_organisation_dashboard_my_team.html" class="menu--link team-lock" title="My Team"
+						<a href="back-users-my-team.html" class="menu--link team-lock" title="My Team"
 							data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-solid fa-user-group menu--icon"></i>
 							<span class="menu--label">後台帳號管理</span>
@@ -416,7 +416,7 @@
 </body>
 <script>
 	const selectElement = document.querySelector('.selectValue');
-	fetch('./my_organisation_dashboard_member/ga')
+	fetch('./back-users-member/ga')
 		.then(response => response.json())
 		.then(data => {
 			const table = document.querySelector('.table tbody');

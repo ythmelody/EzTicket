@@ -1,13 +1,11 @@
 package com.ezticket.web.users.dto;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Map;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -21,4 +19,6 @@ public class RoleDTO {
     private Integer rolestatus;
 
     private Map<Integer, String> funcs;
+
+    private Map<Integer,String> nofuncs;
 }

@@ -30,7 +30,6 @@
 	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
 
-
 	<!-- style.css 2428行改過margin 原為:-70 -->
 	<style>
 		form label.lab {
@@ -53,9 +52,7 @@
 			/* 設定輸入框的寬度 */
 			border: 1px solid gray;
 		}
-
-		#account,
-		#role {
+		#email {
 			border: 1px solid white;
 		}
 
@@ -65,13 +62,14 @@
 			display: inline-block;
 			margin-bottom: 10px;
 			margin-left: 130px;
+
 		}
 	</style>
 </head>
 
 <body class="d-flex flex-column h-100">
 	<!-- Follow People Model Start-->
-	<!-- <div class="modal fade" id="FFModal" tabindex="-1" aria-labelledby="FFModalLabel" aria-hidden="true">
+	<div class="modal fade" id="FFModal" tabindex="-1" aria-labelledby="FFModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-scrollable">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -148,7 +146,7 @@
 				</div>
 			</div>
 		</div>
-	</div> -->
+	</div>
 	<!-- Follow People Model End-->
 	<!-- About Details Model Start-->
 	<div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true">
@@ -370,22 +368,15 @@
 							</button>
 						</div>
 						<div class="offcanvas-body">
-							<!-- <div class="offcanvas-top-area">
+							<div class="offcanvas-top-area">
 								<div class="create-bg">
 									<a href="create.html" class="offcanvas-create-btn">
 										<i class="fa-solid fa-calendar-days"></i>
 										<span>Create Event</span>
 									</a>
 								</div>
-							</div> -->
-							<ul class="navbar-nav justify-content-end flex-grow-1 pe_5"> <!--新加的-->
-								<li class="nav-item">
-									<a class="nav-link" href="my_organisation_dashboard.html">
-										<i class="fa-solid fa-right-left me-2"></i>回到後台
-									</a>
-								</li>
-							</ul>
-							<!-- <ul class="navbar-nav justify-content-end flex-grow-1 pe_5">
+							</div>
+							<ul class="navbar-nav justify-content-end flex-grow-1 pe_5">
 								<li class="nav-item">
 									<a class="nav-link active" aria-current="page" href="index.html">Home</a>
 								</li>
@@ -436,9 +427,9 @@
 										<li>
 											<a class="dropdown-item submenu-item" href="#">Other Pages</a>
 											<ul class="submenu dropdown-menu">
-												<li><a class="dropdown-item pe-5" href="sign_in.html">Sign In</a></li>
-												<li><a class="dropdown-item pe-5" href="sign_up.html">Sign Up</a></li>
-												<li><a class="dropdown-item pe-5" href="forgot_password.html">Forgot
+												<li><a class="dropdown-item pe-5" href="front-users-mem-sign-in.html">Sign In</a></li>
+												<li><a class="dropdown-item pe-5" href="front-users-sign-up.html">Sign Up</a></li>
+												<li><a class="dropdown-item pe-5" href="front-users-forgot-pwd.html">Forgot
 														Password</a></li>
 												<li><a class="dropdown-item pe-5" href="about_us.html">About Us</a></li>
 												<li><a class="dropdown-item pe-5" href="checkout.html">Checkout</a></li>
@@ -488,7 +479,7 @@
 										<li><a class="dropdown-item" href="privacy_policy.html">Privacy Policy</a></li>
 									</ul>
 								</li>
-							</ul> -->
+							</ul>
 						</div>
 						<div class="offcanvas-footer">
 							<div class="offcanvas-social">
@@ -505,12 +496,12 @@
 					</div>
 					<div class="right-header order-2">
 						<ul class="align-self-stretch">
-							<!-- <li>
+							<li>
 								<a href="create.html" class="create-btn btn-hover">
 									<i class="fa-solid fa-calendar-days"></i>
 									<span>Create Event</span>
 								</a>
-							</li> -->
+							</li>
 							<li class="dropdown account-dropdown">
 								<a href="#" class="account-link" role="button" id="accountClick"
 									data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
@@ -529,9 +520,8 @@
 										</div>
 									</li>
 									<li class="profile-link">
-										<!-- <a href="my_organisation_dashboard.html" class="link-item">我的後台</a> -->
 										<!-- <a href="organiser_profile_view.html" class="link-item">My Profile</a> -->
-										<a href="sign_in.html" class="link-item">登出</a>
+										<a href="front-users-mem-sign-in.html" class="link-item">登出</a>
 									</li>
 								</ul>
 							</li>
@@ -550,8 +540,8 @@
 	<!-- Header End-->
 	<!-- Body Start-->
 	<div class="wrapper">
-		<div class="profile-banner">
-			<!-- <div class="hero-cover-block">
+		<!-- <div class="profile-banner">
+			<div class="hero-cover-block">
 				<div class="hero-cover">
 					<div class="hero-cover-img"></div>
 				</div>
@@ -584,20 +574,28 @@
 									<h4 class="user-name">John Doe<span class="verify-badge"><i
 												class="fa-solid fa-circle-check"></i></span></h4>
 								</div>
-								<!-- <div class="ff-block" style="display: inline-block;">
+								<div class="ff-block" style="display: inline-block;">
 									<a href="#" class="" role="button" data-bs-toggle="modal"
 										data-bs-target="#FFModal"><span>0</span>追蹤商品</a>
-								</div> -->
+								</div>
 								<div class="user-btns">
 									<a href="my_organisation_dashboard.html"
 										class="co-main-btn co-btn-width min-width d-inline-block h_40">有需要可以拿來用的按鈕連結</a>
+								</div>
+								<div class="user-btns">
+									<a href="my_organisation_dashboard.html"
+										class="co-main-btn co-btn-width min-width d-inline-block h_40">Ex.我的票夾</a>
+								</div>
+								<div class="user-btns">
+									<a href="my_organisation_dashboard.html"
+										class="co-main-btn co-btn-width min-width d-inline-block h_40">Ex.聯絡表單之類的</a>
 								</div>
 							</div>
 						</div>
 						<div class="col-xl-8 col-lg-7 col-md-12">
 							<div class="right-profile">
 								<div class="profile-tabs">
-									<!-- <ul class="nav nav-pills nav-fill p-2 garren-line-tab" id="myTab" role="tablist">
+									<ul class="nav nav-pills nav-fill p-2 garren-line-tab" id="myTab" role="tablist">
 										<li class="nav-item">
 											<a class="nav-link active" id="feed-tab" data-bs-toggle="tab" href="#feed"
 												role="tab" aria-controls="feed" aria-selected="true"><i
@@ -618,25 +616,23 @@
 												role="tab" aria-controls="orders" aria-selected="false"><i
 													class="fa-solid fa-box"></i>票券訂單</a>
 										</li>
-									</ul> -->
+									</ul>
 									<div class="tab-content" id="myTabContent">
 										<div class="tab-pane fade active show" id="feed" role="tabpanel"
 											aria-labelledby="feed-tab">
 											<div class="nav my-event-tabs mt-4" role="tablist">
 												<button class="event-link active" data-bs-toggle="tab"
 													data-bs-target="#saved" type="button" role="tab"
-													aria-controls="saved" aria-selected="true" style="width: 50%;">
-													<!-- 修改style="width: 50%;-->
+													aria-controls="saved" aria-selected="true">
 													<span>個人資料</span></button>
 												<button class="event-link" data-bs-toggle="tab"
 													data-bs-target="#organised" type="button" role="tab"
-													aria-controls="organised" aria-selected="false" style="width: 50%;">
-													<!-- 修改style="width: 50%;-->
+													aria-controls="organised" aria-selected="false">
 													<span>修改密碼</span></button>
-												<!-- <button class="event-link" data-bs-toggle="tab"
+												<button class="event-link" data-bs-toggle="tab"
 													data-bs-target="#attending" type="button" role="tab"
 													aria-controls="attending" aria-selected="false">
-													<span>備用收件人</span></button> -->
+													<span>備用收件人</span></button>
 											</div>
 											<div class="tab-content">
 												<div class="tab-pane fade show active" id="saved" role="tabpanel">
@@ -647,9 +643,8 @@
 																	<div class="card-event-dt">
 																		<form>
 																			<label class="lab"
-																				for="account">後台帳號：</label>
-																			<input type="text" id="account"
-																				name="account"
+																				for="email">E-Mail帳號：</label>
+																			<input type="email" id="email" name="email"
 																				readonly="readonly"><br><br>
 
 																			<label class="lab" for="name">姓名：</label>
@@ -657,19 +652,38 @@
 																				required><br><br>
 
 																			<label class="lab"
-																				for="email">E-mail：</label>
-																			<input type="email" id="email" name="email"
-																				required><br><br>
+																				for="nickname">暱稱：</label>
+																			<input type="text" id="nickname"
+																				name="nickname" required><br><br>
+
+																			<label class="lab">性別：</label>
+																			<input type="radio" id="male" name="gender"
+																				value="male" required>
+																			<label for="male">男性</label>
+																			<input type="radio" id="female"
+																				name="gender" value="female" required>
+																			<label for="female">女性</label>
+																			<input type="radio" id="unknow"
+																				name="gender" value="unknow" required>
+																			<label for="unknow">不便透露</label><br><br>
+
+																			<label class="lab"
+																				for="birthday">生日：</label>
+																			<input type="date" id="birthday"
+																				name="birthday" required><br><br>
 
 																			<label class="lab" for="phone">手機號碼：</label>
 																			<input type="tel" id="phone" name="phone"
 																				required><br><br>
 
 																			<label class="lab"
-																				for="role">後台角色：</label>
-																			<input type="text" id="role"
-																				name="role"
-																				readonly="readonly"><br><br>
+																				for="alt_phone">備用電話：</label>
+																			<input type="tel" id="alt_phone"
+																				name="alt_phone"><br><br>
+
+																			<label class="lab" for="address">地址：</label>
+																			<input type="text" id="address"
+																				name="address" required><br><br>
 
 																			<div>
 																				<button id="btn1" type="button"
@@ -690,18 +704,12 @@
 																	<div class="card-event-dt">
 																		<form>
 																			<label class="lab"
-																				for="account">後台帳號：</label>
-																			<input type="text" id="account"
-																				name="account"
-																				readonly="readonly"><br><br>
-
-																			<label class="lab"
-																				for="password">舊密碼:</label>
+																				for="oldpassword">舊密碼:</label>
 																			<input type="password" id="oldpassword"
 																				name="oldpassword" required><br><br>
 
 																			<label class="lab"
-																				for="password">新密碼:</label>
+																				for="newpassword">新密碼:</label>
 																			<input type="password" id="newpassword"
 																				name="newpassword"><br><br>
 
@@ -1235,8 +1243,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
-
 	</div>
 	<!-- Body End-->
 	<!-- Footer Start-->
