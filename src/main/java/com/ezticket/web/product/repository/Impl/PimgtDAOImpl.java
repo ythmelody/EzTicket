@@ -1,15 +1,20 @@
-package com.ezticket.web.product.repository;
+package com.ezticket.web.product.repository.Impl;
 
 import java.util.List;
 
 import com.ezticket.web.product.pojo.Pimgt;
+import com.ezticket.web.product.repository.PimgtDAO;
+import jakarta.persistence.PersistenceContext;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class PimgtDAOImpl implements PimgtDAO {
-
+	@PersistenceContext
+	private Session session;
 	@Override
-	public void insert(Pimgt pimgvo) {
-		getSession().persist(pimgvo);
+	public void insert(Pimgt pimgt) {
+		session.persist(pimgt);
 
 	}
 
@@ -21,18 +26,17 @@ public class PimgtDAOImpl implements PimgtDAO {
 
 	@Override
 	public Pimgt getByPrimaryKey(Integer pimgno) {
-		return getSession().get(Pimgt.class, pimgno);
+		return session.get(Pimgt.class, pimgno);
 	}
 
 	@Override
 	public List<Pimgt> getAll() {
 		final String hql = "FROM Pimgt ORDER BY pimgno";
-		return getSession().createQuery(hql, Pimgt.class).getResultList();
+		return session.createQuery(hql, Pimgt.class).getResultList();
 	}
 
 	@Override
 	public boolean delete(Integer pimgno) {
-		Session session = getSession();
 		Pimgt pimgt = session.get(Pimgt.class, pimgno);
 		session.remove(pimgt);
 		return true;
@@ -41,7 +45,7 @@ public class PimgtDAOImpl implements PimgtDAO {
 	@Override
 	public List<Pimgt> getAllByProductNo(Integer productno) {
 		final String hql = "FROM Pimgt WHERE productno = :productno ORDER BY pimgno";
-		return getSession()
+		return session
 				.createQuery(hql,Pimgt.class)
 				.setParameter("productno", productno)
 				.getResultList();

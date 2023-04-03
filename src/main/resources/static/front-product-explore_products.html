@@ -123,10 +123,10 @@
 														Password</a></li>
 												<li><a class="dropdown-item pe-5" href="about_us.html">About
 														Us</a></li>
-												<li><a class="dropdown-item pe-5" href="checkout.html">Checkout</a></li>
+												<li><a class="dropdown-item pe-5" href="front-product-shopping_cart.html">Checkout</a></li>
 												<li><a class="dropdown-item pe-5" href="checkout_premium.html">Checkout
 														Premium</a></li>
-												<li><a class="dropdown-item pe-5" href="invoice.html">Invoice</a></li>
+												<li><a class="dropdown-item pe-5" href="front-product-order_detail.html">Invoice</a></li>
 												<li><a class="dropdown-item pe-5" href="coming_soon.html">Coming
 														Soon</a></li>
 												<li><a class="dropdown-item pe-5" href="error_404.html">Error
@@ -154,11 +154,11 @@
 														View</a></li>
 											</ul>
 										</li>
-										<li><a class="dropdown-item" href="booking_confirmed.html">Booking Confirmed</a>
+										<li><a class="dropdown-item" href="front-product-order_confirmed.html">Booking Confirmed</a>
 										</li>
 										<li><a class="dropdown-item" href="attendee_profile_view.html">Attendee Profile
 												View</a></li>
-										<li><a class="dropdown-item" href="organiser_profile_view.html">Organiser
+										<li><a class="dropdown-item" href="front-product-profile_view.html">Organiser
 												Profile View</a></li>
 										<li><a class="dropdown-item" href="my_organisation_dashboard.html">Organization
 												Dashboard</a></li>
@@ -211,7 +211,7 @@
 									</li>
 									<li class="profile-link"><a href="my_organisation_dashboard.html"
 											class="link-item">My
-											Organisation</a> <a href="organiser_profile_view.html" class="link-item">My
+											Organisation</a> <a href="front-product-profile_view.html" class="link-item">My
 											Profile</a> <a href="sign_in.html" class="link-item">Sign Out</a></li>
 								</ul>
 							</li>
@@ -438,26 +438,33 @@
 
 		<script>
 
-			const productList = document.querySelector('#productList');
-
-			fetch("ProductInfoServlet")
-				.then(resp => resp.json())
+			fetch('ProductInfoServlet', {
+				method: 'POST',
+				body: new URLSearchParams({
+					'action': "availableProductList"
+				})
+			}).then(resp => resp.json())
 				.then(list => {
-					for (let item of list) {
-						let image = item.pimgts && item.pimgts[0] && item.pimgts[0].pimgno;
+					displayProducts(list);
+				})
+
+			function displayProducts(list) {
+				$('#productList').html('');
+
+				for (let item of list) {
+					let image = item.pimgts && item.pimgts[0] && item.pimgts[0].pimgno;
 						if (image === undefined) { image = 70001; }
-						productList.innerHTML +=
-							`<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mix arts concert workshops volunteer sports health_Wellness" data-ref="mixitup-target">
+					$('#productList').append(`<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mix arts concert workshops volunteer sports health_Wellness" data-ref="mixitup-target">
 			<div class="main-card mt-4">
 				<div class="event-thumbnail">
-					<a href="online_product_detail_view.html?productno=${item.productno}" class="thumbnail-img">
+					<a href="front-product-product_detail.html?productno=${item.productno}" class="thumbnail-img">
 						<img src="ProductImg?pimgno=${image}" alt="">
 
 					</a>
 					<span class="bookmark-icon" title="Bookmark"></span>
 				</div>
 				<div class="event-content">
-					<a href="online_product_detail_view.html?productno=${item.productno}" class="event-title">${item.pname}</a>
+					<a href="front-product-product_detail.html?productno=${item.productno}" class="event-title">${item.pname}</a>
 					<div class="duration-price-remaining">
 						<span class="duration-price">${item.pprice}</span>
 						<span class="duration-price">${item.pspecialprice}</span>
@@ -470,10 +477,11 @@
 					</div>
 				</div>
 			</div>
-		</div>`;
-					}
+		</div>`);
 				}
-				);
+			}
+
+
 		</script>
 </body>
 

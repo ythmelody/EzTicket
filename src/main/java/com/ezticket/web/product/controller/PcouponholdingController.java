@@ -25,4 +25,9 @@ public class PcouponholdingController {
     public PcouponholdingDTO getPcouponHoldingByID(@RequestParam Integer id){
         return pcouponholdingService.getPcouponHoldingByID(id);
     }
+
+//    @GetMapping("/byMemberno")
+//    public List<PcouponholdingDTO> getPcouponHoldingByMemberno(@RequestParam Integer memberno){
+//        return pcouponholdingService.getPcouponHoldingByMemberno(memberno);
+//    }
 }

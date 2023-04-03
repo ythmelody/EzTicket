@@ -61,38 +61,38 @@
 							<div class="col-lg-6 col-md-12">
 								<div class="form-group mt-4">
 									<label class="form-label">優惠券名稱</label>
-									<input class="form-control h_40" type="text" placeholder="黑皮牛耶卷" value="">
+									<input id="pcouponname" class="form-control h_40" type="text" placeholder="黑皮牛耶卷" value="">
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-12">
 								<div class="form-group mt-4">
 									<label class="form-label">適用商品編號</label>
-									<input class="form-control h_40" type="text" placeholder="10001" value="">
+									<input id="productno" class="form-control h_40" type="text" placeholder="10001" value="">
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-12">
 								<div class="form-group mt-4">
 									<label class="form-label">折扣金額</label>
-									<input class="form-control h_40" type="text" placeholder="100" value="">
+									<input id="pdiscount" class="form-control h_40" type="text" placeholder="100" value="">
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-12">
 								<div class="form-group main-form mt-4">
 									<label class="form-label">最低消費金額</label>
-									<input class="form-control h_40" type="text" placeholder="1000" value="">
+									<input id="preachprice" class="form-control h_40" type="text" placeholder="1000" value="">
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-12">
 								<div class="form-group mt-4">
 									<label class="form-label">折扣開始日期</label>
-									<input class="form-control h_40 datepicker-here" data-language="en" data-position="top left"
-										type="text" placeholder="MM/DD/YYYY" value="">
+									<input id="pcoupnsdateup" class="form-control h_40 datepicker-here" data-language="en"
+										data-position="top left" type="text" placeholder="MM/DD/YYYY" value="">
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-12">
 								<div class="form-group main-form mt-4">
 									<label class="form-label">時間</label>
-									<select class="selectpicker" data-size="5" data-live-search="true">
+									<select id="pcoupnsdatedown" class="selectpicker" data-size="5" data-live-search="true">
 										<option value="00:00">12:00 AM</option>
 										<option value="00:15">12:15 AM</option>
 										<option value="00:30">12:30 AM</option>
@@ -195,14 +195,14 @@
 							<div class="col-lg-6 col-md-12">
 								<div class="form-group mt-4">
 									<label class="form-label">折扣結束日期</label>
-									<input class="form-control h_40 datepicker-here" data-language="en" data-position="top left"
-										type="text" placeholder="MM/DD/YYYY" value="">
+									<input id="pcoupnedateup" class="form-control h_40 datepicker-here" data-language="en"
+										data-position="top left" type="text" placeholder="MM/DD/YYYY" value="">
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-12">
 								<div class="form-group main-form mt-4">
 									<label class="form-label">時間</label>
-									<select class="selectpicker" data-size="5" data-live-search="true">
+									<select id="pcoupnedatedown" class="selectpicker" data-size="5" data-live-search="true">
 										<option value="00:00">12:00 AM</option>
 										<option value="00:15">12:15 AM</option>
 										<option value="00:30">12:30 AM</option>
@@ -308,8 +308,8 @@
 				<div class="modal-footer">
 					<button type="button" class="co-main-btn min-width btn-hover h_40" data-bs-target="#aboutModal"
 						data-bs-toggle="modal" data-bs-dismiss="modal">取消</button>
-					<button type="button" class="main-btn min-width btn-hover h_40" data-bs-target="#aboutModal"
-						data-bs-toggle="modal" data-bs-dismiss="modal">建立</button>
+					<button type="button" onclick="addCoupon()" class="main-btn min-width btn-hover h_40"
+						data-bs-target="#aboutModal" data-bs-toggle="modal" data-bs-dismiss="modal">建立</button>
 				</div>
 			</div>
 		</div>
@@ -363,7 +363,7 @@
 						</div>
 						<ul class="navbar-nav justify-content-end flex-grow-1 pe_5">
 							<li class="nav-item">
-								<a class="nav-link" href="organiser_profile_view.html">
+								<a class="nav-link" href="front-product-profile_view.html">
 									<i class="fa-solid fa-right-left me-2"></i>My Home
 								</a>
 							</li>
@@ -417,7 +417,7 @@
 									</div>
 								</li>
 								<li class="profile-link">
-									<a href="organiser_profile_view.html" class="link-item">My Profile</a>
+									<a href="front-product-profile_view.html" class="link-item">My Profile</a>
 									<a href="sign_in.html" class="link-item">Sign Out</a>
 								</li>
 							</ul>
@@ -455,8 +455,8 @@
 						</a>
 					</li>
 					<li class="menu--item">
-						<a href="my_organisation_dashboard_promotion.html" class="menu--link active" title="Promotion"
-							data-bs-toggle="tooltip" data-bs-placement="right">
+						<a href="back-product-coupon_manage.html" class="menu--link active" title="Promotion"
+						   data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-solid fa-rectangle-ad menu--icon"></i>
 							<span class="menu--label">優惠券管理</span>
 						</a>
@@ -476,8 +476,8 @@
 						</a>
 					</li>
 					<li class="menu--item">
-						<a href="my_organisation_dashboard_reports.html" class="menu--link" title="Reports" data-bs-toggle="tooltip"
-							data-bs-placement="right">
+						<a href="back-product-order_manage.html" class="menu--link" title="Reports" data-bs-toggle="tooltip"
+                           data-bs-placement="right">
 							<i class="fa-solid fa-chart-pie menu--icon"></i>
 							<span class="menu--label">Reports</span>
 						</a>
@@ -703,6 +703,7 @@
 	<script src="js/night-mode.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 	<script src="js/pfitcoupon.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </body>
 

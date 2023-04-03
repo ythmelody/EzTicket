@@ -15,7 +15,7 @@ $(document).ready(() => {
       for (let i = 0; i < data.products.length; i++) {
         const detailslist = `<tr>
                 <td>${i + 1}</td>
-                <td><a href="online_event_detail_view.html?id=${data.products[i].productno}" target="_blank">${data.products[i].pname}</a></td>
+                <td><a href="front-product-product_detail.html?id=${data.products[i].productno}" target="_blank">${data.products[i].pname}</a></td>
                 <td>${data.pdetails[i].porderqty}</td>
                 <td>$${data.products[i].pprice}</td>
                 <td>$${data.products[i].pprice - data.pdetails[i].pprice}</td>
