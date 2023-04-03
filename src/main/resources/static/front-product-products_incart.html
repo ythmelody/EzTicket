@@ -431,17 +431,23 @@
 		</script>
 
 		<script>
-
-			const productList = document.querySelector('#productList');
-
-			fetch("ProductInfoServlet")
-				.then(resp => resp.json())
+			fetch('ProductInfoServlet', {
+				method: 'POST',
+				body: new URLSearchParams({
+					'action': "availableProductList"
+				})
+			}).then(resp => resp.json())
 				.then(list => {
-					for (let item of list) {
-						let image = item.pimgts && item.pimgts[0] && item.pimgts[0].pimgno;
-						if (image === undefined) { image = 70001; }
-						productList.innerHTML +=
-							`<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mix arts concert workshops volunteer sports health_Wellness" data-ref="mixitup-target">
+					displayProducts(list);
+				})
+
+			function displayProducts(list) {
+				$('#productList').html('');
+
+				for (let item of list) {
+					let image = item.pimgts && item.pimgts[0] && item.pimgts[0].pimgno;
+					if (image === undefined) { image = 70001; }
+					$('#productList').append(`<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mix arts concert workshops volunteer sports health_Wellness" data-ref="mixitup-target">
 			<div class="main-card mt-4">
 				<div class="event-thumbnail">
 					<a href="front-product-product_detail.html?productno=${item.productno}" class="thumbnail-img">
@@ -467,10 +473,9 @@
 					</div>
 				</div>
 			</div>
-		</div>`;
-					}
+		</div>`);
 				}
-				);
+			}
 		</script>
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script src="js/my_porder.js"></script>

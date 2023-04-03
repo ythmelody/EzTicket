@@ -1,10 +1,7 @@
 package com.ezticket.web.product.controller;
 
 
-import ch.qos.logback.core.net.SyslogOutputStream;
-import com.ezticket.web.product.pojo.Pcomment;
 import com.ezticket.web.product.pojo.Preport;
-import com.ezticket.web.product.service.PcommentService;
 import com.ezticket.web.product.service.PreportService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -13,7 +10,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
