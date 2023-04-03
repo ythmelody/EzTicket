@@ -1,0 +1,576 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=9">
+    <meta name="description" content="Gambolthemes">
+    <meta name="author" content="Gambolthemes">
+    <title>Barren - Simple Online Event Ticketing System</title>
+
+    <!-- Favicon Icon -->
+    <link rel="icon" type="image/png" href="images/fav.png">
+
+    <!-- Stylesheets -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+            rel="stylesheet">
+    <link href='vendor/unicons-2.0.1/css/unicons.css' rel='stylesheet'>
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/vertical-responsive-menu.min.css" rel="stylesheet">
+    <link href="css/responsive.css" rel="stylesheet">
+    <link href="css/night-mode.css" rel="stylesheet">
+
+    <!-- Vendor Stylesheets -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="vendor/OwlCarousel/assets/owl.carousel.css" rel="stylesheet">
+    <link href="vendor/OwlCarousel/assets/owl.theme.default.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
+
+    <style>
+        /* SEAT & "COLOR CODE" */
+        .seat, .statusBtn {
+            width: 75px;
+            height: 75px;
+            padding: 10px;
+            border-radius: 10px;
+            background: white;
+            font-size: 8px;
+            text-align: center;
+            line-height: 27.5px
+        }
+
+        .banned {
+            background: lightcoral;
+        }
+
+        .toSell {
+            background: lightgreen;
+        }
+
+        .reserved {
+            background: #c7c5c5;
+        }
+
+        .sold {
+            background: lightblue;
+        }
+
+        /* (B) SEATS LAYOUT */
+        #layout {
+            max-width: 1000px;
+            display: grid;
+            grid-gap: 10px;
+            margin-bottom: 20px;
+            overflow: auto;
+        }
+
+        /* (C) LEGEND */
+        #legend {
+            width: 100%;
+            display: inline-block;
+            margin-bottom: 7px;
+
+            /* grid-gap: 10px;
+            grid-template-columns: 50px auto; */
+        }
+
+        #legend button {
+            border: none;
+        }
+
+        #legend .txt {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Status Button */
+        .pressed {
+            box-shadow: inset 0 0 6px 3px dimgray;
+        }
+
+
+
+
+        /* (D) SAVE */
+        /* #save {
+            font-size: 20px;
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: 0;
+            color: #fff;
+            background: #00479f;
+        } */
+
+        body {
+            min-width: 745px;
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column h-100">
+<!-- Header Start-->
+<header class="header">
+    <div class="header-inner">
+        <nav
+                class="navbar navbar-expand-lg bg-barren barren-head navbar fixed-top justify-content-sm-start pt-0 pb-0 ps-lg-0 pe-2">
+            <div class="container-fluid ps-0">
+                <button type="button" id="toggleMenu" class="toggle_menu">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                </button>
+                <button id="collapse_menu" class="collapse_menu me-4">
+                    <i class="fa-solid fa-bars collapse_menu--icon "></i>
+                    <span class="collapse_menu--label"></span>
+                </button>
+                <button class="navbar-toggler order-3 ms-2 pe-0" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+						<span class="navbar-toggler-icon">
+							<i class="fa-solid fa-bars"></i>
+						</span>
+                </button>
+                <a class="navbar-brand order-1 order-lg-0 ml-lg-0 ml-2 me-auto" href="index.html">
+                    <div class="res-main-logo">
+                        <img src="images/logo-icon.svg" alt="">
+                    </div>
+                    <div class="main-logo" id="logo">
+                        <img src="images/logo.svg" alt="">
+                        <img class="logo-inverse" src="images/dark-logo.svg" alt="">
+                    </div>
+                </a>
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
+                     aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        <div class="offcanvas-logo" id="offcanvasNavbarLabel">
+                            <img src="images/logo-icon.svg" alt="">
+                        </div>
+                        <button type="button" class="close-btn" data-bs-dismiss="offcanvas" aria-label="Close">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <div class="offcanvas-top-area">
+                            <div class="create-bg">
+                                <a href="create.html" class="offcanvas-create-btn">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                    <span>Create Event</span>
+                                </a>
+                            </div>
+                        </div>
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe_5">
+                            <li class="nav-item">
+                                <a class="nav-link" href="organiser_profile_view.html">
+                                    <i class="fa-solid fa-right-left me-2"></i>My Home
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="explore_events.html">
+                                    <i class="fa-solid fa-compass me-2"></i>Explore Events
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="offcanvas-footer">
+                        <div class="offcanvas-social">
+                            <h5>Follow Us</h5>
+                            <ul class="social-links">
+                                <li><a href="#" class="social-link"><i class="fab fa-facebook-square"></i></a>
+                                </li>
+                                <li><a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                                </li>
+                                <li><a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                                </li>
+                                <li><a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                                </li>
+                                <li><a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-header order-2">
+                    <ul class="align-self-stretch">
+                        <li>
+                            <a href="create.html" class="create-btn btn-hover">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <span>Create Event</span>
+                            </a>
+                        </li>
+                        <li class="dropdown account-dropdown order-3">
+                            <a href="#" class="account-link" role="button" id="accountClick"
+                               data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="images/profile-imgs/img-13.jpg" alt="">
+                                <i class="fas fa-caret-down arrow-icon"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-account dropdown-menu-end"
+                                aria-labelledby="accountClick">
+                                <li>
+                                    <div class="dropdown-account-header">
+                                        <div class="account-holder-avatar">
+                                            <img src="images/profile-imgs/img-13.jpg" alt="">
+                                        </div>
+                                        <h5>John Doe</h5>
+                                        <p>johndoe@example.com</p>
+                                    </div>
+                                </li>
+                                <li class="profile-link">
+                                    <a href="organiser_profile_view.html" class="link-item">My Profile</a>
+                                    <a href="sign_in.html" class="link-item">Sign Out</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <div class="night_mode_switch__btn">
+                                <div id="night-mode" class="fas fa-moon fa-sun"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="overlay"></div>
+    </div>
+</header>
+<!-- Header End-->
+<!-- Left Sidebar Start -->
+<nav class="vertical_nav">
+    <div class="left_section menu_left" id="js-menu">
+        <div class="left_section">
+            <ul>
+                <li class="menu--item">
+                    <a href="my_organisation_dashboard.html" class="menu--link" title="Dashboard"
+                       data-bs-toggle="tooltip" data-bs-placement="right">
+                        <i class="fa-solid fa-gauge menu--icon"></i>
+                        <span class="menu--label">Dashboard</span>
+                    </a>
+                </li>
+                <li class="menu--item">
+                    <a href="my_organisation_dashboard_events.html" class="menu--link active" title="Events"
+                       data-bs-toggle="tooltip" data-bs-placement="right">
+                        <i class="fa-solid fa-calendar-days menu--icon"></i>
+                        <span class="menu--label">Events</span>
+                    </a>
+                </li>
+                <li class="menu--item">
+                    <a href="my_organisation_dashboard_promotion.html" class="menu--link" title="Promotion"
+                       data-bs-toggle="tooltip" data-bs-placement="right">
+                        <i class="fa-solid fa-rectangle-ad menu--icon"></i>
+                        <span class="menu--label">Promotion</span>
+                    </a>
+                </li>
+                <li class="menu--item">
+                    <a href="my_organisation_dashboard_contact_lists.html" class="menu--link" title="Contact List"
+                       data-bs-toggle="tooltip" data-bs-placement="right">
+                        <i class="fa-regular fa-address-card menu--icon"></i>
+                        <span class="menu--label">Contact List</span>
+                    </a>
+                </li>
+                <li class="menu--item">
+                    <a href="my_organisation_dashboard_payout.html" class="menu--link" title="Payouts"
+                       data-bs-toggle="tooltip" data-bs-placement="right">
+                        <i class="fa-solid fa-credit-card menu--icon"></i>
+                        <span class="menu--label">Payouts</span>
+                    </a>
+                </li>
+                <li class="menu--item">
+                    <a href="my_organisation_dashboard_reports.html" class="menu--link" title="Reports"
+                       data-bs-toggle="tooltip" data-bs-placement="right">
+                        <i class="fa-solid fa-chart-pie menu--icon"></i>
+                        <span class="menu--label">Reports</span>
+                    </a>
+                </li>
+                <li class="menu--item">
+                    <a href="my_organisation_dashboard_subscription.html" class="menu--link" title="Subscription"
+                       data-bs-toggle="tooltip" data-bs-placement="right">
+                        <i class="fa-solid fa-bahai menu--icon"></i>
+                        <span class="menu--label">Subscription</span>
+                    </a>
+                </li>
+                <li class="menu--item">
+                    <a href="my_organisation_dashboard_conversion_setup.html" class="menu--link"
+                       title="Conversion Setup" data-bs-toggle="tooltip" data-bs-placement="right">
+                        <i class="fa-solid fa-square-plus menu--icon"></i>
+                        <span class="menu--label">Conversion Setup</span>
+                    </a>
+                </li>
+                <li class="menu--item">
+                    <a href="my_organisation_dashboard_about.html" class="menu--link" title="About"
+                       data-bs-toggle="tooltip" data-bs-placement="right">
+                        <i class="fa-solid fa-circle-info menu--icon"></i>
+                        <span class="menu--label">About</span>
+                    </a>
+                </li>
+                <li class="menu--item">
+                    <a href="my_organisation_dashboard_my_team.html" class="menu--link team-lock" title="My Team"
+                       data-bs-toggle="tooltip" data-bs-placement="right">
+                        <i class="fa-solid fa-user-group menu--icon"></i>
+                        <span class="menu--label">My Team</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Left Sidebar End -->
+<!-- Body Start -->
+<div class="wrapper wrapper-body">
+    <div class="dashboard-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-main-title">
+                        <h3 id="actNameAndSession">田馥甄一一巡迴演唱會-高雄場 (場次編號：2200101)</h3>
+                        <p></p>
+                        <h5>區域名稱　<input id="blockName" type="text" placeholder="請輸入區域名稱" value=""
+                                            class="form-control h_40" style="display: inline-block!important; width: 200px;" disabled></h5>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="main-card mt-5">
+                        <div class="dashboard-wrap-content p-4">
+                            <!-- 這邊加上座位狀態選擇器 -->
+                            <div id="legend" style="display: flex;">
+                                <div style="margin: 20px 20px 20px 0px;">
+                                    <button class="statusBtn banned" style="margin: 5px;" onclick="changeStatus(this)" value="banned">場地限制</button>
+                                    <button class="statusBtn reserved " style="margin: 5px;" onclick="changeStatus(this)" value="reserved">保留席</button>
+                                    <button class="statusBtn toSell pressed" style="margin: 5px;" onclick="changeStatus(this)" value="toSell">可出售</button>
+                                    <button class="statusBtn sold" style="margin: 5px;" onclick="changeStatus(this)" value="sold">已售出</button>
+                                </div>
+                                <div style="margin: 47.5px 25px;">
+                                    舞台方向：
+                                    <select name="" id="" style="margin: 5px; border-color: #f1f1f1; width: 75px;">
+                                        <option value="front" selected>前</option>
+                                        <option value="back">後</option>
+                                        <option value="left">左</option>
+                                        <option value="right">右</option>
+                                    </select>
+                                </div>
+                                <div style="margin: 36px 0px;">
+                                    <form id="rowAndColumns">
+                                        排數：<input type="text" class="form-control h_40" style="display: inline-block!important; margin: 5px; width: 75px;
+                                                border-color: #f1f1f1; text-align: center;" value="" disabled>
+                                        座位數：<input type="text" class="form-control h_40" style="display: inline-block!important; margin: 5px; width: 75px;
+                                                      border-color: #f1f1f1; text-align: center;" value="" disabled>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <!-- 座位圖 -->
+                            <!-- (A) SEAT LAYOUT -->
+                            <div class="d-md-flex flex-wrap align-items-center">
+                                <div id="layout" style="margin: auto;" style="overflow:scroll-y"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-12 col-lg-12 col-md-12">
+        <div class="text-center mt-5">
+            <a href="#" class="main-btn btn-hover"
+               style="background-color: gray; border: gray;" onclick="seatsmgt.goBack()">　返回　</a>
+            <a href="#" class="main-btn btn-hover"
+               onclick="seatsmgt.save()">儲存變更</a>
+        </div>
+    </div>
+</div>
+<!-- Body End -->
+
+
+<script src="js/vertical-responsive-menu.min.js"></script>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="vendor/OwlCarousel/owl.carousel.js"></script>
+<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+<script src="js/custom.js"></script>
+<script src="js/night-mode.js"></script>
+
+<!-- 選擇座位的JS -->
+<script>
+    function changeStatus(btn) {
+        if(btn.value === 'sold'){
+            alert('已售出座位無法變動!');
+            return;
+        }
+
+        $('button[class*="pressed"]').removeClass('pressed');
+        btn.classList.add("pressed");
+    }
+
+    const generalInfo = {
+        sessionNo: sessionStorage.getItem("sessionNo"),
+        blockNo: sessionStorage.getItem("blockNo")
+    };
+    const actNameAndSession = document.getElementById("actNameAndSession");
+    const layout = document.getElementById("layout");
+    const blockName = document.getElementById("blockName");
+    let seats;
+    let t_seats;
+    let t_Row;
+    let t_Column;
+
+    $.ajax({
+        async: false,
+        type: 'GET',
+        url: '/seats/BySessionAndBlock' + `?sessionNo=${generalInfo.sessionNo}&blockNo=${generalInfo.blockNo}`,
+        dataType: "json",
+        success: function (jsondata) {
+            seats = jsondata;
+        }
+    });
+
+    t_seats = seats.length;
+    t_Row = seats[seats.length - 1].x;
+    t_Column = seats[seats.length - 1].y;
+
+    $('#blockName').val(seats[0].blockName);
+    $('#rowAndColumns input:eq(0)').val(t_Row+1);
+    $('#rowAndColumns input:eq(1)').val(t_Column+1);
+
+    let seatsmgt = {
+        // INIT
+        init: () => {
+
+            layout.setAttribute("style", `grid-template-columns: repeat(${(t_Column + 1) * 2}, 1fr)`)
+
+            // GENERATE SEATS
+            for (let i = 0; i <= t_Row; i++) {
+                for (let j = 0; j <= t_Column; j++) {
+                    let seat = document.createElement("div");
+                    // 設定座位於資料庫的編號(seatno)
+                    seat.id = seats[i * 10 + j].seatNo;
+
+                    seat.innerHTML = `
+						第<input value="${seats[i*10+j].realX}" style="width: 20px; text-align: center; border: 0; background: transparent">排<br>
+						第<input value="${seats[i*10+j].realY}" style="width: 20px; text-align: center; border: 0; background: transparent">位<br>
+						`;
+
+                    seat.className = "seat";
+                    seat.onclick = () => seatsmgt.toggle(seat);
+
+                    let seatStatus = seats[i*10+j].seatStatus;
+
+                    switch (seatStatus) {
+                        case (-1):
+                            seat.classList.add("banned");
+                            break;
+                        case (0):
+                            seat.classList.add("reserved")
+                            break;
+                        case (1):
+                            seat.classList.add("toSell")
+                            break;
+                        case (2):
+                            seat.classList.add("sold")
+                            break;
+                    }
+
+                    layout.appendChild(seat);
+
+                    // 這行怪怪的，要注意
+                    layout.appendChild(document.createElement("br"));
+                }
+            }
+        },
+
+        // 若點選 "場地限制" 按鈕，可將 "可出售" 或 "保留席" 切換成 "場地限制"
+        // 若點選 "可出售" 按鈕，可將 "場地限制" 或 "保留席" 切換成 "可出售"
+        // 若點選 "保留席" 按鈕，可將 "可出售" 切換成 "保留席"
+        toggle: seat => {
+            if (seat.classList.contains("sold")){
+                return;
+            } else{
+                if($('button[class*="pressed"]')[0].value === 'banned'){
+                    if(seat.classList.contains('reserved')){
+                        seat.classList.remove("reserved");
+                        seat.classList.add("banned");
+                    } else if (seat.classList.contains('toSell')){
+                        seat.classList.remove("toSell");
+                        seat.classList.add("banned");
+                    }
+                    return;
+                }
+                if($('button[class*="pressed"]')[0].value === 'reserved' && !(seat.classList.contains('banned'))){
+                    if(seat.classList.contains('toSell')){
+                        seat.classList.remove("toSell");
+                        seat.classList.add("reserved");
+                    }
+                    return;
+                }
+                if($('button[class*="pressed"]')[0].value === 'toSell'){
+                    if(seat.classList.contains('reserved')){
+                        seat.classList.remove("reserved");
+                        seat.classList.add("toSell");
+                    } else if(seat.classList.contains('banned')){
+                        seat.classList.remove("banned");
+                        seat.classList.add("toSell");
+                    }
+                    return;
+                }
+
+            }
+
+        },
+
+        // SAVE RESERVATION
+        save: () => {
+            // GET SELECTED SEATS
+            let seats = document.querySelectorAll("#layout div");
+            console.log(seats);
+
+            for(let s of seats){
+                let status;
+                if(s.classList.contains("banned")){
+                    status = (-1);
+                } else if(s.classList.contains("reserved")){
+                    status = (0);
+                } else if(s.classList.contains("toSell")){
+                    status = (1);
+                } else {
+                    status = (2);
+                }
+
+                const aSeatInfo = {
+                    "blockName": $('#blockName').val(),
+                    "seatNo" : s.id,
+                    "realX" : $(`#${s.id} input:eq(0)`).val(),
+                    "realY" : $(`#${s.id} input:eq(1)`).val(),
+                    "seatStatus": status
+                };
+
+                fetch('/seats/updateOneSeat', {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(aSeatInfo)
+                })
+            }
+
+            alert("儲存成功!");
+        },
+
+        goBack: () => {
+            sessionStorage.removeItem("blockNo");
+            alert("返回上一頁!")
+        }
+    };
+
+    window.addEventListener("DOMContentLoaded", seatsmgt.init);
+
+
+
+</script>
+
+</body>
+
+</html>

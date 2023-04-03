@@ -18,9 +18,9 @@ public class AReport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "AREPORTNO")
     private Integer aReportNo;
-    @Column(name = "ACOMMENTNO", insertable=false, updatable=false)
+    @Column(name = "ACOMMENTNO")
     private Integer aCommentNo;
-    @Column(name = "MEMBERNO", insertable=false, updatable=false)
+    @Column(name = "MEMBERNO")
     private Integer memberNo;
     @Column(name = "AWHY")
     private String aWhy;
@@ -29,11 +29,17 @@ public class AReport {
     @Column(name = "AREPORTDATE")
     private Date aReportDate;
 
+    public AReport(Integer aCommentNo, Integer memberNo, String aWhy) {
+        this.aCommentNo = aCommentNo;
+        this.memberNo = memberNo;
+        this.aWhy = aWhy;
+    }
+
     @ManyToOne
-    @JoinColumn(name = "MEMBERNO")
+    @JoinColumn(name = "MEMBERNO", insertable=false, updatable=false)
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "ACOMMENTNO")
+    @JoinColumn(name = "ACOMMENTNO", insertable=false, updatable=false)
     private AComment aComment;
 }

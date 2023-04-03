@@ -1,11 +1,13 @@
 package com.ezticket.web.activity.pojo;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -43,4 +45,19 @@ public class Activity {
     private Integer aRateTotal;
     @Column(name = "ARATEQTY")
     private Integer aRateQty;
+    @Column(name = "APLACE")
+    private String aPlace;
+    @Column(name = "ANOTE")
+    private String aNote;
+    @Column(name = "ATICKETREMIND")
+    private String aTicketRemind;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "activity")
+    private List<Session> session;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "activity")
+    private List<Aimgt> aimgt;
+
+
+
 }
