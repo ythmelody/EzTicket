@@ -17,4 +17,10 @@ public class Host {
     private Integer hostno;
     @Column(name = "HOSTNAME")
     private String hostname;
+    @Column(name = "HOSTCONTACT")
+    private String hostcontact;
+    @Column(name = "HOSTEMAIL")
+    private String hostemail;
+    @Column(name = "HOSTCELL")
+    private String hostcell;
 }

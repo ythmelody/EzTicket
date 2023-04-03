@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/my_organisation_dashboard_member")
+@RequestMapping("/back-users-member")
 public class MemberController {
     @Autowired
     private MemberService memberService;

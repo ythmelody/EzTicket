@@ -1,46 +1,54 @@
 package com.ezticket.web.product.service;
 
 import com.ezticket.web.product.pojo.Pcomment;
+import com.ezticket.web.product.pojo.Product;
 import com.ezticket.web.product.repository.PcommentDAO;
-import com.ezticket.web.product.repository.PcommentDAOImpl;
+import com.ezticket.web.product.repository.Impl.PcommentDAOImpl;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
+@Service
 public class PcommentService {
 
+	@Autowired
 	private PcommentDAO dao;
 
-	public PcommentService() {
-		dao = new PcommentDAOImpl();
-	}
-
+	@Transactional
 	public Pcomment addProductComment(Integer productno, String pcommentcont, Integer prate, Integer memberno) {
 		Timestamp pcommentdate = new Timestamp(System.currentTimeMillis());
 		int pcommentstatus = 0;
 		int plike = 0;
 		
-		Pcomment pcommentVO = new Pcomment();
-		pcommentVO.setProductno(productno);
-		pcommentVO.setPcommentcont(pcommentcont);
-		pcommentVO.setPrate(prate);
-		pcommentVO.setPcommentdate(pcommentdate);
-		pcommentVO.setMemberno(memberno);
-		pcommentVO.setPcommentstatus(pcommentstatus);
-		pcommentVO.setPlike(plike);
-		dao.insert(pcommentVO);
-		return pcommentVO;
+		Pcomment pcomment = new Pcomment();
+		pcomment.setProductno(productno);
+		pcomment.setPcommentcont(pcommentcont);
+		pcomment.setPrate(prate);
+		pcomment.setPcommentdate(pcommentdate);
+		pcomment.setMemberno(memberno);
+		pcomment.setPcommentstatus(pcommentstatus);
+		pcomment.setPlike(plike);
+		dao.insert(pcomment);
+		return pcomment;
 	}
-	
-	public Pcomment updateProductComment(Pcomment pcommentVO) {
-		//���O���@�ӭn��s
-		final Pcomment oldPcommentVO =dao.getByPrimaryKey(pcommentVO.getPcommentno());
-		//�]�w��������ק�
-		pcommentVO.setPcommentno(oldPcommentVO.getPcommentno());
-		pcommentVO.setProductno(oldPcommentVO.getProductno());
-		pcommentVO.setMemberno(oldPcommentVO.getMemberno());
-		dao.update(pcommentVO);
-		return pcommentVO;
+
+	@Transactional
+	public Pcomment updateProductComment(Pcomment pcomment) {
+		final Pcomment oldPcomment =dao.getByPrimaryKey(pcomment.getPcommentno());
+		pcomment.setPcommentno(oldPcomment.getPcommentno());
+		pcomment.setProductno(oldPcomment.getProductno());
+		pcomment.setMemberno(oldPcomment.getMemberno());
+		dao.update(pcomment);
+		return pcomment;
+	}
+
+	@Transactional
+	public boolean updateProductComment(Integer pcommentno ,Integer pcommentstatus){
+		return dao.update(pcommentno,pcommentstatus);
 	}
 	
 	public Pcomment getOneProductComment(Integer pcommentno) {
@@ -58,9 +66,14 @@ public class PcommentService {
 	public List<Pcomment> getAllProductCommentOfOneProduct(Integer productno){
 		return dao.getAllByProductno(productno);
 	}
-	
+
+	@Transactional
 	public boolean deleteProductComment(Integer pcommentno) {
 		return dao.delete(pcommentno);
+	}
+
+	public List<Pcomment> getAllBySearch(Map<String, String[]> map) {
+		return dao.getAll(map);
 	}
 
 }

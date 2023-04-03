@@ -8,5 +8,4 @@ import lombok.Data;
 public class PcouponholdingDTO {
     private PcouponholdingPK pcouponholdingPK;
     private byte pcouponstatus;
-
 }

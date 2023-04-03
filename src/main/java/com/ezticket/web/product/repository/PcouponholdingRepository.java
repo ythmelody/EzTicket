@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PcouponholdingRepository extends JpaRepository<Pcouponholding, Integer> {
-
-
+//    List<Pcouponholding> findByMemberno(Integer memberno);
 }
 
