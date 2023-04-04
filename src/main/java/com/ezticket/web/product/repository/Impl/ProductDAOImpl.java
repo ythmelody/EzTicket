@@ -206,8 +206,9 @@ public class ProductDAOImpl implements ProductDAO {
             predicate = builder.equal(root.get(columnName), Integer.valueOf(value));
         else if ("pname".equals(columnName) || "ptag".equals(columnName)) {
             predicate = builder.like(root.get(columnName), "%" + value + "%");
-        }
-        else if ("start_date".equals(columnName)) {
+        }else if ("hostname".equals(columnName)) {
+            predicate = builder.like(root.get("host").get("hostname"), "%" + value + "%");
+        }else if ("start_date".equals(columnName)) {
             System.out.println("input start_date: " + value);
             System.out.println("start_date to timestamp: " + java.sql.Timestamp.valueOf(value));
             predicate = builder.or(

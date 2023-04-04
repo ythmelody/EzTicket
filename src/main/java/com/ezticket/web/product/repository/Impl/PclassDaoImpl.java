@@ -35,7 +35,7 @@ public class PclassDaoImpl implements PclassDAO {
 
 	@Override
 	public List<Pclass> getAll() {
-		final String hql = "FROM PclassVO ORDER BY pclassno";
+		final String hql = "FROM Pclass ORDER BY pclassno";
 		return session.createQuery(hql, Pclass.class).getResultList();
 	}
 
