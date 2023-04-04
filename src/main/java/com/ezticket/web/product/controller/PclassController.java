@@ -46,6 +46,21 @@ public class PclassController extends HttpServlet {
             list2json(pclassList,resp);
         }
 
+        //新增商品類別
+        if("addProductClass".equals(action)){
+            String pclassname =req.getParameter("pclassname");
+            Pclass pclass = pclassSvc.addProductClass(pclassname);
+            Gson gson = new Gson();
+            String json = gson.toJson(pclass);
+            resp.setContentType("application/json");
+            resp.setCharacterEncoding("UTF-8");
+            PrintWriter pw = resp.getWriter();
+            pw.print(json);
+            pw.flush();
+        }
+
+
+
     }
 
     public void list2json(List<Pclass> pclassList, HttpServletResponse resp) throws IOException {

@@ -17,10 +17,10 @@ public class PclassService {
 
 	@Transactional
 	public Pclass addProductClass(String pclassname) {
-		Pclass pclassVO = new Pclass();
-		pclassVO.setPclassname(pclassname);
-		dao.insert(pclassVO);
-		return pclassVO;
+		Pclass pclass = new Pclass();
+		pclass.setPclassname(pclassname);
+		dao.insert(pclass);
+		return pclass;
 	}
 
 	@Transactional
