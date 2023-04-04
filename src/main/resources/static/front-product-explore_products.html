@@ -220,6 +220,14 @@
 									<div id="night-mode" class="fas fa-moon fa-sun"></div>
 								</div>
 							</li>
+							<li>
+								<a href="front-product-shopping_cart.html">
+									<div id="cart">
+										<i class="fa fa-shopping-cart"></i>
+										<span class="badge">0</span>
+									</div>
+								</a>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -473,16 +481,17 @@
 				</div>
 				<div class="event-footer">
 					<div class="booking-btn">
-						<a href="checkout.html" class="main-btn btn-hover w-100">Buy Now</a>
+						<a href="checkout.html" class="main-btn btn-hover w-45" style="width:48%;">Buy Now</a>
+						<button type="button" class="main-btn btn-hover w-45" style="width:48%;" onclick="addCart(${item.productno})" id="product-incart">Add To Cart</button>
 					</div>
 				</div>
 			</div>
 		</div>`);
 				}
 			}
-
-
 		</script>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="js/my_porder.js"></script>
 </body>
 
 </html>
