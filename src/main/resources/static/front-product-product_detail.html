@@ -48,13 +48,15 @@
 							<div class="col-lg-12 col-md-12">
 								<div class="form-group mt-4">
 									<label class="form-label">請選擇原因：*</label>
-									<select class="selectpicker" data-size="5" data-live-search="true">
+									<input type="hidden" id="pcommentno" value="">
+									<input type="hidden" id="memberno" value="">
+									<select class="selectpicker" data-size="5" data-live-search="true" id="pwhy">
 										<option disabled selected>-----請選擇-----</option>
-										<option value="0">評論含有不當言詞或攻擊性的言論</option>
-										<option value="1">評論明顯是假評論</option>
-										<option value="2">評論內容並不符合節目或商品的實際狀況</option>
-										<option value="3">評論內容與節目或商品無關</option>
-										<option value="4">評論內容不當或是令人不適</option>
+										<option value="評論含有不當言詞或攻擊性的言論">評論含有不當言詞或攻擊性的言論</option>
+										<option value="評論明顯是假評論">評論明顯是假評論</option>
+										<option value="評論內容並不符合節目或商品的實際狀況">評論內容並不符合節目或商品的實際狀況</option>
+										<option value="評論內容與節目或商品無關">評論內容與節目或商品無關</option>
+										<option value="評論內容不當或是令人不適">評論內容不當或是令人不適</option>
 									</select>
 								</div>
 							</div>
@@ -64,7 +66,7 @@
 				<div class="modal-footer">
 					<button type="button" class="co-main-btn min-width btn-hover h_40" data-bs-target="#aboutModal"
 						data-bs-toggle="modal" data-bs-dismiss="modal">取消</button>
-					<button onclick="saveStatus(this)" class="main-btn min-width btn-hover h_40">提交</button>
+					<button onclick="submitComment()" class="main-btn min-width btn-hover h_40">提交</button>
 				</div>
 			</div>
 		</div>
@@ -534,7 +536,7 @@
 		const pdiscrip = document.querySelector('div.main-event-content');
 		const pprice = document.querySelector('h5.mb-0');
 		const pspecialprice = document.querySelector('#pspecialprice');
-		
+
 
 
 		//商品詳情資訊
@@ -656,10 +658,9 @@
 																			</button>
 																		</td>
 																		<td style="width: 30px;">100</td>
-																		<td><button data-bs-toggle="modal"
-																				data-bs-target="#couponModal"
-																				style="border: none; background-color: transparent"
-																				id="commentReport">
+																		<td><button  name="${item.pcommentno}" data-bs-toggle="modal"
+																				data-bs-target="#couponModal" 
+																				style="border: none; background-color: transparent" onclick="comment(this.name)">
 																				<img style="padding-top: 4px; width: 30px;"
 																					src="images/comment.png"></button>
 																		</td>
@@ -686,44 +687,46 @@
 			});
 
 
-
-
-
-
-		function addProductCommentReport(button) {
-			const pcommentno = pcommentno;
-			const memberno = memberno;
-			const pwhy = document.querySelector('h3.event-main-t	itle');
-			const preportstatus = preportstatus;
-			const reportdate = now();
-			const status = button.closest('tr').querySelector('select').value;
-			const no = Number(button.closest('tr').querySelector('tr td').textContent);
-			if (status !== '請選擇原因：*') {
-				swal({
-					title: "請確認是否送出檢舉評論?",
-					icon: "warning",
-					buttons: true,
-					dangerMode: true
-				}).then((confirm) => {
-					if (confirm) {
-						fetch(`/ProductCommentReport`, {
-							method: 'POST',
-							headers: { 'Content-Type': 'application/json' },
-							body: JSON.stringify({ porderno: no, pprocessstatus: status }),
-						}).then(response => {
-							if (response.ok) {
-								swal('已成功送出檢舉', { icon: "success" });
-							} else {
-								swal('送出異常請聯繫系統管理員', { icon: "error" });
-							}
-						});
-					} else {
-						return Promise.reject('取消操作');
-					}
-				});
-			}
-		}
 	</script>
+
+
+	<script>
+
+		//會員編號假資料
+		const info = {
+			memberno: 85346,
+		}
+
+		//從評論取得評論編號
+		function comment(pcommentno) {
+			$('#pcommentno').val(pcommentno);
+			$('#memberno').val(info.memberno);
+			console.log("comment"+$("#pcommentno").val());
+		}
+
+		function submitComment() {
+			console.log($("#pcommentno").val());
+
+			fetch('ProductCommentReportServlet', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+				body: new URLSearchParams({
+					'memberno': info.memberno,
+					// 'productno':  productno,
+					'pcommentno': $("#pcommentno").val(),
+					'pwhy': $('#pwhy').val(),
+					'action': "addProductCommentReport"
+				})
+
+			})
+		}
+
+
+
+
+	</script>
+
+
 
 	<script src="js/jquery-3.6.0.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -732,6 +735,8 @@
 	<script src="js/custom.js"></script>
 	<script src="js/timer.js"></script>
 	<script src="js/night-mode.js"></script>
+
+
 
 	<!-- 點讚換圖 -->
 	<script>

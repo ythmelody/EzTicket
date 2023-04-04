@@ -85,6 +85,14 @@ public class ProductCommentReport extends HttpServlet {
             list2json(commentReportList, response);
         }
 
+        //新增評論檢舉-(前台)商品詳情評論輪播
+        if ("addProductCommentReport".equals(action)) {
+            Integer memberno = Integer.valueOf(request.getParameter("memberno"));
+            Integer pcommentno = Integer.valueOf(request.getParameter("pcommentno"));
+            String pwhy = request.getParameter("pwhy");
+            preportSvc.addProductReport(pcommentno, memberno, pwhy);
+        }
+
 
     }
 
