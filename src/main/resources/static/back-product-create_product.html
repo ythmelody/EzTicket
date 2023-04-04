@@ -474,10 +474,12 @@
 												<li><a class="dropdown-item pe-5" href="forgot_password.html">Forgot
 														Password</a></li>
 												<li><a class="dropdown-item pe-5" href="about_us.html">About Us</a></li>
-												<li><a class="dropdown-item pe-5" href="front-product-shopping_cart.html">Checkout</a></li>
+												<li><a class="dropdown-item pe-5"
+														href="front-product-shopping_cart.html">Checkout</a></li>
 												<li><a class="dropdown-item pe-5" href="checkout_premium.html">Checkout
 														Premium</a></li>
-												<li><a class="dropdown-item pe-5" href="front-product-order_detail.html">Invoice</a></li>
+												<li><a class="dropdown-item pe-5"
+														href="front-product-order_detail.html">Invoice</a></li>
 												<li><a class="dropdown-item pe-5" href="coming_soon.html">Coming
 														Soon</a></li>
 												<li><a class="dropdown-item pe-5" href="error_404.html">Error 404</a>
@@ -505,7 +507,8 @@
 												</li>
 											</ul>
 										</li>
-										<li><a class="dropdown-item" href="front-product-order_confirmed.html">Booking Confirmed</a>
+										<li><a class="dropdown-item" href="front-product-order_confirmed.html">Booking
+												Confirmed</a>
 										</li>
 										<li><a class="dropdown-item" href="attendee_profile_view.html">Attendee Profile
 												View</a></li>
@@ -661,8 +664,7 @@
 																	<div class="form-group mt-4">
 																		<label
 																			class="form-label mb-2 fs-14">選擇商品種類*</label>
-																		<select class="selectpicker" multiple=""
-																			data-size="5" title="選擇商品種類"
+																		<select class="selectpicker" title="選擇商品種類"
 																			data-live-search="true" name="pclassno">
 																			<option value="20001">T恤</option>
 																			<option value="20002">手環</option>
@@ -731,7 +733,8 @@
 																				data-language="en" type="text"
 																				placeholder="YYYY/MM/DD" value=""
 																				name="psdate"
-																				data-date-format="yyyy-mm-dd 00:00:00" autocomplete="off">
+																				data-date-format="yyyy-mm-dd 00:00:00"
+																				autocomplete="off">
 																			<span class="absolute-icon"><i
 																					class="fa-solid fa-calendar-days"></i></span>
 																		</div>
@@ -753,7 +756,8 @@
 																				data-language="en" type="text"
 																				placeholder="MM/DD/YYYY" value=""
 																				name="pedate"
-																				data-date-format="yyyy-mm-dd 23:59:59" autocomplete="off">
+																				data-date-format="yyyy-mm-dd 23:59:59"
+																				autocomplete="off">
 																			<span class="absolute-icon"><i
 																					class="fa-solid fa-calendar-days"></i></span>
 																		</div>
@@ -1732,14 +1736,14 @@
 	</script>
 
 	<!-- 動態產生上傳商品圖片，一定要用jQuery.append()才可以正常送資料進資料庫，用JS+=到Controller檔案長度會是0無法順利送出 -->
-		<script>
-			let count = 1
-			previewPicture();
-	
-			function previewPicture() {
-				// const uploadPictures = document.querySelector('#uploadPictures');
-	
-				$('#uploadPictures').append(`<div class="default-event-thumb">
+	<script>
+		let count = 1
+		previewPicture();
+
+		function previewPicture() {
+			// const uploadPictures = document.querySelector('#uploadPictures');
+
+			$('#uploadPictures').append(`<div class="default-event-thumb">
 											 	<div class="default-event-thumb-btn">
 													<div class="thumb-change-btn">
 														<input type="file" id="thumb-img${count}" name=pimg${count}>
@@ -1750,64 +1754,75 @@
 																			</div>
 																			<img id=img${count} src="" alt="">
 																		</div>`);
-	
-				const input = document.querySelector(`#thumb-img${count}`);
-				input.addEventListener('change', function ({ target }) {
-					const { files } = target;
-					const img = document.querySelector('#img' + count);
-					img.src = URL.createObjectURL(files[0]);
-					count++;
-					previewPicture();
-				})
-	
-			}
-		</script>
 
-<script>
-
-	//帶出既有資料，新建商品
-	let urlParams = new URLSearchParams(window.location.search);
-	const productno = urlParams.get('productno');
-
-	fetch("ProductInfoServlet?productno=" + productno)
-		.then(resp => resp.json())
-		.then(item => {
-			// $("[name='productno']").val(item.productno); 新增會自動編號
-			// $("[name='pratetotal']").val(item.pratetotal); 新增時預設為0
-			// $("[name='prateqty']").val(item.prateqty); 新增時預設為0
-			$("[name='pname']").val(item.pname);
-			$("[name='ptag']").val(item.ptag);
-			$("[name='pclassno']").val(item.pclassno);
-			$("select[name='pclassno']").selectpicker('refresh');
-			$("select[name='hostno']").val(item.hostno);
-			$("select[name='hostno']").selectpicker('refresh');
-			$("[name='pprice']").val(item.pprice);
-			$("[name='pspecialprice']").val(item.pspecialprice);
-			$("[name='pqty']").val(item.pqty);
-			$("[name='psdate']").val(item.psdate);
-			$("[name='pedate']").val(item.pedate);
-			$("[name='pstatus']").val(item.pstatus);
-			$("select[name='pstatus']").selectpicker('refresh');
-
-			console.log(item);
-			for(let pimgt of item.pimgts){
-				let count =1 ;
-				$("#img"+count).attr('src',`ProductImg?pimgno=${pimgt.pimgno}`);
+			const input = document.querySelector(`#thumb-img${count}`);
+			input.addEventListener('change', function ({ target }) {
+				const { files } = target;
+				const img = document.querySelector('#img' + count);
+				img.src = URL.createObjectURL(files[0]);
 				count++;
-			}
+				previewPicture();
+			})
 
-			// for(let pimgt of item["Pimgts"]){
-			// 	let count =2 ;
-			// 	$(`#thumb-img${count}`).val(pimgt.pimg).change();
-			// 	// $(`#thumb-img${count}`).change();
-			// 	count++;
-			// }
-			
-			editor.setData(item.pdiscrip);
-
-		});
+		}
 	</script>
-	
+
+	<script>
+
+		// 複製商品-帶出既有資料，新建商品
+		let urlParams = new URLSearchParams(window.location.search);
+		const productno = urlParams.get('productno');
+
+		//為了避免新增商品跑進來複製商品
+		if (productno !== null) {
+			fetch("ProductInfoServlet", {
+				method: 'POST',
+				body: new URLSearchParams({
+					'action': "singleProduct",
+					'productno': productno
+				})
+			})
+			.then(resp => resp.json())
+			.then(item => {
+				// $("[name='productno']").val(item.productno); 新增會自動編號
+				// $("[name='pratetotal']").val(item.pratetotal); 新增時預設為0
+				// $("[name='prateqty']").val(item.prateqty); 新增時預設為0
+				$("[name='pname']").val(item.pname);
+				$("[name='ptag']").val(item.ptag);
+				$("[name='pclassno']").val(item.pclassno);
+				$("select[name='pclassno']").selectpicker('refresh');
+				$("select[name='hostno']").val(item.hostno);
+				$("select[name='hostno']").selectpicker('refresh');
+				$("[name='pprice']").val(item.pprice);
+				$("[name='pspecialprice']").val(item.pspecialprice);
+				$("[name='pqty']").val(item.pqty);
+				$("[name='psdate']").val(item.psdate);
+				$("[name='pedate']").val(item.pedate);
+				$("[name='pstatus']").val(item.pstatus);
+				$("select[name='pstatus']").selectpicker('refresh');
+
+				console.log(item);
+				for (let pimgt of item.pimgts) {
+					let count = 1;
+					$("#img" + count).attr('src', `ProductImg?pimgno=${pimgt.pimgno}`);
+					count++;
+				}
+
+				// for(let pimgt of item["Pimgts"]){
+				// 	let count =2 ;
+				// 	$(`#thumb-img${count}`).val(pimgt.pimg).change();
+				// 	// $(`#thumb-img${count}`).change();
+				// 	count++;
+				// }
+
+				editor.setData(item.pdiscrip);
+
+			});
+		}
+
+
+	</script>
+
 
 
 </body>

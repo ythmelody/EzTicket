@@ -247,7 +247,7 @@
 						</div>
 						<div class="ocard-left" style="margin-left: 5px;">
 							<button class="esv-btn me-2"
-								onclick="window.location.href='back_product_create_product.html'">新增商品</button>
+								onclick="window.location.href='back-product-create_product.html'">新增商品</button>
 						</div>
 					</div>
 					<div class="col-md-12">
@@ -342,6 +342,8 @@
 		</div>
 	</div>
 	<!-- Body End -->
+
+	<!-- 瀏覽所有商品 -->
 	<script>
 		fetch('ProductInfoServlet', {
 			method: 'POST',
@@ -370,11 +372,11 @@
 														aria-haspopup="true" aria-expanded="false"><i
 															class="fa-solid fa-ellipsis-vertical"></i></button>
 													<div class="dropdown-menu dropdown-menu-right">
-														<a href="back-product-update_product.html?productno=${item.productno} target="_blank"" class="dropdown-item"><i
+														<a href="back-product-update_product.html?productno=${item.productno}" target="_blank" class="dropdown-item"><i
 																class="fa-solid fa-gear me-3"></i>編輯商品</a>
-														<a href="front-product-product_detail.html?productno=${item.productno} target="_blank"" class="dropdown-item"><i
+														<a href="front-product-product_detail.html?productno=${item.productno}" target="_blank" class="dropdown-item"><i
 																class="fa-solid fa-eye me-3"></i>前台預覽</a>
-														<a href="back-product-create_product.html?productno=${item.productno} target="_blank"" class="dropdown-item"><i
+														<a href="back-product-create_product.html?productno=${item.productno}" target="_blank" class="dropdown-item"><i
 																class="fa-solid fa-clone me-3"></i>複製商品</a>
 													</div>
 												</div>
@@ -424,7 +426,6 @@
 
 			fetch("ProductInfoServlet", {
 				method: 'POST',
-				// body: formdata,
 				body: new URLSearchParams({
 					'pname': $("[name='pname']").val(),
 					'ptag': $("[name='ptag']").val(),
@@ -434,8 +435,6 @@
 					'action': $("[name='action']").val()
 				}),
 				headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-				// headers: { 'Content-Type': 'application/json' }
-				// headers: { 'Content-Type': 'multipart/form-data' }
 			})
 				.then(resp => resp.json())
 				.then(list => {
@@ -462,11 +461,11 @@
 														aria-haspopup="true" aria-expanded="false"><i
 															class="fa-solid fa-ellipsis-vertical"></i></button>
 													<div class="dropdown-menu dropdown-menu-right">
-														<a href="back-product-update_product.html?productno=${item.productno} target="_blank"" class="dropdown-item"><i
+														<a href="back-product-update_product.html?productno=${item.productno}" target="_blank" class="dropdown-item"><i
 																class="fa-solid fa-gear me-3"></i>編輯商品</a>
-														<a href="front-product-product_detail.html?productno=${item.productno} target="_blank"" class="dropdown-item"><i
+														<a href="front-product-product_detail.html?productno=${item.productno}" target="_blank" class="dropdown-item"><i
 																class="fa-solid fa-eye me-3"></i>前台預覽</a>
-														<a href="back_product_create_product.html?productno=${item.productno} target="_blank"" class="dropdown-item"><i
+														<a href="back_product_create_product.html?productno=${item.productno}" target="_blank" class="dropdown-item"><i
 																class="fa-solid fa-clone me-3"></i>複製商品</a>
 													</div>
 												</div>

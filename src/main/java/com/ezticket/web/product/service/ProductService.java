@@ -20,6 +20,9 @@ public class ProductService {
     public Product addProduct(Integer pclassno, String pname, Integer hostno, String pdiscrip, Integer pprice,
                               Integer pspecialprice, Integer pqty, Timestamp psdate, Timestamp pedate, String ptag, Integer pstatus) {
         Product productVO = new Product();
+        productVO.setPratetotal(0);
+        productVO.setPrateqty(0);
+
         productVO.setPclassno(pclassno);
         productVO.setPname(pname);
         productVO.setHostno(hostno);
@@ -31,6 +34,7 @@ public class ProductService {
         productVO.setPedate(pedate);
         productVO.setPtag(ptag);
         productVO.setPstatus(pstatus);
+
         dao.insert(productVO);
         return productVO;
     }
