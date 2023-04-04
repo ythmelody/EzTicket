@@ -262,7 +262,7 @@
 								<div class="nav custom2-tabs btn-group" role="tablist">
 									<button id="allCommentTab" class="tab-link ms-0 active" data-bs-toggle="tab"
 										data-bs-target="#orders-tab" type="button" role="tab" aria-controls="orders-tab"
-										aria-selected="true" onclick="fetchPcommentRoportList()"><span
+										aria-selected="true" onclick="fetchPcommentList()"><span
 											class="total_event_counter">商品評論</span>
 									</button>
 									<button id="allReportTab" class="tab-link" data-bs-toggle="tab"
@@ -430,8 +430,8 @@
 							<label class="form-label">評論狀態：</label>
 							<select id="cstatus" class="form-select text-bg-light p-3">
 								<option value="-1">取消顯示(不顯示)</option>
-								<option value="0" selected>正常顯示</option>
-								<option value="1">置頂</option>
+								<option value="0" selected>顯示</option>
+								<!-- <option value="1">置頂</option> -->
 							</select>
 						</div>
 
@@ -513,12 +513,11 @@
 		//載入所有評論
 		function fetchPcommentList() {
 
-			// 選單(狀態)呈現
+			// 選單(狀態)呈現 <option value="1">置頂</option>
 			$('#statusSelector').html(`
                 <option value="" selected>所有狀態</option>
                 <option value="-1">取消顯示</option>
                 <option value="0">正常顯示</option>
-                <option value="1">置頂</option>
             `);
 
 
@@ -659,11 +658,11 @@
 			//評論狀態數字→中文
 			for (let item of list) {
 				switch (item.pcommentstatus) {
-					case 1:
-						pcommentstatus = '<span class="status-circle blue-circle"></span>置頂';
-						break;
+					// case 1:
+					// 	pcommentstatus = '<span class="status-circle blue-circle"></span>置頂';
+					// 	break;
 					case 0:
-						pcommentstatus = '<span class="status-circle blue-circle"></span>顯示';
+						pcommentstatus = '<span class="status-circle green-circle"></span>顯示';
 						break;
 					case -1:
 						pcommentstatus = '<span class="status-circle red-circle"></span>不顯示(取消顯示)';
@@ -674,7 +673,7 @@
 										<td>${item.pcommentdate}</td>
 										<td>${item.member.mname}</td>
 										<td>
-											<a href="#" target="_blank">
+											<a href="front-product-product_detail.html?productno=${item.productno}" target="_blank">
 											<div style="width: 150px; height: 50px;">
 												<p class="ellipsis" style="font-weight: 500;
 													color: #000 !important; line-height: 50px;">
@@ -797,13 +796,13 @@
 				console.log(item);
 				switch (item.preportstatus) {
 					case 0:
-						preportstatus = '<span class="status-circle blue-circle"></span>未處理';
+						preportstatus = '<span class="status-circle red-circle"></span>未處理';
 						break;
 					case 1:
-						preportstatus = '<span class="status-circle blue-circle"></span>已處理(顯示)';
+						preportstatus = '<span class="status-circle green-circle"></span>已處理(顯示)';
 						break;
 					case 2:
-						preportstatus = '<span class="status-circle red-circle"></span>已處理(不顯示)';
+						preportstatus = '<span class="status-circle blue-circle"></span>已處理(不顯示)';
 						break;
 				}
 				$('#productCommentReport').append(`<tr>

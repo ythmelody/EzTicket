@@ -16,6 +16,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,8 +48,12 @@ public class ProductCommentServlet extends HttpServlet {
 
         //取得單一商品所有評論(用於前端商品單一詳情)
         if ("oneProductCommentList".equals(action)) {
-            Integer productno = Integer.valueOf(request.getParameter("productno"));
-            List<Pcomment> pcommentList = pcommentSvc.getAllProductCommentOfOneProduct(productno);
+            Map<String,String[]> map =new HashMap<>();
+            String productno[] = {request.getParameter("productno")};
+            map.put("productno", productno);
+            String pcommentstatus[] = {"0"};  //僅狀態顯示於前台的商品
+            map.put("pcommentstatus", pcommentstatus);
+            List<Pcomment> pcommentList = pcommentSvc.getAllBySearch(map);
             list2json(pcommentList, response);
         }
 
