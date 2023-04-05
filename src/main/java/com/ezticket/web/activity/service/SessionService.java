@@ -31,4 +31,12 @@ public class SessionService {
     private SessionDto entityToDTO(Session session){
         return modelMapper.map(session,SessionDto.class);
     }
+
+//    Add by Shawn on 4/3
+    public List<SessionDto> getAllSessionByActNo(Integer actNo){
+        return sessionRepository.findByActivityNo(actNo)
+                .stream()
+                .map(this::entityToDTO)
+                .collect(Collectors.toList());
+    }
 }

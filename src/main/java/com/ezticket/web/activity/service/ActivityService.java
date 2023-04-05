@@ -34,4 +34,19 @@ public class ActivityService {
         activityDto.setActivityNo(activity.getActivityNo());
         return activityDto;
     }
+
+    // Add by Shawn on 4/3
+    public List<Activity> getAllActAfterSell(){
+        return activityRepository.getAllAfterSellDate();
+    }
+
+    public List<Activity> getAllActBeforeSell(){ return activityRepository.getAllBeforeSellDate(); }
+
+    public List<Activity> getAllActSelling(){ return activityRepository.getAllBetweenSellDate(); }
+
+    public Optional<Activity> getActById(Integer actNo){ return activityRepository.findById(actNo);}
+
+    public List<Activity> getActByBlurActName(String aname){
+        return activityRepository.getByBlurActName(aname);
+    }
 }
