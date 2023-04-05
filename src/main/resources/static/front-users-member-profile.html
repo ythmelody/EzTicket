@@ -1337,7 +1337,7 @@
 		});
 
 		const info = {
-			memberNo: 85345
+			memberNo: 85346
 		}
 
 		function followproductList() {
@@ -1363,7 +1363,7 @@
 							})
 						}).then(resp => resp.json())
 							.then(product => {
-								let image = item.pimgts && item.pimgts[0] && item.pimgts[0].pimgno;
+								let image = product.pimgts && product.pimgts[0] && product.pimgts[0].pimgno;
 								if (image === undefined) { image = 70001; }
 								$("#productFollowing").append(`<div class="user-follow-card mb-4">
 											<div class="follow-card-left">

@@ -313,7 +313,7 @@
 									商品類別：<span class="event-type-name"><i class="fa-solid fa-video"></i></span>
 									開賣時間：<span class="event-type-name details-hr"><span class="ev-event-date">Wed, Jun
 											01, 2022 5:30 AM</span></span>
-											主辦單位：<span class="event-type-name details-host"><span
+									主辦單位：<span class="event-type-name details-host"><span
 											class="ev-event-date">XX娛樂</span></span>
 								</div>
 							</div>
@@ -325,7 +325,8 @@
 								<img src="images/event-imgs/big-1.jpg" alt="">
 							</div>
 							<div class="share-save-btns dropdown">
-								<button class="sv-btn me-2"><i class="fa-regular fa-bookmark me-2"></i>Save</button>
+								<button class="sv-btn me-2" onclick="followProduct()"><i class="fa-regular fa-bookmark me-2"
+										></i>Save</button>
 								<button class="sv-btn" data-bs-toggle="dropdown" aria-expanded="false"><i
 										class="fa-solid fa-share-nodes me-2"></i>Share</button>
 								<ul class="dropdown-menu">
@@ -419,7 +420,8 @@
 
 							<div class="booking-btn">
 								<a href="checkout.html" class="main-btn btn-hover w-45" style="width:48%;">Buy Now</a>
-								<button type="button" class="main-btn btn-hover w-45" style="width:48%;"  id="product-incart">Add To Cart</button>
+								<button type="button" class="main-btn btn-hover w-45" style="width:48%;"
+									id="product-incart">Add To Cart</button>
 							</div>
 						</div>
 					</div>
@@ -543,9 +545,9 @@
 
 	<!-- 接收來自後端的資料 -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<script src="js/my_porder.js"></script>
+	<script src="js/my_porder.js"></script>
 
-		
+
 
 	<script>
 		// const productInfo = document.querySelector('#productInfo');
@@ -565,7 +567,7 @@
 		let urlParams = new URLSearchParams(window.location.search);
 		const productno = urlParams.get('productno');
 
-		$('#product-incart').click(function() {
+		$('#product-incart').click(function () {
 			// console.log("點擊加入購物車: " + productno);
 			addCart(productno);
 		});
@@ -728,7 +730,7 @@
 		function comment(pcommentno) {
 			$('#pcommentno').val(pcommentno);
 			$('#memberno').val(info.memberno);
-			console.log("comment"+$("#pcommentno").val());
+			console.log("comment" + $("#pcommentno").val());
 		}
 
 		//新增商品評論檢舉
@@ -748,8 +750,18 @@
 
 			})
 		}
+		//新增商品追蹤
+		function followProduct() {
 
-
+			fetch("FollowproductController", {
+				method: "POST",
+				body: new URLSearchParams({
+					'memberno': info.memberno,
+					'productno': productno,
+					'action': "addOneProductFollow"
+				})
+			})
+		}
 
 
 	</script>
@@ -781,6 +793,8 @@
 		}
 
 	</script>
+
+
 
 
 

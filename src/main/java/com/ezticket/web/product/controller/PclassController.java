@@ -79,7 +79,6 @@ public class PclassController extends HttpServlet {
             Pclass pclass = pclassSvc.updateProductClass(pclassno, pclassname);
             Gson gson = new Gson();
             String json = gson.toJson(pclass);
-            System.out.println(json);
             resp.setContentType("application/json");
             resp.setCharacterEncoding("UTF-8");
             PrintWriter pw = resp.getWriter();
