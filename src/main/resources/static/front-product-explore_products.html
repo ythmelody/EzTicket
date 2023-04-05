@@ -466,6 +466,7 @@
 				for (let item of list) {
 					let image = item.pimgts && item.pimgts[0] && item.pimgts[0].pimgno;
 					if (image === undefined) { image = 70001; }
+
 					$('#productList').append(`<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mix arts concert workshops volunteer sports health_Wellness" data-ref="mixitup-target">
 			<div class="main-card mt-4">
 				<div class="event-thumbnail">
@@ -478,20 +479,26 @@
 				<div class="event-content">
 					<a href="front-product-product_detail.html?productno=${item.productno}" class="event-title">${item.pname}</a>
 					<div class="duration-price-remaining">
-						<span class="duration-price">${item.pprice}</span>
-						<span class="duration-price">${item.pspecialprice}</span>
-						<span class="remaining"></span>
+						<span class="duration-price" style="text-decoration: line-through">${item.pprice}</span>
+						<span class="duration-price" style="font-size: 20px;">${item.pspecialprice}</span>
+						<span class="remaining" id="rateAvg${item.productno}"><i class="fa fa-star" aria-hidden="true"></i></span>
 					</div>
 				</div>
 				<div class="event-footer">
-					<div class="booking-btn">
+					
 						<a href="checkout.html" class="main-btn btn-hover w-45" style="width:48%;">Buy Now</a>
 						<button type="button" class="main-btn btn-hover w-45" style="width:48%;" onclick="addCart(${item.productno})" id="product-incart">Add To Cart</button>
-					</div>
+					
 					
 				</div>
 			</div>
 		</div>`);
+					if (item.prateqty < 1) {
+						$("#rateAvg" + item.productno).text('尚無評論')
+					}
+					else if (item.prateqty >= 1) {
+						$("#rateAvg" + item.productno).text(item.pratetotal / item.prateqty).append(`<i class="fa fa-star fa-2x">`);
+					}
 				}
 			}
 		</script>
@@ -507,13 +514,13 @@
 			function followProduct(productno) {
 
 				fetch("FollowproductController", {
-				method: "POST",
-				body: new URLSearchParams({
-					'memberno': info.memberNo,
-					'productno':productno,
-					'action': "addOneProductFollow"
+					method: "POST",
+					body: new URLSearchParams({
+						'memberno': info.memberNo,
+						'productno': productno,
+						'action': "addOneProductFollow"
+					})
 				})
-			})
 			}
 		</script>
 </body>

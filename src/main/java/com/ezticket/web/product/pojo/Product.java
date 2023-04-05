@@ -15,7 +15,6 @@ public class Product extends Core {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer productno;
 
-
     private Integer pclassno;
     private String pname;
     private Integer hostno;
@@ -40,6 +39,8 @@ public class Product extends Core {
     @ManyToOne
     @JoinColumn(name = "hostno", insertable = false, updatable = false)
     private Host host;
+
+
 
 
     public Product() {

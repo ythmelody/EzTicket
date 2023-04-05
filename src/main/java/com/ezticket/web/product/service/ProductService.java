@@ -64,6 +64,19 @@ public class ProductService {
         return productVO;
     }
 
+    public Product updateProduct(Integer productno, Integer prate) {
+
+        Product product = dao.getByPrimaryKey(productno);
+        Integer pratetotal = product.getPratetotal();
+        Integer prateqty = product.getPrateqty();
+        product.setPratetotal(pratetotal + prate);
+        product.setPrateqty(prateqty+1);
+        dao.update(product);
+
+        return product;
+    }
+
+
     public Product getOneProduct(Integer productno) {
         return dao.getByPrimaryKey(productno);
     }

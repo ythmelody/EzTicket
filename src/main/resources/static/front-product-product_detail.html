@@ -325,8 +325,8 @@
 								<img src="images/event-imgs/big-1.jpg" alt="">
 							</div>
 							<div class="share-save-btns dropdown">
-								<button class="sv-btn me-2" onclick="followProduct()"><i class="fa-regular fa-bookmark me-2"
-										></i>Save</button>
+								<button class="sv-btn me-2" onclick="followProduct()"><i
+										class="fa-regular fa-bookmark me-2"></i>Save</button>
 								<button class="sv-btn" data-bs-toggle="dropdown" aria-expanded="false"><i
 										class="fa-solid fa-share-nodes me-2"></i>Share</button>
 								<ul class="dropdown-menu">
@@ -372,9 +372,10 @@
 					</div>
 					<div class="col-xl-4 col-lg-5 col-md-12">
 						<div class="main-card event-right-dt">
-							<div class="bp-title">
-								<h4>商品評星<i class="fa fa-star-o fa-2x"></i><i class="fa fa-star fa-2x"
-										style="width: 20px"></i></h4>
+							<div class="bp-title" id="productRate">
+								<!-- 商品評星：1.5 定位位置 -->
+								<h4><i class="fa fa-star fa-2x" style="width: 20px"></i><i
+										class="fa fa-star-o fa-2x"></i></h4>
 							</div>
 
 							<!-- <div class="time-left">
@@ -588,6 +589,13 @@
 				pdiscrip.textContent = item.pdiscrip;
 				pprice.textContent = item.pprice;
 				pspecialprice.textContent = item.pspecialprice;
+				if (item.prateqty < 1) {
+					$("#productRate").children("h4").text('尚無評論');
+				}
+				else if (item.prateqty >= 1) { 
+					$("#productRate").children("h4").text("商品評星：" + (item.pratetotal / item.prateqty)).append(`<i class="fa fa-star fa-2x">`); }
+
+
 			})
 
 

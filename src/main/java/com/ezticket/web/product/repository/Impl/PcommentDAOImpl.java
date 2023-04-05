@@ -83,10 +83,8 @@ public class PcommentDAOImpl implements PcommentDAO {
 			if (value != null && value.trim().length() != 0 && !"action".equals(key)) {
 				count++;
 				predicateList.add(getPredicateForDB(builder, root, key, value));
-				System.out.println("有送出查詢資料的欄位數count = " + count);
 			}
 		}
-		System.out.println("predicateList.size()=" + predicateList.size());
 		criteriaQuery.where(predicateList.toArray(new Predicate[predicateList.size()]));
 		Query query = session.createQuery(criteriaQuery);
 		List<Pcomment> pcommentList = query.getResultList();
