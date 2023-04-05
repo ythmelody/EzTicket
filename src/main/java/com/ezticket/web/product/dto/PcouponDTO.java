@@ -1,6 +1,7 @@
 package com.ezticket.web.product.dto;
 
 
+import com.ezticket.web.product.pojo.Pcouponholding;
 import com.ezticket.web.product.pojo.Pfitcoupon;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -21,4 +22,5 @@ public class PcouponDTO {
     private LocalDateTime pcoupnedate;
     private byte pcouponstatus;
     private List<Pfitcoupon> pfitcoupons;
+    private List<Pcouponholding> pcouponholdings;
 }

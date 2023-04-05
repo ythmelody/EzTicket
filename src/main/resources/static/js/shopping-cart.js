@@ -1,3 +1,6 @@
+// 定義會員編號
+let memberno = "85345"
+
 $(document).ready(() => {
   let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
   const itemlist = document.querySelector('tbody');
@@ -14,7 +17,7 @@ $(document).ready(() => {
                   <span class="number-top">$<s>${item.data.pprice}</s></span>
                   <span class="number-bottom">$${item.data.pspecialprice}</span>
                 </td>
-                <td><input  style="width: 25%;" class="form-control h_50" type="number" value="${item.quantity}" min="1" max="${item.data.pqty}"></td>
+                <td><input style="width: 25%;" class="form-control h_50" type="number" value="${item.quantity}" min="1" max="${item.data.pqty}"></td>
                 <td>$${item.data.pspecialprice * item.quantity}</td>
               </tr>`
     }).join('');
@@ -22,7 +25,7 @@ $(document).ready(() => {
                       <td colspan="3">
                         <label class="form-label">優惠券代碼</label>
                         <div class="position-relative">
-                          <input class="form-control h_50" type="text" placeholder="Code" value="">
+                          <input id="couponCode"class="form-control h_50" type="text" placeholder="Code">
                           <button class="apply-btn btn-hover" type="button">使用</button>
                         </div>
                       </td>
@@ -32,6 +35,8 @@ $(document).ready(() => {
                         </div>
                       </td>
                     </tr>`;
+    const card = document.querySelector('#TWD');
+    card.textContent = `應支付總金額 : TWD $${totalPay}`;
     itemlist.innerHTML += itembody;
     itemlist.innerHTML += coupon;
   }
@@ -50,5 +55,72 @@ $(document).ready(() => {
       tr.querySelector('td:last-child').innerText = `$${item.data.pspecialprice * item.quantity}`;
     });
     itemlist.querySelector('.totalinv2').innerText = `總金額 : TWD $${totalPay}`;
+    const card = document.querySelector('#TWD');
+    card.textContent = `應支付總金額 : TWD $${totalPay}`;
   });
 })
+
+function addPorder() {
+  let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+  let ptotal = 0; let pdiscounttotal = 0;
+  let products = [];
+  for (item of cartItems) {
+    ptotal += item.data.pprice * item.quantity;
+    pdiscounttotal += item.data.pspecialprice * item.quantity;
+    products.push({
+      'productno': item.data.productno,
+      'quantity': item.quantity,
+      'pprice': item.data.pspecialprice * item.quantity
+    });
+  }
+  let pcoupontotal = 0;
+  let pcouponno;
+  let pchecktotal = (pdiscounttotal - pcoupontotal);
+  const porderbody = {
+    'memberno': memberno,
+    'ptotal': ptotal,
+    'pdiscounttotal': pdiscounttotal,
+    'pcoupontotal': pcoupontotal,
+    'pchecktotal': pchecktotal,
+    'pcouponno': pcouponno ?? null,
+    'recipient': $("#recipient").val(),
+    'rephone': $("#rephone").val(),
+    'readdress': ($("#readdress1").val() + ',' + $("#readdress2").val() + $("#readdress3").val()),
+    'orderProducts': products,
+  }
+  swal({
+    title: "是否建立訂單?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true
+  }).then((confirm) => {
+    if (confirm) {
+      fetch('/porder/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(porderbody)
+      }).then(response => {
+        if (response.ok) {
+          swal({
+            title: "建立成功",
+            icon: "success",
+            closeOnClickOutside: false,
+          }).then(() => {
+            localStorage.clear();
+            window.location.href = 'front-product-order_confirmed.html';
+          });
+        } else {
+          swal({
+            title: "建立失敗",
+            icon: "error",
+            closeOnClickOutside: false,
+          });
+        }
+      });
+    } else {
+      return Promise.reject('取消操作');
+    }
+  });
+}
