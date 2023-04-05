@@ -39,16 +39,16 @@ public class PclassController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String action =req.getParameter("action");
+        String action = req.getParameter("action");
         //取得所有類別
-        if("productClassList".equals(action)){
+        if ("productClassList".equals(action)) {
             List<Pclass> pclassList = pclassSvc.getAllProductClass();
-            list2json(pclassList,resp);
+            list2json(pclassList, resp);
         }
 
         //新增商品類別
-        if("addProductClass".equals(action)){
-            String pclassname =req.getParameter("pclassname");
+        if ("addProductClass".equals(action)) {
+            String pclassname = req.getParameter("pclassname");
             Pclass pclass = pclassSvc.addProductClass(pclassname);
             Gson gson = new Gson();
             String json = gson.toJson(pclass);
@@ -59,6 +59,33 @@ public class PclassController extends HttpServlet {
             pw.flush();
         }
 
+        //取得單筆商品類別
+        if ("getOneProductClass".equals(action)) {
+            Integer pclassno = Integer.valueOf(req.getParameter("pclassno"));
+            Pclass pclass = pclassSvc.getOneProductClass(pclassno);
+            Gson gson = new Gson();
+            String json = gson.toJson(pclass);
+            resp.setContentType("application/json");
+            resp.setCharacterEncoding("UTF-8");
+            PrintWriter pw = resp.getWriter();
+            pw.print(json);
+            pw.flush();
+        }
+
+
+        if ("updateOneproductClass".equals(action)) {
+            Integer pclassno = Integer.valueOf(req.getParameter("pclassno"));
+            String pclassname = req.getParameter("pclassname_new");
+            Pclass pclass = pclassSvc.updateProductClass(pclassno, pclassname);
+            Gson gson = new Gson();
+            String json = gson.toJson(pclass);
+            System.out.println(json);
+            resp.setContentType("application/json");
+            resp.setCharacterEncoding("UTF-8");
+            PrintWriter pw = resp.getWriter();
+            pw.print(json);
+            pw.flush();
+        }
 
 
     }

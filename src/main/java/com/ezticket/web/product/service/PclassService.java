@@ -24,11 +24,12 @@ public class PclassService {
 	}
 
 	@Transactional
-	public Pclass updateProductClass(Pclass pclassVO) {
-		final Pclass oldPclassVO = dao.getByPrimaryKey(pclassVO.getPclassno());
-		pclassVO.setPclassno(oldPclassVO.getPclassno());
-		dao.update(pclassVO);
-		return pclassVO;
+	public Pclass updateProductClass(Integer pclassno,String pclassname) {
+		Pclass pclass = dao.getByPrimaryKey(pclassno);
+		pclass.setPclassno(pclassno);
+		pclass.setPclassname(pclassname);
+		dao.update(pclass);
+		return pclass;
 	}
 
 	public Pclass getOneProductClass(Integer pclassno) {
