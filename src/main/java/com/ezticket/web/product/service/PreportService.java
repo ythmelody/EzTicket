@@ -45,6 +45,13 @@ public class PreportService {
     @Transactional
     public boolean updateProductReport(Integer preportno, Integer preportstatus) {
        Preport preport = dao.getByPrimaryKey(preportno);
+        Pcomment pcomment = preport.getPcomment();
+        if(preportstatus == 2){
+            pcomment.setPcommentstatus(-1);
+        }else if(preportstatus == 1){
+            pcomment.setPcommentstatus(0);
+        }
+        preport.setPcomment(pcomment);
         preport.setPreportstatus(preportstatus);
         dao.update(preport);
         return true;

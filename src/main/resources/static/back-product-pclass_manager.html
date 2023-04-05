@@ -252,14 +252,14 @@
 					<div class="col-md-12">
 						<div class="d-main-title">
 							<h3>
-								商品評論管理
+								商品類別管理
 							</h3>
 						</div>
 					</div>
 					<div class="col-md-12">
 						<div class="main-card mt-5">
 							<div class="dashboard-wrap-content p-4">
-								<div class="nav custom2-tabs btn-group" role="tablist">
+								<!-- <div class="nav custom2-tabs btn-group" role="tablist">
 									<button id="allCommentTab" class="tab-link ms-0 active" data-bs-toggle="tab"
 										data-bs-target="#orders-tab" type="button" role="tab" aria-controls="orders-tab"
 										aria-selected="true" onclick="fetchPcommentList()"><span
@@ -270,13 +270,21 @@
 										aria-controls="tickets-tab" aria-selected="false"
 										onclick="fetchPcommentRoportList()">受檢舉評論
 									</button>
-								</div>
+								</div> -->
+								<button class="esv-btn me-2" data-bs-toggle="modal"
+									data-bs-target="#inviteTeamModal_add">
+									<div style="width: 200px; height: 50px;">
+										<p class="ellipsis" style="font-weight: 500;
+													color: #000 !important; line-height: 50px;">
+											新增類別</p>
+									</div>
+								</button>
 								<div class="d-md-flex flex-wrap align-items-center">
 									<div class="dashboard-date-wrap mt-4">
 										<div class="form-group">
 											<div class="relative-input position-relative">
 												<input id="showName" class="form-control h_40" type="text"
-													placeholder="搜尋商品" value="" name="pname">
+													placeholder="搜尋商品類別" value="" name="pclass">
 												<i class="uil uil-search"></i>
 											</div>
 										</div>
@@ -296,13 +304,13 @@
 												</select>
 											</div>
 										</div> -->
-										<div class="col-lg-3 col-md-6">
+										<!-- <div class="col-lg-3 col-md-6">
 											<div class="form-group">
 												<select id="statusSelector" name="pcommentstatus"
-													class="form-select"></select>
-												<!-- 評論狀態選單顯示 -->
-											</div>
-										</div>
+													class="form-select"></select> -->
+										<!-- 評論狀態選單顯示 -->
+										<!-- </div>
+										</div> -->
 									</div>
 								</div>
 							</div>
@@ -316,17 +324,17 @@
 												<table class="table">
 													<thead class="thead-dark">
 														<tr>
-															<th scope="col" style="width: 15%">評論日期</th>
-															<th scope="col" style="width: 15%">會員姓名</th>
-															<th scope="col" style="width: 15%">商品名稱</th>
+															<th scope="col" style="width: 15%">類別編號</th>
+															<th scope="col" style="width: 15%">類別名稱</th>
+															<!-- <th scope="col" style="width: 15%">商品名稱</th>
 															<th scope="col" style="width: 20%">評論內容</th>
 															<th scope="col" style="width: 10%">評論星等</th>
 															<th scope="col" style="width: 10%">評論讚數</th>
-															<th scope="col" style="width: 15%">評論狀態</th>
+															<th scope="col" style="width: 15%">評論狀態</th> -->
 														</tr>
 													</thead>
-													<tbody id="productComment">
-														<!-- productComment顯示的位置 -->
+													<tbody id="productClass">
+														<!-- pclass顯示的位置 -->
 													</tbody>
 												</table>
 											</div>
@@ -410,12 +418,12 @@
 	<!-- Body End -->
 
 	<!-- aria-labelledby="inviteTeamModalLabel" -->
-	<!-- 顯示評論內容開始-->
-	<div class="modal fade" id="inviteTeamModal_good" tabindex="-1" aria-hidden="true">
+	<!-- 新增類別內容開始-->
+	<div class="modal fade" id="inviteTeamModal_add" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">評論內容</h5>
+					<h5 class="modal-title">新增類別</h5>
 					<button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"><i
 							class="uil uil-multiply"></i></button>
 				</div>
@@ -423,60 +431,41 @@
 					<div class="model-content main-form">
 						<input id="pcommentno" type="text" value="" style="display: none">
 						<div class="form-group mt-30">
-							<label class="form-label">評論內容：</label>
-							<textarea id="ccontent" class="form-textarea" disabled></textarea>
+							<label class="form-label">類別名稱：</label>
+							<textarea id="pclassname" class="form-textarea"></textarea>
 						</div>
-						<div class="form-group mt-30">
-							<label class="form-label">評論狀態：</label>
-							<select id="cstatus" class="form-select text-bg-light p-3">
-								<option value="-1">取消顯示(不顯示)</option>
-								<option value="0" selected>顯示</option>
-								<!-- <option value="1">置頂</option> -->
-							</select>
-						</div>
-
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="co-main-btn min-width btn-hover h_40" data-bs-dismiss="modal">取消修改
+					<button type="button" class="co-main-btn min-width btn-hover h_40" data-bs-dismiss="modal">取消新增
 					</button>
 					<button type="button" class="main-btn min-width btn-hover h_40" data-bs-dismiss="modal"
-						onclick="confirm_good()">確認修改
+						onclick="confirm_add()">確認新增
 					</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- 顯示評論內容結束-->
-
-	<!-- aria-labelledby="inviteTeamModalLabel" -->
-	<!-- 顯示受檢舉評論內容開始-->
-	<div class="modal fade" id="inviteTeamModal_bad" tabindex="-1" aria-hidden="true">
+	<!-- 新增類別內容結束-->
+	<!-- 修改類別內容開始-->
+	<div class="modal fade" id="inviteTeamModal_update" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">檢舉原因/評論內容</h5>
+					<h5 class="modal-title">修改類別</h5>
 					<button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"><i
 							class="uil uil-multiply"></i></button>
 				</div>
 				<div class="modal-body">
 					<div class="model-content main-form">
-						<input id="preportno" type="text" value="" style="display: none">
+						<input id="pclassno" type="text" value="" style="display: none">
 						<div class="form-group mt-30">
-							<label class="form-label">檢舉原因：</label>
-							<textarea id="rreason" class="form-textarea" disabled></textarea>
+							<label class="form-label">原類別名稱：</label>
+							<textarea id="pclassname_old" class="form-textarea" disabled></textarea>
 						</div>
 						<div class="form-group mt-30">
-							<label class="form-label">評論內容：</label>
-							<textarea id="rcomment" class="form-textarea" disabled></textarea>
-						</div>
-						<div class="form-group mt-30">
-							<label class="form-label">評論狀態：</label>
-							<select id="rstatus" class="form-select text-bg-light p-3">
-								<option value="0" selected>未處理</option>
-								<option value="1">已處理 (顯示)</option>
-								<option value="2">已處理 (不顯示)</option>
-							</select>
+							<label class="form-label">新類別名稱：</label>
+							<textarea id="pclassname_new" class="form-textarea"></textarea>
 						</div>
 					</div>
 				</div>
@@ -484,13 +473,15 @@
 					<button type="button" class="co-main-btn min-width btn-hover h_40" data-bs-dismiss="modal">取消修改
 					</button>
 					<button type="button" class="main-btn min-width btn-hover h_40" data-bs-dismiss="modal"
-						onclick="confirm_bad()">確認修改
+						onclick="confirm_update()">確認修改
 					</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- 顯示受檢舉評論內容結束-->
+	<!-- 修改類別內容結束-->
+
+	<!-- aria-labelledby="inviteTeamModalLabel" -->
 
 
 	<script src="js/vertical-responsive-menu.min.js"></script>
@@ -506,98 +497,98 @@
 
 		// 當網頁載入時先呈現所有商品評論
 		$(document).ready(() => {
-			fetchPcommentList();
+			fetchPclassList();
 		});
 
 
 		//載入所有評論
-		function fetchPcommentList() {
+		function fetchPclassList() {
 
 			// 選單(狀態)呈現 <option value="1">置頂</option>
-			$('#statusSelector').html(`
-                <option value="" selected>所有狀態</option>
-                <option value="-1">取消顯示</option>
-                <option value="0">正常顯示</option>
-            `);
+			// $('#statusSelector').html(`
+			//     <option value="" selected>所有狀態</option>
+			//     <option value="-1">取消顯示</option>
+			//     <option value="0">正常顯示</option>
+			// `);
 
 
-			fetch('ProductCommentServlet', {
+			fetch('PclassController', {
 				method: 'POST',
 				body: new URLSearchParams({
-					'action': "CommentSearch"
+					'action': "productClassList"
 				})
 			}).then(resp => resp.json())
 				.then(list => {
-					displayPcomments(list);
+					displayPclass(list);
 				})
 
-			$('#showName').keypress(function () {
-				if ($('div .tab-pane.fade.active.show').attr('id') === 'tickets-tab') {
-					fetch('ProductCommentReportServlet', {
-						method: "POST",
-						headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-						body: new URLSearchParams({
-							'pname': $("[name='pname']").val(),
-							'preportstatus': $("[name='pcommentstatus']").val(),
-							'action': "CommentReportSearch"
-						}),
-					})
-						.then((resp) => resp.json())
-						.then((list) => {
-							displayPcommentReport(list);
-						})
-				}
-				if ($('div .tab-pane.fade.active.show').attr('id') === 'orders-tab') {
-					fetch('ProductCommentServlet', {
-						method: "POST",
-						headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-						body: new URLSearchParams({
-							'pname': $("[name='pname']").val(),
-							'pcommentstatus': $("[name='pcommentstatus']").val(),
-							'action': "CommentSearch"
-						}),
-					})
-						.then((resp) => resp.json())
-						.then((list) => {
-							displayPcomments(list);
-						})
+			// $('#showName').keypress(function () {
+			// 	if ($('div .tab-pane.fade.active.show').attr('id') === 'tickets-tab') {
+			// 		fetch('ProductCommentReportServlet', {
+			// 			method: "POST",
+			// 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			// 			body: new URLSearchParams({
+			// 				'pname': $("[name='pname']").val(),
+			// 				'preportstatus': $("[name='pcommentstatus']").val(),
+			// 				'action': "CommentReportSearch"
+			// 			}),
+			// 		})
+			// 			.then((resp) => resp.json())
+			// 			.then((list) => {
+			// 				displayPcommentReport(list);
+			// 			})
+			// 	}
+			// 	if ($('div .tab-pane.fade.active.show').attr('id') === 'orders-tab') {
+			// 		fetch('ProductCommentServlet', {
+			// 			method: "POST",
+			// 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			// 			body: new URLSearchParams({
+			// 				'pname': $("[name='pname']").val(),
+			// 				'pcommentstatus': $("[name='pcommentstatus']").val(),
+			// 				'action': "CommentSearch"
+			// 			}),
+			// 		})
+			// 			.then((resp) => resp.json())
+			// 			.then((list) => {
+			// 				displayPcomments(list);
+			// 			})
 
-				}
+			// 	}
 
-			});
+			// });
 
-			$('#statusSelector').change(function () {
-				if ($('div .tab-pane.fade.active.show').attr('id') === 'tickets-tab') {
-					fetch('ProductCommentReportServlet', {
-						method: "POST",
-						headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-						body: new URLSearchParams({
-							'pname': $("[name='pname']").val(),
-							'preportstatus': $("[name='pcommentstatus']").val(),
-							'action': "CommentReportSearch"
-						}),
-					})
-						.then((resp) => resp.json())
-						.then((list) => {
-							displayPcommentReport(list);
-						})
-				} if ($('div .tab-pane.fade.active.show').attr('id') === 'orders-tab') {
-					fetch('ProductCommentServlet', {
-						method: "POST",
-						headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-						body: new URLSearchParams({
-							'pname': $("[name='pname']").val(),
-							'pcommentstatus': $("[name='pcommentstatus']").val(),
-							'action': "CommentSearch"
-						}),
-					})
-						.then((resp) => resp.json())
-						.then((list) => {
-							displayPcomments(list);
-						})
-				}
+			// $('#statusSelector').change(function () {
+			// 	if ($('div .tab-pane.fade.active.show').attr('id') === 'tickets-tab') {
+			// 		fetch('ProductCommentReportServlet', {
+			// 			method: "POST",
+			// 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			// 			body: new URLSearchParams({
+			// 				'pname': $("[name='pname']").val(),
+			// 				'preportstatus': $("[name='pcommentstatus']").val(),
+			// 				'action': "CommentReportSearch"
+			// 			}),
+			// 		})
+			// 			.then((resp) => resp.json())
+			// 			.then((list) => {
+			// 				displayPcommentReport(list);
+			// 			})
+			// 	} if ($('div .tab-pane.fade.active.show').attr('id') === 'orders-tab') {
+			// 		fetch('ProductCommentServlet', {
+			// 			method: "POST",
+			// 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			// 			body: new URLSearchParams({
+			// 				'pname': $("[name='pname']").val(),
+			// 				'pcommentstatus': $("[name='pcommentstatus']").val(),
+			// 				'action': "CommentSearch"
+			// 			}),
+			// 		})
+			// 			.then((resp) => resp.json())
+			// 			.then((list) => {
+			// 				displayPcomments(list);
+			// 			})
+			// 	}
 
-			});
+			// });
 
 		}
 
@@ -632,270 +623,84 @@
 			return commentno;
 		}
 
-		// 修改單一評論狀態
-		function confirm_good() {
-			fetch('ProductCommentServlet', {
+		// 新增商品類別
+		function confirm_add() {
+			fetch('PclassController', {
 				method: 'POST',
 				body: new URLSearchParams({
-					'pcommentno': $('#pcommentno').val(),
-					'pcommentstatus': $('#cstatus').val(),
-					'action': "updateOneproductCommentStatus"
+					'pclassname': $('#pclassname').val(),
+					'action': "addProductClass"
 				})
 			}).then((resp) => resp.json())
 				.then((item) => {
-					if (item === true) {
-						fetchPcommentList();
+					if (item) {
+						fetchPclassList();
 					} else
-						alert("請重新更新狀態");
+						alert("新增失敗,請再次新增類別");
 				})
 		}
 
 		//顯示評論
-		function displayPcomments(list) {
+		function displayPclass(list) {
 			//避免更新單筆資料後render出現重複資料
-			$('#productComment').html('');
-
-			//評論狀態數字→中文
-			for (let item of list) {
-				switch (item.pcommentstatus) {
-					// case 1:
-					// 	pcommentstatus = '<span class="status-circle blue-circle"></span>置頂';
-					// 	break;
-					case 0:
-						pcommentstatus = '<span class="status-circle green-circle"></span>顯示';
-						break;
-					case -1:
-						pcommentstatus = '<span class="status-circle red-circle"></span>不顯示(取消顯示)';
-						break;
-				}
-
-				$('#productComment').append(`<tr>   
-										<td>${item.pcommentdate}</td>
-										<td>${item.member.mname}</td>
-										<td>
-											<a href="front-product-product_detail.html?productno=${item.productno}" target="_blank">
-											<div style="width: 150px; height: 50px;">
-												<p class="ellipsis" style="font-weight: 500;
-													color: #000 !important; line-height: 50px;">
-													${item.product.pname}</p>
-											</div>
-											</a>
-										</td>
-										<td>
-											<button name="${item.pcommentno}"
-												style="border: none; background-color: transparent;"
-												data-bs-toggle="modal"
-												data-bs-target="#inviteTeamModal_good" onclick="showcomment(this.name)">
-												<div style="width: 200px; height: 50px;">
-													<p class="ellipsis" style="font-weight: 500;
-													color: #000 !important; line-height: 50px;">
-													${item.pcommentcont}</p>
-												</div>
-											</button>
-										</td>
-										<td>${item.prate}</td>
-										<td>${item.plike}</td>
-										<td>${pcommentstatus}</td>
-									</tr>`);
-			}
-		}
-
-
-
-
-
-		//呈現被檢舉頁面
-		function fetchPcommentRoportList() {
-
-			// 選單(狀態)呈現
-			$('#statusSelector').html(`
-				<option value="" selected>所有狀態</option>
-				<option value="0">未處理</option>
-				<option value="1">已處理(顯示)</option>
-				<option value="2">未處理(不顯示)</option>
-				`);
-
-			// 選單(商品)呈現
-			// 	$('#showSelector').html(`
-			// 	<option value="all" selected>所有商品</option>
-			// `);
-
-			// 選單(節目)呈現 - 動態 →還不知道抓出來的是甚麼資料
-			// fetch('acomment/ACommentANames')
-			// 	.then((resp) => resp.json())
-			// 	.then((jsondata) => {
-			// 		for (let i of jsondata) {
-			// 			document.getElementById('showSelector').innerHTML += `
-			// 	<option value="${i[0]}">${i[1]}</option>
-			// `
-			// 		}
-			// 	})
-
-
-
-			// $('#showName').keypress(function () {
-			// 	if ($('div .tab-pane.fade.active.show').attr('id') === 'tickets-tab') {
-			// 		fetch('ProductCommentReportServlet', {
-			// 			method: "POST",
-			// 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-			// 			body: new URLSearchParams({
-			// 				'pname': $("[name='pname']").val(),
-			// 				'preportstatus': $("[name='pcommentstatus']").val(),
-			// 				'action': "CommentReportSearch"
-			// 			}),
-			// 		})
-			// 			.then((resp) => resp.json())
-			// 			.then((list) => {
-			// 				displayPcommentReport(list);
-			// 			})
-			// 	}
-			// 	if ($('div .tab-pane.fade.active.show').attr('id') === 'orders-tab') {
-
-			// 	}
-
-
-
-			// });
-
-			// $('#statusSelector').change(function () {
-			// 	fetch('ProductCommentReportServlet', {
-			// 		method: "POST",
-			// 		headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-			// 		body: new URLSearchParams({
-			// 			'pname': $("[name='pname']").val(),
-			// 			'preportstatus': $("[name='pcommentstatus']").val(),
-			// 			'action': "CommentReportSearch"
-			// 		}),
-			// 	})
-			// 		.then((resp) => resp.json())
-			// 		.then((list) => {
-			// 			displayPcommentReport(list);
-			// 		})
-			// });
-
-
-			fetch('ProductCommentReportServlet', {
-				method: 'POST',
-				body: new URLSearchParams({
-					'action': "productCommentRepostList"
-				})
-			}).then(resp => resp.json())
-				.then(list => {
-					displayPcommentReport(list);
-				})
-
-		}
-
-
-
-
-		function displayPcommentReport(list) {
-			$('#productCommentReport').html('');
-
+			$('#productClass').html('');
 			for (let item of list) {
 				console.log(item);
-				switch (item.preportstatus) {
-					case 0:
-						preportstatus = '<span class="status-circle red-circle"></span>未處理';
-						break;
-					case 1:
-						preportstatus = '<span class="status-circle green-circle"></span>已處理(顯示)';
-						break;
-					case 2:
-						preportstatus = '<span class="status-circle blue-circle"></span>已處理(不顯示)';
-						break;
-				}
-				$('#productCommentReport').append(`<tr>
-															<td>${item.preportdate}</td>
-															<td>${item.member.mname}</td>
-															<td>${item.pcomment.member.mname}</td>
-															<td>
-																<!-- <a href="#" target="_blank"> -->
-																<div style="width: 150px; height: 50px;">
-																	<p class="ellipsis" style="font-weight: 500;
-																		color: #000 !important; line-height: 50px;">
-																		${item.pcomment.product.pname}</p>
-																</div>
-																<!-- </a> -->
-															</td>
-															<td>
-																<button name="${item.preportno}"
-																	style="border: none; background-color: transparent;"
-																	data-bs-toggle="modal"
-																	data-bs-target="#inviteTeamModal_bad" onclick="showreport(this.name)">
-																	<div style="width: 150px; height: 50px;">
-																		<p class="ellipsis" style="font-weight: 500;
-																		color: #000 !important; line-height: 50px;">
-																			${item.pwhy}</p>
-																	</div>
-																</button>
-															</td>
-															<td>
-																<button name="${item.preportno}"
-																	style="border: none; background-color: transparent;"
-																	data-bs-toggle="modal"
-																	data-bs-target="#inviteTeamModal_bad" onclick="showreport(this.name)">
-																	<div style="width: 150px; height: 50px;">
-																		<p class="ellipsis" style="font-weight: 500;
-																		color: #000 !important; line-height: 50px;">
-																			${item.pcomment.pcommentcont}</p>
-																	</div>
-																</button>
-															</td>
-															<td>${preportstatus}</td>
-														</tr>`);
+				$('#productClass').append(`<tr>   
+										<td>${item.pclassno}</td>
+										<td><button name="${item.pclassno}"
+											style="border: none; background-color: transparent;"
+											data-bs-toggle="modal"
+											data-bs-target="#inviteTeamModal_update" onclick="showpclass(this.name)">
+											<div style="width: 150px; height: 50px;">
+											<p class="ellipsis" style="font-weight: 500;color: #000 !important; line-height: 50px;">${item.pclassname}</p>
+											</div>
+											</button></td>
+									    </tr>`);
 			}
+
 		}
 
-		// 點擊單一評論檢舉並顯示
-		function showreport(reportno) {
-			fetch('ProductCommentReportServlet', {
+
+		// 點擊單一類別名稱並顯示
+		function showpclass(pclassno) {
+			fetch('PclassController', {
 				method: 'POST',
 				body: new URLSearchParams({
-					'preportno': reportno,
-					'action': "productOneCommentRepost"
+					'pclassno': pclassno,
+					'action': "getOneProductClass"
 				})
 			}).then(resp => resp.json())
 				.then(item => {
 					//把前面有的值先清空避免吃到舊值
-					$('#preportno').val("");
-					$('#rreason').text("");
-					$('#rcomment').text("");
+					$('#pclassno').val("");
+					$('#pclassname_old').text("");
+					$('#pclassname_new').val("");
 
-					$('#preportno').val(item.preportno);
-					console.log(item.preportno);
-					$('#rreason').text(item.pwhy);
-					$('#rcomment').text(item.pcomment.pcommentcont);
+					$('#pclassno').val(item.pclassno);
+					$('#pclassname_old').text(item.pclassname);
 
-					if (item.preportstatus === 0) {
-						$("#rstatus>option[value='0']").prop("selected", true);
-					} else if (item.preportstatus === 1) {
-						$("#rstatus>option[value='1']").prop("selected", true);
-					} else {
-						$("#rstatus>option[value='2']").prop("selected", true);
-
-					}
 				})
-			return reportno;
+			return pclassno;
 		}
 
 
-		// 修改單一檢舉狀態
-		function confirm_bad() {
-			fetch('ProductCommentReportServlet', {
+		// 修改單一類別名稱
+		function confirm_update() {
+			fetch('PclassController', {
 				method: 'POST',
 				body: new URLSearchParams({
-					'preportno': $('#preportno').val(),
-					'preportstatus': $('#rstatus').val(),
-					'action': "updateOneproductCommentReportStatus"
+					'pclassno': $('#pclassno').val(),
+					'pclassname_new': $('#pclassname_new').val(),
+					'action': "updateOneproductClass"
 				})
 			}).then((resp) => resp.json())
 				.then((item) => {
 					console.log(item);
-					if (item === true) {
-						fetchPcommentRoportList();
+					if (item) {
+						fetchPclassList();
 					} else
-						alert("請重新更新狀態");
+						alert("請重新檢查類別名稱");
 				})
 		}
 

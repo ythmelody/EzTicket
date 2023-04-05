@@ -313,7 +313,7 @@
 									商品類別：<span class="event-type-name"><i class="fa-solid fa-video"></i></span>
 									開賣時間：<span class="event-type-name details-hr"><span class="ev-event-date">Wed, Jun
 											01, 2022 5:30 AM</span></span>
-											主辦單位：<span class="event-type-name details-host"><span
+									主辦單位：<span class="event-type-name details-host"><span
 											class="ev-event-date">XX娛樂</span></span>
 								</div>
 							</div>
@@ -325,7 +325,8 @@
 								<img src="images/event-imgs/big-1.jpg" alt="">
 							</div>
 							<div class="share-save-btns dropdown">
-								<button class="sv-btn me-2"><i class="fa-regular fa-bookmark me-2"></i>Save</button>
+								<button class="sv-btn me-2" onclick="followProduct()"><i
+										class="fa-regular fa-bookmark me-2"></i>Save</button>
 								<button class="sv-btn" data-bs-toggle="dropdown" aria-expanded="false"><i
 										class="fa-solid fa-share-nodes me-2"></i>Share</button>
 								<ul class="dropdown-menu">
@@ -371,9 +372,10 @@
 					</div>
 					<div class="col-xl-4 col-lg-5 col-md-12">
 						<div class="main-card event-right-dt">
-							<div class="bp-title">
-								<h4>商品評星<i class="fa fa-star-o fa-2x"></i><i class="fa fa-star fa-2x"
-										style="width: 20px"></i></h4>
+							<div class="bp-title" id="productRate">
+								<!-- 商品評星：1.5 定位位置 -->
+								<h4><i class="fa fa-star fa-2x" style="width: 20px"></i><i
+										class="fa fa-star-o fa-2x"></i></h4>
 							</div>
 
 							<!-- <div class="time-left">
@@ -419,7 +421,8 @@
 
 							<div class="booking-btn">
 								<a href="checkout.html" class="main-btn btn-hover w-45" style="width:48%;">Buy Now</a>
-								<button type="button" class="main-btn btn-hover w-45" style="width:48%;"  id="product-incart">Add To Cart</button>
+								<button type="button" class="main-btn btn-hover w-45" style="width:48%;"
+									id="product-incart">Add To Cart</button>
 							</div>
 						</div>
 					</div>
@@ -543,9 +546,9 @@
 
 	<!-- 接收來自後端的資料 -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<script src="js/my_porder.js"></script>
+	<script src="js/my_porder.js"></script>
 
-		
+
 
 	<script>
 		// const productInfo = document.querySelector('#productInfo');
@@ -565,7 +568,7 @@
 		let urlParams = new URLSearchParams(window.location.search);
 		const productno = urlParams.get('productno');
 
-		$('#product-incart').click(function() {
+		$('#product-incart').click(function () {
 			// console.log("點擊加入購物車: " + productno);
 			addCart(productno);
 		});
@@ -581,11 +584,18 @@
 				pname.textContent = item.pname;
 				pclass.textContent = item.pclass.pclassname;
 				psdate.textContent = item.psdate;
-				hostno.textContent = item.hostno;
+				hostno.textContent = item.host.hostname;
 				pimg.innerHTML = `<img src="ProductImg?pimgno=${item.pimgts[0].pimgno}" alt="">`;
 				pdiscrip.textContent = item.pdiscrip;
 				pprice.textContent = item.pprice;
 				pspecialprice.textContent = item.pspecialprice;
+				if (item.prateqty < 1) {
+					$("#productRate").children("h4").text('尚無評論');
+				}
+				else if (item.prateqty >= 1) { 
+					$("#productRate").children("h4").text("商品評星：" + (item.pratetotal / item.prateqty)).append(`<i class="fa fa-star fa-2x">`); }
+
+
 			})
 
 
@@ -728,7 +738,7 @@
 		function comment(pcommentno) {
 			$('#pcommentno').val(pcommentno);
 			$('#memberno').val(info.memberno);
-			console.log("comment"+$("#pcommentno").val());
+			console.log("comment" + $("#pcommentno").val());
 		}
 
 		//新增商品評論檢舉
@@ -748,8 +758,18 @@
 
 			})
 		}
+		//新增商品追蹤
+		function followProduct() {
 
-
+			fetch("FollowproductController", {
+				method: "POST",
+				body: new URLSearchParams({
+					'memberno': info.memberno,
+					'productno': productno,
+					'action': "addOneProductFollow"
+				})
+			})
+		}
 
 
 	</script>
@@ -781,6 +801,8 @@
 		}
 
 	</script>
+
+
 
 
 

@@ -17,18 +17,19 @@ public class PclassService {
 
 	@Transactional
 	public Pclass addProductClass(String pclassname) {
-		Pclass pclassVO = new Pclass();
-		pclassVO.setPclassname(pclassname);
-		dao.insert(pclassVO);
-		return pclassVO;
+		Pclass pclass = new Pclass();
+		pclass.setPclassname(pclassname);
+		dao.insert(pclass);
+		return pclass;
 	}
 
 	@Transactional
-	public Pclass updateProductClass(Pclass pclassVO) {
-		final Pclass oldPclassVO = dao.getByPrimaryKey(pclassVO.getPclassno());
-		pclassVO.setPclassno(oldPclassVO.getPclassno());
-		dao.update(pclassVO);
-		return pclassVO;
+	public Pclass updateProductClass(Integer pclassno,String pclassname) {
+		Pclass pclass = dao.getByPrimaryKey(pclassno);
+		pclass.setPclassno(pclassno);
+		pclass.setPclassname(pclassname);
+		dao.update(pclass);
+		return pclass;
 	}
 
 	public Pclass getOneProductClass(Integer pclassno) {

@@ -83,10 +83,8 @@ public class PcommentDAOImpl implements PcommentDAO {
 			if (value != null && value.trim().length() != 0 && !"action".equals(key)) {
 				count++;
 				predicateList.add(getPredicateForDB(builder, root, key, value));
-				System.out.println("有送出查詢資料的欄位數count = " + count);
 			}
 		}
-		System.out.println("predicateList.size()=" + predicateList.size());
 		criteriaQuery.where(predicateList.toArray(new Predicate[predicateList.size()]));
 		Query query = session.createQuery(criteriaQuery);
 		List<Pcomment> pcommentList = query.getResultList();
@@ -95,7 +93,7 @@ public class PcommentDAOImpl implements PcommentDAO {
 
 	public static Predicate getPredicateForDB(CriteriaBuilder builder, Root<Pcomment> root, String columnName, String value) {
 		Predicate predicate = null;
-		if ("pcommentstatus".equals(columnName)) {
+		if ("pcommentstatus".equals(columnName) || "productno".equals(columnName)) {
 			predicate = builder.equal(root.get(columnName), Integer.valueOf(value));
 		}
 		else if ("pname".equals(columnName))  {
