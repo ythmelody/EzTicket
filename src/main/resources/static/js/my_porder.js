@@ -42,3 +42,19 @@ function addCart(e) {
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
     })
 }
+
+function buyNow(e) {
+  addCart(e);
+  swal({
+    title: "是否前往購物車結帳?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true
+  }).then((confirm) => {
+    if (confirm) {
+      window.location.href = 'front-product-shopping_cart.html';
+    } else {
+      return Promise.reject('取消操作');
+    }
+  })
+}

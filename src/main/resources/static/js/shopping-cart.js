@@ -19,6 +19,7 @@ $(document).ready(() => {
                 </td>
                 <td><input style="width: 25%;" class="form-control h_50" type="number" value="${item.quantity}" min="1" max="${item.data.pqty}"></td>
                 <td>$${item.data.pspecialprice * item.quantity}</td>
+                <td><a href="#" onClick="removeItem(${(index - 1)})">移除</a></td>
               </tr>`
     }).join('');
     const coupon = `<tr>
@@ -123,4 +124,17 @@ function addPorder() {
       return Promise.reject('取消操作');
     }
   });
+}
+
+function removeItem(e) {
+  // 從 localStorage 取出 item 的值
+  let itemData = JSON.parse(localStorage.getItem('cartItems'));
+  // 刪除指定的項目
+  itemData.splice(e, 1);
+  // 更新索引
+  itemData = itemData.map((item, index) => ({ ...item, index }));
+  // 將修改後的資料存回 localStorage
+  localStorage.setItem('cartItems', JSON.stringify(itemData));
+  // 重新載入頁面
+  location.reload();
 }

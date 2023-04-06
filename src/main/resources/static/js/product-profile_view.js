@@ -1,5 +1,5 @@
 // 定義會員編號
-let memberno = "85342";
+let memberno = "85345";
 
 $(document).ready(() => {
   fetchPorderList(`/porder/getordersbyid?id=${memberno}`);
