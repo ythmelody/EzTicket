@@ -706,8 +706,8 @@
 																				style="color: #DAA520"></span>
 																		</label>
 																		<input class="form-control h_40" type="number"
-																			value="1500" placeholder="請輸入商品原價"
-																			name="pprice" id="pprice">
+																			value="" placeholder="請輸入商品原價" name="pprice"
+																			id="pprice">
 																	</div>
 																</div>
 
@@ -717,7 +717,7 @@
 																			<span id="pspecialpriceErr"
 																				style="color: #DAA520"></span></label>
 																		<input class="form-control h_40" type="number"
-																			value="1200" placeholder="請輸入商品特價"
+																			value="" placeholder="請輸入商品特價"
 																			name="pspecialprice" id="pspecialprice">
 																	</div>
 																</div>
@@ -737,15 +737,14 @@
 
 															<div class="form-group border_bottom pt_30 pb_30">
 																<label class="form-label fs-16">商品上架時間*
-																	<span id="psdateErr"
-																				style="color: #DAA520"></span>
 																</label>
 																<p class="mt-2 fs-14 d-block mb-3">若到了商品上架時間，商品預設會出現在前台
 																</p>
 																<div class="row g-2">
 																	<div class="col-md-6">
-																		<label
-																			class="form-label mt-3 fs-6">選擇日期*</label>
+																		<label class="form-label mt-3 fs-6">選擇日期*
+																			<span id="psdateErr"
+																				style="color: #DAA520"></span></label>
 																		<div class="loc-group position-relative">
 																			<input
 																				class="form-control h_50 datepicker-here"
@@ -764,14 +763,14 @@
 
 
 																<label class="form-label fs-16">商品下架時間*
-																	<span id="pedateErr"
-																				style="color: #DAA520"></span>
+																	</span>
 																</label>
 																<p class="mt-2 fs-14 d-block mb-3">若到了商品下架時間，前台即無法展售</p>
 																<div class="row g-2">
 																	<div class="col-md-6">
-																		<label
-																			class="form-label mt-3 fs-6">選擇日期*</label>
+																		<label class="form-label mt-3 fs-6">選擇日期*
+																			<span id="pedateErr"
+																				style="color: #DAA520"></label>
 																		<div class="loc-group position-relative">
 																			<input
 																				class="form-control h_50 datepicker-here"
@@ -807,7 +806,9 @@
 
 
 															<div class="form-group pt_30 pb_30">
-																<label class="form-label fs-16">上傳商品圖片</label>
+																<label class="form-label fs-16">上傳商品圖片
+																	<span id="imgErr" style="color: #DAA520"></span>
+																</label>
 																<p class="mt-2 fs-14 d-block mb-3 pe_right">
 																	圖片尺寸限制：張數／尺寸大小
 																</p>
@@ -830,10 +831,11 @@
 															</div>
 															<div class="form-group border_bottom pb_30">
 																<label class="form-label fs-16">商品描述
-																	<span id="pedateErr"
-																				style="color: #DAA520"></span>
+																	<span id="pdiscripErr"
+																		style="color: #DAA520"></span>
 																</label>
-																<p class="mt-2 fs-14 d-block mb-3">請為你的商品寫上吸引人的商品說明以增加銷售</p>
+																<p class="mt-2 fs-14 d-block mb-3">請為你的商品寫上吸引人的商品說明以增加銷售
+																</p>
 																<div class="text-editor mt-4">
 																	<textarea id="pd_editor" name="pdiscrip"></textarea>
 																</div>
@@ -1737,10 +1739,18 @@
 		$('#add-event-tab').steps({
 			onFinish: function () {
 				// alert('Wizard Completed');
-				// if(judgePname() && judgePtag()&& judgePclassno() && judgePprice() && judgePspecialprice() &&judgePqty()){
+				const checkresults = [judgePname(), judgePtag(), judgePclassno(), judgeHostno(), judgePprice(), judgePspecialprice(), judgePqty(), judgePsdate(), judgePedate(), judgePdiscrip(),judgeImg() ]
+				let success = 0
+				for (const checkresult of checkresults) {
+					if (checkresult) {
+						success++;
+					}
+				}
+				if (checkresults.length === success) {
 					$('#ProductForm').submit();
-				// }
-				
+				}
+
+
 			}
 		});		
 	</script>
@@ -1842,11 +1852,17 @@
 		}
 
 		//下拉式選單要如何做錯誤驗證?-pclassno
-		$("#pclassSelector").blur(function (e) {
+		$("#pclassSelector").on('select change blur', (function (e) {
 			if (!judgePclassno(e.target.value)) {
 				// $("#pclassno").focus();
 			}
-		})
+		}))
+
+		$("button [data-id='pclassSelector']").on('select change blur click', (function (e) {
+			if (!judgePclassno(e.target.value)) {
+				// $("#pclassno").focus();
+			}
+		}))
 
 		function judgePclassno() {
 			if (pclassSelector.value === '') {
@@ -1854,6 +1870,22 @@
 				return;
 			} else {
 				$("#pclassnoErr").html('');
+				return true;
+			}
+		}
+
+		$("#hostno").on('select change blur', (function (e) {
+			if (!judgeHostno(e.target.value)) {
+				// $("#pclassno").focus();
+			}
+		}))
+
+		function judgeHostno() {
+			if (hostno.value === '') {
+				$("#hostnoErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>主辦單位為必填欄位`);
+				return;
+			} else {
+				$("#hostnoErr").html('');
 				return true;
 			}
 		}
@@ -1944,6 +1976,15 @@
 		}
 
 		//圖片
+		function judgeImg() {
+			if ($("#img2").length === 0) {
+				$("#imgErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>請至少上傳一張圖片`);
+				return;
+			} else {
+				$("#imgErr").html('');
+				return true;
+			}
+		}
 
 		//描述
 		$("#pd_editor").blur(function (e) {
@@ -1953,7 +1994,7 @@
 		})
 
 		function judgePdiscrip() {
-			if (pd_editor.value === '') {
+			if (editor.getData() === '') {
 				$("#pdiscripErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品描述為必填欄位`);
 				return;
 			} else {
