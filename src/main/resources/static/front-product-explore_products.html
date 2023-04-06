@@ -252,20 +252,24 @@
 								<div class="row g-3">
 									<div class="col-lg-5 col-md-12">
 										<div class="form-group search-category">
-											<select class="selectpicker" data-width="100%" data-size="5">
-												<option value="browse_all" data-icon="fa-solid fa-tower-broadcast"
-													selected>Browse
-													All</option>
-												<option value="online_events" data-icon="fa-solid fa-video">Online
+											<select class="selectpicker" data-width="100%" data-size="5"
+												id="pclassSelector" name="pclassno">
+												<option value="" data-icon="fa-solid fa-tower-broadcast" selected>類別選擇
+												</option>
+												<!-- 類別選單顯示開始 -->
+												<!-- <option value="online_events" data-icon="fa-solid fa-video">Online
 													Events</option>
 												<option value="venue_events" data-icon="fa-solid fa-location-dot">Venue
-													Events</option>
+													Events</option> -->
+												<!-- 類別選單顯示結束 -->
 											</select>
 										</div>
 									</div>
 									<div class="col-lg-5 col-md-12">
 										<div class="form-group">
-											<select class="selectpicker" data-width="100%" data-size="5"
+											<input id="pnameSearch" class="form-control h_40" type="text"
+												placeholder="搜尋商品" value="" name="pname">
+											<!-- <select class="selectpicker" data-width="100%" data-size="5"
 												data-live-search="true">
 												<option value="01" selected>All</option>
 												<option value="02">Arts</option>
@@ -286,12 +290,13 @@
 												<option value="17">Sports and Fitness</option>
 												<option value="18">Travel and Outdoor</option>
 												<option value="19">Visual Arts</option>
-											</select>
+											</select> -->
 										</div>
 									</div>
-									<div class="col-lg-2 col-md-12">
+									<!-- 將按鈕刪除 -->
+									<!-- <div class="col-lg-2 col-md-12">
 										<a href="#" class="main-btn btn-hover w-100">Find</a>
-									</div>
+									</div> -->
 								</div>
 							</div>
 						</div>
@@ -449,19 +454,99 @@
 		</script>
 
 		<script>
-
-			fetch('ProductInfoServlet', {
-				method: 'POST',
-				body: new URLSearchParams({
-					'action': "availableProductList"
-				})
+			//類別從資料庫帶入
+			fetch("PclassController", {
+				method: "POST",
+				body: new URLSearchParams({ 'action': "productClassList" })
 			}).then(resp => resp.json())
 				.then(list => {
-					displayProducts(list);
+					for (let item of list) {
+						$('#pclassSelector').append(`<option value=${item.pclassno}>${item.pclassname}</option>`);
+					}
+				}).then(function () {
+					$('.selectpicker').selectpicker('refresh');
 				})
 
+
+
+			//
+		</script>
+
+		<script>
+
+			// 當網頁載入時先呈現所有商品
+			$(document).ready(() => {
+				fetchProductList();
+			});
+
+			function fetchProductList() {
+
+				//為什麼加在這邊就不能顯示?
+				// //類別從資料庫帶入
+				// fetch("PclassController", {
+				// 	method: "POST",
+				// 	body: new URLSearchParams({ 'action': "productClassList" })
+				// }).then(resp => resp.json())
+				// 	.then(list => {
+				// 		for (let item of list) {
+				// 			$('#pclassSelector').append(`<option value=${item.pclassno}>${item.pclassname}</option>`);
+				// 		}
+				// 	}).then(function () {
+				// 		$('.selectpicker').selectpicker('refresh');
+				// 	})
+
+				//?	
+				fetch('ProductInfoServlet', {
+					method: 'POST',
+					body: new URLSearchParams({
+						'pstatus': "0",
+						'action': "ProductSearchForm"
+					})
+				}).then(resp => resp.json())
+					.then(list => {
+						displayProducts(list);
+					})
+
+				//商品名稱搜尋
+				$("#pnameSearch").keypress(function () {
+					fetch("ProductInfoServlet", {
+						method: 'POST',
+						body: new URLSearchParams({
+							'pname': $("[name='pname']").val(),
+							'pclassno': $("[name='pclassno']").val(),
+							'pstatus': "0",
+							'action': "ProductSearchForm"
+						})
+					}).then(resp => resp.json())
+						.then(list => {
+							console.log(list);
+							displayProducts(list);
+						})
+				})
+
+				//商品類別搜尋
+				$('#pclassSelector').change(function () {
+					fetch('ProductInfoServlet', {
+						method: "POST",
+						headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+						body: new URLSearchParams({
+							// var title = $('button[data-id="pclassSelector"]').attr('title');
+							'pname': $("[name='pname']").val(),
+							'pclassno': $("[name='pclassno']").val(),
+							'pstatus': "0",
+							'action': "ProductSearchForm"
+						}),
+					}).then(resp => resp.json())
+						.then(list => {
+						displayProducts(list);
+					})
+				})
+
+
+			}
+
 			function displayProducts(list) {
-				$('#productList').html('');
+				$('#productList').empty();
 
 				for (let item of list) {
 					let image = item.pimgts && item.pimgts[0] && item.pimgts[0].pimgno;
@@ -487,7 +572,7 @@
 				<div class="event-footer">
 					
 						<a href="checkout.html" class="main-btn btn-hover w-45" style="width:48%;">Buy Now</a>
-						<button type="button" class="main-btn btn-hover w-45" style="width:48%;" onclick="addCart(${item.productno})" id="product-incart">Add To Cart</button>
+						<button type="button" class="main-btn btn-hover w-45" style="width:48%;" onclick="addCart(${item.productno})" id="product-incart"><i class="fa-solid fa-cart-shopping"></i></button>
 					
 					
 				</div>
@@ -506,6 +591,7 @@
 		<script src="js/my_porder.js"></script>
 
 		<script>
+			//新增商品追蹤
 			//會員不知道該怎麼辦先寫死
 			const info = {
 				memberNo: 85346

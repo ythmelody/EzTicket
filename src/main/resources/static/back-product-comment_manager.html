@@ -275,7 +275,7 @@
 									<div class="dashboard-date-wrap mt-4">
 										<div class="form-group">
 											<div class="relative-input position-relative">
-												<input id="showName" class="form-control h_40" type="text"
+												<input id="pnameSearch" class="form-control h_40" type="text"
 													placeholder="搜尋商品" value="" name="pname">
 												<i class="uil uil-search"></i>
 											</div>
@@ -531,7 +531,7 @@
 					displayPcomments(list);
 				})
 
-			$('#showName').keypress(function () {
+			$('#pnameSearch').keypress(function () {
 				if ($('div .tab-pane.fade.active.show').attr('id') === 'tickets-tab') {
 					fetch('ProductCommentReportServlet', {
 						method: "POST",

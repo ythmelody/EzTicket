@@ -401,7 +401,7 @@
 								<div class="event-dt-right-content">
 									<h4>NTD</h4>
 									<h5 class="mb-0" id="pprice" style="text-decoration: line-through">$50.00</h5>
-									<h5 class="mb-0" id="pspecialprice">$50.00</h5>
+									<h5 class="mb-0" id="pspecialprice" style="font-size: 20px;">$50.00</h5>
 									<!-- <div class="quantity"> -->
 									<!-- </div> -->
 									<!-- <div class="col-md-6">
@@ -454,7 +454,7 @@
 								<a href="front-product-explore_products.html" class="view-all-link">瀏覽更多<i
 										class="fa-solid fa-right-long ms-2"></i></a>
 							</div>
-							<div class="owl-carousel moreEvents-slider owl-theme">
+							<div class="owl-carousel moreEvents-slider owl-theme" id="moreProducts">
 								<!-- 相關聯商品擺放處 -->
 							</div>
 						</div>
@@ -592,8 +592,9 @@
 				if (item.prateqty < 1) {
 					$("#productRate").children("h4").text('尚無評論');
 				}
-				else if (item.prateqty >= 1) { 
-					$("#productRate").children("h4").text("商品評星：" + (item.pratetotal / item.prateqty)).append(`<i class="fa fa-star fa-2x">`); }
+				else if (item.prateqty >= 1) {
+					$("#productRate").children("h4").text("商品評星：" + (item.pratetotal / item.prateqty)).append(`<i class="fa fa-star fa-2x">`);
+				}
 
 
 			})
@@ -613,33 +614,67 @@
 				for (let item of list) {
 					let image = item.pimgts && item.pimgts[0] && item.pimgts[0].pimgno;
 					if (image === undefined) { image = 70001; }
-					moreProduct.innerHTML += `
-								<div class="item">
-									<div class="main-card mt-4">
-										<div class="event-thumbnail">
-											<a href="online_product_detail_view.html?productno=${item.productno}" class="thumbnail-img">
-												<img src="ProductImg?pimgno=${image}" alt="">
-												
-											</a>
-											<span class="bookmark-icon" title="Bookmark"></span>
-										</div>
-										<div class="event-content">
-											<a href="online_product_detail_view.html?productno=${item.productno}" class="event-title">${item.pname}</a>
-											<div class="duration-price-remaining">
-												<span class="duration-price">NTD ${item.pprice}</span>
-												// <span class="remaining"><i class="fa-solid fa-ticket fa-rotate-90"></i>7
-												// 	Remaining</span>
-											</div>
-										</div>
-										<div class="event-footer">
-											<div class="booking-btn">
-												<a href="checkout.html" class="main-btn btn-hover w-100">Buy
-													Now</a>
-											</div>
-										</div>
-									</div>
-								</div>
-								`;
+
+					$("#moreProducts").append(`
+					<div class="item">
+			<div class="main-card mt-4">
+				<div class="event-thumbnail">
+					<a href="front-product-product_detail.html?productno=${item.productno}" class="thumbnail-img">
+						<img src="ProductImg?pimgno=${image}" alt="">
+
+					</a>
+					<span class="bookmark-icon" title="Bookmark" onclick="moreProductFollowProduct(${item.productno})"></span>
+				</div>
+				<div class="event-content">
+					<a href="front-product-product_detail.html?productno=${item.productno}" class="event-title">${item.pname}</a>
+					<div class="duration-price-remaining">
+						<span class="duration-price" style="text-decoration: line-through">${item.pprice}</span>
+						<span class="duration-price" style="font-size: 20px;">${item.pspecialprice}</span>
+						<span class="remaining" id="rateAvg${item.productno}"><i class="fa fa-star" aria-hidden="true"></i></span>
+					</div>
+				</div>
+				<div class="event-footer">
+					
+						<a href="checkout.html" class="main-btn btn-hover w-45" style="width:48%;">Buy Now</a>
+						<button type="button" class="main-btn btn-hover w-45" style="width:48%;" onclick="addCart(${item.productno})" id="product-incart"><i class="fa-solid fa-cart-shopping"></i></button>
+					
+					
+				</div>
+			</div>
+		</div>`);
+					if (item.prateqty < 1) {
+						$("#rateAvg" + item.productno).text('尚無評論')
+					}
+					else if (item.prateqty >= 1) {
+						$("#rateAvg" + item.productno).text(item.pratetotal / item.prateqty).append(`<i class="fa fa-star fa-2x">`);
+					}
+					// moreProduct.innerHTML += `
+					// 			<div class="item">
+					// 				<div class="main-card mt-4">
+					// 					<div class="event-thumbnail">
+					// 						<a href="online_product_detail_view.html?productno=${item.productno}" class="thumbnail-img">
+					// 							<img src="ProductImg?pimgno=${image}" alt="">
+
+					// 						</a>
+					// 						<span class="bookmark-icon" title="Bookmark"></span>
+					// 					</div>
+					// 					<div class="event-content">
+					// 						<a href="online_product_detail_view.html?productno=${item.productno}" class="event-title">${item.pname}</a>
+					// 						<div class="duration-price-remaining">
+					// 							<span class="duration-price">NTD ${item.pprice}</span>
+					// 							// <span class="remaining"><i class="fa-solid fa-ticket fa-rotate-90"></i>7
+					// 							// 	Remaining</span>
+					// 						</div>
+					// 					</div>
+					// 					<div class="event-footer">
+					// 						<div class="booking-btn">
+					// 							<a href="checkout.html" class="main-btn btn-hover w-100">Buy
+					// 								Now</a>
+					// 						</div>
+					// 					</div>
+					// 				</div>
+					// 			</div>
+					// 			`;
 				}
 			}
 			)
@@ -758,8 +793,21 @@
 
 			})
 		}
-		//新增商品追蹤
+		//新增商品追蹤(單一商品)
 		function followProduct() {
+
+			fetch("FollowproductController", {
+				method: "POST",
+				body: new URLSearchParams({
+					'memberno': info.memberno,
+					'productno': productno,
+					'action': "addOneProductFollow"
+				})
+			})
+		}
+
+		//相關聯商品的追蹤
+		function moreProductFollowProduct(productno) {
 
 			fetch("FollowproductController", {
 				method: "POST",

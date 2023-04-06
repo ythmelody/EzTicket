@@ -373,7 +373,6 @@
 
 		//帶入資料庫類別
 		$('#pclassSelector').append('<option value="" selected>所有類別</option>');
-		// const list = [{ "pclassno": 20001, "pclassname": "T恤" }, { "pclassno": 20002, "pclassname": "手環" }];
 		fetch("PclassController", {
 			method: "POST",
 			body: new URLSearchParams({ 'action': "productClassList" }),
