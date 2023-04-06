@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, shrink-to-fit=9">
 	<meta name="description" content="Gambolthemes">
 	<meta name="author" content="Gambolthemes">
-	<title>Barren - Simple Online Event Ticketing System</title>
+	<title>商品管理</title>
 
 	<!-- Favicon Icon -->
 	<link rel="icon" type="image/png" href="images/fav.png">
@@ -251,82 +251,79 @@
 						</div>
 					</div>
 					<!-- <div class="col-md-12"> -->
-						<div class="main-card mt-5">
-							<div class="dashboard-wrap-content p-4">
-								<!-- <h5 class="mb-4">商品列表</h5> -->
-								<div class="d-md-flex flex-wrap align-items-center">
-									<div class="dashboard-date-wrap">
-										<div class="form-group">
-											<!-- action="ProductInfoServlet" method=post -->
-											<FORM id="ProductSearchForm">
-												<!-- <div class="relative-input position-relative"> -->
-													<label for="pname">商品名稱：</label>
-													<input class="form-control h_40" type="text" placeholder="搜尋商品名稱"
-														value="" id="pname" name="pname">
-													<i class="uil uil-search"></i>
-												</div>
-												<div class="relative-input position-relative">
-													<label for="ptag">商品標籤：</label>
-													<input class="form-control h_40" type="text" placeholder="搜尋標籤"
-														value="" id="ptag" name="ptag">
-													<i class="uil uil-search"></i>
-													<label for="hostname">主辦單位：</label>
-													<input class="form-control h_40" type="text" placeholder="搜尋主辦單位"
-														value="" id="hostname" name="hostname">
-													<label class="form-label mb-2 fs-14">選擇商品狀態*</label>
-													<input type="radio" name="pstatus" value="0">上架中
-													<input type="radio" name="pstatus" value="1">已下架
-												</div>
-												<div class="relative-input position-relative">
-													<label for="productno">商品編號：</label>
-													<input class="form-control h_40" type="text" placeholder="搜尋商品編號"
-														value="" id="productno" name="productno">
-													<i class="uil uil-search"></i>
+					<div class="main-card mt-5">
+						<div class="dashboard-wrap-content p-4">
+							<!-- <h5 class="mb-4">商品列表</h5> -->
+							<div class="d-md-flex flex-wrap align-items-center">
+								<div class="dashboard-date-wrap">
+									<div class="form-group">
+										<!-- action="ProductInfoServlet" method=post -->
+										<FORM id="ProductSearchForm">
+											<!-- <div class="relative-input position-relative"> -->
+											<label for="pname">商品名稱：</label>
+											<input class="form-control h_40" type="text" placeholder="搜尋商品名稱" value=""
+												id="pname" name="pname"><div id="pname-suggestion-box"></div>
+											<i class="uil uil-search"></i>
+									</div>
+									<div class="relative-input position-relative">
+										<label for="ptag">商品標籤：</label>
+										<input class="form-control h_40" type="text" placeholder="搜尋標籤" value=""
+											id="ptag" name="ptag">
+										<i class="uil uil-search"></i>
+										<label for="hostname">主辦單位：</label>
+										<input class="form-control h_40" type="text" placeholder="搜尋主辦單位" value=""
+											id="hostname" name="hostname">
+										<label class="form-label mb-2 fs-14">選擇商品狀態*</label>
+										<input type="radio" name="pstatus" value="0">上架中
+										<input type="radio" name="pstatus" value="1">已下架
+									</div>
+									<div class="relative-input position-relative">
+										<label for="productno">商品編號：</label>
+										<input class="form-control h_40" type="text" placeholder="搜尋商品編號" value=""
+											id="productno" name="productno">
+										<i class="uil uil-search"></i>
 
-												</div>
-												<div class="relative-input position-relative"></div>
-												<label class="form-label mt-3 fs-6">上架日期*</label>
-												<div class="loc-group position-relative">
-													<input class="form-control h_50 datepicker-here" data-language="en"
-														type="text" placeholder="MM/DD/YYYY" value="" name="start_date"
-														data-date-format="yyyy-mm-dd 23:59:59" autocomplete="off">
-													<span class="absolute-icon"><i
-															class="fa-solid fa-calendar-days"></i></span>
-												</div>
-												<label class="form-label mt-3 fs-6">下架日期*</label>
-												<div class="loc-group position-relative">
-													<input class="form-control h_50 datepicker-here" data-language="en"
-														type="text" placeholder="MM/DD/YYYY" value="" name="end_date"
-														data-date-format="yyyy-mm-dd 23:59:59" autocomplete="off">
-													<span class="absolute-icon"><i
-															class="fa-solid fa-calendar-days"></i></span>
-												</div>
-												<div class="relative-input position-relative">
-													<label for="pclass">商品類別：</label>
-													<select id="pclassSelector" name="pclass"
-														class="form-select"></select>
-													<!-- 類別選單顯示 -->
-												</div>
-
-												<input type="hidden" name="action" value="ProductSearchForm">
-												<button class="esv-btn me-2">查詢</button>
-											</FORM>
-										</div>
+									</div>
+									<div class="relative-input position-relative"></div>
+									<label class="form-label mt-3 fs-6">上架日期*</label>
+									<div class="loc-group position-relative">
+										<input class="form-control h_50 datepicker-here" data-language="en" type="text"
+											placeholder="MM/DD/YYYY" value="" name="start_date"
+											data-date-format="yyyy-mm-dd 23:59:59" autocomplete="off">
+										<span class="absolute-icon"><i class="fa-solid fa-calendar-days"></i></span>
+									</div>
+									<label class="form-label mt-3 fs-6">下架日期*</label>
+									<div class="loc-group position-relative">
+										<input class="form-control h_50 datepicker-here" data-language="en" type="text"
+											placeholder="MM/DD/YYYY" value="" name="end_date"
+											data-date-format="yyyy-mm-dd 23:59:59" autocomplete="off">
+										<span class="absolute-icon"><i class="fa-solid fa-calendar-days"></i></span>
+									</div>
+									<div class="relative-input position-relative">
+										<label for="pclass">商品類別：</label>
+										<select id="pclassSelector" name="pclass" class="form-select"></select>
+										<!-- 類別選單顯示 -->
 									</div>
 
+									<input type="hidden" name="action" value="ProductSearchForm">
+									<button class="esv-btn me-2">查詢</button>
+									</FORM>
 								</div>
 							</div>
+
 						</div>
-						<div class="event-list">
-							<!-- <div class="tab-content"> -->
-							<!-- <div class="tab-pane fade show active" id="all-tab" role="tabpanel"> -->
-							<div class="main-card mt-4">
-								<div class="contact-list" id="productList">
-									<!-- 上架商品標籤顯示區 -->
-								</div>
-							</div>
-							<!-- </div> -->
-							<!-- <div class="tab-pane fade active" id="online-tab" role="tabpanel">
+					</div>
+				</div>
+				<div class="event-list">
+					<!-- <div class="tab-content"> -->
+					<!-- <div class="tab-pane fade show active" id="all-tab" role="tabpanel"> -->
+					<div class="main-card mt-4">
+						<div class="contact-list" id="productList">
+							<!-- 上架商品標籤顯示區 -->
+						</div>
+					</div>
+					<!-- </div> -->
+					<!-- <div class="tab-pane fade active" id="online-tab" role="tabpanel">
 									<div class="main-card d-none mt-4">
 										<div
 											class="d-flex align-items-center justify-content-center flex-column min-height-430">
@@ -338,17 +335,17 @@
 									</div>
 									<div class="main-card mt-4">
 										<div class="contact-list" id="productList_off"> -->
-							<!-- 下架商品標籤顯示區 -->
-							<!-- </div>
+					<!-- 下架商品標籤顯示區 -->
+					<!-- </div>
 									</div>
 								</div> -->
 
-							<!-- </div> -->
-						</div>
-					</div>
+					<!-- </div> -->
 				</div>
 			</div>
 		</div>
+	</div>
+	</div>
 	</div>
 	<!-- Body End -->
 
@@ -400,8 +397,8 @@
 					'start_date': $("[name='start_date']").val(),
 					'end_date': $("[name='end_date']").val(),
 					'pclassno': $("[name='pclass']").val(),
-					'pstatus' :$("[name='pstatus']:checked").val() || '',
-					'hostname':$("[name='hostname']").val(),
+					'pstatus': $("[name='pstatus']:checked").val() || '',
+					'hostname': $("[name='hostname']").val(),
 					'action': $("[name='action']").val()
 				}),
 				headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
@@ -412,12 +409,12 @@
 				})
 		})
 
-		function showProductList(list){
+		function showProductList(list) {
 			productList.innerHTML = '';
 			for (let item of list) {
-					let image = item.pimgts && item.pimgts[0] && item.pimgts[0].pimgno;
-					if (image === undefined) { image = 70001; }
-					$('#productList').append(`<div
+				let image = item.pimgts && item.pimgts[0] && item.pimgts[0].pimgno;
+				if (image === undefined) { image = 70001; }
+				$('#productList').append(`<div
 												class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between">
 												<div class="d-md-flex align-items-center event-top-info">
 													<div class="card-event-img">
@@ -475,8 +472,50 @@
 													<h6 class="coupon-status">20</h6>
 												</div>
 											</div>`);
-				}
+			}
 		}
+		
+		function selectPname(input) {
+			console.log("input: ", input);
+			$('#pname').val(input);
+			$('#pname-suggestion-box').empty();
+			$('#pname-suggestion-box').hide();
+		}
+
+		$('#pname').on({
+			"focus": function () {
+				$('#pname-suggestion-box').show();
+			},
+			"keyup": function () {
+				if ($(this).val().length > 1) {
+					$.ajax({
+						url: "ProductInfoServlet",
+						cache: false,
+						type: "POST",
+						dataType: "json",
+						data: {
+							"action": $("[name='action']").val(),
+							"pname": $(this).val()
+						},
+						success: function (items) {
+							$('#pname-suggestion-box').empty();
+							console.log("items: ", items);
+							if (items) {
+								let count = 0;
+								for (let item of items) {
+									if (count > 10) { break; }
+									console.log("item: ", item);
+									$('#pname-suggestion-box').append(`<li style='list-style-type:none;' onClick=selectPname("${item.pname}")>${item.pname}</li>`);
+									count++;
+								}
+							} else {
+								$('#pname-suggestion-box').empty();
+							}
+						}
+					})
+				}
+			}
+		})
 	</script>
 
 	<script src="js/vertical-responsive-menu.min.js"></script>
