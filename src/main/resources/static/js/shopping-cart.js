@@ -104,13 +104,15 @@ function addPorder() {
         body: JSON.stringify(porderbody)
       }).then(response => {
         if (response.ok) {
-          swal({
-            title: "建立成功",
-            icon: "success",
-            closeOnClickOutside: false,
-          }).then(() => {
-            localStorage.clear();
-            window.location.href = 'front-product-order_confirmed.html';
+          response.json().then(porderno => {
+            swal({
+              title: "建立成功",
+              icon: "success",
+              closeOnClickOutside: false,
+            }).then(() => {
+              localStorage.clear();
+              window.location.href = `front-product-order_confirmed.html?id=${porderno}`;
+            })
           });
         } else {
           swal({

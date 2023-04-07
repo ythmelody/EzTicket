@@ -73,7 +73,7 @@ public class PorderService {
 
     // AddPorder
     @Transactional
-    public PorderDTO AddPorder(AddPorderDTO addPorderDTO) {
+    public PorderDTO addPorder(AddPorderDTO addPorderDTO) {
         Porder porder = new Porder();
         porder.setMemberno(addPorderDTO.getMemberno());
         porder.setPtotal(addPorderDTO.getPtotal());

@@ -41,8 +41,7 @@ public class PorderController {
     }
     @PostMapping("/add")
     @ResponseBody
-    public boolean addPorder(@RequestBody AddPorderDTO addPorderDTO){
-        porderService.AddPorder(addPorderDTO);
-        return true;
+    public Integer addPorder(@RequestBody AddPorderDTO addPorderDTO){
+        return porderService.addPorder(addPorderDTO).getPorderno();
     }
 }
