@@ -19,8 +19,8 @@ public class TorderService {
     private ModelMapper modelMapper;
 
 
-    public List<TorderDto> findAll(){
-        return torderRepository.findAll()
+    public List<TorderDto> findByOrderByTorderNoDesc(){
+        return torderRepository.findByOrderByTorderNoDesc()
                 .stream()
                 .map(this::entityToDTO)
                 .collect(Collectors.toList());
@@ -34,4 +34,6 @@ public class TorderService {
         torderDto = modelMapper.map(torder,TorderDto.class);
         return torderDto;
     }
+
+
 }

@@ -10,7 +10,7 @@ import java.util.List;
 public class TicketHolderDAOImpl implements TicketHolderDAO {
 
     String driver = "com.mysql.cj.jdbc.Driver";
-    String url = "jdbc:mysql://localhost:3306/db01?serverTimezone=Asia/Taipei";
+    String url = "jdbc:mysql://localhost:3306/ezticket?serverTimezone=Asia/Taipei";
     String userid = "root";
     String passwd = "root";
     private static final String GET_ONE_STMT =
@@ -250,16 +250,16 @@ public class TicketHolderDAOImpl implements TicketHolderDAO {
         System.out.print(vo1.getMemail() + ",");
         System.out.print(vo1.getTdetailsno() + ",");
         System.out.print(vo1.getTstatus() + ",");
-        System.out.print(vo1.getActivityno());
-        System.out.print(vo1.getAname());
-        System.out.print(vo1.getWetherseat());
-        System.out.print(vo1.getAimg());
-        System.out.print(vo1.getSessionstime());
-        System.out.print(vo1.getSessionetime());
-        System.out.print(vo1.getRealx());
-        System.out.print(vo1.getRealy());
-        System.out.print(vo1.getAnote());
-        System.out.print(vo1.getAticketremind());
+        System.out.print(vo1.getActivityno() + ",");
+        System.out.print(vo1.getAname() + ",");
+        System.out.print(vo1.getWetherseat() + ",");
+        System.out.print(vo1.getAimg() + ",");
+        System.out.print(vo1.getSessionstime() + ",");
+        System.out.print(vo1.getSessionetime() + ",");
+        System.out.print(vo1.getRealx() + ",");
+        System.out.print(vo1.getRealy() + ",");
+        System.out.print(vo1.getAnote() + ",");
+        System.out.print(vo1.getAticketremind() + ",");
         System.out.println();
         System.out.println("---------------------");
 
@@ -272,16 +272,16 @@ public class TicketHolderDAOImpl implements TicketHolderDAO {
             System.out.print(aTicket.getMemail() + ",");
             System.out.print(aTicket.getTdetailsno() + ",");
             System.out.print(aTicket.getTstatus() + ",");
-            System.out.print(aTicket.getActivityno());
-            System.out.print(aTicket.getAname());
-            System.out.print(aTicket.getWetherseat());
-            System.out.print(aTicket.getAimg());
-            System.out.print(aTicket.getSessionstime());
-            System.out.print(aTicket.getSessionetime());
-            System.out.print(aTicket.getRealx());
-            System.out.print(aTicket.getRealy());
-            System.out.print(aTicket.getAnote());
-            System.out.print(aTicket.getAticketremind());
+            System.out.print(aTicket.getActivityno() + ",");
+            System.out.print(aTicket.getAname() + ",");
+            System.out.print(aTicket.getWetherseat() + ",");
+            System.out.print(aTicket.getAimg() + ",");
+            System.out.print(aTicket.getSessionstime() + ",");
+            System.out.print(aTicket.getSessionetime() + ",");
+            System.out.print(aTicket.getRealx() + ",");
+            System.out.print(aTicket.getRealy() + ",");
+            System.out.print(aTicket.getAnote() + ",");
+            System.out.print(aTicket.getAticketremind() + ",");
             System.out.println();
         }
         System.out.println("---------------------");
@@ -295,16 +295,16 @@ public class TicketHolderDAOImpl implements TicketHolderDAO {
             System.out.print(aTicket.getMemail() + ",");
             System.out.print(aTicket.getTdetailsno() + ",");
             System.out.print(aTicket.getTstatus() + ",");
-            System.out.print(aTicket.getActivityno());
-            System.out.print(aTicket.getAname());
-            System.out.print(aTicket.getWetherseat());
-            System.out.print(aTicket.getAimg());
-            System.out.print(aTicket.getSessionstime());
-            System.out.print(aTicket.getSessionetime());
-            System.out.print(aTicket.getRealx());
-            System.out.print(aTicket.getRealy());
-            System.out.print(aTicket.getAnote());
-            System.out.print(aTicket.getAticketremind());
+            System.out.print(aTicket.getActivityno() + ",");
+            System.out.print(aTicket.getAname() + ",");
+            System.out.print(aTicket.getWetherseat() + ",");
+            System.out.print(aTicket.getAimg() + ",");
+            System.out.print(aTicket.getSessionstime() + ",");
+            System.out.print(aTicket.getSessionetime() + ",");
+            System.out.print(aTicket.getRealx() + ",");
+            System.out.print(aTicket.getRealy() + ",");
+            System.out.print(aTicket.getAnote() + ",");
+            System.out.print(aTicket.getAticketremind() + ",");
             System.out.println();
         }
     }

@@ -15,6 +15,11 @@ public class ActivityDto {
     private Date aSDate;
     private Date aEDate;
     private Integer aStatus;
+    private String aPlace;
+    private String aDiscrip;
+    private String aNote;
+    private String aTicketRemind;
+
     private List<Session> session;
     private List<Aimgt> aimgt;
 

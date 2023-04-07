@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface SeatsRepository  extends JpaRepository<Seats, Integer> {
@@ -19,5 +20,14 @@ public interface SeatsRepository  extends JpaRepository<Seats, Integer> {
     @Modifying
     @Query("UPDATE Seats SET blockName=:blockname, realX=:realx, realY=:realy, seatStatus=:seatstatus  WHERE seatNo=:seatno ")
     public int update(@Param("blockname") String blockName,@Param("realx") String realX, @Param("realy") String realY, @Param("seatstatus") int seatStatus, @Param("seatno") int seatNo);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Seats SET seatStatus=:seatstatus  WHERE seatNo=:seatno ")
+    public int updateStatus(@Param("seatstatus") int seatStatus, @Param("seatno") int seatNo);
+
+    @Query("SELECT s.seatNo FROM Seats s WHERE s.sessionNo = :sessionNo AND s.seatStatus = 1")
+    public Set<Integer> getToSellSeatsBySession(@Param("sessionNo") int sessionNo);
+
 
 }

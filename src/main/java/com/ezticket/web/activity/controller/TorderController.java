@@ -15,12 +15,12 @@ public class TorderController {
     private TorderService torderService;
 
     @GetMapping ("/findAll")
-    public List<TorderDto> findAll(){
+    public List<TorderDto> findByOrderByTorderNoDesc(){
 
-        return torderService.findAll();
+        return torderService.findByOrderByTorderNoDesc();
     }
     @GetMapping("/findById")
-    public Optional<TorderDto> findById(@RequestParam Integer torderNo){
+    public Optional<TorderDto> findById( Integer torderNo){
 
         return torderService.findById(torderNo);
     }

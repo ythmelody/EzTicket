@@ -342,37 +342,28 @@
           <div class="row">
             <div class="col-md-12">
               <div class="d-main-title">
-                <h3><i class="fa-solid fa-calendar-days me-3"></i>Events</h3>
+                <h3>場次管理</h3>
               </div>
             </div>
             <div class="col-md-12">
               <div class="main-card mt-5">
                 <div class="dashboard-wrap-content p-4">
-                  <h5 class="mb-4"><b>活動列表</h5>
                   <div class="d-md-flex flex-wrap align-items-center">
                     <div class="dashboard-date-wrap">
-                      <div class="form-group">
-                        <div class="relative-input position-relative">
-                          <input
-                            id="search"
-                            class="form-control h_40"
-                            type="text"
-                            placeholder="搜尋節目"
-                            value=""
-                          />                 
-                          <i ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                          </svg></i>
-                        </div>
-                      </div>
+                      <div class="form-group"></div>
                     </div>
-                    <div style="margin-left: 20px">
-                      <div class="nav custom2-tabs btn-group" role="tablist">
-             
-                      </div>
+                    <div class="ocard-left" style="margin-left: 5px">
+                      <button
+                        class="pe-4 ps-4 co-main-btn min-width"
+                        data-bs-toggle="modal"
+                        data-bs-target="#couponModal"
+                      >
+                        新增場次
+                      </button>
                     </div>
+                    <div class="rs ms-auto mt_r4"></div>
                   </div>
-                </div>		
+                </div>
               </div>
               <div class="event-list">
                 <div class="tab-content">
@@ -381,9 +372,11 @@
                     id="all-tab"
                     role="tabpanel"
                   >
+                    <!--一個場次開始-->
                     <div class="main-card mt-4" id="listTab">
-                   
+                      
                     </div>
+                    <!--一個場次結束-->
                   </div>
                   <div class="tab-pane fade" id="online-tab" role="tabpanel">
                     <div class="main-card d-none mt-4">
@@ -397,30 +390,260 @@
                       </div>
                     </div>
                     <div class="main-card mt-4">
-         
+                      <div class="contact-list">
+                        <div
+                          class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between"
+                        >
+                          <div
+                            class="d-md-flex align-items-center event-top-info"
+                          >
+                            <div class="card-event-img">
+                              <img src="images/event-imgs/img-2.jpg" alt="" />
+                            </div>
+                            <div class="card-event-dt">
+                              <h5>Earrings Workshop with Bronwyn David</h5>
+                            </div>
+                          </div>
+                          <div class="dropdown">
+                            <button
+                              class="option-btn"
+                              type="button"
+                              data-bs-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded="false"
+                            >
+                              <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                              <a href="#" class="dropdown-item"
+                                ><i class="fa-solid fa-clone me-3"></i
+                                >複製座位表</a
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="bottom d-flex flex-wrap justify-content-between align-items-center p-4"
+                        >
+                          <div class="icon-box">
+                            <span class="icon">
+                              <i class="fa-solid fa-location-dot"></i>
+                            </span>
+                            <p>Status</p>
+                            <h6 class="coupon-status">Publish</h6>
+                          </div>
+                          <div class="icon-box">
+                            <span class="icon">
+                              <i class="fa-solid fa-calendar-days"></i>
+                            </span>
+                            <p>Starts on</p>
+                            <h6 class="coupon-status">30 Jun, 2022 10:00 AM</h6>
+                          </div>
+                          <div class="icon-box">
+                            <span class="icon">
+                              <i class="fa-solid fa-ticket"></i>
+                            </span>
+                            <p>Ticket</p>
+                            <h6 class="coupon-status">250</h6>
+                          </div>
+                          <div class="icon-box">
+                            <span class="icon">
+                              <i class="fa-solid fa-tag"></i>
+                            </span>
+                            <p>Tickets sold</p>
+                            <h6 class="coupon-status">20</h6>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-
+                  <div class="tab-pane fade" id="venue-tab" role="tabpanel">
+                    <div class="main-card mt-4">
+                      <div class="contact-list">
+                        <div
+                          class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between"
+                        >
+                          <div
+                            class="d-md-flex align-items-center event-top-info"
+                          >
+                            <div class="card-event-img">
+                              <img src="images/event-imgs/img-7.jpg" alt="" />
+                            </div>
+                            <div class="card-event-dt">
+                              <h5>Tutorial on Canvas Painting for Beginners</h5>
+                            </div>
+                          </div>
+                          
+                        <div
+                          class="bottom d-flex flex-wrap justify-content-between align-items-center p-4"
+                        >
+                          <div class="icon-box">
+                            <span class="icon">
+                              <i class="fa-solid fa-location-dot"></i>
+                            </span>
+                            <p>Status</p>
+                            <h6 class="coupon-status">Publish</h6>
+                          </div>
+                          <div class="icon-box">
+                            <span class="icon">
+                              <i class="fa-solid fa-calendar-days"></i>
+                            </span>
+                            <p>Starts on</p>
+                            <h6 class="coupon-status">30 Jun, 2022 10:00 AM</h6>
+                          </div>
+                          <div class="icon-box">
+                            <span class="icon">
+                              <i class="fa-solid fa-ticket"></i>
+                            </span>
+                            <p>Ticket</p>
+                            <h6 class="coupon-status">250</h6>
+                          </div>
+                          <div class="icon-box">
+                            <span class="icon">
+                              <i class="fa-solid fa-tag"></i>
+                            </span>
+                            <p>Tickets sold</p>
+                            <h6 class="coupon-status">20</h6>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-              <a href="" ></a>
           </div>
         </div>
       </div>
-	  <div style="display: flex; justify-content: space-evenly">
-		<input type="button" id="firstPage" value="第一頁" />
-		<input type="button" id="btnPrev" value="上一頁" />
-		<div style="display: flex; justify-content: space-evenly">
-		  <a href="">1 </a><a href="">2 </a><a href="" > 3</a>
-		</div>
-		<input type="button" id="btnNext" value="下一頁" />
-		<input  style="margin: auto;" type="button" id="lastPage" value="最後一頁" />
-	  </div>
     </div>
-    <div style="display: flex;align-items: center;"> 
+
+    <!-- 新增場次開始-->
+    <div
+      class="modal fade"
+      id="couponModal"
+      tabindex="-1"
+      aria-labelledby="couponModalLabel"
+      aria-hidden="false"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="couponModalLabel">新增場次</h5>
+            <button
+              type="button"
+              class="close-model-btn"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
+              <i class="uil uil-multiply"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="model-content main-form">
+              <div class="row">
+                <div class="col-lg-12 col-md-12">
+                  <div class="form-group mt-4">
+                    <label class="form-label">請選擇場次：</label>
+                    <select
+                      class="selectpicker"
+                      data-size="5"
+                      data-live-search="true"
+                    >
+                      <option disabled selected>-----請選擇-----</option>
+                      <option value="2300103">
+                        五月天諾亞方舟演唱會 (2023/02/07)
+                      </option>
+                      <option value="2300104">
+                        五月天諾亞方舟演唱會 (2023/02/08)
+                      </option>
+                    </select>
+                  </div>
+                  <div class="form-group mt-4">
+                    <label class="form-label">自訂場次座位與否：</label>
+                    <select
+                      class="selectpicker"
+                      data-size="5"
+                      data-live-search="true"
+                    >
+                      <option disabled selected>-----請選擇-----</option>
+                      <option value="true">是</option>
+                      <option value="false">否</option>
+                    </select>
+                  </div>
+
+                  <!-- 若不自訂座位才會顯示 -->
+                  <div class="form-group mt-4">
+                    <label class="form-label">是否沿用既有場次規劃：</label>
+                    <select
+                      class="selectpicker"
+                      data-size="5"
+                      data-live-search="true"
+                    >
+                      <option disabled selected>-----請選擇-----</option>
+                      <option value="true">是</option>
+                      <option value="false">否</option>
+                    </select>
+                  </div>
+                  <!-- 若沿用既有場次規劃才會顯示 -->
+                  <div class="form-group mt-4">
+                    <label class="form-label">請選擇既有場次規劃：</label>
+                    <select
+                      class="selectpicker"
+                      data-size="5"
+                      data-live-search="true"
+                    >
+                      <option disabled selected>-----請選擇-----</option>
+                      <option value="2300101">
+                        五月天諾亞方舟演唱會 (2023/02/05)
+                      </option>
+                      <option value="2300102">
+                        五月天諾亞方舟演唱會 (2023/02/06)
+                      </option>
+                    </select>
+                  </div>
+                  <!-- 若不沿用既有場次規劃才會顯示 -->
+                  <div class="form-group mt-4">
+                    <label class="form-label">請選擇場地模板：</label>
+                    <select
+                      class="selectpicker"
+                      data-size="5"
+                      data-live-search="true"
+                    >
+                      <option disabled selected>-----請選擇-----</option>
+                      <option value="Taipei_Arena">臺北小巨蛋</option>
+                      <option value="Taipei_Music_Center">
+                        台北流行音樂中心
+                      </option>
+                      <option value="K_Arena">高雄巨蛋</option>
+                      <option value="Kaohsiung_Music_Center">
+                        高雄流行音樂中心
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="co-main-btn min-width btn-hover h_40"
+              data-bs-target="#aboutModal"
+              data-bs-toggle="modal"
+              data-bs-dismiss="modal"
+            >
+              取消
+            </button>
+            <button type="submit" class="main-btn min-width btn-hover h_40">
+              提交
+            </button>
+          </div>
+        </div>
+      </div>
+      <a href=""></a>
+    </div>
+    <!-- 新增場次結束-->
+
     <!-- Body End -->
 
     <script src="js/vertical-responsive-menu.min.js"></script>
@@ -430,135 +653,35 @@
     <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script src="js/custom.js"></script>
     <script src="js/night-mode.js"></script>
-    <script>
-      const listTab=document.querySelector("#listTab");
-       fetch("http://localhost:8085/Activity/findAll")
-        .then((Response) => Response.json())
-        .then((data) => {
-          let str="";
-           let status=" ";
 
-          for(i of data){             
-    
-          switch(i.astatus){
-            case 0: status="未上架";
-            break;
-            case 1: status="上架中";
-            break;
-            case 2: status="已下架";
-            break;
-          }
-         
-          str+=`<div class="contact-list" >
-                        <div
-                          class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between"
-                        >
-                          <div
-                            class="d-md-flex align-items-center event-top-info"
-                          >                       
-                            <div class="card-event-dt">
-                              <a href="back-activity-sessionlist.html?activityNo=${i.activityNo}" ><h5>${i.aname}</h5></a>
-                            </div>
-                          </div>
-                          <div class="dropdown">
-                            <button
-                              class="option-btn"
-                              type="button"
-                              data-bs-toggle="dropdown"
-                              aria-haspopup="true"
-                              aria-expanded="false"
-                            >
-                              <i class="fa-solid fa-ellipsis-vertical"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                              <a href="#" class="dropdown-item"
-                                ><i class="fa-solid fa-gear me-3"></i>編輯活動</a
-                              >
-                              <a href="#" class="dropdown-item"
-                                ><i class="fa-solid fa-eye me-3"></i>預覽活動
-                                </a
-                              >
-                              <a href="#" class="dropdown-item"
-                                ><i class="fa-solid fa-clone me-3"></i
-                                >複製活動</a
-                              >
-                              <a href="#" class="dropdown-item delete-event"
-                                ><i class="fa-solid fa-trash-can me-3"></i
-                                >刪除活動</a
-                              >
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="bottom d-flex flex-wrap justify-content-between align-items-center p-4"
-                         style="flex-wrap: nowrap!important;">
-                          <div class="icon-box">
-                            <span class="icon">
-                              <i class="fa-solid fa-location-dot"></i>
-                            </span>
-                            <p>狀態</p>
-                            <h6 class="coupon-status">${status}</h6>
-                          </div>     
-                          <div class="icon-box">
-                            <span class="icon">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building-fill" viewBox="0 0 16 16">
-  <path d="M3 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h3v-3.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V16h3a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H3Zm1 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5ZM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM7.5 5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM4.5 8h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5Z"/>
-</svg>
-                            </span>
-                            <p>活動地點</p>
-                            <h6 class="coupon-status">${i.aplace}</h6>
-                          </div>                        
-                          <div class="icon-box">
-                            <span class="icon">
-                              <i class="fa-solid fa-calendar-days"></i>
-                            </span>
-                            <p>上架日期</p>
-                            <h6 class="coupon-status">${i.asdate}</h6>
-                          </div>         
-                                         
-						              <div class="icon-box">
-                            <span class="icon">
-                              <i class="fa-solid fa-calendar-days"></i>
-                            </span>
-                            <p>下架日期</p>
-                            <h6 class="coupon-status">${i.aedate}</h6>
-                          </div>
-                     
-                        </div>
-                        </div>`
-                    
-                    }
-                    listTab.innerHTML=str;
-                  })
-    
-        const search = document.querySelector("#search");
-        search.addEventListener("input", () => {
-        fetch(`http://localhost:8085/Activity/findAll`)
-          .then((Response) => Response.json())
-          .then((data) => {
-           let str="";
-           let status="";
-            for(i of data){
-            if (search.value.match(i.aname)){
-             
-              switch(i.astatus){
-            case 0: status="未上架";
-            break;
-            case 1: status="上架中";
-            break;
-            case 2: status="已下架";
-            break;
-          }
-              str+=`<div class="contact-list" >
+    <script>
+      const listTab = document.querySelector("#listTab");
+      const urlParams = new URLSearchParams(window.location.search);
+      const activityNo = urlParams.get("activityNo");
+      fetch(
+        `http://localhost:8085/Session/findByactivityNo?activityNo=${activityNo}`
+      )
+        .then((resp) => resp.json())
+        .then((data) => {
+          let str = "";
+          let status = " ";
+          const curDate = new Date();
+          for (i of data) {
+            // console.log(i.sessionsTime);
+            const date=new Date(i.sessionsTime);
+           
+            if (date > curDate) {
+              str += `<div class="contact-list" >
                         <div
                           class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between"
                         >
                           <div
                             class="d-md-flex align-items-center event-top-info"
                           >
-                        
+
+                         
                             <div class="card-event-dt">
-                              <a href="back-activity-sessionlist.html?activityNo=${i.activityNo}"> <h5>${i.aname}</h5></a>
+                              <h5>${i.activity.aname}</h5>
                             </div>
                           </div>
                           <div class="dropdown">
@@ -573,19 +696,15 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
                               <a href="#" class="dropdown-item"
-                                ><i class="fa-solid fa-gear me-3"></i>編輯活動</a
-                              >
-                              <a href="#" class="dropdown-item"
-                                ><i class="fa-solid fa-eye me-3"></i>預覽活動
-                                </a
-                              >
+                                ><i class="fa-solid fa-gear me-3"></i>編輯場次</a
+                              >                             
                               <a href="#" class="dropdown-item"
                                 ><i class="fa-solid fa-clone me-3"></i
-                                >複製活動</a
+                                >複製場次</a
                               >
                               <a href="#" class="dropdown-item delete-event"
                                 ><i class="fa-solid fa-trash-can me-3"></i
-                                >刪除活動</a
+                                >刪除場次</a
                               >
                             </div>
                           </div>
@@ -598,45 +717,133 @@
                               <i class="fa-solid fa-location-dot"></i>
                             </span>
                             <p>狀態</p>
-                            <h6 class="coupon-status">${status}</h6>
-                          </div>     
-                          <div class="icon-box">
-                            <span class="icon">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building-fill" viewBox="0 0 16 16">
-  <path d="M3 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h3v-3.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V16h3a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H3Zm1 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5ZM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM7.5 5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM4.5 8h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5Z"/>
-</svg>
-                            </span>
-                            <p>活動地點</p>
-                            <h6 class="coupon-status">${i.aplace}</h6>
-                          </div>                        
-                          <div class="icon-box">
-                            <span class="icon">
-                              <i class="fa-solid fa-calendar-days"></i>
-                            </span>
-                            <p>上架日期</p>
-                            <h6 class="coupon-status">${i.asdate}</h6>
-                          </div>         
-                                         
-						              <div class="icon-box">
-                            <span class="icon">
-                              <i class="fa-solid fa-calendar-days"></i>
-                            </span>
-                            <p>下架日期</p>
-                            <h6 class="coupon-status">${i.aedate}</h6>
+                            <h6 class="coupon-status">未開始</h6>
                           </div>
-                     
+                          <div class="icon-box">
+                            <span class="icon">
+                              <i class="fa-solid fa-calendar-days"></i>
+                            </span>
+                            <p>活動開始時間</p>
+                            <h6 class="coupon-status">${i.sessionsTime}</h6>
+                          </div>
+                          <div class="icon-box">
+                            <span class="icon">
+                              <i class="fa-solid fa-calendar-days"></i>
+                            </span>
+                            <p>活動結束時間</p>
+                            <h6 class="coupon-status">${i.sessioneTime}</h6>
+                          </div>
+                          <div class="icon-box">
+                            <span class="icon" >
+                              <i class="fa-solid fa-ticket"></i>
+                            </span>
+                            <p>票券張數</p>
+                            <h6 class="coupon-status">站${
+                              i.maxStandingQty
+                            }<br>座${i.maxSeatsQty}<br>——————<br>共${
+                i.maxSeatsQty + i.maxStandingQty
+              }</h6>
+                          </div>
+                          <div class="icon-box">
+                            <span class="icon">
+                              <i class="fa-solid fa-tag"></i>
+                            </span>
+                            <p>已售數量</p>
+                            <h6 class="coupon-status">站${i.standingQty}<br>座${
+                i.seatsQty
+              }<br>——————<br>共${i.seatsQty + i.standingQty}</h6>
+                          </div>
                         </div>
-                      </div>`
-                    
-                    }
-            }
-            listTab.innerHTML=str;
-          }
-          
-          )
-          
-        })
+                      </div>`;
+            } else {
+              str += `<div class="contact-list" >
+                        <div
+                          class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between"
+                        >
+                          <div
+                            class="d-md-flex align-items-center event-top-info"
+                          >
 
+                         
+                            <div class="card-event-dt">
+                              <h5>${i.activity.aname}</h5>
+                            </div>
+                          </div>
+                          <div class="dropdown">
+                            <button
+                              class="option-btn"
+                              type="button"
+                              data-bs-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded="false"
+                            >
+                              <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                              <a href="#" class="dropdown-item"
+                                ><i class="fa-solid fa-gear me-3"></i>編輯場次</a
+                              >                             
+                              <a href="#" class="dropdown-item"
+                                ><i class="fa-solid fa-clone me-3"></i
+                                >複製場次</a
+                              >
+                              <a href="#" class="dropdown-item delete-event"
+                                ><i class="fa-solid fa-trash-can me-3"></i
+                                >刪除場次</a
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="bottom d-flex flex-wrap justify-content-between align-items-center p-4"
+                         style="flex-wrap: nowrap!important;">
+                          <div class="icon-box">
+                            <span class="icon">
+                              <i class="fa-solid fa-location-dot"></i>
+                            </span>
+                            <p>狀態</p>
+                            <h6 class="coupon-status">已結束</h6>
+                          </div>
+                          <div class="icon-box">
+                            <span class="icon">
+                              <i class="fa-solid fa-calendar-days"></i>
+                            </span>
+                            <p>活動開始時間</p>
+                            <h6 class="coupon-status">${i.sessionsTime}</h6>
+                          </div>
+                          <div class="icon-box">
+                            <span class="icon">
+                              <i class="fa-solid fa-calendar-days"></i>
+                            </span>
+                            <p>活動結束時間</p>
+                            <h6 class="coupon-status">${i.sessioneTime}</h6>
+                          </div>
+                          <div class="icon-box">
+                            <span class="icon" >
+                              <i class="fa-solid fa-ticket"></i>
+                            </span>
+                            <p>票券張數</p>
+                            <h6 class="coupon-status">站${
+                              i.maxStandingQty
+                            }<br>座${i.maxSeatsQty}<br>——————<br>共${
+                i.maxSeatsQty + i.maxStandingQty
+              }</h6>
+                          </div>
+                          <div class="icon-box">
+                            <span class="icon">
+                              <i class="fa-solid fa-tag"></i>
+                            </span>
+                            <p>已售數量</p>
+                            <h6 class="coupon-status">站${i.standingQty}<br>座${
+                i.seatsQty
+              }<br>——————<br>共${i.seatsQty + i.standingQty}</h6>
+                          </div>
+                        </div>
+                      </div>`;
+            }
+          }
+          listTab.innerHTML = str;
+        });
     </script>
   </body>
 </html>
