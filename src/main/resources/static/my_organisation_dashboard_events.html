@@ -359,8 +359,10 @@
                             type="text"
                             placeholder="搜尋節目"
                             value=""
-                          />
-                          <i class="uil uil-search"></i>
+                          />                 
+                          <i ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                          </svg></i>
                         </div>
                       </div>
                     </div>
@@ -404,6 +406,7 @@
                 </div>
               </div>
             </div>
+              <a href="" ></a>
           </div>
         </div>
       </div>
@@ -429,29 +432,15 @@
     <script src="js/night-mode.js"></script>
     <script>
       const listTab=document.querySelector("#listTab");
-       fetch("http://localhost:8085/Session/findAll")
+       fetch("http://localhost:8085/Activity/findAll")
         .then((Response) => Response.json())
         .then((data) => {
           let str="";
            let status=" ";
-          for(i of data){
 
-          
-            // url=URL.createObjectURL(i.activity.session.aimgt);
-          //  console.log(i.activity.session.aimg);
-         
-          // const bytesStr = atob(i.aimg);
-          // let len = bytesStr.length;
-          // const u8Array = new Uint8Array(len);
-          // while (len--) {
-          //   enc
-          //   u8Array[len] = bytesStr.charCodeAt(len);
-          //           }
-          //   const blob = new Blob([u8Array]);
-          //   const url = URL.createObjectURL(blob);
-          
-         
-          switch(i.activity.astatus){
+          for(i of data){             
+    
+          switch(i.astatus){
             case 0: status="未上架";
             break;
             case 1: status="上架中";
@@ -459,19 +448,16 @@
             case 2: status="已下架";
             break;
           }
-          
+         
           str+=`<div class="contact-list" >
                         <div
                           class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between"
                         >
                           <div
                             class="d-md-flex align-items-center event-top-info"
-                          >
-                            <div class="card-event-img">
-                              <img src=""alt="" />
-                            </div>
+                          >                       
                             <div class="card-event-dt">
-                              <h5>${i.activity.aname}</h5>
+                              <a href="back-activity-sessionlist.html?activityNo=${i.activityNo}" ><h5>${i.aname}</h5></a>
                             </div>
                           </div>
                           <div class="dropdown">
@@ -512,20 +498,22 @@
                             </span>
                             <p>狀態</p>
                             <h6 class="coupon-status">${status}</h6>
-                          </div>
+                          </div>     
                           <div class="icon-box">
                             <span class="icon">
-                              <i class="fa-solid fa-calendar-days"></i>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building-fill" viewBox="0 0 16 16">
+  <path d="M3 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h3v-3.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V16h3a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H3Zm1 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5ZM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM7.5 5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM4.5 8h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5Z"/>
+</svg>
                             </span>
-                            <p>活動時間</p>
-                            <h6 class="coupon-status">${i.sessionsTime}</h6>
-                          </div>
+                            <p>活動地點</p>
+                            <h6 class="coupon-status">${i.aplace}</h6>
+                          </div>                        
                           <div class="icon-box">
                             <span class="icon">
                               <i class="fa-solid fa-calendar-days"></i>
                             </span>
                             <p>上架日期</p>
-                            <h6 class="coupon-status">${i.activity.asdate}</h6>
+                            <h6 class="coupon-status">${i.asdate}</h6>
                           </div>         
                                          
 						              <div class="icon-box">
@@ -533,41 +521,27 @@
                               <i class="fa-solid fa-calendar-days"></i>
                             </span>
                             <p>下架日期</p>
-                            <h6 class="coupon-status">${i.activity.aedate}</h6>
+                            <h6 class="coupon-status">${i.aedate}</h6>
                           </div>
-                          <div class="icon-box">
-                            <span class="icon" >
-                              <i class="fa-solid fa-ticket"></i>
-                            </span>
-                            <p>票券張數</p>
-                            <h6 class="coupon-status">站${i.maxStandingQty}<br>座${i.maxSeatsQty}<br>——————<br>共${i.maxSeatsQty+i.maxStandingQty}</h6>
-                          </div>
-                          <div class="icon-box">
-                            <span class="icon">
-                              <i class="fa-solid fa-tag"></i>
-                            </span>
-                            <p>已售數量</p>
-                            <h6 class="coupon-status">站${i.standingQty}<br>座${i.seatsQty}<br>——————<br>共${i.seatsQty+i.standingQty}</h6>
-                          </div>
+                     
                         </div>
-                      </div>`
-
-          
-        }
-          listTab.innerHTML=str;
-        })
+                        </div>`
+                    
+                    }
+                    listTab.innerHTML=str;
+                  })
     
         const search = document.querySelector("#search");
         search.addEventListener("input", () => {
-        fetch(`http://localhost:8085/Session/findAll`)
+        fetch(`http://localhost:8085/Activity/findAll`)
           .then((Response) => Response.json())
           .then((data) => {
-            let str="";
+           let str="";
            let status="";
             for(i of data){
-            if (search.value.match(i.activity.aname)){
+            if (search.value.match(i.aname)){
              
-              switch(i.activity.astatus){
+              switch(i.astatus){
             case 0: status="未上架";
             break;
             case 1: status="上架中";
@@ -575,7 +549,6 @@
             case 2: status="已下架";
             break;
           }
-          
               str+=`<div class="contact-list" >
                         <div
                           class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between"
@@ -583,11 +556,9 @@
                           <div
                             class="d-md-flex align-items-center event-top-info"
                           >
-                            <div class="card-event-img">
-                              <img src=""alt="" />
-                            </div>
+                        
                             <div class="card-event-dt">
-                              <h5>${i.activity.aname}</h5>
+                              <a href="back-activity-sessionlist.html?activityNo=${i.activityNo}"> <h5>${i.aname}</h5></a>
                             </div>
                           </div>
                           <div class="dropdown">
@@ -628,20 +599,22 @@
                             </span>
                             <p>狀態</p>
                             <h6 class="coupon-status">${status}</h6>
-                          </div>
+                          </div>     
                           <div class="icon-box">
                             <span class="icon">
-                              <i class="fa-solid fa-calendar-days"></i>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building-fill" viewBox="0 0 16 16">
+  <path d="M3 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h3v-3.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V16h3a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H3Zm1 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5ZM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM7.5 5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1ZM4.5 8h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5Zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1Zm3.5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5Z"/>
+</svg>
                             </span>
-                            <p>活動時間</p>
-                            <h6 class="coupon-status">${i.sessionsTime}</h6>
-                          </div>
+                            <p>活動地點</p>
+                            <h6 class="coupon-status">${i.aplace}</h6>
+                          </div>                        
                           <div class="icon-box">
                             <span class="icon">
                               <i class="fa-solid fa-calendar-days"></i>
                             </span>
                             <p>上架日期</p>
-                            <h6 class="coupon-status">${i.activity.asdate}</h6>
+                            <h6 class="coupon-status">${i.asdate}</h6>
                           </div>         
                                          
 						              <div class="icon-box">
@@ -649,24 +622,12 @@
                               <i class="fa-solid fa-calendar-days"></i>
                             </span>
                             <p>下架日期</p>
-                            <h6 class="coupon-status">${i.activity.aedate}</h6>
+                            <h6 class="coupon-status">${i.aedate}</h6>
                           </div>
-                          <div class="icon-box">
-                            <span class="icon" >
-                              <i class="fa-solid fa-ticket"></i>
-                            </span>
-                            <p>票券張數</p>
-                            <h6 class="coupon-status">站${i.maxStandingQty}<br>座${i.maxSeatsQty}<br>——————<br>共${i.maxSeatsQty+i.maxStandingQty}</h6>
-                          </div>
-                          <div class="icon-box">
-                            <span class="icon">
-                              <i class="fa-solid fa-tag"></i>
-                            </span>
-                            <p>已售數量</p>
-                            <h6 class="coupon-status">站${i.standingQty}<br>座${i.seatsQty}<br>——————<br>共${i.seatsQty+i.standingQty}</h6>
-                          </div>
+                     
                         </div>
                       </div>`
+                    
                     }
             }
             listTab.innerHTML=str;
@@ -675,6 +636,7 @@
           )
           
         })
+
     </script>
   </body>
 </html>

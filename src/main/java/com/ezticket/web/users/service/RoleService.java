@@ -64,44 +64,18 @@ public class RoleService {
         }).collect(Collectors.toList());
     }
 
-//    public List<RoleDTO> getAllRolesWithFuncs() {
-//        List<Role> roles = roleRepository.findAll();
-//        return roles.stream().map(role -> {
-//            RoleDTO roleDTO = new RoleDTO();
-//            roleDTO.setRoleno(role.getRoleno());
-//            roleDTO.setRolename(role.getRolename());
-//            roleDTO.setRolestatus(role.getRolestatus());
-//            Map<Integer, String> funcMap = new HashMap<>();
-//            List<Roleauthority> roleAuthorities = roleauthorityRepository.findByRoleno(role.getRoleno());
-//            for (Roleauthority roleAuthority : roleAuthorities) {
-//                Function allFuncs = functionRepository.findByFuncno(roleAuthority.getFuncno());
-//                funcMap.put(allFuncs.getFuncno(), allFuncs.getFuncname());
-//            }
-//            roleDTO.setFuncs(funcMap);
-//
-//            // Find the missing functions
-//            Set<Integer> roleFuncKey = funcMap.keySet();
-//            Set<Integer> allFuncKey = new HashSet<>();
-//            List<Function> allFuncs = functionRepository.findAll();
-//            for (Function func : allFuncs) {
-//                allFuncKey.add(func.getFuncno());
-//            }
-//            Set<Integer> missFuncs = new HashSet<>(allFuncKey);
-//            missFuncs.removeAll(roleFuncKey);
-//
-//            // Add the missing functions to the nofuncMap
-//            Map<Integer, String> nofuncMap = new HashMap<>();
-//            for (Integer funcno : missFuncs) {
-//                String funcName = allFuncs.stream()
-//                        .filter(func -> func.getFuncno().equals(funcno))
-//                        .map(Function::getFuncname)
-//                        .findFirst()
-//                        .orElse(null);
-//                nofuncMap.put(funcno, funcName);
-//            }
-//            roleDTO.setNofuncs(nofuncMap);
-//
-//            return roleDTO;
-//        }).collect(Collectors.toList());
-//    }
+    public  Role updateRoleStatus(Integer roleno){
+        Optional<Role> oldRole =roleRepository.findById(roleno);
+        if (oldRole.isPresent()){
+            Role updateTheRole = oldRole.get();
+            if(updateTheRole.getRolestatus() == 1){
+                updateTheRole.setRolestatus(0);
+            } else if (updateTheRole.getRolestatus() == 0) {
+                updateTheRole.setRolestatus(1);
+            }
+            return roleRepository.save(updateTheRole);
+        }else {
+            throw new RuntimeException("Role not found with roleno: " + roleno);
+        }
+    }
 }

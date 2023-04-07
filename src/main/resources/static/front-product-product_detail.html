@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, shrink-to-fit=9">
 	<meta name="description" content="Gambolthemes">
 	<meta name="author" content="Gambolthemes">
-	<title>Barren - Simple Online Event Ticketing System</title>
+	<title>商品詳情</title>
 
 	<!-- Favicon Icon -->
 	<link rel="icon" type="image/png" href="images/fav.png">
@@ -48,13 +48,15 @@
 							<div class="col-lg-12 col-md-12">
 								<div class="form-group mt-4">
 									<label class="form-label">請選擇原因：*</label>
-									<select class="selectpicker" data-size="5" data-live-search="true">
+									<input type="hidden" id="pcommentno" value="">
+									<input type="hidden" id="memberno" value="">
+									<select class="selectpicker" data-size="5" data-live-search="true" id="pwhy">
 										<option disabled selected>-----請選擇-----</option>
-										<option value="0">評論含有不當言詞或攻擊性的言論</option>
-										<option value="1">評論明顯是假評論</option>
-										<option value="2">評論內容並不符合節目或商品的實際狀況</option>
-										<option value="3">評論內容與節目或商品無關</option>
-										<option value="4">評論內容不當或是令人不適</option>
+										<option value="評論含有不當言詞或攻擊性的言論">評論含有不當言詞或攻擊性的言論</option>
+										<option value="評論明顯是假評論">評論明顯是假評論</option>
+										<option value="評論內容並不符合節目或商品的實際狀況">評論內容並不符合節目或商品的實際狀況</option>
+										<option value="評論內容與節目或商品無關">評論內容與節目或商品無關</option>
+										<option value="評論內容不當或是令人不適">評論內容不當或是令人不適</option>
 									</select>
 								</div>
 							</div>
@@ -64,7 +66,7 @@
 				<div class="modal-footer">
 					<button type="button" class="co-main-btn min-width btn-hover h_40" data-bs-target="#aboutModal"
 						data-bs-toggle="modal" data-bs-dismiss="modal">取消</button>
-					<button onclick="saveStatus(this)" class="main-btn min-width btn-hover h_40">提交</button>
+					<button onclick="submitComment()" class="main-btn min-width btn-hover h_40">提交</button>
 				</div>
 			</div>
 		</div>
@@ -265,6 +267,14 @@
 									<div id="night-mode" class="fas fa-moon fa-sun"></div>
 								</div>
 							</li>
+							<li>
+								<a href="front-product-shopping_cart.html">
+									<div id="cart">
+										<i class="fa fa-shopping-cart"></i>
+										<span class="badge">0</span>
+									</div>
+								</a>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -300,10 +310,10 @@
 							<div class="event-top-dt">
 								<h3 class="event-main-title">商品名稱</h3>
 								<div class="event-top-info-status">
-									<span class="event-type-name">商品類別<i class="fa-solid fa-video"></i></span>
-									<span class="event-type-name details-hr">開賣時間:<span class="ev-event-date">Wed, Jun
+									商品類別：<span class="event-type-name"><i class="fa-solid fa-video"></i></span>
+									開賣時間：<span class="event-type-name details-hr"><span class="ev-event-date">Wed, Jun
 											01, 2022 5:30 AM</span></span>
-									<span class="event-type-name details-host">主辦單位:<span
+									主辦單位：<span class="event-type-name details-host"><span
 											class="ev-event-date">XX娛樂</span></span>
 								</div>
 							</div>
@@ -315,7 +325,8 @@
 								<img src="images/event-imgs/big-1.jpg" alt="">
 							</div>
 							<div class="share-save-btns dropdown">
-								<button class="sv-btn me-2"><i class="fa-regular fa-bookmark me-2"></i>Save</button>
+								<button class="sv-btn me-2" onclick="followProduct()"><i
+										class="fa-regular fa-bookmark me-2"></i>Save</button>
 								<button class="sv-btn" data-bs-toggle="dropdown" aria-expanded="false"><i
 										class="fa-solid fa-share-nodes me-2"></i>Share</button>
 								<ul class="dropdown-menu">
@@ -361,12 +372,13 @@
 					</div>
 					<div class="col-xl-4 col-lg-5 col-md-12">
 						<div class="main-card event-right-dt">
-							<div class="bp-title">
-								<h4>商品評星<i class="fa fa-star-o fa-2x"></i><i class="fa fa-star fa-2x"
-										style="width: 20px"></i></h4>
+							<div class="bp-title" id="productRate">
+								<!-- 商品評星：1.5 定位位置 -->
+								<h4><i class="fa fa-star fa-2x" style="width: 20px"></i><i
+										class="fa fa-star-o fa-2x"></i></h4>
 							</div>
 
-							<div class="time-left">
+							<!-- <div class="time-left">
 								<div class="countdown">
 									<div class="countdown-item">
 										<span id="day"></span>days
@@ -381,27 +393,36 @@
 										<span id="second"></span>Seconds
 									</div>
 								</div>
-							</div>
+							</div> -->
 							<div class="event-dt-right-group mt-5">
 								<div class="event-dt-right-icon">
 									<i class="fa-solid fa-money-check-dollar"></i>
 								</div>
 								<div class="event-dt-right-content">
 									<h4>NTD</h4>
-									<h5 class="mb-0">$50.00</h5>
-									<h5 class="mb-0" id="pspecialprice">$50.00</h5>
-									<div class="col-md-6">
+									<h5 class="mb-0" id="pprice" style="text-decoration: line-through">$50.00</h5>
+									<h5 class="mb-0" id="pspecialprice" style="font-size: 20px;">$50.00</h5>
+									<!-- <div class="quantity"> -->
+									<!-- </div> -->
+									<!-- <div class="col-md-6">
 										<label class="form-label mt-3 fs-6">欲購買數量</label>
 										<div class="input-number">
 											<input class="form-control h_50" type="number" placeholder="" value="1">
 										</div>
-									</div>
+									</div> -->
+								</div>
+								<div class="counter">
+									<span class="down" onClick='decreaseCount(event, this)'>-</span>
+									<input type="text" value="1">
+									<span class="up" onClick='increaseCount(event, this)'>+</span>
 								</div>
 							</div>
 
 
 							<div class="booking-btn">
-								<a href="checkout.html" class="main-btn btn-hover w-100">Buy Now</a>
+								<a href="checkout.html" class="main-btn btn-hover w-45" style="width:48%;">Buy Now</a>
+								<button type="button" class="main-btn btn-hover w-45" style="width:48%;"
+									id="product-incart">Add To Cart</button>
 							</div>
 						</div>
 					</div>
@@ -433,7 +454,7 @@
 								<a href="front-product-explore_products.html" class="view-all-link">瀏覽更多<i
 										class="fa-solid fa-right-long ms-2"></i></a>
 							</div>
-							<div class="owl-carousel moreEvents-slider owl-theme">
+							<div class="owl-carousel moreEvents-slider owl-theme" id="moreProducts">
 								<!-- 相關聯商品擺放處 -->
 							</div>
 						</div>
@@ -524,6 +545,11 @@
 	<!-- Footer End-->
 
 	<!-- 接收來自後端的資料 -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="js/my_porder.js"></script>
+
+
+
 	<script>
 		// const productInfo = document.querySelector('#productInfo');
 		const pname = document.querySelector('h3.event-main-title');
@@ -532,14 +558,20 @@
 		const hostno = document.querySelector('span.event-type-name.details-host');
 		const pimg = document.querySelector('#productImg');
 		const pdiscrip = document.querySelector('div.main-event-content');
-		const pprice = document.querySelector('h5.mb-0');
+		const pprice = document.querySelector('#pprice');
 		const pspecialprice = document.querySelector('#pspecialprice');
-		
+
+
 
 
 		//商品詳情資訊
 		let urlParams = new URLSearchParams(window.location.search);
 		const productno = urlParams.get('productno');
+
+		$('#product-incart').click(function () {
+			// console.log("點擊加入購物車: " + productno);
+			addCart(productno);
+		});
 
 		fetch('ProductInfoServlet', {
 			method: 'POST',
@@ -552,11 +584,19 @@
 				pname.textContent = item.pname;
 				pclass.textContent = item.pclass.pclassname;
 				psdate.textContent = item.psdate;
-				hostno.textContent = item.hostno;
+				hostno.textContent = item.host.hostname;
 				pimg.innerHTML = `<img src="ProductImg?pimgno=${item.pimgts[0].pimgno}" alt="">`;
 				pdiscrip.textContent = item.pdiscrip;
 				pprice.textContent = item.pprice;
 				pspecialprice.textContent = item.pspecialprice;
+				if (item.prateqty < 1) {
+					$("#productRate").children("h4").text('尚無評論');
+				}
+				else if (item.prateqty >= 1) {
+					$("#productRate").children("h4").text("商品評星：" + (item.pratetotal / item.prateqty)).append(`<i class="fa fa-star fa-2x">`);
+				}
+
+
 			})
 
 
@@ -574,33 +614,67 @@
 				for (let item of list) {
 					let image = item.pimgts && item.pimgts[0] && item.pimgts[0].pimgno;
 					if (image === undefined) { image = 70001; }
-					moreProduct.innerHTML += `
-								<div class="item">
-									<div class="main-card mt-4">
-										<div class="event-thumbnail">
-											<a href="online_product_detail_view.html?productno=${item.productno}" class="thumbnail-img">
-												<img src="ProductImg?pimgno=${image}" alt="">
-												
-											</a>
-											<span class="bookmark-icon" title="Bookmark"></span>
-										</div>
-										<div class="event-content">
-											<a href="online_product_detail_view.html?productno=${item.productno}" class="event-title">${item.pname}</a>
-											<div class="duration-price-remaining">
-												<span class="duration-price">NTD ${item.pprice}</span>
-												<span class="remaining"><i class="fa-solid fa-ticket fa-rotate-90"></i>7
-													Remaining</span>
-											</div>
-										</div>
-										<div class="event-footer">
-											<div class="booking-btn">
-												<a href="checkout.html" class="main-btn btn-hover w-100">Buy
-													Now</a>
-											</div>
-										</div>
-									</div>
-								</div>
-								`;
+
+					$("#moreProducts").append(`
+					<div class="item">
+			<div class="main-card mt-4">
+				<div class="event-thumbnail">
+					<a href="front-product-product_detail.html?productno=${item.productno}" class="thumbnail-img">
+						<img src="ProductImg?pimgno=${image}" alt="">
+
+					</a>
+					<span class="bookmark-icon" title="Bookmark" onclick="moreProductFollowProduct(${item.productno})"></span>
+				</div>
+				<div class="event-content">
+					<a href="front-product-product_detail.html?productno=${item.productno}" class="event-title">${item.pname}</a>
+					<div class="duration-price-remaining">
+						<span class="duration-price" style="text-decoration: line-through">${item.pprice}</span>
+						<span class="duration-price" style="font-size: 20px;">${item.pspecialprice}</span>
+						<span class="remaining" id="rateAvg${item.productno}"><i class="fa fa-star" aria-hidden="true"></i></span>
+					</div>
+				</div>
+				<div class="event-footer">
+					
+						<a href="checkout.html" class="main-btn btn-hover w-45" style="width:48%;">Buy Now</a>
+						<button type="button" class="main-btn btn-hover w-45" style="width:48%;" onclick="addCart(${item.productno})" id="product-incart"><i class="fa-solid fa-cart-shopping"></i></button>
+					
+					
+				</div>
+			</div>
+		</div>`);
+					if (item.prateqty < 1) {
+						$("#rateAvg" + item.productno).text('尚無評論')
+					}
+					else if (item.prateqty >= 1) {
+						$("#rateAvg" + item.productno).text(item.pratetotal / item.prateqty).append(`<i class="fa fa-star fa-2x">`);
+					}
+					// moreProduct.innerHTML += `
+					// 			<div class="item">
+					// 				<div class="main-card mt-4">
+					// 					<div class="event-thumbnail">
+					// 						<a href="online_product_detail_view.html?productno=${item.productno}" class="thumbnail-img">
+					// 							<img src="ProductImg?pimgno=${image}" alt="">
+
+					// 						</a>
+					// 						<span class="bookmark-icon" title="Bookmark"></span>
+					// 					</div>
+					// 					<div class="event-content">
+					// 						<a href="online_product_detail_view.html?productno=${item.productno}" class="event-title">${item.pname}</a>
+					// 						<div class="duration-price-remaining">
+					// 							<span class="duration-price">NTD ${item.pprice}</span>
+					// 							// <span class="remaining"><i class="fa-solid fa-ticket fa-rotate-90"></i>7
+					// 							// 	Remaining</span>
+					// 						</div>
+					// 					</div>
+					// 					<div class="event-footer">
+					// 						<div class="booking-btn">
+					// 							<a href="checkout.html" class="main-btn btn-hover w-100">Buy
+					// 								Now</a>
+					// 						</div>
+					// 					</div>
+					// 				</div>
+					// 			</div>
+					// 			`;
 				}
 			}
 			)
@@ -656,10 +730,9 @@
 																			</button>
 																		</td>
 																		<td style="width: 30px;">100</td>
-																		<td><button data-bs-toggle="modal"
-																				data-bs-target="#couponModal"
-																				style="border: none; background-color: transparent"
-																				id="commentReport">
+																		<td><button  name="${item.pcommentno}" data-bs-toggle="modal"
+																				data-bs-target="#couponModal" 
+																				style="border: none; background-color: transparent" onclick="comment(this.name)">
 																				<img style="padding-top: 4px; width: 30px;"
 																					src="images/comment.png"></button>
 																		</td>
@@ -686,52 +759,80 @@
 			});
 
 
-
-
-
-
-		function addProductCommentReport(button) {
-			const pcommentno = pcommentno;
-			const memberno = memberno;
-			const pwhy = document.querySelector('h3.event-main-t	itle');
-			const preportstatus = preportstatus;
-			const reportdate = now();
-			const status = button.closest('tr').querySelector('select').value;
-			const no = Number(button.closest('tr').querySelector('tr td').textContent);
-			if (status !== '請選擇原因：*') {
-				swal({
-					title: "請確認是否送出檢舉評論?",
-					icon: "warning",
-					buttons: true,
-					dangerMode: true
-				}).then((confirm) => {
-					if (confirm) {
-						fetch(`/ProductCommentReport`, {
-							method: 'POST',
-							headers: { 'Content-Type': 'application/json' },
-							body: JSON.stringify({ porderno: no, pprocessstatus: status }),
-						}).then(response => {
-							if (response.ok) {
-								swal('已成功送出檢舉', { icon: "success" });
-							} else {
-								swal('送出異常請聯繫系統管理員', { icon: "error" });
-							}
-						});
-					} else {
-						return Promise.reject('取消操作');
-					}
-				});
-			}
-		}
 	</script>
+
+
+	<script>
+
+		//會員編號假資料
+		const info = {
+			memberno: 85346,
+		}
+
+		//從評論取得評論編號
+		function comment(pcommentno) {
+			$('#pcommentno').val(pcommentno);
+			$('#memberno').val(info.memberno);
+			console.log("comment" + $("#pcommentno").val());
+		}
+
+		//新增商品評論檢舉
+		function submitComment() {
+			console.log($("#pcommentno").val());
+
+			fetch('ProductCommentReportServlet', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+				body: new URLSearchParams({
+					'memberno': info.memberno,
+					// 'productno':  productno,
+					'pcommentno': $("#pcommentno").val(),
+					'pwhy': $('#pwhy').val(),
+					'action': "addProductCommentReport"
+				})
+
+			})
+		}
+		//新增商品追蹤(單一商品)
+		function followProduct() {
+
+			fetch("FollowproductController", {
+				method: "POST",
+				body: new URLSearchParams({
+					'memberno': info.memberno,
+					'productno': productno,
+					'action': "addOneProductFollow"
+				})
+			})
+		}
+
+		//相關聯商品的追蹤
+		function moreProductFollowProduct(productno) {
+
+			fetch("FollowproductController", {
+				method: "POST",
+				body: new URLSearchParams({
+					'memberno': info.memberno,
+					'productno': productno,
+					'action': "addOneProductFollow"
+				})
+			})
+		}
+
+
+	</script>
+
+
 
 	<script src="js/jquery-3.6.0.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="vendor/OwlCarousel/owl.carousel.js"></script>
 	<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 	<script src="js/custom.js"></script>
-	<script src="js/timer.js"></script>
+	<!-- <script src="js/timer.js"></script> -->
 	<script src="js/night-mode.js"></script>
+
+
 
 	<!-- 點讚換圖 -->
 	<script>
@@ -748,6 +849,8 @@
 		}
 
 	</script>
+
+
 
 
 

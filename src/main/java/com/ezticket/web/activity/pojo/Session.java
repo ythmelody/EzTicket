@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Calendar;
+import java.util.Date;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -22,9 +24,10 @@ public class Session {
     private Integer activityNo;
     @Column(name = "SESSIONSTIME")
     @JsonFormat(pattern = "yyyy/MM/dd kk:mm", timezone = "GMT+8")
-    private Calendar sessionsTime;
+    private Date sessionsTime;
     @Column(name = "SESSIONETIME")
-    private Calendar sessioneTime;
+    @JsonFormat(pattern = "yyyy/MM/dd kk:mm", timezone = "GMT+8")
+    private Date sessioneTime;
     @Column(name = "MAXSEATSQTY")
     private Integer maxSeatsQty;
     @Column(name = "MAXSTANDINGQTY")
