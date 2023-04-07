@@ -23,7 +23,7 @@ function addCart(e) {
   badge.innerHTML = count;
   // 存入 localStorage
   const productno = e;
-  fetch(`/ProductInfoServlet?productno=${productno}`)
+  fetch(`/ProductInfoServlet?action=singleProduct&productno=${productno}`)
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -41,4 +41,20 @@ function addCart(e) {
       }
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
     })
+}
+
+function buyNow(e) {
+  addCart(e);
+  swal({
+    title: "是否前往購物車結帳?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true
+  }).then((confirm) => {
+    if (confirm) {
+      window.location.href = 'front-product-shopping_cart.html';
+    } else {
+      return Promise.reject('取消操作');
+    }
+  })
 }

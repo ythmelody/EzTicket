@@ -4,6 +4,7 @@ package com.ezticket.web.product.controller;
 import com.ezticket.web.product.pojo.Pcomment;
 import com.ezticket.web.product.pojo.Product;
 import com.ezticket.web.product.service.PcommentService;
+import com.ezticket.web.product.service.ProductService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import jakarta.servlet.ServletException;
@@ -16,6 +17,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,11 +25,13 @@ import java.util.Map;
 public class ProductCommentServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private PcommentService pcommentSvc;
+    private ProductService productSvc;
 
     @Override
     public void init() throws ServletException {
         ApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
         pcommentSvc = applicationContext.getBean(PcommentService.class);
+        productSvc = applicationContext.getBean(ProductService.class);
     }
 
 
@@ -47,18 +51,23 @@ public class ProductCommentServlet extends HttpServlet {
 
         //取得單一商品所有評論(用於前端商品單一詳情)
         if ("oneProductCommentList".equals(action)) {
-            Integer productno = Integer.valueOf(request.getParameter("productno"));
-            List<Pcomment> pcommentList = pcommentSvc.getAllProductCommentOfOneProduct(productno);
+            Map<String,String[]> map =new HashMap<>();
+            String productno[] = {request.getParameter("productno")};
+            map.put("productno", productno);
+            String pcommentstatus[] = {"0"};  //僅狀態顯示於前台的商品
+            map.put("pcommentstatus", pcommentstatus);
+            List<Pcomment> pcommentList = pcommentSvc.getAllBySearch(map);
             list2json(pcommentList, response);
         }
 
-        //新增商品評論
+        //新增商品評論 (同時更新商品總評星)
         if ("addProductComment".equals(action)) {
             Integer productno = Integer.valueOf(request.getParameter("productno"));
             Integer memberno = Integer.valueOf(request.getParameter("memberno"));
             Integer prate = Integer.valueOf(request.getParameter("prate"));
             String pcommentcont = request.getParameter("pcommentcont");
             pcommentSvc.addProductComment(productno, pcommentcont, prate, memberno);
+            productSvc.updateProduct(productno,prate);
         }
 
         //取得單一筆評論
@@ -91,7 +100,6 @@ public class ProductCommentServlet extends HttpServlet {
         //商品複合查詢
         if ("CommentSearch".equals(action)) {
             Map<String, String[]> map = request.getParameterMap(); //將得到的資料轉成map
-            System.out.println("我有跑進來CommentSearch" + map);
             List<Pcomment> commentList = pcommentSvc.getAllBySearch(map); //轉交進行複合查詢
             list2json(commentList, response);
         }

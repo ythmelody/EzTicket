@@ -8,6 +8,7 @@ import com.ezticket.web.product.pojo.Pfitcoupon;
 import com.ezticket.web.product.pojo.PfitcouponPK;
 import com.ezticket.web.product.repository.PcouponRepository;
 import com.ezticket.web.product.repository.PfitcouponRepository;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,7 +56,7 @@ public class PcouponService {
         return modelMapper.map(pcoupon, PcouponStatusDTO.class);
     }
 
-
+    @Transactional
     public boolean addPcoupon(AddPcouponDTO couponBody) {
         Pcoupon pcoupon = pcouponRepository.findByPcouponname(couponBody.getPcouponname());
         if (pcoupon == null) {
