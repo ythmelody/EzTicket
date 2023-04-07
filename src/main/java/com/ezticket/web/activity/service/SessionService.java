@@ -25,8 +25,10 @@ public class SessionService {
                 .map(this::entityToDTO)
                 .collect(Collectors.toList());
     }
-    public Optional<SessionDto> findById(Integer sessionNo){
-        return sessionRepository.findById(sessionNo).map(this::entityToDTO);
+    public List<SessionDto> findByactivityNo(Integer activityNo){
+        return sessionRepository.findByactivityNo(activityNo).stream()
+                .map(this::entityToDTO)
+                .collect(Collectors.toList());
     }
     private SessionDto entityToDTO(Session session){
         return modelMapper.map(session,SessionDto.class);
