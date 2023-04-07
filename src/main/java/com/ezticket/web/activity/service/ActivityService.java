@@ -30,10 +30,12 @@ public class ActivityService {
         return activityRepository.findByaName(aName).map(this::entityToDTO);
 
     }
+
     public Optional<ActivityDto> findByactivityNo(Integer activityNo){
         return activityRepository.findByactivityNo(activityNo).map(this::entityToDTO);
 
     }
+
         @Scheduled(cron = "0 0 * * * * ?")
     public void checkExpiredActivity() {
         LocalDate today = LocalDate.now();
@@ -61,6 +63,21 @@ public class ActivityService {
         ActivityDto activityDto = modelMapper.map(activity,ActivityDto.class);
         activityDto.setActivityNo(activity.getActivityNo());
         return activityDto;
+    }
+
+    // Add by Shawn on 4/3
+    public List<Activity> getAllActAfterSell(){
+        return activityRepository.getAllAfterSellDate();
+    }
+
+    public List<Activity> getAllActBeforeSell(){ return activityRepository.getAllBeforeSellDate(); }
+
+    public List<Activity> getAllActSelling(){ return activityRepository.getAllBetweenSellDate(); }
+
+    public Optional<Activity> getActById(Integer actNo){ return activityRepository.findById(actNo);}
+
+    public List<Activity> getActByBlurActName(String aname){
+        return activityRepository.getByBlurActName(aname);
     }
 
 

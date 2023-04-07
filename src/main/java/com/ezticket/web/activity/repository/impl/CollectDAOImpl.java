@@ -9,22 +9,14 @@ import java.util.List;
 
 public class CollectDAOImpl implements CollectDAO {
     String driver = "com.mysql.cj.jdbc.Driver";
-    String url = "jdbc:mysql://localhost:3306/db01?serverTimezone=Asia/Taipei";
+    String url = "jdbc:mysql://localhost:3306/ezticket?serverTimezone=Asia/Taipei";
     String userid = "root";
     String passwd = "root";
 
     private static final String INSERT_STMT =
-            "INSERT INTO collect (memberno, tdetailsno, tstatus, qrcode) VALUES (?, ?, ?, ?)";
+            "INSERT INTO collect (memberno, tdetailsno,qrcode) VALUES (?, ?, ?)";
     private static final String GET_ALL_STMT =
-            "SELECT m.mname, a.activityno, a.aname, i.aimg, ss.sessionstime, st.realx, st.realy, c.collectno, c.tdetailsno, c.tstatus "
-                    + "FROM collect c JOIN member m ON c.memberno = m.memberno "
-                    + "JOIN tdetails d ON c.tdetailsno = d.tdetailsno "
-                    + "JOIN seats st ON d.seatno = st.seatno "
-                    + "JOIN session ss ON d.sessionno = ss.sessionno "
-                    + "JOIN activity a ON ss.activityno = a.activityno "
-                    + "JOIN aimgt i ON a.activityno = i.activityno "
-                    + "WHERE m.memberno = 85341 AND i.aimgmain = 1 "
-                    + "ORDER BY collectno";
+            "SELECT collectno, memberno, tdetailsno, tstatus, qrcode FROM collect ORDER BY collectno";
     private static final String GET_ONE_STMT =
             "SELECT collectno, memberno, tdetailsno, tstatus, qrcode FROM collect WHERE collectno = ?";
     private static final String DELETE =
@@ -46,8 +38,7 @@ public class CollectDAOImpl implements CollectDAO {
 
             pstmt.setInt(1, collectVO.getMemberno());
             pstmt.setInt(2, collectVO.gettDetailsno());
-            pstmt.setInt(3, collectVO.gettStatus());
-            pstmt.setBytes(4, collectVO.getQrcode());
+            pstmt.setBytes(3, collectVO.getQrcode());
 
             pstmt.executeUpdate();
 
@@ -282,5 +273,51 @@ public class CollectDAOImpl implements CollectDAO {
             }
         }
         return list;
+    }
+
+    public static void main(String[] args) {
+
+        CollectDAOImpl dao = new CollectDAOImpl();
+
+        // 新增
+//        CollectVO collectVO1 = new CollectVO();
+//        collectVO1.setMemberno(85346);
+//        collectVO1.settDetailsno(10006);
+//        dao.insert(collectVO1);
+
+        // 修改
+//        CollectVO collectVO2 = new CollectVO();
+//        collectVO2.setCollectno(12);
+//        collectVO2.setMemberno(85344);
+//        collectVO2.settDetailsno(10006);
+//        collectVO2.settStatus(1);
+//        collectVO2.setQrcode(null);
+//        dao.update(collectVO2);
+
+
+
+        // 刪除
+//        dao.delete(12);
+
+        // 查詢
+//        CollectVO collectVO3 = dao.findByPK(11);
+//        System.out.print(collectVO3.getCollectno() + ",");
+//        System.out.print(collectVO3.getMemberno() + ",");
+//        System.out.print(collectVO3.gettDetailsno() + ",");
+//        System.out.print(collectVO3.gettStatus() + ",");
+//        System.out.print(collectVO3.getQrcode() + ",");
+//        System.out.println("---------------------");
+
+
+        // 查詢
+        List<CollectVO> list = dao.getAll();
+        for (CollectVO aCollect : list) {
+            System.out.print(aCollect.getCollectno() + ",");
+            System.out.print(aCollect.getMemberno() + ",");
+            System.out.print(aCollect.gettDetailsno() + ",");
+            System.out.print(aCollect.gettStatus() + ",");
+            System.out.print(aCollect.getQrcode() + ",");
+            System.out.println();
+        }
     }
 }
