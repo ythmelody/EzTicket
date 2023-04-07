@@ -53,7 +53,7 @@ $(document).ready(() => {
       const item = cartItems[idx];
       item.quantity = parseInt(tr.querySelector('input[type="number"]').value);
       totalPay += item.data.pspecialprice * item.quantity;
-      tr.querySelector('td:last-child').innerText = `$${item.data.pspecialprice * item.quantity}`;
+      tr.querySelector('td:nth-last-child(2)').innerText = `$${item.data.pspecialprice * item.quantity}`;
     });
     itemlist.querySelector('.totalinv2').innerText = `總金額 : TWD $${totalPay}`;
     const card = document.querySelector('#TWD');
