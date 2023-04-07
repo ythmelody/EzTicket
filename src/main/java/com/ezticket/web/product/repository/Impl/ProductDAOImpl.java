@@ -190,10 +190,8 @@ public class ProductDAOImpl implements ProductDAO {
             if (value != null && value.trim().length() != 0 && !"action".equals(key)) {
                 count++;
                 predicateList.add(getPredicateForDB(builder, root, key, value));
-                System.out.println("有送出查詢資料的欄位數count = " + count);
             }
         }
-        System.out.println("predicateList.size()=" + predicateList.size());
         criteriaQuery.where(predicateList.toArray(new Predicate[predicateList.size()]));
         Query query = session.createQuery(criteriaQuery);
         List<Product> productList = query.getResultList();
@@ -206,17 +204,14 @@ public class ProductDAOImpl implements ProductDAO {
             predicate = builder.equal(root.get(columnName), Integer.valueOf(value));
         else if ("pname".equals(columnName) || "ptag".equals(columnName)) {
             predicate = builder.like(root.get(columnName), "%" + value + "%");
-        }
-        else if ("start_date".equals(columnName)) {
-            System.out.println("input start_date: " + value);
-            System.out.println("start_date to timestamp: " + java.sql.Timestamp.valueOf(value));
+        }else if ("hostname".equals(columnName)) {
+            predicate = builder.like(root.get("host").get("hostname"), "%" + value + "%");
+        }else if ("start_date".equals(columnName)) {
             predicate = builder.or(
                     builder.greaterThanOrEqualTo(root.get("psdate"), java.sql.Timestamp.valueOf(value))
 //                    builder.greaterThanOrEqualTo(root.get("pedate"), java.sql.Timestamp.valueOf(value))
             );
         } else if ("end_date".equals(columnName)) {
-            System.out.println("input end_date: " + value);
-            System.out.println("end_date to timestamp: " + java.sql.Timestamp.valueOf(value));
             predicate = builder.or(
 //                    builder.lessThanOrEqualTo(root.get("psdate"), java.sql.Timestamp.valueOf(value)),
                     builder.lessThanOrEqualTo(root.get("pedate"), java.sql.Timestamp.valueOf(value))

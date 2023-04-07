@@ -14,17 +14,17 @@ public class PclassDaoImpl implements PclassDAO {
 	@PersistenceContext
 	private Session session;
 	@Override
-	public void insert(Pclass pclassVO) {
-		session.persist(pclassVO);
+	public void insert(Pclass pclass) {
+		session.persist(pclass);
 	}
 
 	@Override
-	public void update(Pclass pclassVO) {
-	final String hql ="UPDATE PclassVO SET pclassname = :pclassname WHERE pclassno = :pclassno";
+	public void update(Pclass pclass) {
+	final String hql ="UPDATE Pclass SET pclassname = :pclassname WHERE pclassno = :pclassno";
 	
 	Query<?> query =session.createQuery(hql);
-	query.setParameter("pclassname",pclassVO.getPclassname());
-	query.setParameter("pclassno",pclassVO.getPclassno());
+	query.setParameter("pclassname",pclass.getPclassname());
+	query.setParameter("pclassno",pclass.getPclassno());
 	query.executeUpdate();
 	}
 
@@ -35,14 +35,14 @@ public class PclassDaoImpl implements PclassDAO {
 
 	@Override
 	public List<Pclass> getAll() {
-		final String hql = "FROM PclassVO ORDER BY pclassno";
+		final String hql = "FROM Pclass ORDER BY pclassno";
 		return session.createQuery(hql, Pclass.class).getResultList();
 	}
 
 	@Override
 	public boolean delete(Integer pclassno) {
-		Pclass pclassVO = session.get(Pclass.class, pclassno);
-		session.remove(pclassVO);
+		Pclass pclass = session.get(Pclass.class, pclassno);
+		session.remove(pclass);
 		return true;
 
 	}

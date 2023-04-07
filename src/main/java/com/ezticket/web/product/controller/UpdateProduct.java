@@ -55,5 +55,7 @@ public class UpdateProduct extends HttpServlet {
 
 		productSvc.updateProduct(productno, pclassno, pname, hostno, pdiscrip, pprice, pspecialprice, pqty, psdate,
 				pedate, ptag, pstatus, pratetotal, prateqty);
+
+		response.sendRedirect("back-product-product_manage.html");
 	}
 }
