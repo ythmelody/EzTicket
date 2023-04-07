@@ -27,10 +27,10 @@ public class SessionController {
         return sessionService.findAll();
     }
 
-    @GetMapping("/findById")
-    public Optional<SessionDto> findById(@RequestParam Integer sessionNo) {
+    @GetMapping("/findByactivityNo")
+    public List<SessionDto> findByactivityNo(@RequestParam Integer activityNo){
 
-        return sessionService.findById(sessionNo);
+        return sessionService.findByactivityNo(activityNo);
     }
 
     //    Add by Shawn on 4/3

@@ -19,14 +19,12 @@ public class ActivityController {
     private ActivityService activityService;
 
     @GetMapping("/findAll")
-    public List<ActivityDto> findAll(){
+    public List<ActivityDto> findByOrderByActivityNoDesc(){
 
-        return activityService.findAll();
+        return activityService.findByOrderByActivityNoDesc();
     }
-
     @GetMapping("/findByaName")
     public Optional<ActivityDto> findByAname(String aName){
-
         return activityService.findByaName(aName);
     }
 
@@ -56,4 +54,11 @@ public class ActivityController {
         System.out.println(actName);
         return activityService.getActByBlurActName(actName);
     };
+
+    @GetMapping("/findByactivityNo")
+    public Optional<ActivityDto> findByactivityNo(Integer activityNo){
+
+        return activityService.findByactivityNo(activityNo);
+    }
+
 }
