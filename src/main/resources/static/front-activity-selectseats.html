@@ -327,6 +327,8 @@
 <!-- Body Start-->
 
 <!-- 人工選位開始 -->
+
+
 <div class="modal fade" id="orgSettings" tabindex="-1" aria-labelledby="addorganisationLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -375,6 +377,8 @@
 <!-- 人工選位結束-->
 
 <!-- 電腦選位開始 -->
+
+
 <div class="modal fade" id="orgSettings_system" tabindex="-1" aria-labelledby="addorganisationLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -494,12 +498,12 @@
                             <div class="order-total-block">
                                 請選擇選位方式
                                 <div class="nav custom2-tabs btn-group" role="tablist">
-                                    <button class="tab-link active" data-bs-toggle="tab" data-bs-target="#all-tab"
-                                            type="button" role="tab" aria-controls="all-tab" aria-selected="true"
+                                    <button id="byComputor" class="tab-link active" data-bs-toggle="tab" data-bs-target=""
+                                            type="button" role="tab" aria-controls="" aria-selected="true"
                                             style="width: 49%;">電腦選位
                                     </button>
-                                    <button class="tab-link" data-bs-toggle="tab" data-bs-target="#online-tab"
-                                            type="button" role="tab" aria-controls="online-tab" aria-selected="false"
+                                    <button id="byMember" class="tab-link" data-bs-toggle="tab" data-bs-target=""
+                                            type="button" role="tab" aria-controls="" aria-selected="false"
                                             style="width: 49%;">自行選位
                                     </button>
                                 </div>
@@ -508,24 +512,7 @@
                         <div class="order-summary-content p_30">
                             <div class="form-group mt-4">
                                 <label class="form-label">請選擇區域</label>
-                                <div>
-                                    <button name="chooseBlock" value="1" id="1"
-                                            class="main-btn btn-hover h_40 w-100 mt-5" type="button"
-                                            data-bs-toggle="modal" data-bs-target="#orgSettings"
-                                            style="margin: 5px!important; background-color: rgb(230, 230, 107);
-											border: none; font-size: 1rem; color: black;"
-                                            onmousedown="setKV(this.value)">黃1A
-                                    </button>
-                                    <button class="main-btn btn-hover h_40 w-100 mt-5" type="button"
-                                            data-bs-toggle="modal" data-bs-target="#orgSettings_system"
-                                            style="margin: 5px!important; background-color: rgb(230, 230, 107); border: none; font-size: 1rem; color: black;">
-                                        黃2A
-                                    </button>
-                                    <button class="main-btn btn-hover h_40 w-100 mt-5" type="button"
-                                            data-bs-toggle="modal" data-bs-target="#orgSettings"
-                                            style="margin: 5px!important; background-color: rgb(230, 230, 107); border: none; font-size: 1rem; color: black;">
-                                        黃3A
-                                    </button>
+                                <div id="selectBlocks">
                                 </div>
                             </div>
                         </div>
@@ -620,8 +607,11 @@
 
 <!-- 選擇座位的JS -->
 <script>
+    sessionStorage.setItem("memberNo", "85341");
+    sessionStorage.setItem("activityNo", "1");
+    sessionStorage.setItem("sessionNo", "1");
 
-    // websocket functions
+    // WebSocket 相關變數及函式 (connect/ sendMessage/ disconnect)
     let webSocket;
 
     function connect() {
@@ -692,7 +682,8 @@
         webSocket.close();
     }
 
-    // Seats-related functions
+
+    // 選位相關變數及函式 (seatsmgt/ sendMessage/ disconnect)
     let layout = document.getElementById("layout");
 
     let seats;
@@ -708,6 +699,9 @@
 
         // (A) INIT
         init: () => {
+
+            console.log("重跑一次");
+            layout.innerHTML = "";
 
             // 初始化票券數量 (最小為 1 張)
             $('#quantity').val("1");
@@ -845,13 +839,45 @@
         },
     };
 
-    $('button[name="chooseBlock"]').click(
-        seatsmgt.init()
-    );
+
+
+    // 區域按鈕相關變數及函式
+    $(document).ready(function () {
+            fetch("BlockPrice/findAll")
+                .then(resp => resp.json())
+                .then(jsondata => {
+                        for(let j of jsondata){
+                            if(j.activityNo == sessionStorage.getItem("activityNo")){
+                                document.getElementById('selectBlocks').innerHTML += `
+                                <button name="selectOneBlock" value="${j.blockNo}"
+                                    class="main-btn btn-hover h_40 w-100 mt-5" type="button"
+                                    data-bs-toggle="modal" data-bs-target="#orgSettings"
+                                    style="margin: 5px!important; background-color: rgb(230, 230, 107);
+											    border: none; font-size: 1rem; color: black;"
+                                    onMouseDown="setKV(this.value)" onclick="seatsmgt.init()">${j.blockName}
+                                </button>`;
+                            }
+                        }
+                    }
+                )
+        }
+    )
+
+    // $('button[name="selectOneBlock"]').click(
+        // function(){
+        //     if($('#byMember').aria-selected == "true")
+        //         seatsmgt.init()
+        //     else
+        //         alert('電腦選位喔');
+        // }
+    // );
 
     function setKV(blockNo) {
         sessionStorage.setItem("blockNo", blockNo);
     }
+
+
+
 
 
 
