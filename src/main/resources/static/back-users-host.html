@@ -71,26 +71,28 @@
 					<div class="model-content main-form">
 						<div class="form-group mt-30">
 							<label class="form-label">廠商</label>
-							<input class="form-control h_40" type="text" placeholder="請輸入廠商名稱.." value="">
+							<input id="hostName" class="form-control h_40" type="text" placeholder="請輸入廠商名稱.." value="">
 						</div>
 						<div class="form-group mt-30">
 							<label class="form-label">E-mail</label>
-							<input class="form-control h_40" type="text" placeholder="請輸入email.." value="">
+							<input id="hostEmail" class="form-control h_40" type="text" placeholder="請輸入email.."
+								value="">
 						</div>
 						<div class="form-group mt-30">
 							<label class="form-label">聯絡窗口</label>
-							<input class="form-control h_40" type="text" placeholder="請輸入窗口姓名.." value="">
+							<input id="hostContact" class="form-control h_40" type="text" placeholder="請輸入窗口姓名.."
+								value="">
 						</div>
 						<div class="form-group mt-30">
 							<label class="form-label">電話</label>
-							<input class="form-control h_40" type="tel" placeholder="請輸入聯絡電話.." value="">
+							<input id="hostCell" class="form-control h_40" type="tel" placeholder="請輸入聯絡電話.." value="">
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="co-main-btn min-width btn-hover h_40"
-						data-bs-dismiss="modal">Cancel</button>
-					<button type="button" class="main-btn min-width btn-hover h_40">Invite</button>
+						data-bs-dismiss="modal">取消</button>
+					<button id="insertHostButton" type="button" class="main-btn min-width btn-hover h_40">新增廠商</button>
 				</div>
 			</div>
 		</div>
@@ -220,8 +222,8 @@
 						</a>
 					</li>
 					<li class="menu--item">
-						<a href="back-users-member.html" class="menu--link" title="Members"
-							data-bs-toggle="tooltip" data-bs-placement="right">
+						<a href="back-users-member.html" class="menu--link" title="Members" data-bs-toggle="tooltip"
+							data-bs-placement="right">
 							<!--class="active" 就是點選menu後按鈕呈現深色背景的狀態-->
 							<i class="fa-solid fa-user-group menu--icon"></i>
 							<span class="menu--label">會員資訊管理</span>
@@ -258,8 +260,8 @@
 										<div style="width: 50px;">
 											<div class="form-group">
 												<div class="relative-input position-relative">
-													<input class="form-control h_40" type="text" placeholder="搜尋廠商..."
-														value="">
+													<input class="form-control h_40" id="search" type="text"
+														placeholder="搜尋廠商..." value="">
 													<i class="uil uil-search"></i>
 												</div>
 											</div>
@@ -276,7 +278,7 @@
 									<div class="table-card mt-4">
 										<div class="main-table">
 											<div class="table-responsive">
-												<table class="table">
+												<table class="table" id="myTable">
 													<thead class="thead-dark">
 														<tr>
 															<th scope="col">編號/帳號</th>
@@ -315,6 +317,7 @@
 	<script src="js/datepicker.min.js"></script>
 	<script src="js/i18n/datepicker.en.js"></script>
 	<script src="js/night-mode.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </body>
 <script>
@@ -333,20 +336,73 @@
 					</tr>	
 				`);
 
-				$(`#edit-${host.hostno}`).click(() =>{
+				$(`#edit-${host.hostno}`).click(() => {
 					$(`#name-${host.hostno},#contact-${host.hostno},#host-${host.hostno},#phone-${host.hostno}`).toggleClass("allEditInput");
-					
-					if($(`#name-${host.hostno}`).attr("readonly")){
-						$(`#name-${host.hostno},#contact-${host.hostno},#host-${host.hostno},#phone-${host.hostno}`).attr("readonly",false);
-					}else{
-						$(`#name-${host.hostno},#contact-${host.hostno},#host-${host.hostno},#phone-${host.hostno}`).attr("readonly",true);
-						//這邊之後要寫fetch儲存修改指令
+
+					if ($(`#name-${host.hostno}`).attr("readonly")) {
+						$(`#name-${host.hostno},#contact-${host.hostno},#host-${host.hostno},#phone-${host.hostno}`).attr("readonly", false);
+					} else {
+						$(`#name-${host.hostno},#contact-${host.hostno},#host-${host.hostno},#phone-${host.hostno}`).attr("readonly", true);
+						//這邊用fetch儲存編輯修改指令
+						const updatedHost = {
+							hostno: host.hostno,
+							hostname: $(`#name-${host.hostno}`).val(),
+							hostcontact: $(`#contact-${host.hostno}`).val(),
+							hostemail: $(`#host-${host.hostno}`).val(),
+							hostcell: $(`#phone-${host.hostno}`).val(),
+						};
+
+						fetch(`/back-users-host/${host.hostno}`, {
+							method: "POST",
+							headers: { "Content-Type": "application/json" },
+							body: JSON.stringify(updatedHost)
+						}).then(response => response.json())
+							.then(success => {
+								swal("修改成功!", "您已經更改了廠商資料了", "success");
+							})
+							.catch(error => console.error("Error:", error));
 					}
 				})
-
-
 			});
 		})
+	//新增新加入的廠商資料功能
+	$("#insertHostButton").click(() => {
+		const newHostData = {
+			hostname: $("#hostName").val(),
+			hostemail: $("#hostEmail").val(),
+			hostcontact: $("#hostContact").val(),
+			hostcell: $("#hostCell").val()
+		}
+		fetch("back-users-host/insertHost", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(newHostData)
+		}).then(response => response.json())
+			.then(success => {
+				swal("新增成功!", "您已經新增了一筆廠商資料!", "success")
+					.then(() => { location.reload(); })
+			})
+			.catch(error => console.error("Error:", error));
+	})
+
+
+	// 當輸入框改變時觸發搜尋
+	$("#search").keyup(function () {
+		var searchValue = $("#search").val().toLowerCase();
+		$("tbody tr").filter(function () {
+			//這邊filter會篩選所有value跟searchValue相符合的input
+			var trInputValue = $(this).find("input").filter(function () {
+				return $(this).val().toLowerCase().indexOf(searchValue) > -1;  
+			});
+
+			// 如果tr底下 所有文字內容有跟searchValue相符合,textMatches 就會等於 true
+			var trText = $(this).text().toLowerCase().indexOf(searchValue) > -1;
+
+			// 如果有符合條件的input會顯示true,不符合就為false,  toggle(true)→顯示  toggle(false)→隱藏
+			$(this).toggle(trInputValue.length > 0 || trText);
+		});
+	});
+
 </script>
 
 </html>
