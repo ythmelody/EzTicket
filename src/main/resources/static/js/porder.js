@@ -54,7 +54,7 @@ function fetchPorderList(e) {
         return `<tr>
                           <td><a href="front-product-order_detail.html?id=${obj.porderno}">${obj.porderno}</a></td>
                           <td>${obj.memberno}</td>
-                          <td>${obj.ptotal}</td>
+                          <td>${obj.pchecktotal}</td>
                           <td>${moment(obj.porderdate).format('YYYY-MM-DD HH:mm:ss')}</td>
                           <td>
                             <div class="img-btn" data-bs-toggle="modal" data-bs-target="#DeliveryModal">
