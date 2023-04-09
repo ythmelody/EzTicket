@@ -2,7 +2,6 @@ package com.ezticket.web.activity.dto;
 
 import com.ezticket.web.activity.pojo.Aimgt;
 import com.ezticket.web.activity.pojo.Session;
-import jakarta.persistence.OneToMany;
 import lombok.Data;
 import java.sql.Date;
 import java.util.List;
@@ -12,6 +11,7 @@ import java.util.List;
 public class ActivityDto {
     private Integer activityNo;
     private String aName;
+    private byte[] aSeatsImg;
     private Date aSDate;
     private Date aEDate;
     private Integer aStatus;
@@ -22,8 +22,6 @@ public class ActivityDto {
 
     private List<Session> session;
     private List<Aimgt> aimgt;
-
-
 
 
 
