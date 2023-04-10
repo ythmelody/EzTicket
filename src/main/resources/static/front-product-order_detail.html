@@ -92,24 +92,32 @@
 								<div class="gift-coupon-icon mt-5 pb-5">
 									<label class="form-label" style="font-weight: bold">請為此商品評星</label>
 									<form id="ratingForm">
+										<input id="productno" type="hidden" value="">
+										<input id="porderno" type="hidden" value="">
 										<div class="form-textarea">
 											<div class="card-body">
 												<div class="starRating">
-													<span class="star"><i class="fa fa-star-o fa-2x"></i><i class="fa fa-star fa-2x"></i></span>
-													<span class="star"><i class="fa fa-star-o fa-2x"></i><i class="fa fa-star fa-2x"></i></span>
-													<span class="star"><i class="fa fa-star-o fa-2x"></i><i class="fa fa-star fa-2x"></i></span>
-													<span class="star"><i class="fa fa-star-o fa-2x"></i><i class="fa fa-star fa-2x"></i></span>
-													<span class="star"><i class="fa fa-star-o fa-2x"></i><i class="fa fa-star fa-2x"></i></span>
+													<span class="star"><i class="fa fa-star-o fa-2x"></i><i
+															class="fa fa-star fa-2x"></i></span>
+													<span class="star"><i class="fa fa-star-o fa-2x"></i><i
+															class="fa fa-star fa-2x"></i></span>
+													<span class="star"><i class="fa fa-star-o fa-2x"></i><i
+															class="fa fa-star fa-2x"></i></span>
+													<span class="star"><i class="fa fa-star-o fa-2x"></i><i
+															class="fa fa-star fa-2x"></i></span>
+													<span class="star"><i class="fa fa-star-o fa-2x"></i><i
+															class="fa fa-star fa-2x"></i></span>
 												</div>
 											</div>
 										</div>
+										<input id="prate" type="hidden" value="">
 									</form>
 								</div>
 							</div>
 							<div class="col-lg-12 col-md-12">
 								<div class="gift-coupon-icon mt-5 pb-5">
 									<label class="form-label" style="font-weight: bold;">請為此商品評論</label>
-									<textarea class="form-textarea"></textarea>
+									<textarea id="pcommentcont" class="form-textarea"></textarea>
 								</div>
 							</div>
 						</div>
@@ -118,7 +126,8 @@
 				<div class="modal-footer">
 					<button type="button" class="co-main-btn min-width btn-hover h_40" data-bs-target="#aboutModal"
 						data-bs-toggle="modal" data-bs-dismiss="modal">取消</button>
-					<button class="main-btn min-width btn-hover h_40" type="submit">提交</button>
+					<button class="main-btn min-width btn-hover h_40" type="submit"
+						onclick="submitComment()">提交</button>
 				</div>
 			</div>
 		</div>
@@ -188,8 +197,9 @@
 											<td>$500</td>
 											<td>
 												<div style="text-align:center">
-													<button style="border: none;  background-color:transparent" data-bs-toggle="modal"
-														data-bs-target="#couponModal"><img src="images/cmtbtn.png"></button>
+													<button style="border: none;  background-color:transparent"
+														data-bs-toggle="modal" data-bs-target="#couponModal"><img
+															src="images/cmtbtn.png"></button>
 												</div>
 											</td>
 										</tr>
@@ -221,6 +231,7 @@
 	<script src="js/custom.js"></script>
 	<script src="js/night-mode.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script>
 		$('.starRating span').click(function () {
 			$(this).siblings().removeClass('active');
@@ -232,7 +243,7 @@
 			$('#currentRating').html("<small>Rating: <b>" + rating + "</b></small>");
 		});
 	</script>
-	<script src="/js/porderdetails.js"></script>
+	<script src="js/porderdetails.js"></script>
 	<!-- 評星 -->
 	<script>
 		const info = {
@@ -252,20 +263,41 @@
 		});
 
 
-		function submitComment(){
-
-			fetch('ProductCommentServlet',{
+		function submitComment() {
+			console.log($("#productno").val());
+			fetch('ProductCommentServlet', {
 				method: "POST",
 				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-				body:  new URLSearchParams({
-				'memberno': info.memberNo,
-				'productno':  $("#productno").val(),
-				'prate': $("#prate").val(),
-				'pcommentcont': $('#pcommentcont').val(),
-				'action': "addProductComment"
-			}),
-			})
+				body: new URLSearchParams({
+					'memberno': info.memberNo,
+					'productno': $("#productno").val(),
+					'prate': $("#prate").val(),
+					'pcommentcont': $('#pcommentcont').val(),
+					'action': "addProductComment"
+				}),
+
+			}).then(resp => resp.json())
+				.then(item => {
+					console.log(item);
+					console.log(item.pcommentno);
+					if (item.pcommentno) {
+						swal({
+							title: "建立成功",
+							icon: "success",
+							closeOnClickOutside: false,
+						}).then(() => {
+							window.location.reload();
+						})
+					} else {
+						swal({
+							title: "新增失敗",
+							icon: "error",
+							closeOnClickOutside: false,
+						});
+					}
+				}).then()
 		}
+
 	</script>
 </body>
 

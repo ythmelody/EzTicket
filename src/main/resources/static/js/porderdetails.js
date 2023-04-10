@@ -6,6 +6,7 @@ $(document).ready(() => {
     method: 'GET',
   }).then(resp => resp.json())
     .then(data => {
+      console.log(data);
       document.querySelectorAll('.vdt-list')[0].textContent = "訂單編號 : " + data.porderno;
       document.querySelectorAll('.vdt-list')[1].textContent = "訂單成立時間 : " + (moment(data.porderdate).format('YYYY-MM-DD HH:mm:ss'));
       document.querySelectorAll('.vdt-list')[2].textContent = "訂單付款時間 : " + (moment(data.ppaydate).format('YYYY-MM-DD HH:mm:ss'));
@@ -13,6 +14,7 @@ $(document).ready(() => {
       detailsbody.innerHTML = '';
       let total = 0;
       for (let i = 0; i < data.products.length; i++) {
+
         const detailslist = `<tr>
                 <td>${i + 1}</td>
                 <td><a href="front-product-product_detail.html?productno=${data.products[i].productno}" target="_blank">${data.products[i].pname}</a></td>
@@ -29,6 +31,9 @@ $(document).ready(() => {
                 </tr>`;
         total += data.pdetails[i].pprice;
         detailsbody.innerHTML += detailslist;
+        $("#productno").val(data.products[i].productno);
+        $("#productno").val(data.porderno);
+
       }
       const detailstotal = `<tr>
                               <td colspan="1"></td>
@@ -41,4 +46,6 @@ $(document).ready(() => {
                             </tr>`;
       detailsbody.innerHTML += detailstotal;
     });
+
+    
 });
