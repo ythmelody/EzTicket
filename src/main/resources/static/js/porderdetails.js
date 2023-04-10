@@ -18,7 +18,7 @@ $(document).ready(() => {
                 <td><a href="front-product-product_detail.html?id=${data.products[i].productno}" target="_blank">${data.products[i].pname}</a></td>
                 <td>${data.pdetails[i].porderqty}</td>
                 <td>$${data.products[i].pprice}</td>
-                <td>$${data.products[i].pprice - data.pdetails[i].pprice}</td>
+                <td>$${data.products[i].pspecialprice}</td>
                 <td>$${data.pdetails[i].pprice}</td>
                 <td>
                   <div style="text-align:center">
