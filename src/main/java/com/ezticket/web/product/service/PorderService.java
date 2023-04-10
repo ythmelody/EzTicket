@@ -79,6 +79,7 @@ public class PorderService {
                 break;
             case 3:
                 porder.setPclosedate(LocalDateTime.now());
+//                List<Products> products = porder.getProducts();
                 break;
         }
         porder.setPprocessstatus(processStatus);
