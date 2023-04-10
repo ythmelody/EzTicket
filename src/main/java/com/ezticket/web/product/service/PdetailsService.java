@@ -27,5 +27,11 @@ public class PdetailsService {
                 .map(this::EntityToDTO)
                 .collect(Collectors.toList());
     }
+    public List<PdetailsDTO> getPdetailsByPorderno(Integer porderno){
+        return pdetailsRepository.findByPorderno(porderno)
+                .stream()
+                .map(this::EntityToDTO)
+                .collect(Collectors.toList());
+    }
 
 }
