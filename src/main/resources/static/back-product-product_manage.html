@@ -262,7 +262,7 @@
 											<!-- <div class="relative-input position-relative"> -->
 											<label for="pname">商品名稱：</label>
 											<input class="form-control h_40" type="text" placeholder="搜尋商品名稱" value=""
-												id="pname" name="pname"><div id="pname-suggestion-box"></div>
+												id="pname" name="pname"><div id="pname-suggestion-box" class="form-control h_40"></div>
 											<i class="uil uil-search"></i>
 									</div>
 									<div class="relative-input position-relative">
@@ -384,7 +384,7 @@
 
 	</script>
 	<script>
-		//商品篩選
+		//商品複合查詢
 		$('#ProductSearchForm').on('submit', function (e) {
 			e.preventDefault(); //取消跳轉頁面
 
@@ -475,6 +475,7 @@
 			}
 		}
 		
+		//輸入商品名稱後在pname-suggestion-box方框內帶入資料庫原有資料(不用點選查詢即可選擇資料)
 		function selectPname(input) {
 			console.log("input: ", input);
 			$('#pname').val(input);
@@ -498,6 +499,7 @@
 							"pname": $(this).val()
 						},
 						success: function (items) {
+							//執行前都把前一次的清空
 							$('#pname-suggestion-box').empty();
 							console.log("items: ", items);
 							if (items) {

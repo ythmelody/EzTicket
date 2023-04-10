@@ -283,8 +283,8 @@
 									<div class="dashboard-date-wrap mt-4">
 										<div class="form-group">
 											<div class="relative-input position-relative">
-												<input id="showName" class="form-control h_40" type="text"
-													placeholder="搜尋商品類別" value="" name="pclass">
+												<input id="pclassnameSearch" class="form-control h_40" type="text"
+													placeholder="搜尋商品類別名稱" value="" name="pclass">
 												<i class="uil uil-search"></i>
 											</div>
 										</div>
@@ -431,8 +431,11 @@
 					<div class="model-content main-form">
 						<input id="pcommentno" type="text" value="" style="display: none">
 						<div class="form-group mt-30">
-							<label class="form-label">類別名稱：</label>
-							<textarea id="pclassname" class="form-textarea"></textarea>
+							<label for="pclassname" class="form-label">類別名稱：
+								<span class="pclassnameErr" style="color: #DAA520"></span>
+							</label>
+							<input type="text" id="pclassname" class="form-textarea" onkeyup="confirm_exist(this.id)"
+								style="height:20px"></input>
 						</div>
 					</div>
 				</div>
@@ -440,7 +443,7 @@
 					<button type="button" class="co-main-btn min-width btn-hover h_40" data-bs-dismiss="modal">取消新增
 					</button>
 					<button type="button" class="main-btn min-width btn-hover h_40" data-bs-dismiss="modal"
-						onclick="confirm_add()">確認新增
+						onclick="confirm_add()" id="confirm_add">確認新增
 					</button>
 				</div>
 			</div>
@@ -464,8 +467,11 @@
 							<textarea id="pclassname_old" class="form-textarea" disabled></textarea>
 						</div>
 						<div class="form-group mt-30">
-							<label class="form-label">新類別名稱：</label>
-							<textarea id="pclassname_new" class="form-textarea"></textarea>
+							<label class="form-label">新類別名稱：
+								<span class="pclassnameErr" style="color: #DAA520"></span>
+							</label>
+							<textarea id="pclassname_new" class="form-textarea"
+								onkeyup="confirm_exist(this.id)"></textarea>
 						</div>
 					</div>
 				</div>
@@ -473,7 +479,7 @@
 					<button type="button" class="co-main-btn min-width btn-hover h_40" data-bs-dismiss="modal">取消修改
 					</button>
 					<button type="button" class="main-btn min-width btn-hover h_40" data-bs-dismiss="modal"
-						onclick="confirm_update()">確認修改
+						onclick="confirm_update()" id="confirm_update">確認修改
 					</button>
 				</div>
 			</div>
@@ -495,22 +501,14 @@
 
 	<script>
 
-		// 當網頁載入時先呈現所有商品評論
+		// 當網頁載入時先呈現所有商品類別
 		$(document).ready(() => {
 			fetchPclassList();
 		});
 
 
-		//載入所有評論
+		//載入所有類別
 		function fetchPclassList() {
-
-			// 選單(狀態)呈現 <option value="1">置頂</option>
-			// $('#statusSelector').html(`
-			//     <option value="" selected>所有狀態</option>
-			//     <option value="-1">取消顯示</option>
-			//     <option value="0">正常顯示</option>
-			// `);
-
 
 			fetch('PclassController', {
 				method: 'POST',
@@ -521,76 +519,22 @@
 				.then(list => {
 					displayPclass(list);
 				})
-
-			// $('#showName').keypress(function () {
-			// 	if ($('div .tab-pane.fade.active.show').attr('id') === 'tickets-tab') {
-			// 		fetch('ProductCommentReportServlet', {
-			// 			method: "POST",
-			// 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-			// 			body: new URLSearchParams({
-			// 				'pname': $("[name='pname']").val(),
-			// 				'preportstatus': $("[name='pcommentstatus']").val(),
-			// 				'action': "CommentReportSearch"
-			// 			}),
-			// 		})
-			// 			.then((resp) => resp.json())
-			// 			.then((list) => {
-			// 				displayPcommentReport(list);
-			// 			})
-			// 	}
-			// 	if ($('div .tab-pane.fade.active.show').attr('id') === 'orders-tab') {
-			// 		fetch('ProductCommentServlet', {
-			// 			method: "POST",
-			// 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-			// 			body: new URLSearchParams({
-			// 				'pname': $("[name='pname']").val(),
-			// 				'pcommentstatus': $("[name='pcommentstatus']").val(),
-			// 				'action': "CommentSearch"
-			// 			}),
-			// 		})
-			// 			.then((resp) => resp.json())
-			// 			.then((list) => {
-			// 				displayPcomments(list);
-			// 			})
-
-			// 	}
-
-			// });
-
-			// $('#statusSelector').change(function () {
-			// 	if ($('div .tab-pane.fade.active.show').attr('id') === 'tickets-tab') {
-			// 		fetch('ProductCommentReportServlet', {
-			// 			method: "POST",
-			// 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-			// 			body: new URLSearchParams({
-			// 				'pname': $("[name='pname']").val(),
-			// 				'preportstatus': $("[name='pcommentstatus']").val(),
-			// 				'action': "CommentReportSearch"
-			// 			}),
-			// 		})
-			// 			.then((resp) => resp.json())
-			// 			.then((list) => {
-			// 				displayPcommentReport(list);
-			// 			})
-			// 	} if ($('div .tab-pane.fade.active.show').attr('id') === 'orders-tab') {
-			// 		fetch('ProductCommentServlet', {
-			// 			method: "POST",
-			// 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-			// 			body: new URLSearchParams({
-			// 				'pname': $("[name='pname']").val(),
-			// 				'pcommentstatus': $("[name='pcommentstatus']").val(),
-			// 				'action': "CommentSearch"
-			// 			}),
-			// 		})
-			// 			.then((resp) => resp.json())
-			// 			.then((list) => {
-			// 				displayPcomments(list);
-			// 			})
-			// 	}
-
-			// });
-
 		}
+
+		//查詢商品類別名稱
+		$('#pclassnameSearch').keyup(function () {
+			fetch('PclassController', {
+				method: "POST",
+				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+				body: new URLSearchParams({
+					'pclassname': $("[name='pclass']").val(),
+					'action': "pclassnameSearch"
+				})
+			}).then(resp => resp.json())
+				.then(list => {
+					displayPclass(list);
+				})
+		})
 
 
 		// 點擊單一評論並顯示
@@ -625,6 +569,8 @@
 
 		// 新增商品類別
 		function confirm_add() {
+
+			// if(confirm_exist() === true){
 			fetch('PclassController', {
 				method: 'POST',
 				body: new URLSearchParams({
@@ -638,6 +584,8 @@
 					} else
 						alert("新增失敗,請再次新增類別");
 				})
+			// }
+
 		}
 
 		//顯示評論
@@ -704,7 +652,60 @@
 				})
 		}
 
+		//確認類別不能新增重複商品
+		function confirm_exist(id) {
+			$(".pclassnameErr").empty();
 
+			if (id === "pclassname") {
+				fetch('PclassController', {
+					method: 'POST',
+					body: new URLSearchParams({
+						'pclassname': $('#pclassname').val(),
+						'action': "pclassnameComfirm"
+					})
+				}).then((resp) => resp.json())
+					.then((list) => {
+						console.log(list);
+						if (list.length >= 1) {
+							//新增類別時使用
+							$(".pclassnameErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品類別名稱已重複，不可新增`);
+							$("#confirm_add").prop('disabled', true);
+							$("#confirm_add").attr('style', 'background-color:gray');
+							//修改類別時使用
+						} else {
+							$("#pclassnameErr").html('');
+							$("#confirm_add").prop('disabled', false);
+							$("#confirm_add").removeAttr('style');
+							return true;
+						}
+					})
+			}
+			if (id === "pclassname_new") {
+				fetch('PclassController', {
+					method: 'POST',
+					body: new URLSearchParams({
+						'pclassname': $('#pclassname_new').val(),
+						'action': "pclassnameComfirm"
+					})
+				}).then((resp) => resp.json())
+					.then((list) => {
+						console.log(list);
+						if (list.length >= 1) {
+							//新增類別時使用
+							$(".pclassnameErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品類別名稱已重複，不可新增`);
+							$("#confirm_update").prop('disabled', true);
+							$("#confirm_update").attr('style', 'background-color:gray');
+							//修改類別時使用
+						} else {
+							$(".pclassnameErr").html('');
+							$("#confirm_update").prop('disabled', false);
+							$("#confirm_update").removeAttr('style');
+							return true;
+						}
+					})
+			}
+
+		}
 
 	</script>
 
