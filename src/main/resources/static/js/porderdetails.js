@@ -15,10 +15,10 @@ $(document).ready(() => {
       for (let i = 0; i < data.products.length; i++) {
         const detailslist = `<tr>
                 <td>${i + 1}</td>
-                <td><a href="front-product-product_detail.html?id=${data.products[i].productno}" target="_blank">${data.products[i].pname}</a></td>
+                <td><a href="front-product-product_detail.html?productno=${data.products[i].productno}" target="_blank">${data.products[i].pname}</a></td>
                 <td>${data.pdetails[i].porderqty}</td>
                 <td>$${data.products[i].pprice}</td>
-                <td>$${data.products[i].pspecialprice}</td>
+                <td>$${data.products[i].pprice-data.products[i].pspecialprice}</td>
                 <td>$${data.pdetails[i].pprice}</td>
                 <td>
                   <div style="text-align:center">

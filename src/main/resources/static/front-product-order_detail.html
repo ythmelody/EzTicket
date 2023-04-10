@@ -233,6 +233,40 @@
 		});
 	</script>
 	<script src="/js/porderdetails.js"></script>
+	<!-- 評星 -->
+	<script>
+		const info = {
+			memberNo: 85346
+		}
+
+		$('.starRating span').click(function () {
+			$(this).siblings().removeClass('active');
+			$(this).addClass('active');
+			$(this).parent().addClass('starRated');
+
+			let rating = $(this).index() + 1;
+			// $('#currentRating').html("<small>Rating: <b>" + rating + "</b></small>");
+
+			alert(rating);
+			$('#prate').val(rating);
+		});
+
+
+		function submitComment(){
+
+			fetch('ProductCommentServlet',{
+				method: "POST",
+				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+				body:  new URLSearchParams({
+				'memberno': info.memberNo,
+				'productno':  $("#productno").val(),
+				'prate': $("#prate").val(),
+				'pcommentcont': $('#pcommentcont').val(),
+				'action': "addProductComment"
+			}),
+			})
+		}
+	</script>
 </body>
 
 </html>
