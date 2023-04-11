@@ -237,36 +237,51 @@
 </nav>
 <!-- Left Sidebar End -->
 <!-- Body Start -->
+<form id="sessionInfo" action="" method="get">
+    <input type="hidden" name="activityNo" value="1">
+    <input type="hidden" name="sessionNo" value="1">
+</form>
+
 <div class="wrapper wrapper-body">
     <div class="dashboard-body">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="d-main-title">
-                        <h3>場次座位管理</h3>
+                        <h3 id="bodyTitle"></h3>
                     </div>
-
                 </div>
                 <div class="col-md-12">
                     <div class="main-card mt-5">
-                        <div class="dashboard-wrap-content p-4" style="border: 1px solid lightgray">
+                        <div class="dashboard-wrap-content p-4">
                             <div class="d-md-flex flex-wrap align-items-center">
                                 <div class="dashboard-date-wrap">
                                     <div class="form-group">
                                         <div class="relative-input position-relative">
-                                            <select id="sessionSelector" class="form-control" data-size="5"
+                                            <select id="blockSelector" class="form-control" data-size="5"
                                                     data-live-search="true">
                                             </select>
                                             <i class="uil uil-arrow-circle-down"></i>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="ocard-left" style="margin-left: 5px;">
+                                    <button class="pe-4 ps-4 co-main-btn min-width" data-bs-toggle="modal"
+                                            data-bs-target="#addorganisationModal">檢視座位圖
+                                    </button>
+                                </div>
+                                <div class="rs ms-auto mt_r4">
+                                    <button id="copyBlockBtn" class="main-btn min-width btn-hover h_40"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#copyBlockSeats">複製區域
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="event-list">
                         <div class="tab-content">
-                            <div class="tab-pane fade show active" id="sessionList" role="tabpanel">
+                            <div class="tab-pane fade show active" id="blockList" role="tabpanel">
                             </div>
                         </div>
                     </div>
@@ -275,7 +290,119 @@
         </div>
     </div>
 </div>
+
+<!-- 座位圖開始 -->
+<div class="modal fade" id="addorganisationModal" tabindex="-1" aria-labelledby="addorganisationLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addorganisationLabel">座位圖</h5>
+                <button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="uil uil-multiply"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="model-content main-form">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div id="seatsImg" class="form-group text-center mt-4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="co-main-btn min-width btn-hover h_40"
+                        data-bs-dismiss="modal">關閉
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 座位圖結束 -->
+
+<!-- 複製區域開始-->
+<div class="modal fade" id="copyBlockSeats" tabindex="-1" aria-labelledby="couponModalLabel" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="couponModalLabel">新增場次</h5>
+                <button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="uil uil-multiply"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="model-content main-form">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <!-- 若沿用既有場次規劃才會顯示 -->
+                            <div class="form-group mt-4">
+                                <label class="form-label">請選擇既有場次規劃：</label>
+                                <select class="selectpicker" data-size="5" data-live-search="true">
+                                    <option disabled selected>-----請選擇-----</option>
+                                    <option value="2300101">五月天諾亞方舟演唱會 (2023/02/05)</option>
+                                    <option value="2300102">五月天諾亞方舟演唱會 (2023/02/06)</option>
+                                </select>
+                            </div>
+                            <!-- 若不沿用既有場次規劃才會顯示 -->
+                            <div class="form-group mt-4">
+                                <label class="form-label">請選擇場地模板：</label>
+                                <select class="selectpicker" data-size="5" data-live-search="true">
+                                    <option disabled selected>-----請選擇-----</option>
+                                    <option value="Taipei_Arena">臺北小巨蛋</option>
+                                    <option value="Taipei_Music_Center">台北流行音樂中心</option>
+                                    <option value="K_Arena">高雄巨蛋</option>
+                                    <option value="Kaohsiung_Music_Center">高雄流行音樂中心</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="co-main-btn min-width btn-hover h_40" data-bs-target="#aboutModal"
+                        data-bs-toggle="modal" data-bs-dismiss="modal">取消
+                </button>
+                <button type="submit" class="main-btn min-width btn-hover h_40">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 複製區域結束-->
+
+<!-- 更改站席數量開始-->
+<div class="modal fade" id="changeToSellNumbers" tabindex="-1" aria-labelledby="addorganisationLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="blockName_system">管理非座位席次數量</h5>
+                <button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="uil uil-multiply"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="model-content main-form">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12">
+                            <div class="form-group main-form mt-4">
+                                <input id="noSeatTickets" type="number" class="form-control" aria-describedby=""
+                                       placeholder="無非席次座位資訊" min="1" max="10000">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="main-btn min-width btn-hover h_40" data-bs-dismiss="modal"
+                        onclick="updateNumbers()">儲存變更
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 更改站席數量結束-->
+
 <!-- Body End -->
+
 
 <script src="js/vertical-responsive-menu.min.js"></script>
 <script src="js/jquery-3.6.0.min.js"></script>
@@ -285,151 +412,177 @@
 <script src="js/custom.js"></script>
 <script src="js/night-mode.js"></script>
 
+</body>
+
 <script>
-
     // 共用實體變數
-    const sessionSelector = document.getElementById('sessionSelector');
-    const actNo = sessionStorage.getItem("activityNo");
+    const blockSelector = document.getElementById('blockSelector');
+    const blockList = document.getElementById('blockList');
+    let actImgMain;
+    let flag;
 
-    // 選單(場次)呈現
-    $('#sessionSelector').html(`
-                <option value="all" selected>所有場次</option>
+    // 將頁面標題重置
+    $('#bodyTitle').text('');
+
+    // 選單(區域)呈現
+    $('#blockSelector').html(`
+                <option value="all" selected>所有區域</option>
             `);
 
-    // 當網頁載入時先呈現 "所有場次"
     $(document).ready(function () {
-        fetch('Session/ActSessions' + `?actNo=${actNo}`)
-            .then((resp) => resp.json())
-            .then((jsondata) => {
-                // 選單(場次)呈現 - 動態
-                for (let j of jsondata) {
-                    document.getElementById('sessionSelector').innerHTML += `
-                            <option value="${j.sessionNo}">第 ${j.sessionNo} 場</option>
-                        `
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: "/Activity/findByActNo" + `?actNo=${sessionStorage.getItem("activityNo")}`,
+            dataType: "json",
+            success: function (jsondata) {
+
+                let seatsImg = new Image();
+                seatsImg.src = `data:image/png;base64,${jsondata.aseatsImg}`;
+                seatsImg.style.width = '100%';
+                seatsImg.style.height = '100%';
+                document.getElementById('seatsImg').appendChild(seatsImg);
+
+                let showpic = jsondata.aimgt;
+
+                for (let i = 0; i < showpic.length; i++) {
+                    if (showpic[i].aimgMain == 1) {
+                        actImgMain = `data:image/png;base64,${showpic[i].aimg}`;
+                    }
                 }
 
-                // 呈現所有場次
-                displaySessions(jsondata);
-            })
-    })
+                $('#bodyTitle').text(`${jsondata.aname} (場次編號：${sessionStorage.getItem("sessionNo")})`);
+            }
+        });
 
-    // ====================================================================================================
-
-    // 所有場次
-    const sessionList = document.querySelector('#sessionList');
-
-    // 查詢場次
-    sessionSelector.addEventListener('change', function () {
-
-        fetch('Session/findById' + `?sessionNo=${sessionSelector.value}`)
-            .then((resp) => resp.json())
+        fetch("/BlockPrice/findByActNo" + `?activityNo=${sessionStorage.getItem("activityNo")}`)
+            .then(resp => resp.json())
             .then((jsondata) => {
-                console.log(jsondata)
-                let array = [jsondata];
-                displaySessions(array);
-            })
+                    // 選單(區域)呈現 - 動態
+                    for (let j of jsondata) {
+                        document.getElementById('blockSelector').innerHTML += `
+                            <option value="${j.blockNo}"> ${j.blockName} </option>`;
+                    }
+
+                    // 呈現所有區域
+                    displayBlocks(jsondata, actImgMain);
+                }
+            )
+
+        // 該場次若無座位表資訊則顯示 "複製區域按鈕"
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: "/seats/getSeatsBySession" + `?sessionNo=${sessionStorage.getItem("sessionNo")}`,
+            dataType: "json",
+            success: function (jsondata) {
+                flag = jsondata
+            }
+        });
+
+        if (!flag) {
+            $('#copyBlockBtn').css('display', '');
+        } else {
+            $('#copyBlockBtn').css('display', 'none');
+        }
     })
 
-    // 顯示 "場次"
-    function displaySessions(jsondata) {
-        sessionList.innerHTML = "";
+    // 顯示區域
+    function displayBlocks(jsondata, actImg) {
+        blockList.innerHTML = "";
 
         for (let j of jsondata) {
-            sessionList.innerHTML += `
-                <div class="s-container"
-                     style="border: 1px solid lightgray; width: 100%; height: 210px; border-radius: 5px; background-color: white; margin-top: 10px">
-                    <div class="s-container-upper" style="height: 60%; border-bottom: 1px solid lightgray;">
-                        <div style="width: 100%; height: 100%; padding: 20px;">
-                            <div
-                                style="width: 125px; height: 100%; background: url('https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2022/10/01/0/18809827.jpg&s=Y&x=4&y=6&sw=1276&sh=848&sl=W&fw=1050') no-repeat; background-size: 130px ; border-radius: 5px; display: inline-block;">
-                            </div>
-                            <div
-                                style="width: 50%; height: 100%; display: inline-block; margin-left: 15px; vertical-align: top;">
-                                <h5 style="font-weight: bold;">${j.activity.aname}</h5>
-                                <div style="width: 50%; margin-top: 20px;">
-                                    <div style="display: inline-block; vertical-align: middle; width: 45%;">
-                                        <h6 style="color: #717171;">場次編號：</h6>
-                                        <h6>${j.sessionNo}</h6>
-                                    </div>
-                                    <div style="display: inline-block; vertical-align: middle; width: 45%;">
-                                        <h6 style="color: #717171;">表演者：</h6>
-                                        <h6>${j.activity.performer}</h6>
-                                    </div>
+            let toSellNumber;
+            let soldNumber;
+
+            $.ajax({
+                async: false,
+                type: 'GET',
+                url: "/seats/getSeatsNumbers" + `?sessionNo=${sessionStorage.getItem("sessionNo")}&blockNo=${j.blockNo}`,
+                dataType: "json",
+                success: function (jsondata) {
+                    toSellNumber = jsondata[0];
+                    soldNumber = jsondata[1];
+                }
+            });
+
+            blockList.innerHTML += `
+                <div class="main-card mt-4">
+                    <div class="contact-list">
+                        <div
+                            class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between">
+                            <div class="d-md-flex align-items-center event-top-info">
+                                <div class="card-event-img">
+                                    <img src=${actImg} alt="">
+                                </div>
+                                <div class="card-event-dt">
+                                    <h4>${j.blockName}</h4>
                                 </div>
                             </div>
-
-                            <div class="dropdown" style="width: 40px; float:right;">
-                                <button
-                                    class="" type="button" data-bs-toggle="dropdown" aria-expanded="false"
-                                    style="float:right; border: 0; background-color: transparent;">
-                                    <div
-                                        style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-selection.png') center no-repeat; background-size: 20px; border-radius: 5px; float:right;">
-                                    </div>
-                                </button>
-
-                                <ul class="dropdown-menu">
-                                    <li><a id="${j.sessionNo}" href="#" class="dropdown-item" onclick="manageSeatTable(this.id)">管理座位表</a></li>
-                                </ul>
+                            <div class="dropdown">
+                                <button class="option-btn" type="button" data-bs-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false"><i
+                                    class="fa-solid fa-ellipsis-vertical"></i></button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a id="manageSeats_${j.blockNo}" href="back-activity-seatmgt-existed.html"
+                                       class="dropdown-item" onmousedown="sessionStorage.setItem('blockNo', ${j.blockNo})"><i
+                                        class="fa-solid fa-gear me-3"></i>管理座位</a>
+                                    <a href="#" class="dropdown-item delete-event"><i
+                                        class="fa-solid fa-trash-can me-3"></i>刪除區域</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="s-container-downer" style="height: 40%; ">
-                        <div style="height: 100%; width: 24%; padding: 20px; display: inline-block;">
-                            <div
-                                style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-starttime.png') center no-repeat; background-size: 20px; border-radius: 100px;">
+                        <div
+                            class="bottom d-flex flex-wrap align-items-center p-4">
+                            <div class="icon-box">
+								<span class="icon">
+									<i class="fa-solid fa-ticket"></i>
+								</span>
+                                <p>票券總數量</p>
+                                <h6 class="coupon-status">${toSellNumber}</h6>
                             </div>
-                            <div
-                                style="height: 100%; width: 70%; display: inline-block; font-size: 13px; vertical-align: top; margin-left: 10px;">
-                                <div style="vertical-align: top; color: #717171;">表演開始時間</div>
-                                <div style="vertical-align: top;">${j.sessionsTime}</div>
-                            </div>
-                        </div>
-                        <div style="height: 100%; width: 24%; padding: 20px; display: inline-block;">
-                            <div
-                                style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-endtime.png') center no-repeat; background-size: 20px; border-radius: 100px;">
-                            </div>
-                            <div
-                                style="height: 100%; width: 70%; display: inline-block; font-size: 13px; vertical-align: top; margin-left: 10px;">
-                                <div style="vertical-align: top; color: #717171;">表演結束時間</div>
-                                <div style="vertical-align: top;">${j.sessioneTime}</div>
-                            </div>
-                        </div>
-                        <div style="height: 100%; width: 24%; padding: 20px; display: inline-block;">
-                            <div
-                                style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-ticketunsold.png') center no-repeat; background-size: 20px; border-radius: 100px;">
-                            </div>
-                            <div
-                                style="height: 100%; width: 70%; display: inline-block; font-size: 13px; vertical-align: top; margin-left: 10px;">
-                                <div style="vertical-align: top; color: #717171;">票券總數量</div>
-                                <div style="vertical-align: top;">${j.maxSeatsQty + j.maxStandingQty}</div>
-                            </div>
-                        </div>
-                        <div style="height: 100%; width: 24%; padding: 20px; display: inline-block;">
-                            <div
-                                style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-ticketsold.png') center no-repeat; background-size: 20px; border-radius: 100px;">
-                            </div>
-                            <div
-                                style="height: 100%; width: 70%; display: inline-block; font-size: 13px; vertical-align: top; margin-left: 10px;">
-                                <div style="vertical-align: top; color: #717171;">已售出數量</div>
-                                <div style="vertical-align: top;">${j.seatsQty + j.standingQty}</div>
+                            <div class="icon-box">
+								<span class="icon">
+									<i class="fa-solid fa-tag"></i>
+								</span>
+                                <p>已售出數量</p>
+                                <h6 class="coupon-status">${soldNumber}</h6>
                             </div>
                         </div>
                     </div>
                 </div>`;
+
+            if (j.blockType === 0) {
+                document.getElementById(`manageSeats_${j.blockNo}`).href = "#changeToSellNumbers";
+                document.getElementById(`manageSeats_${j.blockNo}`).setAttribute("data-bs-toggle", "modal");
+                document.getElementById(`manageSeats_${j.blockNo}`).classList.add("addFcn");
+            };
+        };
+
+        for(let e of document.querySelectorAll(".addFcn")){
+            e.addEventListener("click", addClickFcn);
         }
-        ;
     }
 
-    // ====================================================================================================
-
-    function manageSeatTable(sessionNo) {
-        console.log(sessionNo);
-        alert(sessionNo);
-        sessionStorage.setItem('sessionNo', sessionNo);
+    function addClickFcn(){
+            $.ajax({
+                async: false,
+                type: 'GET',
+                url: "/seats/getSeatsNumbers" + `?sessionNo=${sessionStorage.getItem("sessionNo")}&blockNo=${sessionStorage.getItem("blockNo")}`,
+                dataType: "json",
+                success: function (jsondata) {
+                    if(jsondata[0] !== 0) {
+                        document.getElementById('noSeatTickets').value = jsondata[0];
+                        console.log("run");
+                    }
+                    else{
+                        document.getElementById('noSeatTickets').value = "";
+                        console.log("not run");
+                    }
+                }
+            });
     }
 
 </script>
-
-</body>
 
 </html>

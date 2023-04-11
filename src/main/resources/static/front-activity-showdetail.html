@@ -769,12 +769,16 @@
     const commentcontainer = document.querySelector('#commentcontainer');
 
     $(document).ready(function () {
-            fetch('acomment/ActAComments' + `?actNo=${info.activityno}`)
-                .then((resp) => resp.json())
-                .then((jsondata) => {
+
+            $.ajax({
+                async: false,
+                type: 'GET',
+                url: 'acomment/ActAComments' + `?actNo=${info.activityno}`,
+                dataType: "json",
+                success: function (jsondata) {
                     for (let j of jsondata) {
                         commentcontainer.innerHTML += `
-                            <div class="item">
+                            <div class="commentclass item">
                                 <div class="main-card">
                                     <div class=" testimonial-content">
                                         <div class="testimonial-text">
@@ -820,7 +824,37 @@
                                 </div>
                             </div>`;
                     }
-                })
+                }
+            });
+
+            $('.commentclass').owlCarousel({
+                items: 7,
+                loop: true,
+                margin: 20,
+                nav: true,
+                dots: false,
+                navText: ["<i class='uil uil-angle-left'></i>", "<i class='uil uil-angle-right'></i>"],
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 2
+                    },
+                    800: {
+                        items: 2
+                    },
+                    1000: {
+                        items: 3
+                    },
+                    1200: {
+                        items: 4
+                    },
+                    1400: {
+                        items: 4
+                    }
+                }
+            })
         }
     )
 
@@ -841,7 +875,7 @@
             method: "POST",
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(reqbody)
-        } )
+        })
     }
 
     function chgthumbimg() {

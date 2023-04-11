@@ -289,5 +289,13 @@ public class SeatsModelDAOImpl implements SeatsModelDAO {
         }
         return list;
     }
+
+    public static void main(String[] args) {
+        SeatsModelDAOImpl seatsModelDAOImpl = new SeatsModelDAOImpl();
+        List<SeatsModelVO> list = seatsModelDAOImpl.getAll();
+        for(SeatsModelVO SMVO: list){
+            System.out.println(SMVO);
+        }
+    }
 }
 
