@@ -324,6 +324,9 @@
 							<div class="event-img" id="productImg">
 								<img src="images/event-imgs/big-1.jpg" alt="">
 							</div>
+							<div class="owl-carousel moreImgs-slider owl-theme" id="moreProductImg">
+								<!-- 商品圖片擺放處 -->
+							</div>
 							<div class="share-save-btns dropdown">
 								<button class="sv-btn me-2" onclick="followProduct()"><i
 										class="fa-regular fa-bookmark me-2"></i>Save</button>
@@ -547,6 +550,12 @@
 	<!-- 接收來自後端的資料 -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="js/my_porder.js"></script>
+	<script src="js/jquery-3.6.0.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="vendor/OwlCarousel/owl.carousel.js"></script>
+	<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+	<script src="js/custom.js"></script>
+	<script src="js/night-mode.js"></script>
 
 
 
@@ -581,6 +590,7 @@
 			})
 		}).then(resp => resp.json())
 			.then(item => {
+				console.log(item);
 				pname.textContent = item.pname;
 				pclass.textContent = item.pclass.pclassname;
 				psdate.textContent = item.psdate;
@@ -595,9 +605,52 @@
 				else if (item.prateqty >= 1) {
 					$("#productRate").children("h4").text("商品評星：" + (item.pratetotal / item.prateqty)).append(`<i class="fa fa-star fa-2x">`);
 				}
+				for (let pimgt of item.pimgts) {
+					console.log(pimgt.pimgno);
+					$("#moreProductImg").append(
+						`<div class="item">
+													<div class="main-card mt-4">
+														<div class="event-thumbnail">
+															<a href="front-product-product_detail.html?productno=${item.productno}" class="thumbnail-img">
+																<img src="ProductImg?pimgno=${pimgt.pimgno}" alt="">
+															</a>
+										</div>
+									</div>
+								</div>`);
+
+				}
 
 
-			})
+			}).then(function () {
+				$('.moreImgs-slider').owlCarousel({
+					items: 7,
+					loop: false,
+					margin: 20,
+					nav: true,
+					dots: false,
+					navText: ["<i class='uil uil-angle-left'></i>", "<i class='uil uil-angle-right'></i>"],
+					responsive: {
+						0: {
+							items: 1
+						},
+						600: {
+							items: 2
+						},
+						800: {
+							items: 2
+						},
+						1000: {
+							items: 3
+						},
+						1200: {
+							items: 4
+						},
+						1400: {
+							items: 4
+						}
+					}
+				})
+			});
 
 
 
@@ -643,41 +696,43 @@
 			</div>
 		</div>`);
 					if (item.prateqty < 1) {
-						$("#rateAvg" + item.productno).text('尚無評論')
+						$("#rateAvg" + item.productno).text('尚無評星')
 					}
 					else if (item.prateqty >= 1) {
 						$("#rateAvg" + item.productno).text(item.pratetotal / item.prateqty).append(`<i class="fa fa-star fa-2x">`);
 					}
-					// moreProduct.innerHTML += `
-					// 			<div class="item">
-					// 				<div class="main-card mt-4">
-					// 					<div class="event-thumbnail">
-					// 						<a href="online_product_detail_view.html?productno=${item.productno}" class="thumbnail-img">
-					// 							<img src="ProductImg?pimgno=${image}" alt="">
-
-					// 						</a>
-					// 						<span class="bookmark-icon" title="Bookmark"></span>
-					// 					</div>
-					// 					<div class="event-content">
-					// 						<a href="online_product_detail_view.html?productno=${item.productno}" class="event-title">${item.pname}</a>
-					// 						<div class="duration-price-remaining">
-					// 							<span class="duration-price">NTD ${item.pprice}</span>
-					// 							// <span class="remaining"><i class="fa-solid fa-ticket fa-rotate-90"></i>7
-					// 							// 	Remaining</span>
-					// 						</div>
-					// 					</div>
-					// 					<div class="event-footer">
-					// 						<div class="booking-btn">
-					// 							<a href="checkout.html" class="main-btn btn-hover w-100">Buy
-					// 								Now</a>
-					// 						</div>
-					// 					</div>
-					// 				</div>
-					// 			</div>
-					// 			`;
 				}
 			}
-			)
+			).then(function () {
+				$('.moreEvents-slider').owlCarousel({
+					items: 7,
+					loop: true,
+					margin: 20,
+					nav: true,
+					dots: false,
+					navText: ["<i class='uil uil-angle-left'></i>", "<i class='uil uil-angle-right'></i>"],
+					responsive: {
+						0: {
+							items: 1
+						},
+						600: {
+							items: 2
+						},
+						800: {
+							items: 2
+						},
+						1000: {
+							items: 3
+						},
+						1200: {
+							items: 4
+						},
+						1400: {
+							items: 4
+						}
+					}
+				})
+			})
 
 		//商品評論
 		const productComment = document.querySelector('div.owl-carousel.testimonial-slider.owl-theme');
@@ -693,7 +748,6 @@
 			.then(resp => resp.json())
 			.then(list => {
 				for (let item of list) {
-
 					productComment.innerHTML += `<div class="item">
 													<div class="main-card">
 														<div class=" testimonial-content">
@@ -756,6 +810,35 @@
 												</div>`;
 				}
 
+			}).then(function () {
+				$('.testimonial-slider').owlCarousel({
+					items: 10,
+					loop: true,
+					margin: 20,
+					nav: false,
+					dots: true,
+					smartSpeed: 800,
+					autoplay: true,
+					autoplayTimeout: 3000,
+					autoplayHoverPause: true,
+					responsive: {
+						0: {
+							items: 1
+						},
+						600: {
+							items: 1
+						},
+						1000: {
+							items: 2
+						},
+						1200: {
+							items: 2
+						},
+						1400: {
+							items: 2
+						}
+					}
+				})
 			});
 
 
@@ -824,13 +907,7 @@
 
 
 
-	<script src="js/jquery-3.6.0.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="vendor/OwlCarousel/owl.carousel.js"></script>
-	<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-	<script src="js/custom.js"></script>
-	<!-- <script src="js/timer.js"></script> -->
-	<script src="js/night-mode.js"></script>
+
 
 
 
