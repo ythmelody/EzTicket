@@ -4605,7 +4605,30 @@ body {
 	float: right;
 }
 
+.default-event-thumb-btn .thumb-change-btn [type="button"] + label {
+	color: #000;
+    background: #fff;
+    Border: 1px solid #bbb;
+	border-radius: 3px;
+	cursor: pointer;
+	display: inline-block;
+	font-size:14px;
+	font-weight: 500;
+	outline: none;
+	padding: 12px 30px;
+	position: relative;
+	transition: all 0.3s;
+	vertical-align: middle;
+	margin: 0;
+	float: right;
+}
+
 .default-event-thumb-btn .thumb-change-btn [type="file"] + label:hover {
+	background: #7ad254;
+	color: #fff;
+}
+
+.default-event-thumb-btn .thumb-change-btn [type="button"] + label:hover {
 	background: #7ad254;
 	color: #fff;
 }

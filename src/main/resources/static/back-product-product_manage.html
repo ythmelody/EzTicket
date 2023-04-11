@@ -262,7 +262,7 @@
 											<!-- <div class="relative-input position-relative"> -->
 											<label for="pname">商品名稱：</label>
 											<input class="form-control h_40" type="text" placeholder="搜尋商品名稱" value=""
-												id="pname" name="pname"><div id="pname-suggestion-box" class="form-control h_40"></div>
+												id="pname" name="pname" autocomplete="off"><div id="pname-suggestion-box" class="form-control h_40" style="display:none" ></div>
 											<i class="uil uil-search"></i>
 									</div>
 									<div class="relative-input position-relative">
@@ -487,6 +487,9 @@
 			"focus": function () {
 				$('#pname-suggestion-box').show();
 			},
+			// "blur": function () {
+			// 	$('#pname-suggestion-box').hide();
+			// },
 			"keyup": function () {
 				if ($(this).val().length > 1) {
 					$.ajax({
@@ -507,7 +510,7 @@
 								for (let item of items) {
 									if (count > 10) { break; }
 									console.log("item: ", item);
-									$('#pname-suggestion-box').append(`<li style='list-style-type:none;' onClick=selectPname("${item.pname}")>${item.pname}</li>`);
+									$('#pname-suggestion-box').append(`<div onClick=selectPname("${item.pname}")>${item.pname}</div>`);
 									count++;
 								}
 							} else {

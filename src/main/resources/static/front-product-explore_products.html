@@ -582,7 +582,7 @@
 						$("#rateAvg" + item.productno).text('尚無評論')
 					}
 					else if (item.prateqty >= 1) {
-						$("#rateAvg" + item.productno).text(item.pratetotal / item.prateqty).append(`<i class="fa fa-star fa-2x">`);
+						$("#rateAvg" + item.productno).text((item.pratetotal / item.prateqty).toFixed(1)).append(`<i class="fa fa-star fa-2x">`);
 					}
 				}
 			}
