@@ -22,4 +22,7 @@ public class BlockPrice {
     @Column(name = "BLOCKPRICE")
     private Integer blockPrice;
 
+    @Column(name = "BLOCKTYPE")
+    private Integer blockType;
+
 }
