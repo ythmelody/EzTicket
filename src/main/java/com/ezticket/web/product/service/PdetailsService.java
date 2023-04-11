@@ -39,13 +39,19 @@ public class PdetailsService {
                 .collect(Collectors.toList());
     }
 
+    //查詢單筆訂單明細的單個品項
+    public PdetailsStatusDTO getPdetailsStatusByID(PdetailsPK pdetailsNo) {
+        Pdetails pdetails = pdetailsRepository.getReferenceById(pdetailsNo);
+        return EntityToStatusDTO(pdetails);
+    }
+
     @Transactional
     //更新訂單明細評論狀態
     public PdetailsStatusDTO updateByID(PdetailsPK pdetailsNo, Integer pcommentstatus) {
         Pdetails pdetails = pdetailsRepository.getReferenceById(pdetailsNo);
         pdetails.setPcommentstatus(pcommentstatus);
         Pdetails updatedPdetails = pdetailsRepository.save(pdetails);
-        return EntityToStatusDTO(updatedPdetails);
+        return EntityToStatusDTO(pdetails);
     }
 
     //更新訂單明細評論狀態
