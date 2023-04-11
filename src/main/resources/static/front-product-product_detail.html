@@ -416,14 +416,14 @@
 								</div>
 								<div class="counter">
 									<span class="down" onClick='decreaseCount(event, this)'>-</span>
-									<input type="text" value="1">
+									<input id="count" type="text" value="1">
 									<span class="up" onClick='increaseCount(event, this)'>+</span>
 								</div>
 							</div>
 
 
 							<div class="booking-btn">
-								<a href="checkout.html" class="main-btn btn-hover w-45" style="width:48%;">Buy Now</a>
+								<button type="button" id="buyNow" class="main-btn btn-hover w-45" style="width:48%;">Buy Now</button>
 								<button type="button" class="main-btn btn-hover w-45" style="width:48%;"
 									id="product-incart">Add To Cart</button>
 							</div>
@@ -556,6 +556,7 @@
 	<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 	<script src="js/custom.js"></script>
 	<script src="js/night-mode.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 
@@ -578,8 +579,19 @@
 		const productno = urlParams.get('productno');
 
 		$('#product-incart').click(function () {
-			// console.log("點擊加入購物車: " + productno);
-			addCart(productno);
+			let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+			let qty = document.querySelector('#count').value;
+			let existingItem = cartItems.find(item => item.data.productno === productno);
+			if (existingItem) {
+					existingItem.quantity += qty;
+					localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  		} else {
+				  // console.log("點擊加入購物車: " + productno);
+					addCart(productno);
+			}
+		});
+		$('#buyNow').click(function () {
+			buyNow(productno);
 		});
 
 		fetch('ProductInfoServlet', {
@@ -689,7 +701,7 @@
 				</div>
 				<div class="event-footer">
 					
-						<a href="checkout.html" class="main-btn btn-hover w-45" style="width:48%;">Buy Now</a>
+						<a onclick="buyNow(${item.productno})" class="main-btn btn-hover w-45" style="width:48%;">Buy Now</a>
 						<button type="button" class="main-btn btn-hover w-45" style="width:48%;" onclick="addCart(${item.productno})" id="product-incart"><i class="fa-solid fa-cart-shopping"></i></button>
 					
 					

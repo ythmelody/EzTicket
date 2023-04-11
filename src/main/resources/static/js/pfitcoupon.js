@@ -47,7 +47,7 @@ function fetchPcouponList(e) {
                           </button>
                           <div class="dropdown-menu dropdown-menu-right">
                             <a href="#" class="dropdown-item" onclick="editCoupon(${obj.pcouponno})"><i class="fa-solid fa-pen me-3"></i>編輯</a>
-                            <a href="#" class="dropdown-item" onclick="saveCoupon(${obj.pcouponno})"><i class="fa-solid fa-floppy-disk me-3"></i>儲存</a>
+                            <a href="#" class="dropdown-item" onclick="saveCoupon(${obj.pcouponno}, event)"><i class="fa-solid fa-floppy-disk me-3"></i>儲存</a>
                           </div>
                         </div>
                       </div>
@@ -155,6 +155,88 @@ function editCoupon(edit) {
 		method: 'GET',
 	}).then(response => response.json())
 		.then(data => {
-			console.log(data);
+			$('#editpcouponno').val(data[0].pcouponno);
+			$('#editproductno').val(data[0].pfitcoupons && data[0].pfitcoupons[0] && data[0].pfitcoupons[0].pfitcouponNo.productno || "");
+			$('#editpcouponname').val(data[0].pcouponname);
+			$('#editpdiscount').val(data[0].pdiscount);
+			$('#editpreachprice').val(data[0].preachprice);
+			formatDate($("#editpcoupnsdateup").val(), $("#editpcoupnsdatedown").val());
+			formatDate($("#editpcoupnedateup").val(), $("#editpcoupnedatedown").val());
 		})
+}
+
+function editsaveCoupon() {
+	const couponbody = {
+		'pcouponno': $("#editpcouponno").val(),
+		'pcouponname': $("#editpcouponname").val(),
+		'productno': $("#editproductno").val(),
+		'pdiscount': +$("#editpdiscount").val(),
+		'preachprice': +$("#editpreachprice").val(),
+		'pcoupnsdate': formatDate($("#editpcoupnsdateup").val(), $("#editpcoupnsdatedown").val()),
+		'pcoupnedate': formatDate($("#editpcoupnedateup").val(),$("#editpcoupnedatedown").val())
+	}
+	swal({
+		title: "是否更新優惠券?",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true
+	}).then((confirm) => {
+		if (confirm) {
+			fetch('/pcoupon/edit', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(couponbody)
+			}).then(response => {
+				if (response.ok) {
+					swal('更新成功', { icon: "success" });
+				} else {
+					swal('更新失敗', { icon: "error" });
+				}
+			});
+		} else {
+			return Promise.reject('取消操作');
+		}
+	});
+}
+function saveCoupon(couponno, event) {
+		const btn = event.target;
+		const couponNode = btn.closest(".coupon-active");
+		const checkbox = couponNode.querySelector('input[type="checkbox"]');
+		const checkboxValue = checkbox.checked;
+		let statusbyte;
+	if (checkboxValue === false) {
+		statusbyte = 2;
+	} else {
+		statusbyte = 1;
+	}
+	const couponstatus = {
+		'pcouponno': couponno,
+		'pcouponstatus': statusbyte
+	}
+	swal({
+		title: "是否更新優惠券狀態?",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true
+	}).then((confirm) => {
+		if (confirm) {
+			fetch('/pcoupon/updateStatus', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(couponstatus)
+			}).then(response => {
+				if (response.ok) {
+					swal('更新成功', { icon: "success" });
+				} else {
+					swal('更新失敗', { icon: "error" });
+				}
+			});
+		} else {
+			return Promise.reject('取消操作');
+		}
+	});
 }

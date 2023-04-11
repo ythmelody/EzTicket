@@ -85,7 +85,7 @@
 							<div class="col-lg-6 col-md-12">
 								<div class="form-group mt-4">
 									<label class="form-label">折扣開始日期</label>
-									<input id="pcoupnsdateup" class="form-control h_40 datepicker-here" data-language="en"
+									<input id="pcoupnsdateup" class="form-control h_40 datepicker-here" data-language="zh"
 										data-position="top left" type="text" placeholder="MM/DD/YYYY" value="">
 								</div>
 							</div>
@@ -195,7 +195,7 @@
 							<div class="col-lg-6 col-md-12">
 								<div class="form-group mt-4">
 									<label class="form-label">折扣結束日期</label>
-									<input id="pcoupnedateup" class="form-control h_40 datepicker-here" data-language="en"
+									<input id="pcoupnedateup" class="form-control h_40 datepicker-here" data-language="zh"
 										data-position="top left" type="text" placeholder="MM/DD/YYYY" value="">
 								</div>
 							</div>
@@ -333,46 +333,46 @@
 								</div>
 							</div>
 							<div class="col-lg-12 col-md-12">
-								<!-- <div class="form-group mt-4">
+								<div class="form-group mt-4">
 									<label class="form-label">優惠券代碼</label>
-									<input class="form-control h_40" type="text" placeholder="40010" value="">
-								</div> -->
+									<input disabled id="editpcouponno" class="form-control h_40" type="text" placeholder="" value="">
+								</div>
 							</div>
 							<div class="col-lg-6 col-md-12">
 								<div class="form-group mt-4">
 									<label class="form-label">優惠券名稱</label>
-									<input id="pcouponname" class="form-control h_40" type="text" placeholder="黑皮牛耶卷" value="">
+									<input id="editpcouponname" class="form-control h_40" type="text" placeholder="" value="">
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-12">
 								<div class="form-group mt-4">
 									<label class="form-label">適用商品編號</label>
-									<input id="productno" class="form-control h_40" type="text" placeholder="10001" value="">
+									<input id="editproductno" class="form-control h_40" type="text" placeholder="" value="">
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-12">
 								<div class="form-group mt-4">
 									<label class="form-label">折扣金額</label>
-									<input id="pdiscount" class="form-control h_40" type="text" placeholder="100" value="">
+									<input id="editpdiscount" class="form-control h_40" type="text" placeholder="" value="">
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-12">
 								<div class="form-group main-form mt-4">
 									<label class="form-label">最低消費金額</label>
-									<input id="preachprice" class="form-control h_40" type="text" placeholder="1000" value="">
+									<input id="editpreachprice" class="form-control h_40" type="text" placeholder="" value="">
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-12">
 								<div class="form-group mt-4">
 									<label class="form-label">折扣開始日期</label>
-									<input id="pcoupnsdateup" class="form-control h_40 datepicker-here" data-language="en"
+									<input id="editpcoupnsdateup" class="form-control h_40 datepicker-here" data-language="zh"
 										data-position="top left" type="text" placeholder="MM/DD/YYYY" value="">
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-12">
 								<div class="form-group main-form mt-4">
 									<label class="form-label">時間</label>
-									<select id="pcoupnsdatedown" class="selectpicker" data-size="5" data-live-search="true">
+									<select id="editpcoupnsdatedown" class="selectpicker" data-size="5" data-live-search="true">
 										<option value="00:00">12:00 AM</option>
 										<option value="00:15">12:15 AM</option>
 										<option value="00:30">12:30 AM</option>
@@ -475,14 +475,14 @@
 							<div class="col-lg-6 col-md-12">
 								<div class="form-group mt-4">
 									<label class="form-label">折扣結束日期</label>
-									<input id="pcoupnedateup" class="form-control h_40 datepicker-here" data-language="en"
+									<input id="editpcoupnedateup" class="form-control h_40 datepicker-here" data-language="zh"
 										data-position="top left" type="text" placeholder="MM/DD/YYYY" value="">
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-12">
 								<div class="form-group main-form mt-4">
 									<label class="form-label">時間</label>
-									<select id="pcoupnedatedown" class="selectpicker" data-size="5" data-live-search="true">
+									<select id="editpcoupnedatedown" class="selectpicker" data-size="5" data-live-search="true">
 										<option value="00:00">12:00 AM</option>
 										<option value="00:15">12:15 AM</option>
 										<option value="00:30">12:30 AM</option>
@@ -588,8 +588,8 @@
 				<div class="modal-footer">
 					<button type="button" class="co-main-btn min-width btn-hover h_40" data-bs-target="#aboutModal"
 						data-bs-toggle="modal" data-bs-dismiss="modal">取消</button>
-					<button type="button" onclick="addCoupon()" class="main-btn min-width btn-hover h_40"
-						data-bs-target="#aboutModal" data-bs-toggle="modal" data-bs-dismiss="modal">建立</button>
+					<button type="button" onclick="editsaveCoupon()" class="main-btn min-width btn-hover h_40"
+						data-bs-target="#aboutModal" data-bs-toggle="modal" data-bs-dismiss="modal">儲存</button>
 				</div>
 			</div>
 		</div>
@@ -979,7 +979,7 @@
 	<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 	<script src="js/custom.js"></script>
 	<script src="js/datepicker.min.js"></script>
-	<script src="js/i18n/datepicker.en.js"></script>
+	<script src="js/i18n/datepicker.zh.js"></script>
 	<script src="js/night-mode.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 	<script src="js/pfitcoupon.js"></script>
