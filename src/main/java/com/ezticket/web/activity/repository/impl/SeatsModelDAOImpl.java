@@ -187,7 +187,7 @@ public class SeatsModelDAOImpl implements SeatsModelDAO {
             while (rs.next()) {
                 seatsModelVO = new SeatsModelVO();
                 seatsModelVO.setSeatModelno(rs.getInt("seatModelno"));
-                seatsModelVO.setBlockno(rs.getInt("modelno"));
+                seatsModelVO.setBlockno(rs.getInt("blockno"));
                 seatsModelVO.setX(rs.getInt("x"));
                 seatsModelVO.setY(rs.getInt("y"));
                 seatsModelVO.setRealx(rs.getString("realx"));
