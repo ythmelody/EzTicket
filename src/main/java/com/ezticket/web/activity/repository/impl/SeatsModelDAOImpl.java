@@ -246,7 +246,7 @@ public class SeatsModelDAOImpl implements SeatsModelDAO {
             while (rs.next()) {
                 seatsModelVO = new SeatsModelVO();
                 seatsModelVO.setSeatModelno(rs.getInt("seatModelno"));
-                seatsModelVO.setBlockno(rs.getInt("modelno"));
+                seatsModelVO.setBlockno(rs.getInt("blockno"));
                 seatsModelVO.setX(rs.getInt("x"));
                 seatsModelVO.setY(rs.getInt("y"));
                 seatsModelVO.setRealx(rs.getString("realx"));
@@ -288,6 +288,14 @@ public class SeatsModelDAOImpl implements SeatsModelDAO {
             }
         }
         return list;
+    }
+
+    public static void main(String[] args) {
+        SeatsModelDAOImpl seatsModelDAOImpl = new SeatsModelDAOImpl();
+        List<SeatsModelVO> list = seatsModelDAOImpl.getAll();
+        for(SeatsModelVO SMVO: list){
+            System.out.println(SMVO);
+        }
     }
 }
 
