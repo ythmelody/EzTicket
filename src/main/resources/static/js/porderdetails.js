@@ -14,26 +14,37 @@ $(document).ready(() => {
       detailsbody.innerHTML = '';
       let total = 0;
       for (let i = 0; i < data.products.length; i++) {
-
-        const detailslist = `<tr>
-                <td>${i + 1}</td>
-                <td><a href="front-product-product_detail.html?productno=${data.products[i].productno}" target="_blank">${data.products[i].pname}</a></td>
-                <td>${data.pdetails[i].porderqty}</td>
-                <td>$${data.products[i].pprice}</td>
-                <td>$${data.products[i].pprice-data.products[i].pspecialprice}</td>
-                <td>$${data.pdetails[i].pprice}</td>
-                <td>
-                  <div style="text-align:center">
-                    <button style="border: none;  background-color:transparent" data-bs-toggle="modal"
-                      data-bs-target="#couponModal"><img src="images/cmtbtn.png"></button>
-                  </div>
-                </td>
-                </tr>`;
-        total += data.pdetails[i].pprice;
-        detailsbody.innerHTML += detailslist;
-        $("#productno").val(data.products[i].productno);
-        $("#productno").val(data.porderno);
-
+        //判斷是否已評論過
+        if (data.pdetails[i].pcommentstatus === 0) {
+          const detailslist = `<tr>
+                              <td>${i + 1}</td>
+                              <td><a href="front-product-product_detail.html?productno=${data.products[i].productno}" target="_blank">${data.products[i].pname}</a></td>
+                              <td>${data.pdetails[i].porderqty}</td>
+                              <td>$${data.products[i].pprice}</td>
+                              <td>$${data.products[i].pprice - data.products[i].pspecialprice}</td>
+                              <td>$${data.pdetails[i].pprice}</td>
+                              <td>
+                              <div style="text-align:center">
+                              <button style="border: none;  background-color:transparent" data-bs-toggle="modal"
+                              data-bs-target="#couponModal" onclick="renewModal(${data.porderno},${data.products[i].productno})" id="commentButton"><img src="images/cmtbtn.png"></button>
+                              </div>
+                              </td>
+                             </tr>`;
+          total += data.pdetails[i].pprice;
+          detailsbody.innerHTML += detailslist;
+        } else {
+          const detailslist = `<tr>
+                            <td>${i + 1}</td>
+                            <td><a href="front-product-product_detail.html?productno=${data.products[i].productno}" target="_blank">${data.products[i].pname}</a></td>
+                            <td>${data.pdetails[i].porderqty}</td>
+                            <td>$${data.products[i].pprice}</td>
+                            <td>$${data.products[i].pprice - data.products[i].pspecialprice}</td>
+                            <td>$${data.pdetails[i].pprice}</td>
+                            <td><div style="text-align:center"><a href="front-product-product_detail.html?productno=${data.products[i].productno}" target="_blank">已評論</a></div></td>
+       </tr>`;
+          total += data.pdetails[i].pprice;
+          detailsbody.innerHTML += detailslist;
+        }
       }
       const detailstotal = `<tr>
                               <td colspan="1"></td>
@@ -47,5 +58,30 @@ $(document).ready(() => {
       detailsbody.innerHTML += detailstotal;
     });
 
-    
+
 });
+
+//取得單筆明細資訊(porderno-productno)
+function renewModal(porderno, productno) {
+  let urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get('id');
+  fetch(`/pdetails/byPorderno?porderno=${porderno}&productno=${productno}`, {
+    method: 'GET',
+  }).then(resp => resp.json())
+    .then(item => {
+      console.log(item);
+      // console.log(item);
+
+      if (item.pcommentstatus === 1) {
+        $("#commentButton").html("已評論");
+      } else {
+        $("#productno").val('');
+        $("#porderno").val('');
+        $("#pcommentstatus").val('');
+
+        $("#productno").val(item.pdetailsNo.productno);
+        $("#porderno").val(item.pdetailsNo.porderno);
+        $("#pcommentstatus").val(item.pcommentstatus);
+      }
+    })
+}
