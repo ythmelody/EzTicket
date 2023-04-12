@@ -116,10 +116,9 @@ public class PcouponService {
     // 第四個 * 代表天數，表示不限定天數。
     // 第五個 * 代表月份，表示不限定月份。
     // 第六個 * 代表星期幾，表示不限定星期幾。
-    // 第七個 ? 代表不指定，表示不需要指定任何值。
 
     // 每小時檢查Coupon使用狀態
-    @Scheduled(cron = "0 0 * * * * ?")
+    @Scheduled(cron = "0 0 * * * *")
     public void checkPouconStatus() {
         LocalDateTime today = LocalDateTime.now();
         List<Pcoupon> pcoupons = pcouponRepository.findAll();

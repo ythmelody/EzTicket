@@ -70,7 +70,8 @@ public class FollowproductController extends HttpServlet {
         if ("addOneProductFollow".equals(action)){
             Integer memberno = Integer.valueOf(request.getParameter("memberno"));
             Integer productno = Integer.valueOf(request.getParameter("productno"));
-            followproductSvc.addFollowProduct(memberno,productno);
+            Boolean successful = followproductSvc.addFollowProduct(memberno,productno);
+
 
 
         }

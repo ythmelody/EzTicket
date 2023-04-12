@@ -6,14 +6,14 @@ import java.util.List;
 
 
 public class PageResult<T> {
-    private Long totalCount;
+    private Integer totalCount;
     private List<T> data;
 
-    public Long getTotalCount() {
+    public Integer getTotalCount() {
         return totalCount;
     }
 
-    public void setTotalCount(Long totalCount) {
+    public void setTotalCount(Integer totalCount) {
         this.totalCount = totalCount;
     }
 

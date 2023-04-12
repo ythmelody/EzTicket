@@ -538,8 +538,8 @@
 						}),
 					}).then(resp => resp.json())
 						.then(list => {
-						displayProducts(list);
-					})
+							displayProducts(list);
+						})
 				})
 
 
@@ -604,7 +604,14 @@
 						'productno': productno,
 						'action': "addOneProductFollow"
 					})
-				})
+				}).then(resp => resp.json())
+					.then(item => {
+						swal({
+							title: "加入成功",
+							icon: "success",
+							closeOnClickOutside: false
+						});
+					})
 			}
 		</script>
 </body>
