@@ -19,15 +19,15 @@ public class BlockModelDAOImpl implements BlockModelDAO {
     String passwd = "root";
 
     private static final String INSERT_STMT =
-            "INSERT INTO blockmodel (blockno, modelno, blockname) VALUES (?, ?, ?)";
+            "INSERT INTO blockmodel (blockno, modelno, blockname, blocktype) VALUES (?, ?, ?, ?)";
     private static final String GET_ALL_STMT =
-            "SELECT blockno, modelno, blockname FROM blockmodel order by blockno";
+            "SELECT blockno, modelno, blockname, blocktype FROM blockmodel order by blockno";
     private static final String GET_ONE_STMT =
-            "SELECT blockno, modelno, blockname FROM blockmodel WHERE blockno = ?";
+            "SELECT blockno, modelno, blockname, blocktype FROM blockmodel WHERE blockno = ?";
     private static final String DELETE =
             "DELETE FROM blockmodel WHERE blockno = ?";
     private static final String UPDATE =
-            "UPDATE blockmodel SET modelno = ?, blockname = ? WHERE blockno = ?";
+            "UPDATE blockmodel SET modelno = ?, blockname = ?, blocktype = ? WHERE blockno = ?";
 
     @Override
     public void insert(BlockModelVO blockModelVO) {
@@ -44,6 +44,7 @@ public class BlockModelDAOImpl implements BlockModelDAO {
             pstmt.setInt(1, blockModelVO.getBlockno());
             pstmt.setInt(2, blockModelVO.getModelno());
             pstmt.setString(3, blockModelVO.getBlockName());
+            pstmt.setInt(4, blockModelVO.getBlockType());
 
             pstmt.executeUpdate();
 
@@ -88,7 +89,8 @@ public class BlockModelDAOImpl implements BlockModelDAO {
 
             pstmt.setInt(1, blockModelVO.getModelno());
             pstmt.setString(2, blockModelVO.getBlockName());
-            pstmt.setInt(3, blockModelVO.getBlockno());
+            pstmt.setInt(3, blockModelVO.getBlockType());
+            pstmt.setInt(4, blockModelVO.getBlockno());
 
             pstmt.executeUpdate();
 
@@ -181,6 +183,7 @@ public class BlockModelDAOImpl implements BlockModelDAO {
                 blockModelVO.setBlockno(rs.getInt("blockno"));
                 blockModelVO.setModelno(rs.getInt("modelno"));
                 blockModelVO.setBlockName(rs.getString("blockName"));
+                blockModelVO.setBlockType(rs.getInt("blockyType"));
             }
 
         } catch (ClassNotFoundException e) {
@@ -236,6 +239,7 @@ public class BlockModelDAOImpl implements BlockModelDAO {
                 blockModelVO.setBlockno(rs.getInt("blockno"));
                 blockModelVO.setModelno(rs.getInt("modelno"));
                 blockModelVO.setBlockName(rs.getString("blockName"));
+                blockModelVO.setBlockType(rs.getInt("blockType"));
                 list.add(blockModelVO); // Store the row in the list
             }
 

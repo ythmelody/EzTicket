@@ -4,6 +4,15 @@ public class BlockModelVO {
     private Integer blockno;
     private Integer modelno;
     private String blockName;
+    private Integer blockType;
+
+    public Integer getBlockType() {
+        return blockType;
+    }
+
+    public void setBlockType(Integer blockType) {
+        this.blockType = blockType;
+    }
 
     public Integer getBlockno() {
         return blockno;
