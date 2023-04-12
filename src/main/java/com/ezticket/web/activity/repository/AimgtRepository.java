@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface AimgtRepository extends JpaRepository <Aimgt,Integer> {
-    List<Aimgt> findByActivityNo(Integer activityNo);
+
     List<Aimgt>findAllByActivityNo(Integer activityNo);
 }

@@ -3,8 +3,10 @@ package com.ezticket.web.activity.controller;
 import com.ezticket.web.activity.dto.ACommentDto;
 import com.ezticket.web.activity.dto.ActivityDto;
 import com.ezticket.web.activity.dto.AimgtDto;
+import com.ezticket.web.activity.pojo.AComment;
 import com.ezticket.web.activity.pojo.Activity;
 import com.ezticket.web.activity.service.ActivityService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -76,5 +78,11 @@ public class ActivityController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+    @PostMapping("/insert")
+    public void insertActivity(@RequestBody String jsonData){
+        Gson gson = new Gson();
+        Activity activity = gson.fromJson(jsonData, Activity.class);
+        activityService.insertActivity(activity);
     }
 }

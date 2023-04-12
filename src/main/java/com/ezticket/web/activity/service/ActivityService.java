@@ -90,4 +90,8 @@ public class ActivityService {
                 .map(this::entityToDTO)
                 .collect(Collectors.toList());
     }
+    public void  insertActivity(Activity activity){
+        activityRepository.save(activity);
+
+    }
 }
