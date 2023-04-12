@@ -73,6 +73,8 @@ public class AddProduct extends HttpServlet {
 
 		}
 
+		response.sendRedirect("back-product-product_manage.html");
+
 		
 		
 	

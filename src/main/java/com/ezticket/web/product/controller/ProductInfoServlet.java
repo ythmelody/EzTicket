@@ -56,6 +56,8 @@ public class ProductInfoServlet extends HttpServlet {
             list2json(allAvailableProductlist, response);
             return;
         }
+
+        //單一商品
         if ("singleProduct".equals(action)) {
             Integer productno = Integer.valueOf(request.getParameter("productno"));
             Product product = productSvc.getOneProduct(productno);
@@ -69,21 +71,16 @@ public class ProductInfoServlet extends HttpServlet {
             return;
         }
 
+        //後台商品管理查詢所有商品
         if ("allProductList".equals(action)) {
-            List<Product> allAvailableProductlist = productSvc.getAllProduct();
-            list2json(allAvailableProductlist, response);
+            List<Product> allProductlist = productSvc.getAllProduct();
+            list2json(allProductlist, response);
             return;
         }
-
-
-
-
-
 
         //商品複合查詢
         if ("ProductSearchForm".equals(action)) {
             Map<String, String[]> map = request.getParameterMap(); //將得到的資料轉成map
-            System.out.println("我有跑進來ProductSearchForm" + map);
             List<Product> productList = productSvc.getAllByproductSearch(map); //轉交進行複合查詢
             list2json(productList, response);
         }

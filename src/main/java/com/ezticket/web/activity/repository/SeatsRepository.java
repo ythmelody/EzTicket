@@ -7,12 +7,13 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Set;
 
 @Repository
-public interface SeatsRepository  extends JpaRepository<Seats, Integer> {
+public interface SeatsRepository extends JpaRepository<Seats, Integer> {
 
     public List<Seats> findBySessionNoAndBlockNo(Integer sessionNo, Integer blockNo);
 
@@ -26,8 +27,21 @@ public interface SeatsRepository  extends JpaRepository<Seats, Integer> {
     @Query("UPDATE Seats SET seatStatus=:seatstatus  WHERE seatNo=:seatno ")
     public int updateStatus(@Param("seatstatus") int seatStatus, @Param("seatno") int seatNo);
 
-    @Query("SELECT s.seatNo FROM Seats s WHERE s.sessionNo = :sessionNo AND s.seatStatus = 1")
-    public Set<Integer> getToSellSeatsBySession(@Param("sessionNo") int sessionNo);
+    @Query("SELECT DISTINCT s.blockNo FROM Seats s JOIN Session ss WHERE ss.activityNo = :actNo AND s.blockNo IS NOT NULL")
+    public List<Integer> getActBlockHasSeats(@Param("actNo") int actNo);
 
+    @Query("SELECT s.seatNo FROM Seats s WHERE s.blockNo = :blockNo AND s.seatStatus = :seatStatus")
+    public List<Integer> getIdsByBlockNoAndSeatStatus(@Param("blockNo") int blockNo, @Param("seatStatus") int seatStatus);
+
+    public List<Seats> findBySessionNo(int sessionNo);
+
+    @Query(value = "SELECT COUNT(seatNo) FROM Seats WHERE seatStatus = 1 AND sessionNo = :sessionNo AND blockNo = :blockNo", nativeQuery = true)
+    public int getToSellNumber(@Param("sessionNo") int sessionNo, @Param("blockNo") int blockNo);
+
+    @Query(value = "SELECT COUNT(seatNo) FROM Seats WHERE seatStatus = 2 AND sessionNo = :sessionNo AND blockNo = :blockNo", nativeQuery = true)
+    public int getSoldNumber(@Param("sessionNo") int sessionNo, @Param("blockNo") int blockNo);
+
+    @Query("SELECT count (seatNo) FROM Seats")
+    public int getSeatsNumber();
 
 }

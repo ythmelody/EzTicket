@@ -243,7 +243,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="d-main-title">
-                        <h3>節目座位管理</h3>
+                        <h3>場次座位管理</h3>
                     </div>
 
                 </div>
@@ -254,27 +254,11 @@
                                 <div class="dashboard-date-wrap">
                                     <div class="form-group">
                                         <div class="relative-input position-relative">
-                                            <select id="showSelector" class="form-control" data-size="5"
+                                            <select id="sessionSelector" class="form-control" data-size="5"
                                                     data-live-search="true">
                                             </select>
                                             <i class="uil uil-arrow-circle-down"></i>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="rs ms-auto mt_r4">
-                                    <div class="nav custom2-tabs btn-group" role="tablist">
-                                        <button class="tab-link active" data-bs-toggle="tab"
-                                                data-bs-target="#notStart" type="button" role="tab"
-                                                aria-controls="notStart" aria-selected="true" id="notStartBtn" onclick="notStartTab()">未上架
-                                        </button>
-                                        <button class="tab-link" data-bs-toggle="tab" data-bs-target="#starting"
-                                                type="button" role="tab" aria-controls="starting"
-                                                aria-selected="false" id="startingBtn" onclick="startingTab()">上架中
-                                        </button>
-                                        <button class="tab-link" data-bs-toggle="tab" data-bs-target="#finished"
-                                                type="button" role="tab" aria-controls="finished"
-                                                aria-selected="false" id="finishedBtn" onclick="endSellTab()">已下架
-                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -282,15 +266,8 @@
                     </div>
                     <div class="event-list">
                         <div class="tab-content">
-                            <div class="tab-pane fade show active" id="notStart" role="tabpanel">
+                            <div class="tab-pane fade show active" id="sessionList" role="tabpanel">
                             </div>
-
-                            <div class="tab-pane fade" id="starting" role="tabpanel">
-                            </div>
-
-                            <div class="tab-pane fade" id="finished" role="tabpanel">
-                            </div>
-
                         </div>
                     </div>
                 </div>
@@ -309,383 +286,146 @@
 <script src="js/night-mode.js"></script>
 
 <script>
-    // 當網頁載入時先呈現 "未上架節目"
-    $(document).ready(function () {
-        notStartTab();
-    })
 
     // 共用實體變數
-    const showSelector = document.getElementById('showSelector');
+    const sessionSelector = document.getElementById('sessionSelector');
+    const actNo = sessionStorage.getItem("activityNo");
 
-    // ====================================================================================================
-
-    // 所有 "未上架節目"
-    const notStartbody = document.querySelector('#notStart');
-
-    // 點擊 "未上架節目"，顯示頁面
-    function notStartTab() {
-        // 選單(節目)呈現
-        $('#showSelector').html(`
-                <option value="all" selected>所有節目</option>
+    // 選單(場次)呈現
+    $('#sessionSelector').html(`
+                <option value="all" selected>所有場次</option>
             `);
 
-        fetch('Activity/beforeSell')
+    // 當網頁載入時先呈現 "所有場次"
+    $(document).ready(function () {
+        fetch('Session/ActSessions' + `?actNo=${actNo}`)
             .then((resp) => resp.json())
             .then((jsondata) => {
-                // 選單(節目)呈現 - 動態
+                // 選單(場次)呈現 - 動態
                 for (let j of jsondata) {
-                    document.getElementById('showSelector').innerHTML += `
-                            <option value="${j.activityNo}">${j.aname}</option>
+                    document.getElementById('sessionSelector').innerHTML += `
+                            <option value="${j.sessionNo}">第 ${j.sessionNo} 場</option>
                         `
                 }
 
-                // 呈現所有節目
-                displayNotStartActivity(jsondata);
-            })
-    }
-
-    // 顯示 "未上架節目"
-    function displayNotStartActivity(jsondata) {
-        notStartbody.innerHTML = "";
-
-        for (let j of jsondata) {
-            notStartbody.innerHTML += `
-                <div class="s-container"
-                     style="border: 1px solid lightgray; width: 100%; height: 210px; border-radius: 5px; background-color: white; margin-top: 10px">
-                    <div class="s-container-upper" style="height: 60%; border-bottom: 1px solid lightgray;">
-                        <div style="width: 100%; height: 100%; padding: 20px;">
-                            <div
-                                id="showpic_${j.activityNo}" style="width: 125px; height: 100%; background: url('') no-repeat; background-size: 130px ; border-radius: 5px; display: inline-block;">
-                            </div>
-                            <div
-                                style="width: 50%; height: 100%; display: inline-block; margin-left: 15px; vertical-align: top;">
-                                <h5 style="font-weight: bold;">${j.aname}</h5>
-                                <div style="width: 50%; margin-top: 20px;">
-                                    <div style="display: inline-block; vertical-align: middle; width: 45%;">
-                                        <h6 style="color: #717171;">節目編號：</h6>
-                                        <h6>${j.activityNo}</h6>
-                                    </div>
-                                    <div style="display: inline-block; vertical-align: middle; width: 45%;">
-                                        <h6 style="color: #717171;">表演者：</h6>
-                                        <h6>${j.performer}</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="dropdown" style="width: 40px; float:right;">
-                                <button
-                                    class="" type="button" data-bs-toggle="dropdown" aria-expanded="false"
-                                    style="float:right; border: 0; background-color: transparent;">
-                                    <div
-                                        style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-selection.png') center no-repeat; background-size: 20px; border-radius: 5px; float:right;">
-                                    </div>
-                                </button>
-
-                                <ul class="dropdown-menu">
-                                    <li><a id="${j.activityNo}" href="back-activity-seatmgt-unsellsessions.html" class="dropdown-item" onclick="manageSeatTable(this.id)">管理座位表</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="s-container-downer" style="height: 40%; ">
-                        <div style="height: 100%; width: 24%; padding: 20px; display: inline-block;">
-                            <div
-                                style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-place.png') center no-repeat; background-size: 20px; border-radius: 100px;">
-                            </div>
-                            <div
-                                style="height: 100%; width: 70%; display: inline-block; font-size: 13px; vertical-align: top; margin-left: 10px;">
-                                <div style="vertical-align: top; color: #717171;">演出位置</div>
-                                <div style="vertical-align: top;">${j.aplace}</div>
-                            </div>
-                        </div>
-                        <div style="height: 100%; width: 24%; padding: 20px; display: inline-block;">
-                            <div
-                                style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-calendar.png') center no-repeat; background-size: 20px; border-radius: 100px;">
-                            </div>
-                            <div
-                                style="height: 100%; width: 70%; display: inline-block; font-size: 13px; vertical-align: top; margin-left: 10px;">
-                                <div style="vertical-align: top; color: #717171;">上架時間</div>
-                                <div style="vertical-align: top;">${j.asdate}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-
-            let showpic = j.aimgt;
-
-            for (let i = 0; i < showpic.length; i++) {
-                if (showpic[i].aimgMain == 1) {
-                    document.getElementById(`showpic_${j.activityNo}`).style.backgroundImage= `url(data:image/png;base64,${showpic[i].aimg})`;
-                }
-            }
-        }
-        ;
-    }
-
-
-    // ====================================================================================================
-
-    // 所有上架中節目
-    const startingbody = document.querySelector('#starting');
-
-    // 點擊 "上架中節目"，顯示頁面
-    function startingTab() {
-        // 選單(節目)呈現
-        $('#showSelector').html(`
-                <option value="all" selected>所有節目</option>
-            `);
-
-        fetch('Activity/selling')
-            .then((resp) => resp.json())
-            .then((jsondata) => {
-                // 選單(節目)呈現 - 動態
-                for (let j of jsondata) {
-                    document.getElementById('showSelector').innerHTML += `
-                            <option value="${j.activityNo}">${j.aname}</option>
-                        `
-                }
-
-                // 呈現所有節目
-                displaySellingActivity(jsondata);
-            })
-    }
-
-    // 顯示 "上架中節目"
-    function displaySellingActivity(jsondata) {
-        startingbody.innerHTML = "";
-
-        for (let j of jsondata) {
-            startingbody.innerHTML += `
-                <div class="s-container"
-                     style="border: 1px solid lightgray; width: 100%; height: 210px; border-radius: 5px; background-color: white; margin-top: 10px">
-                    <div class="s-container-upper" style="height: 60%; border-bottom: 1px solid lightgray;">
-                        <div style="width: 100%; height: 100%; padding: 20px;">
-                            <div
-                                id="showpic_${j.activityNo}" style="width: 125px; height: 100%; background: url('') no-repeat; background-size: 130px ; border-radius: 5px; display: inline-block;">
-                            </div>
-                            <div
-                                style="width: 50%; height: 100%; display: inline-block; margin-left: 15px; vertical-align: top;">
-                                <h5 style="font-weight: bold;">${j.aname}</h5>
-                                <div style="width: 50%; margin-top: 20px;">
-                                    <div style="display: inline-block; vertical-align: middle; width: 45%;">
-                                        <h6 style="color: #717171;">節目編號：</h6>
-                                        <h6>${j.activityNo}</h6>
-                                    </div>
-                                    <div style="display: inline-block; vertical-align: middle; width: 45%;">
-                                        <h6 style="color: #717171;">表演者：</h6>
-                                        <h6>${j.performer}</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="dropdown" style="width: 40px; float:right;">
-                                <button
-                                    class="" type="button" data-bs-toggle="dropdown" aria-expanded="false"
-                                    style="float:right; border: 0; background-color: transparent;">
-                                    <div
-                                        style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-selection.png') center no-repeat; background-size: 20px; border-radius: 5px; float:right;">
-                                    </div>
-                                </button>
-
-                                <ul class="dropdown-menu">
-                                    <li><a id="${j.activityNo}" href="back-activity-seatmgt-sellingandsoldsessions.html" class="dropdown-item" onclick="readSeatTable(this.id)">查看座位表</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="s-container-downer" style="height: 40%; ">
-                        <div style="height: 100%; width: 24%; padding: 20px; display: inline-block;">
-                            <div
-                                style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-place.png') center no-repeat; background-size: 20px; border-radius: 100px;">
-                            </div>
-                            <div
-                                style="height: 100%; width: 70%; display: inline-block; font-size: 13px; vertical-align: top; margin-left: 10px;">
-                                <div style="vertical-align: top; color: #717171;">演出位置</div>
-                                <div style="vertical-align: top;">${j.aplace}</div>
-                            </div>
-                        </div>
-                        <div style="height: 100%; width: 24%; padding: 20px; display: inline-block;">
-                            <div
-                                style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-calendar.png') center no-repeat; background-size: 20px; border-radius: 100px;">
-                            </div>
-                            <div
-                                style="height: 100%; width: 70%; display: inline-block; font-size: 13px; vertical-align: top; margin-left: 10px;">
-                                <div style="vertical-align: top; color: #717171;">上架時間</div>
-                                <div style="vertical-align: top;">${j.asdate}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-
-            let showpic = j.aimgt;
-
-            for (let i = 0; i < showpic.length; i++) {
-                if (showpic[i].aimgMain == 1) {
-                    document.getElementById(`showpic_${j.activityNo}`).style.backgroundImage= `url(data:image/png;base64,${showpic[i].aimg})`;
-                }
-            }
-        }
-        ;
-    }
-
-    // ====================================================================================================
-
-    // 所有下架節目
-    const finishedbody = document.querySelector('#finished');
-
-    // 點擊 "下架節目"，顯示頁面
-    function endSellTab() {
-        // 選單(節目)呈現
-        $('#showSelector').html(`
-                <option value="all" selected>所有節目</option>
-            `);
-
-        fetch('Activity/afterSell')
-            .then((resp) => resp.json())
-            .then((jsondata) => {
-                // 選單(節目)呈現 - 動態
-                for (let j of jsondata) {
-                    document.getElementById('showSelector').innerHTML += `
-                            <option value="${j.activityNo}">${j.aname}</option>
-                        `
-                }
-
-                // 呈現所有節目
-                displayEndSellActivity(jsondata);
-            })
-    }
-
-    // 顯示 "下架節目"
-    function displayEndSellActivity(jsondata) {
-        finishedbody.innerHTML = "";
-
-        for (let j of jsondata) {
-            finishedbody.innerHTML += `
-                <div class="s-container"
-                     style="border: 1px solid lightgray; width: 100%; height: 210px; border-radius: 5px; background-color: white; margin-top: 10px">
-                    <div class="s-container-upper" style="height: 60%; border-bottom: 1px solid lightgray;">
-                        <div style="width: 100%; height: 100%; padding: 20px;">
-                            <div
-                                id="showpic_${j.activityNo}" style="width: 125px; height: 100%; background: url('') no-repeat; background-size: 130px ; border-radius: 5px; display: inline-block;">
-                            </div>
-                            <div
-                                style="width: 50%; height: 100%; display: inline-block; margin-left: 15px; vertical-align: top;">
-                                <h5 style="font-weight: bold;">${j.aname}</h5>
-                                <div style="width: 50%; margin-top: 20px;">
-                                    <div style="display: inline-block; vertical-align: middle; width: 45%;">
-                                        <h6 style="color: #717171;">節目編號：</h6>
-                                        <h6>${j.activityNo}</h6>
-                                    </div>
-                                    <div style="display: inline-block; vertical-align: middle; width: 45%;">
-                                        <h6 style="color: #717171;">表演者：</h6>
-                                        <h6>${j.performer}</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="dropdown" style="width: 40px; float:right;">
-                                <button
-                                    class="" type="button" data-bs-toggle="dropdown" aria-expanded="false"
-                                    style="float:right; border: 0; background-color: transparent;">
-                                    <div
-                                        style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-selection.png') center no-repeat; background-size: 20px; border-radius: 5px; float:right;">
-                                    </div>
-                                </button>
-
-                                <ul class="dropdown-menu">
-                                    <li><a id="${j.activityNo}" href="back-activity-seatmgt-sellingandsoldsessions.html" class="dropdown-item" onclick="readSeatTable(this.id)">查看座位表</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="s-container-downer" style="height: 40%; ">
-                        <div style="height: 100%; width: 24%; padding: 20px; display: inline-block;">
-                            <div
-                                style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-place.png') center no-repeat; background-size: 20px; border-radius: 100px;">
-                            </div>
-                            <div
-                                style="height: 100%; width: 70%; display: inline-block; font-size: 13px; vertical-align: top; margin-left: 10px;">
-                                <div style="vertical-align: top; color: #717171;">演出位置</div>
-                                <div style="vertical-align: top;">${j.aplace}</div>
-                            </div>
-                        </div>
-                        <div style="height: 100%; width: 24%; padding: 20px; display: inline-block;">
-                            <div
-                                style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-calendar.png') center no-repeat; background-size: 20px; border-radius: 100px;">
-                            </div>
-                            <div
-                                style="height: 100%; width: 70%; display: inline-block; font-size: 13px; vertical-align: top; margin-left: 10px;">
-                                <div style="vertical-align: top; color: #717171;">上架時間</div>
-                                <div style="vertical-align: top;">${j.asdate}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-
-            let showpic = j.aimgt;
-
-            for (let i = 0; i < showpic.length; i++) {
-                if (showpic[i].aimgMain == 1) {
-                    document.getElementById(`showpic_${j.activityNo}`).style.backgroundImage= `url(data:image/png;base64,${showpic[i].aimg})`;
-                }
-            }
-        }
-        ;
-    }
-
-    // ==========================================================================================================================
-    // 查詢節目
-    showSelector.addEventListener('change', function () {
-
-        if(showSelector.value == 'all'){
-            if($('#notStartBtn').attr('aria-selected') === "true"){
-                notStartTab();
-                return;
-            }
-
-            if($('#startingBtn').attr('aria-selected') === "true"){
-                startingTab();
-                return;
-            }
-
-            if($('#finishedBtn').attr('aria-selected') === "true"){
-                endSellTab();
-                return;
-            }
-        }
-
-
-        fetch('Activity/findByActNo' + `?actNo=${showSelector.value}`)
-            .then((resp) => resp.json())
-            .then((jsondata) => {
-                let array = [jsondata];
-
-                if($('#notStartBtn').attr('aria-selected') === "true"){
-                    displayNotStartActivity(array);
-                    return;
-                }
-
-                if($('#startingBtn').attr('aria-selected') === "true"){
-                    displaySellingActivity(array);
-                    return;
-                }
-
-                if($('#finishedBtn').attr('aria-selected') === "true"){
-                    displayEndSellActivity(array);
-                    return;
-                }
+                // 呈現所有場次
+                displaySessions(jsondata);
             })
     })
 
-    function readSeatTable(actNo){
-        sessionStorage.setItem('activityNo', actNo);
+    // ====================================================================================================
+
+    // 所有場次
+    const sessionList = document.querySelector('#sessionList');
+
+    // 查詢場次
+    sessionSelector.addEventListener('change', function () {
+
+        fetch('Session/findById' + `?sessionNo=${sessionSelector.value}`)
+            .then((resp) => resp.json())
+            .then((jsondata) => {
+                console.log(jsondata)
+                let array = [jsondata];
+                displaySessions(array);
+            })
+    })
+
+    // 顯示 "場次"
+    function displaySessions(jsondata) {
+        sessionList.innerHTML = "";
+
+        for (let j of jsondata) {
+            sessionList.innerHTML += `
+                <div class="s-container"
+                     style="border: 1px solid lightgray; width: 100%; height: 210px; border-radius: 5px; background-color: white; margin-top: 10px">
+                    <div class="s-container-upper" style="height: 60%; border-bottom: 1px solid lightgray;">
+                        <div style="width: 100%; height: 100%; padding: 20px;">
+                            <div
+                                style="width: 125px; height: 100%; background: url('https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2022/10/01/0/18809827.jpg&s=Y&x=4&y=6&sw=1276&sh=848&sl=W&fw=1050') no-repeat; background-size: 130px ; border-radius: 5px; display: inline-block;">
+                            </div>
+                            <div
+                                style="width: 50%; height: 100%; display: inline-block; margin-left: 15px; vertical-align: top;">
+                                <h5 style="font-weight: bold;">${j.activity.aname}</h5>
+                                <div style="width: 50%; margin-top: 20px;">
+                                    <div style="display: inline-block; vertical-align: middle; width: 45%;">
+                                        <h6 style="color: #717171;">場次編號：</h6>
+                                        <h6>${j.sessionNo}</h6>
+                                    </div>
+                                    <div style="display: inline-block; vertical-align: middle; width: 45%;">
+                                        <h6 style="color: #717171;">表演者：</h6>
+                                        <h6>${j.activity.performer}</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dropdown" style="width: 40px; float:right;">
+                                <button
+                                    class="" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                    style="float:right; border: 0; background-color: transparent;">
+                                    <div
+                                        style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-selection.png') center no-repeat; background-size: 20px; border-radius: 5px; float:right;">
+                                    </div>
+                                </button>
+
+                                <ul class="dropdown-menu">
+                                    <li><a id="${j.sessionNo}" href="back-activity-seatmgt-sessioncanmodi.html" class="dropdown-item" onclick="manageSeatTable(this.id)">管理座位表</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="s-container-downer" style="height: 40%; ">
+                        <div style="height: 100%; width: 24%; padding: 20px; display: inline-block;">
+                            <div
+                                style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-starttime.png') center no-repeat; background-size: 20px; border-radius: 100px;">
+                            </div>
+                            <div
+                                style="height: 100%; width: 70%; display: inline-block; font-size: 13px; vertical-align: top; margin-left: 10px;">
+                                <div style="vertical-align: top; color: #717171;">表演開始時間</div>
+                                <div style="vertical-align: top;">${j.sessionsTime}</div>
+                            </div>
+                        </div>
+                        <div style="height: 100%; width: 24%; padding: 20px; display: inline-block;">
+                            <div
+                                style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-endtime.png') center no-repeat; background-size: 20px; border-radius: 100px;">
+                            </div>
+                            <div
+                                style="height: 100%; width: 70%; display: inline-block; font-size: 13px; vertical-align: top; margin-left: 10px;">
+                                <div style="vertical-align: top; color: #717171;">表演結束時間</div>
+                                <div style="vertical-align: top;">${j.sessioneTime}</div>
+                            </div>
+                        </div>
+                        <div style="height: 100%; width: 24%; padding: 20px; display: inline-block;">
+                            <div
+                                style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-ticketunsold.png') center no-repeat; background-size: 20px; border-radius: 100px;">
+                            </div>
+                            <div
+                                style="height: 100%; width: 70%; display: inline-block; font-size: 13px; vertical-align: top; margin-left: 10px;">
+                                <div style="vertical-align: top; color: #717171;">票券總數量</div>
+                                <div style="vertical-align: top;">${j.maxSeatsQty + j.maxStandingQty}</div>
+                            </div>
+                        </div>
+                        <div style="height: 100%; width: 24%; padding: 20px; display: inline-block;">
+                            <div
+                                style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-ticketsold.png') center no-repeat; background-size: 20px; border-radius: 100px;">
+                            </div>
+                            <div
+                                style="height: 100%; width: 70%; display: inline-block; font-size: 13px; vertical-align: top; margin-left: 10px;">
+                                <div style="vertical-align: top; color: #717171;">已售出數量</div>
+                                <div style="vertical-align: top;">${j.seatsQty + j.standingQty}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+        }
+        ;
     }
 
-    function manageSeatTable(actNo){
-        sessionStorage.setItem('activityNo', actNo);
+    // ====================================================================================================
+
+    function manageSeatTable(sessionNo) {
+        console.log(sessionNo);
+        sessionStorage.setItem('sessionNo', sessionNo);
     }
-
-
 
 </script>
 

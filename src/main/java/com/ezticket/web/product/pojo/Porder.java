@@ -28,16 +28,23 @@ public class Porder {
     private String rephone;
     private String readdress;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JoinColumn(insertable = false,updatable = false)
     private LocalDateTime porderdate;
+    @JoinColumn(insertable = false,updatable = false)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime ppaydate;
+    @JoinColumn(insertable = false,updatable = false)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime pshipdate;
+    @JoinColumn(insertable = false,updatable = false)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime parrivedate;
+    @JoinColumn(insertable = false,updatable = false)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime pclosedate;
+    @JoinColumn(insertable = false,updatable = false)
     private Integer ppaymentstatus;
+    @JoinColumn(insertable = false,updatable = false)
     private Integer pprocessstatus;
 
     @ManyToMany

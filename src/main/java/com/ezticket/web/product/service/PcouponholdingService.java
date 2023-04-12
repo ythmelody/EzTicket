@@ -18,12 +18,12 @@ public class PcouponholdingService {
     @Autowired
     private ModelMapper modelMapper;
 
-//    public List<PcouponholdingDTO> getPcouponHoldingByMemberno(Integer memberno){
-//        return pcouponholdingRepository.findByMemberno(memberno)
-//                .stream()
-//                .map(this::EntityToDTO)
-//                .collect(Collectors.toList());
-//    }
+    public List<PcouponholdingDTO> getPcouponHoldingByMemberno(Integer memberno){
+        return pcouponholdingRepository.findByMemberno(memberno)
+                .stream()
+                .map(this::EntityToDTO)
+                .collect(Collectors.toList());
+    }
     public PcouponholdingDTO getPcouponHoldingByID(Integer id) {
         Pcouponholding pcouponholding = pcouponholdingRepository.getReferenceById(id);
         return EntityToDTO(pcouponholding);

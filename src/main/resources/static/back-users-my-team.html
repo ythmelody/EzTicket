@@ -41,6 +41,10 @@
 			width: 230px;
 		}
 
+		.name {
+			width: 60px;
+		}
+
 		.iconbutton {
 			width: 20px;
 			height: 20px;
@@ -110,23 +114,28 @@
 					<div class="model-content main-form">
 						<div class="form-group mt-30">
 							<label class="form-label">姓名</label>
-							<input class="form-control h_40" type="text" placeholder="請輸入姓名.." value="">
+							<input id="baname" class="form-control h_40" type="text" placeholder="請輸入姓名.." value="">
 						</div>
 						<div class="form-group mt-30">
 							<label class="form-label">帳號</label>
-							<input class="form-control h_40" type="text" placeholder="請輸入帳號.." value="">
+							<input id="baaccount" class="form-control h_40" type="text" placeholder="請輸入帳號.." value="">
 						</div>
 						<div class="form-group mt-30">
 							<label class="form-label">E-mail</label>
-							<input class="form-control h_40" type="text" placeholder="請輸入email.." value="">
+							<input id="baemail" class="form-control h_40" type="email" placeholder="請輸入email.."
+								value="">
+						</div>
+						<div class="form-group mt-30">
+							<label class="form-label">電話</label>
+							<input id="bacell" class="form-control h_40" type="tel" placeholder="請輸入email.." value="">
 						</div>
 						<div class="form-group mt-30">
 							<label class="form-label">密碼(預設)</label>
-							<input class="form-control h_40" type="text" value="123456" readonly>
+							<input id="bapassword" class="form-control h_40" type="text" value="Aa123456" readonly>
 						</div>
 						<div class="form-group mt-30">
 							<label class="form-label">權限指派</label>
-							<select class="selectpicker" title="Select Role">
+							<select id="baroleno" class="selectpicker" title="Select Role">
 								<option value="1">業務統籌</option>
 								<option value="2">商品管理者</option>
 								<option value="3">節目管理者</option>
@@ -136,26 +145,12 @@
 								<option value="7">後台使用者</option>
 							</select>
 						</div>
-						<!-- <div class="form-group mt-30">
-							<div class="d-flex align-items-start">
-								<label class="btn-switch m-0 me-3">
-									<input type="checkbox" class="" id="bird-discount" value="">
-									<span class="checkbox-slider"></span>
-								</label>
-								<div class="d-flex flex-column">
-									<label class="color-black fw-bold mb-0">Send system emails to this team
-										member</label>
-									<p class="mt-2 fs-14 d-block mb-0">System emails provide information about events
-										created, as well as updates to the system.</p>
-								</div>
-							</div>
-						</div> -->
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="co-main-btn min-width btn-hover h_40"
-						data-bs-dismiss="modal">Cancel</button>
-					<button type="button" class="main-btn min-width btn-hover h_40">Invite</button>
+						data-bs-dismiss="modal">取消</button>
+					<button type="button" id="inviteNewBu" class="main-btn min-width btn-hover h_40">邀請新成員</button>
 				</div>
 			</div>
 		</div>
@@ -166,7 +161,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" >新建角色</h5>
+					<h5 class="modal-title">新建角色</h5>
 					<button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"><i
 							class="uil uil-multiply"></i></button>
 				</div>
@@ -174,7 +169,7 @@
 					<div class="model-content main-form">
 						<div class="form-group mt-30">
 							<label class="form-label">角色名稱</label>
-							<input class="form-control h_40" type="text" placeholder="請輸入角色名稱.." value="">
+							<input id="rolename" class="form-control h_40" type="text" placeholder="請輸入角色名稱.." value="">
 						</div>
 						<div class="form-group mt-30">
 							<label class="form-label">角色狀態</label>
@@ -182,14 +177,13 @@
 							<label for="choice">停用</label>
 							<input id="choice2" type="radio" value="1" name="rolestatus">
 							<label for="choice2">啟用</label>
-							<!-- <input class="form-control h_40" type="text" placeholder="請輸入帳號.." value=""> -->
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="co-main-btn min-width btn-hover h_40"
-						data-bs-dismiss="modal">Cancel</button>
-					<button type="button" class="main-btn min-width btn-hover h_40">Invite</button>
+					<button type="button" id="roleCancel" class="co-main-btn min-width btn-hover h_40"
+						data-bs-dismiss="modal">取消</button>
+					<button type="button" id="addNewRole" class="main-btn min-width btn-hover h_40">新增後台角色</button>
 				</div>
 			</div>
 		</div>
@@ -353,23 +347,23 @@
 			<div class="left_section">
 				<ul>
 					<li class="menu--item">
-						<a href="back-users-host.html" class="menu--link" title="Members"
-							data-bs-toggle="tooltip" data-bs-placement="right">
+						<a href="back-users-host.html" class="menu--link" title="Members" data-bs-toggle="tooltip"
+							data-bs-placement="right">
 							<!--class="active" 就是點選menu後按鈕呈現深色背景的狀態-->
 							<i class="fa-solid fa-square-plus menu--icon"></i>
 							<span class="menu--label">主辦單位管理</span>
 						</a>
 					</li>
 					<li class="menu--item">
-						<a href="back-users-member.html" class="menu--link " title="Members"
-							data-bs-toggle="tooltip" data-bs-placement="right">
+						<a href="back-users-member.html" class="menu--link " title="Members" data-bs-toggle="tooltip"
+							data-bs-placement="right">
 							<i class="fa-solid fa-user-group menu--icon"></i>
 							<span class="menu--label">會員資訊管理</span>
 						</a>
 					</li>
 					<li class="menu--item">
-						<a href="back-users-my-team.html" class="menu--link team-lock active"
-							title="My Team" data-bs-toggle="tooltip" data-bs-placement="right">
+						<a href="back-users-my-team.html" class="menu--link team-lock active" title="My Team"
+							data-bs-toggle="tooltip" data-bs-placement="right">
 							<!--↑class="active" 就是點選menu後按鈕呈現深色背景的狀態-->
 							<i class="fa-solid fa-user-group menu--icon"></i>
 							<span class="menu--label">後台帳號管理</span>
@@ -412,7 +406,7 @@
 										<div style="width: 50px; margin-left: 10px;">
 											<div class="form-group">
 												<div class="relative-input position-relative hide2">
-													<input class="form-control h_40" type="text" placeholder="搜尋使用者..."
+													<input class="form-control h_40" id="search" type="text" placeholder="搜尋使用者..."
 														value="">
 													<i class="uil uil-search"></i>
 												</div>
@@ -442,7 +436,7 @@
 															<th scope="col">角色</th>
 															<th scope="col">聯絡電話</th>
 															<th scope="col">編輯</th>
-															<th scope="col">停權</th>
+															<th scope="col" id="auth">停權</th>
 														</tr>
 													</thead>
 													<tbody>
@@ -462,7 +456,7 @@
 												<div class="main-card">
 													<div class="role-header">
 														<h6><b>停用角色</b></h6>
-														<button class="btn-activate">啟用</button>
+														<button class="btn-activate roleAuthButton">啟用</button>
 													</div>
 													<div class="role-body-content">
 														<div class="menu4">
@@ -475,7 +469,7 @@
 												<div class="main-card">
 													<div class="role-header">
 														<h6><b>後台角色</b></h6>
-														<button class="btn-activate">停用</button>
+														<button class="btn-activate roleAuthButton">停用</button>
 													</div>
 													<div class="role-body-content">
 														<div class="menu1">
@@ -488,7 +482,7 @@
 												<div class="main-card">
 													<div class="role-header">
 														<h6><b>角色擁有權限</b></h6>
-														<button class="btn-activate">移除</button>
+														<button class="btn-activate removefunc">移除</button>
 													</div>
 													<div class="role-body-content">
 														<div class="menu2">
@@ -501,7 +495,7 @@
 												<div class="main-card">
 													<div class="role-header">
 														<h6><b>剩餘功能權限</b></h6>
-														<button class="btn-activate">加入</button>
+														<button class="btn-activate addfunc">加入</button>
 													</div>
 													<div class="role-body-content">
 														<div class="menu3">
@@ -531,75 +525,192 @@
 	<script src="js/datepicker.min.js"></script>
 	<script src="js/i18n/datepicker.en.js"></script>
 	<script src="js/night-mode.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </body>
 <script>
 	// 以下為權限功能設定按鈕頁
-	fetch('back-users-my-team/garf')
-		.then(response => response.json())
-		.then(roleData => {
-			const status0Div = document.querySelector(".menu4"); //顯示停用角色的div
-			const status1Div = document.querySelector(".menu1"); //顯示啟用角色的div
-			
-			roleData.forEach(role => {
-				// 設定讓啟用停用角色顯示在不同的區塊
-				if(role.rolestatus === 0){
-					status0Div.innerHTML += `<div class="menu-item role-menu" id="role-${role.roleno}" data-value=${role.roleno}>${role.rolename}</div>`;
-				} else if(role.rolestatus === 1){
-					status1Div.innerHTML += `<div class="menu-item role-menu" id="role-${role.roleno}" data-value=${role.roleno}>${role.rolename}</div>`;
-				}
-				//停用or啟用角色選單
-				const rolemenu = document.querySelectorAll('.role-menu');
-				let selectedValue = null;
-				rolemenu.forEach(item =>{
-					item.addEventListener("click", () => {
-						const funcDiv = document.querySelector(".menu2"); //顯示啟用角色功能的div
-						const missfuncDiv = document.querySelector(".menu3"); //顯示啟用角色功能的div
-						
-						// 取消"停用or啟用"選單中(div)前一次選中的選項
-						if (selectedValue) {
-							document.querySelector(`[data-value="${selectedValue}"]`).classList.remove('active');
-							funcDiv.innerHTML =""; //取消前一次顯示的功能列表
-						}
+	function refreshRoleData() {
+		fetch('back-users-my-team/garf')
+			.then(response => response.json())
+			.then(roleData => {
+				const status0Div = document.querySelector(".menu4"); //顯示停用角色的div
+				const status1Div = document.querySelector(".menu1"); //顯示啟用角色的div
 
-						// 設置"停用or啟用"選單中(div)當前選中的選項
-						item.classList.add('active');
-						selectedValue = item.dataset.value;
+				roleData.forEach(role => {
+					// 設定讓啟用/停用角色顯示在不同的區塊
+					if (role.rolestatus === 0) {
+						status0Div.innerHTML += `<div class="menu-item role-menu" id="role-${role.roleno}" data-value=${role.roleno}>${role.rolename}</div>`;
+					} else if (role.rolestatus === 1) {
+						status1Div.innerHTML += `<div class="menu-item role-menu" id="role-${role.roleno}" data-value=${role.roleno}>${role.rolename}</div>`;
+					}
 
-						console.log(selectedValue);//測試被選中的角色的value
-						
-						//讓點選的角色擁有的功能顯示在功能區塊
+
+					//停用or啟用角色選單
+					const rolemenu = document.querySelectorAll('.role-menu');
+					let selectedValue = null;
+					rolemenu.forEach(item => {
+						item.addEventListener("click", () => {
+							const funcDiv = document.querySelector(".menu2"); //顯示啟用角色擁有功能的div
+							const missfuncDiv = document.querySelector(".menu3"); //顯示啟用角色沒有的功能的div
+
+							// 取消"停用or啟用"選單中(div)前一次選中的選項
+							if (selectedValue) {
+								document.querySelector(`[data-value="${selectedValue}"]`).classList.remove('active');
+								funcDiv.innerHTML = ""; //取消前一次顯示的功能列表
+							}
+
+							// 設置"停用or啟用"選單中(div)當前選中的選項
+							item.classList.add('active');
+							selectedValue = item.dataset.value;
+
+							console.log(selectedValue);//測試被選中的角色的value
+
+							//讓點選的角色擁有的功能顯示在功能區塊
+							fetch("back-users-my-team/garf")
+								.then(response => response.json())
+								.then(roleData2 => {
+									funcDiv.innerHTML = ""; //因為foreach會讓我印到兩次,要清空前一次印出的功能列表
+									missfuncDiv.innerHTML = "";
+									roleData2.forEach(role2 => {
+										// console.log(selectedValue);//測試被選中的角色的value
+										if (`${role2.roleno}` === selectedValue) {   //!!!雷點:role2.roleno 要加‵${}`才能比對
+											//該角色有的功能
+											const funcSet = new Set();
+											for (let func in role2.funcs) {
+												funcSet.add(`${func}: ${role2.funcs[func]}`);
+											}
+											const funclist = Array.from(funcSet);
+											for (let func of funclist) {
+												funcDiv.innerHTML += `<div class="menu-item hasfuncs" id="${func.split(':')[0]}" data-value="funcno-${func.split(':')[0]}">${func.split(':')[1]}</div>`;
+											}
+
+
+											//該角色沒有的功能
+											const missfuncSet = new Set();
+											for (let missfunc in role2.nofuncs) {
+												missfuncSet.add(`${missfunc}: ${role2.nofuncs[missfunc]}`)
+											}
+											const nofunclist = Array.from(missfuncSet);
+											for (let missfunc of nofunclist) {
+												missfuncDiv.innerHTML += `<div class="menu-item nofuncs" id="${missfunc.split(':')[0]}" data-value="funcno-${missfunc.split(':')[0]}">${missfunc.split(':')[1]}</div>`;
+												// console.log(missfunc);
+											}
+
+										}
+										//"角色擁有權限"選單
+										const menuItems2 = document.querySelectorAll('.menu2 .menu-item');
+										let selectedValue2 = null;
+										menuItems2.forEach(item => {
+											item.addEventListener('click', () => {
+												// 取消之前選中的選項
+												if (selectedValue2) {
+													document.querySelector(`.menu2 [data-value="${selectedValue2}"]`).classList.remove('active');
+												}
+												console.log(selectedValue2);
+												// 設置當前選中的選項
+												item.classList.add('active');
+												selectedValue2 = item.dataset.value;
+
+											});
+										});
+
+										//"角色沒有的功能"選單
+										const menuItems3 = document.querySelectorAll('.menu3 .menu-item');
+										let selectedValue3 = null;
+										menuItems3.forEach(item => {
+											item.addEventListener('click', () => {
+												// 取消之前選中的選項
+												if (selectedValue3) {
+													document.querySelector(`.menu3 [data-value="${selectedValue3}"]`).classList.remove('active');
+												}
+												console.log(selectedValue3);
+												// 設置當前選中的選項
+												item.classList.add('active');
+												selectedValue3 = item.dataset.value;
+
+											});
+										});
+
+									})
+								}).catch(error => console.error(error));
+						})
+					})
+				})
+			})
+	}
+	refreshRoleData();
+
+	//啟用/停用角色 的按鈕功能
+	$(".roleAuthButton").click(() => {
+		if ($(".role-menu.active").length) {
+			selectedRoleno = $(".role-menu.active").data("value");
+			console.log("被選取的角色" + selectedRoleno);
+			fetch(`/back-users-my-team/${selectedRoleno}/roleauth`, {
+				method: "POST",
+			}).then(success => {
+				swal("更改成功!", "您已調整了選擇的角色權限!", "success");
+				$(".menu4").empty();
+				$(".menu1").empty();
+				$(".menu2").empty();
+				$(".menu3").empty();
+				refreshRoleData();
+			})
+		} else {
+			swal("更改失敗!", "請先點選要調整權限的角色!", "error");
+		}
+	})
+
+	//角色功能移除
+	$(".removefunc").click(() => {
+		selectedRoleno = $(".role-menu.active").data("value");//抓到正在被點選的角色(roleno)
+		selectedFunc = $(".hasfuncs.active").attr("id");//抓到正在被點選的角色 擁有的功能(funcno)
+		const removeRoleauth = {
+			roleno: selectedRoleno,
+			funcno: selectedFunc
+		}
+		if ($(".role-menu.active").length && $(".hasfuncs.active").length){
+			fetch("/back-users-my-team/removeRoleauthority", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(removeRoleauth)
+			}).then(success => {
+				swal("刪除成功!", "您已經為角色刪除了功能!", "success")
+					.then(() => {   // 清空func相關的div 重載資料
+						$(".menu2").empty();
+						$(".menu3").empty();
 						fetch("back-users-my-team/garf")
-						.then(response => response.json())
-						.then(roleData2 => {
-							funcDiv.innerHTML =""; //因為foreach會讓我印到兩次,要清空前一次印出的功能列表
-							missfuncDiv.innerHTML = "";
-							roleData2.forEach(role2 => {
-									// console.log(selectedValue);//測試被選中的角色的value
-									if(`${role2.roleno}` === selectedValue){   //!!!雷點:role2.roleno 要加‵${}`才能比對
+							.then(response => response.json())
+							.then(roleData2 => {
+								roleData2.forEach(role2 => {
+									console.log(selectedRoleno);//test是否接的到被選中的角色的value
+									if (`${role2.roleno}` === `${selectedRoleno}`) {
+										//該角色有的功能
 										const funcSet = new Set();
 										for (let func in role2.funcs) {
 											funcSet.add(`${func}: ${role2.funcs[func]}`);
 										}
 										const funclist = Array.from(funcSet);
 										for (let func of funclist) {
-											funcDiv.innerHTML += `<div class="menu-item" data-value="funcno-${func.split(':')[0]}">${func.split(':')[1]}</div>`;
+											$(".menu2").html(function (i, html) {
+												return html + `<div class="menu-item hasfuncs" id="${func.split(':')[0]}" data-value="funcno-${func.split(':')[0]}">${func.split(':')[1]}</div>`;
+											});
+											// console.log(func); //test 顯示角色全部擁有的功能
 										}
-
-
-										//沒有的功能
+										//該角色沒有的功能
 										const missfuncSet = new Set();
-										for(let missfunc in role2.nofuncs){
+										for (let missfunc in role2.nofuncs) {
 											missfuncSet.add(`${missfunc}: ${role2.nofuncs[missfunc]}`)
 										}
-										const nofunclist =Array.from(missfuncSet);
+										const nofunclist = Array.from(missfuncSet);
 										for (let missfunc of nofunclist) {
-											missfuncDiv.innerHTML += `<div class="menu-item" data-value="funcno-${missfunc.split(':')[0]}">${missfunc.split(':')[1]}</div>`;
-											// console.log(missfunc);
-										}	
-
-									}
-									//"角色擁有權限"選單
+											$(".menu3").html(function (i, html) {
+												return html + `<div class="menu-item nofuncs" id="${missfunc.split(':')[0]}" data-value="funcno-${missfunc.split(':')[0]}">${missfunc.split(':')[1]}</div>`;
+											});
+											// console.log(missfunc); //test 顯示角色全部沒有的功能
+										}
+									} 
+									//"角色擁有權限"選單  點選效果
 									const menuItems2 = document.querySelectorAll('.menu2 .menu-item');
 									let selectedValue2 = null;
 									menuItems2.forEach(item => {
@@ -608,15 +719,13 @@
 											if (selectedValue2) {
 												document.querySelector(`.menu2 [data-value="${selectedValue2}"]`).classList.remove('active');
 											}
-											console.log(selectedValue2);
 											// 設置當前選中的選項
 											item.classList.add('active');
 											selectedValue2 = item.dataset.value;
-
 										});
 									});
 
-									//"所有功能"選單
+									//"角色沒有的功能"選單 點選效果
 									const menuItems3 = document.querySelectorAll('.menu3 .menu-item');
 									let selectedValue3 = null;
 									menuItems3.forEach(item => {
@@ -625,19 +734,105 @@
 											if (selectedValue3) {
 												document.querySelector(`.menu3 [data-value="${selectedValue3}"]`).classList.remove('active');
 											}
-											console.log(selectedValue3);
+											item.classList.add('active');
+											selectedValue3 = item.dataset.value;
+										});
+									})
+								})
+							}).catch(error => console.error(error));
+				})
+			}).catch(error => console.error("Error:", error));
+		}else {
+			swal("更改失敗!", "請先點選要調整權限的角色以及角色擁有的功能!", "error");
+		}
+	})
+
+	//角色功能新增
+	$(".addfunc").click(() => {
+		selectedRoleno = $(".role-menu.active").data("value");//抓到正在被點選的角色(roleno)
+		selectedNoFunc = $(".nofuncs.active").attr("id");//抓到正在被點選的角色 沒有的功能(funcno)
+		const addRoleauth = {
+			roleno: selectedRoleno,
+			funcno: selectedNoFunc
+		}
+		if ($(".role-menu.active").length && $(".nofuncs.active").length) {
+			fetch("/back-users-my-team/addRoleauthority", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(addRoleauth)
+			}).then(success => {
+				swal("新增成功!", "您已經為角色新增了功能!", "success")
+					.then(() => {   // 清空func相關的div 重載資料
+						$(".menu2").empty();
+						$(".menu3").empty();
+						fetch("back-users-my-team/garf")
+							.then(response => response.json())
+							.then(roleData2 => {
+								roleData2.forEach(role2 => {
+									console.log(selectedRoleno);//test是否接的到被選中的角色的value
+									if (`${role2.roleno}` === `${selectedRoleno}`) {
+										//該角色有的功能
+										const funcSet = new Set();
+										for (let func in role2.funcs) {
+											funcSet.add(`${func}: ${role2.funcs[func]}`);
+										}
+										const funclist = Array.from(funcSet);
+										for (let func of funclist) {
+											$(".menu2").html(function (i, html) {
+												return html + `<div class="menu-item hasfuncs" id="${func.split(':')[0]}" data-value="funcno-${func.split(':')[0]}">${func.split(':')[1]}</div>`;
+											});
+											// console.log(func); //test 顯示角色全部擁有的功能
+										}
+										//該角色沒有的功能
+										const missfuncSet = new Set();
+										for (let missfunc in role2.nofuncs) {
+											missfuncSet.add(`${missfunc}: ${role2.nofuncs[missfunc]}`)
+										}
+										const nofunclist = Array.from(missfuncSet);
+										for (let missfunc of nofunclist) {
+											$(".menu3").html(function (i, html) {
+												return html + `<div class="menu-item nofuncs" id="${missfunc.split(':')[0]}" data-value="funcno-${missfunc.split(':')[0]}">${missfunc.split(':')[1]}</div>`;
+											});
+											// console.log(missfunc); //test 顯示角色全部沒有的功能
+										}
+									} 
+									//"角色擁有權限"選單  點選效果
+									const menuItems2 = document.querySelectorAll('.menu2 .menu-item');
+									let selectedValue2 = null;
+									menuItems2.forEach(item => {
+										item.addEventListener('click', () => {
+											// 取消之前選中的選項
+											if (selectedValue2) {
+												document.querySelector(`.menu2 [data-value="${selectedValue2}"]`).classList.remove('active');
+											}
+											// 設置當前選中的選項
+											item.classList.add('active');
+											selectedValue2 = item.dataset.value;
+										});
+									});
+
+									//"角色沒有的功能"選單 點選效果
+									const menuItems3 = document.querySelectorAll('.menu3 .menu-item');
+									let selectedValue3 = null;
+									menuItems3.forEach(item => {
+										item.addEventListener('click', () => {
+											// 取消之前選中的選項
+											if (selectedValue3) {
+												document.querySelector(`.menu3 [data-value="${selectedValue3}"]`).classList.remove('active');
+											}
 											// 設置當前選中的選項
 											item.classList.add('active');
 											selectedValue3 = item.dataset.value;
-
 										});
-									});
-							})
-						}).catch(error => console.error(error));
+									})
+								})
+							}).catch(error => console.error(error));
 					})
-				})
-			})
-		})
+			}).catch(error => console.error("Error:", error));
+		} else {
+			swal("更改失敗!", "請先點選要調整權限的角色以及角色還未有的功能!", "error");
+		}
+	})
 
 	// -------------------------點選權限功能設定/後台使用者button監聽器------------------------------------------------
 	// 當點選權限功能設定的button時，修改最後一個button的屬性和內容
@@ -655,23 +850,53 @@
 		document.querySelector('.hide').removeAttribute('hidden', 'hidden');
 		document.querySelector('.hide2').removeAttribute('hidden', 'hidden');
 	});
+	//--------------------------新增後台角色--------------------------------------------------
+	$("#addNewRole").click(() => {
+		const addNewRole = {
+			rolename: $("#rolename").val(),
+			rolestatus: $('input[name="rolestatus"]:checked').val()
+		}
+		fetch("back-users-my-team/addNewRole", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(addNewRole)
+		}).then(success => {
+			swal("新增成功!", "您已經新增了一個職位角色,請為您的角色加上功能!", "success")
+				.then(() => {   //清空value 執行cancel  清空div 重載資料
+					$("#rolename").val("");
+					$("#roleCancel").click();
+					$(".menu4").empty();
+					$(".menu1").empty();
+					$(".menu2").empty();
+					$(".menu3").empty();
+					refreshRoleData();
+				})
+		}).catch(error => console.error("Error:", error));
+	})
 	// ------------------------以下為透過fetchAPI拿取資料後的功能製作-----------------------------------------------------
 	const selectElement = document.querySelector('.sp');//為了要監聽啟用停用選單
 	fetch('back-users-my-team/ga')
-	.then(response => response.json())
-	.then(data => {
-		const table = document.querySelector('.table tbody');
-		data.forEach(backuser => {
-			const tr = document.createElement('tr');
-			//根據啟用/停用選單的value顯示表格內容
-			function showBackuser(){
-				const option = selectElement.options[selectElement.selectedIndex];
-				const selectValue = option.value;    //權限狀態的選單的value
-				if(selectValue === `${backuser.bastatus}`){
-					tr.innerHTML = `
+		.then(response => response.json())
+		.then(data => {
+			const table = document.querySelector('.table tbody');
+			data.forEach(backuser => {
+				const tr = document.createElement('tr');
+				//根據啟用/停用選單的value顯示表格內容
+				function showBackuser() {
+					const option = selectElement.options[selectElement.selectedIndex];
+					const selectValue = option.value;    //權限狀態的選單的value
+					//↓以下為改變停用選單的th內容改成啟用
+					const auth = document.querySelector("#auth");
+					if (selectValue === "0") {
+						auth.textContent = "啟用";
+					} else {
+						auth.textContent = "停權";
+					}
+					if (selectValue === `${backuser.bastatus}`) {
+						tr.innerHTML = `
 							<td>${backuser.baaccount}</td>
 							<td><input type="text" class="name allInput" id="${backuser.baname}" value="${backuser.baname}" readonly></td>
-							<td><input class="backuser allInput" id="${backuser.baemail}" value="${backuser.baemail}" readonly></td>
+							<td><input class="backuser allInput" id="email-${backuser.bano}" value="${backuser.baemail}" readonly></td>
 							<td>
 							<select class="jobSelect allInput" id="mySelect-${backuser.baaccount}">
 							</select>
@@ -686,88 +911,161 @@
 							</td>
 							<td><span class="action-btn" id="myAuth-${backuser.bano}" ><i class="fa-solid fa-lock"></i></span></td>
 						`;
-					table.appendChild(tr);
-					// ↓這邊是在做編輯按鈕-------------------------------------------------------------------------------------------
-					const editbutton =document.querySelector(`#myEdit-${backuser.bano}`);//backuser專屬的編輯按鈕抓取
-					const select = document.getElementById(`mySelect-${backuser.baaccount}`);
-					const baname = document.getElementById(`${backuser.baname}`);
-					const baemail = document.getElementById(`${backuser.baemail}`);
-					const bacell = document.getElementById(`${backuser.bacell}`);
-					editbutton.addEventListener('click',() => {
-							
-						if(select.disabled){
-							select.disabled = false;
-							baname.removeAttribute("readonly");
-							baname.className = "name" ;
-							baemail.removeAttribute("readonly");
-							baemail.className =	"backuser" ;
-							bacell.removeAttribute("readonly");
-							bacell.className =	"phone" ;
-								
-						}else{
-							select.disabled = true;
-							baname.setAttribute("readonly","readonly");
-							baname.className = "name allInput" ;
-							baemail.setAttribute("readonly","readonly");
-							baemail.className = "backuser allInput" ;
-							bacell.setAttribute("readonly","readonly");
-							bacell.className =	"phone allInput" ;
-
-							// 這邊未來要寫修改指令
-
-						}
-					})
-					//↓這邊是在做權限按鈕-------------------------------------------------------------------------------------------
-					const authbutton = document.getElementById(`myAuth-${backuser.bano}`);
-					authbutton.addEventListener("click",() => {
-						if(`${backuser.bastatus}` === 0){
-							//把status改成1  後端要寫指令
-						}else if(`${backuser.bastatus}` === 1){
-							//把status改成0	 後端要寫指令
-						}
-					})
-
-					//根據角色 數量 產生相對應的 select 選項
-					fetch('back-users-my-team/garf')
+						table.appendChild(tr);
+						//根據角色 數量 產生相對應的 select 選項-------------------------------------------------------------
+						fetch('back-users-my-team/garf')
 							.then(response => response.json())
 							.then(roleData => {
-							const select = document.getElementById(`mySelect-${backuser.baaccount}`);
-							roleData.forEach(role => {
-								const option = document.createElement('option');
-								option.value = role.roleno;
-								option.text = role.rolename;
-								option.selected = backuser.baroleno === role.roleno;
-								select.appendChild(option);
-								// 角色選單 print 到 瀏覽功能頁
-								const iconbutton = document.querySelector(`#mySelect-${backuser.bano}`);//特定backuser旁功能瀏覽按鈕
-								const currentRole = document.querySelector('#currentRole'); //選取器選取  要放內容(角色名稱)的地方
-								const workAuthority = document.querySelector('#workAuthority'); //選取器選取  要放內容(負責權限名稱)的地方
-								iconbutton.addEventListener('click',() => {
-									if(backuser.baroleno === role.roleno){
-										currentRole.textContent = `${role.rolename}`; 
-										workAuthority.innerHTML = "";   //重新點擊button清空再印出
-										for(let func in role.funcs){
-											workAuthority.innerHTML += `${role.funcs[func]}<br>`;
+								const select = document.getElementById(`mySelect-${backuser.baaccount}`);
+								roleData.forEach(role => {
+									const option = document.createElement('option');
+									option.value = role.roleno;
+									option.text = role.rolename;
+									option.selected = backuser.baroleno === role.roleno;
+									select.appendChild(option);
+									// 角色選單 print 到 瀏覽功能頁
+									const iconbutton = document.querySelector(`#mySelect-${backuser.bano}`);//特定backuser旁功能瀏覽按鈕
+									const currentRole = document.querySelector('#currentRole'); //選取器選取  要放內容(角色名稱)的地方
+									const workAuthority = document.querySelector('#workAuthority'); //選取器選取  要放內容(負責權限名稱)的地方
+									iconbutton.addEventListener('click', () => {
+										if (backuser.baroleno === role.roleno) {
+											currentRole.textContent = `${role.rolename}`;
+											workAuthority.innerHTML = "";   //重新點擊button清空再印出
+											for (let func in role.funcs) {
+												workAuthority.innerHTML += `${role.funcs[func]}<br>`;
+											}
 										}
+									})
+								});
+								select.disabled = true; //關閉編輯選單
+							}).catch(error => console.error(error));
+						// ↓這邊是在做編輯按鈕-------------------------------------------------------------------------------------------
+						const editbutton = document.querySelector(`#myEdit-${backuser.bano}`);//backuser專屬的編輯按鈕抓取
+						const select = document.getElementById(`mySelect-${backuser.baaccount}`);
+						const baname = document.getElementById(`${backuser.baname}`);
+						const baemail = document.getElementById(`email-${backuser.bano}`);
+						const bacell = document.getElementById(`${backuser.bacell}`);
+						editbutton.addEventListener('click', () => {
+
+							if (select.disabled) {
+								select.disabled = false;
+								baname.removeAttribute("readonly");
+								baname.className = "name";
+								baemail.removeAttribute("readonly");
+								baemail.className = "backuser";
+								bacell.removeAttribute("readonly");
+								bacell.className = "phone";
+
+							} else {
+								select.disabled = true;
+								baname.setAttribute("readonly", "readonly");
+								baname.className = "name allInput";
+								baemail.setAttribute("readonly", "readonly");
+								baemail.className = "backuser allInput";
+								bacell.setAttribute("readonly", "readonly");
+								bacell.className = "phone allInput";
+
+								// 這邊寫fetch儲存編輯後的資料
+								const updateBu = {
+									bano: backuser.bano,
+									baaccount: backuser.baaccount,
+									baname: $(`#${backuser.baname}`).val(),
+									baemail: $(`#email-${backuser.bano}`).val(),
+									baroleno: $(`#mySelect-${backuser.baaccount}`).val(),
+									bacell: $(`#${backuser.bacell}`).val(),
+									bastatus: backuser.bastatus,
+								}
+								fetch(`/back-users-my-team/${backuser.bano}`, {
+									method: "POST",
+									headers: { "Content-Type": "application/json" },
+									body: JSON.stringify(updateBu)
+								}).then(response => response.json())
+									.then(success => {
+										swal("修改成功!", "您已經更改了會員資料了", "success")
+											.then(() => { location.reload(); })
+									}).catch(error => console.error("Error:", error));
+
+							}
+						})
+						//↓這邊是在做權限按鈕-------------------------------------------------------------------------------------------
+						const authbutton = document.getElementById(`myAuth-${backuser.bano}`);
+						authbutton.addEventListener("click", () => {
+							fetch(`back-users-my-team/${backuser.bano}/auth`, {
+								method: "POST"
+							}).then(response => response.json())
+								.then(success => {
+									if (`${backuser.bastatus}` === "1") {
+										swal("停權成功!", "您已經更改了會員的權限資料了", "warning")
+											.then(() => {
+												backuser.bastatus = 0;
+												tr.remove();
+											})
+									} else {
+										swal("啟用成功!", "您已經更改了會員的權限資料了", "success")
+											.then(() => {
+												backuser.bastatus = 1;
+												tr.remove();
+											})
 									}
-								})
-							});
-					select.disabled = true; //關閉編輯選單
-					}).catch(error => console.error(error));
+
+								}).catch(error => console.error("Error:", error));
+						})
+
+
+
+					}
 				}
-			}
-			// ----------------------------------------------------------------------------------------------------------------------------
-			showBackuser(); //讓打開網頁一開始先顯示啟用帳號的表格內容
-			//再根據啟用/停用選單,改變表格內容(對選單做監聽器)
-			selectElement.addEventListener('change', () => {
-				tr.remove();
-				showBackuser();
+				// ----------------------------------------------------------------------------------------------------------------------------
+				showBackuser(); //讓打開網頁一開始先顯示啟用帳號的表格內容
+				//再根據啟用/停用選單,改變表格內容(對選單做監聽器)
+				selectElement.addEventListener('change', () => {
+					tr.remove();
+					showBackuser();
+				});
 			});
+		}).catch(error => console.error(error));
+
+	//新增後台成員
+	$("#inviteNewBu").click(() => {
+		const newBu = {
+			baname: $("#baname").val(),
+			baaccount: $("#baaccount").val(),
+			baemail: $("#baemail").val(),
+			bacell: $("#bacell").val(),
+			bapassword: $("#bapassword").val(),
+			baroleno: $("#baroleno").val(),
+			bastatus: "1"
+		}
+		fetch("back-users-my-team/insertBu", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(newBu)
+		}).then(success => {
+			swal("新增成功!", "您已經新增了一位成員至團隊中!", "success")
+				.then(() => {
+					location.reload();
+				})
+		})
+			.catch(error => console.error("Error:", error));
+	})
+
+
+	// 當輸入框改變時觸發搜尋
+	$("#search").keyup(function () {
+		var searchValue = $("#search").val().toLowerCase();
+		$("tbody tr").filter(function () {
+			//這邊filter會篩選所有value跟searchValue相符合的input
+			var trInputValue = $(this).find("input").filter(function () {
+				return $(this).val().toLowerCase().indexOf(searchValue) > -1;  
+			});
+
+			// 如果tr底下 所有文字內容有跟searchValue相符合,textMatches 就會等於 true
+			var trText = $(this).text().toLowerCase().indexOf(searchValue) > -1;
+			
+			// 如果有符合條件的input會顯示true,不符合就為false,  toggle(true)→顯示  toggle(false)→隱藏
+			$(this).toggle(trInputValue.length > 0 || trText);
 		});
-	}).catch(error => console.error(error));
-
-
-
+	});
 
 </script>
 

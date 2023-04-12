@@ -1,5 +1,6 @@
 package com.ezticket.web.product.controller;
 
+import com.ezticket.web.product.dto.AddPorderDTO;
 import com.ezticket.web.product.dto.PorderDTO;
 import com.ezticket.web.product.dto.PorderDetailsDTO;
 import com.ezticket.web.product.dto.PorderStatusDTO;
@@ -36,6 +37,12 @@ public class PorderController {
     @ResponseBody
     public boolean updateStatusByID(@RequestBody PorderStatusDTO ps){
         porderService.updateByID(ps.getPorderno(), ps.getPprocessstatus());
+        return true;
+    }
+    @PostMapping("/add")
+    @ResponseBody
+    public boolean addPorder(@RequestBody AddPorderDTO addPorderDTO){
+        porderService.AddPorder(addPorderDTO);
         return true;
     }
 }

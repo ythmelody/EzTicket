@@ -22,4 +22,8 @@ public class BlockPrice {
     @Column(name = "BLOCKPRICE")
     private Integer blockPrice;
 
+    // Add by Shawn on 04/11
+    @Column(name = "BLOCKTYPE")
+    private Integer blockType;
+
 }

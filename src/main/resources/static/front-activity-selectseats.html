@@ -77,8 +77,6 @@
         #layout {
             max-width: 1000px;
             display: grid;
-            grid-template-columns: repeat(50, 1fr);
-            /* 調整一排的座位數 */
             grid-gap: 10px;
             margin-bottom: 20px;
             overflow: auto;
@@ -89,9 +87,6 @@
             width: 100%;
             display: inline-block;
             margin-bottom: 7px;
-
-            /* grid-gap: 10px;
-            grid-template-columns: 50px auto; */
         }
 
         #legend button {
@@ -327,21 +322,20 @@
 <!-- Body Start-->
 
 <!-- 人工選位開始 -->
-
-
 <div class="modal fade" id="orgSettings" tabindex="-1" aria-labelledby="addorganisationLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 id="blockName" class="modal-title">黃1A</h5>
-                <button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"><i
+                <h5 id="blockName" class="modal-title"></h5>
+                <button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"
+                        onclick="seatsmgt.cancel()"><i
                         class="uil uil-multiply"></i></button>
             </div>
             <!-- 這邊加上座位狀態選擇器 -->
             <div id="legend" style="display: flex; padding: 5px!important;">
                 <div style="margin: 18px 18px 18px 18px; padding-top: 10px; position: relative; right: 0;">
                     <div class="form-group">
-                        <label for="quantity">請選擇張數：</label>
+                        <label for="quantity">選擇張數：</label>
                         <select class="form-control" id="quantity">
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -359,10 +353,10 @@
                 <div style="margin: 35px 0px; position: relative; right: 0;">
                     <form action="">
                         <button type="submit" class="main-btn btn-hover"
-                                style="background-color: gray;" onclick="disconnect()">重設選位
+                                style="background-color: gray;" onclick="seatsmgt.cancel();">重設選位
                         </button>
                         <button type="submit" class="main-btn btn-hover"
-                                onclick="seatsmgt.save(); window.location.href='Shawn_checkout.html'">確定選位
+                                onclick="seatsmgt.save(); window.location.href='#'">確定選位
                         </button>
                     </form>
                 </div>
@@ -384,7 +378,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addorganisationLabel">黃2A</h5>
+                <h5 class="modal-title" id="blockName_system"></h5>
                 <button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"><i
                         class="uil uil-multiply"></i></button>
             </div>
@@ -393,8 +387,9 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-12">
                             <div class="form-group main-form mt-4">
+                                <input id="blockNo" type="hidden" value="">
                                 <label class="form-label">選擇張數</label>
-                                <select class="selectpicker" data-size="5" title="Nothing selected"
+                                <select id="ticketDecr" class="selectpicker" data-size="5" title="Nothing selected"
                                         data-live-search="true">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -427,7 +422,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="main-btn min-width btn-hover h_40">確定選位</button>
+                <button type="button" class="main-btn min-width btn-hover h_40" data-bs-dismiss="modal"
+                        onclick="TicketBySystem()">確定選位
+                </button>
             </div>
         </div>
     </div>
@@ -463,12 +460,8 @@
                         <div class="col-lg-6 col-md-12">
                             <div class="form-group main-form mt-4">
                                 請選擇場次：
-                                <select class="selectpicker" data-size="5" data-live-search="true">
-                                    <option value="2200101" selected>2022/09/09 19:30 田馥甄一一巡迴演唱會-高雄場
-                                    </option>
-                                    <option value="2200102">2022/09/10 19:30 田馥甄一一巡迴演唱會-高雄場</option>
-                                    <option value="2200103">2022/09/11 19:30 田馥甄一一巡迴演唱會-高雄場</option>
-                                    <option value="2200104">2022/09/12 19:30 田馥甄一一巡迴演唱會-高雄場</option>
+                                <select id="selectSession" class="form-control" data-size="5" data-live-search="true"
+                                        onchange="selectSession()">
                                 </select>
                             </div>
                         </div>
@@ -478,7 +471,7 @@
                     <div class="checkout-block" style="position: sticky; top: 0;">
                         <div class="main-card">
                             <div class="bp-content bp-form">
-                                <img src="images/event-imgs/hebeseats.png" alt="" style="max-width: 100%; ">
+                                <img id="seatsImg" src="" alt="" style="max-width: 100%; ">
                             </div>
                         </div>
                     </div>
@@ -488,23 +481,24 @@
                         <div class="order-summary-content p_30">
                             <div class="event-order-dt">
                                 <div class="event-thumbnail-img">
-                                    <img src="images/event-imgs/hebetien.webp" alt="">
+                                    <img id="actImg" src="" alt="" style="max-width: 100%">
                                 </div>
                                 <div class="event-order-dt-content">
-                                    <h5>田馥甄一一巡迴演唱會-高雄場</h5>
-                                    <span>2022/09/09 19:30</span>
+                                    <h5 id="actName"></h5>
+                                    <span id="showTime"></span>
                                 </div>
                             </div>
                             <div class="order-total-block">
                                 請選擇選位方式
                                 <div class="nav custom2-tabs btn-group" role="tablist">
-                                    <button id="byComputor" class="tab-link active" data-bs-toggle="tab" data-bs-target=""
+                                    <button id="byComputor" class="tab-link active" data-bs-toggle="tab"
+                                            data-bs-target=""
                                             type="button" role="tab" aria-controls="" aria-selected="true"
-                                            style="width: 49%;">電腦選位
+                                            style="width: 49%;" onclick="selectBySystem()">電腦選位
                                     </button>
                                     <button id="byMember" class="tab-link" data-bs-toggle="tab" data-bs-target=""
                                             type="button" role="tab" aria-controls="" aria-selected="false"
-                                            style="width: 49%;">自行選位
+                                            style="width: 49%;" onclick="selectByMember()">自行選位
                                     </button>
                                 </div>
                             </div>
@@ -607,100 +601,81 @@
 
 <!-- 選擇座位的JS -->
 <script>
-    sessionStorage.setItem("memberNo", "85341");
-    sessionStorage.setItem("activityNo", "1");
-    sessionStorage.setItem("sessionNo", "1");
-
-    // WebSocket 相關變數及函式 (connect/ sendMessage/ disconnect)
+    // WebSocket 用戶相關變數與函式 (connect/ sendMessage/ disconnect)
     let webSocket;
 
     function connect() {
-        // WS 相關變數
         let MyPoint = "/SelectSeatsTogether/Sync";
         let path = window.location.pathname;
         let webCtx = path.substring(0, path.indexOf('/', 1));
         let endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
 
-        // create a websocket
+        // 建立 WebSocket 連線
         webSocket = new WebSocket(endPointURL);
 
-        // websocket 啟動當下要做什麼
+        // WebSocket 啟動動作
         webSocket.onopen = function (event) {
-
         };
 
-        // websocket 當接收到他人的狀態變化時，要做什麼
+        // WebSocket 接收推播動作
         webSocket.onmessage = function (event) {
             let jsonObj = JSON.parse(event.data);
             let seat = document.getElementById(`${jsonObj.seatNo}`);
 
-            if(jsonObj.seatStatus == 3) {
+            if (jsonObj.seatStatus == 3) {
                 seat.classList.remove("toSell");
                 seat.classList.add("beLocked");
             } else {
                 seat.classList.remove("beLocked");
                 seat.classList.add("toSell");
             }
-
         };
 
-        // websocket 關閉當下要做什麼
+        // WebSocket 結束使用動作
         webSocket.onclose = function (event) {
-
         };
     }
 
-    // websocket 當發送出狀態時，要做什麼
+    // WebSocket Client 向 Server 端發動訊息的動作
     function sendMessage(seat) {
-
         let jsonObj;
-
         if (seat.classList.contains("selected")) {
             jsonObj = {
                 "sessionNo": sessionStorage.getItem("sessionNo"),
                 "seatNo": seat.id,
                 "seatStatus": 3
             };
-
-            fetch("seats/updateSeatStatus"+ `?seatStatus=${jsonObj.seatStatus}&seatNo=${jsonObj.seatNo}&sessionNo=${jsonObj.sessionNo}`);
-
+            fetch("seats/updateSeatStatus" + `?seatStatus=${jsonObj.seatStatus}&seatNo=${jsonObj.seatNo}&sessionNo=${jsonObj.sessionNo}`);
         } else {
             jsonObj = {
                 "sessionNo": sessionStorage.getItem("sessionNo"),
                 "seatNo": seat.id,
                 "seatStatus": 1
             };
-
-            fetch("seats/updateSeatStatus"+ `?seatStatus=${jsonObj.seatStatus}&seatNo=${jsonObj.seatNo}&sessionNo=${jsonObj.sessionNo}`);
+            fetch("seats/updateSeatStatus" + `?seatStatus=${jsonObj.seatStatus}&seatNo=${jsonObj.seatNo}&sessionNo=${jsonObj.sessionNo}`);
         }
-
         webSocket.send(JSON.stringify(jsonObj));
-        console.log("執行了!");
     }
 
     function disconnect() {
         webSocket.close();
     }
 
+    // 測試用: 假設會員已登入
+    sessionStorage.setItem("memberNo", "85341");
 
-    // 選位相關變數及函式 (seatsmgt/ sendMessage/ disconnect)
-    let layout = document.getElementById("layout");
-
+    // 選位相關變數與函式
     let seats;
     let t_seats;
     let t_Row;
     let t_Column;
-
-    // 定義實體變數: 已選位數量
     let count;
+    let lockedSeats = [];
+    let layout = document.getElementById("layout");
 
     let seatsmgt = {
 
-
-        // (A) INIT
         init: () => {
-
-            console.log("重跑一次");
             layout.innerHTML = "";
 
             // 初始化票券數量 (最小為 1 張)
@@ -709,7 +684,7 @@
             // 初始化已選位數量
             count = 0;
 
-            $.ajax({
+            $.ajax({ // 取得場次所選擇區域的座位表 (MySQL)
                 async: false,
                 type: 'GET',
                 url: '/seats/BySessionAndBlock' + `?sessionNo=${sessionStorage.getItem("sessionNo")}&blockNo=${sessionStorage.getItem("blockNo")}`,
@@ -725,21 +700,22 @@
 
             $('#blockName').text(seats[0].blockName);
 
-            // 若購買數量有所變化，則更新購買數量的確認
+            // 購買數量 < 選擇數量時，要求更新購買數量
             $('#quantity').change(function () {
                     if ($('#quantity').val() < count)
                         alert("選擇座位數量已超出選購數量，請再次確認!!");
                 }
             );
 
-            // 座位幾個時要換一排
+            // 座位每 x 個換一排
             layout.setAttribute("style", `grid-template-columns: repeat(${(t_Column + 1) * 2}, 1fr)`)
 
             // GENERATE SEATS
             for (let i = 0; i <= t_Row; i++) {
                 for (let j = 0; j <= t_Column; j++) {
                     let seat = document.createElement("div");
-                    // 設定座位於資料庫的編號(seatno)
+
+                    // ID 為座位編號(seatno)
                     seat.id = seats[i * 10 + j].seatNo;
 
                     seat.innerHTML = `
@@ -752,38 +728,35 @@
 
                     let seatStatus = seats[i * 10 + j].seatStatus;
 
-                    switch (seatStatus) {
-                        case (-1):
-                            seat.classList.add("banned");
-                            break;
-                        case (0):
-                            seat.classList.add("taken");
-                            break;
-                        case (1):
-                            seat.classList.add("toSell");
-                            break;
-                        case (2):
-                            seat.classList.add("taken");
-                            break;
-                        case (3):
-                            seat.classList.add("beLocked");
-                            break;
+                    if (!lockedSeats.includes(String(seat.id))) {
+                        switch (seatStatus) {
+                            case (-1):
+                                seat.classList.add("banned");
+                                break;
+                            case (0):
+                                seat.classList.add("taken");
+                                break;
+                            case (1):
+                                seat.classList.add("toSell");
+                                break;
+                            case (2):
+                                seat.classList.add("taken");
+                                break;
+                        }
+                    } else {
+                        seat.classList.add("beLocked");
                     }
 
                     layout.appendChild(seat);
 
-                    // 這行怪怪的，要注意
+                    // 此行若不加，則座位表會跑版
                     layout.appendChild(document.createElement("br"));
                 }
             }
-
-            // websocket 開啟
-            connect();
-
         },
 
-        // CHOOSE THIS SEAT
         toggle: seat => {
+
             if ($('#quantity').val() < count) {
                 --count;
                 seat.classList.remove("selected");
@@ -812,42 +785,146 @@
             }
         },
 
-        // SAVE RESERVATION
         save: () => {
-            // GET SELECTED SEATS
             let seats = document.querySelectorAll("#layout div.selected");
+            let seatNos = [];
 
             for (let s of seats) {
-
-                const aSeatInfo = {
-                    "blockName": $('#blockName').text(),
-                    "seatNo": s.id,
-                    "realX": $(`#${s.id} span:eq(0)`).text(),
-                    "realY": $(`#${s.id} span:eq(1)`).text(),
-                    "seatStatus": 2
-                };
-
-                fetch('/seats/updateOneSeat', {
-                    method: "POST",
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(aSeatInfo)
-                })
+                seatNos.push(s.id);
             }
 
-            // websocket 關閉
-            disconnect();
+            sessionStorage.setItem("toBuySeats", seatNos);
         },
+
+        cancel: () => {
+            // 重設選擇票券數量
+            count = 0;
+            let seats = document.querySelectorAll("#layout div.selected");
+            for (let s of seats) {
+                s.classList.remove("selected");
+                s.classList.add("toSell");
+                sendMessage(s);
+            }
+        }
     };
 
+    // 取得場次的擁有座位的區域
+    let blockHasSeats;
 
+    $.ajax({
+        async: false,
+        type: 'GET',
+        url: '/seats/getBlockHasSeats' + `?actNo=${sessionStorage.getItem("activityNo")}`,
+        dataType: "json",
+        success: function (jsondata) {
+            blockHasSeats = jsondata;
+        }
+    });
 
-    // 區域按鈕相關變數及函式
+    // 頁面載入動作
     $(document).ready(function () {
-            fetch("BlockPrice/findAll")
-                .then(resp => resp.json())
-                .then(jsondata => {
-                        for(let j of jsondata){
-                            if(j.activityNo == sessionStorage.getItem("activityNo")){
+        // WebSocket 連線
+        connect();
+
+        // 清空下拉選單(selectSession)/ 按鈕(selectBlocks)/ 節目名稱及表演時間
+        document.getElementById('selectSession').innerHTML = "";
+        document.getElementById('actName').innerText = "";
+        document.getElementById('showTime').innerText = "";
+
+        // 取得場次資訊並加入下拉選單
+        fetch("Session/ActSessions" + `?actNo=${sessionStorage.getItem("activityNo")}`)
+            .then(resp => resp.json())
+            .then(jsondata => {
+                for (let j of jsondata) {
+                    if (j.sessionNo == sessionStorage.getItem("sessionNo")) {
+                        document.getElementById('selectSession').innerHTML += `
+                            <option value="${j.sessionNo}" selected>${j.sessionsTime} ${j.activity.aname}</option>
+                            `;
+
+                        document.getElementById('actName').innerText = `${j.activity.aname}`;
+
+                        document.getElementById('showTime').innerText = `${j.sessionsTime}`;
+
+                    } else {
+                        document.getElementById('selectSession').innerHTML += `
+                            <option value="${j.sessionNo}">${j.sessionsTime} ${j.activity.aname}</option>
+                            `;
+                    }
+                }
+            })
+
+        // 取得節目主視覺、座位圖並呈現於 HTML
+        fetch("/Activity/findByActNo" + `?actNo=${sessionStorage.getItem("activityNo")}`)
+            .then(resp => resp.json())
+            .then(jsondata => {
+                document.getElementById('seatsImg').src = `data:image/png;base64,${jsondata.aseatsImg}`;
+
+                let showpic = jsondata.aimgt;
+
+                for (let i = 0; i < showpic.length; i++) {
+                    if (showpic[i].aimgMain == 1) {
+                        document.getElementById('actImg').src = `data:image/png;base64,${showpic[i].aimg}`;
+                    }
+                }
+            })
+
+        // 預設為系統選位
+        selectBySystem();
+
+        // 每秒得到最新的 Redis 座位狀態
+        setInterval('getLastestLockedSeats();', 1000);
+    })
+
+    // 選擇場次後重新整理 HTML
+    function selectSession() {
+        sessionStorage.setItem("sessionNo", `${$("#selectSession").val()}`);
+        window.location.reload();
+    }
+
+    // 點選系統選位按鈕時，將按鈕的 data-bs-target 改為 "#orgSettings_system"
+    function selectBySystem() {
+        document.getElementById('selectBlocks').innerHTML = "";
+
+        fetch("BlockPrice/findAll")
+            .then(resp => resp.json())
+            .then(jsondata => {
+                    for (let j of jsondata) {
+                        if (j.activityNo == sessionStorage.getItem("activityNo")) {
+                            document.getElementById('selectBlocks').innerHTML += `
+                                <button name="selectOneBlock" value="${j.blockNo}"
+                                    class="main-btn btn-hover h_40 w-100 mt-5" type="button"
+                                    data-bs-toggle="modal" data-bs-target="#orgSettings_system"
+                                    style="margin: 5px!important; background-color: rgb(230, 230, 107);
+											    border: none; font-size: 1rem; color: black;"
+                                    onMouseDown="setKV(this.value)" onclick="setBlockNoAndName()">${j.blockName}
+                                </button>`;
+                        }
+                    }
+
+                    if (document.getElementById('selectBlocks').innerHTML === "") {
+                        document.getElementById('selectBlocks').innerHTML += `
+                                <button name="selectOneBlock" value=""
+                                    class="main-btn btn-hover h_40 w-100 mt-5" type="button"
+                                    data-bs-toggle="modal" data-bs-target="#orgSettings_system"
+                                    style="margin: 5px!important; background-color: rgb(230, 230, 107);
+							        border: none; font-size: 1rem; color: black;">
+							        立即購票
+                                </button>`;
+                    }
+                }
+            )
+    }
+
+    // 點選自行選位按鈕時，將按鈕的 data-bs-target 改為 "#orgSettings"，但如果對應區域沒有座位時，依然保持 "#orgSettings_system"
+    function selectByMember() {
+        document.getElementById('selectBlocks').innerHTML = "";
+
+        fetch("BlockPrice/findAll")
+            .then(resp => resp.json())
+            .then(jsondata => {
+                    for (let j of jsondata) {
+                        if (j.activityNo == sessionStorage.getItem("activityNo")) {
+                            if (blockHasSeats.includes(j.blockNo)) {
                                 document.getElementById('selectBlocks').innerHTML += `
                                 <button name="selectOneBlock" value="${j.blockNo}"
                                     class="main-btn btn-hover h_40 w-100 mt-5" type="button"
@@ -856,30 +933,104 @@
 											    border: none; font-size: 1rem; color: black;"
                                     onMouseDown="setKV(this.value)" onclick="seatsmgt.init()">${j.blockName}
                                 </button>`;
+                            } else {
+                                document.getElementById('selectBlocks').innerHTML += `
+                                <button name="selectOneBlock" value="${j.blockNo}"
+                                        class="main-btn btn-hover h_40 w-100 mt-5" type="button"
+                                        data-bs-toggle="modal" data-bs-target="#orgSettings_system"
+                                        style="margin: 5px!important; background-color: rgb(230, 230, 107);
+											    border: none; font-size: 1rem; color: black;"
+                                        onMouseDown="setKV(this.value)">${j.blockName}
+                                </button>`
                             }
                         }
                     }
-                )
-        }
-    )
 
-    // $('button[name="selectOneBlock"]').click(
-        // function(){
-        //     if($('#byMember').aria-selected == "true")
-        //         seatsmgt.init()
-        //     else
-        //         alert('電腦選位喔');
-        // }
-    // );
+                    if (document.getElementById('selectBlocks').innerHTML === "") {
+                        document.getElementById('selectBlocks').innerHTML += `
+                                <button name="selectOneBlock" value=""
+                                    class="main-btn btn-hover h_40 w-100 mt-5" type="button"
+                                    data-bs-toggle="modal" data-bs-target="#orgSettings_system"
+                                    style="margin: 5px!important; background-color: rgb(230, 230, 107);
+							        border: none; font-size: 1rem; color: black;">
+							        立即購票
+                                </button>`;
+                    }
+                }
+            )
+    }
 
+
+    // 零碎的 JS 函式
+
+    // 點選區塊按鈕後將區塊編號存入 SessionStorage
     function setKV(blockNo) {
         sessionStorage.setItem("blockNo", blockNo);
     }
 
+    // 系統選位的顯示視窗，應顯示對應區域名稱
+    function setBlockNoAndName() {
+        fetch("/BlockPrice/findById" + `?blockNo=${sessionStorage.getItem("blockNo")}`)
+            .then(resp => resp.json())
+            .then(jsondata => {
+                document.getElementById('blockName_system').innerHTML = "";
+                document.getElementById('blockName_system').innerHTML = `${jsondata.blockName}`;
+            })
+    }
 
+    // 監聽浮動視窗點擊空白 => 清空 Redis 所存的鎖定座位
+    $('#orgSettings').on('hidden.bs.modal', function (e) {
+        seatsmgt.cancel();
+    });
 
+    // 取得最新的 Redis 座位狀態
+    function getLastestLockedSeats() {
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: '/seats/getLockedSeatsBySession' + `?sessionNo=${sessionStorage.getItem("sessionNo")}`,
+            dataType: "json",
+            success: function (jsondata) {
+                lockedSeats = jsondata;
+            }
+        });
+    }
 
+    // 系統選位 => 購票
+    function TicketBySystem() {
+        fetch("/Activity/findByActNo" + `?actNo=${sessionStorage.getItem("activityNo")}`)
+            .then(resp => resp.json())
+            .then(jsondata => {
+                if (jsondata.wetherSeat != 1) { // 若節目完全沒有座位區分，將要購買的票券數量存在 SessionStorage
+                    // fetch("/Session/updateTicketQTY" + `?ticketChange=-${$('#ticketDecr').val()}&sessionNo=${sessionStorage.getItem("sessionNo")}`);
+                    sessionStorage.setItem("toBuyTickets", $('#ticketDecr').val());
+                } else { // 若節目有座位區分，發送請求到後端取得座位陣列
+                    fetch("/seats/getTicketsBystem" + `?ticketQTY=${$('#ticketDecr').val()}&blockNo=${sessionStorage.getItem("blockNo")}&sessionNo=${sessionStorage.getItem("sessionNo")}`)
+                        .then(resp => resp.json())
+                        .then(jsondata => {
+                                if (jsondata) {
+                                    let seatNos = [];
+                                    for (let j of jsondata) {
+                                        seatNos.push(j);
+                                        // 包裝取得的座位陣列，並送給 WebSocket 伺服器推播
+                                        let seat = document.createElement("div");
+                                        seat.id = j;
+                                        seat.classList.add("selected");
+                                        sendMessage(seat);
+                                    }
 
+                                    // 將要購買的座位編號以陣列的格式存在 SessionStorage
+                                    sessionStorage.setItem("toBuySeats", seatNos);
+
+                                    return;
+                                }
+
+                                alert("無對應數量票券");
+                            }
+                        )
+                }
+            })
+    }
 
 </script>
 
