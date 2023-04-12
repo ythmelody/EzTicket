@@ -1,5 +1,6 @@
 package com.ezticket.web.users.pojo;
 
+import com.ezticket.core.pojo.Core;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +13,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "MEMBER")
-public class Member {
+public class Member extends Core {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

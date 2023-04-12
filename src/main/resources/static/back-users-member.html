@@ -323,7 +323,7 @@
 </body>
 <script>
 	const selectElement = document.querySelector('.selectValue');
-	fetch('./back-users-member/ga')
+	fetch('./member/ga')
 		.then(response => response.json())
 		.then(data => {
 			const table = document.querySelector('.table tbody');
@@ -410,7 +410,7 @@
 									mcell: $(`#${member.mcell}`).val(),
 									address: $(`#${member.memberno}-address`).val()
 								}
-								fetch(`back-users-member/${member.memberno}`, {
+								fetch(`member/${member.memberno}`, {
 									method: "POST",
 									headers: { "Content-Type": "application/json" },
 									body: JSON.stringify(updateMember)
@@ -425,7 +425,7 @@
 
 						//以下為權限功能按鈕製作監聽權限按鈕
 						authbutton.addEventListener("click", () => {
-							fetch(`back-users-member/${member.memberno}/auth`, {
+							fetch(`member/${member.memberno}/auth`, {
 								method: "POST"
 							}).then(response => response.json())
 								.then(success => {

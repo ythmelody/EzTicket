@@ -531,7 +531,7 @@
 <script>
 	// 以下為權限功能設定按鈕頁
 	function refreshRoleData() {
-		fetch('back-users-my-team/garf')
+		fetch('role/garf')
 			.then(response => response.json())
 			.then(roleData => {
 				const status0Div = document.querySelector(".menu4"); //顯示停用角色的div
@@ -567,7 +567,7 @@
 							console.log(selectedValue);//測試被選中的角色的value
 
 							//讓點選的角色擁有的功能顯示在功能區塊
-							fetch("back-users-my-team/garf")
+							fetch("role/garf")
 								.then(response => response.json())
 								.then(roleData2 => {
 									funcDiv.innerHTML = ""; //因為foreach會讓我印到兩次,要清空前一次印出的功能列表
@@ -646,7 +646,7 @@
 		if ($(".role-menu.active").length) {
 			selectedRoleno = $(".role-menu.active").data("value");
 			console.log("被選取的角色" + selectedRoleno);
-			fetch(`/back-users-my-team/${selectedRoleno}/roleauth`, {
+			fetch(`/role/${selectedRoleno}/roleauth`, {
 				method: "POST",
 			}).then(success => {
 				swal("更改成功!", "您已調整了選擇的角色權限!", "success");
@@ -670,7 +670,7 @@
 			funcno: selectedFunc
 		}
 		if ($(".role-menu.active").length && $(".hasfuncs.active").length){
-			fetch("/back-users-my-team/removeRoleauthority", {
+			fetch("/roleauthority/removeRoleauthority", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(removeRoleauth)
@@ -679,7 +679,7 @@
 					.then(() => {   // 清空func相關的div 重載資料
 						$(".menu2").empty();
 						$(".menu3").empty();
-						fetch("back-users-my-team/garf")
+						fetch("role/garf")
 							.then(response => response.json())
 							.then(roleData2 => {
 								roleData2.forEach(role2 => {
@@ -756,7 +756,7 @@
 			funcno: selectedNoFunc
 		}
 		if ($(".role-menu.active").length && $(".nofuncs.active").length) {
-			fetch("/back-users-my-team/addRoleauthority", {
+			fetch("/roleauthority/addRoleauthority", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(addRoleauth)
@@ -765,7 +765,7 @@
 					.then(() => {   // 清空func相關的div 重載資料
 						$(".menu2").empty();
 						$(".menu3").empty();
-						fetch("back-users-my-team/garf")
+						fetch("role/garf")
 							.then(response => response.json())
 							.then(roleData2 => {
 								roleData2.forEach(role2 => {
@@ -856,7 +856,7 @@
 			rolename: $("#rolename").val(),
 			rolestatus: $('input[name="rolestatus"]:checked').val()
 		}
-		fetch("back-users-my-team/addNewRole", {
+		fetch("role/addNewRole", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(addNewRole)
@@ -875,7 +875,7 @@
 	})
 	// ------------------------以下為透過fetchAPI拿取資料後的功能製作-----------------------------------------------------
 	const selectElement = document.querySelector('.sp');//為了要監聽啟用停用選單
-	fetch('back-users-my-team/ga')
+	fetch('backuser/ga')
 		.then(response => response.json())
 		.then(data => {
 			const table = document.querySelector('.table tbody');
@@ -913,7 +913,7 @@
 						`;
 						table.appendChild(tr);
 						//根據角色 數量 產生相對應的 select 選項-------------------------------------------------------------
-						fetch('back-users-my-team/garf')
+						fetch('role/garf')
 							.then(response => response.json())
 							.then(roleData => {
 								const select = document.getElementById(`mySelect-${backuser.baaccount}`);
@@ -975,7 +975,7 @@
 									bacell: $(`#${backuser.bacell}`).val(),
 									bastatus: backuser.bastatus,
 								}
-								fetch(`/back-users-my-team/${backuser.bano}`, {
+								fetch(`/backuser/${backuser.bano}`, {
 									method: "POST",
 									headers: { "Content-Type": "application/json" },
 									body: JSON.stringify(updateBu)
@@ -990,7 +990,7 @@
 						//↓這邊是在做權限按鈕-------------------------------------------------------------------------------------------
 						const authbutton = document.getElementById(`myAuth-${backuser.bano}`);
 						authbutton.addEventListener("click", () => {
-							fetch(`back-users-my-team/${backuser.bano}/auth`, {
+							fetch(`backuser/${backuser.bano}/auth`, {
 								method: "POST"
 							}).then(response => response.json())
 								.then(success => {
@@ -1036,7 +1036,7 @@
 			baroleno: $("#baroleno").val(),
 			bastatus: "1"
 		}
-		fetch("back-users-my-team/insertBu", {
+		fetch("backuser/insertBu", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(newBu)
