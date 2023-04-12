@@ -659,7 +659,7 @@
 																		<label class="lab" for="name">姓名：</label>
 																		<input type="text" id="name" name="name"
 																			required><br><br>
-																			
+
 																		<label class="lab">性別：</label>
 																		<input type="radio" id="male" name="gender"
 																			value="1" required>
@@ -689,7 +689,8 @@
 
 																		<div>
 																			<button id="btn1" type="button"
-																				class="btn btn-primary">儲存</button>
+																				class="btn btn-primary">儲存</button><p id="success3"
+																				style="color: red; display: inline-block;">
 																		</div>
 																	</form>
 																</div>
@@ -1421,7 +1422,7 @@
 			.then(response => response.json())
 			.then(response => {
 				//檢視拿到的資料
-				console.log(response);
+				// console.log(response);
 
 				//頭貼那邊顯示會員ID資料
 				$(".un").text(`${response.mname}`)
@@ -1451,10 +1452,10 @@
 							}
 							reader.readAsDataURL(file);
 						} else {
-							alert("上傳失敗");
+							console.log("上傳失敗");
 						}
 					}).catch(error => {
-						alert("上傳失敗：" + error);
+						console.log("上傳失敗");
 					});
 				})
 				//顯示會員原有的資料
@@ -1547,7 +1548,33 @@
 			});
 		})
 
+		//按下儲存更改會員資料時
+		$("#btn1").click(() => {
+			
+			const data = {
+				memail:$("#email").val(),
+				mname:$("#name").val(),
+				gender:$("input[name='gender']:checked").val(),
+				birth:$("#birthday").val(),
+				mcell:$("#phone").val(),
+				mphone:$("#alt_phone").val(),
+				address:$("#address").val()
+			}
+			fetch("member/saveMemberEdit",{
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(data)
+			}).then(response => {
+				return response.text();
+			}).then(text => {
+				if (text === 'success') {
+					$("#success3").text("更改成功!")
+				}
+			}).catch(err => {
+				console.log('發生錯誤:', err);
+			});
 
+		})
 
 
 

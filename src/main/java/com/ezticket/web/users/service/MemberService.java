@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -124,6 +126,24 @@ public class MemberService {
             return "success";
         }else {
             throw new RuntimeException("Member not found with Memail: " + email);
+        }
+    }
+
+    public String updateMember(Map<String, String> data){
+        Optional<Member> member = Optional.ofNullable(memberRepository.findByMemail(data.get("memail")));
+        if(member.isPresent()){
+            Member updateTheMember = member.get();
+
+            updateTheMember.setMname(data.get("mname"));
+            updateTheMember.setGender(Integer.valueOf(data.get("gender")));
+            updateTheMember.setBirth(Date.valueOf(data.get("birth")));
+            updateTheMember.setMcell("mcell");
+            updateTheMember.setMphone("mphone");
+            updateTheMember.setAddress("address");
+            memberRepository.save(updateTheMember);
+            return "success";
+        }else {
+            throw new RuntimeException("Member not found with Memail: " + data.get("memail"));
         }
     }
 

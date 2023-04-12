@@ -137,5 +137,21 @@ public class MemberController {
         return status;
     }
 
+    @PostMapping("/saveMemberEdit")
+    @ResponseBody
+    public String updateMember(@RequestBody Map<String, String> data, HttpSession session) {
+        Member member = (Member) session.getAttribute("member");
+        if (member == null) {
+            System.out.println("Session找不到登入的會員資料");
+            return "error";
+        }
+        // 儲存資料到資料庫
+        String status = memberService.updateMember(data);
+        System.out.println("會員資料更新!");
+        System.out.println(status);
+
+        return status;
+    }
+
 
 }
