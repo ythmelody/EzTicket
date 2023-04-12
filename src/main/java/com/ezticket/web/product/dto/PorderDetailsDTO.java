@@ -12,7 +12,7 @@ import java.util.List;
 public class PorderDetailsDTO {
     private Integer porderno;
     private LocalDateTime porderdate;
-    private Integer ptotal;
+    private Integer pchecktotal;
     @JsonFormat(pattern = "yyyy-MM-dd kk:mm:ss")
     private LocalDateTime ppaydate;
     private List<Product> products;

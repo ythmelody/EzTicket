@@ -1739,7 +1739,7 @@
 		$('#add-event-tab').steps({
 			onFinish: function () {
 				// alert('Wizard Completed');
-				const checkresults = [judgePname(), judgePtag(), judgePclassno(), judgeHostno(), judgePprice(), judgePspecialprice(), judgePqty(), judgePsdate(), judgePedate(), judgePdiscrip(),judgeImg() ]
+				const checkresults = [judgePname(), judgePtag(), judgePclassno(), judgeHostno(), judgePprice(), judgePspecialprice(), judgePqty(), judgePsdate(), judgePedate(), judgePdiscrip(), judgeImg()]
 				let success = 0
 				for (const checkresult of checkresults) {
 					if (checkresult) {
@@ -1796,12 +1796,12 @@
 											 	<div class="default-event-thumb-btn">
 													<div class="thumb-change-btn">
 														<input type="file" id="thumb-img${count}" name=pimg${count}>
-															<label for="thumb-img${count}">Change Image</label>
+															<label for="thumb-img${count}">新增圖片</label>
 	
 	
 											</div>
 																			</div>
-																			<img id=img${count} src="" alt="">
+																			<img id=img${count} src="images/banners/hero-cover-01.jpg" alt="">
 																		</div>`);
 
 			const input = document.querySelector(`#thumb-img${count}`);
@@ -2045,20 +2045,6 @@
 					$("[name='pedate']").val(item.pedate);
 					$("[name='pstatus']").val(item.pstatus);
 					$("select[name='pstatus']").selectpicker('refresh');
-
-					for (let pimgt of item.pimgts) {
-						let count = 1;
-						$("#img" + count).attr('src', `ProductImg?pimgno=${pimgt.pimgno}`);
-						count++;
-					}
-
-					// 複製帶出多張商品未成功
-					// for(let pimgt of item["Pimgts"]){
-					// 	let count =2 ;
-					// 	$(`#thumb-img${count}`).val(pimgt.pimg).change();
-					// 	// $(`#thumb-img${count}`).change();
-					// 	count++;
-					// }
 
 					editor.setData(item.pdiscrip);
 

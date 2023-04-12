@@ -1,7 +1,6 @@
 package com.ezticket.web.activity.service;
 
 import com.ezticket.web.activity.dto.AimgtDto;
-import com.ezticket.web.activity.dto.TorderDto;
 import com.ezticket.web.activity.pojo.Aimgt;
 import com.ezticket.web.activity.repository.AimgtRepository;
 import org.modelmapper.ModelMapper;
@@ -28,15 +27,26 @@ public List<AimgtDto> findAll(){
 
     }
 
+    public Optional<AimgtDto> findById(Integer aimgNo) {
+        return aimgtRepository.findById(aimgNo).map(this::entityToDTO);
+    }
+
+    public List<AimgtDto> findAllByActivityNo(Integer activityNo){
+
+        return aimgtRepository.findAllByActivityNo(activityNo)
+                .stream()
+                .map(this::entityToDTO)
+                .collect(Collectors.toList());
+    }
+
+
+
 
     private AimgtDto entityToDTO(Aimgt aimgt){
-        AimgtDto aimgtDto = new AimgtDto();
-        aimgtDto= modelMapper.map(aimgt,AimgtDto.class);
-//        aimgtDto.setAimg(aimgt.getAimg());
-       return aimgtDto;
+        AimgtDto aimgtDto = modelMapper.map(aimgt, AimgtDto.class);
+        return aimgtDto;
    }
 
-    public Optional<AimgtDto> findById(Integer aimgNo) {
-    return aimgtRepository.findById(aimgNo).map(this::entityToDTO);
-    }
+
+
 }

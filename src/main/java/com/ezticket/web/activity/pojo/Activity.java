@@ -47,6 +47,8 @@ public class Activity {
     private Integer aRateQty;
     @Column(name = "APLACE")
     private String aPlace;
+    @Column(name = "APLACEADDRESS")
+    private String aPlaceAdress;
     @Column(name = "ANOTE")
     private String aNote;
     @Column(name = "ATICKETREMIND")

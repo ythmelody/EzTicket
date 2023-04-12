@@ -20,43 +20,18 @@ public class CollectService {
 
     }
 
-
-//    public EmpVO addEmp(String ename, String job, java.sql.Date hiredate,
-//                        Double sal, Double comm, Integer deptno) {
-//
-//        EmpVO empVO = new EmpVO();
-//
-//        empVO.setEname(ename);
-//        empVO.setJob(job);
-//        empVO.setHiredate(hiredate);
-//        empVO.setSal(sal);
-//        empVO.setComm(comm);
-//        empVO.setDeptno(deptno);
-//        dao.insert(empVO);
-//
-//        return empVO;
-//    }
-//
-//    //預留給 Struts 2 或 Spring MVC 用
-//    public void addEmp(EmpVO empVO) {
-//        dao.insert(empVO);
-//    }
-
 //    欠會員的修改功能
 //    public CollectVO updateCollect(Integer collectno, String memail) {
 //
-//        EmpVO empVO = new EmpVO();
+// Step1:  用 email 查出會員編號
 //
-//        empVO.setEmpno(empno);
-//        empVO.setEname(ename);
-//        empVO.setJob(job);
-//        empVO.setHiredate(hiredate);
-//        empVO.setSal(sal);
-//        empVO.setComm(comm);
-//        empVO.setDeptno(deptno);
-//        dao.update(empVO);
 //
-//        return dao.findByPrimaryKey(empno);
+// Step2: 更新 collect 表格中的會員編號
+//        CollectVO collectVO = new CollectVO();
+//
+//        cdao.update(collectVO);
+//
+//        return cdao.findByPK(collectno);
 //    }
 
 

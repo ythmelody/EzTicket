@@ -89,6 +89,11 @@
 
 
 
+<!--		Add on 04/08-->
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+		</dependency>
 
 	</dependencies>
 

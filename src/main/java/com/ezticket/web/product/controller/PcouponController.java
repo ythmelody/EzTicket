@@ -2,6 +2,7 @@ package com.ezticket.web.product.controller;
 
 import com.ezticket.web.product.dto.AddPcouponDTO;
 import com.ezticket.web.product.dto.PcouponDTO;
+import com.ezticket.web.product.dto.PcouponStatusDTO;
 import com.ezticket.web.product.service.PcouponService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,5 +32,15 @@ public class PcouponController {
     @ResponseBody
     public boolean postAddPcoupon(@RequestBody AddPcouponDTO couponBody){
         return pcouponService.addPcoupon(couponBody);
+    }
+    @PostMapping("/edit")
+    @ResponseBody
+    public boolean postEditPcoupon(@RequestBody AddPcouponDTO couponBody){
+        return pcouponService.editPcoupon(couponBody);
+    }
+    @PostMapping("/updateStatus")
+    @ResponseBody
+    public boolean updateByID(@RequestBody PcouponStatusDTO ps) {
+        return pcouponService.updateByID(ps.getPcouponno(),ps.getPcouponstatus());
     }
 }

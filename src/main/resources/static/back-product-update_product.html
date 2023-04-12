@@ -787,13 +787,17 @@
 																</div>
 															</div>
 
-
+															<div class="owl-carousel moreImgs-slider owl-theme"
+																id="moreProductImg">
+																<!-- 商品圖片擺放處 -->
+															</div>
 
 															<div class="form-group pt_30 pb_30">
 																<label class="form-label fs-16">上傳商品圖片</label>
 																<p class="mt-2 fs-14 d-block mb-3 pe_right">
 																	圖片尺寸限制：張數／尺寸大小
 																</p>
+
 																<div class="content-holder mt-4" id="uploadPictures">
 																	<!-- <div class="default-event-thumb">
 																		<div class="default-event-thumb-btn">
@@ -1527,6 +1531,7 @@
 	<script src="js/jquery-steps.min.js"></script>
 	<script src="js/datepicker.min.js"></script>
 	<script src="js/i18n/datepicker.en.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script>
 		$('#add-event-tab').steps({
 			onFinish: function () {
@@ -1548,45 +1553,47 @@
 			});
 	</script>
 
-<script>
+	<script>
 
-	//類別從資料庫帶入
-	fetch("PclassController",{
-		method :"POST",
-		body :new URLSearchParams({'action':"productClassList"})
-	}).then(resp => resp.json())
-	.then(list =>{
-		for (let item of list ){
-			$('#pclassSelector').append(`<option value=${item.pclassno}>${item.pclassname}</option>`);
-		}
-	}).then (function(){
-		$('.selectpicker').selectpicker('refresh');
-	})
+		//類別從資料庫帶入
+		fetch("PclassController", {
+			method: "POST",
+			body: new URLSearchParams({ 'action': "productClassList" })
+		}).then(resp => resp.json())
+			.then(list => {
+				for (let item of list) {
+					$('#pclassSelector').append(`<option value=${item.pclassno}>${item.pclassname}</option>`);
+				}
+			}).then(function () {
+				$('.selectpicker').selectpicker('refresh');
+			})
 
-</script>
+	</script>
 
 
 
 	<!-- 動態產生上傳商品圖片，一定要用jQuery.append()才可以正常送資料進資料庫，用JS+=到Controller檔案長度會是0無法順利送出 -->
 	<script>
-		let count = 1
-		previewPicture();
+		// let count = 1
+		
 
-		function previewPicture() {
+		function previewPicture(count) {
 			// const uploadPictures = document.querySelector('#uploadPictures');
+			console.log("previewPicture"+count);
 
-			$('#uploadPictures').append(`<div class="default-event-thumb">
+			$('#uploadPictures').append(`<div class="default-event-thumb default-event-thumb">
 											<div class="default-event-thumb-btn">
 												<div class="thumb-change-btn">
 																					<input type="file" id="thumb-img${count}"
 																						name=pimg${count}>
-																					<label for="thumb-img${count}">Change
-																						Image</label>
-	
-	
+																					<label for="thumb-img${count}">新增圖片
+																						</label>
+																					
+																					<div id = deleteImg></div>
+
 																				</div>
 																			</div>
-																			<img id=img${count} src="" alt="">
+																			<img id=img${count} src="images/banners/hero-cover-01.jpg" alt="">
 																		</div>`);
 
 			const input = document.querySelector(`#thumb-img${count}`);
@@ -1594,8 +1601,8 @@
 				const { files } = target;
 				const img = document.querySelector('#img' + count);
 				img.src = URL.createObjectURL(files[0]);
-				count++;
-				previewPicture();
+				// count++;
+				previewPicture(count+1);
 			})
 
 		}
@@ -1632,26 +1639,61 @@
 				$("[name='pstatus']").val(item.pstatus);
 				$("select[name='pstatus']").selectpicker('refresh');
 
-				console.log(item);
+				let count=1;
 				for (let pimgt of item.pimgts) {
-					let count = 1;
-					$("#img" + count).attr('src', `ProductImg?pimgno=${pimgt.pimgno}`);
+					$('#uploadPictures').append(`<div class="default-event-thumb">
+											<div class="default-event-thumb-btn">
+												<div class="thumb-change-btn">
+																					<input type="button" id="thumb-img${count}"
+																						name=pimg${count} onclick="deleteProductImg(${pimgt.pimgno})">
+																					<label for="thumb-img${count}">刪除圖片</label>
+																						
+	
+																				</div>
+																			</div>
+																			<img id=img${count} src="ProductImg?pimgno=${pimgt.pimgno}" alt="">
+																		</div>`);
 					count++;
 				}
-
-				// for(let pimgt of item["Pimgts"]){
-				// 	let count =2 ;
-				// 	$(`#thumb-img${count}`).val(pimgt.pimg).change();
-				// 	// $(`#thumb-img${count}`).change();
-				// 	count++;
-				// }
-
 				editor.setData(item.pdiscrip);
+				//要return 下面的then才接的到值
+				return count;
+				
 
+			}).then((count) =>{
+				console.log("fetch"+count);
+				previewPicture(count);
 			});
 
-	</script>
+		function deleteProductImg(pimgno){
+			fetch("ProductImg",{
+				method:"POST",
+				body: new URLSearchParams({ 
+					'pimgno':pimgno,
+					'action': "deleteProdouctImg" }),
+			}).then(resp => resp.json())
+				.then(item => {
+					console.log(item);
+					if (item ===true) {
+						swal({
+							title: "刪除成功",
+							icon: "success",
+							closeOnClickOutside: false,
+						}).then(() => {
+							window.location.reload();
+						})
+					} else {
+						swal({
+							title: "刪除失敗",
+							icon: "error",
+							closeOnClickOutside: false,
+						});
+					}
+				})
 
+		}	
+
+	</script>
 
 </body>
 

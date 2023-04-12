@@ -42,6 +42,7 @@
   <body class="d-flex flex-column h-100">
     <!-- Header Start-->
     <header class="header">
+      <div id="test"></div>
       <div class="header-inner">
         <nav
           class="navbar navbar-expand-lg bg-barren barren-head navbar fixed-top justify-content-sm-start pt-0 pb-0"
@@ -714,7 +715,7 @@
             const diff = dateDiffer(sessionsTime, curDate);
             // console.log(sessionsTime[0]);
             // console.log(curDate);
-            console.log(diff);
+
 
             str += `<div
                       class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mix arts concert workshops volunteer sports health_Wellness"
@@ -726,7 +727,7 @@
                             href="Shawn_venue_event_detail_view.html?activityNo=${i.activityNo}"
                             class="thumbnail-img"
                           >
-                            <img src="images/event-imgs/1 .jpg" alt="" />
+                            <img src="http://localhost:8085/Aimgt/findAllByActivityNo/${i.activityNo}" alt="" />
                           </a>
                           <span class="bookmark-icon" title="Bookmark"></span>
                         </div>
@@ -747,16 +748,18 @@
                         </div>
                       </div>
                     </div>`;
+           
           }
           listTab.innerHTML = str;
         });
         const search=document.querySelector('#search');
-        fetch("http://localhost:8085/Activity/findAll")
+         search.addEventListener('input',()=>{
+        fetch(`http://localhost:8085/Activity/ByActName?actName=${search.value}`)
         .then((Response) => Response.json())
         .then((data) => {
           let str = "";
           const curDate=new Date();
-            search.addEventListener('input',()=>{
+           
               for(i of data){
                 const sessionsTime = [];
             i.session.forEach(session => {
@@ -766,7 +769,7 @@
             // console.log(sessionsTime[0]);
             // console.log(curDate);
             console.log(diff);
-              if(search.value.match(i.aname)){
+          
                 str+=`<div
                       class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mix arts concert workshops volunteer sports health_Wellness"
                       data-ref="mixitup-target"
@@ -777,7 +780,7 @@
                             href="Shawn_venue_event_detail_view.html?activityNo=${i.activityNo}"
                             class="thumbnail-img"
                           >
-                            <img src="images/event-imgs/1 .jpg" alt="" />
+                            <img src="http://localhost:8085/Aimgt/findAllByActivityNo/${i.activityNo}" alt="" />
                           </a>
                           <span class="bookmark-icon" title="Bookmark"></span>
                         </div>
@@ -799,12 +802,13 @@
                       </div>
                     </div>`;
                 listTab.innerHTML=str;
-              }
+              
             }
+            
         });
         });
 
-       
+
     </script>
   </body>
 </html>

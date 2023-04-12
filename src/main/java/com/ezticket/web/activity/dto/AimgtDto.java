@@ -3,9 +3,6 @@ package com.ezticket.web.activity.dto;
 import com.ezticket.web.activity.pojo.Activity;
 import lombok.Data;
 
-import java.sql.Blob;
-import java.util.Base64;
-
 @Data
 public class AimgtDto {
     private  Integer aimgNo;
@@ -13,6 +10,9 @@ public class AimgtDto {
     private byte[] aimg;
     private Integer aimgMain;
 
+//    public void setAimg(byte[] aimg) {
+//        this.aimg = aimg;
+//    }
     private Activity activity;
 
 

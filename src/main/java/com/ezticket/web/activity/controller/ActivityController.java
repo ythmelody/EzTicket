@@ -2,9 +2,16 @@ package com.ezticket.web.activity.controller;
 
 import com.ezticket.web.activity.dto.ACommentDto;
 import com.ezticket.web.activity.dto.ActivityDto;
+import com.ezticket.web.activity.dto.AimgtDto;
+import com.ezticket.web.activity.pojo.AComment;
 import com.ezticket.web.activity.pojo.Activity;
 import com.ezticket.web.activity.service.ActivityService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +33,10 @@ public class ActivityController {
     @GetMapping("/findByaName")
     public Optional<ActivityDto> findByAname(String aName){
         return activityService.findByaName(aName);
+    }
+    @GetMapping("/findByactivityNo")
+    public Optional<ActivityDto> findByactivityNo(Integer activityNo){
+        return activityService.findByactivityNo(activityNo);
     }
 
     // Add by Shawn on 4/3
@@ -55,10 +66,23 @@ public class ActivityController {
         return activityService.getActByBlurActName(actName);
     };
 
-    @GetMapping("/findByactivityNo")
-    public Optional<ActivityDto> findByactivityNo(Integer activityNo){
-
-        return activityService.findByactivityNo(activityNo);
+    @GetMapping("/findAllByActivityNo/{activityNo}")
+    public ResponseEntity<byte[]> getImage(@PathVariable Integer activityNo) {
+        List<ActivityDto> activityDtos = activityService.findAllByActivityNo(activityNo);
+        if (!activityDtos.isEmpty()) {
+            ActivityDto activityDto = activityDtos.get(0);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG);
+            headers.setContentLength(activityDto.getASeatsImg().length);
+            return new ResponseEntity<>(activityDto.getASeatsImg(), headers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
-
+    @PostMapping("/insert")
+    public void insertActivity(@RequestBody String jsonData){
+        Gson gson = new Gson();
+        Activity activity = gson.fromJson(jsonData, Activity.class);
+        activityService.insertActivity(activity);
+    }
 }

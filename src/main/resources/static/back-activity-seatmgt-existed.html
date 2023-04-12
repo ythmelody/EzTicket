@@ -327,7 +327,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="d-main-title">
-                        <h3 id="actNameAndSession">田馥甄一一巡迴演唱會-高雄場 (場次編號：2200101)</h3>
+                        <h3 id="actNameAndSession"></h3>
                         <p></p>
                         <h5>區域名稱　<input id="blockName" type="text" placeholder="請輸入區域名稱" value=""
                                             class="form-control h_40" style="display: inline-block!important; width: 200px;" disabled></h5>
@@ -378,7 +378,7 @@
     </div>
     <div class="col-xl-12 col-lg-12 col-md-12">
         <div class="text-center mt-5">
-            <a href="#" class="main-btn btn-hover"
+            <a href="back-activity-seatmgt-sessioncanmodi.html" class="main-btn btn-hover"
                style="background-color: gray; border: gray;" onclick="seatsmgt.goBack()">　返回　</a>
             <a href="#" class="main-btn btn-hover"
                onclick="seatsmgt.save()">儲存變更</a>
@@ -560,11 +560,25 @@
 
         goBack: () => {
             sessionStorage.removeItem("blockNo");
-            alert("返回上一頁!")
         }
     };
 
     window.addEventListener("DOMContentLoaded", seatsmgt.init);
+
+    $(document).ready(function(){
+        $('#actNameAndSession').text('');
+
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: "/Activity/findByActNo"+`?actNo=${sessionStorage.getItem("activityNo")}`,
+            dataType: "json",
+            success: function (jsondata) {
+                $('#actNameAndSession').text(`${jsondata.aname} (場次編號：${sessionStorage.getItem("sessionNo")})`);
+            }
+        });
+
+    })
 
 
 

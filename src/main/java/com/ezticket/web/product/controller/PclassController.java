@@ -1,6 +1,7 @@
 package com.ezticket.web.product.controller;
 
 import com.ezticket.web.product.pojo.Pclass;
+import com.ezticket.web.product.pojo.Product;
 import com.ezticket.web.product.service.PclassService;
 import com.ezticket.web.product.service.PcommentService;
 import com.google.gson.Gson;
@@ -18,6 +19,7 @@ import javax.swing.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 
 
 @WebServlet("/PclassController")
@@ -86,8 +88,21 @@ public class PclassController extends HttpServlet {
             pw.flush();
         }
 
+        //查詢類別名稱及確認新增&修改類別是否重複名稱
+        if ("pclassnameComfirm".equals(action)) {
+            String pclassname = req.getParameter("pclassname");
+            List<Pclass> pclassList = pclassSvc.comfiremIfRepeated(pclassname);
+            list2json(pclassList, resp);
+        }
 
+        if ("pclassnameSearch".equals(action)) {
+            String pclassname = req.getParameter("pclassname");
+            List<Pclass> pclassList = pclassSvc.getAllByPclassNameSearch(pclassname);
+            list2json(pclassList, resp);
+        }
     }
+
+
 
     public void list2json(List<Pclass> pclassList, HttpServletResponse resp) throws IOException {
         Gson gson = new Gson();

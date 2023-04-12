@@ -385,6 +385,7 @@
                     </div>
                     <div class="form-group mt-30">
                         <label class="form-label">評論內容：</label>
+                        <input id="rcommentId" type="hidden" value="">
                         <textarea id="rcomment" class="form-textarea" disabled></textarea>
                     </div>
                     <div class="form-group mt-30">
@@ -473,6 +474,8 @@
 
     // 點擊 "受檢舉評論"，顯示頁面
     function reportbtn() {
+        $('#showName').val('');
+
         // 選單(狀態)呈現
         $('#statusSelector').html(`
                 <option value="all" selected>所有狀態</option>
@@ -557,9 +560,12 @@
                 rreason.innerHTML = "";
                 let rcomment = document.querySelector('#rcomment');
                 rcomment.innerHTML = "";
+                let rcommentId = document.querySelector('#rcommentId');
+                rcommentId.value = "";
 
                 $('#areportNo').val(report.areportNo);
                 rreason.innerHTML += `${report.awhy}`;
+                rcommentId.value = report.acomment.acommentNo;
                 rcomment.innerHTML += `${report.acomment.acommentCont}`;
                 if (Number(report.areportStatus) === 0) {
                     $("#rstatus>option[value='0']").prop("selected", true);
@@ -575,6 +581,15 @@
 
     // 修改受檢舉評論狀態
     function confirm_bad() {
+        // 連動評論狀態
+        if($('#rstatus').val() !== "2"){ // 不是被決定為取消顯示，都會出現在評論頁面
+            fetch("/acomment/UpdateOneAComment" + `?commentId=${$('#rcommentId').val()}&commentStatus=1`)
+            console.log("跑585行");
+        } else {
+            fetch("/acomment/UpdateOneAComment" + `?commentId=${$('#rcommentId').val()}&commentStatus=0`)
+            console.log("跑588行");
+        }
+
         url = `areport/UpdateOneAReport` + `?reportId=${$('#areportNo').val()}&reportStatus=${$('#rstatus').val()}`;
         fetch(url)
             .then((resp) => resp.json())
@@ -627,10 +642,10 @@
                     `<span class="status-circle blue-circle"></span>未處理`;
             } else if (j.areportStatus == 1) {
                 areportstatus.innerHTML +=
-                    `<span class="status-circle red-circle"></span>已處理 (顯示)`;
+                    `<span class="status-circle green-circle"></span>已處理 (顯示)`;
             } else {
                 areportstatus.innerHTML +=
-                    `<span class="status-circle green-circle"></span>已處理 (不顯示)`;
+                    `<span class="status-circle red-circle"></span>已處理 (不顯示)`;
             }
         }
         ;
@@ -640,6 +655,8 @@
 
     // 點擊 "所有評論"，顯示頁面
     function commentbtn() {
+        $('#showName').val('');
+
         // 選單(狀態)呈現
         $('#statusSelector').html(`
                 <option value="all" selected>所有狀態</option>
@@ -773,19 +790,17 @@
 						    </td>
                             `;
 
-            console.log(j.acommentNo);
-
             let acommentstatus = document.getElementById(`acommentstatus_${j.acommentNo}`);
 
             if (j.acommentStatus == 0) {
                 acommentstatus.innerHTML +=
-                    `<span class="status-circle blue-circle"></span>取消顯示`;
+                    `<span class="status-circle red-circle"></span>取消顯示`;
             } else if (j.acommentStatus == 1) {
                 acommentstatus.innerHTML +=
-                    `<span class="status-circle red-circle"></span>正常顯示`;
+                    `<span class="status-circle green-circle"></span>正常顯示`;
             } else {
                 acommentstatus.innerHTML +=
-                    `<span class="status-circle green-circle"></span>置頂`;
+                    `<span class="status-circle blue-circle"></span>置頂`;
             }
         }
         ;
@@ -813,7 +828,7 @@
             fetch(url_acomment)
                 .then((resp) => resp.json())
                 .then((jsondata) => {
-                    displayAReports(jsondata);
+                    displayAComments(jsondata);
                 })
         } else {
             fetch(url_areport)

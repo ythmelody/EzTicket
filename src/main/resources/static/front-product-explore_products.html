@@ -570,11 +570,8 @@
 					</div>
 				</div>
 				<div class="event-footer">
-					
-						<a href="checkout.html" class="main-btn btn-hover w-45" style="width:48%;">Buy Now</a>
+						<a onclick="buyNow(${item.productno})" class="main-btn btn-hover w-45" style="width:48%;">Buy Now</a>
 						<button type="button" class="main-btn btn-hover w-45" style="width:48%;" onclick="addCart(${item.productno})" id="product-incart"><i class="fa-solid fa-cart-shopping"></i></button>
-					
-					
 				</div>
 			</div>
 		</div>`);
@@ -582,13 +579,14 @@
 						$("#rateAvg" + item.productno).text('尚無評論')
 					}
 					else if (item.prateqty >= 1) {
-						$("#rateAvg" + item.productno).text(item.pratetotal / item.prateqty).append(`<i class="fa fa-star fa-2x">`);
+						$("#rateAvg" + item.productno).text((item.pratetotal / item.prateqty).toFixed(1)).append(`<i class="fa fa-star fa-2x">`);
 					}
 				}
 			}
 		</script>
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script src="js/my_porder.js"></script>
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 		<script>
 			//新增商品追蹤
