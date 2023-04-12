@@ -2,7 +2,9 @@ package com.ezticket.web.product.repository.Impl;
 
 import com.ezticket.web.product.pojo.Product;
 import com.ezticket.web.product.repository.ProductDAO;
+import com.ezticket.web.product.util.PageResult;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -263,6 +265,54 @@ public class ProductDAOImpl implements ProductDAO {
 //            se.printStackTrace();
 //        }
 //        return null;
+    }
+
+    public PageResult<Product> getAll(Map<String, String[]> map, Integer pageNumber, Integer pageSize) {
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Product> criteriaQuery = builder.createQuery(Product.class);
+        Root<Product> root = criteriaQuery.from(Product.class);
+
+        List<Predicate> predicateList = new ArrayList<>();
+
+        Set<String> keys = map.keySet();
+        int count = 0;
+        for (String key : keys) {
+            String value = map.get(key)[0]; //why[0]?
+            //!"action".equals(key) 要加避免當成where條件傳進來
+            if (value != null && value.trim().length() != 0 && !"action".equals(key)) {
+                count++;
+                predicateList.add(getPredicateForDB(builder, root, key, value));
+            }
+        }
+        criteriaQuery.where(predicateList.toArray(new Predicate[predicateList.size()]));
+
+        //取得查詢過後的資料
+        Query query = session.createQuery(criteriaQuery);
+        query.setFirstResult((pageNumber - 1) * pageSize);
+        query.setMaxResults(pageSize);
+        List<Product> productList = query.getResultList();
+
+        // 計算符合條件的總筆數
+        CriteriaQuery<Long> countQuery = builder.createQuery(Long.class);
+        countQuery.select(builder.count(countQuery.from(Product.class))).where(predicateList.toArray(new Predicate[predicateList.size()]));
+        Long totalCount = session.createQuery(countQuery).getSingleResult();
+
+//        Root<Product> countRoot = countQuery.from(Product.class);
+//        countQuery.select(builder.count(countRoot))
+//                .where(predicateList.toArray(new Predicate[predicateList.size()]));
+//
+//        TypedQuery<Long> typedQuery = session.createQuery(countQuery);
+//        Long totalCount = typedQuery.getSingleResult();
+//        Long totalCount = session.createQuery(countQuery).uniqueResult();
+
+
+
+        // 封裝分頁結果
+        PageResult<Product> pageResult = new PageResult<>();
+        pageResult.setTotalCount(totalCount);
+        pageResult.setData(productList);
+        return pageResult;
     }
 
 }

@@ -2,6 +2,7 @@ package com.ezticket.web.product.service;
 
 import com.ezticket.web.product.pojo.Product;
 import com.ezticket.web.product.repository.ProductDAO;
+import com.ezticket.web.product.util.PageResult;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -91,5 +92,9 @@ public class ProductService {
 
     public List<Product> getAllByproductSearch(Map<String, String[]> map) {
         return dao.getAll(map);
+    }
+
+    public PageResult<Product> getAllByproductSearch(Map<String, String[]> map, Integer pageNumber, Integer pageSize) {
+        return dao.getAll(map,pageNumber,pageSize);
     }
 }
