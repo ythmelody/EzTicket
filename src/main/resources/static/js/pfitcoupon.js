@@ -46,7 +46,8 @@ function fetchPcouponList(e) {
                             <i class="fa-solid fa-ellipsis-vertical"></i>
                           </button>
                           <div class="dropdown-menu dropdown-menu-right">
-                            <a href="#" class="dropdown-item" onclick="editCoupon(${obj.pcouponno})"><i class="fa-solid fa-pen me-3"></i>編輯</a>
+                            <a href="#" class="dropdown-item" data-bs-toggle="modal"
+														data-bs-target="#editcouponModal" onclick="editCoupon(${obj.pcouponno})"><i class="fa-solid fa-pen me-3"></i>編輯</a>
                             <a href="#" class="dropdown-item" onclick="saveCoupon(${obj.pcouponno}, event)"><i class="fa-solid fa-floppy-disk me-3"></i>儲存</a>
                           </div>
                         </div>
@@ -148,9 +149,6 @@ function formatDate(date, time) {
 
 function editCoupon(edit) {
 	const couponno = edit;
-	const editClass = document.querySelector('#editcouponModal');
-	editClass.style.display = "block";
-	editClass.classList.add('show');
 	fetch(`/pcoupon/getbyno?id=${couponno}`, {
 		method: 'GET',
 	}).then(response => response.json())

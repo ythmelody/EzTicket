@@ -15,9 +15,14 @@ $(document).ready(() => {
       let total = 0;
       for (let i = 0; i < data.products.length; i++) {
         //判斷是否已評論過
+        let imagesrc;
+        if (data.products[i].pimgts && data.products[i].pimgts[0]) {
+          imagesrc = `data:image/png;base64,${data.products[i].pimgts[0].pimg}`;
+        }
         if (data.pdetails[i].pcommentstatus === 0) {
           const detailslist = `<tr>
                               <td>${i + 1}</td>
+                              <td><img src="${imagesrc}" width="100" height="100" alt=""></td>
                               <td><a href="front-product-product_detail.html?productno=${data.products[i].productno}" target="_blank">${data.products[i].pname}</a></td>
                               <td>${data.pdetails[i].porderqty}</td>
                               <td>$${data.products[i].pprice}</td>
