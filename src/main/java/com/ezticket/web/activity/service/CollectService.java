@@ -39,6 +39,9 @@ public class CollectService {
         return thdao.findByCollectno(collectno);
     }
 
+    public List<TicketHolder> getByMemberno(Integer memberno) {
+        return thdao.getByMemberno(memberno);
+    }
     public List<TicketHolder> getAll() {
         return thdao.getAll();
     }
