@@ -48,4 +48,9 @@ public class SessionService {
     public Integer updateTicketQTY(Integer ticketChange, Integer sessionNo) {
         return sessionRepository.updateById(ticketChange, sessionNo);
     }
+
+    //    Add by Shawn on 04/11
+    public Optional<SessionDto> findById(Integer sessionNo){
+        return sessionRepository.findById(sessionNo).map(this::entityToDTO);
+    }
 }

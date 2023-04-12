@@ -376,6 +376,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="blockName_system">管理非座位席次數量</h5>
+                <input id="standingSeatsBN" type="hidden" value="">
                 <button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"><i
                         class="uil uil-multiply"></i></button>
             </div>
@@ -420,6 +421,7 @@
     const blockList = document.getElementById('blockList');
     let actImgMain;
     let flag;
+    let hasSeatsBlocks;
 
     // 將頁面標題重置
     $('#bodyTitle').text('');
@@ -430,6 +432,38 @@
             `);
 
     $(document).ready(function () {
+        showAllSessionBlocks();
+
+        // 取得節目擁有座位的區域
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: "/seats/getBlockHasSeats" + `?actNo=${sessionStorage.getItem("sessionNo")}`,
+            dataType: "json",
+            success: function (jsondata) {
+                hasSeatsBlocks = jsondata;
+            }
+        });
+
+        // 該場次若無座位表資訊則顯示 "複製區域按鈕"
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: "/seats/getSeatsBySession" + `?sessionNo=${sessionStorage.getItem("sessionNo")}`,
+            dataType: "json",
+            success: function (jsondata) {
+                flag = jsondata
+            }
+        });
+
+        if (!flag) {
+            $('#copyBlockBtn').css('display', '');
+        } else {
+            $('#copyBlockBtn').css('display', 'none');
+        }
+    })
+
+    function showAllSessionBlocks(){
         $.ajax({
             async: false,
             type: 'GET',
@@ -468,23 +502,22 @@
                     displayBlocks(jsondata, actImgMain);
                 }
             )
+    }
 
-        // 該場次若無座位表資訊則顯示 "複製區域按鈕"
-        $.ajax({
-            async: false,
-            type: 'GET',
-            url: "/seats/getSeatsBySession" + `?sessionNo=${sessionStorage.getItem("sessionNo")}`,
-            dataType: "json",
-            success: function (jsondata) {
-                flag = jsondata
-            }
-        });
+    // 查詢區域
+    blockSelector.addEventListener('change', function () {
 
-        if (!flag) {
-            $('#copyBlockBtn').css('display', '');
-        } else {
-            $('#copyBlockBtn').css('display', 'none');
+        if(blockSelector.value === "all"){
+            showAllSessionBlocks();
+            return;
         }
+
+        fetch('BlockPrice/findById' + `?blockNo=${blockSelector.value}`)
+            .then((resp) => resp.json())
+            .then((jsondata) => {
+                let array = [jsondata];
+                displayBlocks(array, actImgMain);
+            })
     })
 
     // 顯示區域
@@ -552,11 +585,16 @@
                     </div>
                 </div>`;
 
+            if(!hasSeatsBlocks.includes(j.blockNo)){
+                document.getElementById(`manageSeats_${j.blockNo}`).href = "back-activity-seatmgt-notexisted.html"
+            }
+
             if (j.blockType === 0) {
                 document.getElementById(`manageSeats_${j.blockNo}`).href = "#changeToSellNumbers";
                 document.getElementById(`manageSeats_${j.blockNo}`).setAttribute("data-bs-toggle", "modal");
                 document.getElementById(`manageSeats_${j.blockNo}`).classList.add("addFcn");
             };
+
         };
 
         for(let e of document.querySelectorAll(".addFcn")){
@@ -573,15 +611,48 @@
                 success: function (jsondata) {
                     if(jsondata[0] !== 0) {
                         document.getElementById('noSeatTickets').value = jsondata[0];
-                        console.log("run");
                     }
                     else{
                         document.getElementById('noSeatTickets').value = "";
-                        console.log("not run");
                     }
                 }
             });
+
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: "/BlockPrice/findById"+`?blockNo=${sessionStorage.getItem("blockNo")}`,
+            dataType: "json",
+            success: function (jsondata) {
+                $('#standingSeatsBN').val(`${jsondata.blockName}`);
+            }
+        });
     }
+
+    function updateNumbers(){
+        for (let i = 0; i < noSeatTickets.value; i ++) {
+            let status = 1;
+
+            const aSeatInfo = {
+                "sessionNo": sessionStorage.getItem("sessionNo"),
+                "blockNo": sessionStorage.getItem("blockNo"),
+                "blockName": $('#standingSeatsBN').val(),
+                "x": null,
+                "y": null,
+                "realX": null,
+                "realY": null,
+                "seatStatus": status
+            };
+
+            fetch('/seats/insertNewSeat', {
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(aSeatInfo)
+            })
+        }
+
+    }
+
 
 </script>
 

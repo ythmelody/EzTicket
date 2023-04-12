@@ -360,36 +360,36 @@ $('.engaging-slider').owlCarousel({
 })
 
 // Testimonial Slider 有改這邊評論才不會跑版
-$(document).ready(function () {
-	$('.testimonial-slider').owlCarousel({
-		items: 10,
-		loop: true,
-		margin: 20,
-		nav: false,
-		dots: true,
-		smartSpeed: 800,
-		autoplay: true,
-		autoplayTimeout: 3000,
-		autoplayHoverPause: true,
-		responsive: {
-			0: {
-				items: 1
-			},
-			600: {
-				items: 1
-			},
-			1000: {
-				items: 2
-			},
-			1200: {
-				items: 2
-			},
-			1400: {
-				items: 2
-			}
-		}
-	})
-});
+// $(document).ready(function () {
+// 	$('.testimonial-slider').owlCarousel({
+// 		items: 10,
+// 		loop: true,
+// 		margin: 20,
+// 		nav: false,
+// 		dots: true,
+// 		smartSpeed: 800,
+// 		autoplay: true,
+// 		autoplayTimeout: 3000,
+// 		autoplayHoverPause: true,
+// 		responsive: {
+// 			0: {
+// 				items: 1
+// 			},
+// 			600: {
+// 				items: 1
+// 			},
+// 			1000: {
+// 				items: 2
+// 			},
+// 			1200: {
+// 				items: 2
+// 			},
+// 			1400: {
+// 				items: 2
+// 			}
+// 		}
+// 	})
+// });
 
 // Organisations Slider
 $('.organisations-slider').owlCarousel({
