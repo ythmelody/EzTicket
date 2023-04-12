@@ -1,12 +1,13 @@
 package com.ezticket.web.users.service;
 
-import com.ezticket.web.users.dto.BackuserDTO;
 import com.ezticket.web.users.dto.MemberDTO;
+import com.ezticket.web.users.dto.MemberImgDTO;
 import com.ezticket.web.users.pojo.Member;
 import com.ezticket.web.users.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -62,6 +63,69 @@ public class MemberService {
         }else {
             throw new RuntimeException("Member not found with memberno: " + memberno);
         }
+    }
+
+    public boolean authenticate(String memail, String mpassword) {
+        Member member = memberRepository.findByMemail(memail);
+        if (member != null && member.getMpassword().equals(mpassword)) {
+            return true;
+        } else {
+            return false;
+        }
 
     }
+    public Member getMemberInfo(String memail){
+        Member member = memberRepository.findByMemail(memail);
+        return member;
+    }
+
+
+    public Member updateMemImg(MemberImgDTO memberImgDTO) throws IOException {
+        Optional<Member> member = memberRepository.findById(memberImgDTO.getMemberno());
+        if(member.isPresent()){
+            Member updateTheMember = member.get();
+            updateTheMember.setMimg(memberImgDTO.getFile().getBytes());
+            return  memberRepository.save(updateTheMember);
+        }else {
+            throw new RuntimeException("Member not found with memberno: " + memberImgDTO.getMemberno());
+        }
+    }
+
+    public String updateMpassword(String email, String oldPassword, String newPassword, String confirmPassword){
+        Optional<Member> member = Optional.ofNullable(memberRepository.findByMemail(email));
+        if(member.isPresent()){
+            Member updateTheMember = member.get();
+
+            if (!updateTheMember.getMpassword().equals(oldPassword)) {
+                System.out.println("輸入的舊密碼與真正的舊密碼不同!");
+                return "oPwdError";
+            }
+            if (!newPassword.equals(confirmPassword)) {
+                System.out.println("新密碼與確認密碼不同!");
+                return "newPwdError";
+            }
+            updateTheMember.setMpassword(newPassword);
+            memberRepository.save(updateTheMember);
+            return "success";
+        }else {
+            throw new RuntimeException("Member not found with Memail: " + email);
+        }
+    }
+
+    public String updateComrecipient(String email, String comrecipient, String comrephone, String comreaddress){
+        Optional<Member> member = Optional.ofNullable(memberRepository.findByMemail(email));
+        if(member.isPresent()){
+            Member updateTheMember = member.get();
+
+            updateTheMember.setComrecipient(comrecipient);
+            updateTheMember.setComrephone(comrephone);
+            updateTheMember.setComreaddress(comreaddress);
+            memberRepository.save(updateTheMember);
+            return "success";
+        }else {
+            throw new RuntimeException("Member not found with Memail: " + email);
+        }
+    }
+
+
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/back-users-host")
+@RequestMapping("/host")
 public class HostController {
     @Autowired
     private HostService hostService;

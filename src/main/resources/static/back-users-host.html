@@ -321,7 +321,7 @@
 
 </body>
 <script>
-	fetch("back-users-host/gh")
+	fetch("host/gh")
 		.then(response => response.json())
 		.then(hostData => {
 			hostData.forEach(host => {
@@ -352,7 +352,7 @@
 							hostcell: $(`#phone-${host.hostno}`).val(),
 						};
 
-						fetch(`/back-users-host/${host.hostno}`, {
+						fetch(`/host/${host.hostno}`, {
 							method: "POST",
 							headers: { "Content-Type": "application/json" },
 							body: JSON.stringify(updatedHost)
@@ -373,7 +373,7 @@
 			hostcontact: $("#hostContact").val(),
 			hostcell: $("#hostCell").val()
 		}
-		fetch("back-users-host/insertHost", {
+		fetch("host/insertHost", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(newHostData)
