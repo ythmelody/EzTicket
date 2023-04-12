@@ -48,8 +48,8 @@ public class SeatsController {
     @PostMapping("/insertNewSeat")
     public boolean insertNewSeats(@RequestBody String jsonData) {
         Gson gson = new Gson();
-        Seats seats = gson.fromJson(jsonData, Seats.class);
-        seatsService.insertNewSeat(seats);
+        Seats seat = gson.fromJson(jsonData, Seats.class);
+        seatsService.insertNewSeat(seat);
         return true;
     }
 
