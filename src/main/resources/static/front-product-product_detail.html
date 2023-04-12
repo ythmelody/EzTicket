@@ -581,14 +581,34 @@
 		$('#product-incart').click(function () {
 			let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 			let qty = document.querySelector('#count').value;
-			let existingItem = cartItems.find(item => item.data.productno === productno);
-			if (existingItem) {
-					existingItem.quantity += qty;
-					localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  		} else {
-				  // console.log("點擊加入購物車: " + productno);
-					addCart(productno);
+			let itemqty;
+			for(item of cartItems){
+				if(item.data.productno == productno){
+					itemqty = item;
+				}
 			}
+			if (itemqty) {
+				itemqty.quantity += parseInt(qty);
+				localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  		} else {
+				// console.log("點擊加入購物車: " + productno);
+				addCart(productno);
+			}
+			// 獲取購物車元素
+			let cart = document.getElementById('cart');
+			// 獲取購物車商品數量元素
+			let badge = cart.querySelector('.badge');
+			// 設置初始購物車商品數量為 0
+			let count = 0;
+			// 載入未結帳商品數量
+			$(document).ready(() => {
+				if (cartItems.length !== 0) {
+					for (item of cartItems) {
+						count += Number(item.quantity);
+					}
+					badge.innerHTML = count;
+				}
+			})
 		});
 		$('#buyNow').click(function () {
 			buyNow(productno);
