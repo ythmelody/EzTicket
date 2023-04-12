@@ -18,6 +18,11 @@ public interface ACommentRepository extends JpaRepository<AComment, Integer> {
     @Query("UPDATE AComment SET aCommentStatus = :statusNo WHERE aCommentNo = :commentId")
     public int update(@Param("commentId") int commentId, @Param("statusNo") int statusNo);
 
+    @Transactional
+    @Modifying
+    @Query("UPDATE AComment SET aLike = aLike + :alike WHERE aCommentNo = :commentId")
+    public int updateALike(@Param("alike") int aLike, @Param("commentId") int commentId);
+
     @Query("SELECT ac FROM AComment ac JOIN ac.activity act WHERE act.aName LIKE %?1%")
     public List<AComment> getACommentByActName(@Param("1") String actName);
 

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/acomment")
@@ -60,6 +61,21 @@ public class ACommentController {
         Gson gson = new Gson();
         AComment aComment = gson.fromJson(jsonData, AComment.class);
         return aCommentService.insertAComment(aComment);
+    }
+
+    @GetMapping("/getThumbUpCmtNos")
+    public Set<Integer> getACommentNosByMemberNo(@RequestParam Integer memberNo){
+        return aCommentService.getACommentNosByMemberNo(memberNo);
+    }
+
+    @GetMapping("/thumbUpCmtNo")
+    public boolean addThumbUp(Integer memberNo, Integer aCommentNo){
+        return aCommentService.addThumbUp(memberNo, aCommentNo);
+    }
+
+    @GetMapping("/thumbDownCmtNo")
+    public boolean removeThumbUp(Integer memberNo, Integer aCommentNo){
+        return aCommentService.removeThumbUp(memberNo, aCommentNo);
     }
 
 }

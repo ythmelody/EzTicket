@@ -761,15 +761,20 @@
 
 <!-- 點讚換圖 -->
 <script>
-    const info = {
-        memberNo: 85346,
-        activityno: 1
-    }
+    // 為了測試使用
+    sessionStorage.setItem("memberNo", 85346);
+    sessionStorage.setItem("activityNo", 1);
+
+    // =============================================================================
+
     const commentcontainer = document.querySelector('#commentcontainer');
+
+    // 從 Redis 撈出會員所對應的按讚評論編號並存到一個陣列以供後續比對
+    let commentArr = [];
 
     function comment(commentNo) {
         $('#aCommentNo').val(commentNo);
-        $('#memberNo').val(info.memberNo);
+        $('#memberNo').val(sessionStorage.getItem("memberNo"));
     }
 
     function submitComment() {
@@ -792,9 +797,27 @@
         if (btnClass === '') {
             event.target.src = 'images/thumbup_clicked.png';
             event.target.classList.add("thumbbed");
-        } else {
+            $.ajax({
+                async: false,
+                type: 'GET',
+                url: 'acomment/thumbUpCmtNo' + `?memberNo=${sessionStorage.getItem("memberNo")}&aCommentNo=${event.target.id.replace("thumb_","")}`,
+                dataType: "json",
+                success: function (jsondata) {
+
+                }
+            })}
+        else {
             event.target.src = 'images/thumbup_blank.png';
             event.target.classList.remove("thumbbed");
+            $.ajax({
+                async: false,
+                type: 'GET',
+                url: 'acomment/thumbDownCmtNo' + `?memberNo=${sessionStorage.getItem("memberNo")}&aCommentNo=${event.target.id.replace("thumb_","")}`,
+                dataType: "json",
+                success: function (jsondata) {
+
+                }
+            })
         }
     }
 
@@ -803,10 +826,12 @@
             $.ajax({
                 async: false,
                 type: 'GET',
-                url: 'acomment/ActAComments' + `?actNo=${info.activityno}`,
+                url: 'acomment/ActAComments' + `?actNo=${sessionStorage.getItem("activityNo")}`,
                 dataType: "json",
                 success: function (jsondata) {
                     for (let j of jsondata) {
+                        commentArr.push(j.acommentNo);
+
                         commentcontainer.innerHTML += `
                             <div class="commentclass item">
                                 <div class="main-card">
@@ -830,7 +855,7 @@
                                                     <td style="padding-top: 4px; width: 35px;">
                                                         <button
                                                             style="border: none; background-color: transparent;">
-                                                            <img name="thumbbtn"
+                                                            <img id="thumb_${j.acommentNo}" name="thumbbtn"
                                                                  style="width: 30px;"
                                                                  src="images/thumbup_blank.png"
                                                                  onClick="chgthumbimg()">
@@ -854,38 +879,59 @@
                                 </div>
                             </div>`;
                     }
-                }
-            }).then(function () {
-                    $('.testimonial-slider').owlCarousel({
-                        items: 10,
-                        loop: true,
-                        margin: 20,
-                        nav: false,
-                        dots: true,
-                        smartSpeed: 800,
-                        autoplay: true,
-                        autoplayTimeout: 3000,
-                        autoplayHoverPause: true,
-                        responsive: {
-                            0: {
-                                items: 1
-                            },
-                            600: {
-                                items: 1
-                            },
-                            1000: {
-                                items: 2
-                            },
-                            1200: {
-                                items: 2
-                            },
-                            1400: {
-                                items: 2
+
+                    // Document load 的時候顯示按過的讚，$(`#thumb_${i}`) 要新增在空讚的圖片中
+                    $.ajax({
+                            async: false,
+                            type: 'GET',
+                            url: 'acomment/getThumbUpCmtNos' + `?memberNo=${sessionStorage.getItem("memberNo")}`,
+                            dataType: "json",
+                            success: function (jsondata) {
+                                checkUpArr = Object.values(jsondata)
+
+                                for (let i of commentArr) {
+                                    if (checkUpArr.includes(i)) {
+                                        $(`#thumb_${i}`).attr('src', 'images/thumbup_clicked.png');
+                                        $(`#thumb_${i}`).addClass("thumbbed");
+                                    }
+                                }
+
                             }
                         }
-                    })
+                    )
                 }
-            )
+            }).then(function () {
+                $('.testimonial-slider').owlCarousel({
+                    items: 10,
+                    loop: true,
+                    margin: 20,
+                    nav: false,
+                    dots: true,
+                    smartSpeed: 800,
+                    autoplay: true,
+                    autoplayTimeout: 3000,
+                    autoplayHoverPause: true,
+                    responsive: {
+                        0: {
+                            items: 1
+                        },
+                        600: {
+                            items: 1
+                        },
+                        1000: {
+                            items: 2
+                        },
+                        1200: {
+                            items: 2
+                        },
+                        1400: {
+                            items: 2
+                        }
+                    }
+                })
+
+
+            })
         }
     )
 
