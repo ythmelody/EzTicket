@@ -27,6 +27,7 @@ public class ActivityDto {
     private Integer aRateTotal;
     private Integer aRateQty;
     private String aPlace;
+    private String aPlaceAdress;
     private String aNote;
     private String aTicketRemind;
     private List<Session> session;

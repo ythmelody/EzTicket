@@ -4,9 +4,8 @@ import com.ezticket.web.users.pojo.Host;
 import com.ezticket.web.users.repository.HostRepository;
 import com.ezticket.web.users.service.HostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class HostController {
     public List<Host> getAllHost(){ return  hostService.getAllHost(); }
 
     @PostMapping("/{hostno}")
-    public ResponseEntity<Host> updateHost(@PathVariable("hostno")Integer hostno,@RequestBody Host newhost){
+    public ResponseEntity<Host> updateHost(@PathVariable("hostno")Integer hostno, @RequestBody Host newhost){
         Host updateHost = hostService.updateHost(hostno,newhost);
         //測試編輯輸入的資料有沒有進來
         System.out.println("hostno: " + hostno);
