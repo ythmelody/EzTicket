@@ -12,6 +12,7 @@ import com.ezticket.web.product.pojo.Pcomment;
 import com.ezticket.web.product.pojo.Product;
 import com.ezticket.web.product.service.PimgtService;
 import com.ezticket.web.product.service.ProductService;
+import com.ezticket.web.product.util.PageResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import jakarta.servlet.ServletException;
@@ -84,6 +85,21 @@ public class ProductInfoServlet extends HttpServlet {
             List<Product> productList = productSvc.getAllByproductSearch(map); //轉交進行複合查詢
             list2json(productList, response);
         }
+
+        if ("ProductSearchPage".equals(action)) {
+            Map<String, String[]> map = request.getParameterMap(); //將得到的資料轉成map
+            Integer pageNumber =Integer.valueOf(request.getParameter("pageNumber"));
+            Integer pageSize =Integer.valueOf(request.getParameter("pageSize"));
+            PageResult<Product> productList = productSvc.getAllByproductSearch(map,pageNumber,pageSize); //轉交進行複合查詢
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+            String json = gson.toJson(productList);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter pw = response.getWriter();
+            pw.print(json);
+            pw.flush();
+            return;
+        }
     }
 
     public void list2json(List<Product> productList, HttpServletResponse response) throws IOException {
@@ -96,5 +112,7 @@ public class ProductInfoServlet extends HttpServlet {
         pw.print(json);
         pw.flush();
     }
+
+
 
 }
