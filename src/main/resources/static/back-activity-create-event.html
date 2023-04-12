@@ -40,7 +40,7 @@
     <link href="vendor/ckeditor5/sample/css/sample.css" rel="stylesheet" />
   </head>
 
-  <body class="d-flex flex-column h-100">
+  <body class="d-flex flex-column h-100" >
     <!-- Create Single Ticket Model Start-->
     <div
       class="modal fade"
@@ -245,27 +245,7 @@
                 <div class="col-lg-12 col-md-12">
                   <div class="main-card p-4 mt-4">
                     <div class="form-group">
-                      <div class="d-flex align-items-start">
-                        <label class="btn-switch m-0 me-3">
-                          <input
-                            type="checkbox"
-                            class=""
-                            id="bird-discount"
-                            value=""
-                          />
-                          <span class="checkbox-slider"></span>
-                        </label>
-                        <div class="d-flex flex-column">
-                          <label class="color-black mb-1"
-                            >I want to offer early bird discount.</label
-                          >
-                          <p class="mt-2 fs-14 d-block mb-3">
-                            Enabling this discount lets your attendees get all
-                            the regular tickets features at a discounted price.
-                          
-                          </p>
-                        </div>
-                      </div>
+                   
                       <div
                         class="online-event-discount-wrapper"
                         style="display: none"
@@ -610,28 +590,7 @@
                 </div>
                 <div class="col-lg-12 col-md-12">
                   <div class="main-card p-4 mt-4">
-                    <div class="form-group">
-                      <div class="d-flex align-items-start">
-                        <label class="btn-switch m-0 me-3">
-                          <input
-                            type="checkbox"
-                            class=""
-                            id="bird-discount2"
-                            value=""
-                          />
-                          <span class="checkbox-slider"></span>
-                        </label>
-                        <div class="d-flex flex-column">
-                          <label class="color-black mb-1"
-                            >I want to offer early bird discount.</label
-                          >
-                          <p class="mt-2 fs-14 d-block mb-3">
-                            Enabling this discount lets your attendees get all
-                            the regular tickets features at a discounted price.
-                          
-                          </p>
-                        </div>
-                      </div>
+                 
                       <div
                         class="online-event-discount-wrapper2"
                         style="display: none"
@@ -1252,33 +1211,7 @@
             <div class="col-xl-8 col-lg-9 col-md-12">
               <div class="wizard-steps-block">
                 <div id="add-event-tab" class="step-app">
-                  <ul class="step-steps">
-                    <li class="active">
-                      <a href="#tab_step1">
-                        <span class="number"></span>
-                        <span class="step-name" style="font-weight: bold"
-                          >編輯節目資訊</span
-                        >
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#tab_step2">
-                        <span class="number"></span>
-                        <span class="step-name" style="font-weight: bold"
-                          >編輯票券</span
-                        >
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#tab_step3">
-                        <span class="number"></span>
-                        <span class="step-name" style="font-weight: bold"
-                          >設定</span
-                        >
-                      </a>
-                    </li>
-                  </ul>
-                  <div class="step-content">
+                  <div >
                     <div
                       class="step-tab-panel step-tab-info active"
                       id="tab_step1"
@@ -1290,7 +1223,7 @@
                               <i
                                 class="fa-solid fa-circle-info step_icon me-3"
                               ></i
-                              >節目資訊
+                              >活動資訊
                             </h4>
                           </div>
                           <div class="p-4 bp-form main-form">
@@ -1298,7 +1231,7 @@
                               <div class="col-lg-12 col-md-12">
                                 <div class="form-group border_bottom pb_30">
                                   <label class="form-label fs-16"
-                                    >節目名稱</label
+                                    >活動名稱</label
                                   >
                                   <p class="mt-2 d-block fs-14 mb-3">
                                     查看您的名字如何出現在活動頁面上<br />
@@ -1309,472 +1242,140 @@
                                     type="text"
                                     placeholder="輸入活動名稱"
                                     value=""
+                                    id="aname"
                                   />
                                 </div>
                                 <div
                                   class="form-group border_bottom pt_30 pb_30"
                                 >
                                   <label class="form-label fs-16"
-                                    >選擇活動類別(可複選)</label
+                                    >選擇活動類別</label
                                   >
                                   <p class="mt-2 d-block fs-14 mb-3">
                                     選擇相關類別有助於提高活動曝光率。<br />
                                   
                                   </p>
                                   <div>
-                                    <input type="checkbox" />
-                                    <label for="">演唱會</label>
-                                    <input type="checkbox" />
-                                    <label for="">戲劇</label>
-                                    <input type="checkbox" />
-                                    <label for="">運動</label>
-                                    <input type="checkbox" />
-                                    <label for="">親子</label>
-                                    <input type="checkbox" />
-                                    <label for="">展覽</label>
-                                    <input type="checkbox" />
-                                    <label for="">脫口秀</label>
-                                    <input type="checkbox" />
-                                    <label for="">其他</label>
+                                    <input
+                                    class="form-control h_50"
+                                    type="text"
+                                    placeholder="輸入欲新增的活動類別"
+                                    id="inputaclassname"
+                                  />
+                                        <button id="inputbtn" class=" main-btn btn-hover h_40 pe-4 ps-4">新增</button>
+                                  
+                                </div><br>
+                                   
+                                  <div id="typeList">
+                                    <select name="" id="aclass" class="btn dropdown-toggle btn-light">
+                                      
+                                    </select>
+                                  </div>
+                                 
+                                </div>
+                                <div class="form-group border_bottom pb_30">
+                                  <label class="form-label fs-16"
+                                    >表演者</label
+                                  >
+                                  <p class="mt-2 d-block fs-14 mb-3">
+                                    使否有表演者<br />
+                                  </p>
+                                  <div>
+                                    <input type="checkbox" name="performerTrueFalse" value="yes" id="yes">
+                                    <label for="">是</label>
+                                    <input type="checkbox" name="performerTrueFalse" value="no" id="no">
+                                    <label for="">否</label>
+                                  </div>
+                                  <div style="display: none;" id="typePerformer">
+                                  <p class="mt-2 d-block fs-14 mb-3">
+                                    若表演者為複數請加、<br />
+                                    如:蕭敬騰、周杰倫、林俊傑<br />
+                                  </p>
+                                  <input
+                                    class="form-control h_50"
+                                    type="text"
+                                    placeholder="請輸入表演者名稱"
+                                    value=""
+                                    id="aperformer"
+                                  />
                                   </div>
                                 </div>
                                 <div
-                                  class="form-group border_bottom pt_30 pb_30"
+                                class="form-group border_bottom pt_30 pb_30"
+                              >
+                                <label class="form-label fs-16"
+                                  >主辦單位</label
                                 >
-                                  <label class="form-label fs-16"
-                                    >節目開始時間</label
-                                  >
-                                  <div class="row g-2">
-                                    <div class="col-md-6">
-                                      <label class="form-label mt-3 fs-6"
-                                        >節目開始日期</label
-                                      >
-                                      <div class="loc-group position-relative">
-                                        <input
-                                          class="form-control h_50 datepicker-here"
-                                          data-language="en"
-                                          type="text"
-                                          placeholder="MM/DD/YYYY"
-                                          value=""
-                                        />
-                                        <span class="absolute-icon"
-                                          ><i
-                                            class="fa-solid fa-calendar-days"
-                                          ></i
-                                        ></span>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                      <div class="row g-2">
-                                        <div class="col-md-6">
-                                          <div class="clock-icon">
-                                            <label class="form-label mt-3 fs-6"
-                                              >節目開始時間</label
-                                            >
-                                            <select
-                                              class="selectpicker"
-                                              data-size="5"
-                                              data-live-search="true"
-                                            >
-                                              <option value="00:00">
-                                                12:00 AM
-                                              </option>
-                                              <option value="00:15">
-                                                12:15 AM
-                                              </option>
-                                              <option value="00:30">
-                                                12:30 AM
-                                              </option>
-                                              <option value="00:45">
-                                                12:45 AM
-                                              </option>
-                                              <option value="01:00">
-                                                01:00 AM
-                                              </option>
-                                              <option value="01:15">
-                                                01:15 AM
-                                              </option>
-                                              <option value="01:30">
-                                                01:30 AM
-                                              </option>
-                                              <option value="01:45">
-                                                01:45 AM
-                                              </option>
-                                              <option value="02:00">
-                                                02:00 AM
-                                              </option>
-                                              <option value="02:15">
-                                                02:15 AM
-                                              </option>
-                                              <option value="02:30">
-                                                02:30 AM
-                                              </option>
-                                              <option value="02:45">
-                                                02:45 AM
-                                              </option>
-                                              <option value="03:00">
-                                                03:00 AM
-                                              </option>
-                                              <option value="03:15">
-                                                03:15 AM
-                                              </option>
-                                              <option value="03:30">
-                                                03:30 AM
-                                              </option>
-                                              <option value="03:45">
-                                                03:45 AM
-                                              </option>
-                                              <option value="04:00">
-                                                04:00 AM
-                                              </option>
-                                              <option value="04:15">
-                                                04:15 AM
-                                              </option>
-                                              <option value="04:30">
-                                                04:30 AM
-                                              </option>
-                                              <option value="04:45">
-                                                04:45 AM
-                                              </option>
-                                              <option value="05:00">
-                                                05:00 AM
-                                              </option>
-                                              <option value="05:15">
-                                                05:15 AM
-                                              </option>
-                                              <option value="05:30">
-                                                05:30 AM
-                                              </option>
-                                              <option value="05:45">
-                                                05:45 AM
-                                              </option>
-                                              <option value="06:00">
-                                                06:00 AM
-                                              </option>
-                                              <option value="06:15">
-                                                06:15 AM
-                                              </option>
-                                              <option value="06:30">
-                                                06:30 AM
-                                              </option>
-                                              <option value="06:45">
-                                                06:45 AM
-                                              </option>
-                                              <option value="07:00">
-                                                07:00 AM
-                                              </option>
-                                              <option value="07:15">
-                                                07:15 AM
-                                              </option>
-                                              <option value="07:30">
-                                                07:30 AM
-                                              </option>
-                                              <option value="07:45">
-                                                07:45 AM
-                                              </option>
-                                              <option value="08:00">
-                                                08:00 AM
-                                              </option>
-                                              <option value="08:15">
-                                                08:15 AM
-                                              </option>
-                                              <option value="08:30">
-                                                08:30 AM
-                                              </option>
-                                              <option value="08:45">
-                                                08:45 AM
-                                              </option>
-                                              <option value="09:00">
-                                                09:00 AM
-                                              </option>
-                                              <option value="09:15">
-                                                09:15 AM
-                                              </option>
-                                              <option value="09:30">
-                                                09:30 AM
-                                              </option>
-                                              <option value="09:45">
-                                                09:45 AM
-                                              </option>
-                                              <option
-                                                value="10:00"
-                                                selected="selected"
-                                              >
-                                                10:00 AM
-                                              </option>
-                                              <option value="10:15">
-                                                10:15 AM
-                                              </option>
-                                              <option value="10:30">
-                                                10:30 AM
-                                              </option>
-                                              <option value="10:45">
-                                                10:45 AM
-                                              </option>
-                                              <option value="11:00">
-                                                11:00 AM
-                                              </option>
-                                              <option value="11:15">
-                                                11:15 AM
-                                              </option>
-                                              <option value="11:30">
-                                                11:30 AM
-                                              </option>
-                                              <option value="11:45">
-                                                11:45 AM
-                                              </option>
-                                              <option value="12:00">
-                                                12:00 PM
-                                              </option>
-                                              <option value="12:15">
-                                                12:15 PM
-                                              </option>
-                                              <option value="12:30">
-                                                12:30 PM
-                                              </option>
-                                              <option value="12:45">
-                                                12:45 PM
-                                              </option>
-                                              <option value="13:00">
-                                                01:00 PM
-                                              </option>
-                                              <option value="13:15">
-                                                01:15 PM
-                                              </option>
-                                              <option value="13:30">
-                                                01:30 PM
-                                              </option>
-                                              <option value="13:45">
-                                                01:45 PM
-                                              </option>
-                                              <option value="14:00">
-                                                02:00 PM
-                                              </option>
-                                              <option value="14:15">
-                                                02:15 PM
-                                              </option>
-                                              <option value="14:30">
-                                                02:30 PM
-                                              </option>
-                                              <option value="14:45">
-                                                02:45 PM
-                                              </option>
-                                              <option value="15:00">
-                                                03:00 PM
-                                              </option>
-                                              <option value="15:15">
-                                                03:15 PM
-                                              </option>
-                                              <option value="15:30">
-                                                03:30 PM
-                                              </option>
-                                              <option value="15:45">
-                                                03:45 PM
-                                              </option>
-                                              <option value="16:00">
-                                                04:00 PM
-                                              </option>
-                                              <option value="16:15">
-                                                04:15 PM
-                                              </option>
-                                              <option value="16:30">
-                                                04:30 PM
-                                              </option>
-                                              <option value="16:45">
-                                                04:45 PM
-                                              </option>
-                                              <option value="17:00">
-                                                05:00 PM
-                                              </option>
-                                              <option value="17:15">
-                                                05:15 PM
-                                              </option>
-                                              <option value="17:30">
-                                                05:30 PM
-                                              </option>
-                                              <option value="17:45">
-                                                05:45 PM
-                                              </option>
-                                              <option value="18:00">
-                                                06:00 PM
-                                              </option>
-                                              <option value="18:15">
-                                                06:15 PM
-                                              </option>
-                                              <option value="18:30">
-                                                06:30 PM
-                                              </option>
-                                              <option value="18:45">
-                                                06:45 PM
-                                              </option>
-                                              <option value="19:00">
-                                                07:00 PM
-                                              </option>
-                                              <option value="19:15">
-                                                07:15 PM
-                                              </option>
-                                              <option value="19:30">
-                                                07:30 PM
-                                              </option>
-                                              <option value="19:45">
-                                                07:45 PM
-                                              </option>
-                                              <option value="20:00">
-                                                08:00 PM
-                                              </option>
-                                              <option value="20:15">
-                                                08:15 PM
-                                              </option>
-                                              <option value="20:30">
-                                                08:30 PM
-                                              </option>
-                                              <option value="20:45">
-                                                08:45 PM
-                                              </option>
-                                              <option value="21:00">
-                                                09:00 PM
-                                              </option>
-                                              <option value="21:15">
-                                                09:15 PM
-                                              </option>
-                                              <option value="21:30">
-                                                09:30 PM
-                                              </option>
-                                              <option value="21:45">
-                                                09:45 PM
-                                              </option>
-                                              <option value="22:00">
-                                                10:00 PM
-                                              </option>
-                                              <option value="22:15">
-                                                10:15 PM
-                                              </option>
-                                              <option value="22:30">
-                                                10:30 PM
-                                              </option>
-                                              <option value="22:45">
-                                                10:45 PM
-                                              </option>
-                                              <option value="23:00">
-                                                11:00 PM
-                                              </option>
-                                              <option value="23:15">
-                                                11:15 PM
-                                              </option>
-                                              <option value="23:30">
-                                                11:30 PM
-                                              </option>
-                                              <option value="23:45">
-                                                11:45 PM
-                                              </option>
-                                            </select>
-                                          </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                          <label class="form-label mt-3 fs-6"
-                                            >節目持續時間</label
-                                          >
-                                          <select
-                                            class="selectpicker"
-                                            data-size="5"
-                                            data-live-search="true"
-                                          >
-                                            <option value="15">15m</option>
-                                            <option value="30">30m</option>
-                                            <option value="45">45m</option>
-                                            <option
-                                              value="60"
-                                              selected="selected"
-                                            >
-                                              1h
-                                            </option>
-                                            <option value="75">1h 15m</option>
-                                            <option value="90">1h 30m</option>
-                                            <option value="105">1h 45m</option>
-                                            <option value="120">2h</option>
-                                            <option value="135">2h 15m</option>
-                                            <option value="150">2h 30m</option>
-                                            <option value="165">2h 45m</option>
-                                            <option value="180">3h</option>
-                                            <option value="195">3h 15m</option>
-                                            <option value="210">3h 30m</option>
-                                            <option value="225">3h 45m</option>
-                                          </select>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
+                                <div>
+                                  <input
+                                  class="form-control h_50"
+                                  type="text"
+                                  placeholder="輸入欲新增的主辦單位"
+                                  id="inputHost"
+                                />
+                                      <button id="inputHostBtn" class=" main-btn btn-hover h_40 pe-4 ps-4">新增</button>
+                                
+                              </div><br>
+                                 
+                                <div>
+                                  <select name="" id="host" class="btn dropdown-toggle btn-light">
+                                    
+                                  </select>
                                 </div>
+                               
+                              </div>
+                                
                                 <div class="form-group pt_30 pb_30">
                                   <label class="form-label fs-16"
-                                    >上傳節目圖片</label
+                                    >上傳活動圖片</label
                                   >
                                   <p class="mt-2 fs-14 d-block mb-3 pe_right">
                                     上傳色彩鮮豔、充滿活力的圖片作為活動的旗幟！<br />
                                   
                                   </p>
-                                  <div class="content-holder mt-4">
+                                  
+                                  <div class="content-holder mt-4" id="eventImgList">
+                                    <input type="file" accept="image/*" id="file1" /><br>
                                     <div class="default-event-thumb">
-                                      <div class="default-event-thumb-btn">
-                                        <div class="thumb-change-btn">
-                                          <input type="file" id="thumb-img" />
-                                          <label for="thumb-img"
-                                            >上傳圖片</label
-                                          >
-                                        </div>
-                                      </div>
-                                      <img
-                                        src="images/banners/custom-img.jpg"
-                                        alt=""
-                                      />
+                                       <img id="img1"/>
                                     </div>
                                   </div>
                                 </div>
-                                <div class="form-group border_bottom pb_30">
-                                  <label class="form-label fs-16"
-                                    >撰寫節目資訊</label
-                                  >
-                                  <div class="text-editor mt-4">
-                                    <div id="pd_editor"></div>
-                                  </div>
+                            
+                               
                                 </div>
-                                <div class="form-group border_bottom pb_30">
-                                  <label class="form-label fs-16">撰寫注意事項</label>
-                                  <div class="text-editor mt-4">
-                                    <div id="pd_editor" style="display: none;"></div><div class="ck ck-reset ck-editor ck-rounded-corners" role="application" dir="ltr" lang="en" aria-labelledby="ck-editor__label_ed1f79333450d676c65dc236dd8e5a6f0"><label class="ck ck-label ck-voice-label" id="ck-editor__label_ed1f79333450d676c65dc236dd8e5a6f0">Rich Text Editor</label><div class="ck ck-editor__top ck-reset_all" role="presentation"><div class="ck ck-sticky-panel"><div class="ck ck-sticky-panel__placeholder" style="display: none;"></div><div class="ck ck-sticky-panel__content"><div class="ck ck-toolbar ck-toolbar_grouping" role="toolbar" aria-label="Editor toolbar"><div class="ck ck-toolbar__items"><div class="ck ck-dropdown ck-heading-dropdown"><button class="ck ck-button ck-off ck-button_with-text ck-dropdown__button" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_eb847cf712868e670e2b84a70463eaa23" aria-haspopup="true"><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Heading</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_eb847cf712868e670e2b84a70463eaa23">Paragraph</span><svg class="ck ck-icon ck-dropdown__arrow" viewBox="0 0 10 10"><path d="M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z"></path></svg></button><div class="ck ck-reset ck-dropdown__panel ck-dropdown__panel_se"><ul class="ck ck-reset ck-list"><li class="ck ck-list__item"><button class="ck ck-button ck-heading_paragraph ck-on ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_efbec10fc3ae9370e600921426a423dd0"><span class="ck ck-tooltip ck-tooltip_s ck-hidden"><span class="ck ck-tooltip__text"></span></span><span class="ck ck-button__label" id="ck-editor__aria-label_efbec10fc3ae9370e600921426a423dd0">Paragraph</span></button></li><li class="ck ck-list__item"><button class="ck ck-button ck-heading_heading1 ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e615820543e0a03d847bda32f35d36d6d"><span class="ck ck-tooltip ck-tooltip_s ck-hidden"><span class="ck ck-tooltip__text"></span></span><span class="ck ck-button__label" id="ck-editor__aria-label_e615820543e0a03d847bda32f35d36d6d">Heading 1</span></button></li><li class="ck ck-list__item"><button class="ck ck-button ck-heading_heading2 ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e6cf2c93a07a8082a97c0255ba81c1225"><span class="ck ck-tooltip ck-tooltip_s ck-hidden"><span class="ck ck-tooltip__text"></span></span><span class="ck ck-button__label" id="ck-editor__aria-label_e6cf2c93a07a8082a97c0255ba81c1225">Heading 2</span></button></li><li class="ck ck-list__item"><button class="ck ck-button ck-heading_heading3 ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ef62927a45799138955b6f30710f3c606"><span class="ck ck-tooltip ck-tooltip_s ck-hidden"><span class="ck ck-tooltip__text"></span></span><span class="ck ck-button__label" id="ck-editor__aria-label_ef62927a45799138955b6f30710f3c606">Heading 3</span></button></li></ul></div></div><span class="ck ck-toolbar__separator"></span><button class="ck ck-button ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e686cd2134ff89cd25593f56bfd9ed2c7" aria-pressed="false"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M10.187 17H5.773c-.637 0-1.092-.138-1.364-.415-.273-.277-.409-.718-.409-1.323V4.738c0-.617.14-1.062.419-1.332.279-.27.73-.406 1.354-.406h4.68c.69 0 1.288.041 1.793.124.506.083.96.242 1.36.478.341.197.644.447.906.75a3.262 3.262 0 0 1 .808 2.162c0 1.401-.722 2.426-2.167 3.075C15.05 10.175 16 11.315 16 13.01a3.756 3.756 0 0 1-2.296 3.504 6.1 6.1 0 0 1-1.517.377c-.571.073-1.238.11-2 .11zm-.217-6.217H7v4.087h3.069c1.977 0 2.965-.69 2.965-2.072 0-.707-.256-1.22-.768-1.537-.512-.319-1.277-.478-2.296-.478zM7 5.13v3.619h2.606c.729 0 1.292-.067 1.69-.2a1.6 1.6 0 0 0 .91-.765c.165-.267.247-.566.247-.897 0-.707-.26-1.176-.778-1.409-.519-.232-1.31-.348-2.375-.348H7z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Bold (CTRL+B)</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_e686cd2134ff89cd25593f56bfd9ed2c7">Bold</span></button><button class="ck ck-button ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ecfd2b58bf529d77a225937606f7e112d" aria-pressed="false"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M9.586 14.633l.021.004c-.036.335.095.655.393.962.082.083.173.15.274.201h1.474a.6.6 0 1 1 0 1.2H5.304a.6.6 0 0 1 0-1.2h1.15c.474-.07.809-.182 1.005-.334.157-.122.291-.32.404-.597l2.416-9.55a1.053 1.053 0 0 0-.281-.823 1.12 1.12 0 0 0-.442-.296H8.15a.6.6 0 0 1 0-1.2h6.443a.6.6 0 1 1 0 1.2h-1.195c-.376.056-.65.155-.823.296-.215.175-.423.439-.623.79l-2.366 9.347z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Italic (CTRL+I)</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_ecfd2b58bf529d77a225937606f7e112d">Italic</span></button><button class="ck ck-button ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e0d01de6448129744566e3a0b57a65a64" aria-pressed="false"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M11.077 15l.991-1.416a.75.75 0 1 1 1.229.86l-1.148 1.64a.748.748 0 0 1-.217.206 5.251 5.251 0 0 1-8.503-5.955.741.741 0 0 1 .12-.274l1.147-1.639a.75.75 0 1 1 1.228.86L4.933 10.7l.006.003a3.75 3.75 0 0 0 6.132 4.294l.006.004zm5.494-5.335a.748.748 0 0 1-.12.274l-1.147 1.639a.75.75 0 1 1-1.228-.86l.86-1.23a3.75 3.75 0 0 0-6.144-4.301l-.86 1.229a.75.75 0 0 1-1.229-.86l1.148-1.64a.748.748 0 0 1 .217-.206 5.251 5.251 0 0 1 8.503 5.955zm-4.563-2.532a.75.75 0 0 1 .184 1.045l-3.155 4.505a.75.75 0 1 1-1.229-.86l3.155-4.506a.75.75 0 0 1 1.045-.184z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Link (Ctrl+K)</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_e0d01de6448129744566e3a0b57a65a64">Link</span></button><button class="ck ck-button ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e64e64b6bf39ca9ef1ee8828b0131afe4" aria-pressed="false"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M7 5.75c0 .414.336.75.75.75h9.5a.75.75 0 1 0 0-1.5h-9.5a.75.75 0 0 0-.75.75zm-6 0C1 4.784 1.777 4 2.75 4c.966 0 1.75.777 1.75 1.75 0 .966-.777 1.75-1.75 1.75C1.784 7.5 1 6.723 1 5.75zm6 9c0 .414.336.75.75.75h9.5a.75.75 0 1 0 0-1.5h-9.5a.75.75 0 0 0-.75.75zm-6 0c0-.966.777-1.75 1.75-1.75.966 0 1.75.777 1.75 1.75 0 .966-.777 1.75-1.75 1.75-.966 0-1.75-.777-1.75-1.75z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Bulleted List</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_e64e64b6bf39ca9ef1ee8828b0131afe4">Bulleted List</span></button><button class="ck ck-button ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ee642892f7b793a0e653048130222201c" aria-pressed="false"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M7 5.75c0 .414.336.75.75.75h9.5a.75.75 0 1 0 0-1.5h-9.5a.75.75 0 0 0-.75.75zM3.5 3v5H2V3.7H1v-1h2.5V3zM.343 17.857l2.59-3.257H2.92a.6.6 0 1 0-1.04 0H.302a2 2 0 1 1 3.995 0h-.001c-.048.405-.16.734-.333.988-.175.254-.59.692-1.244 1.312H4.3v1h-4l.043-.043zM7 14.75a.75.75 0 0 1 .75-.75h9.5a.75.75 0 1 1 0 1.5h-9.5a.75.75 0 0 1-.75-.75z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Numbered List</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_ee642892f7b793a0e653048130222201c">Numbered List</span></button><span class="ck ck-toolbar__separator"></span><button class="ck ck-button ck-disabled ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e0d8192c842b95d17ab1a6b8a23e1b80c" aria-disabled="true"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M2 3.75c0 .414.336.75.75.75h14.5a.75.75 0 1 0 0-1.5H2.75a.75.75 0 0 0-.75.75zm5 6c0 .414.336.75.75.75h9.5a.75.75 0 1 0 0-1.5h-9.5a.75.75 0 0 0-.75.75zM2.75 16.5h14.5a.75.75 0 1 0 0-1.5H2.75a.75.75 0 1 0 0 1.5zM1.632 6.95L5.02 9.358a.4.4 0 0 1-.013.661l-3.39 2.207A.4.4 0 0 1 1 11.892V7.275a.4.4 0 0 1 .632-.326z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Increase indent</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_e0d8192c842b95d17ab1a6b8a23e1b80c">Increase indent</span></button><button class="ck ck-button ck-disabled ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ec60775d52ca8dcf98672be6f34a9730c" aria-disabled="true"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M2 3.75c0 .414.336.75.75.75h14.5a.75.75 0 1 0 0-1.5H2.75a.75.75 0 0 0-.75.75zm5 6c0 .414.336.75.75.75h9.5a.75.75 0 1 0 0-1.5h-9.5a.75.75 0 0 0-.75.75zM2.75 16.5h14.5a.75.75 0 1 0 0-1.5H2.75a.75.75 0 1 0 0 1.5zm1.618-9.55L.98 9.358a.4.4 0 0 0 .013.661l3.39 2.207A.4.4 0 0 0 5 11.892V7.275a.4.4 0 0 0-.632-.326z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Decrease indent</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_ec60775d52ca8dcf98672be6f34a9730c">Decrease indent</span></button><span class="ck ck-toolbar__separator"></span><span class="ck-file-dialog-button"><button class="ck ck-button ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_eaea83b00ba31e7aa559c6a80a0a7e7fa"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M6.91 10.54c.26-.23.64-.21.88.03l3.36 3.14 2.23-2.06a.64.64 0 0 1 .87 0l2.52 2.97V4.5H3.2v10.12l3.71-4.08zm10.27-7.51c.6 0 1.09.47 1.09 1.05v11.84c0 .59-.49 1.06-1.09 1.06H2.79c-.6 0-1.09-.47-1.09-1.06V4.08c0-.58.49-1.05 1.1-1.05h14.38zm-5.22 5.56a1.96 1.96 0 1 1 3.4-1.96 1.96 1.96 0 0 1-3.4 1.96z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Insert image</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_eaea83b00ba31e7aa559c6a80a0a7e7fa">Insert image</span></button><input class="ck-hidden" type="file" tabindex="-1" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp,image/tiff" multiple="true"></span></div><span class="ck ck-toolbar__separator"></span><div class="ck ck-dropdown ck-toolbar__grouped-dropdown ck-toolbar-dropdown"><button class="ck ck-button ck-off ck-dropdown__button" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ed79a241162740c27bb60ee6bee90d13b" aria-haspopup="true"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><circle cx="9.5" cy="4.5" r="1.5"></circle><circle cx="9.5" cy="10.5" r="1.5"></circle><circle cx="9.5" cy="16.5" r="1.5"></circle></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Show more items</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_ed79a241162740c27bb60ee6bee90d13b">Show more items</span><svg class="ck ck-icon ck-dropdown__arrow" viewBox="0 0 10 10"><path d="M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z"></path></svg></button><div class="ck ck-reset ck-dropdown__panel ck-dropdown__panel_se"><div class="ck ck-toolbar" role="toolbar" aria-label="Dropdown toolbar"><div class="ck ck-toolbar__items"><button class="ck ck-button ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ef941aa2e7b300afe66f9a563a011d74d" aria-pressed="false"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M3 10.423a6.5 6.5 0 0 1 6.056-6.408l.038.67C6.448 5.423 5.354 7.663 5.22 10H9c.552 0 .5.432.5.986v4.511c0 .554-.448.503-1 .503h-5c-.552 0-.5-.449-.5-1.003v-4.574zm8 0a6.5 6.5 0 0 1 6.056-6.408l.038.67c-2.646.739-3.74 2.979-3.873 5.315H17c.552 0 .5.432.5.986v4.511c0 .554-.448.503-1 .503h-5c-.552 0-.5-.449-.5-1.003v-4.574z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Block quote</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_ef941aa2e7b300afe66f9a563a011d74d">Block quote</span></button><div class="ck ck-dropdown"><button class="ck ck-button ck-off ck-dropdown__button" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e563e573ccfa0c9b02dd53f1a7d44d4af" aria-haspopup="true"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M3 6v3h4V6H3zm0 4v3h4v-3H3zm0 4v3h4v-3H3zm5 3h4v-3H8v3zm5 0h4v-3h-4v3zm4-4v-3h-4v3h4zm0-4V6h-4v3h4zm1.5 8a1.5 1.5 0 0 1-1.5 1.5H3A1.5 1.5 0 0 1 1.5 17V4c.222-.863 1.068-1.5 2-1.5h13c.932 0 1.778.637 2 1.5v13zM12 13v-3H8v3h4zm0-4V6H8v3h4z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Insert table</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_e563e573ccfa0c9b02dd53f1a7d44d4af">Insert table</span><svg class="ck ck-icon ck-dropdown__arrow" viewBox="0 0 10 10"><path d="M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z"></path></svg></button><div class="ck ck-reset ck-dropdown__panel ck-dropdown__panel_se"></div></div><div class="ck ck-dropdown"><button class="ck ck-button ck-off ck-dropdown__button" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ef1d2ad9ead15429c3241ac9b0b263902" aria-haspopup="true"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M18.68 3.03c.6 0 .59-.03.59.55v12.84c0 .59.01.56-.59.56H1.29c-.6 0-.59.03-.59-.56V3.58c0-.58-.01-.55.6-.55h17.38zM15.77 15V5H4.2v10h11.57zM2 4v1h1V4H2zm0 2v1h1V6H2zm0 2v1h1V8H2zm0 2v1h1v-1H2zm0 2v1h1v-1H2zm0 2v1h1v-1H2zM17 4v1h1V4h-1zm0 2v1h1V6h-1zm0 2v1h1V8h-1zm0 2v1h1v-1h-1zm0 2v1h1v-1h-1zm0 2v1h1v-1h-1zM7.5 7.177a.4.4 0 0 1 .593-.351l5.133 2.824a.4.4 0 0 1 0 .7l-5.133 2.824a.4.4 0 0 1-.593-.35V7.176v.001z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Insert media</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_ef1d2ad9ead15429c3241ac9b0b263902">Insert media</span><svg class="ck ck-icon ck-dropdown__arrow" viewBox="0 0 10 10"><path d="M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z"></path></svg></button><div class="ck ck-reset ck-dropdown__panel ck-dropdown__panel_se"><form class="ck ck-media-form" tabindex="-1"><div class="ck ck-labeled-field-view"><label class="ck ck-label" id="ck-editor__label_e4368b155b830123a9a388b22749b82a2" for="ck-labeled-field-view-ec4a167c58d604215c8396034f7ae9f67">Media URL</label><input type="text" class="ck ck-input ck-input-text" id="ck-labeled-field-view-ec4a167c58d604215c8396034f7ae9f67" placeholder="https://example.com" aria-describedby="ck-labeled-field-view-status-e7bbbbd2bb797f0970a4648b90c6dc7a8"><div class="ck ck-labeled-field-view__status" id="ck-labeled-field-view-status-e7bbbbd2bb797f0970a4648b90c6dc7a8">Paste the media URL in the input.</div></div><button class="ck ck-button ck-off ck-button-save" type="submit" tabindex="-1" aria-labelledby="ck-editor__aria-label_ed5c5119a012a00b055c58380f8aaa94c"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M6.972 16.615a.997.997 0 0 1-.744-.292l-4.596-4.596a1 1 0 1 1 1.414-1.414l3.926 3.926 9.937-9.937a1 1 0 0 1 1.414 1.415L7.717 16.323a.997.997 0 0 1-.745.292z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Save</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_ed5c5119a012a00b055c58380f8aaa94c">Save</span></button><button class="ck ck-button ck-off ck-button-cancel" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e435124333411cb8ce87acdcbd6c05d2c"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M11.591 10.177l4.243 4.242a1 1 0 0 1-1.415 1.415l-4.242-4.243-4.243 4.243a1 1 0 0 1-1.414-1.415l4.243-4.242L4.52 5.934A1 1 0 0 1 5.934 4.52l4.243 4.243 4.242-4.243a1 1 0 1 1 1.415 1.414l-4.243 4.243z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Cancel</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_e435124333411cb8ce87acdcbd6c05d2c">Cancel</span></button></form></div></div><button class="ck ck-button ck-disabled ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e684c7e062c986d6557c0a648a97172f9" aria-disabled="true"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M5.042 9.367l2.189 1.837a.75.75 0 0 1-.965 1.149l-3.788-3.18a.747.747 0 0 1-.21-.284.75.75 0 0 1 .17-.945L6.23 4.762a.75.75 0 1 1 .964 1.15L4.863 7.866h8.917A.75.75 0 0 1 14 7.9a4 4 0 1 1-1.477 7.718l.344-1.489a2.5 2.5 0 1 0 1.094-4.73l.008-.032H5.042z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Undo (CTRL+Z)</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_e684c7e062c986d6557c0a648a97172f9">Undo</span></button><button class="ck ck-button ck-disabled ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ebc62fa4a2d30675905d00f113f4cbd57" aria-disabled="true"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M14.958 9.367l-2.189 1.837a.75.75 0 0 0 .965 1.149l3.788-3.18a.747.747 0 0 0 .21-.284.75.75 0 0 0-.17-.945L13.77 4.762a.75.75 0 1 0-.964 1.15l2.331 1.955H6.22A.75.75 0 0 0 6 7.9a4 4 0 1 0 1.477 7.718l-.344-1.489A2.5 2.5 0 1 1 6.039 9.4l-.008-.032h8.927z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Redo (CTRL+Y)</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_ebc62fa4a2d30675905d00f113f4cbd57">Redo</span></button></div></div></div></div></div></div></div></div><div class="ck ck-editor__main" role="presentation"><div class="ck-blurred ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline" lang="en" dir="ltr" role="textbox" aria-label="Rich Text Editor, main" contenteditable="true"><p><br data-cke-filler="true"></p></div></div></div>
-                                  </div>
+                                <div class="form-group mt-4">
+                                  <label class="form-label mb-2 fs-14">撰寫活動資訊</label>
+                                  <textarea class="form-textarea"
+                                  id="adiscrip"
+                                   ></textarea>
                                 </div>
-                                <div class="form-group border_bottom pb_30">
-                                  <label class="form-label fs-16">撰寫購票流程</label>
-                                  <div class="text-editor mt-4">
-                                    <div id="pd_editor" style="display: none;"></div><div class="ck ck-reset ck-editor ck-rounded-corners" role="application" dir="ltr" lang="en" aria-labelledby="ck-editor__label_ed1f79333450d676c65dc236dd8e5a6f0"><label class="ck ck-label ck-voice-label" id="ck-editor__label_ed1f79333450d676c65dc236dd8e5a6f0">Rich Text Editor</label><div class="ck ck-editor__top ck-reset_all" role="presentation"><div class="ck ck-sticky-panel"><div class="ck ck-sticky-panel__placeholder" style="display: none;"></div><div class="ck ck-sticky-panel__content"><div class="ck ck-toolbar ck-toolbar_grouping" role="toolbar" aria-label="Editor toolbar"><div class="ck ck-toolbar__items"><div class="ck ck-dropdown ck-heading-dropdown"><button class="ck ck-button ck-off ck-button_with-text ck-dropdown__button" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_eb847cf712868e670e2b84a70463eaa23" aria-haspopup="true"><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Heading</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_eb847cf712868e670e2b84a70463eaa23">Paragraph</span><svg class="ck ck-icon ck-dropdown__arrow" viewBox="0 0 10 10"><path d="M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z"></path></svg></button><div class="ck ck-reset ck-dropdown__panel ck-dropdown__panel_se"><ul class="ck ck-reset ck-list"><li class="ck ck-list__item"><button class="ck ck-button ck-heading_paragraph ck-on ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_efbec10fc3ae9370e600921426a423dd0"><span class="ck ck-tooltip ck-tooltip_s ck-hidden"><span class="ck ck-tooltip__text"></span></span><span class="ck ck-button__label" id="ck-editor__aria-label_efbec10fc3ae9370e600921426a423dd0">Paragraph</span></button></li><li class="ck ck-list__item"><button class="ck ck-button ck-heading_heading1 ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e615820543e0a03d847bda32f35d36d6d"><span class="ck ck-tooltip ck-tooltip_s ck-hidden"><span class="ck ck-tooltip__text"></span></span><span class="ck ck-button__label" id="ck-editor__aria-label_e615820543e0a03d847bda32f35d36d6d">Heading 1</span></button></li><li class="ck ck-list__item"><button class="ck ck-button ck-heading_heading2 ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e6cf2c93a07a8082a97c0255ba81c1225"><span class="ck ck-tooltip ck-tooltip_s ck-hidden"><span class="ck ck-tooltip__text"></span></span><span class="ck ck-button__label" id="ck-editor__aria-label_e6cf2c93a07a8082a97c0255ba81c1225">Heading 2</span></button></li><li class="ck ck-list__item"><button class="ck ck-button ck-heading_heading3 ck-off ck-button_with-text" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ef62927a45799138955b6f30710f3c606"><span class="ck ck-tooltip ck-tooltip_s ck-hidden"><span class="ck ck-tooltip__text"></span></span><span class="ck ck-button__label" id="ck-editor__aria-label_ef62927a45799138955b6f30710f3c606">Heading 3</span></button></li></ul></div></div><span class="ck ck-toolbar__separator"></span><button class="ck ck-button ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e686cd2134ff89cd25593f56bfd9ed2c7" aria-pressed="false"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M10.187 17H5.773c-.637 0-1.092-.138-1.364-.415-.273-.277-.409-.718-.409-1.323V4.738c0-.617.14-1.062.419-1.332.279-.27.73-.406 1.354-.406h4.68c.69 0 1.288.041 1.793.124.506.083.96.242 1.36.478.341.197.644.447.906.75a3.262 3.262 0 0 1 .808 2.162c0 1.401-.722 2.426-2.167 3.075C15.05 10.175 16 11.315 16 13.01a3.756 3.756 0 0 1-2.296 3.504 6.1 6.1 0 0 1-1.517.377c-.571.073-1.238.11-2 .11zm-.217-6.217H7v4.087h3.069c1.977 0 2.965-.69 2.965-2.072 0-.707-.256-1.22-.768-1.537-.512-.319-1.277-.478-2.296-.478zM7 5.13v3.619h2.606c.729 0 1.292-.067 1.69-.2a1.6 1.6 0 0 0 .91-.765c.165-.267.247-.566.247-.897 0-.707-.26-1.176-.778-1.409-.519-.232-1.31-.348-2.375-.348H7z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Bold (CTRL+B)</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_e686cd2134ff89cd25593f56bfd9ed2c7">Bold</span></button><button class="ck ck-button ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ecfd2b58bf529d77a225937606f7e112d" aria-pressed="false"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M9.586 14.633l.021.004c-.036.335.095.655.393.962.082.083.173.15.274.201h1.474a.6.6 0 1 1 0 1.2H5.304a.6.6 0 0 1 0-1.2h1.15c.474-.07.809-.182 1.005-.334.157-.122.291-.32.404-.597l2.416-9.55a1.053 1.053 0 0 0-.281-.823 1.12 1.12 0 0 0-.442-.296H8.15a.6.6 0 0 1 0-1.2h6.443a.6.6 0 1 1 0 1.2h-1.195c-.376.056-.65.155-.823.296-.215.175-.423.439-.623.79l-2.366 9.347z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Italic (CTRL+I)</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_ecfd2b58bf529d77a225937606f7e112d">Italic</span></button><button class="ck ck-button ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e0d01de6448129744566e3a0b57a65a64" aria-pressed="false"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M11.077 15l.991-1.416a.75.75 0 1 1 1.229.86l-1.148 1.64a.748.748 0 0 1-.217.206 5.251 5.251 0 0 1-8.503-5.955.741.741 0 0 1 .12-.274l1.147-1.639a.75.75 0 1 1 1.228.86L4.933 10.7l.006.003a3.75 3.75 0 0 0 6.132 4.294l.006.004zm5.494-5.335a.748.748 0 0 1-.12.274l-1.147 1.639a.75.75 0 1 1-1.228-.86l.86-1.23a3.75 3.75 0 0 0-6.144-4.301l-.86 1.229a.75.75 0 0 1-1.229-.86l1.148-1.64a.748.748 0 0 1 .217-.206 5.251 5.251 0 0 1 8.503 5.955zm-4.563-2.532a.75.75 0 0 1 .184 1.045l-3.155 4.505a.75.75 0 1 1-1.229-.86l3.155-4.506a.75.75 0 0 1 1.045-.184z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Link (Ctrl+K)</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_e0d01de6448129744566e3a0b57a65a64">Link</span></button><button class="ck ck-button ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e64e64b6bf39ca9ef1ee8828b0131afe4" aria-pressed="false"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M7 5.75c0 .414.336.75.75.75h9.5a.75.75 0 1 0 0-1.5h-9.5a.75.75 0 0 0-.75.75zm-6 0C1 4.784 1.777 4 2.75 4c.966 0 1.75.777 1.75 1.75 0 .966-.777 1.75-1.75 1.75C1.784 7.5 1 6.723 1 5.75zm6 9c0 .414.336.75.75.75h9.5a.75.75 0 1 0 0-1.5h-9.5a.75.75 0 0 0-.75.75zm-6 0c0-.966.777-1.75 1.75-1.75.966 0 1.75.777 1.75 1.75 0 .966-.777 1.75-1.75 1.75-.966 0-1.75-.777-1.75-1.75z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Bulleted List</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_e64e64b6bf39ca9ef1ee8828b0131afe4">Bulleted List</span></button><button class="ck ck-button ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ee642892f7b793a0e653048130222201c" aria-pressed="false"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M7 5.75c0 .414.336.75.75.75h9.5a.75.75 0 1 0 0-1.5h-9.5a.75.75 0 0 0-.75.75zM3.5 3v5H2V3.7H1v-1h2.5V3zM.343 17.857l2.59-3.257H2.92a.6.6 0 1 0-1.04 0H.302a2 2 0 1 1 3.995 0h-.001c-.048.405-.16.734-.333.988-.175.254-.59.692-1.244 1.312H4.3v1h-4l.043-.043zM7 14.75a.75.75 0 0 1 .75-.75h9.5a.75.75 0 1 1 0 1.5h-9.5a.75.75 0 0 1-.75-.75z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Numbered List</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_ee642892f7b793a0e653048130222201c">Numbered List</span></button><span class="ck ck-toolbar__separator"></span><button class="ck ck-button ck-disabled ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e0d8192c842b95d17ab1a6b8a23e1b80c" aria-disabled="true"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M2 3.75c0 .414.336.75.75.75h14.5a.75.75 0 1 0 0-1.5H2.75a.75.75 0 0 0-.75.75zm5 6c0 .414.336.75.75.75h9.5a.75.75 0 1 0 0-1.5h-9.5a.75.75 0 0 0-.75.75zM2.75 16.5h14.5a.75.75 0 1 0 0-1.5H2.75a.75.75 0 1 0 0 1.5zM1.632 6.95L5.02 9.358a.4.4 0 0 1-.013.661l-3.39 2.207A.4.4 0 0 1 1 11.892V7.275a.4.4 0 0 1 .632-.326z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Increase indent</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_e0d8192c842b95d17ab1a6b8a23e1b80c">Increase indent</span></button><button class="ck ck-button ck-disabled ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ec60775d52ca8dcf98672be6f34a9730c" aria-disabled="true"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M2 3.75c0 .414.336.75.75.75h14.5a.75.75 0 1 0 0-1.5H2.75a.75.75 0 0 0-.75.75zm5 6c0 .414.336.75.75.75h9.5a.75.75 0 1 0 0-1.5h-9.5a.75.75 0 0 0-.75.75zM2.75 16.5h14.5a.75.75 0 1 0 0-1.5H2.75a.75.75 0 1 0 0 1.5zm1.618-9.55L.98 9.358a.4.4 0 0 0 .013.661l3.39 2.207A.4.4 0 0 0 5 11.892V7.275a.4.4 0 0 0-.632-.326z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Decrease indent</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_ec60775d52ca8dcf98672be6f34a9730c">Decrease indent</span></button><span class="ck ck-toolbar__separator"></span><span class="ck-file-dialog-button"><button class="ck ck-button ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_eaea83b00ba31e7aa559c6a80a0a7e7fa"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M6.91 10.54c.26-.23.64-.21.88.03l3.36 3.14 2.23-2.06a.64.64 0 0 1 .87 0l2.52 2.97V4.5H3.2v10.12l3.71-4.08zm10.27-7.51c.6 0 1.09.47 1.09 1.05v11.84c0 .59-.49 1.06-1.09 1.06H2.79c-.6 0-1.09-.47-1.09-1.06V4.08c0-.58.49-1.05 1.1-1.05h14.38zm-5.22 5.56a1.96 1.96 0 1 1 3.4-1.96 1.96 1.96 0 0 1-3.4 1.96z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Insert image</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_eaea83b00ba31e7aa559c6a80a0a7e7fa">Insert image</span></button><input class="ck-hidden" type="file" tabindex="-1" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp,image/tiff" multiple="true"></span></div><span class="ck ck-toolbar__separator"></span><div class="ck ck-dropdown ck-toolbar__grouped-dropdown ck-toolbar-dropdown"><button class="ck ck-button ck-off ck-dropdown__button" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ed79a241162740c27bb60ee6bee90d13b" aria-haspopup="true"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><circle cx="9.5" cy="4.5" r="1.5"></circle><circle cx="9.5" cy="10.5" r="1.5"></circle><circle cx="9.5" cy="16.5" r="1.5"></circle></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Show more items</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_ed79a241162740c27bb60ee6bee90d13b">Show more items</span><svg class="ck ck-icon ck-dropdown__arrow" viewBox="0 0 10 10"><path d="M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z"></path></svg></button><div class="ck ck-reset ck-dropdown__panel ck-dropdown__panel_se"><div class="ck ck-toolbar" role="toolbar" aria-label="Dropdown toolbar"><div class="ck ck-toolbar__items"><button class="ck ck-button ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ef941aa2e7b300afe66f9a563a011d74d" aria-pressed="false"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M3 10.423a6.5 6.5 0 0 1 6.056-6.408l.038.67C6.448 5.423 5.354 7.663 5.22 10H9c.552 0 .5.432.5.986v4.511c0 .554-.448.503-1 .503h-5c-.552 0-.5-.449-.5-1.003v-4.574zm8 0a6.5 6.5 0 0 1 6.056-6.408l.038.67c-2.646.739-3.74 2.979-3.873 5.315H17c.552 0 .5.432.5.986v4.511c0 .554-.448.503-1 .503h-5c-.552 0-.5-.449-.5-1.003v-4.574z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Block quote</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_ef941aa2e7b300afe66f9a563a011d74d">Block quote</span></button><div class="ck ck-dropdown"><button class="ck ck-button ck-off ck-dropdown__button" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e563e573ccfa0c9b02dd53f1a7d44d4af" aria-haspopup="true"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M3 6v3h4V6H3zm0 4v3h4v-3H3zm0 4v3h4v-3H3zm5 3h4v-3H8v3zm5 0h4v-3h-4v3zm4-4v-3h-4v3h4zm0-4V6h-4v3h4zm1.5 8a1.5 1.5 0 0 1-1.5 1.5H3A1.5 1.5 0 0 1 1.5 17V4c.222-.863 1.068-1.5 2-1.5h13c.932 0 1.778.637 2 1.5v13zM12 13v-3H8v3h4zm0-4V6H8v3h4z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Insert table</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_e563e573ccfa0c9b02dd53f1a7d44d4af">Insert table</span><svg class="ck ck-icon ck-dropdown__arrow" viewBox="0 0 10 10"><path d="M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z"></path></svg></button><div class="ck ck-reset ck-dropdown__panel ck-dropdown__panel_se"></div></div><div class="ck ck-dropdown"><button class="ck ck-button ck-off ck-dropdown__button" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ef1d2ad9ead15429c3241ac9b0b263902" aria-haspopup="true"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M18.68 3.03c.6 0 .59-.03.59.55v12.84c0 .59.01.56-.59.56H1.29c-.6 0-.59.03-.59-.56V3.58c0-.58-.01-.55.6-.55h17.38zM15.77 15V5H4.2v10h11.57zM2 4v1h1V4H2zm0 2v1h1V6H2zm0 2v1h1V8H2zm0 2v1h1v-1H2zm0 2v1h1v-1H2zm0 2v1h1v-1H2zM17 4v1h1V4h-1zm0 2v1h1V6h-1zm0 2v1h1V8h-1zm0 2v1h1v-1h-1zm0 2v1h1v-1h-1zm0 2v1h1v-1h-1zM7.5 7.177a.4.4 0 0 1 .593-.351l5.133 2.824a.4.4 0 0 1 0 .7l-5.133 2.824a.4.4 0 0 1-.593-.35V7.176v.001z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Insert media</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_ef1d2ad9ead15429c3241ac9b0b263902">Insert media</span><svg class="ck ck-icon ck-dropdown__arrow" viewBox="0 0 10 10"><path d="M.941 4.523a.75.75 0 1 1 1.06-1.06l3.006 3.005 3.005-3.005a.75.75 0 1 1 1.06 1.06l-3.549 3.55a.75.75 0 0 1-1.168-.136L.941 4.523z"></path></svg></button><div class="ck ck-reset ck-dropdown__panel ck-dropdown__panel_se"><form class="ck ck-media-form" tabindex="-1"><div class="ck ck-labeled-field-view"><label class="ck ck-label" id="ck-editor__label_e4368b155b830123a9a388b22749b82a2" for="ck-labeled-field-view-ec4a167c58d604215c8396034f7ae9f67">Media URL</label><input type="text" class="ck ck-input ck-input-text" id="ck-labeled-field-view-ec4a167c58d604215c8396034f7ae9f67" placeholder="https://example.com" aria-describedby="ck-labeled-field-view-status-e7bbbbd2bb797f0970a4648b90c6dc7a8"><div class="ck ck-labeled-field-view__status" id="ck-labeled-field-view-status-e7bbbbd2bb797f0970a4648b90c6dc7a8">Paste the media URL in the input.</div></div><button class="ck ck-button ck-off ck-button-save" type="submit" tabindex="-1" aria-labelledby="ck-editor__aria-label_ed5c5119a012a00b055c58380f8aaa94c"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M6.972 16.615a.997.997 0 0 1-.744-.292l-4.596-4.596a1 1 0 1 1 1.414-1.414l3.926 3.926 9.937-9.937a1 1 0 0 1 1.414 1.415L7.717 16.323a.997.997 0 0 1-.745.292z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Save</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_ed5c5119a012a00b055c58380f8aaa94c">Save</span></button><button class="ck ck-button ck-off ck-button-cancel" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e435124333411cb8ce87acdcbd6c05d2c"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M11.591 10.177l4.243 4.242a1 1 0 0 1-1.415 1.415l-4.242-4.243-4.243 4.243a1 1 0 0 1-1.414-1.415l4.243-4.242L4.52 5.934A1 1 0 0 1 5.934 4.52l4.243 4.243 4.242-4.243a1 1 0 1 1 1.415 1.414l-4.243 4.243z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Cancel</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_e435124333411cb8ce87acdcbd6c05d2c">Cancel</span></button></form></div></div><button class="ck ck-button ck-disabled ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_e684c7e062c986d6557c0a648a97172f9" aria-disabled="true"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M5.042 9.367l2.189 1.837a.75.75 0 0 1-.965 1.149l-3.788-3.18a.747.747 0 0 1-.21-.284.75.75 0 0 1 .17-.945L6.23 4.762a.75.75 0 1 1 .964 1.15L4.863 7.866h8.917A.75.75 0 0 1 14 7.9a4 4 0 1 1-1.477 7.718l.344-1.489a2.5 2.5 0 1 0 1.094-4.73l.008-.032H5.042z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Undo (CTRL+Z)</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_e684c7e062c986d6557c0a648a97172f9">Undo</span></button><button class="ck ck-button ck-disabled ck-off" type="button" tabindex="-1" aria-labelledby="ck-editor__aria-label_ebc62fa4a2d30675905d00f113f4cbd57" aria-disabled="true"><svg class="ck ck-icon ck-button__icon" viewBox="0 0 20 20"><path d="M14.958 9.367l-2.189 1.837a.75.75 0 0 0 .965 1.149l3.788-3.18a.747.747 0 0 0 .21-.284.75.75 0 0 0-.17-.945L13.77 4.762a.75.75 0 1 0-.964 1.15l2.331 1.955H6.22A.75.75 0 0 0 6 7.9a4 4 0 1 0 1.477 7.718l-.344-1.489A2.5 2.5 0 1 1 6.039 9.4l-.008-.032h8.927z"></path></svg><span class="ck ck-tooltip ck-tooltip_s"><span class="ck ck-tooltip__text">Redo (CTRL+Y)</span></span><span class="ck ck-button__label" id="ck-editor__aria-label_ebc62fa4a2d30675905d00f113f4cbd57">Redo</span></button></div></div></div></div></div></div></div></div><div class="ck ck-editor__main" role="presentation"><div class="ck-blurred ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline" lang="en" dir="ltr" role="textbox" aria-label="Rich Text Editor, main" contenteditable="true"><p><br data-cke-filler="true"></p></div></div></div>
-                                  </div>
+                                <div class="form-group mt-4">
+                                  <label class="form-label mb-2 fs-14">撰寫注意事項</label>
+                                  <textarea class="form-textarea"
+                                  id="anote"
+                                    ></textarea>
+                                </div>
+                                <div class="form-group mt-4">
+                                  <label class="form-label mb-2 fs-14">撰寫購票流程</label>
+                                  <textarea class="form-textarea"
+                                  id="aticketremind"
+                                    ></textarea>
+                                </div>
                                 </div>
                                 <div class="form-group pt_30 pb_30">
                                   <label class="form-label fs-16"
                                     >上傳票價區域示意圖</label
                                   >
-                                  <div class="content-holder mt-4">
+                                  <div class="content-holder mt-4" id="seatImgBlock">
+                                    <input type="file" accept="image/*" id="seat" /><br>
                                     <div class="default-event-thumb">
-                                      <div class="default-event-thumb-btn">
-                                        <div class="thumb-change-btn">
-                                          <input type="file" id="thumb-img" />
-                                          <label for="thumb-img"
-                                            >上傳圖片</label
-                                          >
-                                        </div>
-                                      </div>
-                                      <img
-                                        src="images/banners/custom-img.jpg"
-                                        alt=""
-                                      />
+                                       <img id="aseatimg"/>
                                     </div>
                                   </div>
                                 </div>
                                 <div class="form-group pt_30 pb-2">
-                                  <label class="form-label fs-16"
-                                    >活動地點</label
-                                  >
+                              
                                   <div class="stepper-data-set">
                                     <div
                                       class="content-holder template-selector"
@@ -1783,37 +1384,34 @@
                                         <div class="col-md-12">
                                           <div class="venue-event">
                                             <div class="map">
-                                              <iframe
-                                                src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d27382.59422947023!2d75.84077125074462!3d30.919535510612153!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1534312417365"
-                                                style="border: 0"
-                                                allowfullscreen
-                                              ></iframe>
+                                           
                                             </div>
                                           </div>
                                         </div>
                                         <div class="col-md-12">
                                           <div class="form-group mt-1">
                                             <label class="form-label fs-6"
-                                              >節目場地</label
+                                              >活動場地</label
                                             >
                                             <input
                                               class="form-control h_50"
                                               type="text"
                                               placeholder=""
                                               value="輸入場地名稱"
+                                              id="aplace"
                                             />
                                           </div>
                                         </div>
                                         <div class="col-md-6">
                                           <div class="form-group mt-1">
                                             <label class="form-label fs-6"
-                                              >節目地址</label
+                                              >活動地址</label
                                             >
                                             <input
                                               class="form-control h_50"
                                               type="text"
                                               placeholder=""
-                                              value="輸入節目地址"
+                                              value="輸入活動地址"
                                             />
                                           </div>
                                         </div>
@@ -1834,7 +1432,7 @@
                           <div class="bp-title">
                             <h4>
                               <i class="fa-solid fa-ticket step_icon me-3"></i
-                              >票券
+                              >區域票價
                             </h4>
                           </div>
                           <div class="bp-form main-form">
@@ -1842,7 +1440,7 @@
                               <div class="">
                                 <div class="ticket-section">
                                   <label class="form-label fs-16"
-                                    >編輯票券</label
+                                    >編輯區域票價</label
                                   >
                                 </div>
                                 <div
@@ -1860,9 +1458,9 @@
                                     <button
                                       class=" main-btn btn-hover h_40 pe-4 ps-4"
                                       type="button"
-                                      id="dropdownMenuButton"
+                                      id="addBlockPriceBtn"
                                     >
-                                      <span>增加票券種類</span>
+                                      <span>增加票價區域</span>
                                     </button>
                                  
                                   </div>
@@ -1883,236 +1481,14 @@
                                   </p>
                                 </div>
                                 <div class="ticket-type-item-list mt-4">
-                                  <div class="price-ticket-card mt-4">
-                                    <div
-                                      class="price-ticket-card-head d-md-flex flex-wrap align-items-start justify-content-between position-relative p-4"
-                                    >
-                                      <div
-                                        class="d-flex align-items-center top-name"
-                                      >
-                                        <div class="icon-box">
-                                          <span
-                                            class="icon-big rotate-icon icon icon-purple"
-                                          >
-                                            <i class="fa-solid fa-ticket"></i>
-                                          </span>
-                                          <h5 class="fs-16 mb-1 mt-1">
-                                            黃明志大飛機 早鳥優惠
-                                          </h5>
-                                          <p class="text-gray-50 m-0">
-                                            <span class="visitor-date-time"
-                                              >2023/3/10</span
-                                            >
-                                          </p>
-                                        </div>
-                                      </div>
-                                      <div class="d-flex align-items-center">
-                                        <div class="price-badge">
-                                          <img
-                                            src="images/discount.png"
-                                            alt=""
-                                          />
-                                        </div>
-                                        <label
-                                          class="btn-switch tfs-8 mb-0 me-4 mt-1"
-                                        >
-                                          <input
-                                            type="checkbox"
-                                            value=""
-                                            checked
-                                          />
-                                          <span class="checkbox-slider"></span>
-                                        </label>
-                                       <div
-                                          class="dropdown dropdown-default dropdown-text dropdown-icon-item"
-                                        >
-                                          <button
-                                            class="option-btn-1"
-                                            type="button"
-                                            data-bs-toggle="dropdown"
-                                            aria-expanded="false"
-                                          >
-                                            <i
-                                              class="fa-solid fa-ellipsis-vertical"
-                                            ></i>
-                                          </button>
-                                          <div
-                                            class="dropdown-menu dropdown-menu-end"
-                                          >
-                                            <a href="#" class="dropdown-item"
-                                              ><i
-                                                class="fa-solid fa-pen me-3"
-                                              ></i
-                                              >編輯</a
-                                            >
-                                            <a href="#" class="dropdown-item"
-                                              ><i
-                                                class="fa-solid fa-trash-can me-3"
-                                              ></i
-                                              >刪除</a
-                                            >
-                                            <a href="#" class="dropdown-item"
-                                            ><i class="fa-solid fa-clone me-3"></i
-                                              >複製</a
-                                          >
-                                          
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
+                                  <div class="price-ticket-card mt-4" id="blockPriceList">
+                          
                                     <div
                                       class="price-ticket-card-body border_top p-4"
                                     >
-                                      <div
-                                        class="full-width d-flex flex-wrap justify-content-between align-items-center"
-                                      >
-                                        <div class="icon-box">
-                                          <div class="icon me-3">
-                                            <i class="fa-solid fa-ticket"></i>
-                                          </div>
-                                          <span class="text-145"
-                                            >票券總數</span
-                                          >
-                                          <h6 class="coupon-status">20</h6>
-                                        </div>
-                                        <div class="icon-box">
-                                          <div class="icon me-3">
-                                            <i class="fa-solid fa-users"></i>
-                                          </div>
-                                          <span class="text-145"
-                                            >單筆訂單購買上限</span
-                                          >
-                                          <h6 class="coupon-status">2</h6>
-                                        </div>
-                                        <div class="icon-box">
-                                          <div class="icon me-3">
-                                            <i
-                                              class="fa-solid fa-cart-shopping"
-                                            ></i>
-                                          </div>
-                                          <span class="text-145">票價</span>
-                                          <h6 class="coupon-status">$1000</h6>
-                                        </div>
-                                      </div>
                                     </div>
                                   </div>
-                                  <div class="price-ticket-card mt-4">
-                                    <div
-                                      class="price-ticket-card-head d-md-flex flex-wrap align-items-start justify-content-between position-relative p-4"
-                                    >
-                                      <div
-                                        class="d-flex align-items-center top-name"
-                                      >
-                                        <div class="icon-box">
-                                          <span
-                                            class="icon-big rotate-icon icon icon-yellow"
-                                          >
-                                            <i class="fa-solid fa-ticket"></i>
-                                          </span>
-                                          <h5 class="fs-16 mb-1 mt-1">
-                                           黃明志 大飛機ibon
-                                          </h5>
-                                          <p class="text-gray-50 m-0">
-                                            <span class="visitor-date-time"
-                                              >2023/4/10</span
-                                            >
-                                          </p>
-                                        </div>
-                                      </div>
-                                      <div class="d-flex align-items-center">
-                                        <div class="price-badge">
-                                          <img
-                                            src="images/discount.png"
-                                            alt=""
-                                          />
-                                        </div>
-                                        <label
-                                          class="btn-switch tfs-8 mb-0 me-4 mt-1"
-                                        >
-                                          <input
-                                            type="checkbox"
-                                            value=""
-                                            checked
-                                          />
-                                          <span class="checkbox-slider"></span>
-                                        </label>
-                                        <div
-                                          class="dropdown dropdown-default dropdown-text dropdown-icon-item"
-                                        >
-                                          <button
-                                            class="option-btn-1"
-                                            type="button"
-                                            data-bs-toggle="dropdown"
-                                            aria-expanded="false"
-                                          >
-                                            <i
-                                              class="fa-solid fa-ellipsis-vertical"
-                                            ></i>
-                                          </button>
-                                          <div
-                                            class="dropdown-menu dropdown-menu-end"
-                                          >
-                                            <a href="#" class="dropdown-item"
-                                              ><i
-                                                class="fa-solid fa-pen me-3"
-                                              ></i
-                                              >編輯</a
-                                            >
-                                            <a href="#" class="dropdown-item"
-                                              ><i
-                                                class="fa-solid fa-trash-can me-3"
-                                              ></i
-                                              >刪除</a
-                                            >
-                                            <a href="#" class="dropdown-item"
-                                            ><i class="fa-solid fa-clone me-3"></i
-                                              >複製</a
-                                          >
-                                          
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div
-                                      class="price-ticket-card-body border_top p-4"
-                                    >
-                                      <div
-                                        class="full-width d-flex flex-wrap justify-content-between align-items-center"
-                                      >
-                                        <div class="icon-box">
-                                          <div class="icon me-3">
-                                            <i class="fa-solid fa-ticket"></i>
-                                          </div>
-                                          <span class="text-145"
-                                            >票券總數</span
-                                          >
-                                          <h6 class="coupon-status">
-                                            ˋ400
-                                          </h6>
-                                        </div>
-                                        <div class="icon-box">
-                                          <div class="icon me-3">
-                                            <i class="fa-solid fa-users"></i>
-                                          </div>
-                                          <span class="text-145"
-                                            >單筆訂單購買上限</span
-                                          >
-                                          <h6 class="coupon-status">
-                                            10
-                                          </h6>
-                                        </div>
-                                        <div class="icon-box">
-                                          <div class="icon me-3">
-                                            <i
-                                              class="fa-solid fa-cart-shopping"
-                                            ></i>
-                                          </div>
-                                          <span class="text-145">票價</span>
-                                          <h6 class="coupon-status">2000</h6>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
+  
                                 </div>
                               </div>
                             </div>
@@ -2143,724 +1519,50 @@
                                   <div
                                     class="setting-item border_bottom pb_30 pt-4"
                                   >
-                                    <div class="d-flex align-items-start">
-                                      <label class="btn-switch m-0 me-3">
-                                        <input
-                                          type="checkbox"
-                                          class=""
-                                          id="booking-start-time-btn"
-                                          value=""
-                                          checked
-                                        />
-                                        <span class="checkbox-slider"></span>
-                                      </label>
-                                      <div class="d-flex flex-column">
-                                        <label class="color-black fw-bold mb-1"
-                                          >節目立即上架</label
-                                        >
-                                        <p class="mt-2 fs-14 d-block mb-0">
-                                        如不立即上架則取消此選項.
-                                        </p>
-                                      </div>
-                                    </div>
+                                
                                     <div
-                                      class="booking-start-time-holder"
-                                      style="display: none"
+                                      class="booking-start-time-holder" 
                                     >
                                       <div class="form-group pt_30">
                                         <label class="form-label fs-16"
-                                          >節目上架時間</label
+                                          ><b>活動上架時間</label
                                         >
                                         <div class="row g-3">
                                           <div class="col-md-6">
                                             <label class="form-label mt-3 fs-6"
-                                              >上架日期</label
+                                              >上架時間</label
                                             >
                                             <div
                                               class="loc-group position-relative"
                                             >
                                               <input
-                                                class="form-control h_50 datepicker-here"
                                                 data-language="en"
-                                                type="text"
-                                                placeholder="MM/DD/YYYY"
+                                                type="datetime-local"
                                                 value=""
+                                                id="asdate"
                                               />
-                                              <span class="absolute-icon"
-                                                ><i
-                                                  class="fa-solid fa-calendar-days"
-                                                ></i
-                                              ></span>
+                                              
                                             </div>
                                           </div>
                                           <div class="col-md-6">
-                                            <div class="clock-icon">
-                                              <label
-                                                class="form-label mt-3 fs-6"
-                                                >上架時間</label
-                                              >
-                                              <select
-                                                class="selectpicker"
-                                                data-size="5"
-                                                data-live-search="true"
-                                              >
-                                                <option value="00:00">
-                                                  12:00 AM
-                                                </option>
-                                                <option value="00:15">
-                                                  12:15 AM
-                                                </option>
-                                                <option value="00:30">
-                                                  12:30 AM
-                                                </option>
-                                                <option value="00:45">
-                                                  12:45 AM
-                                                </option>
-                                                <option value="01:00">
-                                                  01:00 AM
-                                                </option>
-                                                <option value="01:15">
-                                                  01:15 AM
-                                                </option>
-                                                <option value="01:30">
-                                                  01:30 AM
-                                                </option>
-                                                <option value="01:45">
-                                                  01:45 AM
-                                                </option>
-                                                <option value="02:00">
-                                                  02:00 AM
-                                                </option>
-                                                <option value="02:15">
-                                                  02:15 AM
-                                                </option>
-                                                <option value="02:30">
-                                                  02:30 AM
-                                                </option>
-                                                <option value="02:45">
-                                                  02:45 AM
-                                                </option>
-                                                <option value="03:00">
-                                                  03:00 AM
-                                                </option>
-                                                <option value="03:15">
-                                                  03:15 AM
-                                                </option>
-                                                <option value="03:30">
-                                                  03:30 AM
-                                                </option>
-                                                <option value="03:45">
-                                                  03:45 AM
-                                                </option>
-                                                <option value="04:00">
-                                                  04:00 AM
-                                                </option>
-                                                <option value="04:15">
-                                                  04:15 AM
-                                                </option>
-                                                <option value="04:30">
-                                                  04:30 AM
-                                                </option>
-                                                <option value="04:45">
-                                                  04:45 AM
-                                                </option>
-                                                <option value="05:00">
-                                                  05:00 AM
-                                                </option>
-                                                <option value="05:15">
-                                                  05:15 AM
-                                                </option>
-                                                <option value="05:30">
-                                                  05:30 AM
-                                                </option>
-                                                <option value="05:45">
-                                                  05:45 AM
-                                                </option>
-                                                <option value="06:00">
-                                                  06:00 AM
-                                                </option>
-                                                <option value="06:15">
-                                                  06:15 AM
-                                                </option>
-                                                <option value="06:30">
-                                                  06:30 AM
-                                                </option>
-                                                <option value="06:45">
-                                                  06:45 AM
-                                                </option>
-                                                <option value="07:00">
-                                                  07:00 AM
-                                                </option>
-                                                <option value="07:15">
-                                                  07:15 AM
-                                                </option>
-                                                <option value="07:30">
-                                                  07:30 AM
-                                                </option>
-                                                <option value="07:45">
-                                                  07:45 AM
-                                                </option>
-                                                <option value="08:00">
-                                                  08:00 AM
-                                                </option>
-                                                <option value="08:15">
-                                                  08:15 AM
-                                                </option>
-                                                <option value="08:30">
-                                                  08:30 AM
-                                                </option>
-                                                <option value="08:45">
-                                                  08:45 AM
-                                                </option>
-                                                <option value="09:00">
-                                                  09:00 AM
-                                                </option>
-                                                <option value="09:15">
-                                                  09:15 AM
-                                                </option>
-                                                <option value="09:30">
-                                                  09:30 AM
-                                                </option>
-                                                <option value="09:45">
-                                                  09:45 AM
-                                                </option>
-                                                <option
-                                                  value="10:00"
-                                                  selected="selected"
-                                                >
-                                                  10:00 AM
-                                                </option>
-                                                <option value="10:15">
-                                                  10:15 AM
-                                                </option>
-                                                <option value="10:30">
-                                                  10:30 AM
-                                                </option>
-                                                <option value="10:45">
-                                                  10:45 AM
-                                                </option>
-                                                <option value="11:00">
-                                                  11:00 AM
-                                                </option>
-                                                <option value="11:15">
-                                                  11:15 AM
-                                                </option>
-                                                <option value="11:30">
-                                                  11:30 AM
-                                                </option>
-                                                <option value="11:45">
-                                                  11:45 AM
-                                                </option>
-                                                <option value="12:00">
-                                                  12:00 PM
-                                                </option>
-                                                <option value="12:15">
-                                                  12:15 PM
-                                                </option>
-                                                <option value="12:30">
-                                                  12:30 PM
-                                                </option>
-                                                <option value="12:45">
-                                                  12:45 PM
-                                                </option>
-                                                <option value="13:00">
-                                                  01:00 PM
-                                                </option>
-                                                <option value="13:15">
-                                                  01:15 PM
-                                                </option>
-                                                <option value="13:30">
-                                                  01:30 PM
-                                                </option>
-                                                <option value="13:45">
-                                                  01:45 PM
-                                                </option>
-                                                <option value="14:00">
-                                                  02:00 PM
-                                                </option>
-                                                <option value="14:15">
-                                                  02:15 PM
-                                                </option>
-                                                <option value="14:30">
-                                                  02:30 PM
-                                                </option>
-                                                <option value="14:45">
-                                                  02:45 PM
-                                                </option>
-                                                <option value="15:00">
-                                                  03:00 PM
-                                                </option>
-                                                <option value="15:15">
-                                                  03:15 PM
-                                                </option>
-                                                <option value="15:30">
-                                                  03:30 PM
-                                                </option>
-                                                <option value="15:45">
-                                                  03:45 PM
-                                                </option>
-                                                <option value="16:00">
-                                                  04:00 PM
-                                                </option>
-                                                <option value="16:15">
-                                                  04:15 PM
-                                                </option>
-                                                <option value="16:30">
-                                                  04:30 PM
-                                                </option>
-                                                <option value="16:45">
-                                                  04:45 PM
-                                                </option>
-                                                <option value="17:00">
-                                                  05:00 PM
-                                                </option>
-                                                <option value="17:15">
-                                                  05:15 PM
-                                                </option>
-                                                <option value="17:30">
-                                                  05:30 PM
-                                                </option>
-                                                <option value="17:45">
-                                                  05:45 PM
-                                                </option>
-                                                <option value="18:00">
-                                                  06:00 PM
-                                                </option>
-                                                <option value="18:15">
-                                                  06:15 PM
-                                                </option>
-                                                <option value="18:30">
-                                                  06:30 PM
-                                                </option>
-                                                <option value="18:45">
-                                                  06:45 PM
-                                                </option>
-                                                <option value="19:00">
-                                                  07:00 PM
-                                                </option>
-                                                <option value="19:15">
-                                                  07:15 PM
-                                                </option>
-                                                <option value="19:30">
-                                                  07:30 PM
-                                                </option>
-                                                <option value="19:45">
-                                                  07:45 PM
-                                                </option>
-                                                <option value="20:00">
-                                                  08:00 PM
-                                                </option>
-                                                <option value="20:15">
-                                                  08:15 PM
-                                                </option>
-                                                <option value="20:30">
-                                                  08:30 PM
-                                                </option>
-                                                <option value="20:45">
-                                                  08:45 PM
-                                                </option>
-                                                <option value="21:00">
-                                                  09:00 PM
-                                                </option>
-                                                <option value="21:15">
-                                                  09:15 PM
-                                                </option>
-                                                <option value="21:30">
-                                                  09:30 PM
-                                                </option>
-                                                <option value="21:45">
-                                                  09:45 PM
-                                                </option>
-                                                <option value="22:00">
-                                                  10:00 PM
-                                                </option>
-                                                <option value="22:15">
-                                                  10:15 PM
-                                                </option>
-                                                <option value="22:30">
-                                                  10:30 PM
-                                                </option>
-                                                <option value="22:45">
-                                                  10:45 PM
-                                                </option>
-                                                <option value="23:00">
-                                                  11:00 PM
-                                                </option>
-                                                <option value="23:15">
-                                                  11:15 PM
-                                                </option>
-                                                <option value="23:30">
-                                                  11:30 PM
-                                                </option>
-                                                <option value="23:45">
-                                                  11:45 PM
-                                                </option>
-                                              </select>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div
-                                    class="setting-item border_bottom pb_30 pt_30"
-                                  >
-                                    <div class="d-flex align-items-start">
-                                      <label class="btn-switch m-0 me-3">
-                                        <input
-                                          type="checkbox"
-                                          class=""
-                                          id="booking-end-time-btn"
-                                          value=""
-                                          checked
-                                        />
-                                        <span class="checkbox-slider"></span>
-                                      </label>
-                                      <div class="d-flex flex-column">
-                                        <label class="color-black fw-bold mb-1"
-                                          >是否持續開放售票直至節目結束</label
-                                        >
-                                      </div>
-                                    </div>
-                                    <div
-                                      class="booking-end-time-holder"
-                                      style="display: none"
-                                    >
-                                      <div class="form-group pt_30">
-                                        <label class="form-label fs-16"
-                                          >節目下架時間</label
-                                        >
-                                        <div class="row g-3">
-                                          <div class="col-md-6">
-                                            <label class="form-label mt-3 fs-6"
-                                              >下架日期</label
-                                            >
-                                            <div
-                                              class="loc-group position-relative"
-                                            >
-                                              <input
-                                                class="form-control h_50 datepicker-here"
-                                                data-language="en"
-                                                type="text"
-                                                placeholder="MM/DD/YYYY"
-                                                value=""
-                                              />
-                                              <span class="absolute-icon"
-                                                ><i
-                                                  class="fa-solid fa-calendar-days"
-                                                ></i
-                                              ></span>
-                                            </div>
-                                          </div>
-                                          <div class="col-md-6">
-                                            <div class="clock-icon">
+                                            
                                               <label
                                                 class="form-label mt-3 fs-6"
                                                 >下架時間</label
                                               >
-                                              <select
-                                                class="selectpicker"
-                                                data-size="5"
-                                                data-live-search="true"
-                                              >
-                                                <option value="00:00">
-                                                  12:00 AM
-                                                </option>
-                                                <option value="00:15">
-                                                  12:15 AM
-                                                </option>
-                                                <option value="00:30">
-                                                  12:30 AM
-                                                </option>
-                                                <option value="00:45">
-                                                  12:45 AM
-                                                </option>
-                                                <option value="01:00">
-                                                  01:00 AM
-                                                </option>
-                                                <option value="01:15">
-                                                  01:15 AM
-                                                </option>
-                                                <option value="01:30">
-                                                  01:30 AM
-                                                </option>
-                                                <option value="01:45">
-                                                  01:45 AM
-                                                </option>
-                                                <option value="02:00">
-                                                  02:00 AM
-                                                </option>
-                                                <option value="02:15">
-                                                  02:15 AM
-                                                </option>
-                                                <option value="02:30">
-                                                  02:30 AM
-                                                </option>
-                                                <option value="02:45">
-                                                  02:45 AM
-                                                </option>
-                                                <option value="03:00">
-                                                  03:00 AM
-                                                </option>
-                                                <option value="03:15">
-                                                  03:15 AM
-                                                </option>
-                                                <option value="03:30">
-                                                  03:30 AM
-                                                </option>
-                                                <option value="03:45">
-                                                  03:45 AM
-                                                </option>
-                                                <option value="04:00">
-                                                  04:00 AM
-                                                </option>
-                                                <option value="04:15">
-                                                  04:15 AM
-                                                </option>
-                                                <option value="04:30">
-                                                  04:30 AM
-                                                </option>
-                                                <option value="04:45">
-                                                  04:45 AM
-                                                </option>
-                                                <option value="05:00">
-                                                  05:00 AM
-                                                </option>
-                                                <option value="05:15">
-                                                  05:15 AM
-                                                </option>
-                                                <option value="05:30">
-                                                  05:30 AM
-                                                </option>
-                                                <option value="05:45">
-                                                  05:45 AM
-                                                </option>
-                                                <option value="06:00">
-                                                  06:00 AM
-                                                </option>
-                                                <option value="06:15">
-                                                  06:15 AM
-                                                </option>
-                                                <option value="06:30">
-                                                  06:30 AM
-                                                </option>
-                                                <option value="06:45">
-                                                  06:45 AM
-                                                </option>
-                                                <option value="07:00">
-                                                  07:00 AM
-                                                </option>
-                                                <option value="07:15">
-                                                  07:15 AM
-                                                </option>
-                                                <option value="07:30">
-                                                  07:30 AM
-                                                </option>
-                                                <option value="07:45">
-                                                  07:45 AM
-                                                </option>
-                                                <option value="08:00">
-                                                  08:00 AM
-                                                </option>
-                                                <option value="08:15">
-                                                  08:15 AM
-                                                </option>
-                                                <option value="08:30">
-                                                  08:30 AM
-                                                </option>
-                                                <option value="08:45">
-                                                  08:45 AM
-                                                </option>
-                                                <option value="09:00">
-                                                  09:00 AM
-                                                </option>
-                                                <option value="09:15">
-                                                  09:15 AM
-                                                </option>
-                                                <option value="09:30">
-                                                  09:30 AM
-                                                </option>
-                                                <option value="09:45">
-                                                  09:45 AM
-                                                </option>
-                                                <option
-                                                  value="10:00"
-                                                  selected="selected"
-                                                >
-                                                  10:00 AM
-                                                </option>
-                                                <option value="10:15">
-                                                  10:15 AM
-                                                </option>
-                                                <option value="10:30">
-                                                  10:30 AM
-                                                </option>
-                                                <option value="10:45">
-                                                  10:45 AM
-                                                </option>
-                                                <option value="11:00">
-                                                  11:00 AM
-                                                </option>
-                                                <option value="11:15">
-                                                  11:15 AM
-                                                </option>
-                                                <option value="11:30">
-                                                  11:30 AM
-                                                </option>
-                                                <option value="11:45">
-                                                  11:45 AM
-                                                </option>
-                                                <option value="12:00">
-                                                  12:00 PM
-                                                </option>
-                                                <option value="12:15">
-                                                  12:15 PM
-                                                </option>
-                                                <option value="12:30">
-                                                  12:30 PM
-                                                </option>
-                                                <option value="12:45">
-                                                  12:45 PM
-                                                </option>
-                                                <option value="13:00">
-                                                  01:00 PM
-                                                </option>
-                                                <option value="13:15">
-                                                  01:15 PM
-                                                </option>
-                                                <option value="13:30">
-                                                  01:30 PM
-                                                </option>
-                                                <option value="13:45">
-                                                  01:45 PM
-                                                </option>
-                                                <option value="14:00">
-                                                  02:00 PM
-                                                </option>
-                                                <option value="14:15">
-                                                  02:15 PM
-                                                </option>
-                                                <option value="14:30">
-                                                  02:30 PM
-                                                </option>
-                                                <option value="14:45">
-                                                  02:45 PM
-                                                </option>
-                                                <option value="15:00">
-                                                  03:00 PM
-                                                </option>
-                                                <option value="15:15">
-                                                  03:15 PM
-                                                </option>
-                                                <option value="15:30">
-                                                  03:30 PM
-                                                </option>
-                                                <option value="15:45">
-                                                  03:45 PM
-                                                </option>
-                                                <option value="16:00">
-                                                  04:00 PM
-                                                </option>
-                                                <option value="16:15">
-                                                  04:15 PM
-                                                </option>
-                                                <option value="16:30">
-                                                  04:30 PM
-                                                </option>
-                                                <option value="16:45">
-                                                  04:45 PM
-                                                </option>
-                                                <option value="17:00">
-                                                  05:00 PM
-                                                </option>
-                                                <option value="17:15">
-                                                  05:15 PM
-                                                </option>
-                                                <option value="17:30">
-                                                  05:30 PM
-                                                </option>
-                                                <option value="17:45">
-                                                  05:45 PM
-                                                </option>
-                                                <option value="18:00">
-                                                  06:00 PM
-                                                </option>
-                                                <option value="18:15">
-                                                  06:15 PM
-                                                </option>
-                                                <option value="18:30">
-                                                  06:30 PM
-                                                </option>
-                                                <option value="18:45">
-                                                  06:45 PM
-                                                </option>
-                                                <option value="19:00">
-                                                  07:00 PM
-                                                </option>
-                                                <option value="19:15">
-                                                  07:15 PM
-                                                </option>
-                                                <option value="19:30">
-                                                  07:30 PM
-                                                </option>
-                                                <option value="19:45">
-                                                  07:45 PM
-                                                </option>
-                                                <option value="20:00">
-                                                  08:00 PM
-                                                </option>
-                                                <option value="20:15">
-                                                  08:15 PM
-                                                </option>
-                                                <option value="20:30">
-                                                  08:30 PM
-                                                </option>
-                                                <option value="20:45">
-                                                  08:45 PM
-                                                </option>
-                                                <option value="21:00">
-                                                  09:00 PM
-                                                </option>
-                                                <option value="21:15">
-                                                  09:15 PM
-                                                </option>
-                                                <option value="21:30">
-                                                  09:30 PM
-                                                </option>
-                                                <option value="21:45">
-                                                  09:45 PM
-                                                </option>
-                                                <option value="22:00">
-                                                  10:00 PM
-                                                </option>
-                                                <option value="22:15">
-                                                  10:15 PM
-                                                </option>
-                                                <option value="22:30">
-                                                  10:30 PM
-                                                </option>
-                                                <option value="22:45">
-                                                  10:45 PM
-                                                </option>
-                                                <option value="23:00">
-                                                  11:00 PM
-                                                </option>
-                                                <option value="23:15">
-                                                  11:15 PM
-                                                </option>
-                                                <option value="23:30">
-                                                  11:30 PM
-                                                </option>
-                                                <option value="23:45">
-                                                  11:45 PM
-                                                </option>
-                                              </select>
-                                            </div>
+                                              <input
+                                              data-language="en"
+                                              type="datetime-local"
+                                              value=""
+                                              id="aedate"
+                                            />
+                                            
                                           </div>
                                         </div>
                                       </div>
                                     </div>
                                   </div>
+                    
                                   
                                   <div
                                     class="setting-item border_bottom pb_30 pt_30"
@@ -2878,7 +1580,7 @@
                                       </label>
                                       <div class="d-flex flex-column">
                                         <label class="color-black fw-bold mb-1"
-                                          >此節目是否開放退票</label
+                                          >此活動是否開放退票</label
                                         >
                                         <p class="mt-2 fs-14 d-block mb-0">
                                          如不開放退票則選擇使選項
@@ -2928,7 +1630,7 @@
                                                 <div class="input-content mb-3">
                                                   <label
                                                     class="color-black mb-2 fs-14 fw-bold"
-                                                    >節目開始日期前多少天
+                                                    >活動開始日期前多少天
                                                     <span class="red"
                                                       >*</span
                                                     ></label
@@ -3016,19 +1718,8 @@
                       </div>
                     </div>
                   </div>
-                  <div class="step-footer step-tab-pager mt-4">
-                    <button
-                      data-direction="prev"
-                      class="btn btn-default btn-hover steps_btn"
-                    >
-                      上一頁
-                    </button>
-                    <button
-                      data-direction="next"
-                      class="btn btn-default btn-hover steps_btn"
-                    >
-                      下一頁
-                    </button>
+                  <div class="step-footer step-tab-pager mt-4" style="display: flex; justify-content: center;">
+                   
                     <button
                       data-direction="finish"
                       class="btn btn-default btn-hover steps_btn"
@@ -3190,18 +1881,224 @@
       });
     </script>
     <script>
-      ClassicEditor.create(document.querySelector("#pd_editor"), {
-        toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
-      })
-        .then((editor) => {
-          window.editor = editor;
-        })
-        .catch((err) => {
-          console.error(err.stack);
-        });
+      // ClassicEditor.create(document.querySelector("#pd_editor"), {
+      //   toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
+      // })
+      //   .then((editor) => {
+      //     window.editor = editor;
+      //   })
+      //   .catch((err) => {
+      //     console.error(err.stack);
+      //   });
     </script>
+    <!--是否有表演者-->>
     <script>
-      
+      $(document).ready(function(){
+
+          $("input[name=performerTrueFalse]").click( function () {
+            var Selected = $(this).val();
+            $("input[name=performerTrueFalse]").each(function(i){
+              if($(this).val() == Selected) $(this).prop("checked", true);
+              else $(this).prop("checked", false);
+              });
+            });
+          });
+          const performerYes=document.querySelector('#yes');
+          const performerNo=document.querySelector('#no');
+
+          const typePerformer=document.querySelector('#typePerformer')
+          
+          performerYes.addEventListener('change', () => {
+            if (performerYes.checked) {
+              typePerformer.style.display = 'block';
+            } else {
+              typePerformer.style.display = 'none';
+            }
+          });
+          performerNo.addEventListener('change', () => {
+            if (performerNo.checked) {
+              typePerformer.style.display = 'none';
+            } else {
+              typePerformer.style.display = 'block';
+            }
+          });
+
     </script>
+     <!--動態生成活動圖片-->
+    <script>
+    document
+        .querySelector("#file1")
+        .addEventListener("change", changeListener);
+
+      function changeListener({ target }) {
+        const { id, files } = target;
+        const seq = id.substring(id.indexOf("file") + 4);
+        const img = document.querySelector("#img" + seq);
+        const file = files[0];
+        if (!file) {
+          img.src = "";
+          return;
+        }
+        img.src = URL.createObjectURL(file);
+
+        const nextSeq = +seq + 1;
+        if (!document.querySelector("#file" + nextSeq)) {
+          addNext(nextSeq);
+        }
+      }
+      let imgList=document.querySelector('#eventImgList');
+      function addNext(seq) {
+        const br=document.createElement("br");
+        imgList.append(br);
+        const div=document.createElement("div");
+        div.className="default-event-thumb";
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+        input.id = "file" + seq;
+        input.addEventListener("change", changeListener);
+        div.append(input);
+        imgList.append(input);
+        imgList.append(div);
+        imgList.append(br);
+        const img = document.createElement("img");
+        img.id = "img" + seq;
+        div.append(img);
+        const deletebtn=document.createElement("button");
+        deletebtn.id="delete"+seq;
+        deletebtn.className="option-btn-1";
+        deletebtn.innerHTML="刪除"
+        imgList.append(deletebtn);
+        imgList.append(br);
+
+        deletebtn.addEventListener("click",()=>{
+          const deleteimg=document.getElementById("img"+seq); 
+          div.removeChild(deleteimg);
+          imgList.removeChild(div);
+          imgList.removeChild(input);
+          imgList.removeChild(deletebtn);
+          imgList.removeChild(br);
+        })
+       
+      }
+    </script>
+    <!--座位圖選擇-->
+    <script>
+    document
+        .querySelector("#seat")
+        .addEventListener("change", showPic);
+    function showPic({ target }) {
+        const { id, files } = target;
+        const seq = id.substring(id.indexOf("file") + 4);
+        const img = document.querySelector("#aseatimg");
+        const file = files[0];
+        if (!file) {
+          img.src = "";
+          return;
+        }
+        img.src = URL.createObjectURL(file);
+      } 
+    </script>
+    <!--活動類別顯示-->
+    <script>
+      let aclass=document.querySelector('#aclass')
+      fetch(`http://localhost:8085/Aclass/findAll`)
+      .then((Response) => Response.json())
+      .then((data) => {
+        let str="";
+        for(i of data){
+          str+=`
+                <option value="${i.aclassName}">${i.aclassName}</option>`;
+
+        }
+        aclass.innerHTML=str;
+      });
+    </script>
+    <!--主辦單位顯示-->
+    <script>
+      let host=document.querySelector('#host');
+      fetch(`http://localhost:8085/back-users-host/gh`)
+      .then((Response) => Response.json())
+      .then((data) => {
+        let str="";
+        for(i of data){
+          str+=`
+                <option value="${i.hostname}">${i.hostname}</option>`;
+
+        }
+        host.innerHTML=str;
+      });
+    </script>
+    </script>
+<!--區域票價動態顯示-->>
+   <script>
+      const addBlockPriceBtn=document.querySelector("#addBlockPriceBtn");
+      const blockPriceList=document.querySelector("#blockPriceList");
+      let count=1;
+      addBlockPriceBtn.addEventListener("click",()=>{
+        let str=`          <div
+                                      class="price-ticket-card-head d-md-flex flex-wrap align-items-start justify-content-between position-relative p-4"
+                                    id="blockDiv${count}">
+                                      <div
+                                        class="d-flex align-items-center top-name"
+                                      >
+                                        <div class="icon-box">
+                                          <span
+                                            class="icon-big rotate-icon icon icon-purple"
+                                          >
+                                            <i class="fa-solid fa-ticket"></i>
+                                          </span>
+                                          <div>
+                                            <span class="text-145">請輸入區域名稱</span>
+                                          </div>
+                                        <input type="text" class="blockName">
+                                         
+                                        </div>
+                                      </div>
+                                      <div
+                                      class="d-flex align-items-center top-name"
+                                    >
+                                      <div class="icon-box">
+                                        <span
+                                        class="icon-big  icon icon-purple"
+                                      >
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 17 20">
+                                        <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z"/>
+                                      </svg>
+                                      </span>
+                                        <div>
+                                          <span class="text-145">請輸入區域票價</span>
+                                        </div>
+                                      <input type="text" class="blockPrice">
+                                       
+                                      </div>
+                                    </div>
+                                      <div class="d-flex align-items-center">
+                                        <div class="price-badge">
+                                      
+                                        </div>
+                                      
+                                       <div
+                                          class="dropdown dropdown-default dropdown-text dropdown-icon-item"
+                                        >
+                                          <button class="option-btn-1" id="deleteBlockPriceBtn${count}">
+                                          刪除
+                                          </button>    
+                                        </div>
+                                      </div>
+                                    </div>`
+                                    blockPriceList.insertAdjacentHTML('beforeend',str);                                  
+                                  let deleteBlockPriceBtn=document.querySelector(`#deleteBlockPriceBtn${count}`);                                 
+                                  let blockDivId =`blockDiv${count}`;
+                                  deleteBlockPriceBtn.addEventListener("click",()=>{
+                                    document.getElementById(blockDivId).remove();
+                                  } )  
+                                  count++;
+      });
+   </script>
+   <!-- insert Activity data -->>
+   <script>
+
+   </script>
   </body>
 </html>

@@ -533,13 +533,13 @@
     
         const search = document.querySelector("#search");
         search.addEventListener("input", () => {
-        fetch(`http://localhost:8085/Activity/findAll`)
+        fetch(`http://localhost:8085/Activity/ByActName?actName=${search.value}`)
           .then((Response) => Response.json())
           .then((data) => {
            let str="";
            let status="";
             for(i of data){
-            if (search.value.match(i.aname)){
+            // if (search.value.match(i.aname)){
              
               switch(i.astatus){
             case 0: status="未上架";
@@ -628,7 +628,7 @@
                         </div>
                       </div>`
                     
-                    }
+                    
             }
             listTab.innerHTML=str;
           }

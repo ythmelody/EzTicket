@@ -31,90 +31,6 @@
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
 
-    <script
-            src="https://code.jquery.com/jquery-3.6.0.js"
-            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-            crossorigin="anonymous"></script>
-
-    <style>
-        /* SEAT & "COLOR CODE" */
-        .seat, .statusBtn {
-            width: 75px;
-            height: 75px;
-            padding: 10px;
-            border-radius: 10px;
-            background: white;
-            font-size: 8px;
-            text-align: center;
-            line-height: 27.5px
-        }
-
-        .banned {
-            background: lightcoral;
-        }
-
-        .toSell {
-            background: lightgreen;
-        }
-
-        .reserved {
-            background: #c7c5c5;
-        }
-
-        .sold {
-            background: lightblue;
-        }
-
-        /* (B) SEATS LAYOUT */
-        #layout {
-            max-width: 1000px;
-            display: grid;
-            grid-gap: 10px;
-            margin-bottom: 20px;
-            overflow: auto;
-        }
-
-        /* (C) LEGEND */
-        #legend {
-            width: 100%;
-            display: inline-block;
-            margin-bottom: 7px;
-
-            /* grid-gap: 10px;
-            grid-template-columns: 50px auto; */
-        }
-
-        #legend button {
-            border: none;
-        }
-
-        #legend .txt {
-            display: flex;
-            align-items: center;
-        }
-
-        /* Status Button */
-        .pressed {
-            box-shadow: inset 0 0 6px 3px dimgray;
-        }
-
-
-
-
-        /* (D) SAVE */
-        /* #save {
-            font-size: 20px;
-            margin-top: 20px;
-            padding: 10px 20px;
-            border: 0;
-            color: #fff;
-            background: #00479f;
-        } */
-
-        body {
-            min-width: 745px;
-        }
-    </style>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -321,54 +237,45 @@
 </nav>
 <!-- Left Sidebar End -->
 <!-- Body Start -->
+<form id="sessionInfo" action="" method="get">
+    <input type="hidden" name="activityNo" value="1">
+    <input type="hidden" name="sessionNo" value="1">
+</form>
+
 <div class="wrapper wrapper-body">
     <div class="dashboard-body">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="d-main-title">
-                        <h3 id="actNameAndSession"></h3>
-                        <p></p>
-                        <h5>區域名稱　<input id="blockName" type="text" placeholder="請輸入區域名稱" value=""
-                                            class="form-control h_40" style="display: inline-block!important; width: 200px;" disabled></h5>
+                        <h3 id="bodyTitle"></h3>
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="main-card mt-5">
                         <div class="dashboard-wrap-content p-4">
-                            <!-- 這邊加上座位狀態選擇器 -->
-                            <div id="legend" style="display: flex;">
-                                <div style="margin: 20px 20px 20px 0px;">
-                                    <button class="statusBtn banned" style="margin: 5px;" onclick="changeStatus(this)" value="banned">場地限制</button>
-                                    <button class="statusBtn reserved " style="margin: 5px;" onclick="changeStatus(this)" value="reserved">保留席</button>
-                                    <button class="statusBtn toSell pressed" style="margin: 5px;" onclick="changeStatus(this)" value="toSell">可出售</button>
-                                    <button class="statusBtn sold" style="margin: 5px;" onclick="changeStatus(this)" value="sold">已售出</button>
+                            <div class="d-md-flex flex-wrap align-items-center">
+                                <div class="dashboard-date-wrap">
+                                    <div class="form-group">
+                                        <div class="relative-input position-relative">
+                                            <select id="blockSelector" class="form-control" data-size="5"
+                                                    data-live-search="true">
+                                            </select>
+                                            <i class="uil uil-arrow-circle-down"></i>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div style="margin: 47.5px 25px;">
-                                    舞台方向：
-                                    <select name="" id="" style="margin: 5px; border-color: #f1f1f1; width: 75px;">
-                                        <option value="front" selected>前</option>
-                                        <option value="back">後</option>
-                                        <option value="left">左</option>
-                                        <option value="right">右</option>
-                                    </select>
-                                </div>
-                                <div style="margin: 36px 0px;">
-                                    <form id="rowAndColumns">
-                                        排數：<input type="text" class="form-control h_40" style="display: inline-block!important; margin: 5px; width: 75px;
-                                                border-color: #f1f1f1; text-align: center;" value="" disabled>
-                                        座位數：<input type="text" class="form-control h_40" style="display: inline-block!important; margin: 5px; width: 75px;
-                                                      border-color: #f1f1f1; text-align: center;" value="" disabled>
-                                    </form>
+                                <div class="ocard-left" style="margin-left: 5px;">
+                                    <button class="pe-4 ps-4 co-main-btn min-width" data-bs-toggle="modal"
+                                            data-bs-target="#addorganisationModal">檢視座位圖
+                                    </button>
                                 </div>
                             </div>
-
-                            <hr>
-
-                            <!-- 座位圖 -->
-                            <!-- (A) SEAT LAYOUT -->
-                            <div class="d-md-flex flex-wrap align-items-center">
-                                <div id="layout" style="margin: auto;" style="overflow:scroll-y"></div>
+                        </div>
+                    </div>
+                    <div class="event-list">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="blockList" role="tabpanel">
                             </div>
                         </div>
                     </div>
@@ -376,15 +283,66 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-12 col-lg-12 col-md-12">
-        <div class="text-center mt-5">
-            <a href="back-activity-seatmgt-sessioncanmodi.html" class="main-btn btn-hover"
-               style="background-color: gray; border: gray;" onclick="seatsmgt.goBack()">　返回　</a>
-            <a href="#" class="main-btn btn-hover"
-               onclick="seatsmgt.save()">儲存變更</a>
+</div>
+
+<!-- 座位圖開始 -->
+<div class="modal fade" id="addorganisationModal" tabindex="-1" aria-labelledby="addorganisationLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addorganisationLabel">座位圖</h5>
+                <button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="uil uil-multiply"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="model-content main-form">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div id="seatsImg" class="form-group text-center mt-4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="co-main-btn min-width btn-hover h_40"
+                        data-bs-dismiss="modal">關閉
+                </button>
+            </div>
         </div>
     </div>
 </div>
+<!-- 座位圖結束 -->
+
+<!-- 更改站席數量開始-->
+<div class="modal fade" id="changeToSellNumbers" tabindex="-1" aria-labelledby="addorganisationLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="blockName_system">管理非座位席次數量</h5>
+                <input id="standingSeatsBN" type="hidden" value="">
+                <button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="uil uil-multiply"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="model-content main-form">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12">
+                            <div class="form-group main-form mt-4">
+                                <input id="noSeatTickets" type="number" class="form-control" aria-describedby=""
+                                       placeholder="無非席次座位資訊" min="1" max="10000" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 更改站席數量結束-->
+
 <!-- Body End -->
 
 
@@ -396,194 +354,220 @@
 <script src="js/custom.js"></script>
 <script src="js/night-mode.js"></script>
 
-<!-- 選擇座位的JS -->
+</body>
+
 <script>
-    function changeStatus(btn) {
-        if(btn.value === 'sold'){
-            alert('已售出座位無法變動!');
+    // 共用實體變數
+    const blockSelector = document.getElementById('blockSelector');
+    const blockList = document.getElementById('blockList');
+    let actImgMain;
+    let flag;
+    let hasSeatsBlocks;
+
+    // 將頁面標題重置
+    $('#bodyTitle').text('');
+
+    // 選單(區域)呈現
+    $('#blockSelector').html(`
+                <option value="all" selected>所有區域</option>
+            `);
+
+    $(document).ready(function () {
+        showAllSessionBlocks();
+
+        // 取得節目擁有座位的區域
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: "/seats/getBlockHasSeats" + `?actNo=${sessionStorage.getItem("sessionNo")}`,
+            dataType: "json",
+            success: function (jsondata) {
+                hasSeatsBlocks = jsondata;
+            }
+        });
+
+        // 該場次若無座位表資訊則顯示 "複製區域按鈕"
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: "/seats/getSeatsBySession" + `?sessionNo=${sessionStorage.getItem("sessionNo")}`,
+            dataType: "json",
+            success: function (jsondata) {
+                flag = jsondata
+            }
+        });
+
+        if (!flag) {
+            $('#copyBlockBtn').css('display', '');
+        } else {
+            $('#copyBlockBtn').css('display', 'none');
+        }
+    })
+
+    function showAllSessionBlocks(){
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: "/Activity/findByActNo" + `?actNo=${sessionStorage.getItem("activityNo")}`,
+            dataType: "json",
+            success: function (jsondata) {
+
+                let seatsImg = new Image();
+                seatsImg.src = `data:image/png;base64,${jsondata.aseatsImg}`;
+                seatsImg.style.width = '100%';
+                seatsImg.style.height = '100%';
+                document.getElementById('seatsImg').appendChild(seatsImg);
+
+                let showpic = jsondata.aimgt;
+
+                for (let i = 0; i < showpic.length; i++) {
+                    if (showpic[i].aimgMain == 1) {
+                        actImgMain = `data:image/png;base64,${showpic[i].aimg}`;
+                    }
+                }
+
+                $('#bodyTitle').text(`${jsondata.aname} (場次編號：${sessionStorage.getItem("sessionNo")})`);
+            }
+        });
+
+        fetch("/BlockPrice/findByActNo" + `?activityNo=${sessionStorage.getItem("activityNo")}`)
+            .then(resp => resp.json())
+            .then((jsondata) => {
+                    // 選單(區域)呈現 - 動態
+                    for (let j of jsondata) {
+                        document.getElementById('blockSelector').innerHTML += `
+                            <option value="${j.blockNo}"> ${j.blockName} </option>`;
+                    }
+
+                    // 呈現所有區域
+                    displayBlocks(jsondata, actImgMain);
+                }
+            )
+    }
+
+    // 查詢區域
+    blockSelector.addEventListener('change', function () {
+
+        if(blockSelector.value === "all"){
+            showAllSessionBlocks();
             return;
         }
 
-        $('button[class*="pressed"]').removeClass('pressed');
-        btn.classList.add("pressed");
+        fetch('BlockPrice/findById' + `?blockNo=${blockSelector.value}`)
+            .then((resp) => resp.json())
+            .then((jsondata) => {
+                let array = [jsondata];
+                displayBlocks(array, actImgMain);
+            })
+    })
+
+    // 顯示區域
+    function displayBlocks(jsondata, actImg) {
+        blockList.innerHTML = "";
+
+        for (let j of jsondata) {
+            let toSellNumber;
+            let soldNumber;
+
+            $.ajax({
+                async: false,
+                type: 'GET',
+                url: "/seats/getSeatsNumbers" + `?sessionNo=${sessionStorage.getItem("sessionNo")}&blockNo=${j.blockNo}`,
+                dataType: "json",
+                success: function (jsondata) {
+                    toSellNumber = jsondata[0];
+                    soldNumber = jsondata[1];
+                }
+            });
+
+            blockList.innerHTML += `
+                <div class="main-card mt-4">
+                    <div class="contact-list">
+                        <div
+                            class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between">
+                            <div class="d-md-flex align-items-center event-top-info">
+                                <div class="card-event-img">
+                                    <img src=${actImg} alt="">
+                                </div>
+                                <div class="card-event-dt">
+                                    <h4>${j.blockName}</h4>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <button class="option-btn" type="button" data-bs-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false"><i
+                                    class="fa-solid fa-ellipsis-vertical"></i></button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a id="manageSeats_${j.blockNo}" href="back-activity-seatmgt-readonly.html"
+                                       class="dropdown-item" onmousedown="sessionStorage.setItem('blockNo', ${j.blockNo})"><i
+                                        class="fa-solid fa-gear me-3"></i>查看座位</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="bottom d-flex flex-wrap align-items-center p-4">
+                            <div class="icon-box">
+								<span class="icon">
+									<i class="fa-solid fa-ticket"></i>
+								</span>
+                                <p>票券總數量</p>
+                                <h6 class="coupon-status">${toSellNumber}</h6>
+                            </div>
+                            <div class="icon-box">
+								<span class="icon">
+									<i class="fa-solid fa-tag"></i>
+								</span>
+                                <p>已售出數量</p>
+                                <h6 class="coupon-status">${soldNumber}</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+
+            if(!hasSeatsBlocks.includes(j.blockNo)){
+                document.getElementById(`manageSeats_${j.blockNo}`).href = "back-activity-seatmgt-notexisted.html"
+            }
+
+            if (j.blockType === 0) {
+                document.getElementById(`manageSeats_${j.blockNo}`).href = "#changeToSellNumbers";
+                document.getElementById(`manageSeats_${j.blockNo}`).setAttribute("data-bs-toggle", "modal");
+                document.getElementById(`manageSeats_${j.blockNo}`).classList.add("addFcn");
+            };
+
+        };
+
+        for(let e of document.querySelectorAll(".addFcn")){
+            e.addEventListener("click", addClickFcn);
+        }
     }
 
-    const generalInfo = {
-        sessionNo: sessionStorage.getItem("sessionNo"),
-        blockNo: sessionStorage.getItem("blockNo")
-    };
-    const layout = document.getElementById("layout");
-    const blockName = document.getElementById("blockName");
-    let seats;
-    let t_seats;
-    let t_Row;
-    let t_Column;
-
-    $.ajax({
-        async: false,
-        type: 'GET',
-        url: '/seats/BySessionAndBlock' + `?sessionNo=${generalInfo.sessionNo}&blockNo=${generalInfo.blockNo}`,
-        dataType: "json",
-        success: function (jsondata) {
-            seats = jsondata;
-        }
-    });
-
-    t_seats = seats.length;
-    t_Row = seats[seats.length - 1].x;
-    t_Column = seats[seats.length - 1].y;
-
-    $('#blockName').val(seats[0].blockName);
-    $('#rowAndColumns input:eq(0)').val(t_Row+1);
-    $('#rowAndColumns input:eq(1)').val(t_Column+1);
-
-    let seatsmgt = {
-        // INIT
-        init: () => {
-
-            layout.setAttribute("style", `grid-template-columns: repeat(${(t_Column + 1) * 2}, 1fr)`)
-
-            // GENERATE SEATS
-            for (let i = 0; i <= t_Row; i++) {
-                for (let j = 0; j <= t_Column; j++) {
-                    let seat = document.createElement("div");
-                    // 設定座位於資料庫的編號(seatno)
-                    seat.id = seats[i * 10 + j].seatNo;
-
-                    seat.innerHTML = `
-						第<input value="${seats[i*10+j].realX}" style="width: 20px; text-align: center; border: 0; background: transparent">排<br>
-						第<input value="${seats[i*10+j].realY}" style="width: 20px; text-align: center; border: 0; background: transparent">位<br>
-						`;
-
-                    seat.className = "seat";
-                    seat.onclick = () => seatsmgt.toggle(seat);
-
-                    let seatStatus = seats[i*10+j].seatStatus;
-
-                    switch (seatStatus) {
-                        case (-1):
-                            seat.classList.add("banned");
-                            break;
-                        case (0):
-                            seat.classList.add("reserved")
-                            break;
-                        case (1):
-                            seat.classList.add("toSell")
-                            break;
-                        case (2):
-                            seat.classList.add("sold")
-                            break;
-                    }
-
-                    layout.appendChild(seat);
-
-                    // 這行怪怪的，要注意
-                    layout.appendChild(document.createElement("br"));
+    function addClickFcn(){
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: "/seats/getSeatsNumbers" + `?sessionNo=${sessionStorage.getItem("sessionNo")}&blockNo=${sessionStorage.getItem("blockNo")}`,
+            dataType: "json",
+            success: function (jsondata) {
+                if(jsondata[0] !== 0) {
+                    document.getElementById('noSeatTickets').value = jsondata[0];
+                }
+                else{
+                    document.getElementById('noSeatTickets').value = "";
                 }
             }
-        },
-
-        // 若點選 "場地限制" 按鈕，可將 "可出售" 或 "保留席" 切換成 "場地限制"
-        // 若點選 "可出售" 按鈕，可將 "場地限制" 或 "保留席" 切換成 "可出售"
-        // 若點選 "保留席" 按鈕，可將 "可出售" 切換成 "保留席"
-        toggle: seat => {
-            if (seat.classList.contains("sold")){
-                return;
-            } else{
-                if($('button[class*="pressed"]')[0].value === 'banned'){
-                    if(seat.classList.contains('reserved')){
-                        seat.classList.remove("reserved");
-                        seat.classList.add("banned");
-                    } else if (seat.classList.contains('toSell')){
-                        seat.classList.remove("toSell");
-                        seat.classList.add("banned");
-                    }
-                    return;
-                }
-                if($('button[class*="pressed"]')[0].value === 'reserved' && !(seat.classList.contains('banned'))){
-                    if(seat.classList.contains('toSell')){
-                        seat.classList.remove("toSell");
-                        seat.classList.add("reserved");
-                    }
-                    return;
-                }
-                if($('button[class*="pressed"]')[0].value === 'toSell'){
-                    if(seat.classList.contains('reserved')){
-                        seat.classList.remove("reserved");
-                        seat.classList.add("toSell");
-                    } else if(seat.classList.contains('banned')){
-                        seat.classList.remove("banned");
-                        seat.classList.add("toSell");
-                    }
-                    return;
-                }
-
-            }
-
-        },
-
-        // SAVE RESERVATION
-        save: () => {
-            // GET SELECTED SEATS
-            let seats = document.querySelectorAll("#layout div");
-            console.log(seats);
-
-            for(let s of seats){
-                let status;
-                if(s.classList.contains("banned")){
-                    status = (-1);
-                } else if(s.classList.contains("reserved")){
-                    status = (0);
-                } else if(s.classList.contains("toSell")){
-                    status = (1);
-                } else {
-                    status = (2);
-                }
-
-                const aSeatInfo = {
-                    "blockName": $('#blockName').val(),
-                    "seatNo" : s.id,
-                    "realX" : $(`#${s.id} input:eq(0)`).val(),
-                    "realY" : $(`#${s.id} input:eq(1)`).val(),
-                    "seatStatus": status
-                };
-
-                fetch('/seats/updateOneSeat', {
-                    method: "POST",
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(aSeatInfo)
-                })
-            }
-
-            alert("儲存成功!");
-        },
-
-        goBack: () => {
-            sessionStorage.removeItem("blockNo");
-        }
-    };
-
-    window.addEventListener("DOMContentLoaded", seatsmgt.init);
-
-    $(document).ready(function(){
-        $('#actNameAndSession').text('');
+        });
 
         $.ajax({
             async: false,
             type: 'GET',
-            url: "/Activity/findByActNo"+`?actNo=${sessionStorage.getItem("activityNo")}`,
+            url: "/BlockPrice/findById"+`?blockNo=${sessionStorage.getItem("blockNo")}`,
             dataType: "json",
             success: function (jsondata) {
-                $('#actNameAndSession').text(`${jsondata.aname} (場次編號：${sessionStorage.getItem("sessionNo")})`);
+                $('#standingSeatsBN').val(`${jsondata.blockName}`);
             }
         });
-
-    })
-
-
+    }
 
 </script>
-
-</body>
 
 </html>

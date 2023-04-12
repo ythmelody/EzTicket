@@ -1,17 +1,14 @@
 package com.ezticket.web.activity.repository;
 
-import com.ezticket.web.activity.dto.ActivityDto;
-import com.ezticket.web.activity.pojo.AComment;
 import com.ezticket.web.activity.pojo.Activity;
-import com.ezticket.web.activity.pojo.Torder;
-import jakarta.transaction.Transactional;
+import com.ezticket.web.activity.pojo.Aimgt;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +16,7 @@ import java.util.Optional;
 public interface ActivityRepository extends JpaRepository <Activity,Integer>{
 
     Optional<Activity> findByaName(String aName);
-    Optional<Activity> findByactivityNo(Integer activityNo);
+
     List <Activity> findByOrderByActivityNoDesc();
 
     // Add by Shawn on 4/3
@@ -40,4 +37,7 @@ public interface ActivityRepository extends JpaRepository <Activity,Integer>{
 
     @Query("SELECT a FROM Activity a WHERE a.aSDate >= :today AND a.aStatus = 0")
     List<Activity> findActiveActivity(@Param("today") LocalDate today);
+    Optional <Activity> findByactivityNo(Integer activityNo);
+
+    List<Activity>findAllByActivityNo(Integer activityNo);
 }

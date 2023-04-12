@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
@@ -28,21 +30,23 @@ public class AimgtController {
         return aimgtService.findAll();
     }
 
-
-    @GetMapping("/image")
-    public ResponseEntity<byte[]> getImage(Integer aimgNo) {
-        Optional<AimgtDto> aimgtDto = aimgtService.findById(aimgNo);
-        if (aimgtDto.isPresent()) {
-            byte[] image = aimgtDto.get().getAimg();
+    @GetMapping("/findAllByActivityNo/{activityNo}")
+    public ResponseEntity<byte[]> getImage(@PathVariable Integer activityNo) {
+        List<AimgtDto> aimgtDtos = aimgtService.findAllByActivityNo(activityNo);
+        if (!aimgtDtos.isEmpty()) {
+            AimgtDto aimgtDto = aimgtDtos.get(0);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.IMAGE_JPEG);
-            headers.setContentLength(image.length);
-            return new ResponseEntity<>(image, headers, HttpStatus.OK);
+            headers.setContentLength(aimgtDto.getAimg().length);
+            return new ResponseEntity<>(aimgtDto.getAimg(), headers, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
+    }
 
-}
+
+
+
 
