@@ -242,17 +242,14 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="d-main-title" style="display: inline-block; float: left; padding-top: 10px;">
-                        <h3>區域座位管理</h3>
-                    </div>
-                    <div class="d-main-title" style="display: inline-block; float: right; text-align: right; vertical-align: top; margin-right: 15px;" >
-                        <h5 id="aName">節目名稱：</h5><h5 id="sessionNo">場次編號：</h5>
+                    <div class="d-main-title">
+                        <h3>場次座位管理</h3>
                     </div>
 
                 </div>
                 <div class="col-md-12">
                     <div class="main-card mt-5">
-                        <div class="dashboard-wrap-content p-4" style="border: 1px solid lightgray">
+                        <div class="dashboard-wrap-content p-4" style="border: 1px solid #EFEFEF">
                             <div class="d-md-flex flex-wrap align-items-center">
                                 <div class="dashboard-date-wrap">
                                     <div class="form-group">
@@ -263,10 +260,6 @@
                                             <i class="uil uil-arrow-circle-down"></i>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="ocard-left" style="margin-left: 5px;">
-                                    <button class="pe-4 ps-4 co-main-btn min-width" data-bs-toggle="modal"
-                                            data-bs-target="#addorganisationModal">檢視座位圖</button>
                                 </div>
                             </div>
                         </div>
@@ -282,36 +275,6 @@
         </div>
     </div>
 </div>
-
-<!-- Add Organisation Model Start-->
-<div class="modal fade" id="addorganisationModal" tabindex="-1" aria-labelledby="addorganisationLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addorganisationLabel">座位圖</h5>
-                <button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"><i
-                        class="uil uil-multiply"></i></button>
-            </div>
-            <div class="modal-body">
-                <div class="model-content main-form">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12">
-                            <div class="form-group text-center mt-4">
-                                <img src="images/event-imgs/hebeseats.png" alt="" style="width: 100%; height:100%;">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="co-main-btn min-width btn-hover h_40"
-                        data-bs-dismiss="modal">關閉</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Add Organisation Model End-->
 <!-- Body End -->
 
 <script src="js/vertical-responsive-menu.min.js"></script>
@@ -326,25 +289,14 @@
 
     // 共用實體變數
     const sessionSelector = document.getElementById('sessionSelector');
-    const headerAName = document.getElementById('aName');
-    const headerSessionNo = document.getElementById('sessionNo');
     const actNo = sessionStorage.getItem("activityNo");
-    const sessionNo = sessionStorage.getItem("sessionNo");
 
-    fetch('Session/findById' + `?sessionNo=${sessionNo}`)
-        .then((resp) => resp.json())
-        .then((jsondata) => {
-            headerAName.innerText += `${jsondata.activity.aname}`;
-            headerSessionNo.innerText += `${jsondata.sessionNo}`;
-        });
-
-
-    // 選單(區域)呈現
+    // 選單(場次)呈現
     $('#sessionSelector').html(`
-                <option value="all" selected>所有區域</option>
+                <option value="all" selected>所有場次</option>
             `);
 
-    // 當網頁載入時先呈現 "所有區域"
+    // 當網頁載入時先呈現 "所有場次"
     $(document).ready(function () {
         fetch('Session/ActSessions' + `?actNo=${actNo}`)
             .then((resp) => resp.json())
@@ -385,8 +337,8 @@
         for (let j of jsondata) {
             sessionList.innerHTML += `
                 <div class="s-container"
-                     style="border: 1px solid lightgray; width: 100%; height: 210px; border-radius: 5px; background-color: white; margin-top: 10px">
-                    <div class="s-container-upper" style="height: 60%; border-bottom: 1px solid lightgray;">
+                     style="border: 1px solid #EFEFEF; width: 100%; height: 210px; border-radius: 5px; background-color: white; margin-top: 10px">
+                    <div class="s-container-upper" style="height: 60%; border-bottom: 1px solid #EFEFEF;">
                         <div style="width: 100%; height: 100%; padding: 20px;">
                             <div
                                 style="width: 125px; height: 100%; background: url('https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2022/10/01/0/18809827.jpg&s=Y&x=4&y=6&sw=1276&sh=848&sl=W&fw=1050') no-repeat; background-size: 130px ; border-radius: 5px; display: inline-block;">
@@ -416,7 +368,7 @@
                                 </button>
 
                                 <ul class="dropdown-menu">
-                                    <li><a id="${j.sessionNo}" href="#" class="dropdown-item" onclick="readSeatTable(this.id)">查看座位表</a></li>
+                                    <li><a id="${j.sessionNo}" href="back-activity-seatmgt-sessioncanmodi.html" class="dropdown-item" onclick="manageSeatTable(this.id)">管理座位表</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -459,7 +411,7 @@
                             <div
                                 style="height: 100%; width: 70%; display: inline-block; font-size: 13px; vertical-align: top; margin-left: 10px;">
                                 <div style="vertical-align: top; color: #717171;">已售出數量</div>
-                                <div style="vertical-align: top;">${j.seatsQty + j.standingQty}</div>
+                                <div style="vertical-align: top;">${(j.maxSeatsQty + j.maxStandingQty) - (j.seatsQty + j.standingQty)}</div>
                             </div>
                         </div>
                     </div>
@@ -470,9 +422,8 @@
 
     // ====================================================================================================
 
-    function readSeatTable(sessionNo) {
+    function manageSeatTable(sessionNo) {
         console.log(sessionNo);
-        alert(sessionNo);
         sessionStorage.setItem('sessionNo', sessionNo);
     }
 

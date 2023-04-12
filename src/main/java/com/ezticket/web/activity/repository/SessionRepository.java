@@ -2,6 +2,7 @@ package com.ezticket.web.activity.repository;
 
 import com.ezticket.web.activity.pojo.Activity;
 import com.ezticket.web.activity.pojo.Session;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface SessionRepository extends JpaRepository<Session,Integer> {
@@ -26,7 +28,12 @@ public interface SessionRepository extends JpaRepository<Session,Integer> {
 //    Add by Shawn on 4/3
     public List<Session> findByActivityNo(Integer actNo);
 
-    @Query("SELECT s.sessionNo FROM Session s")
-    public List<Integer> getSessionNos();
+    @Query("SELECT s.sessionNo FROM Session s JOIN Activity act WHERE act.aEDate > current_date")
+    public Set<Integer> getToSellSessions();
 
+//    Add by Shawn on 04/08
+    @Transactional
+    @Modifying
+    @Query("UPDATE Session SET standingQty = standingQty + :ticketChange where sessionNo = :sessionNo")
+    public int updateById(@Param("ticketChange") Integer ticketChange, @Param("sessionNo") Integer sessionNo);
 }

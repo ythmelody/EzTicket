@@ -513,6 +513,9 @@
 		//載入所有評論
 		function fetchPcommentList() {
 
+			//換頁的時候將原本查詢的東西清空
+			$("[name='pname']").val('');
+
 			// 選單(狀態)呈現 <option value="1">置頂</option>
 			$('#statusSelector').html(`
                 <option value="" selected>所有狀態</option>
@@ -531,7 +534,7 @@
 					displayPcomments(list);
 				})
 
-			$('#pnameSearch').keypress(function () {
+			$('#pnameSearch').keyup(function () {
 				if ($('div .tab-pane.fade.active.show').attr('id') === 'tickets-tab') {
 					fetch('ProductCommentReportServlet', {
 						method: "POST",
@@ -706,6 +709,8 @@
 
 		//呈現被檢舉頁面
 		function fetchPcommentRoportList() {
+			//換頁的時候將原本查詢的東西清空
+			$("[name='pname']").val('');
 
 			// 選單(狀態)呈現
 			$('#statusSelector').html(`

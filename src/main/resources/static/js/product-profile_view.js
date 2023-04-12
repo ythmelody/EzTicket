@@ -18,6 +18,10 @@ function fetchPorderList(e) {
           method: 'GET',
         }).then(resp => resp.json())
           .then(data => {
+            let imagesrc;
+            if (data.products[0].pimgts && data.products[0].pimgts[0]) {
+              imagesrc = `data:image/png;base64,${data.products[0].pimgts[0].pimg}`;
+            }
             let detailslist = '';
             for (let i = 0; i < data.products.length; i++) {
               detailslist += `<div><span>${data.products[i].pname} x ${data.pdetails[i].porderqty}</span></div>`;
@@ -39,7 +43,7 @@ function fetchPorderList(e) {
             const orderHtml = `<div class="main-card mt-4">
               <div class="card-top p-4">
                 <div class="card-event-img">
-                  <img src="images/event-imgs/img-7.jpg" alt="">
+                  <img src="${imagesrc}" alt="">
                 </div>
                 <div class="card-event-dt">
                   <h5>訂單編號 : ${obj.porderno}</h5>

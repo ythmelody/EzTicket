@@ -249,7 +249,7 @@
                 </div>
                 <div class="col-md-12">
                     <div class="main-card mt-5">
-                        <div class="dashboard-wrap-content p-4" style="border: 1px solid lightgray">
+                        <div class="dashboard-wrap-content p-4" style="border: 1px solid #EFEFEF">
                             <div class="d-md-flex flex-wrap align-items-center">
                                 <div class="dashboard-date-wrap">
                                     <div class="form-group">
@@ -265,7 +265,7 @@
                                     <div class="nav custom2-tabs btn-group" role="tablist">
                                         <button class="tab-link active" data-bs-toggle="tab"
                                                 data-bs-target="#notStart" type="button" role="tab"
-                                                aria-controls="notStart" aria-selected="true" id="notStartBtn">未上架
+                                                aria-controls="notStart" aria-selected="true" id="notStartBtn" onclick="notStartTab()">未上架
                                         </button>
                                         <button class="tab-link" data-bs-toggle="tab" data-bs-target="#starting"
                                                 type="button" role="tab" aria-controls="starting"
@@ -342,19 +342,6 @@
                 // 呈現所有節目
                 displayNotStartActivity(jsondata);
             })
-
-        // 查詢節目
-        showSelector.addEventListener('change', function () {
-            $('#showName').val('');
-
-            fetch('Activity/findByActNo' + `?actNo=${showSelector.value}`)
-                .then((resp) => resp.json())
-                .then((jsondata) => {
-                    console.log(jsondata)
-                    let array = [jsondata];
-                    displayNotStartActivity(array);
-                })
-        })
     }
 
     // 顯示 "未上架節目"
@@ -364,11 +351,11 @@
         for (let j of jsondata) {
             notStartbody.innerHTML += `
                 <div class="s-container"
-                     style="border: 1px solid lightgray; width: 100%; height: 210px; border-radius: 5px; background-color: white; margin-top: 10px">
-                    <div class="s-container-upper" style="height: 60%; border-bottom: 1px solid lightgray;">
+                     style="border: 1px solid #EFEFEF; width: 100%; height: 210px; border-radius: 5px; background-color: white; margin-top: 10px">
+                    <div class="s-container-upper" style="height: 60%; border-bottom: 1px solid #EFEFEF;">
                         <div style="width: 100%; height: 100%; padding: 20px;">
                             <div
-                                style="width: 125px; height: 100%; background: url('https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2022/10/01/0/18809827.jpg&s=Y&x=4&y=6&sw=1276&sh=848&sl=W&fw=1050') no-repeat; background-size: 130px ; border-radius: 5px; display: inline-block;">
+                                id="showpic_${j.activityNo}" style="width: 125px; height: 100%; background: url('') no-repeat; background-size: 130px ; border-radius: 5px; display: inline-block;">
                             </div>
                             <div
                                 style="width: 50%; height: 100%; display: inline-block; margin-left: 15px; vertical-align: top;">
@@ -395,13 +382,13 @@
                                 </button>
 
                                 <ul class="dropdown-menu">
-                                    <li><a id="${j.activityNo}" href="back-activity-seatmgt-allsellingsession.html" class="dropdown-item" onclick="manageSeatTable(this.id)">管理座位表</a></li>
+                                    <li><a id="${j.activityNo}" href="back-activity-seatmgt-unsellsessions.html" class="dropdown-item" onclick="manageSeatTable(this.id)">管理座位表</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="s-container-downer" style="height: 40%; ">
-                        <div style="height: 100%; width: 24%; padding: 20px; display: inline-block;">
+                        <div style="height: 100%; width: 49%; padding: 20px; display: inline-block;">
                             <div
                                 style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-place.png') center no-repeat; background-size: 20px; border-radius: 100px;">
                             </div>
@@ -411,7 +398,7 @@
                                 <div style="vertical-align: top;">${j.aplace}</div>
                             </div>
                         </div>
-                        <div style="height: 100%; width: 24%; padding: 20px; display: inline-block;">
+                        <div style="height: 100%; width: 49%; padding: 20px; display: inline-block;">
                             <div
                                 style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-calendar.png') center no-repeat; background-size: 20px; border-radius: 100px;">
                             </div>
@@ -423,6 +410,14 @@
                         </div>
                     </div>
                 </div>`;
+
+            let showpic = j.aimgt;
+
+            for (let i = 0; i < showpic.length; i++) {
+                if (showpic[i].aimgMain == 1) {
+                    document.getElementById(`showpic_${j.activityNo}`).style.backgroundImage= `url(data:image/png;base64,${showpic[i].aimg})`;
+                }
+            }
         }
         ;
     }
@@ -453,19 +448,6 @@
                 // 呈現所有節目
                 displaySellingActivity(jsondata);
             })
-
-        // 查詢節目
-        showSelector.addEventListener('change', function () {
-            $('#showName').val('');
-
-            fetch('Activity/findByActNo' + `?actNo=${showSelector.value}`)
-                .then((resp) => resp.json())
-                .then((jsondata) => {
-                    console.log(jsondata)
-                    let array = [jsondata];
-                    displaySellingActivity(array);
-                })
-        })
     }
 
     // 顯示 "上架中節目"
@@ -475,11 +457,11 @@
         for (let j of jsondata) {
             startingbody.innerHTML += `
                 <div class="s-container"
-                     style="border: 1px solid lightgray; width: 100%; height: 210px; border-radius: 5px; background-color: white; margin-top: 10px">
-                    <div class="s-container-upper" style="height: 60%; border-bottom: 1px solid lightgray;">
+                     style="border: 1px solid #EFEFEF; width: 100%; height: 210px; border-radius: 5px; background-color: white; margin-top: 10px">
+                    <div class="s-container-upper" style="height: 60%; border-bottom: 1px solid #EFEFEF;">
                         <div style="width: 100%; height: 100%; padding: 20px;">
                             <div
-                                style="width: 125px; height: 100%; background: url('https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2022/10/01/0/18809827.jpg&s=Y&x=4&y=6&sw=1276&sh=848&sl=W&fw=1050') no-repeat; background-size: 130px ; border-radius: 5px; display: inline-block;">
+                                id="showpic_${j.activityNo}" style="width: 125px; height: 100%; background: url('') no-repeat; background-size: 130px ; border-radius: 5px; display: inline-block;">
                             </div>
                             <div
                                 style="width: 50%; height: 100%; display: inline-block; margin-left: 15px; vertical-align: top;">
@@ -506,13 +488,13 @@
                                 </button>
 
                                 <ul class="dropdown-menu">
-                                    <li><a id="${j.activityNo}" href="back-activity-seatmgt-allsellingsession.html" class="dropdown-item" onclick="manageSeatTable(this.id)">管理座位表</a></li>
+                                    <li><a id="${j.activityNo}" href="back-activity-seatmgt-sellingandsoldsessions.html" class="dropdown-item" onclick="readSeatTable(this.id)">查看座位表</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="s-container-downer" style="height: 40%; ">
-                        <div style="height: 100%; width: 24%; padding: 20px; display: inline-block;">
+                        <div style="height: 100%; width: 49%; padding: 20px; display: inline-block;">
                             <div
                                 style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-place.png') center no-repeat; background-size: 20px; border-radius: 100px;">
                             </div>
@@ -522,7 +504,7 @@
                                 <div style="vertical-align: top;">${j.aplace}</div>
                             </div>
                         </div>
-                        <div style="height: 100%; width: 24%; padding: 20px; display: inline-block;">
+                        <div style="height: 100%; width: 49%; padding: 20px; display: inline-block;">
                             <div
                                 style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-calendar.png') center no-repeat; background-size: 20px; border-radius: 100px;">
                             </div>
@@ -534,6 +516,14 @@
                         </div>
                     </div>
                 </div>`;
+
+            let showpic = j.aimgt;
+
+            for (let i = 0; i < showpic.length; i++) {
+                if (showpic[i].aimgMain == 1) {
+                    document.getElementById(`showpic_${j.activityNo}`).style.backgroundImage= `url(data:image/png;base64,${showpic[i].aimg})`;
+                }
+            }
         }
         ;
     }
@@ -563,19 +553,6 @@
                 // 呈現所有節目
                 displayEndSellActivity(jsondata);
             })
-
-        // 查詢節目
-        showSelector.addEventListener('change', function () {
-            $('#showName').val('');
-
-            fetch('Activity/findByActNo' + `?actNo=${showSelector.value}`)
-                .then((resp) => resp.json())
-                .then((jsondata) => {
-                    console.log(jsondata)
-                    let array = [jsondata];
-                    displayEndSellActivity(array);
-                })
-        })
     }
 
     // 顯示 "下架節目"
@@ -585,11 +562,11 @@
         for (let j of jsondata) {
             finishedbody.innerHTML += `
                 <div class="s-container"
-                     style="border: 1px solid lightgray; width: 100%; height: 210px; border-radius: 5px; background-color: white; margin-top: 10px">
-                    <div class="s-container-upper" style="height: 60%; border-bottom: 1px solid lightgray;">
+                     style="border: 1px solid #EFEFEF; width: 100%; height: 210px; border-radius: 5px; background-color: white; margin-top: 10px">
+                    <div class="s-container-upper" style="height: 60%; border-bottom: 1px solid #EFEFEF;">
                         <div style="width: 100%; height: 100%; padding: 20px;">
                             <div
-                                style="width: 125px; height: 100%; background: url('https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2022/10/01/0/18809827.jpg&s=Y&x=4&y=6&sw=1276&sh=848&sl=W&fw=1050') no-repeat; background-size: 130px ; border-radius: 5px; display: inline-block;">
+                                id="showpic_${j.activityNo}" style="width: 125px; height: 100%; background: url('') no-repeat; background-size: 130px ; border-radius: 5px; display: inline-block;">
                             </div>
                             <div
                                 style="width: 50%; height: 100%; display: inline-block; margin-left: 15px; vertical-align: top;">
@@ -616,13 +593,13 @@
                                 </button>
 
                                 <ul class="dropdown-menu">
-                                    <li><a id="${j.activityNo}" href="back-activity-seatmgt-allsoldsession.html" class="dropdown-item" onclick="readSeatTable(this.id)">查看座位表</a></li>
+                                    <li><a id="${j.activityNo}" href="back-activity-seatmgt-sellingandsoldsessions.html" class="dropdown-item" onclick="readSeatTable(this.id)">查看座位表</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="s-container-downer" style="height: 40%; ">
-                        <div style="height: 100%; width: 24%; padding: 20px; display: inline-block;">
+                        <div style="height: 100%; width: 49%; padding: 20px; display: inline-block;">
                             <div
                                 style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-place.png') center no-repeat; background-size: 20px; border-radius: 100px;">
                             </div>
@@ -632,7 +609,7 @@
                                 <div style="vertical-align: top;">${j.aplace}</div>
                             </div>
                         </div>
-                        <div style="height: 100%; width: 24%; padding: 20px; display: inline-block;">
+                        <div style="height: 100%; width: 49%; padding: 20px; display: inline-block;">
                             <div
                                 style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-calendar.png') center no-repeat; background-size: 20px; border-radius: 100px;">
                             </div>
@@ -644,50 +621,71 @@
                         </div>
                     </div>
                 </div>`;
+
+            let showpic = j.aimgt;
+
+            for (let i = 0; i < showpic.length; i++) {
+                if (showpic[i].aimgMain == 1) {
+                    document.getElementById(`showpic_${j.activityNo}`).style.backgroundImage= `url(data:image/png;base64,${showpic[i].aimg})`;
+                }
+            }
         }
         ;
     }
 
-    // ====================================================================================================
+    // ==========================================================================================================================
+    // 查詢節目
+    showSelector.addEventListener('change', function () {
 
-    // 模糊比對節目的所有評論或受檢舉評論
-    function search() {
-        // $("#showSelector>option[value='all']").prop("selected", true);
+        if(showSelector.value == 'all'){
+            if($('#notStartBtn').attr('aria-selected') === "true"){
+                notStartTab();
+                return;
+            }
 
-        url = `Activity/ByActName` + `?actName=${$('#showName').val()}`;
+            if($('#startingBtn').attr('aria-selected') === "true"){
+                startingTab();
+                return;
+            }
 
-        if ($('#notStartBtn').attr('aria-selected') == 'true') {
-            fetch(url)
-                .then((resp) => resp.json())
-                .then((jsondata) => {
-                    displayNotStartActivity(jsondata);
-                })
-        } else if ($('#startingBtn').attr('aria-selected') == 'true') {
-            fetch(url)
-                .then((resp) => resp.json())
-                .then((jsondata) => {
-                    displaySellingActivity(jsondata);
-                })
-        } else {
-            fetch(url)
-                .then((resp) => resp.json())
-                .then((jsondata) => {
-                    displayEndSellActivity(jsondata);
-                })
+            if($('#finishedBtn').attr('aria-selected') === "true"){
+                endSellTab();
+                return;
+            }
         }
-    }
+
+
+        fetch('Activity/findByActNo' + `?actNo=${showSelector.value}`)
+            .then((resp) => resp.json())
+            .then((jsondata) => {
+                let array = [jsondata];
+
+                if($('#notStartBtn').attr('aria-selected') === "true"){
+                    displayNotStartActivity(array);
+                    return;
+                }
+
+                if($('#startingBtn').attr('aria-selected') === "true"){
+                    displaySellingActivity(array);
+                    return;
+                }
+
+                if($('#finishedBtn').attr('aria-selected') === "true"){
+                    displayEndSellActivity(array);
+                    return;
+                }
+            })
+    })
 
     function readSeatTable(actNo){
-        console.log(actNo);
-        alert(actNo);
         sessionStorage.setItem('activityNo', actNo);
     }
 
     function manageSeatTable(actNo){
-        console.log(actNo);
-        alert(actNo);
         sessionStorage.setItem('activityNo', actNo);
     }
+
+
 
 </script>
 

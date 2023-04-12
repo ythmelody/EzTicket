@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import jakarta.websocket.*;
 import jakarta.websocket.server.ServerEndpoint;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -22,8 +21,6 @@ public class SelectSeatsTogether {
     @Autowired
     private SeatsService seatsService;
 
-
-
     private static final Set<Session> connectedSessions = Collections.synchronizedSet(new HashSet<>());
 
     @OnOpen
@@ -33,12 +30,9 @@ public class SelectSeatsTogether {
         System.out.println(text);
     }
 
-//    重點是這
+    //    WebSocket 的重點，伺服器所需推播的內容
     @OnMessage
     public void onMessage(Session userSession, String message) {
-        Gson gson = new Gson();
-        Seats seat = gson.fromJson(message, Seats.class);
-
         for (Session session : connectedSessions) {
             if (session.isOpen() && (session != userSession))
                 session.getAsyncRemote().sendText(message);

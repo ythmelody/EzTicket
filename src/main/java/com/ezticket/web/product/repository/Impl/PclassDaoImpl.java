@@ -1,8 +1,10 @@
 package com.ezticket.web.product.repository.Impl;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ezticket.web.product.pojo.Pclass;
+import com.ezticket.web.product.pojo.Product;
 import com.ezticket.web.product.repository.PclassDAO;
 import jakarta.persistence.PersistenceContext;
 import org.hibernate.Session;
@@ -46,5 +48,20 @@ public class PclassDaoImpl implements PclassDAO {
 		return true;
 
 	}
+
+	@Override
+	public List<Pclass> getByPclasstName(String pclassname) {
+		final String SELECT_BY_NAME_SQL = "FROM Pclass WHERE pclassname LIKE :pclassname ";
+		Query query = session.createQuery(SELECT_BY_NAME_SQL, Pclass.class);
+		return query.setParameter("pclassname", "%" + pclassname + "%").getResultList();
+	}
+
+	@Override
+	public List<Pclass> getByCompletePclasstName(String pclassname) {
+		final String SELECT_BY_NAME_SQL = "FROM Pclass WHERE pclassname = :pclassname ";
+		Query query = session.createQuery(SELECT_BY_NAME_SQL, Pclass.class);
+		return query.setParameter("pclassname", pclassname).getResultList();
+	}
+
 
 }

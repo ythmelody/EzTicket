@@ -32,8 +32,8 @@ public class PcommentDAOImpl implements PcommentDAO {
 			"SELECT * FROM pcomment WHERE memberno = ? order by pcommentno";
 
 	@Override
-	public void insert(Pcomment pcommentVO) {
-		session.persist(pcommentVO);
+	public void insert(Pcomment pcomment) {
+		session.persist(pcomment);
 	}
 
 	@Override

@@ -8,11 +8,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Timestamp;
+import java.util.Collection;
 
 
 @WebServlet("/updateProduct")
@@ -55,6 +58,22 @@ public class UpdateProduct extends HttpServlet {
 
 		productSvc.updateProduct(productno, pclassno, pname, hostno, pdiscrip, pprice, pspecialprice, pqty, psdate,
 				pedate, ptag, pstatus, pratetotal, prateqty);
+
+		//多張圖片上傳
+		Collection<Part> parts = request.getParts();
+
+		for (Part part : parts) {
+			String filename = part.getSubmittedFileName();
+
+			if (filename!= null  && filename.length()!=0){
+				InputStream in = part.getInputStream();
+				byte[] buf = new byte[in.available()];   // 也可以用byte[] buf = in.readAllBytes();  // Java 9 的新方法
+				in.read(buf);
+				in.close();
+				pimgtSvc.addProductImg(productno,buf);
+			}
+
+		}
 
 		response.sendRedirect("back-product-product_manage.html");
 	}

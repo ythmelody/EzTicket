@@ -465,8 +465,7 @@
                 <!-- 節目評論 -->
                 <div class="col-xl-12 col-lg-12 col-md-12">
                     <div class="testimonial-block p-80">
-                        <!-- height 有調整 -->
-                        <div class="container" style="height: 325px;">
+                        <div class="container">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="testimonial-slider-area">
@@ -768,13 +767,48 @@
     }
     const commentcontainer = document.querySelector('#commentcontainer');
 
+    function comment(commentNo) {
+        $('#aCommentNo').val(commentNo);
+        $('#memberNo').val(info.memberNo);
+    }
+
+    function submitComment() {
+
+        let reqbody = {
+            "memberNo": $('#memberNo').val(),
+            "aCommentNo": $('#aCommentNo').val(),
+            "aWhy": $('#aWhy').val()
+        }
+
+        fetch('areport/insert', {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(reqbody)
+        })
+    }
+
+    function chgthumbimg() {
+        const btnClass = event.target.className;
+        if (btnClass === '') {
+            event.target.src = 'images/thumbup_clicked.png';
+            event.target.classList.add("thumbbed");
+        } else {
+            event.target.src = 'images/thumbup_blank.png';
+            event.target.classList.remove("thumbbed");
+        }
+    }
+
     $(document).ready(function () {
-            fetch('acomment/ActAComments' + `?actNo=${info.activityno}`)
-                .then((resp) => resp.json())
-                .then((jsondata) => {
+
+            $.ajax({
+                async: false,
+                type: 'GET',
+                url: 'acomment/ActAComments' + `?actNo=${info.activityno}`,
+                dataType: "json",
+                success: function (jsondata) {
                     for (let j of jsondata) {
                         commentcontainer.innerHTML += `
-                            <div class="item">
+                            <div class="commentclass item">
                                 <div class="main-card">
                                     <div class=" testimonial-content">
                                         <div class="testimonial-text">
@@ -820,40 +854,40 @@
                                 </div>
                             </div>`;
                     }
-                })
+                }
+            }).then(function () {
+                    $('.testimonial-slider').owlCarousel({
+                        items: 10,
+                        loop: true,
+                        margin: 20,
+                        nav: false,
+                        dots: true,
+                        smartSpeed: 800,
+                        autoplay: true,
+                        autoplayTimeout: 3000,
+                        autoplayHoverPause: true,
+                        responsive: {
+                            0: {
+                                items: 1
+                            },
+                            600: {
+                                items: 1
+                            },
+                            1000: {
+                                items: 2
+                            },
+                            1200: {
+                                items: 2
+                            },
+                            1400: {
+                                items: 2
+                            }
+                        }
+                    })
+                }
+            )
         }
     )
-
-    function comment(commentNo) {
-        $('#aCommentNo').val(commentNo);
-        $('#memberNo').val(info.memberNo);
-    }
-
-    function submitComment() {
-
-        let reqbody = {
-            "memberNo": $('#memberNo').val(),
-            "aCommentNo": $('#aCommentNo').val(),
-            "aWhy": $('#aWhy').val()
-        }
-
-        fetch('areport/insert', {
-            method: "POST",
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(reqbody)
-        } )
-    }
-
-    function chgthumbimg() {
-        const btnClass = event.target.className;
-        if (btnClass === '') {
-            event.target.src = 'images/thumbup_clicked.png';
-            event.target.classList.add("thumbbed");
-        } else {
-            event.target.src = 'images/thumbup_blank.png';
-            event.target.classList.remove("thumbbed");
-        }
-    }
 
 
 </script>

@@ -28,7 +28,7 @@ public class SessionController {
     }
 
     @GetMapping("/findByactivityNo")
-    public List<SessionDto> findByactivityNo(@RequestParam Integer activityNo){
+    public List<SessionDto> findByactivityNo(@RequestParam Integer activityNo) {
 
         return sessionService.findByactivityNo(activityNo);
     }
@@ -38,4 +38,18 @@ public class SessionController {
     public List<SessionDto> getAllSessionByActNo(@RequestParam Integer actNo) {
         return sessionService.getAllSessionByActNo(actNo);
     }
+
+    //    Add by Shawn on 04/08
+    @GetMapping("/updateTicketQTY")
+    public Integer updateTicketQTY(@RequestParam Integer ticketChange, @RequestParam Integer sessionNo) {
+        return sessionService.updateTicketQTY(ticketChange, sessionNo);
+    }
+
+    //    Add by Shawn on 04/12
+    @GetMapping("/findById")
+    public Optional<SessionDto> findById(@RequestParam Integer sessionNo) {
+
+        return sessionService.findById(sessionNo);
+    }
+
 }

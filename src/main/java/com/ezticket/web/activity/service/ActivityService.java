@@ -1,6 +1,7 @@
 package com.ezticket.web.activity.service;
 
 import com.ezticket.web.activity.dto.ActivityDto;
+import com.ezticket.web.activity.dto.AimgtDto;
 import com.ezticket.web.activity.pojo.Activity;
 import com.ezticket.web.activity.repository.ActivityRepository;
 import org.modelmapper.ModelMapper;
@@ -31,12 +32,9 @@ public class ActivityService {
 
     }
 
-    public Optional<ActivityDto> findByactivityNo(Integer activityNo){
-        return activityRepository.findByactivityNo(activityNo).map(this::entityToDTO);
 
-    }
 
-        @Scheduled(cron = "0 0 * * * * ?")
+        @Scheduled(cron = "0 0 * * * *")
     public void checkExpiredActivity() {
         LocalDate today = LocalDate.now();
         List<Activity> offStatus = activityRepository.findExpiredActivity(today);
@@ -47,7 +45,7 @@ public class ActivityService {
         }
     }
 
-    @Scheduled(cron = "0 0 * * * *?")
+    @Scheduled(cron = "0 0 * * * *")
     public void checkActiveActivity() {
         LocalDate today = LocalDate.now();
         List<Activity> onStatus = activityRepository.findActiveActivity(today);
@@ -81,4 +79,19 @@ public class ActivityService {
     }
 
 
+    public Optional<ActivityDto> findByactivityNo(Integer activityNo) {
+        return activityRepository.findByactivityNo(activityNo).map(this::entityToDTO);
+
+    }
+    public List<ActivityDto> findAllByActivityNo(Integer activityNo){
+
+        return activityRepository.findAllByActivityNo(activityNo)
+                .stream()
+                .map(this::entityToDTO)
+                .collect(Collectors.toList());
+    }
+    public void  insertActivity(Activity activity){
+        activityRepository.save(activity);
+
+    }
 }

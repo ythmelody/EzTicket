@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
-@RequestMapping("/back-users-host")
+@RequestMapping("/host")
 public class HostController {
     @Autowired
     private HostService hostService;
@@ -20,7 +21,7 @@ public class HostController {
     public List<Host> getAllHost(){ return  hostService.getAllHost(); }
 
     @PostMapping("/{hostno}")
-    public ResponseEntity<Host> updateHost(@PathVariable("hostno")Integer hostno,@RequestBody Host newhost){
+    public ResponseEntity<Host> updateHost(@PathVariable("hostno")Integer hostno, @RequestBody Host newhost){
         Host updateHost = hostService.updateHost(hostno,newhost);
         //測試編輯輸入的資料有沒有進來
         System.out.println("hostno: " + hostno);
