@@ -651,22 +651,29 @@
 
 														<div class="col-lg-12 col-md-12">
 															<div class="form-group border_bottom pb_30">
-																<label class="form-label fs-16">商品名稱*</label>
+																<label class="form-label fs-16">商品名稱*
+																	<span id="pnameErr" style="color: #DAA520"></span>
+																</label>
 																<p class="mt-2 d-block fs-14 mb-3">
 																	前面加上演唱會或展覽名稱可以加強搜尋，建議格式＂五月天｜FLY TO YOU 毛巾＂</p>
 																<input class="form-control h_50" type="text"
-																	placeholder="請輸入商品名稱" value="" name="pname">
+																	placeholder="請輸入商品名稱" value="" name="pname"
+																	id="pname">
 																<p></p>
-																<label class="form-label fs-16">商品特色標籤*</label>
+																<label class="form-label fs-16">商品特色標籤*
+																	<span id="ptagErr" style="color: #DAA520"></span>
+																</label>
 																<p class="mt-2 d-block fs-14 mb-3">
-																	範例：#五月天 #毛巾 </p>
+																	範例：#五月天 #毛巾 #演唱會聯名 #獨家限量</p>
 																<input class="form-control h_50" type="text"
-																	placeholder="請輸入商品特色標籤" value="" name="ptag">
+																	placeholder="請輸入商品特色標籤" value="" name="ptag"
+																	id="ptag">
 
 																<div class="col-lg-12 col-md-12">
 																	<div class="form-group mt-4">
-																		<label
-																			class="form-label mb-2 fs-14">選擇商品類別*</label>
+																		<label class="form-label mb-2 fs-14">選擇商品類別*
+																			<span id="pclassnoErr"
+																				style="color: #DAA520"></span></label>
 																		<select id="pclassSelector" name="pclassno"
 																			class="selectpicker" title="選擇商品類別"
 																			data-live-search="true">
@@ -680,11 +687,12 @@
 
 																<div class="col-lg-12 col-md-12">
 																	<div class="form-group mt-4">
-																		<label
-																			class="form-label mb-2 fs-14">選擇主辦單位*</label>
+																		<label class="form-label mb-2 fs-14">選擇主辦單位*
+																			<span id="hostnoErr"
+																				style="color: #DAA520"></span></label>
 																		<select class="selectpicker" data-size="5"
 																			title="選擇主辦單位" data-live-search="true"
-																			name="hostno">
+																			name="hostno" id="hostno">
 																			<option value="5001">詠傑股份有限公司</option>
 																			<option value="5002">尉賢股份有限公司</option>
 																			<option value="5003">晉賢股份有限公司</option>
@@ -694,44 +702,50 @@
 
 																<div class="col-lg-12 col-md-12">
 																	<div class="form-group mt-4">
-																		<label
-																			class="form-label mb-2 fs-14">商品原價＊</label>
+																		<label class="form-label mb-2 fs-14">商品原價＊
+																			<span id="ppriceErr"
+																				style="color: #DAA520"></span></label>
 																		<input class="form-control h_40" type="number"
 																			value="10" placeholder="請輸入商品原價"
-																			name="pprice">
+																			name="pprice" id="pprice">
 																	</div>
 																</div>
 
 																<div class="col-lg-12 col-md-12">
 																	<div class="form-group mt-4">
-																		<label
-																			class="form-label mb-2 fs-14">商品特價＊</label>
+																		<label class="form-label mb-2 fs-14">商品特價＊
+																			<span id="pspecialpriceErr"
+																				style="color: #DAA520"></span></label></label>
 																		<input class="form-control h_40" type="number"
 																			value="10" placeholder="請輸入商品特價"
-																			name="pspecialprice">
+																			name="pspecialprice" id="pspecialprice">
 																	</div>
 																</div>
 
 																<div class="col-lg-12 col-md-12">
 																	<div class="form-group mt-4">
-																		<label
-																			class="form-label mb-2 fs-14">商品可售數量＊</label>
+																		<label class="form-label mb-2 fs-14">商品可售數量＊
+																			<span id="pqtyErr"
+																				style="color: #DAA520"></span></label>
 																		<input class="form-control h_40" type="number"
 																			value="10" placeholder="請輸入商品可售數量"
-																			name="pqty">
+																			name="pqty" id="pqty">
 																	</div>
 																</div>
 
 															</div>
 
 															<div class="form-group border_bottom pt_30 pb_30">
-																<label class="form-label fs-16">商品上架時間*</label>
+																<label class="form-label fs-16">商品上架時間*
+																	<span id="psdateErr" style="color: #DAA520"></span>
+																</label>
 																<p class="mt-2 fs-14 d-block mb-3">若到了商品上架時間，商品預設會出現在前台
 																</p>
 																<div class="row g-2">
 																	<div class="col-md-6">
-																		<label
-																			class="form-label mt-3 fs-6">選擇日期*</label>
+																		<label class="form-label mt-3 fs-6">選擇日期*
+																			<span id="psdateErr"
+																				style="color: #DAA520"></span></label>
 																		<div class="loc-group position-relative">
 																			<input
 																				class="form-control h_50 datepicker-here"
@@ -739,7 +753,7 @@
 																				placeholder="YYYY/MM/DD" value=""
 																				name="psdate"
 																				data-date-format="yyyy-mm-dd 00:00:00"
-																				autocomplete="off">
+																				autocomplete="off" id="psdate">
 																			<span class="absolute-icon"><i
 																					class="fa-solid fa-calendar-days"></i></span>
 																		</div>
@@ -753,8 +767,9 @@
 																<p class="mt-2 fs-14 d-block mb-3">若到了商品下架時間，前台即無法展售</p>
 																<div class="row g-2">
 																	<div class="col-md-6">
-																		<label
-																			class="form-label mt-3 fs-6">選擇日期*</label>
+																		<label class="form-label mt-3 fs-6">選擇日期*
+																			<span id="pedateErr"
+																				style="color: #DAA520"></label>
 																		<div class="loc-group position-relative">
 																			<input
 																				class="form-control h_50 datepicker-here"
@@ -762,7 +777,7 @@
 																				placeholder="MM/DD/YYYY" value=""
 																				name="pedate"
 																				data-date-format="yyyy-mm-dd 23:59:59"
-																				autocomplete="off">
+																				autocomplete="off" id="pedate">
 																			<span class="absolute-icon"><i
 																					class="fa-solid fa-calendar-days"></i></span>
 																		</div>
@@ -793,7 +808,9 @@
 															</div>
 
 															<div class="form-group pt_30 pb_30">
-																<label class="form-label fs-16">上傳商品圖片</label>
+																<label class="form-label fs-16">上傳商品圖片
+																	<span id="imgErr" style="color: #DAA520"></span>
+																</label>
 																<p class="mt-2 fs-14 d-block mb-3 pe_right">
 																	圖片尺寸限制：張數／尺寸大小
 																</p>
@@ -816,14 +833,12 @@
 
 															</div>
 															<div class="form-group border_bottom pb_30">
-																<label class="form-label fs-16">商品描述</label>
-																<p class="mt-2 fs-14 d-block mb-3">Write a few words
-																	below
-																	to describe your event and provide any extra
-																	information
-																	such as schedules, itinerary or any special
-																	instructions
-																	required to attend your event.</p>
+																<label class="form-label fs-16">商品描述
+																	<span id="pdiscripErr"
+																		style="color: #DAA520"></span>
+																</label>
+																<p class="mt-2 fs-14 d-block mb-3">請為你的商品寫上吸引人的商品說明以增加銷售
+																</p>
 																<div class="text-editor mt-4">
 																	<textarea id="pd_editor" name="pdiscrip"></textarea>
 																</div>
@@ -1536,7 +1551,18 @@
 		$('#add-event-tab').steps({
 			onFinish: function () {
 				// alert('Wizard Completed');
-				$('#ProductForm').submit();
+				const checkresults = [judgePname(), judgePtag(), judgePclassno(), judgeHostno(), judgePprice(), judgePspecialprice(), judgePqty(), judgePsdate(), judgePedate(), judgePdiscrip(), judgeImg()]
+				let success = 0
+
+				for (let checkresult of checkresults) {
+					if (checkresult) {
+						success++;
+					}
+				}
+				if (checkresults.length === success) {
+					$('#ProductForm').submit();
+				}
+
 			}
 		});		
 	</script>
@@ -1572,14 +1598,12 @@
 
 
 
-	<!-- 動態產生上傳商品圖片，一定要用jQuery.append()才可以正常送資料進資料庫，用JS+=到Controller檔案長度會是0無法順利送出 -->
-	<script>
-		// let count = 1
-		
 
+	<script>
+		// 動態產生上傳商品圖片，一定要用jQuery.append()才可以正常送資料進資料庫，用JS+=到Controller檔案長度會是0無法順利送出
 		function previewPicture(count) {
 			// const uploadPictures = document.querySelector('#uploadPictures');
-			console.log("previewPicture"+count);
+			console.log("previewPicture" + count);
 
 			$('#uploadPictures').append(`<div class="default-event-thumb default-event-thumb">
 											<div class="default-event-thumb-btn">
@@ -1602,7 +1626,7 @@
 				const img = document.querySelector('#img' + count);
 				img.src = URL.createObjectURL(files[0]);
 				// count++;
-				previewPicture(count+1);
+				previewPicture(count + 1);
 			})
 
 		}
@@ -1629,7 +1653,7 @@
 				$("[name='ptag']").val(item.ptag);
 				$("[name='pclassno']").val(item.pclassno);
 				$("select[name='pclassno']").selectpicker('refresh');
-				$("select[name='hostno']").val('5003');
+				$("select[name='hostno']").val(item.hostno);
 				$("select[name='hostno']").selectpicker('refresh');
 				$("[name='pprice']").val(item.pprice);
 				$("[name='pspecialprice']").val(item.pspecialprice);
@@ -1639,7 +1663,7 @@
 				$("[name='pstatus']").val(item.pstatus);
 				$("select[name='pstatus']").selectpicker('refresh');
 
-				let count=1;
+				let count = 1;
 				for (let pimgt of item.pimgts) {
 					$('#uploadPictures').append(`<div class="default-event-thumb">
 											<div class="default-event-thumb-btn">
@@ -1658,23 +1682,24 @@
 				editor.setData(item.pdiscrip);
 				//要return 下面的then才接的到值
 				return count;
-				
 
-			}).then((count) =>{
-				console.log("fetch"+count);
+
+			}).then((count) => {
+				// console.log("fetch"+count);
 				previewPicture(count);
 			});
 
-		function deleteProductImg(pimgno){
-			fetch("ProductImg",{
-				method:"POST",
-				body: new URLSearchParams({ 
-					'pimgno':pimgno,
-					'action': "deleteProdouctImg" }),
+		function deleteProductImg(pimgno) {
+			fetch("ProductImg", {
+				method: "POST",
+				body: new URLSearchParams({
+					'pimgno': pimgno,
+					'action': "deleteProdouctImg"
+				}),
 			}).then(resp => resp.json())
 				.then(item => {
 					console.log(item);
-					if (item ===true) {
+					if (item === true) {
 						swal({
 							title: "刪除成功",
 							icon: "success",
@@ -1691,7 +1716,196 @@
 					}
 				})
 
-		}	
+		}
+
+	</script>
+
+	<script>
+		//錯誤處理
+		//商品名稱不得為空
+		$("#pname").blur(function (e) {
+			if (!judgePname(e.target.value)) {
+				// $("#pname").focus();
+			}
+		})
+
+		function judgePname() {
+			if (pname.value === '') {
+				$("#pnameErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品名稱為必填欄位`);
+				return;
+			} else {
+				$("#pnameErr").html('');
+				return true;
+			}
+		}
+		//商品特色標籤不得為空
+		$("#ptag").blur(function (e) {
+			if (!judgePtag(e.target.value)) {
+				// $("#ptag").focus();
+			}
+		})
+
+		function judgePtag() {
+			if (ptag.value === '') {
+				$("#ptagErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品特色標籤為必填欄位`);
+				return;
+			} else {
+				$("#ptagErr").html('');
+				return true;
+			}
+		}
+
+		//下拉式選單要如何做錯誤驗證?-pclassno
+		$("#pclassSelector").on('select change blur', (function (e) {
+			if (!judgePclassno(e.target.value)) {
+				// $("#pclassno").focus();
+			}
+		}))
+
+		$("button [data-id='pclassSelector']").on('select change blur click', (function (e) {
+			if (!judgePclassno(e.target.value)) {
+				// $("#pclassno").focus();
+			}
+		}))
+
+		function judgePclassno() {
+			if (pclassSelector.value === '') {
+				$("#pclassnoErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品類別為必填欄位`);
+				return;
+			} else {
+				$("#pclassnoErr").html('');
+				return true;
+			}
+		}
+
+		$("#hostno").on('select change blur', (function (e) {
+			if (!judgeHostno(e.target.value)) {
+				// $("#pclassno").focus();
+			}
+		}))
+
+		function judgeHostno() {
+			if (hostno.value === '') {
+				$("#hostnoErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>主辦單位為必填欄位`);
+				return;
+			} else {
+				$("#hostnoErr").html('');
+				return true;
+			}
+		}
+
+		//下拉式選單要如何做錯誤驗證?-hostno
+
+		//原價
+		$("#pprice").blur(function (e) {
+			if (!judgePprice(e.target.value)) {
+				// $("#pprice").focus();
+			}
+		})
+
+		function judgePprice() {
+			if (pprice.value === '' || pprice.value < 0) {
+				$("#ppriceErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品原價為必填欄位且不得為負數`);
+				return;
+			} else {
+				$("#ppriceErr").html('');
+				return true;
+			}
+		}
+		//特價
+		$("#pspecialprice").blur(function (e) {
+			if (!judgePspecialprice(e.target.value)) {
+				// $("#pspecialprice").focus();
+			}
+		})
+
+		function judgePspecialprice() {
+			if (pspecialprice.value === '' || pspecialprice.value > $("#pprice").val() || pspecialprice.value < 0) {
+				$("#pspecialpriceErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品特價為必填欄位且不得大於原價且不得為負數`);
+				return;
+			} else {
+				$("#pspecialpriceErr").html('');
+				return true;
+			}
+		}
+		//數量
+		$("#pqty").blur(function (e) {
+			if (!judgePqty(e.target.value)) {
+				// $("#pqty").focus();
+			}
+		})
+
+		function judgePqty() {
+			if (pqty.value === '' || pqty.value < 0) {
+				$("#pqtyErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品數量為必填欄位且不得為負數`);
+				return;
+			} else {
+				$("#pqtyErr").html('');
+				return true;
+			}
+		}
+
+		//上架時間
+		$("#psdate").blur(function (e) {
+			if (!judgePsdate(e.target.value)) {
+				// $("#psdate").focus();
+			}
+		})
+
+		function judgePsdate() {
+			if (psdate.value === '') {
+				$("#psdateErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>上架日期為必填欄位`);
+				return;
+			} else {
+				$("#psdateErr").html('');
+				return true;
+			}
+		}
+
+		//下架時間
+		$("#pedate").blur(function (e) {
+			if (!judgePedate(e.target.value)) {
+				// $("#pedate").focus();
+			}
+		})
+
+		function judgePedate() {
+			if (pedate.value === '') {
+				$("#pedateErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>下架日期為必填欄位`);
+				return;
+			} else {
+				$("#pedateErr").html('');
+				return true;
+			}
+		}
+
+		//圖片
+		function judgeImg() {
+			if ($("#img2").length === 0) {
+				$("#imgErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>請至少上傳一張圖片`);
+				return;
+			} else {
+				$("#imgErr").html('');
+				return true;
+			}
+		}
+
+		//描述
+		$("#pd_editor").blur(function (e) {
+			if (!judgePdiscrip(e.target.value)) {
+				// $("#pdiscrip").focus();
+			}
+		})
+
+		function judgePdiscrip() {
+			if (editor.getData() === '') {
+				$("#pdiscripErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品描述為必填欄位`);
+				return;
+			} else {
+				$("#pdiscripErr").html('');
+				return true;
+			}
+		}
 
 	</script>
 

@@ -1900,8 +1900,8 @@
 		})
 
 		function judgePprice() {
-			if (pprice.value === '') {
-				$("#ppriceErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品原價為必填欄位`);
+			if (pprice.value === '' || pprice.value < 0) {
+				$("#ppriceErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品原價為必填欄位且不得為負數`);
 				return;
 			} else {
 				$("#ppriceErr").html('');
@@ -1916,8 +1916,8 @@
 		})
 
 		function judgePspecialprice() {
-			if (pspecialprice.value === '') {
-				$("#pspecialpriceErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品特價為必填欄位`);
+			if (pspecialprice.value === '' || pspecialprice.value > $("#pprice").val() || pspecialprice.value < 0 ) {
+				$("#pspecialpriceErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品特價為必填欄位且不得大於原價且不得為負數`);
 				return;
 			} else {
 				$("#pspecialpriceErr").html('');
@@ -1932,8 +1932,8 @@
 		})
 
 		function judgePqty() {
-			if (pqty.value === '') {
-				$("#pqtyErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品數量為必填欄位`);
+			if (pqty.value === '' || pqty.value < 0) {
+				$("#pqtyErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品數量為必填欄位且不得為負數`);
 				return;
 			} else {
 				$("#pqtyErr").html('');
