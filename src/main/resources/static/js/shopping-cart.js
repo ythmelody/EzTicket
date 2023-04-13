@@ -1,17 +1,34 @@
 // 定義會員編號
 let memberno = "85345"
 
-$(document).ready(() => {
+$(document).ready(async () => {
   let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
   const itemlist = document.querySelector('tbody');
   itemlist.innerHTML = "";
-  if (cartItems.length !== 0) {
+  if(cartItems.length === 0 || !cartItems.length){
+    const body = document.querySelector('.event-dt-block');
+    body.innerHTML = "";
+    body.innerHTML = `
+    <div class="d-flex justify-content-center">
+      <div class="col-lg-6 col-md-6">
+        <h1 class="text-center">你的購物車還是空的!!</h1>
+        <button class="main-btn btn-hover h_50 w-100 mt-5" onclick="location.href='front-product-explore_products.html'" type="button">
+          立即前往購物
+        </button>
+      </div>
+    </div>
+  `;
+  return;
+  } else {
     let index = 0;
     let totalPay = 0;
+    let imagesrc;
     const itembody = cartItems.map(item => {
       totalPay += (item.data.pspecialprice * item.quantity);
+      imagesrc = `data:image/png;base64,${item.data.pimgts[0].pimg}`;
       return `<tr>
                 <td>${++index}</td>
+                <td><img src="${imagesrc}" width="100" height="100" alt=""></td>
                 <td><a href="front-product-product_detail.html?productno=${item.data.productno}" target="_blank">${item.data.pname}</a></td>
                 <td class="number-cell">
                   <span class="number-top">$<s>${item.data.pprice}</s></span>
@@ -22,22 +39,32 @@ $(document).ready(() => {
                 <td><a href="#" onClick="removeItem(${(index - 1)})">移除</a></td>
               </tr>`
     }).join('');
+    const couponuse = await getpcouponlist(memberno);
+    // 定義運費 滿499免運
+    let delivery = totalPay > 499 ? 0 : 100;
+    let pdiscount = 0;
     const coupon = `<tr>
                       <td colspan="3">
-                        <label class="form-label">優惠券代碼</label>
+                        <label class="form-label">優惠券</label>
                         <div class="position-relative">
-                          <input id="couponCode"class="form-control h_50" type="text" placeholder="Code">
-                          <button class="apply-btn btn-hover" type="button">使用</button>
-                        </div>
+                          <select id="couponCode" class="form-select h_50" onchange="disCoupon()">
+                            <option value="">請選擇</option>
+                            ${couponuse}
+                          </select>
+                          <button class="apply-btn btn-hover" type="button" onClick="useCoupon()">使用</button>
+                        </div>                        
                       </td>
                       <td colspan="4">
                         <div class="user_dt_trans text-end pe-xl-4">
-                          <div class="totalinv2">總金額 : TWD $${totalPay}</div>
+                          <div class="pdiscount-fee">優惠券折扣 : -$<span>${pdiscount}</span></div>
+                          <div class="delivery-fee">運費(滿499免運) : $<span>${delivery}</span></div>
+                          <div class="product-fee">商品金額 : $<span>${totalPay + delivery}</span></div>
+                          <div class="totalinv2">結帳金額 : $<span>${totalPay + delivery}</span></div>
                         </div>
                       </td>
                     </tr>`;
     const card = document.querySelector('#TWD');
-    card.textContent = `應支付總金額 : TWD $${totalPay}`;
+    card.textContent = `應支付總金額 : $${totalPay}`;
     itemlist.innerHTML += itembody;
     itemlist.innerHTML += coupon;
   }
@@ -55,11 +82,43 @@ $(document).ready(() => {
       totalPay += item.data.pspecialprice * item.quantity;
       tr.querySelector('td:nth-last-child(2)').innerText = `$${item.data.pspecialprice * item.quantity}`;
     });
-    itemlist.querySelector('.totalinv2').innerText = `總金額 : TWD $${totalPay}`;
-    const card = document.querySelector('#TWD');
-    card.textContent = `應支付總金額 : TWD $${totalPay}`;
+    // 定義運費 滿499免運
+    let delivery = totalPay > 499 ? 0 : 100;
+    itemlist.querySelector('.product-fee span').innerText = totalPay;
+    $('.delivery-fee span').text(delivery);
+    $('.totalinv2 span').text(totalPay + delivery);
+    $('#TWD').text(`應支付總金額 : $${totalPay + delivery}`);
+    $('#couponCode').val('');
   });
 })
+function disCoupon() {
+  const productpay = Number($('.product-fee span').text());
+  const couponCode = $('#couponCode option:selected');
+  const discount = +couponCode.data('discount');
+  const minimum = +couponCode.data('minimum');
+  let delivery = Number(productpay > 499 ? 0 : 100);
+  if(productpay > minimum){
+    $('.pdiscount-fee span').text(discount);
+    $('.totalinv2 span').text(productpay + delivery - discount);
+    $('#TWD').text(`應支付總金額 : $${productpay + delivery - discount}`);
+  }
+  else{
+    $('.pdiscount-fee span').text(0);
+    $('.totalinv2 span').text(productpay + delivery);
+    $('#TWD').text(`應支付總金額 : $${productpay + delivery}`);
+  }
+}
+
+function useCoupon(){
+  // 获取下拉选项框
+  const couponCode = $('#couponCode');
+  // 点击按钮时切换下拉选项框的禁用状态
+  if (couponCode.prop('disabled')) {
+    couponCode.prop('disabled', false);
+  } else {
+    couponCode.prop('disabled', true);
+  };
+}
 
 function addPorder() {
   let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -75,7 +134,7 @@ function addPorder() {
     });
   }
   let pcoupontotal = 0;
-  let pcouponno;
+  let pcouponno = $('#couponCode').val();
   let pchecktotal = (pdiscounttotal - pcoupontotal);
   const porderbody = {
     'memberno': memberno,
@@ -131,12 +190,46 @@ function addPorder() {
 function removeItem(e) {
   // 從 localStorage 取出 item 的值
   let itemData = JSON.parse(localStorage.getItem('cartItems'));
-  // 刪除指定的項目
-  itemData.splice(e, 1);
-  // 更新索引
-  itemData = itemData.map((item, index) => ({ ...item, index }));
+  if (!e) {
+    // 若未傳入參數，則清除所有項目
+    itemData = [];
+  } else {
+    // 刪除指定的項目
+    itemData.splice(e, 1);
+    // 更新索引
+    itemData = itemData.map((item, index) => ({ ...item, index }));
+  }
   // 將修改後的資料存回 localStorage
   localStorage.setItem('cartItems', JSON.stringify(itemData));
   // 重新載入頁面
   location.reload();
+}
+
+async function getpcouponlist(memberno) {
+  return new Promise((resolve, reject) => {
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const productlistno = cartItems.map(item => {
+      return item.data.productno;
+    })
+    fetch(`/pcouponholding/byMemberno?memberno=${memberno}`, {
+        method: 'GET',
+      })
+      .then(response => response.json())
+      .then(data => {
+        const fitpcouponlist = data.map(item => {
+          for (no of productlistno) {
+            if (no == item.pcoupon.pfitcoupons[0].pfitcouponNo.productno &&
+              item.pcouponstatus == 0 && item.pcoupon.pcouponstatus == 1) {
+              return `<option value="${item.pcoupon.pcouponno}" data-discount="${item.pcoupon.pdiscount}" data-minimum="${item.pcoupon.preachprice}">
+              ${item.pcoupon.pcouponname}(消費滿$${item.pcoupon.preachprice})(折扣$${item.pcoupon.pdiscount})
+              </option>`;
+            }
+          }
+        })
+        resolve(fitpcouponlist);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
 }
