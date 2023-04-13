@@ -16,11 +16,15 @@ public class TicketHolder {
     private Blob aimg;
     private Timestamp sessionstime;
     private Timestamp sessionetime;
+
+    private String blockname;
+
     private String realx;
+
     private String realy;
     private String anote;
     private String aticketremind;
-
+    private String aplace;
     public Integer getCollectno() {
         return collectno;
     }
@@ -117,6 +121,14 @@ public class TicketHolder {
         this.sessionetime = sessionetime;
     }
 
+    public String getBlockname() {
+        return blockname;
+    }
+
+    public void setBlockname(String blockname) {
+        this.blockname = blockname;
+    }
+
     public String getRealx() {
         return realx;
     }
@@ -147,5 +159,13 @@ public class TicketHolder {
 
     public void setAticketremind(String aticketremind) {
         this.aticketremind = aticketremind;
+    }
+
+    public String getAplace() {
+        return aplace;
+    }
+
+    public void setAplace(String aplace) {
+        this.aplace = aplace;
     }
 }

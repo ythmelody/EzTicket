@@ -593,8 +593,8 @@
 									class="co-main-btn co-btn-width min-width d-inline-block h_40">有需要可以拿來用的按鈕連結</a>
 							</div>
 							<div class="user-btns">
-								<a href="my_organisation_dashboard.html"
-									class="co-main-btn co-btn-width min-width d-inline-block h_40">Ex.我的票夾</a>
+								<button id="collect"
+									class="co-main-btn co-btn-width min-width d-inline-block h_40">Ex.我的票夾</button>
 							</div>
 							<div class="user-btns">
 								<a href="my_organisation_dashboard.html"
@@ -1545,15 +1545,33 @@
 			}).catch(err => {
 				console.log('發生錯誤:', err);
 			});
-		})
+		});
 
+		// 我的票夾
+		// 找不到 Servlet
+		// function getAllForDisplay() {
+  		//
+		// const memberno = 85341; // 替換成要傳遞的會員編號
+  		// const formData = new FormData();
+  		// formData.append("action", "getAll_For_Display");
+ 		// formData.append("memberno", memberno);
+		//
+  		// fetch('/front-activity-ticket-holder', {
+    	// method: "POST",
+    	// body: formData,
+  		// })
+    	// .then((response) => response.text())
+    	// .then((data) => {
+      	// 	console.log(data);
+    	// })
+    	// .catch((error) => {
+      	// 	console.error(error);
+    	// });
+		// }
 
-
-
-
-
-
-
+	</script>
+	<script>
+		
 	</script>
 </body>
 
