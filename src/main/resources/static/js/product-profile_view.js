@@ -165,9 +165,16 @@ function fetchPcouponHoldingList(e) {
                   <span class="icon">
                     <i class="fa-regular fa-circle-dot"></i>
                   </span>
-                  <p>狀態</p>
+                  <p>使用狀態</p>
                   <h6 class="coupon-status">${obj.pcouponstatus === 0 ? '未使用' : '已使用'}</h6>
                 </div>
+                <div class="icon-box ">
+                <span class="icon">
+                  <i class="fa-regular fa-circle-dot"></i>
+                </span>
+                <p>票卷狀態</p>
+                <h6 class="coupon-status">${obj.pcoupon.pcouponstatus === 1 ? '可用' : '不可用'}</h6>
+              </div>
                 <div class="icon-box">
                   <span class="icon">
                     <i class="fa-solid fa-tag"></i>
