@@ -4,7 +4,6 @@ import com.ezticket.web.product.pojo.Product;
 import com.ezticket.web.product.repository.ProductDAO;
 import com.ezticket.web.product.util.PageResult;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -14,6 +13,8 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -218,6 +219,10 @@ public class ProductDAOImpl implements ProductDAO {
 //                    builder.lessThanOrEqualTo(root.get("psdate"), java.sql.Timestamp.valueOf(value)),
                     builder.lessThanOrEqualTo(root.get("pedate"), java.sql.Timestamp.valueOf(value))
             );
+        }else if ("sale_date".equals(columnName)) {
+            predicate = builder.or(
+                    builder.lessThan(root.get("psdate"), java.sql.Timestamp.valueOf(value))
+            );
         }
         return predicate;
     }
@@ -225,7 +230,7 @@ public class ProductDAOImpl implements ProductDAO {
 
     @Override
     public List<Product> findByProductName(String pname) {
-        final String SELECT_BY_NAME_SQL = "SELECT * FROM Product WHERE Pname LIKE :pname ";
+        final String SELECT_BY_NAME_SQL = "FROM Product WHERE Pname LIKE :pname ";
         Query query = session.createQuery(SELECT_BY_NAME_SQL, Product.class);
         return query.setParameter("pname", "%" + pname + "%").getResultList();
 
@@ -296,7 +301,6 @@ public class ProductDAOImpl implements ProductDAO {
         query.setFirstResult((pageNumber - 1) * pageSize);
         query.setMaxResults(pageSize);
         List<Product> productList = query.getResultList();
-        System.out.print(productList.size());
         // 計算符合條件的總筆數
 //        CriteriaQuery<Long> countQuery = builder.createQuery(Long.class);
 //        countQuery.select(builder.count(countQuery.from(Product.class))).
@@ -319,7 +323,17 @@ public class ProductDAOImpl implements ProductDAO {
         return pageResult;
 
 
-    }}
+    }
+
+
+    @Override
+    public List<Product> findExpiredProduct(Timestamp today) {
+        String SELECT_BY_EDATE_SQL ="FROM Product WHERE pedate < :today AND pstatus = 0 ";
+        Query query =session.createQuery(SELECT_BY_EDATE_SQL,Product.class);
+        query.setParameter("today", today);
+        return query.getResultList();
+    }
+}
 
 
 
