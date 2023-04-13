@@ -1,9 +1,21 @@
 // 定義會員編號
-let memberno = "85345";
+let memberno;
 
-$(document).ready(() => {
-  fetchPorderList(`/porder/getordersbyid?id=${memberno}`);
+$(document).ready(async () => {
+  const response = await fetch('member/getMemberInfo', {
+    method: 'GET',
+  });
+  const data = await response.json();
+  memberno = data.memberno;
+  if(memberno){
+    fetchPorderList(`/porder/getordersbyid?id=${memberno}`);
+    fetchPcouponHoldingList(`/pcouponholding/byMemberno?memberno=${memberno}`);
+  } else {
+    // 請前往登入
+    window.location.href = 'front-users-mem-sign-in.html';
+  }
 });
+
 
 function fetchPorderList(e) {
   fetch(e, {
@@ -128,21 +140,12 @@ function cancelPorder(orderno) {
   }
 }
 
-
-$(document).ready(() => {
-  fetchPcouponHoldingList(`/pcouponholding/byMemberno?memberno=${memberno}`);
-});
-
 function fetchPcouponHoldingList(e) {
   fetch(e, {
     method: 'GET',
   }).then(response => response.json())
     .then(data => {
-      const holdingCount1 = document.querySelector('#holding');
-      const holdingCount2 = document.querySelector('#couponcount');
-      holdingCount1.textContent = '(' + data.length + ')';
-      holdingCount2.textContent = data.length;
-      const followers = document.querySelector('#followers-empty-state');
+      const followers = document.querySelector('#coupons');
       followers.innerHTML = '';
       const couponHolding = data.map(obj => {
         return fetch(`/pcoupon?id=${obj.pcouponholdingPK.pcouponno}`, {
@@ -163,14 +166,14 @@ function fetchPcouponHoldingList(e) {
               <div class="bottom d-flex flex-wrap justify-content-between align-items-center p-4">
                 <div class="icon-box ">
                   <span class="icon">
-                    <i class="fa-regular fa-circle-dot"></i>
+                  <i class="fa-regular fa-circle-dot"></i>
                   </span>
                   <p>使用狀態</p>
                   <h6 class="coupon-status">${obj.pcouponstatus === 0 ? '未使用' : '已使用'}</h6>
                 </div>
                 <div class="icon-box ">
                 <span class="icon">
-                  <i class="fa-regular fa-circle-dot"></i>
+                <i class="fa-regular fa-circle-dot"></i>
                 </span>
                 <p>票卷狀態</p>
                 <h6 class="coupon-status">${obj.pcoupon.pcouponstatus === 1 ? '可用' : '不可用'}</h6>
