@@ -1,6 +1,6 @@
 // 定義會員編號
 let memberno = "85345"
-
+let fitlist;
 $(document).ready(async () => {
   let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
   const itemlist = document.querySelector('tbody');
@@ -12,6 +12,7 @@ $(document).ready(async () => {
     <div class="d-flex justify-content-center">
       <div class="col-lg-6 col-md-6">
         <h1 class="text-center">你的購物車還是空的!!</h1>
+        <h3 class="text-center">對自己好一點!!</h3>
         <button class="main-btn btn-hover h_50 w-100 mt-5" onclick="location.href='front-product-explore_products.html'" type="button">
           立即前往購物
         </button>
@@ -30,7 +31,7 @@ $(document).ready(async () => {
                 <td>${++index}</td>
                 <td><img src="${imagesrc}" width="100" height="100" alt=""></td>
                 <td><a href="front-product-product_detail.html?productno=${item.data.productno}" target="_blank">${item.data.pname}</a></td>
-                <td class="number-cell">
+                <td>
                   <span class="number-top">$<s>${item.data.pprice}</s></span>
                   <span class="number-bottom">$${item.data.pspecialprice}</span>
                 </td>
@@ -58,7 +59,7 @@ $(document).ready(async () => {
                         <div class="user_dt_trans text-end pe-xl-4">
                           <div class="pdiscount-fee">優惠券折扣 : -$<span>${pdiscount}</span></div>
                           <div class="delivery-fee">運費(滿499免運) : $<span>${delivery}</span></div>
-                          <div class="product-fee">商品金額 : $<span>${totalPay + delivery}</span></div>
+                          <div class="product-fee">商品金額 : $<span>${totalPay}</span></div>
                           <div class="totalinv2">結帳金額 : $<span>${totalPay + delivery}</span></div>
                         </div>
                       </td>
@@ -133,16 +134,17 @@ function addPorder() {
       'pprice': item.data.pspecialprice * item.quantity
     });
   }
-  let pcoupontotal = 0;
-  let pcouponno = $('#couponCode').val();
-  let pchecktotal = (pdiscounttotal - pcoupontotal);
+  let delivery = pdiscounttotal > 499 ? 0 : 100;
+  let pcoupontotal = +$('.pdiscount-fee span').text();
+  let pcouponno = $('#couponCode').val() ? +$('#couponCode').val() : null;  
+  let pchecktotal = (pdiscounttotal - pcoupontotal + delivery);
   const porderbody = {
     'memberno': memberno,
     'ptotal': ptotal,
     'pdiscounttotal': pdiscounttotal,
     'pcoupontotal': pcoupontotal,
     'pchecktotal': pchecktotal,
-    'pcouponno': pcouponno ?? null,
+    'pcouponno': pcouponno,
     'recipient': $("#recipient").val(),
     'rephone': $("#rephone").val(),
     'readdress': ($("#readdress1").val() + ',' + $("#readdress2").val() + $("#readdress3").val()),
@@ -220,6 +222,7 @@ async function getpcouponlist(memberno) {
           for (no of productlistno) {
             if (no == item.pcoupon.pfitcoupons[0].pfitcouponNo.productno &&
               item.pcouponstatus == 0 && item.pcoupon.pcouponstatus == 1) {
+                fitlist = item.pcoupon;
               return `<option value="${item.pcoupon.pcouponno}" data-discount="${item.pcoupon.pdiscount}" data-minimum="${item.pcoupon.preachprice}">
               ${item.pcoupon.pcouponname}(消費滿$${item.pcoupon.preachprice})(折扣$${item.pcoupon.pdiscount})
               </option>`;

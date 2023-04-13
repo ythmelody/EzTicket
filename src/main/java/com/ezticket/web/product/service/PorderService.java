@@ -1,13 +1,7 @@
 package com.ezticket.web.product.service;
 
-import com.ezticket.web.product.dto.AddPorderDTO;
-import com.ezticket.web.product.dto.OrderProductDTO;
-import com.ezticket.web.product.dto.PorderDTO;
-import com.ezticket.web.product.dto.PorderDetailsDTO;
-import com.ezticket.web.product.pojo.Pdetails;
-import com.ezticket.web.product.pojo.PdetailsPK;
-import com.ezticket.web.product.pojo.Porder;
-import com.ezticket.web.product.pojo.Product;
+import com.ezticket.web.product.dto.*;
+import com.ezticket.web.product.pojo.*;
 import com.ezticket.web.product.repository.PdetailsRepository;
 import com.ezticket.web.product.repository.PorderRepository;
 import com.ezticket.web.product.repository.ProductDAO;
@@ -79,7 +73,14 @@ public class PorderService {
                 break;
             case 3:
                 porder.setPclosedate(LocalDateTime.now());
-//                List<Products> products = porder.getProducts();
+                List<Pdetails> pdetails = pdetailsRepository.findByPorderno(porder.getPorderno());
+                for (Pdetails pdetail : pdetails) {
+                    Product product = dao.getByPrimaryKey(pdetail.getPdetailsNo().getProductno());
+                    product.setPqty(product.getPqty() + pdetail.getPorderqty());
+                    pdetail.setPorderqty(0);
+                    pdetailsRepository.save(pdetail);
+                    dao.update(product);
+                }
                 break;
         }
         porder.setPprocessstatus(processStatus);
