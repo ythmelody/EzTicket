@@ -40,6 +40,7 @@ $(document).ready(() => {
         } else {
           const detailslist = `<tr>
                             <td>${i + 1}</td>
+                            <td><img src="${imagesrc}" width="100" height="100" alt=""></td>
                             <td><a href="front-product-product_detail.html?productno=${data.products[i].productno}" target="_blank">${data.products[i].pname}</a></td>
                             <td>${data.pdetails[i].porderqty}</td>
                             <td>$${data.products[i].pprice}</td>
