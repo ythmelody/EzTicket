@@ -5,9 +5,13 @@ import com.ezticket.web.product.repository.ProductDAO;
 import com.ezticket.web.product.util.PageResult;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -71,7 +75,7 @@ public class ProductService {
         Integer pratetotal = product.getPratetotal();
         Integer prateqty = product.getPrateqty();
         product.setPratetotal(pratetotal + prate);
-        product.setPrateqty(prateqty+1);
+        product.setPrateqty(prateqty + 1);
         dao.update(product);
 
         return product;
@@ -95,6 +99,25 @@ public class ProductService {
     }
 
     public PageResult<Product> getAllByproductSearch(Map<String, String[]> map, Integer pageNumber, Integer pageSize) {
-        return dao.getAll(map,pageNumber,pageSize);
+        return dao.getAll(map, pageNumber, pageSize);
+    }
+
+    // 這是一個 Spring 框架的定時任務設定，表示每小時的整點觸發一次，其中各個欄位的意義如下：
+    // 第一個 * 代表秒數，表示不限定秒數。
+    // 第二個 0 代表分鐘數，表示每小時的 0 分鐘觸發。
+    // 第三個 * 代表小時數，表示每小時都要觸發。
+    // 第四個 * 代表天數，表示不限定天數。
+    // 第五個 * 代表月份，表示不限定月份。
+    // 第六個 * 代表星期幾，表示不限定星期幾。
+    @Scheduled(cron = "0 0 * * * *")
+    public void checkPstatus() {
+        Date date = new java.util.Date();
+        Timestamp today = new Timestamp(date.getTime());
+        List<Product> productList = dao.findExpiredProduct(today);
+
+        for (Product product : productList) {
+            product.setPstatus(1);
+            dao.update(product);
+        }
     }
 }
