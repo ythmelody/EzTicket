@@ -25,6 +25,8 @@ public class TicketHolder {
     private String anote;
     private String aticketremind;
     private String aplace;
+    private String aplaceAddress;
+
     public Integer getCollectno() {
         return collectno;
     }
@@ -167,5 +169,13 @@ public class TicketHolder {
 
     public void setAplace(String aplace) {
         this.aplace = aplace;
+    }
+
+    public String getAplaceAddress() {
+        return aplaceAddress;
+    }
+
+    public void setAplaceAddress(String aplaceAddress) {
+        this.aplaceAddress = aplaceAddress;
     }
 }

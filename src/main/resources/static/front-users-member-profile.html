@@ -592,9 +592,9 @@
 								<a href="my_organisation_dashboard.html"
 									class="co-main-btn co-btn-width min-width d-inline-block h_40">有需要可以拿來用的按鈕連結</a>
 							</div>
-							<div class="user-btns">
-								<button id="collect"
-									class="co-main-btn co-btn-width min-width d-inline-block h_40">Ex.我的票夾</button>
+							<div class="user-btns" id="myCollect">
+								<a href='' style="visibility: hidden"
+									class="co-main-btn co-btn-width min-width d-inline-block h_40">我的票夾</a>
 							</div>
 							<div class="user-btns">
 								<a href="my_organisation_dashboard.html"
@@ -659,7 +659,7 @@
 																		<label class="lab" for="name">姓名：</label>
 																		<input type="text" id="name" name="name"
 																			required><br><br>
-																			
+
 																		<label class="lab">性別：</label>
 																		<input type="radio" id="male" name="gender"
 																			value="1" required>
@@ -1477,10 +1477,9 @@
 				$("#backupUser").val(`${response.comrecipient}`);
 				$("#backupUserPhone").val(`${response.comrephone}`);
 				$("#backupUserAddress").val(`${response.comreaddress}`);
-
 			})
 			.catch(error => {
-				console.log('發生錯誤:', err);
+				console.log('發生錯誤:', error);
 			});
 
 		//按下修改密碼的按鈕時
@@ -1547,31 +1546,26 @@
 			});
 		});
 
-		// 我的票夾
-		// 找不到 Servlet
-		// function getAllForDisplay() {
-  		//
-		// const memberno = 85341; // 替換成要傳遞的會員編號
-  		// const formData = new FormData();
-  		// formData.append("action", "getAll_For_Display");
- 		// formData.append("memberno", memberno);
-		//
-  		// fetch('/front-activity-ticket-holder', {
-    	// method: "POST",
-    	// body: formData,
-  		// })
-    	// .then((response) => response.text())
-    	// .then((data) => {
-      	// 	console.log(data);
-    	// })
-    	// .catch((error) => {
-      	// 	console.error(error);
-    	// });
-		// }
-
 	</script>
 	<script>
-		
+			fetch('member/getMemberInfo', {
+				method: 'GET',
+			})
+				.then(member => member.json())
+				.then(member => {
+					console.log('有進來');
+					// 啟用我的票夾按鈕
+					let myCollect = document.getElementById('myCollect');
+					console.log((myCollect));
+					myCollect.innerHTML = '';
+					myCollect.innerHTML += `
+						<a href='/collect?action=myCollect&memberno=${member.memberno}'
+									class="co-main-btn co-btn-width min-width d-inline-block h_40">我的票夾</a>
+					`;
+				})
+				.catch(error => {
+					console.log('發生錯誤:', error);
+				});
 	</script>
 </body>
 

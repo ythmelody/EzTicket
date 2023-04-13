@@ -532,11 +532,13 @@
 	<!-- 所有擁有的票券 -->
 	<!-- 會員編號先寫死 -->
 	<script>
+		const memberno = new URLSearchParams(window.location.search).get("memberno");
+
 		fetch('collect', {
 			method: 'POST',
 			body: new URLSearchParams({
 				'action': 'allMyTickets',
-				'memberno': '85341'
+				'memberno': memberno
 			})
 		})
 			// .then(() => console.log('fetch success'))
@@ -544,6 +546,9 @@
 			.then(list => {
 				showMyTickets(list);
 			})
+			.catch(err => {
+				console.log('發生錯誤:', err);
+			});
 
 	</script>
 
@@ -551,6 +556,7 @@
 		function showMyTickets(list) {
 			const incoming = document.getElementById('incoming');
 			incoming.innerHTML = '';
+			let ticketCount=1;
 			for (let ticket of list) {
 				incoming.innerHTML += `
 					<div class="card-top p-4">
@@ -564,7 +570,7 @@
 													<div
 														class="d-md-flex flex-wrap align-items-center conversion-setup">
 														<div class="rs ms-auto mt_r4">
-															<a href="front-activity-ticket-detail.html"
+															<a href="/collect?action=oneTicket&memberno=${ticket.memberno}&collectno=${ticket.collectno}"
 																class="main-btn btn-hover h_40 w-100">取票</a>
 														</div>
 													</div>
@@ -602,7 +608,7 @@
 														</div>
 														<div class="card-dt-text">
 															<h6>座位</h6>
-															<span>${ticket.blockname} ${ticket.realx}排 ${ticket.realy}號</span>
+															<span id='withSeat${ticketCount}'>${ticket.blockname} ${ticket.realx}排 ${ticket.realy}號</span>
 														</div>
 													</div>
 													<div class="card-bottom-item">
@@ -615,6 +621,13 @@
 														</div>
 													</div>
 				`;
+				let realx = `${ticket.realx}`;
+				let realy = `${ticket.realy}`;
+				if ((realx ?? true) && (realy ?? true)) {
+					const withSeat = document.getElementById(`withSeat${ticketCount}`);
+					withSeat.textContent='非對號座';
+				}
+				ticketCount++;
 			}
 		}
 	</script>

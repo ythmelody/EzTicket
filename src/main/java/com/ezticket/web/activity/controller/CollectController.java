@@ -29,19 +29,34 @@ public class CollectController extends HttpServlet{
         String membernoStr = req.getParameter("memberno");
         Integer memberno = Integer.valueOf(membernoStr);
 
-        if ("oneTicket".equals(action)) {
-            String collectnoStr = req.getParameter("collectno");
-            Integer collectno = Integer.valueOf(collectnoStr);
+        if ("myCollect".equals(action)) {
+//            暫時沒用，由queryString轉交變數
+//            String collectnoStr = req.getParameter("collectno");
+//            Integer collectno = Integer.valueOf(collectnoStr);
+//
+////          查詢資料
+//            CollectService coSvc = new CollectService();
+//            TicketHolder ticketHolder = coSvc.getOneTicket(collectno);
+            String url = "front-activity-ticket-holder.html";
+            RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 front-activity-ticket-detail.html
+            successView.forward(req, res);
+        }
 
-//          查詢資料
-            CollectService coSvc = new CollectService();
-            TicketHolder ticketHolder = coSvc.getOneTicket(collectno);
-            req.setAttribute("ticketHolder", ticketHolder); // 資料庫取出的ticketHolder物件,存入req
+//      單張票券詳情
+        if ("oneTicket".equals(action)) {
+//            暫時沒用，由queryString轉交變數
+//            String collectnoStr = req.getParameter("collectno");
+//            Integer collectno = Integer.valueOf(collectnoStr);
+//
+////          查詢資料
+//            CollectService coSvc = new CollectService();
+//            TicketHolder ticketHolder = coSvc.getOneTicket(collectno);
             String url = "front-activity-ticket-detail.html";
             RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 front-activity-ticket-detail.html
             successView.forward(req, res);
         }
 
+//        票夾渲染
         if ("allMyTickets".equals(action)) {
 
 //          查詢資料
@@ -56,12 +71,22 @@ public class CollectController extends HttpServlet{
             PrintWriter pw = res.getWriter();
             pw.write(json);
             pw.flush();
+        }
 
-//            forward 方法
-//            req.setAttribute("list", list);
-//            String url = "front-activity-ticket-holder.html";
-//            RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 front-activity-ticket-detail.html
-//            successView.forward(req, res);
+//      單張畫面渲染
+        if ("ticketDetails".equals(action)) {
+            String collectnoStr = req.getParameter("collectno");
+            Integer collectno = Integer.valueOf(collectnoStr);
+
+//          查詢資料
+            CollectService coSvc = new CollectService();
+            TicketHolder ticketHolder = coSvc.getOneTicket(collectno);
+            Gson gson = new Gson();
+            String json = gson.toJson(ticketHolder);
+            res.setContentType("application/json;charset=UTF-8");
+            PrintWriter pw = res.getWriter();
+            pw.write(json);
+            pw.flush();
         }
     }
 }

@@ -15,15 +15,15 @@ public class TicketHolderDAOImpl implements TicketHolderDAO {
     String passwd = "root";
     private static final String GET_ONE_STMT =
             "SELECT collectno, memberno, mname, memail, tdetailsno, tstatus, activityno, aname, "
-                    + "wetherseat, aimg, sessionstime, sessionetime, blockname, realx, realy, anote, aticketremind, aplace "
+                    + "wetherseat, aimg, sessionstime, sessionetime, blockname, realx, realy, anote, aticketremind, aplace, aplaceaddress "
                     + "FROM ticketholder WHERE collectno = ?";
     private static final String GET_BY_MEM_STMT =
             "SELECT collectno, memberno, mname, memail, tdetailsno, tstatus, activityno, aname, "
-                    + "wetherseat, aimg, sessionstime, sessionetime, blockname, realx, realy, anote, aticketremind, aplace "
+                    + "wetherseat, aimg, sessionstime, sessionetime, blockname, realx, realy, anote, aticketremind, aplace, aplaceaddress "
                     + "FROM ticketholder WHERE memberno = ? ORDER BY sessionstime";
     private static final String GET_ALL_STMT =
             "SELECT collectno, memberno, mname, memail, tdetailsno, tstatus, activityno, aname, "
-                    + "wetherseat, aimg, sessionstime, sessionetime, blockname, realx, realy, anote, aticketremind, aplace "
+                    + "wetherseat, aimg, sessionstime, sessionetime, blockname, realx, realy, anote, aticketremind, aplace, aplaceaddress "
                     + "FROM ticketholder ORDER BY sessionstime";
 
     @Override
@@ -64,6 +64,7 @@ public class TicketHolderDAOImpl implements TicketHolderDAO {
                 ticketHolder.setAnote(rs.getString("anote"));
                 ticketHolder.setAticketremind(rs.getString("aticketremind"));
                 ticketHolder.setAplace(rs.getString("aplace"));
+                ticketHolder.setAplaceAddress(rs.getString("aplaceaddress"));
             }
 
         } catch (ClassNotFoundException e) {
@@ -137,6 +138,7 @@ public class TicketHolderDAOImpl implements TicketHolderDAO {
                 ticketHolder.setAnote(rs.getString("anote"));
                 ticketHolder.setAticketremind(rs.getString("aticketremind"));
                 ticketHolder.setAplace(rs.getString("aplace"));
+                ticketHolder.setAplaceAddress(rs.getString("aplaceaddress"));
                 list.add(ticketHolder);
             }
 
@@ -209,6 +211,7 @@ public class TicketHolderDAOImpl implements TicketHolderDAO {
                 ticketHolder.setAnote(rs.getString("anote"));
                 ticketHolder.setAticketremind(rs.getString("aticketremind"));
                 ticketHolder.setAplace(rs.getString("aplace"));
+                ticketHolder.setAplaceAddress(rs.getString("aplaceaddress"));
                 list.add(ticketHolder);
             }
 
@@ -268,6 +271,7 @@ public class TicketHolderDAOImpl implements TicketHolderDAO {
         System.out.print(vo1.getAnote() + ",");
         System.out.print(vo1.getAticketremind() + ",");
         System.out.print(vo1.getAplace() + ",");
+        System.out.print(vo1.getAplaceAddress() + ",");
         System.out.println();
         System.out.println("---------------------");
 
@@ -292,6 +296,7 @@ public class TicketHolderDAOImpl implements TicketHolderDAO {
             System.out.print(aTicket.getAnote() + ",");
             System.out.print(aTicket.getAticketremind() + ",");
             System.out.print(aTicket.getAplace() + ",");
+            System.out.print(aTicket.getAplaceAddress() + ",");
             System.out.println();
         }
         System.out.println("---------------------");
@@ -317,6 +322,7 @@ public class TicketHolderDAOImpl implements TicketHolderDAO {
             System.out.print(aTicket.getAnote() + ",");
             System.out.print(aTicket.getAticketremind() + ",");
             System.out.print(aTicket.getAplace() + ",");
+            System.out.print(aTicket.getAplaceAddress() + ",");
             System.out.println();
         }
     }
