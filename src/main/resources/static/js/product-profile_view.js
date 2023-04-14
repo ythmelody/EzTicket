@@ -1,9 +1,22 @@
 // 定義會員編號
-let memberno = "85345";
+let memberno;
 
-$(document).ready(() => {
-  fetchPorderList(`/porder/getordersbyid?id=${memberno}`);
+$(document).ready(async () => {
+  const response = await fetch('member/getMemberInfo', {
+    method: 'GET',
+  });
+  const data = await response.json();
+  memberno = data.memberno;
+  if(memberno){
+    fetchPorderList(`/porder/getordersbyid?id=${memberno}`);
+    fetchPcouponHoldingList(`/pcouponholding/byMemberno?memberno=${memberno}`);
+    fetchPcouponList(`/pcoupon/list`);
+  } else {
+    // 請前往登入
+    window.location.href = 'front-users-mem-sign-in.html';
+  }
 });
+
 
 function fetchPorderList(e) {
   fetch(e, {
@@ -128,21 +141,13 @@ function cancelPorder(orderno) {
   }
 }
 
-
-$(document).ready(() => {
-  fetchPcouponHoldingList(`/pcouponholding/byMemberno?memberno=${memberno}`);
-});
-
 function fetchPcouponHoldingList(e) {
   fetch(e, {
     method: 'GET',
   }).then(response => response.json())
     .then(data => {
-      const holdingCount1 = document.querySelector('#holding');
-      const holdingCount2 = document.querySelector('#couponcount');
-      holdingCount1.textContent = '(' + data.length + ')';
-      holdingCount2.textContent = data.length;
-      const followers = document.querySelector('#followers-empty-state');
+      data.reverse();
+      const followers = document.querySelector('#coupons-01');
       followers.innerHTML = '';
       const couponHolding = data.map(obj => {
         return fetch(`/pcoupon?id=${obj.pcouponholdingPK.pcouponno}`, {
@@ -163,14 +168,14 @@ function fetchPcouponHoldingList(e) {
               <div class="bottom d-flex flex-wrap justify-content-between align-items-center p-4">
                 <div class="icon-box ">
                   <span class="icon">
-                    <i class="fa-regular fa-circle-dot"></i>
+                  <i class="fa-regular fa-circle-dot"></i>
                   </span>
                   <p>使用狀態</p>
                   <h6 class="coupon-status">${obj.pcouponstatus === 0 ? '未使用' : '已使用'}</h6>
                 </div>
                 <div class="icon-box ">
                 <span class="icon">
-                  <i class="fa-regular fa-circle-dot"></i>
+                <i class="fa-regular fa-circle-dot"></i>
                 </span>
                 <p>票卷狀態</p>
                 <h6 class="coupon-status">${obj.pcoupon.pcouponstatus === 1 ? '可用' : '不可用'}</h6>
@@ -192,4 +197,70 @@ function fetchPcouponHoldingList(e) {
         followers.innerHTML = values.join('');
       });
     });
+}
+
+function fetchPcouponList(e) {
+	fetch(e, {
+		method: 'GET',
+	}).then(response => response.json())
+		.then(data => {
+			data.reverse();
+			const couponlist = document.querySelector('#coupons-02');
+			couponlist.innerHTML = "";
+			const couponbody = data.map(obj => {
+        console.log(data);
+        console.log()
+				return `<div class="main-card mt-4">
+                  <div class="contact-list coupon-active">
+                    <div class="top d-flex flex-wrap justify-content-between align-items-center p-4 border_bottom">
+                      <div class="icon-box">
+                        <span class="icon-big rotate-icon icon icon-purple">
+                          <i class="fa-solid fa-ticket"></i>
+                        </span>
+                        <h5 class="font-18 mb-1 mt-1 f-weight-medium">${obj.pcouponno}<span class="font-weight-normal"> -
+                        ${obj.pcouponname}</span></h5>
+                        <p class="text-gray-50 m-0"><span class="visitor-date-time">${moment(obj.pcoupnsdate).format('YYYY-MM-DD HH:mm:ss')}
+                          </span> - <span class="visitor-date-time">${moment(obj.pcoupnedate).format('YYYY-MM-DD HH:mm:ss')}</span></p>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <div class="rs ms-auto mt_r4">
+                        <button class="main-btn btn-hover h_40 w-100" onclick="takeCoupon(${obj.porderno})">領取優惠券</button>
+                      </div>
+                      </div>
+                    </div>
+                    <div class="bottom d-flex flex-wrap justify-content-between align-items-center p-4">
+                      <div class="icon-box ">
+                        <span class="icon">
+                          <i class="fa-regular fa-circle-dot"></i>
+                        </span>
+                        <p>狀態</p>
+                        <h6 class="coupon-status">${obj.pcouponstatus === 1 ? '可使用' : '不可使用'}</h6>
+                      </div>
+                      <div class="icon-box">
+                        <span class="icon">
+                          <i class="fa-solid fa-tag"></i>
+                        </span>
+                        <p>適用商品編號</p>
+                        <h6 class="coupon-status">${obj.pfitcoupons && obj.pfitcoupons[0] && obj.pfitcoupons[0].pfitcouponNo.productno}</h6>
+                      </div>
+                      <div class="icon-box">
+                        <span class="icon">
+                          <i class="fa-solid fa-money-bill"></i>
+                        </span>
+                        <p>消費金額</p>
+                        <h6 class="coupon-status">${obj.preachprice}</h6>
+                      </div>
+                      <div class="icon-box">
+                        <span class="icon">
+                          <i class="fa-solid fa-money-bill"></i>
+                        </span>
+                        <p>折扣</p>
+                        <h6 class="coupon-status">${obj.pdiscount}</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>`;
+			}).join('');
+			couponlist.innerHTML += couponbody;
+		})
 }

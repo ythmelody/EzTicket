@@ -48,5 +48,20 @@ public class PcouponholdingService {
         pcouponholdingRepository.save(pcouponholding);
         return true;
     }
+    @Transactional
+    public boolean takePcoupon(Integer memberno,Integer pcouponno){
+        PcouponholdingPK pcouponholdingPK = new PcouponholdingPK(pcouponno,memberno);
+        Pcouponholding pcouponholding = new Pcouponholding();
+        pcouponholding.setPcouponholdingPK(pcouponholdingPK);
+        Pcouponholding oldholding = pcouponholdingRepository.getReferenceById(pcouponholding.getPcouponholdingPK());
+        if (oldholding == null) {
+            return false;
+        } else {
+            pcouponholding.setPcouponstatus((byte) 0);
+            pcouponholdingRepository.save(pcouponholding);
+            return true;
+        }
+
+    }
 
 }

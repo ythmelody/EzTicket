@@ -612,19 +612,19 @@
 												class="fa-solid fa-house"></i>會員帳號管理</a>
 									</li>
 									<li class="nav-item">
-										<a class="nav-link" id="about-tab" data-bs-toggle="tab" href="#about" role="tab"
-											aria-controls="about" aria-selected="false"><i
+										<a class="nav-link" id="coupons-tab" data-bs-toggle="tab" href="#coupons" role="tab"
+											aria-controls="coupons" aria-selected="false"><i
 												class="fa-solid fa-circle-info"></i>我的優惠券</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link" id="setting-tab" data-bs-toggle="tab" href="#setting"
-											role="tab" aria-controls="setting" aria-selected="false"><i
-												class="fa-solid fa-gear"></i>商品訂單</a>
 									</li>
 									<li class="nav-item">
 										<a class="nav-link" id="orders-tab" data-bs-toggle="tab" href="#orders"
 											role="tab" aria-controls="orders" aria-selected="false"><i
-												class="fa-solid fa-box"></i>票券訂單</a>
+												class="fa-solid fa-box"></i>商品訂單</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" id="setting-tab" data-bs-toggle="tab" href="#setting"
+											role="tab" aria-controls="setting" aria-selected="false"><i
+												class="fa-solid fa-gear"></i>票券訂單</a>
 									</li>
 								</ul>
 								<div class="tab-content" id="myTabContent">
@@ -1191,6 +1191,36 @@
 											</div>
 										</div>
 									</div>
+									<div class="tab-pane fade" id="coupons" role="tabpanel" aria-labelledby="coupons-tab">
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="main-card mt-4 p-0">
+													<div class="nav custom-tabs" role="tablist">
+														<button class="tab-link active" style="width:50%;" data-bs-toggle="tab"
+															data-bs-target="#coupons-01" type="button" role="tab"
+															aria-controls="coupons-01" aria-selected="true"><i
+																class="fa-solid fa-envelope me-3"></i>我的優惠券</button>
+														<button class="tab-link" style="width:50%;" data-bs-toggle="tab"
+															data-bs-target="#coupons-02" type="button" role="tab"
+															aria-controls="coupons-02" aria-selected="false"><i
+																class="fa-solid fa-key me-3"></i>領取優惠券</button>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-12">
+												<div class="main-card mt-4">
+													<div class="tab-content">
+														<div class="tab-pane fade show active" id="coupons-01" role="tabpanel">
+															<!-- 優惠卷內容 -->
+														</div>
+														<div class="tab-pane fade" id="coupons-02" role="tabpanel">
+															<!-- 領取優惠卷內容 -->
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
 									<div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
 										<div class="main-card mt-4">
 											<div class="card-top p-4">
@@ -1335,6 +1365,11 @@
 	<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 	<script src="js/custom.js"></script>
 	<script src="js/night-mode.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+	<!-- Jie JavaScript Start-->
+	<script src="js/product-profile_view.js"></script>
+	<!-- Jie JavaScript End-->
 
 	<script>
 		//追蹤商品清單呈現&移除

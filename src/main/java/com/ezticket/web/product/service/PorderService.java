@@ -77,7 +77,6 @@ public class PorderService {
                 for (Pdetails pdetail : pdetails) {
                     Product product = dao.getByPrimaryKey(pdetail.getPdetailsNo().getProductno());
                     product.setPqty(product.getPqty() + pdetail.getPorderqty());
-                    pdetail.setPorderqty(0);
                     pdetailsRepository.save(pdetail);
                     dao.update(product);
                 }

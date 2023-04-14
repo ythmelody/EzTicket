@@ -1,7 +1,23 @@
 // 定義會員編號
-let memberno = "85345"
+let memberno;
+// 定義持有優惠券
 let fitlist;
+
 $(document).ready(async () => {
+  const response = await fetch('member/getMemberInfo', {
+    method: 'GET',
+  });
+  const data = await response.json();
+  memberno = data.memberno;
+  if(memberno){
+    getcart();
+  } else {
+    // 請前往登入
+    window.location.href = 'front-users-mem-sign-in.html';
+  }
+});
+
+async function getcart() {
   let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
   const itemlist = document.querySelector('tbody');
   itemlist.innerHTML = "";
@@ -91,7 +107,8 @@ $(document).ready(async () => {
     $('#TWD').text(`應支付總金額 : $${totalPay + delivery}`);
     $('#couponCode').val('');
   });
-})
+}
+
 function disCoupon() {
   const productpay = Number($('.product-fee span').text());
   const couponCode = $('#couponCode option:selected');
