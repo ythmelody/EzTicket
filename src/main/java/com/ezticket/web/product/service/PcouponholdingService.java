@@ -4,7 +4,10 @@ import com.ezticket.web.product.dto.PcouponholdingDTO;
 import com.ezticket.web.product.dto.PcouponholdingStatusDTO;
 import com.ezticket.web.product.pojo.Pcouponholding;
 import com.ezticket.web.product.pojo.PcouponholdingPK;
+import com.ezticket.web.product.repository.PcouponRepository;
 import com.ezticket.web.product.repository.PcouponholdingRepository;
+import com.ezticket.web.users.pojo.Member;
+import com.ezticket.web.users.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +20,10 @@ import java.util.stream.Collectors;
 public class PcouponholdingService {
     @Autowired
     private PcouponholdingRepository pcouponholdingRepository;
-
+    @Autowired
+    private MemberRepository memberRepository;
+    @Autowired
+    private PcouponRepository pcouponRepository;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -32,6 +38,7 @@ public class PcouponholdingService {
         return EntityToDTO(pcouponholding);
     }
     public PcouponholdingDTO EntityToDTO(Pcouponholding pcouponholding){
+        pcouponholding.getPcoupon().getPcouponholdings().forEach(holding -> holding.getPcoupon().setPcouponholdings(null));
         return modelMapper.map(pcouponholding, PcouponholdingDTO.class);
     }
     public List<PcouponholdingDTO> getAllPcouponHolding(){
@@ -42,26 +49,45 @@ public class PcouponholdingService {
     }
     @Transactional
     public boolean changePcouponHoldingStatus(PcouponholdingStatusDTO ps){
-        PcouponholdingPK pcouponholdingPK = new PcouponholdingPK(ps.getPcouponno(),ps.getMemberno());
+        PcouponholdingPK pcouponholdingPK = new PcouponholdingPK(ps.getPcouponno() ,ps.getMemberno());
         Pcouponholding pcouponholding = pcouponholdingRepository.getReferenceById(pcouponholdingPK);
         pcouponholding.setPcouponstatus(ps.getPcouponstatus());
         pcouponholdingRepository.save(pcouponholding);
         return true;
     }
     @Transactional
-    public boolean takePcoupon(Integer memberno,Integer pcouponno){
-        PcouponholdingPK pcouponholdingPK = new PcouponholdingPK(pcouponno,memberno);
-        Pcouponholding pcouponholding = new Pcouponholding();
-        pcouponholding.setPcouponholdingPK(pcouponholdingPK);
-        Pcouponholding oldholding = pcouponholdingRepository.getReferenceById(pcouponholding.getPcouponholdingPK());
-        if (oldholding == null) {
-            return false;
-        } else {
-            pcouponholding.setPcouponstatus((byte) 0);
-            pcouponholdingRepository.save(pcouponholding);
-            return true;
-        }
+    public boolean takePcoupon(Integer memberno, Integer pcouponno) {
+        PcouponholdingPK pcouponholdingPK = new PcouponholdingPK();
+        pcouponholdingPK.setMemberno(memberno);
+        pcouponholdingPK.setPcouponno(pcouponno);
 
+        Pcouponholding pcouponholding = pcouponholdingRepository.findById(pcouponholdingPK)
+                .orElseGet(() -> {
+                    Pcouponholding newPcouponholding = new Pcouponholding();
+                    newPcouponholding.setPcouponholdingPK(pcouponholdingPK);
+                    newPcouponholding.setPcouponstatus((byte) 0);
+                    return pcouponholdingRepository.save(newPcouponholding);
+                });
+        return true;
+    }
+
+    @Transactional
+    public boolean takePcouponAllMember(Integer pcouponno) {
+        List<Member> Members = memberRepository.findAll();
+        for (Member member : Members) {
+            PcouponholdingPK pcouponholdingPK = new PcouponholdingPK();
+            pcouponholdingPK.setMemberno(member.getMemberno());
+            pcouponholdingPK.setPcouponno(pcouponno);
+
+            Pcouponholding pcouponholding = pcouponholdingRepository.findById(pcouponholdingPK)
+                    .orElseGet(() -> {
+                        Pcouponholding newPcouponholding = new Pcouponholding();
+                        newPcouponholding.setPcouponholdingPK(pcouponholdingPK);
+                        newPcouponholding.setPcouponstatus((byte) 0);
+                        return pcouponholdingRepository.save(newPcouponholding);
+                    });
+        }
+        return true;
     }
 
 }

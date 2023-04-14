@@ -9,6 +9,45 @@ $(document).ready(async () => {
   });
   const data = await response.json();
   memberno = data.memberno;
+
+  // $('#twzipcode').twzipcode({
+  //   // 設定初始化時的縣市選項樣式
+  //   css: ['form-control', 'h_50'],
+  //   // 是否顯示縣市選項的下拉式選單
+  //   countySel: true,
+  //   // 是否顯示鄉鎮市區選項的下拉式選單
+  //   districtSel: true,
+  //   // 是否顯示郵遞區號的欄位
+  //   zipcodeSel: true,
+  //   // 設定縣市選項的預設值
+  //   countyName: '台北市',
+  //   // 設定鄉鎮市區選項的預設值
+  //   districtName: '中正區',
+  //   // 設定郵遞區號欄位的預設值
+  //   zipcode: '100',
+  //   // 設定選項欄位的名稱
+  //   countyName: 'county',
+  //   districtName: 'district',
+  //   zipcodeName: 'zipcode',
+  //   // 設定縣市選項的 class 名稱
+  //   countyClass: 'county',
+  //   // 設定鄉鎮市區選項的 class 名稱
+  //   districtClass: 'district',
+  //   // 設定郵遞區號欄位的 class 名稱
+  //   zipcodeClass: 'zipcode',
+  //   // 設定縣市選項的 placeholder
+  //   countyPlaceholder: '請選擇縣市',
+  //   // 設定鄉鎮市區選項的 placeholder
+  //   districtPlaceholder: '請選擇鄉鎮市區',
+  //   // 設定郵遞區號欄位的 placeholder
+  //   zipcodePlaceholder: '郵遞區號'
+  // });
+  // $('#recipient').val(data.comrecipient);
+  // $('#rephone').val(data.comrephone);
+  // $('#email').val(data.memail);
+  // $('#readdress1').val(data.memail);
+  // $('#readdress2').val(data.comrecipient);
+  // $('#readdress3').val(data.comrecipient);
   if(memberno){
     getcart();
   } else {
@@ -39,7 +78,7 @@ async function getcart() {
   } else {
     let index = 0;
     let totalPay = 0;
-    let imagesrc;
+    let imagesrc = '';
     const itembody = cartItems.map(item => {
       totalPay += (item.data.pspecialprice * item.quantity);
       imagesrc = `data:image/png;base64,${item.data.pimgts[0].pimg}`;

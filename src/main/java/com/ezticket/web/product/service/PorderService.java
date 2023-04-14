@@ -2,6 +2,7 @@ package com.ezticket.web.product.service;
 
 import com.ezticket.web.product.dto.*;
 import com.ezticket.web.product.pojo.*;
+import com.ezticket.web.product.repository.PcouponholdingRepository;
 import com.ezticket.web.product.repository.PdetailsRepository;
 import com.ezticket.web.product.repository.PorderRepository;
 import com.ezticket.web.product.repository.ProductDAO;
@@ -23,6 +24,8 @@ public class PorderService {
     private PorderRepository porderRepository;
     @Autowired
     private PdetailsRepository pdetailsRepository;
+    @Autowired
+    private PcouponholdingRepository pcouponholdingRepository;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -114,7 +117,11 @@ public class PorderService {
         porder.setPorderdate(LocalDateTime.now());
         porder.setPpaymentstatus(0);
         porder.setPprocessstatus(0);
-
+        if (addPorderDTO.getPcouponno() != null){
+            PcouponholdingPK pcouponholdingPK = new PcouponholdingPK(addPorderDTO.getPcouponno(),addPorderDTO.getMemberno());
+            Pcouponholding pcouponholding = pcouponholdingRepository.getReferenceById(pcouponholdingPK);
+            pcouponholding.setPcouponstatus((byte) 1);
+        }
         Porder porderno = porderRepository.save(porder);
         List<OrderProductDTO> orderProducts = addPorderDTO.getOrderProducts();
         for (int i = 0; i < orderProducts.size(); i++) {
