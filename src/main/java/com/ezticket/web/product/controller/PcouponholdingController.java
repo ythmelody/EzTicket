@@ -35,5 +35,9 @@ public class PcouponholdingController {
     public boolean takeCoupon(@RequestParam Integer memberno,@RequestParam Integer pcouponno){
         return pcouponholdingService.takePcoupon(memberno,pcouponno);
     }
+    @GetMapping("/takeAll")
+    public boolean takeCouponForMember(@RequestParam Integer pcouponno){
+        return pcouponholdingService.takePcouponAllMember(pcouponno);
+    }
 
 }

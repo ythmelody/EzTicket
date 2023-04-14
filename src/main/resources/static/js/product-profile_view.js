@@ -31,7 +31,7 @@ function fetchPorderList(e) {
           method: 'GET',
         }).then(resp => resp.json())
           .then(data => {
-            let imagesrc;
+            let imagesrc = '';
             if (data.products[0].pimgts && data.products[0].pimgts[0]) {
               imagesrc = `data:image/png;base64,${data.products[0].pimgts[0].pimg}`;
             }
@@ -82,7 +82,9 @@ function fetchPorderList(e) {
                   <div class="card-dt-text">
                     <h6>訂單狀態</h6>
                     <span>${processstatus}</span>
+                    <span>
                     <a onclick="cancelPorder(${obj.porderno})">取消訂單</a>
+                    </span>
                   </div>
                 </div>
                 <div class="card-bottom-item">
@@ -224,8 +226,8 @@ function fetchPcouponList(e) {
                       </div>
                       <div class="d-flex align-items-center">
                         <div class="rs ms-auto mt_r4">
-                        <button class="main-btn btn-hover h_40 w-100" onclick="takeCoupon(${obj.porderno})">領取優惠券</button>
-                      </div>
+                        <button class="main-btn btn-hover h_40 w-100" onclick="takeCoupon(${memberno},${obj.pcouponno})">領取優惠券</button>
+                        </div>
                       </div>
                     </div>
                     <div class="bottom d-flex flex-wrap justify-content-between align-items-center p-4">
@@ -263,4 +265,13 @@ function fetchPcouponList(e) {
 			}).join('');
 			couponlist.innerHTML += couponbody;
 		})
+}
+
+function takeCoupon(memberno,pcouponno){
+  fetch(`/pcouponholding/take?memberno=${memberno}&pcouponno=${pcouponno}`,{
+      method: 'GET',
+    }).then(response => response.json())
+    .then(data => {
+      console.log(data);
+    })
 }

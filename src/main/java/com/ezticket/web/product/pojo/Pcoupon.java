@@ -33,7 +33,10 @@ public class Pcoupon {
     private byte pcouponstatus;
     @OneToMany(mappedBy = "pfitcouponNo.pcouponno", cascade = CascadeType.ALL)
     private List<Pfitcoupon> pfitcoupons;
-//    @Transient
-    @OneToMany(mappedBy = "pcouponholdingPK.pcouponno", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pcouponholdingPK.pcouponno", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Pcouponholding> pcouponholdings;
+
+    public Pcoupon(Integer pcouponno) {
+        this.pcouponno = pcouponno;
+    }
 }

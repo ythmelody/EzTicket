@@ -39,7 +39,7 @@ async function getcart() {
   } else {
     let index = 0;
     let totalPay = 0;
-    let imagesrc;
+    let imagesrc = '';
     const itembody = cartItems.map(item => {
       totalPay += (item.data.pspecialprice * item.quantity);
       imagesrc = `data:image/png;base64,${item.data.pimgts[0].pimg}`;

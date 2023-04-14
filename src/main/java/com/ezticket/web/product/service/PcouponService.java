@@ -30,7 +30,6 @@ public class PcouponService {
 
     public PcouponDTO getPcouponByID(Integer id) {
         Pcoupon pcoupon = pcouponRepository.getReferenceById(id);
-        pcoupon.getPcouponholdings().forEach(holding -> holding.setPcoupon(null));
         return EntityToDTO(pcoupon);
     }
     public List<PcouponDTO> getPcouponsByID(Integer id) {
@@ -40,6 +39,7 @@ public class PcouponService {
                 .collect(Collectors.toList());
     }
     public PcouponDTO EntityToDTO(Pcoupon pcoupon){
+        pcoupon.getPcouponholdings().forEach(holding -> holding.setPcoupon(null));
         return modelMapper.map(pcoupon, PcouponDTO.class);
     }
     public List<PcouponDTO> getAllPcoupon(){
