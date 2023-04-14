@@ -451,7 +451,6 @@
 					'pageSize': $("[name='pageSize']").val(),
 					'action': "ProductSearchPage"
 				}),
-
 			}
 			).then(resp => resp.json())
 		}
@@ -484,8 +483,6 @@
 				} else {
 					$(".pagination").append(`<li class="page-item" onclick="switchPage(${item})"><a class="page-link" href="javascript:void(0);" >${item}</a></li>`);
 				}
-
-
 			}
 
 			//判斷最後面的>> 可否執行，不可執行加上disabled
