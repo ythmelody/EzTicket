@@ -119,11 +119,11 @@
 								</div>
 							</div>
 							<ul class="navbar-nav justify-content-end flex-grow-1 pe_5">
-								<li class="nav-item">
+								<!-- <li class="nav-item">
 									<a class="nav-link" href="back-users-profile.html">
 										<i class="fa-solid fa-right-left me-2"></i>使用者管理
 									</a>
-								</li>
+								</li> -->
 								<!-- <li class="nav-item">
 									<a class="nav-link" href="explore_events.html">
 										<i class="fa-solid fa-compass me-2"></i>Explore Events
@@ -175,7 +175,8 @@
 										</div>
 									</li>
 									<li class="profile-link">
-										<!-- <a href="back-users-profile.html" class="link-item">我的帳戶</a> -->
+										<a href="" class="link-item">我的後台</a>
+										<a href="back-users-profile.html" class="link-item">使用者資訊</a>
 										<a href="front-users-mem-sign-in.html" class="link-item">登出</a>
 									</li>
 								</ul>
@@ -414,11 +415,31 @@
 									method: "POST",
 									headers: { "Content-Type": "application/json" },
 									body: JSON.stringify(updateMember)
-								}).then(response => response.json())
+								}).then(response => {
+									if (response.ok) {
+										return response.json();
+									} else {
+										return response.json().then(errors => {
+											let errorMessages = Object.values(errors).join("<br>");
+											throw new Error(errorMessages);
+										});
+									}
+								})
 									.then(success => {
 										swal("修改成功!", "您已經更改了會員資料了", "success");
 									})
-									.catch(error => console.error("Error:", error));
+									.catch(error => {
+										console.error("Error:", error);
+										swal("修改失敗!", error.message.replace(/<br>/g, '\n'), "error")
+											.then(() => {
+												$(`#${member.memberno}`).val(`${member.mname}`)
+												$(`#${member.memberno}-email`).val(`${member.memail}`)
+												$(`#${member.memberno}-birth`).val(`${member.birth}`)
+												$(`#mySelect-${member.memberno}`).val(`${member.gender}`)
+												$(`#${member.mcell}`).val(`${member.mcell}`)
+												$(`#${member.memberno}-address`).val(`${member.address}`)
+											});
+									});
 							}
 
 						})

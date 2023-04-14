@@ -530,7 +530,8 @@
 										</div>
 									</li>
 									<li class="profile-link">
-										<!-- <a href="organiser_profile_view.html" class="link-item">My Profile</a> -->
+										<a href="" class="link-item">我的後台</a>
+										<a href="back-users-profile.html" class="link-item">使用者資訊</a>
 										<a href="front-users-mem-sign-in.html" class="link-item">登出</a>
 									</li>
 								</ul>
@@ -658,7 +659,10 @@
 
 																		<label class="lab" for="name">姓名：</label>
 																		<input type="text" id="name" name="name"
-																			required><br><br>
+																			required>
+																		<p id="mnameError"
+																			style="color: red; display: inline-block; margin: 0;">
+																		</p><br><br>
 
 																		<label class="lab">性別：</label>
 																		<input type="radio" id="male" name="gender"
@@ -677,20 +681,30 @@
 
 																		<label class="lab" for="phone">手機號碼：</label>
 																		<input type="tel" id="phone" name="phone"
-																			required><br><br>
+																			required>
+																		<p id="mcellError"
+																			style="color: red; display: inline-block; margin: 0;">
+																		</p><br><br>
 
 																		<label class="lab" for="alt_phone">備用電話：</label>
 																		<input type="tel" id="alt_phone"
-																			name="alt_phone"><br><br>
+																			name="alt_phone">
+																		<p id="mphoneError"
+																			style="color: red; display: inline-block; margin: 0;">
+																		</p><br><br>
 
 																		<label class="lab" for="address">地址：</label>
 																		<input type="text" id="address" name="address"
-																			required><br><br>
+																			required>
+																		<p id="maddressError"
+																			style="color: red; display: inline-block; margin: 0;">
+																		</p><br><br>
 
 																		<div>
 																			<button id="btn1" type="button"
-																				class="btn btn-primary">儲存</button><p id="success3"
-																				style="color: red; display: inline-block;">
+																				class="btn btn-primary">儲存</button>&nbsp;
+																			<p id="success3"
+																				style="color: red; display: inline-block; margin: 0;">
 																		</div>
 																	</form>
 																</div>
@@ -711,26 +725,29 @@
 																		<input type="password" id="oldpassword"
 																			name="oldpassword" required>
 																		<p id="oPwdError"
-																			style="color: red; display: inline-block;">
+																			style="color: red; display: inline-block; margin: 0;">
 																		</p><br><br>
 
 																		<label class="lab"
 																			for="newpassword">新密碼:</label>
 																		<input type="password" id="newpassword"
-																			name="newpassword"><br><br>
+																			name="newpassword">
+																		<p id="pwdFormatError"
+																			style="color: red; display: inline-block; margin: 0;">
+																		</p><br><br>
 
 																		<label class="lab"
 																			for="confirmPassword">確認密碼:</label>
 																		<input type="password" id="confirmPassword"
 																			name="confirmPassword" required>
-																		<p id="newPwdError"
-																			style="color: red;display: inline-block;">
+																		<p id="ChPwdError"
+																			style="color: red;display: inline-block; margin: 0;">
 																		</p><br><br>
 																		<div>
 																			<button id="btn2" type="button"
-																				class="btn btn-primary">儲存</button>
-																			<p id="success"
-																				style="color: red; display: inline-block;">
+																				class="btn btn-primary">儲存</button>&nbsp;
+																		<p id="success"
+																			style="color: red; display: inline-block; margin: 0;">
 																		</div>
 																	</form>
 																</div>
@@ -747,23 +764,32 @@
 																<form>
 																	<label class="lab" for="backupUser">常用收件人:</label>
 																	<input type="text" id="backupUser" name="backupUser"
-																		required><br><br>
+																		required>
+																	<p id="cptNullError"
+																		style="color: red; display: inline-block; margin: 0;">
+																	</p><br><br>
 
 																	<label class="lab"
 																		for="backupUserPhone">常用收件人電話:</label>
 																	<input type="tel" id="backupUserPhone"
-																		name="backupUserPhone" required><br><br>
+																		name="backupUserPhone" required>
+																	<p id="cphoneError"
+																		style="color: red; display: inline-block; margin: 0;">
+																	</p><br><br>
 
 																	<label class="lab"
 																		for="backupUserAddress">常用收件人地址:</label>
 																	<input type="text" id="backupUserAddress"
-																		name="backupUserAddress"><br><br>
+																		name="backupUserAddress">
+																	<p id="caddressNullError"
+																		style="color: red; display: inline-block; margin: 0;">
+																	</p><br><br>
 
 																	<div>
 																		<button id="btn3" type="button"
-																			class="btn btn-primary">儲存</button>
-																		<p id="success2"
-																			style="color: red; display: inline-block;">
+																			class="btn btn-primary">儲存</button>&nbsp;<p
+																			id="success4"
+																			style="color: red; display: inline-block; margin: 0;"></p>
 																	</div>
 																</form>
 															</div>
@@ -1422,7 +1448,7 @@
 			.then(response => response.json())
 			.then(response => {
 				//檢視拿到的資料
-				// console.log(response);
+				console.log(response);
 
 				//頭貼那邊顯示會員ID資料
 				$(".un").text(`${response.mname}`)
@@ -1465,7 +1491,6 @@
 				$("#phone").val(`${response.mcell}`)
 				$("#alt_phone").val(`${response.mphone}`)
 				$("#address").val(`${response.address}`)
-				console.log(response.gender)
 				if (response.gender === 1) {
 					$("#male").prop("checked", true);
 				} else if (response.gender === 2) {
@@ -1490,13 +1515,10 @@
 			const newPwdIpVal = $("#newpassword").val();
 			const cfPwdIpVal = $("#confirmPassword").val();
 			if (oldPwdIpVal === '' || newPwdIpVal === '' || cfPwdIpVal === '') {
-				$("#success").text("請填寫所有欄位！")
+				$("#success").text("上述欄位請勿空白！")
 				return;
-			}
-			if (newPwdIpVal !== cfPwdIpVal) {
-				$("#newPwdError").text("請確認您的新密碼!");
 			} else {
-				$("#newPwdError").text("");
+				$("#success").text("")
 			}
 			fetch("member/changePwd", {
 				method: 'POST',
@@ -1505,22 +1527,41 @@
 				},
 				body: `oldpassword=${oldPwdIpVal}&newpassword=${newPwdIpVal}&confirmpassword=${cfPwdIpVal}`
 			}).then(response => {
-				return response.text();
-			}).then(text => {
+				response.json().then(resultMap => {
+					console.log(resultMap);
+					//沒登入
+					if (resultMap.noSessionError) {
+						window.location.href = 'index.html';
+					}
+					
+					//成功
+					if (resultMap.success) {
+						$("#success").text(resultMap.success)
+					}  else {
+						$("#success").text("")
+					}
+					//舊密碼不同
+					if (resultMap.oPwdError) {
+						$("#oPwdError").text(resultMap.oPwdError);
+					} else {
+						$("#oPwdError").text("");
+					}
+					//新密碼確認密碼不同
+					if (resultMap.ChPwdError) {
+						$("#ChPwdError").text(resultMap.ChPwdError);
+					} else {
+						$("#ChPwdError").text("");
+					}
+					//新密碼格式錯誤
+					if (resultMap.pwdFormatError) {
+						$("#pwdFormatError").text(resultMap.pwdFormatError);
+					}else {
+						$("#pwdFormatError").text("");
 
-				if (text === "success") {
-					$("#oldpassword").val("");
-					$("#newpassword").val("");
-					$("#confirmPassword").val("");
-					$("#success").text("更改成功!")
-				} else if (text === "oPwdError") {
-					$("#oPwdError").text("請確認您的舊密碼!");
-				} else if (text !== "oPwdError") {
-					$("#oPwdError").text("");
-				} else if (text === "error") {
-					$("#success").text("更改失敗!")
-				}
-
+					}
+				});
+			}).catch(err => {
+				console.log('發生錯誤:', err);
 			});
 		});
 		//按下儲存備用收件人時
@@ -1538,11 +1579,40 @@
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data)
 			}).then(response => {
-				return response.text();
-			}).then(text => {
-				if (text === 'success') {
-					$("#success2").text("更改成功!")
-				}
+				response.json().then(resultMap =>{
+					console.log(resultMap);
+					//沒登入
+					if (resultMap.noSessionError) {
+						window.location.href = 'index.html';
+					}
+					//備用收件人為空
+					if (resultMap.cptNullError) {
+						$("#cptNullError").text(resultMap.cptNullError);
+					} else {
+						$("#cptNullError").text("");
+					}
+					//備用收件人電話為空
+					if (resultMap.cphoneNullError) {
+						$("#cphoneError").text(resultMap.cphoneNullError);
+					} else if (resultMap.phoneFormatError) {//備用收件人電話格式錯誤
+						$("#cphoneError").text(resultMap.phoneFormatError);
+					} else {
+						$("#cphoneError").text("");
+					}
+					//備用收件人地址為空
+					if (resultMap.caddressNullError) {
+						$("#caddressNullError").text(resultMap.caddressNullError);
+					} else {
+						$("#caddressNullError").text("");
+					}
+					
+					//成功存入
+					if (resultMap.success) {
+						$("#success4").text(resultMap.success)
+					}  else {
+						$("#success4").text("")
+					}
+				})
 			}).catch(err => {
 				console.log('發生錯誤:', err);
 			});
@@ -1550,30 +1620,65 @@
 
 		//按下儲存更改會員資料時
 		$("#btn1").click(() => {
-			
+
 			const data = {
-				memail:$("#email").val(),
-				mname:$("#name").val(),
-				gender:$("input[name='gender']:checked").val(),
-				birth:$("#birthday").val(),
-				mcell:$("#phone").val(),
-				mphone:$("#alt_phone").val(),
-				address:$("#address").val()
+				memail: $("#email").val(),
+				mname: $("#name").val(),
+				gender: $("input[name='gender']:checked").val(),
+				birth: $("#birthday").val(),
+				mcell: $("#phone").val(),
+				mphone: $("#alt_phone").val(),
+				address: $("#address").val()
 			}
-			fetch("member/saveMemberEdit",{
+			fetch("member/saveMemberEdit", {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data)
 			}).then(response => {
-				return response.text();
-			}).then(text => {
-				if (text === 'success') {
-					$("#success3").text("更改成功!")
-				}
-			}).catch(err => {
-				console.log('發生錯誤:', err);
-			});
+			if (response.ok) {
+				//清空錯誤提示
+				$("#mnameError").text("");
+				$("#mcellError").text("");
+				$("#mphoneError").text("");
+				$("#maddressError").text("");
+				return response.json();
+			} else {
+				//清空成功提示
+				$("#success3").text("")
+				return response.json().then(errors =>{
+					console.log("Error:", errors);
+					if(errors.mname){
+						$("#mnameError").text(`${errors.mname}`);
+					} else {
+						$("#mnameError").text("");
+					}
 
+					if(errors.mcell){
+						$("#mcellError").text(`${errors.mcell}`);
+					} else {
+						$("#mcellError").text("");
+					}
+
+					if(errors.mphone){
+						$("#mphoneError").text(`${errors.mphone}`);
+					} else {
+						$("#mphoneError").text("");
+					}
+
+					if(errors.address){
+						$("#maddressError").text(`${errors.address}`);
+					} else {
+						$("#maddressError").text("");
+					}
+					let errorMessages = Object.values(errors).join("<br>");
+					throw new Error(errorMessages);
+				})
+			}
+			}).then(success => {
+				$("#success3").text("更改成功!")
+			}).catch(error => {
+				console.error('Error:', error);
+			});
 		})
 
 

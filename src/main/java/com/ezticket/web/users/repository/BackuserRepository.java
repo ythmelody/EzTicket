@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BackuserRepository extends JpaRepository<Backuser, Integer> {
 
+    Backuser findByBaaccount(String baacount);
 }

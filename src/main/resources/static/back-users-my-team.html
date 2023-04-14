@@ -113,20 +113,24 @@
 				<div class="modal-body">
 					<div class="model-content main-form">
 						<div class="form-group mt-30">
-							<label class="form-label">姓名</label>
+							<label class="form-label">姓名 &emsp;&emsp;<p id="errorbaname"
+									style="color: red; display: inline-block; margin: 0;"></p></label></label>
 							<input id="baname" class="form-control h_40" type="text" placeholder="請輸入姓名.." value="">
 						</div>
 						<div class="form-group mt-30">
-							<label class="form-label">帳號</label>
-							<input id="baaccount" class="form-control h_40" type="text" placeholder="請輸入帳號.." value="">
+							<label class="form-label">帳號(預設)</label>
+							<input id="baaccount" class="form-control h_40" type="text" placeholder="請輸入帳號.." value=""
+								readonly>
 						</div>
 						<div class="form-group mt-30">
-							<label class="form-label">E-mail</label>
+							<label class="form-label">E-mail &emsp;&emsp;<p id="errorbaemail"
+									style="color: red; display: inline-block; margin: 0;"></p></label></label>
 							<input id="baemail" class="form-control h_40" type="email" placeholder="請輸入email.."
 								value="">
 						</div>
 						<div class="form-group mt-30">
-							<label class="form-label">電話</label>
+							<label class="form-label">電話 &emsp;&emsp;<p id="errorbacell"
+									style="color: red; display: inline-block; margin: 0;"></p></label></label>
 							<input id="bacell" class="form-control h_40" type="tel" placeholder="請輸入email.." value="">
 						</div>
 						<div class="form-group mt-30">
@@ -267,11 +271,11 @@
 								</div>
 							</div>
 							<ul class="navbar-nav justify-content-end flex-grow-1 pe_5">
-								<li class="nav-item">
+								<!-- <li class="nav-item">
 									<a class="nav-link" href="back-users-profile.html">
 										<i class="fa-solid fa-right-left me-2"></i>使用者管理
 									</a>
-								</li>
+								</li> -->
 								<!-- <li class="nav-item">
 									<a class="nav-link" href="explore_events.html">
 										<i class="fa-solid fa-compass me-2"></i>Explore Events
@@ -323,7 +327,8 @@
 										</div>
 									</li>
 									<li class="profile-link">
-										<!-- <a href="back-users-profile.html" class="link-item">我的帳戶</a> -->
+										<a href="" class="link-item">我的後台</a>
+										<a href="back-users-profile.html" class="link-item">使用者資訊</a>
 										<a href="front-users-mem-sign-in.html" class="link-item">登出</a>
 									</li>
 								</ul>
@@ -406,8 +411,8 @@
 										<div style="width: 50px; margin-left: 10px;">
 											<div class="form-group">
 												<div class="relative-input position-relative hide2">
-													<input class="form-control h_40" id="search" type="text" placeholder="搜尋使用者..."
-														value="">
+													<input class="form-control h_40" id="search" type="text"
+														placeholder="搜尋使用者..." value="">
 													<i class="uil uil-search"></i>
 												</div>
 											</div>
@@ -669,7 +674,7 @@
 			roleno: selectedRoleno,
 			funcno: selectedFunc
 		}
-		if ($(".role-menu.active").length && $(".hasfuncs.active").length){
+		if ($(".role-menu.active").length && $(".hasfuncs.active").length) {
 			fetch("/roleauthority/removeRoleauthority", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
@@ -709,7 +714,7 @@
 											});
 											// console.log(missfunc); //test 顯示角色全部沒有的功能
 										}
-									} 
+									}
 									//"角色擁有權限"選單  點選效果
 									const menuItems2 = document.querySelectorAll('.menu2 .menu-item');
 									let selectedValue2 = null;
@@ -740,9 +745,9 @@
 									})
 								})
 							}).catch(error => console.error(error));
-				})
+					})
 			}).catch(error => console.error("Error:", error));
-		}else {
+		} else {
 			swal("更改失敗!", "請先點選要調整權限的角色以及角色擁有的功能!", "error");
 		}
 	})
@@ -795,7 +800,7 @@
 											});
 											// console.log(missfunc); //test 顯示角色全部沒有的功能
 										}
-									} 
+									}
 									//"角色擁有權限"選單  點選效果
 									const menuItems2 = document.querySelectorAll('.menu2 .menu-item');
 									let selectedValue2 = null;
@@ -878,6 +883,10 @@
 	fetch('backuser/ga')
 		.then(response => response.json())
 		.then(data => {
+			//取資料庫最後一個baaccount + 1 放進新增使用者的預設帳號
+			const lastbaaccount = parseInt(data[data.length - 1].baaccount);
+			$("#baaccount").val(`${lastbaaccount + 1}`);
+
 			const table = document.querySelector('.table tbody');
 			data.forEach(backuser => {
 				const tr = document.createElement('tr');
@@ -979,11 +988,28 @@
 									method: "POST",
 									headers: { "Content-Type": "application/json" },
 									body: JSON.stringify(updateBu)
-								}).then(response => response.json())
-									.then(success => {
-										swal("修改成功!", "您已經更改了會員資料了", "success")
-											.then(() => { location.reload(); })
-									}).catch(error => console.error("Error:", error));
+								}).then(response => {
+									if (response.ok) {
+										return response.json();
+									} else {
+										return response.json().then(errors => {
+											let errorMessages = Object.values(errors).join("<br>");
+											throw new Error(errorMessages);
+										});
+									}
+								}).then(success => {
+									swal("修改成功!", "您已經更改了會員資料了", "success")
+										.then(() => { location.reload(); })
+								}).catch(error => {
+									console.error("Error:", error)
+									swal("修改失敗!", error.message.replace(/<br>/g, '\n'), "error")
+											.then(() => {
+												$(`#${backuser.baname}`).val(`${backuser.baname}`);
+												$(`#email-${backuser.bano}`).val(`${backuser.baemail}`);
+												$(`#mySelect-${backuser.baaccount}`).val(`${backuser.baroleno}`);
+												$(`#${backuser.bacell}`).val(`${backuser.bacell}`);
+											});
+								});
 
 							}
 						})
@@ -1040,13 +1066,37 @@
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(newBu)
+		}).then(response => {
+			if (response.ok) {
+				return response.json();
+			} else {
+				return response.json().then(errors => {
+					console.log("Error:", errors);
+					if (errors.baname) {
+						$("#errorbaname").text(`${errors.baname}`);
+					} else {
+						$("#errorbaname").text("");
+					}
+					if (errors.baemail) {
+						$("#errorbaemail").text(`${errors.baemail}`);
+					} else {
+						$("#errorbaemail").text("");
+					}
+					if (errors.bacell) {
+						$("#errorbacell").text(`${errors.bacell}`);
+					} else {
+						$("#errorbacell").text("");
+					}
+					let errorMessages = Object.values(errors).join("<br>");
+					throw new Error(errorMessages);
+				});
+			}
 		}).then(success => {
 			swal("新增成功!", "您已經新增了一位成員至團隊中!", "success")
 				.then(() => {
 					location.reload();
 				})
-		})
-			.catch(error => console.error("Error:", error));
+		}).catch(error => console.error("Error:", error));
 	})
 
 
@@ -1056,12 +1106,12 @@
 		$("tbody tr").filter(function () {
 			//這邊filter會篩選所有value跟searchValue相符合的input
 			var trInputValue = $(this).find("input").filter(function () {
-				return $(this).val().toLowerCase().indexOf(searchValue) > -1;  
+				return $(this).val().toLowerCase().indexOf(searchValue) > -1;
 			});
 
 			// 如果tr底下 所有文字內容有跟searchValue相符合,textMatches 就會等於 true
 			var trText = $(this).text().toLowerCase().indexOf(searchValue) > -1;
-			
+
 			// 如果有符合條件的input會顯示true,不符合就為false,  toggle(true)→顯示  toggle(false)→隱藏
 			$(this).toggle(trInputValue.length > 0 || trText);
 		});

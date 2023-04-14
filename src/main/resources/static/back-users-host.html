@@ -70,21 +70,22 @@
 				<div class="modal-body">
 					<div class="model-content main-form">
 						<div class="form-group mt-30">
-							<label class="form-label">廠商</label>
+							<label class="form-label">廠商 &emsp;&emsp;<p id="hostnameError" style="color: red; display: inline-block; margin: 0;"></p></label>
+							
 							<input id="hostName" class="form-control h_40" type="text" placeholder="請輸入廠商名稱.." value="">
 						</div>
 						<div class="form-group mt-30">
-							<label class="form-label">E-mail</label>
+							<label class="form-label">E-mail &emsp;&emsp;<p id="hostemailError" style="color: red; display: inline-block; margin: 0;"></p></label>
 							<input id="hostEmail" class="form-control h_40" type="text" placeholder="請輸入email.."
 								value="">
 						</div>
 						<div class="form-group mt-30">
-							<label class="form-label">聯絡窗口</label>
+							<label class="form-label">聯絡窗口 &emsp;&emsp;<p id="hostcontactError" style="color: red; display: inline-block; margin: 0;"></p></label>
 							<input id="hostContact" class="form-control h_40" type="text" placeholder="請輸入窗口姓名.."
 								value="">
 						</div>
 						<div class="form-group mt-30">
-							<label class="form-label">電話</label>
+							<label class="form-label">電話 &emsp;&emsp;<p id="hostcellError" style="color: red; display: inline-block; margin: 0;"></p></label>
 							<input id="hostCell" class="form-control h_40" type="tel" placeholder="請輸入聯絡電話.." value="">
 						</div>
 					</div>
@@ -144,13 +145,13 @@
 									</a>
 								</div>
 							</div>
-							<ul class="navbar-nav justify-content-end flex-grow-1 pe_5">
+							<!-- <ul class="navbar-nav justify-content-end flex-grow-1 pe_5">
 								<li class="nav-item">
 									<a class="nav-link" href="back-users-profile.html">
 										<i class="fa-solid fa-right-left me-2"></i>使用者管理
 									</a>
 								</li>
-							</ul>
+							</ul> -->
 						</div>
 						<div class="offcanvas-footer">
 							<div class="offcanvas-social">
@@ -190,7 +191,8 @@
 										</div>
 									</li>
 									<li class="profile-link">
-										<!-- <a href="back-users-profile.html" class="link-item">我的帳戶</a> -->
+										<a href="" class="link-item">我的後台</a>
+										<a href="back-users-profile.html" class="link-item">使用者資訊</a>
 										<a href="front-users-mem-sign-in.html" class="link-item">登出</a>
 									</li>
 								</ul>
@@ -356,11 +358,28 @@
 							method: "POST",
 							headers: { "Content-Type": "application/json" },
 							body: JSON.stringify(updatedHost)
-						}).then(response => response.json())
-							.then(success => {
-								swal("修改成功!", "您已經更改了廠商資料了", "success");
-							})
-							.catch(error => console.error("Error:", error));
+						}).then(response => {
+							if (response.ok) {
+								return response.json();
+							} else {
+								return response.json().then(errors => {
+									let errorMessages = Object.values(errors).join("<br>");
+									throw new Error(errorMessages);
+								});
+							}
+						}).then(success => {
+							swal("修改成功!", "您已經更改了廠商資料了", "success");
+						})
+							.catch(error => {
+								console.error("Error:", error);
+								swal("修改失敗!", error.message.replace(/<br>/g, '\n'), "error")
+									.then(() => {
+										$(`#name-${host.hostno}`).val(`${host.hostname}`);
+										$(`#contact-${host.hostno}`).val(`${host.hostcontact}`);
+										$(`#host-${host.hostno}`).val(`${host.hostemail}`);
+										$(`#phone-${host.hostno}`).val(`${host.hostcell}`);
+									});
+							});
 					}
 				})
 			});
@@ -377,12 +396,42 @@
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(newHostData)
-		}).then(response => response.json())
-			.then(success => {
-				swal("新增成功!", "您已經新增了一筆廠商資料!", "success")
-					.then(() => { location.reload(); })
-			})
-			.catch(error => console.error("Error:", error));
+		}).then(response => {
+			if (response.ok) {
+				return response.json();
+			} else {
+				return response.json().then(errors => {
+					console.log("Error:", errors);
+					if(errors.hostname){
+						$("#hostnameError").text(`${errors.hostname}`);
+					}else{
+						$("#hostnameError").text("");
+					}
+					if(errors.hostemail){
+						$("#hostemailError").text(`${errors.hostemail}`);
+					}else{
+						$("#hostemailError").text("");
+					}
+					if(errors.hostcontact){
+						$("#hostcontactError").text(`${errors.hostcontact}`);
+					}else{
+						$("#hostcontactError").text("");
+					}
+					if(errors.hostcell){
+						$("#hostcellError").text(`${errors.hostcell}`);
+					}else{
+						$("#hostcellError").text("");
+					}
+					let errorMessages = Object.values(errors).join("<br>");
+					throw new Error(errorMessages);
+				});
+			}
+		}).then(success => {
+			swal("新增成功!", "您已經新增了一筆廠商資料!", "success")
+				.then(() => { location.reload(); })
+		}).catch(error => {
+			console.error("Error:", error);
+		});
 	})
 
 
@@ -392,7 +441,7 @@
 		$("tbody tr").filter(function () {
 			//這邊filter會篩選所有value跟searchValue相符合的input
 			var trInputValue = $(this).find("input").filter(function () {
-				return $(this).val().toLowerCase().indexOf(searchValue) > -1;  
+				return $(this).val().toLowerCase().indexOf(searchValue) > -1;
 			});
 
 			// 如果tr底下 所有文字內容有跟searchValue相符合,textMatches 就會等於 true
