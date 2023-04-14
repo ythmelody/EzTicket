@@ -77,7 +77,6 @@ public class ProductService {
         product.setPratetotal(pratetotal + prate);
         product.setPrateqty(prateqty + 1);
         dao.update(product);
-
         return product;
     }
 
@@ -98,10 +97,12 @@ public class ProductService {
         return dao.getAll(map);
     }
 
+    //複合查詢搭配分頁
     public PageResult<Product> getAllByproductSearch(Map<String, String[]> map, Integer pageNumber, Integer pageSize) {
         return dao.getAll(map, pageNumber, pageSize);
     }
 
+    //將過了下架時間的商品狀態更動為下架
     // 這是一個 Spring 框架的定時任務設定，表示每小時的整點觸發一次，其中各個欄位的意義如下：
     // 第一個 * 代表秒數，表示不限定秒數。
     // 第二個 0 代表分鐘數，表示每小時的 0 分鐘觸發。

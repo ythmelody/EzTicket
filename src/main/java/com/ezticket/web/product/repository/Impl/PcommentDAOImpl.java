@@ -37,8 +37,8 @@ public class PcommentDAOImpl implements PcommentDAO {
 	}
 
 	@Override
-	public void update(Pcomment pcommentVO) {
-		final StringBuilder hql =new StringBuilder().append("UPDATE PcommentVO SET ");
+	public void update(Pcomment pcomment) {
+		final StringBuilder hql =new StringBuilder().append("UPDATE Pcomment SET ");
 		hql.append("pcommentcont = :pcommentcont,")
 		.append("prate = :prate,")
 		.append("pcommentdate = :pcommentdate,")
@@ -47,12 +47,12 @@ public class PcommentDAOImpl implements PcommentDAO {
 		.append("WHERE pcommentno = :pcommentno");
 		
 		Query<?>query=session.createQuery(hql.toString());
-		query.setParameter("pcommentcont", pcommentVO.getPcommentcont());
-		query.setParameter("prate", pcommentVO.getPrate());
-		query.setParameter("pcommentdate", pcommentVO.getPcommentdate());
-		query.setParameter("pcommentstatus", pcommentVO.getPcommentcont());
-		query.setParameter("plike", pcommentVO.getPlike());
-		query.setParameter("pcommentno", pcommentVO.getPcommentno());
+		query.setParameter("pcommentcont", pcomment.getPcommentcont());
+		query.setParameter("prate", pcomment.getPrate());
+		query.setParameter("pcommentdate", pcomment.getPcommentdate());
+		query.setParameter("pcommentstatus", pcomment.getPcommentcont());
+		query.setParameter("plike", pcomment.getPlike());
+		query.setParameter("pcommentno", pcomment.getPcommentno());
 		query.executeUpdate();
 	}
 	@Override

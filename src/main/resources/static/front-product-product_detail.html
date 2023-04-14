@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, shrink-to-fit=9">
 	<meta name="description" content="Gambolthemes">
 	<meta name="author" content="Gambolthemes">
-	<title>商品詳情</title>
+	<title id ="productTitle">商品詳情</title>
 
 	<!-- Favicon Icon -->
 	<link rel="icon" type="image/png" href="images/ezTicket.png">
@@ -239,9 +239,9 @@
 						<div class="barren-breadcrumb">
 							<nav aria-label="breadcrumb">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-									<li class="breadcrumb-item"><a href="explore_events.html">Explore Events</a></li>
-									<li class="breadcrumb-item active" aria-current="page">Online Event Detail View</li>
+									<li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+									<li class="breadcrumb-item"><a href="front-product-explore_products.html">周邊商品</a></li>
+									<li class="breadcrumb-item active" aria-current="page" id="pclassName">Online Event Detail View</li>
 								</ol>
 							</nav>
 						</div>
@@ -571,6 +571,8 @@
 		}).then(resp => resp.json())
 			.then(item => {
 				console.log(item);
+				$("#productTitle").text(item.pname);
+				$("#pclassName").text(item.pclass.pclassname);
 				pname.textContent = item.pname;
 				pclass.textContent = item.pclass.pclassname;
 				psdate.textContent = item.psdate;
@@ -743,7 +745,7 @@
 																<h5>評論者${item.memberno}</h5>
 																<span>評論日期${item.pcommentdate}</span>
 																<ul id="starContainer_${item.pcommentno}">
-																	${item.prate}
+																	
 																</ul>
 
 																<!-- 點讚/檢舉 -->
@@ -856,8 +858,22 @@
 					'pwhy': $('#pwhy').val(),
 					'action': "addProductCommentReport"
 				})
-
-			})
+			}).then(resp => resp.json())
+				.then(item => {
+					if (item.pcommentno) {
+						swal({
+							title: "檢舉成功",
+							icon: "success",
+							closeOnClickOutside: true,
+						})
+					} else {
+						swal({
+							title: "檢舉失敗",
+							icon: "error",
+							closeOnClickOutside: true,
+						})
+					}
+				})
 		}
 		//新增商品追蹤(單一商品)
 		function followProduct() {
