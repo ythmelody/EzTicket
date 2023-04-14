@@ -30,6 +30,7 @@ public class PcouponService {
 
     public PcouponDTO getPcouponByID(Integer id) {
         Pcoupon pcoupon = pcouponRepository.getReferenceById(id);
+        pcoupon.getPcouponholdings().forEach(holding -> holding.setPcoupon(null));
         return EntityToDTO(pcoupon);
     }
     public List<PcouponDTO> getPcouponsByID(Integer id) {
