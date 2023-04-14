@@ -1,6 +1,7 @@
 package com.ezticket.web.product.controller;
 
 import com.ezticket.web.product.pojo.Followproduct;
+import com.ezticket.web.product.pojo.Pcomment;
 import com.ezticket.web.product.repository.FollowproductDAO;
 import com.ezticket.web.product.service.FollowproductService;
 import com.ezticket.web.product.service.PclassService;
@@ -71,7 +72,7 @@ public class FollowproductController extends HttpServlet {
             Integer memberno = Integer.valueOf(request.getParameter("memberno"));
             Integer productno = Integer.valueOf(request.getParameter("productno"));
             Boolean successful = followproductSvc.addFollowProduct(memberno,productno);
-
+            boolean2Json(successful,response);
 
 
         }
@@ -79,5 +80,14 @@ public class FollowproductController extends HttpServlet {
 
     }
 
+    public void boolean2Json(Boolean successful, HttpServletResponse response) throws IOException {
+        Gson gson =new Gson();
+        String json =gson.toJson(successful);
+        PrintWriter out = response.getWriter();
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+        out.println(json);
+        out.flush();
+    }
 
 }

@@ -82,7 +82,9 @@ public class PcommentService {
         return dao.getAll(map);
     }
 
+
     //更新評論按讚
+    @Transactional
     public Pcomment updatePcomment(Integer pcommentno, Integer thumpup) {
         Pcomment pcomment = dao.getByPrimaryKey(pcommentno);
         Integer plike = pcomment.getPlike();
@@ -92,18 +94,21 @@ public class PcommentService {
     }
 
     //節目評論按讚
+    @Transactional
     public boolean addThumpUp(Integer memberno, Integer pcommentno) {
         try {
             pcommentRedisDAO.addKeyValue("thumbup:product:" + memberno, String.valueOf(pcommentno));
             updatePcomment(pcommentno, 1);
-            System.out.print("有近來addThumpUp");
+            System.out.print("有進來addThumpUp");
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
 
     //商品評論取消按讚
+    @Transactional
     public boolean removeThumpUp(Integer memberno, Integer pcommentno) {
 
         try {
@@ -111,6 +116,7 @@ public class PcommentService {
             updatePcomment(pcommentno, -1);
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

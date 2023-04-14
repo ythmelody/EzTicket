@@ -136,6 +136,13 @@ public class ProductCommentServlet extends HttpServlet {
         if ("getThumpupPcommentno".equals(action)) {
             Integer memberno = Integer.valueOf(request.getParameter("memberno"));
             Set<Integer> set = pcommentSvc.getPcommentnosByMemberno(memberno);
+            Gson gson =new Gson();
+            String json = gson.toJson(set);
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            PrintWriter pw = response.getWriter();
+            pw.print(json);
+            pw.flush();
 
 
         }
@@ -144,7 +151,14 @@ public class ProductCommentServlet extends HttpServlet {
         if ("thumpupPcomment".equals(action)) {
             Integer memberno = Integer.valueOf(request.getParameter("memberno"));
             Integer pcommentno = Integer.valueOf(request.getParameter("pcommentno"));
-            pcommentSvc.addThumpUp(memberno, pcommentno);
+            Boolean thumpup =pcommentSvc.addThumpUp(memberno, pcommentno);
+            Gson gson =new Gson();
+            String json = gson.toJson(thumpup);
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            PrintWriter pw = response.getWriter();
+            pw.print(json);
+            pw.flush();
         }
 
         //評論取消按讚

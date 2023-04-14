@@ -50,7 +50,7 @@ public class PcommentDAOImpl implements PcommentDAO {
 		query.setParameter("pcommentcont", pcomment.getPcommentcont());
 		query.setParameter("prate", pcomment.getPrate());
 		query.setParameter("pcommentdate", pcomment.getPcommentdate());
-		query.setParameter("pcommentstatus", pcomment.getPcommentcont());
+		query.setParameter("pcommentstatus", pcomment.getPcommentstatus());
 		query.setParameter("plike", pcomment.getPlike());
 		query.setParameter("pcommentno", pcomment.getPcommentno());
 		System.out.println("有跑進來PcommentDAOImpl");
