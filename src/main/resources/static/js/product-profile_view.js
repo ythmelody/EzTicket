@@ -208,6 +208,8 @@ function fetchPcouponList(e) {
 			const couponlist = document.querySelector('#coupons-02');
 			couponlist.innerHTML = "";
 			const couponbody = data.map(obj => {
+        console.log(data);
+        console.log()
 				return `<div class="main-card mt-4">
                   <div class="contact-list coupon-active">
                     <div class="top d-flex flex-wrap justify-content-between align-items-center p-4 border_bottom">
@@ -221,21 +223,9 @@ function fetchPcouponList(e) {
                           </span> - <span class="visitor-date-time">${moment(obj.pcoupnedate).format('YYYY-MM-DD HH:mm:ss')}</span></p>
                       </div>
                       <div class="d-flex align-items-center">
-                        <label class="btn-switch tfs-8 mb-0 me-4 mt-1">
-                        <input type="checkbox" onchange="changeStatus(this)" value="" ${obj.pcouponstatus === 1 ? 'checked' : 'false'}>
-                          <span class="checkbox-slider"></span>
-                        </label>
-                        <div class="dropdown dropdown-default dropdown-text dropdown-icon-item">
-                          <button class="option-btn-1" type="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                            <i class="fa-solid fa-ellipsis-vertical"></i>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            <a href="#" class="dropdown-item" data-bs-toggle="modal"
-														data-bs-target="#editcouponModal" onclick="editCoupon(${obj.pcouponno})"><i class="fa-solid fa-pen me-3"></i>編輯</a>
-                            <a href="#" class="dropdown-item" onclick="saveCoupon(${obj.pcouponno}, event)"><i class="fa-solid fa-floppy-disk me-3"></i>儲存</a>
-                          </div>
-                        </div>
+                        <div class="rs ms-auto mt_r4">
+                        <button class="main-btn btn-hover h_40 w-100" onclick="takeCoupon(${obj.porderno})">領取優惠券</button>
+                      </div>
                       </div>
                     </div>
                     <div class="bottom d-flex flex-wrap justify-content-between align-items-center p-4">
