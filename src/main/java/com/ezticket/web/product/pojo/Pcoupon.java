@@ -35,8 +35,4 @@ public class Pcoupon {
     private List<Pfitcoupon> pfitcoupons;
     @OneToMany(mappedBy = "pcouponholdingPK.pcouponno", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Pcouponholding> pcouponholdings;
-
-    public Pcoupon(Integer pcouponno) {
-        this.pcouponno = pcouponno;
-    }
 }

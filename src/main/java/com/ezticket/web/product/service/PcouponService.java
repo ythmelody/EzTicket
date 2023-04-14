@@ -50,9 +50,6 @@ public class PcouponService {
     }
     public boolean updateByID(Integer id, byte processStatus) {
         Pcoupon pcoupon = pcouponRepository.getReferenceById(id);
-        if (pcoupon == null) {
-            return false;
-        }
         pcoupon.setPcouponstatus(processStatus);
         pcouponRepository.save(pcoupon);
         checkPouconStatus();
@@ -83,9 +80,6 @@ public class PcouponService {
     @Transactional
     public boolean editPcoupon(AddPcouponDTO couponBody) {
         Pcoupon pcoupon = pcouponRepository.getReferenceById(couponBody.getPcouponno());
-        if (pcoupon == null) {
-            return false;
-        }
         pcoupon.setPcouponname(couponBody.getPcouponname());
         pcoupon.setPdiscount(couponBody.getPdiscount());
         pcoupon.setPreachprice(couponBody.getPreachprice());
