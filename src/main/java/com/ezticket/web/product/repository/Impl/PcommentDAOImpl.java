@@ -53,8 +53,12 @@ public class PcommentDAOImpl implements PcommentDAO {
 		query.setParameter("pcommentstatus", pcomment.getPcommentcont());
 		query.setParameter("plike", pcomment.getPlike());
 		query.setParameter("pcommentno", pcomment.getPcommentno());
+		System.out.println("有跑進來PcommentDAOImpl");
 		query.executeUpdate();
+
 	}
+
+
 	@Override
 	public boolean update(Integer pcommentno ,Integer pcommentstatus) {
 		final String hql ="UPDATE Pcomment SET pcommentstatus = :pcommentstatus WHERE pcommentno = :pcommentno";

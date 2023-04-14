@@ -4,8 +4,6 @@ package com.ezticket.web.product.controller;
 import com.ezticket.web.product.pojo.Pcomment;
 import com.ezticket.web.product.pojo.Pdetails;
 import com.ezticket.web.product.pojo.PdetailsPK;
-import com.ezticket.web.product.pojo.Product;
-import com.ezticket.web.product.repository.PdetailsRepository;
 import com.ezticket.web.product.service.PcommentService;
 import com.ezticket.web.product.service.PdetailsService;
 import com.ezticket.web.product.service.ProductService;
@@ -16,7 +14,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -99,8 +96,6 @@ public class ProductCommentServlet extends HttpServlet {
             PrintWriter pw = response.getWriter();
             pw.print(json);
             pw.flush();
-
-
         }
 
         //取得單一筆評論

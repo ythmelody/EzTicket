@@ -96,6 +96,7 @@ public class PcommentService {
         try {
             pcommentRedisDAO.addKeyValue("thumbup:product:" + memberno, String.valueOf(pcommentno));
             updatePcomment(pcommentno, 1);
+            System.out.print("有近來addThumpUp");
             return true;
         } catch (Exception e) {
             return false;

@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, shrink-to-fit=9">
 	<meta name="description" content="Gambolthemes">
 	<meta name="author" content="Gambolthemes">
-	<title id ="productTitle">商品詳情</title>
+	<title id="productTitle">商品詳情</title>
 
 	<!-- Favicon Icon -->
 	<link rel="icon" type="image/png" href="images/ezTicket.png">
@@ -240,8 +240,10 @@
 							<nav aria-label="breadcrumb">
 								<ol class="breadcrumb">
 									<li class="breadcrumb-item"><a href="index.html">首頁</a></li>
-									<li class="breadcrumb-item"><a href="front-product-explore_products.html">周邊商品</a></li>
-									<li class="breadcrumb-item active" aria-current="page" id="pclassName">Online Event Detail View</li>
+									<li class="breadcrumb-item"><a href="front-product-explore_products.html">周邊商品</a>
+									</li>
+									<li class="breadcrumb-item active" aria-current="page" id="pclassName">Online Event
+										Detail View</li>
 								</ol>
 							</nav>
 						</div>
@@ -586,7 +588,7 @@
 				}
 				else if (item.prateqty >= 1) {
 					//.toFixed(2) 呈現至小數點後兩位數
-					$("#productRate").children("h4").text("商品評星：" + ((item.pratetotal / item.prateqty)).toFixed(1)).append(`&nbsp;<i class="fa-solid fa-star" style="color: #ffad21!important;"></i>`);
+					$("#productRate").children("h4").text("商品評星：" + Math.round((item.pratetotal / item.prateqty)).toFixed(1)).append(`&nbsp;<i class="fa-solid fa-star" style="color: #ffad21!important;"></i>`);
 				}
 				for (let pimgt of item.pimgts) {
 					console.log(pimgt.pimgno);
@@ -720,20 +722,19 @@
 		//商品評論
 		const productComment = document.querySelector('div.owl-carousel.testimonial-slider.owl-theme');
 
+		// 從 Redis 撈出會員所對應的按讚評論編號並存到一個陣列以供後續比對
+		let commentArr = [];
+
 		fetch("ProductCommentServlet", {
 			method: "POST",
 			body: new URLSearchParams({
 				'action': "oneProductCommentList",
 				'productno': productno
-
 			})
 		})
 			.then(resp => resp.json())
 			.then(list => {
 				for (let item of list) {
-
-
-
 					productComment.innerHTML += `<div class="item">
 													<div class="main-card">
 														<div class=" testimonial-content">
@@ -754,13 +755,13 @@
 																		<td style="padding-top: 4px; width: 35px;">
 																			<button
 																				style="border: none; background-color: transparent;">
-																				<img name="thumbbtn"
+																				<img id="thumb_${item.pcommentno}" name="thumbbtn"
 																					style="width: 30px;"
 																					src="images/thumbup_blank.png"
 																					onclick="chgthumbimg()">
 																			</button>
 																		</td>
-																		<td style="width: 30px;">100</td>
+																		<td style="width: 30px;">${item.plike}</td>
 																		<td><button  name="${item.pcommentno}" data-bs-toggle="modal"
 																				data-bs-target="#couponModal" 
 																				style="border: none; background-color: transparent" onclick="comment(this.name)">
@@ -787,12 +788,33 @@
 												</div>`;
 
 					for (let star = 0; star < item.prate; star++) {
-
 						$(`#starContainer_${item.pcommentno}`).append(`<li><i class="fa-solid fa-star"></i></li>`);
-
 					}
 				}
 
+				// Document load 的時候顯示按過的讚，$(`#thumb_${i}`) 要新增在空讚的圖片中
+				$.ajax({
+					url: "ProductCommentServlet",
+					cache: false,
+					async: false,
+					type: 'POST',
+					dataType: "json",
+					data: {
+						"action": "getThumpupPcommentno",
+						"memberno": info.memberno,
+					},
+					success: function (jsondata) {
+						checkUpArr = Object.values(jsondata)
+
+						for (let i of commentArr) {
+							if (checkUpArr.includes(i)) {
+								$(`#thumb_${i}`).attr('src', 'images/thumbup_clicked.png');
+								$(`#thumb_${i}`).addClass("thumbbed");
+							}
+						}
+					}
+
+				})
 
 
 			}).then(function () {
@@ -914,15 +936,46 @@
 	<script>
 		function chgthumbimg() {
 			const btnClass = event.target.className;
+			const pcommentno = event.target.id.replace("thumb_", "");
+
 			if (btnClass === '') {
 				event.target.src = 'images/thumbup_clicked.png';
 				event.target.classList.add("thumbbed");
+				$.ajax({
+					url: "ProductCommentServlet",
+					async: false,
+					type: 'POST',
+					dataType: "json",
+					data: {
+						"action": "thumpupPcomment",
+						"memberno": info.memberno,
+						"pcommentno": pcommentno
+					},
+					success: function (jsondata) {
+
+					}
+				})
 			}
 			else {
 				event.target.src = 'images/thumbup_blank.png';
 				event.target.classList.remove("thumbbed");
+				$.ajax({
+					url: "ProductCommentServlet",
+					async: false,
+					type: 'POST',
+					dataType: "json",
+					data: {
+						"action": "thumpdownPcomment",
+						"memberno": info.memberno,
+						"pcommentno": pcommentno
+					},
+					success: function (jsondata) {
+					}
+				})
 			}
 		}
+
+
 
 	</script>
 
