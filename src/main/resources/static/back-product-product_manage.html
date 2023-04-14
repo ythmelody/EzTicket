@@ -303,7 +303,7 @@
 									</div>
 									<div class="relative-input position-relative">
 										<label for="pclass">商品類別：</label>
-										<select id="pclassSelector" name="pclass" class="form-select"></select>
+										<select id="pclassSelector" name="pclass" class="selectpicker"></select>
 										<!-- 類別選單顯示 -->
 									</div>
 
@@ -411,6 +411,8 @@
 					// console.log(item);
 					$('#pclassSelector').append(`<option value=${item.pclassno}>${item.pclassname}</option>`);
 				}
+			}).then(function () {
+				$('.selectpicker').selectpicker('refresh');
 			})
 
 	</script>
