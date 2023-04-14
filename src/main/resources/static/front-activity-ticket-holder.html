@@ -36,7 +36,7 @@
 
 	<!-- About Details Model End-->
 	<!-- Invite Team Member Model Start-->
-	<div class="modal fade" id="inviteTeamModal" tabindex="-1" aria-labelledby="inviteTeamModalLabel"
+	<!-- <div class="modal fade" id="inviteTeamModal" tabindex="-1" aria-labelledby="inviteTeamModalLabel"
 		aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -72,7 +72,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<!-- Invite Team Member Model End-->
 	<!-- Header Start-->
 	<header class="header">
@@ -311,7 +311,7 @@
 										<div class="tab-pane fade" id="orders" role="tabpanel"
 											aria-labelledby="orders-tab">
 											<div class="main-card mt-4" id="incoming">
-												<div class="card-top p-4">
+												<!-- <div class="card-top p-4">
 													<div class="card-event-img">
 														<img src="images/event-imgs/img-7.jpg" alt="">
 													</div>
@@ -319,22 +319,22 @@
 														<h5>黃金歲月演場會</h5>
 														<div class="invoice-id">票券編號：<span>0000000001</span></div>
 													</div>
-													<div
-														class="d-md-flex flex-wrap align-items-center conversion-setup">
-														<div class="rs ms-auto mt_r4">
-															<a href="front-activity-ticket-detail.html"
-																class="main-btn btn-hover h_40 w-100">取票</a>
-														</div>
-													</div>
-													<div
-														class="d-md-flex flex-wrap align-items-center conversion-setup">
-														<div class="rs ms-auto mt_r4">
-															<button class="main-btn btn-hover h_40 w-100"
-																data-bs-toggle="modal"
-																data-bs-target="#inviteTeamModal">分票</button>
-														</div>
-													</div>
-												</div>
+													<div class="rs ms-auto mt_r4" style="float:right !important">
+														<div class="rs ms-auto mt_r4"> -->
+														<!-- <a href="front-activity-ticket-detail.html"
+															class="main-btn btn-hover h_40 w-100"
+															style="margin-top: 10px;">取票</a>
+														<button class="main-btn btn-hover h_40 w-100"
+															style="margin-top: 10px;" data-bs-toggle="modal"
+															data-bs-target="#inviteTeamModal">分票</button> -->
+														<!-- </div> -->
+													<!-- </div> -->
+													<!-- <div class="rs ms-auto mt_r4" style="float:right !important"> -->
+													<!-- <div class="rs ms-auto mt_r4"> -->
+
+													<!-- </div> -->
+													<!-- </div> -->
+												<!-- </div>
 												<div class="card-bottom">
 													<div class="card-bottom-item">
 														<div class="card-icon">
@@ -373,7 +373,7 @@
 														</div>
 													</div>
 
-												</div>
+												</div> -->
 											</div>
 										</div>
 										<div class="tab-pane fade" id="history" role="tabpanel"
@@ -527,13 +527,14 @@
 	<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 	<script src="js/custom.js"></script>
 	<script src="js/night-mode.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 	<!-- 所有擁有的票券 -->
 	<!-- 會員編號先寫死 -->
 	<script>
 		const memberno = new URLSearchParams(window.location.search).get("memberno");
-
+		
 		fetch('collect', {
 			method: 'POST',
 			body: new URLSearchParams({
@@ -567,20 +568,11 @@
 														<h5>${ticket.aname}</h5>
 														<div class="invoice-id">票券編號：<span>${ticket.collectno}</span></div>
 													</div>
-													<div
-														class="d-md-flex flex-wrap align-items-center conversion-setup">
-														<div class="rs ms-auto mt_r4">
+													<div class="rs ms-auto mt_r4" style="float:right !important">
 															<a href="/collect?action=oneTicket&memberno=${ticket.memberno}&collectno=${ticket.collectno}"
-																class="main-btn btn-hover h_40 w-100">取票</a>
-														</div>
-													</div>
-													<div
-														class="d-md-flex flex-wrap align-items-center conversion-setup">
-														<div class="rs ms-auto mt_r4">
-															<button class="main-btn btn-hover h_40 w-100"
-																data-bs-toggle="modal"
-																data-bs-target="#inviteTeamModal">分票</button>
-														</div>
+																class="main-btn btn-hover h_40 w-100" style="margin-top: 10px;">取票</a>
+																<button class="main-btn btn-hover h_40 w-100" style="margin-top: 10px;" 
+																onclick='transfer(${ticket.collectno},${ticket.memberno})'>分票</button>
 													</div>
 												</div>
 												<div class="card-bottom">
@@ -628,6 +620,150 @@
 					withSeat.textContent='非對號座';
 				}
 				ticketCount++;
+			}
+		}
+	</script>
+
+<!-- 動態生成，還抓不到東西 -->
+<!-- <script>
+		$(document).ready(() => {
+
+		fetch('collect', {
+			method: 'POST',
+			body: new URLSearchParams({
+				'action': 'allMyTickets',
+				'memberno': memberno
+			})
+		})
+			// .then(() => console.log('fetch success'))
+			.then(resp => resp.json())
+			.then(list => {
+				showMyTickets(list);
+			})
+			.catch(err => {
+				console.log('發生錯誤:', err);
+			});
+		});
+
+		function showMyTickets(data) {
+			const incoming = document.getElementById('incoming');
+			incoming.innerHTML = '';
+
+
+			const tickets = data.map(obj => {
+				return fetch (`/collect?action=ticketDetails&member=${memberno}&collectno=${obj.collectno}`, {
+					method: "GET",
+				})
+				.then(resp => resp.json())
+				.then(data => {
+					let imagesrc = `data:image/png;base64,${data.aimg}`;
+					incoming.innerHTML = `
+					<div class="card-top p-4">
+													<div class="card-event-img" ">
+														<img src='${imagesrc}' alt="">
+													</div>
+													<div class="card-event-dt">
+														<h5>${obj.aname}</h5>
+														<div class="invoice-id">票券編號：<span>${obj.collectno}</span></div>
+													</div>
+														<div class="rs ms-auto mt_r4" style="float:right !important">
+															<a href="/collect?action=oneTicket&memberno=${obj.memberno}&collectno=${obj.collectno}"
+																class="main-btn btn-hover h_40 w-100" style="margin-top: 10px;">取票</a>
+																<button class="main-btn btn-hover h_40 w-100" style="margin-top: 10px;" 
+																onclick='transfer(${obj.collectno},${obj.memberno})'>分票</button>
+														</div>
+												</div>
+												<div class="card-bottom">
+													<div class="card-bottom-item">
+														<div class="card-icon">
+															<i class="fa-solid fa-calendar-days"></i>
+														</div>
+														<div class="card-dt-text">
+															<h6>活動開始時間</h6>
+															<span>${obj.sessionstime}</span>
+														</div>
+													</div>
+													<div class="card-bottom-item">
+														<div class="card-icon">
+															<i class="fa-solid fa-location-dot"></i>
+														</div>
+														<div class="card-dt-text">
+															<h6>活動地點</h6>
+															<span>${obj.aplace}</span>
+														</div>
+													</div>
+													<div class="card-bottom-item">
+														<div class="card-icon">
+															<i class="fa-solid fa-ticket"></i>
+														</div>
+														<div class="card-dt-text">
+															<h6>座位</h6>
+															<span id='withSeat'>${obj.blockname} ${obj.realx}排 ${obj.realy}號</span>
+														</div>
+													</div>
+													<div class="card-bottom-item">
+														<div class="card-icon">
+															<i class="fa-solid fa-money-bill"></i>
+														</div>
+														<div class="card-dt-text">
+															<h6>票券持有人</h6>
+															<span>${obj.mname}</span>
+														</div>
+													</div>
+					`;
+					let realx = `${obj.realx}`;
+					let realy = `${obj.realy}`;
+					if ((realx ?? true) && (realy ?? true)) {
+						const withSeat = document.getElementById(`withSeat`);
+						withSeat.textContent = '非對號座';
+					}
+					return incoming;
+				});
+			});
+			Promise.all(tickets).then(values => {
+				incoming.innerHTML = values.join('');
+      		});
+		};
+	</script> -->
+		
+	<script>
+		function transfer(collectno, memberno) {
+			if (collectno) {
+				swal({
+					title: "請輸入欲轉贈票券的會員帳號",
+					content: {
+						element: "input",
+						attributes: {
+							placeholder: "請輸入電子信箱",
+							type: "email",
+						},
+					},
+					icon: "warning",
+					buttons: true,
+					dangerMode: true
+				}).then((confirm) => {
+					if (confirm) {
+						fetch(`/collect?action=transferTicket&collectno=${collectno}&memberno=${memberno}`, {
+							method: 'POST',
+							headers: { 'Content-Type': 'text/html' },
+							body: confirm.value,
+						}).then(response => {
+							if (response === '分票成功！') {
+								swal('票券分送成功', { icon: "success" });
+							} else if (response === '分票成功！') {
+								swal('查無此會員', { icon: "error" });
+							} else {
+								swal('發生錯誤，請稍後再試', { icon: "error" });
+							}
+						})
+							.catch(err => {
+								console.log('發生錯誤:', err);
+							});
+					} else {
+						swal('取消操作', { icon: "info" });
+					}
+				});
+
 			}
 		}
 	</script>

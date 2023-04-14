@@ -55,7 +55,7 @@ public class TicketHolderDAOImpl implements TicketHolderDAO {
                 ticketHolder.setActivityno(rs.getInt("activityno"));
                 ticketHolder.setAname(rs.getString("aname"));
                 ticketHolder.setWetherseat(rs.getInt("wetherseat"));
-                ticketHolder.setAimg(rs.getBlob("aimg"));
+                ticketHolder.setAimg(rs.getBytes("aimg"));
                 ticketHolder.setSessionstime(rs.getTimestamp("sessionstime"));
                 ticketHolder.setSessionetime(rs.getTimestamp("sessionetime"));
                 ticketHolder.setBlockname(rs.getString("blockname"));
@@ -129,7 +129,7 @@ public class TicketHolderDAOImpl implements TicketHolderDAO {
                 ticketHolder.setActivityno(rs.getInt("activityno"));
                 ticketHolder.setAname(rs.getString("aname"));
                 ticketHolder.setWetherseat(rs.getInt("wetherseat"));
-                ticketHolder.setAimg(rs.getBlob("aimg"));
+                ticketHolder.setAimg(rs.getBytes("aimg"));
                 ticketHolder.setSessionstime(rs.getTimestamp("sessionstime"));
                 ticketHolder.setSessionetime(rs.getTimestamp("sessionetime"));
                 ticketHolder.setBlockname(rs.getString("blockname"));
@@ -202,7 +202,7 @@ public class TicketHolderDAOImpl implements TicketHolderDAO {
                 ticketHolder.setActivityno(rs.getInt("activityno"));
                 ticketHolder.setAname(rs.getString("aname"));
                 ticketHolder.setWetherseat(rs.getInt("wetherseat"));
-                ticketHolder.setAimg(rs.getBlob("aimg"));
+                ticketHolder.setAimg(rs.getBytes("aimg"));
                 ticketHolder.setSessionstime(rs.getTimestamp("sessionstime"));
                 ticketHolder.setSessionetime(rs.getTimestamp("sessionetime"));
                 ticketHolder.setBlockname(rs.getString("blockname"));

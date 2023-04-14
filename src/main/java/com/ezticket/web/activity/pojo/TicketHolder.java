@@ -13,7 +13,7 @@ public class TicketHolder {
     private Integer activityno;
     private String aname;
     private Integer wetherseat;
-    private Blob aimg;
+    private byte[] aimg;
     private Timestamp sessionstime;
     private Timestamp sessionetime;
 
@@ -95,17 +95,19 @@ public class TicketHolder {
         return wetherseat;
     }
 
+    public byte[] getAimg() {
+        return aimg;
+    }
+
+    public void setAimg(byte[] aimg) {
+        this.aimg = aimg;
+    }
+
     public void setWetherseat(Integer wetherseat) {
         this.wetherseat = wetherseat;
     }
 
-    public Blob getAimg() {
-        return aimg;
-    }
 
-    public void setAimg(Blob aimg) {
-        this.aimg = aimg;
-    }
 
     public Timestamp getSessionstime() {
         return sessionstime;
