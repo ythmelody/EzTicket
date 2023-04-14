@@ -1,8 +1,17 @@
 package com.ezticket.web.activity.controller;
 
+import com.ezticket.web.activity.pojo.CollectVO;
 import com.ezticket.web.activity.pojo.TicketHolder;
+import com.ezticket.web.activity.repository.CollectDAO;
+import com.ezticket.web.activity.repository.impl.CollectDAOImpl;
 import com.ezticket.web.activity.service.CollectService;
+import com.ezticket.web.product.pojo.PdetailsPK;
+import com.ezticket.web.product.service.PcommentService;
+import com.ezticket.web.product.service.PdetailsService;
+import com.ezticket.web.product.service.ProductService;
+import com.ezticket.web.users.pojo.Member;
 import com.ezticket.web.users.repository.MemberRepository;
+import com.ezticket.web.users.service.MemberService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import jakarta.servlet.RequestDispatcher;
@@ -13,8 +22,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import java.io.*;
 import java.sql.Blob;
@@ -22,8 +33,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet("/collect")
-@Controller
 public class CollectController extends HttpServlet {
+
+    @Autowired
+    private MemberService memberService;
+    public void init() throws ServletException {
+        ApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+        memberService = applicationContext.getBean(MemberService.class);
+    }
+
     public void doGet(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
         doPost(req, res);
@@ -76,7 +94,30 @@ public class CollectController extends HttpServlet {
 
 //          更新擁有者
             CollectService coSvc = new CollectService();
-            String stat = coSvc.updateCollect(collectno, memail);
+            CollectDAO cdao = new CollectDAOImpl();
+// Step1:  用 email 查出會員編號
+//        取不到memberRepository......
+//        Member member = memberRepository.findByMemail(memail);
+//        Member member = findByMemail(memail);
+
+            String stat;
+            Member member = memberService.getMemberInfo(memail);
+            if (member==null) {
+                stat= "查無此會員";
+            } else {
+                Integer newMemberno = member.getMemberno();
+
+// Step2: 更新 collect 表格中的會員編號
+                CollectVO oldCollectVO = cdao.findByPK(collectno);
+                CollectVO collectVO = new CollectVO();
+                collectVO.setCollectno(collectno);
+                collectVO.setMemberno(memberno);
+                collectVO.settDetailsno(oldCollectVO.gettDetailsno());
+                collectVO.settStatus(oldCollectVO.gettStatus());
+                collectVO.setQrcode(oldCollectVO.getQrcode());
+                cdao.update(collectVO);
+                stat = "分票成功！";
+            }
             res.setContentType("text/HTML;charset=UTF-8");
             PrintWriter pw = res.getWriter();
             pw.write(stat);

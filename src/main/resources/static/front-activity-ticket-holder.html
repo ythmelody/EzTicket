@@ -321,19 +321,19 @@
 													</div>
 													<div class="rs ms-auto mt_r4" style="float:right !important">
 														<div class="rs ms-auto mt_r4"> -->
-														<!-- <a href="front-activity-ticket-detail.html"
+												<!-- <a href="front-activity-ticket-detail.html"
 															class="main-btn btn-hover h_40 w-100"
 															style="margin-top: 10px;">取票</a>
 														<button class="main-btn btn-hover h_40 w-100"
 															style="margin-top: 10px;" data-bs-toggle="modal"
 															data-bs-target="#inviteTeamModal">分票</button> -->
-														<!-- </div> -->
-													<!-- </div> -->
-													<!-- <div class="rs ms-auto mt_r4" style="float:right !important"> -->
-													<!-- <div class="rs ms-auto mt_r4"> -->
+												<!-- </div> -->
+												<!-- </div> -->
+												<!-- <div class="rs ms-auto mt_r4" style="float:right !important"> -->
+												<!-- <div class="rs ms-auto mt_r4"> -->
 
-													<!-- </div> -->
-													<!-- </div> -->
+												<!-- </div> -->
+												<!-- </div> -->
 												<!-- </div>
 												<div class="card-bottom">
 													<div class="card-bottom-item">
@@ -534,7 +534,7 @@
 	<!-- 會員編號先寫死 -->
 	<script>
 		const memberno = new URLSearchParams(window.location.search).get("memberno");
-		
+
 		fetch('collect', {
 			method: 'POST',
 			body: new URLSearchParams({
@@ -557,7 +557,7 @@
 		function showMyTickets(list) {
 			const incoming = document.getElementById('incoming');
 			incoming.innerHTML = '';
-			let ticketCount=1;
+			let ticketCount = 1;
 			for (let ticket of list) {
 				incoming.innerHTML += `
 					<div class="card-top p-4">
@@ -617,15 +617,15 @@
 				let realy = `${ticket.realy}`;
 				if ((realx ?? true) && (realy ?? true)) {
 					const withSeat = document.getElementById(`withSeat${ticketCount}`);
-					withSeat.textContent='非對號座';
+					withSeat.textContent = '非對號座';
 				}
 				ticketCount++;
 			}
 		}
 	</script>
 
-<!-- 動態生成，還抓不到東西 -->
-<!-- <script>
+	<!-- 動態生成，還抓不到東西 -->
+	<!-- <script>
 		$(document).ready(() => {
 
 		fetch('collect', {
@@ -725,7 +725,7 @@
       		});
 		};
 	</script> -->
-		
+
 	<script>
 		function transfer(collectno, memberno) {
 			if (collectno) {
@@ -748,14 +748,19 @@
 							headers: { 'Content-Type': 'text/html' },
 							body: confirm.value,
 						}).then(response => {
-							if (response === '分票成功！') {
-								swal('票券分送成功', { icon: "success" });
-							} else if (response === '分票成功！') {
-								swal('查無此會員', { icon: "error" });
-							} else {
-								swal('發生錯誤，請稍後再試', { icon: "error" });
-							}
+							console.log(response);
+							response.text();
 						})
+							.then(response => {
+								console.log(response);
+								if (response === '分票成功！') {
+									swal('票券分送成功', { icon: "success" });
+								} else if (response === '分票成功！') {
+									swal('查無此會員', { icon: "error" });
+								} else {
+									swal('發生錯誤，請稍後再試', { icon: "error" });
+								}
+							})
 							.catch(err => {
 								console.log('發生錯誤:', err);
 							});
