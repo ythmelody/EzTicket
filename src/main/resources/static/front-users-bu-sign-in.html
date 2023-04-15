@@ -136,10 +136,15 @@
 			})
 				.then(response => response.json())
 				.then(data => {
+					console.log(data);
 					if (data.successful) {
-						window.location.href = 'index.html';
+						window.location.href = 'back-users-profile.html';
 					} else {
-						$("#statusfalse").text("請輸入正確的帳號或密碼!");
+						if(data.bastatus === 0){
+							$("#statusfalse").text(data.message);
+						}else{
+							$("#statusfalse").text("請輸入正確的帳號或密碼!");
+						}
 						return;
 					}
 				})

@@ -96,7 +96,6 @@ public class MemberController {
             member.setSuccessful(true);
             member.setMpassword("第二組everybody年薪百萬!");
         } else {
-            member = new Member();
             member.setSuccessful(false);
             member.setMessage("會員未通過認證");
         }

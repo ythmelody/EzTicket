@@ -80,7 +80,7 @@ public class BackuserService {
     //驗證資料庫有無此後台成員,回傳布林值
     public boolean authenticate(String baaccount, String bapassword) {
         Backuser backuser = backuserRepository.findByBaaccount(baaccount);
-        if (backuser != null && backuser.getBapassword().equals(bapassword)) {
+        if (backuser != null && backuser.getBapassword().equals(bapassword) && backuser.getBastatus() == 1) {
             return true;
         } else {
             return false;

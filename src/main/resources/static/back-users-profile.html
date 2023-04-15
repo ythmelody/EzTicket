@@ -47,11 +47,15 @@
 		form input[type="password"],
 		form input[type="email"],
 		form input[type="tel"],
-		form input[type="date"] {
+		form input[type="date"]{
 			display: inline-block;
 			width: 200px;
 			/* 設定輸入框的寬度 */
 			border: 1px solid gray;
+		}
+
+		#workAuthority {
+			display: inline-block;
 		}
 
 		#account,
@@ -525,8 +529,8 @@
 											<div class="account-holder-avatar">
 												<img src="images/profile-imgs/img-13.jpg" alt="">
 											</div>
-											<h5>John Doe</h5>
-											<p>johndoe@example.com</p>
+											<h5 class="baname"><!-- 後台成員名稱--></h5>
+											<p class="baemail"><!-- 後台成員email--></p>
 										</div>
 									</li>
 									<li class="profile-link">
@@ -582,16 +586,15 @@
 									</div>
 								</div>
 								<div class="user-dts">
-									<h4 class="user-name">John Doe<span class="verify-badge"><i
+									<h4 class="user-name "><!-- 後台成員名稱--><span class="verify-badge babefore"><i
 												class="fa-solid fa-circle-check"></i></span></h4>
 								</div>
-								<!-- <div class="ff-block" style="display: inline-block;">
-									<a href="#" class="" role="button" data-bs-toggle="modal"
-										data-bs-target="#FFModal"><span>0</span>追蹤商品</a>
-								</div> -->
+								<div class="user-dts">
+									<h4 class="user-name baemail"><!-- 後台成員email--></h4>
+								</div>
 								<div class="user-btns">
-									<a href="my_organisation_dashboard.html"
-										class="co-main-btn co-btn-width min-width d-inline-block h_40">有需要可以拿來用的按鈕連結</a>
+									<a href="back-users-my-team.html"
+										class="co-main-btn co-btn-width min-width d-inline-block h_40">我的後台</a>
 								</div>
 							</div>
 						</div>
@@ -650,32 +653,45 @@
 																			<label class="lab"
 																				for="account">後台帳號：</label>
 																			<input type="text" id="account"
-																				name="account"
+																				name="account" class="baaccount"
 																				readonly="readonly"><br><br>
 
 																			<label class="lab" for="name">姓名：</label>
-																			<input type="text" id="name" name="name"
-																				required><br><br>
+																			<input type="text" id="name" name="name" class="baname"
+																				required>
+																			<p id="banameError"
+																				style="color: red; display: inline-block; margin: 0;">
+																			</p><br><br>
 
 																			<label class="lab"
 																				for="email">E-mail：</label>
-																			<input type="email" id="email" name="email"
-																				required><br><br>
+																			<input type="email" id="email" name="email" class="baemail"
+																				required> 
+																			<p id="baemailError"
+																				style="color: red; display: inline-block; margin: 0;">
+																			</p><br><br>
 
 																			<label class="lab" for="phone">手機號碼：</label>
 																			<input type="tel" id="phone" name="phone"
-																				required><br><br>
+																				required>
+																			<p id="bacellError"
+																				style="color: red; display: inline-block; margin: 0;">
+																			</p><br><br>
 
 																			<label class="lab"
 																				for="role">後台角色：</label>
 																			<input type="text" id="role"
 																				name="role"
 																				readonly="readonly"><br><br>
-
+																			<label class="lab" for="workAuthority">負責工作:</label>
+																			<p id="workAuthority">test</p>
 																			<div>
 																				<button id="btn1" type="button"
-																					class="btn btn-primary">儲存修改</button>
+																					class="btn btn-primary">儲存修改</button>&nbsp;
+																					<p id="success"
+																						style="color: red; display: inline-block; margin: 0;">
 																			</div>
+																			
 																		</form>
 																	</div>
 																</div>
@@ -693,60 +709,40 @@
 																			<label class="lab"
 																				for="account2">後台帳號：</label>
 																			<input type="text" id="account2"
-																				name="account"
+																				name="account" class="baaccount"
 																				readonly="readonly"><br><br>
 
 																			<label class="lab"
 																				for="oldpassword">舊密碼:</label>
 																			<input type="password" id="oldpassword"
-																				name="oldpassword" required><br><br>
+																				name="oldpassword" required>
+																			<p id="oPwdError"
+																				style="color: red; display: inline-block; margin: 0;">
+																			</p><br><br>
 
 																			<label class="lab"
 																				for="newpassword">新密碼:</label>
 																			<input type="password" id="newpassword"
-																				name="newpassword"><br><br>
+																				name="newpassword">
+																			<p id="pwdFormatError"
+																				style="color: red; display: inline-block; margin: 0;">
+																			</p><br><br>
 
 																			<label class="lab"
 																				for="confirmPassword">確認密碼:</label>
 																			<input type="password" id="confirmPassword"
-																				name="confirmPassword" required><br><br>
+																				name="confirmPassword" required>
+																			<p id="ChPwdError"
+																				style="color: red;display: inline-block; margin: 0;">
+																			</p><br><br>
 																			<div>
 																				<button id="btn2" type="button"
-																					class="btn btn-primary">更改送出</button>
+																					class="btn btn-primary">更改送出</button>&nbsp;
+																					<p id="success2"
+																						style="color: red; display: inline-block; margin: 0;">
 																			</div>
 																		</form>
 																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="tab-pane fade" id="attending" role="tabpanel">
-													<div class="row">
-														<div class="col-md-12">
-															<div class="main-card mt-4">
-																<div class="card-top p-4">
-																	<form>
-																		<label class="lab"
-																			for="backupUser">常用收件人:</label>
-																		<input type="text" id="backupUser"
-																			name="backupUser" required><br><br>
-
-																		<label class="lab"
-																			for="backupUserPhone">常用收件人電話:</label>
-																		<input type="tel" id="backupUserPhone"
-																			name="backupUserPhone" required><br><br>
-
-																		<label class="lab"
-																			for="backupUserAddress">常用收件人地址:</label>
-																		<input type="text" id="backupUserAddress"
-																			name="backupUserAddress"><br><br>
-
-																		<div>
-																			<button id="btn3" type="button"
-																				class="btn btn-primary">儲存</button>
-																		</div>
-																	</form>
 																</div>
 															</div>
 														</div>
@@ -1313,8 +1309,6 @@
 		</div>
 	</footer>
 	<!-- Footer End-->
-
-
 	<script src="js/jquery-3.6.0.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="vendor/OwlCarousel/owl.carousel.js"></script>
@@ -1322,5 +1316,34 @@
 	<script src="js/custom.js"></script>
 	<script src="js/night-mode.js"></script>
 </body>
+<script>
 
+	fetch("backuser/getBackuserInfo", {
+			method: 'GET',
+		})
+			.then(response => response.json())
+			.then(response => {
+				//測試檢視拿到的資料
+				console.log(response);
+
+				//帶入顯示後台成員的基本資料
+				$(".baaccount").val(`${response.baaccount}`);
+				$(".baname").val(`${response.baname}`);
+				$('.babefore').before(`${response.baname}`);
+				$(".baemail").val(`${response.baemail}`);
+				$(".baemail").text(`${response.baemail}`);
+				$("#phone").val(`${response.bacell}`);
+
+
+
+
+
+
+
+			})
+
+
+
+
+</script>
 </html>

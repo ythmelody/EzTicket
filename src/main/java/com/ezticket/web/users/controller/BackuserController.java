@@ -3,6 +3,7 @@ package com.ezticket.web.users.controller;
 import com.ezticket.web.users.dto.BackuserDTO;
 import com.ezticket.web.users.dto.RoleDTO;
 import com.ezticket.web.users.pojo.Backuser;
+import com.ezticket.web.users.pojo.Member;
 import com.ezticket.web.users.repository.BackuserRepository;
 import com.ezticket.web.users.service.BackuserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -86,12 +87,54 @@ public class BackuserController {
             backuser.setSuccessful(true);
             System.out.println("登入驗證成功");
         } else {
+            Backuser newbackuser = backuserRepository.findByBaaccount(backuser.getBaaccount());
+            if(newbackuser.getBastatus() == 0){
+                backuser.setBastatus(0);
+                backuser.setMessage("此帳號無權限登入!");
+                System.out.println("此帳號無權限登入!");
+            }else {
+                backuser.setMessage("查無此帳號或密碼");
+                System.out.println("查無此帳號或密碼");
+            }
             backuser.setSuccessful(false);
-            backuser.setMessage("查無此帳號或密碼");
-            System.out.println("查無此帳號或密碼");
         }
         return backuser;
     }
+
+    //後台使用者登入後,其他後台頁面可取得後台成員的基本資料
+    @GetMapping("/getBackuserInfo")
+    @ResponseBody
+    public Backuser getBackuserInfo(HttpSession session){
+       Backuser backuser = (Backuser) session.getAttribute("backuser");
+        if (backuser != null) {
+            backuser = backuserService.getBackuserInfo(backuser.getBaaccount());
+            backuser.setSuccessful(true);
+            backuser.setBapassword("第二組everybody年薪百萬!");
+        } else {
+            backuser.setSuccessful(false);
+            backuser.setMessage("會員未通過認證");
+        }
+        return backuser;
+    }
+
+    //後台使用者登入後,其他後台頁面可取得後台成員的權限功能資料
+    @GetMapping("/getBackuserAuthInfo")
+    @ResponseBody
+    public  RoleDTO getBackuserAuthInfo(HttpSession session){
+        Backuser backuser = (Backuser) session.getAttribute("backuser");
+        RoleDTO roleDTO = new RoleDTO();
+        if (backuser != null) {
+            roleDTO = backuserService.getBaRolesWithFuncs(backuser.getBaaccount());
+            System.out.println("取得後台成員功能成功!");
+        } else {
+            roleDTO = null;
+            System.out.println("會員未通過認證");
+        }
+        return roleDTO;
+    }
+
+
+
 
     //測試可不可以根據後台角色的baroleno拿到該角色有的功能和沒有的功能
     @GetMapping("/test")
