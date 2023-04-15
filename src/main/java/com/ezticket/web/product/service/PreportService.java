@@ -4,6 +4,7 @@ import com.ezticket.web.product.pojo.Pcomment;
 import com.ezticket.web.product.pojo.Preport;
 import com.ezticket.web.product.repository.PreportDAO;
 import com.ezticket.web.product.repository.Impl.PreportDAOImpl;
+import com.ezticket.web.product.util.PageResult;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,7 +69,9 @@ public class PreportService {
         return dao.getAll(map);
     }
 
-
+    public PageResult<Preport> getAllBySearch(Map<String, String[]> map, Integer pageNumber, Integer pageSize){
+        return dao.getAll(map,pageNumber,pageSize);
+    }
 
 
 }

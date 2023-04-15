@@ -5,6 +5,8 @@ import com.ezticket.web.product.pojo.Product;
 import com.ezticket.web.product.repository.PcommentDAO;
 import com.ezticket.web.product.repository.Impl.PcommentDAOImpl;
 import com.ezticket.web.product.repository.PcommentRedisDAO;
+import com.ezticket.web.product.repository.ProductDAO;
+import com.ezticket.web.product.util.PageResult;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,8 @@ public class PcommentService {
 
     @Autowired
     private PcommentRedisDAO pcommentRedisDAO;
+    @Autowired
+    private ProductDAO productDAO;
 
     @Transactional
     public Pcomment addProductComment(Integer productno, String pcommentcont, Integer prate, Integer memberno) {
@@ -56,6 +60,26 @@ public class PcommentService {
     public boolean updateProductComment(Integer pcommentno, Integer pcommentstatus) {
         return dao.update(pcommentno, pcommentstatus);
     }
+
+    @Transactional
+    public boolean updateProductComment(Integer pcommentno, Integer prate, String pcommentcont) {
+        //更新商品評論
+        Pcomment pcomment = dao.getByPrimaryKey(pcommentno);
+
+        dao.update(pcomment);
+        //同時更新商品總評星
+        Product product =productDAO.getByPrimaryKey(pcomment.getProductno());
+        System.out.print("原始的product.getPratetotal()="+product.getPratetotal());
+        System.out.print("原始的pcomment.getPrate()="+pcomment.getPrate());
+        product.setPratetotal(product.getPratetotal() - pcomment.getPrate() + prate);
+        System.out.print("更新過的product.getPratetotal()"+product.getPratetotal());
+
+        pcomment.setPrate(prate);
+        pcomment.setPcommentcont(pcommentcont);
+        productDAO.update(product);
+        return dao.update(pcomment);
+    }
+
 
     public Pcomment getOneProductComment(Integer pcommentno) {
         return dao.getByPrimaryKey(pcommentno);
@@ -99,7 +123,6 @@ public class PcommentService {
         try {
             pcommentRedisDAO.addKeyValue("thumbup:product:" + memberno, String.valueOf(pcommentno));
             updatePcomment(pcommentno, 1);
-            System.out.print("有進來addThumpUp");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -129,6 +152,11 @@ public class PcommentService {
             set.add(Integer.valueOf(pcommentno));
         }
         return set;
+    }
+
+    //查詢搭配分頁
+    public PageResult<Pcomment> getAllBySearch(Map<String, String[]> map, Integer pageNumber, Integer pageSize) {
+        return dao.getAll(map, pageNumber, pageSize);
     }
 
 
