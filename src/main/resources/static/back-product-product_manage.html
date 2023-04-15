@@ -10,7 +10,7 @@
 	<title>商品管理</title>
 
 	<!-- Favicon Icon -->
-	<link rel="icon" type="image/png" href="images/fav.png">
+	<link rel="icon" type="image/png" href="images/ezTicket.png">
 
 	<!-- Stylesheets -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,10 +55,10 @@
 					</button>
 					<a class="navbar-brand order-1 order-lg-0 ml-lg-0 ml-2 me-auto" href="index.html">
 						<div class="res-main-logo">
-							<img src="images/logo-icon.svg" alt="">
+							<img src="images/ezTicket-icon.svg" alt="">
 						</div>
 						<div class="main-logo" id="logo">
-							<img src="images/logo.svg" alt="">
+							<img src="images/ezTicket.svg" alt="">
 							<img class="logo-inverse" src="images/dark-logo.svg" alt="">
 						</div>
 					</a>
@@ -66,7 +66,7 @@
 						aria-labelledby="offcanvasNavbarLabel">
 						<div class="offcanvas-header">
 							<div class="offcanvas-logo" id="offcanvasNavbarLabel">
-								<img src="images/logo-icon.svg" alt="">
+								<img src="images/ezTicket-icon.svg" alt="">
 							</div>
 							<button type="button" class="close-btn" data-bs-dismiss="offcanvas" aria-label="Close">
 								<i class="fa-solid fa-xmark"></i>
@@ -262,7 +262,9 @@
 											<!-- <div class="relative-input position-relative"> -->
 											<label for="pname">商品名稱：</label>
 											<input class="form-control h_40" type="text" placeholder="搜尋商品名稱" value=""
-												id="pname" name="pname" autocomplete="off"><div id="pname-suggestion-box" class="form-control h_40" style="display:none" ></div>
+												id="pname" name="pname" autocomplete="off">
+											<div id="pname-suggestion-box" class="form-control h_40"
+												style="display:none"></div>
 											<i class="uil uil-search"></i>
 									</div>
 									<div class="relative-input position-relative">
@@ -288,20 +290,20 @@
 									<label class="form-label mt-3 fs-6">上架日期*</label>
 									<div class="loc-group position-relative">
 										<input class="form-control h_50 datepicker-here" data-language="en" type="text"
-											placeholder="MM/DD/YYYY" value="" name="start_date"
+											placeholder="YYYY/MM/DD" value="" name="start_date"
 											data-date-format="yyyy-mm-dd 23:59:59" autocomplete="off">
 										<span class="absolute-icon"><i class="fa-solid fa-calendar-days"></i></span>
 									</div>
 									<label class="form-label mt-3 fs-6">下架日期*</label>
 									<div class="loc-group position-relative">
 										<input class="form-control h_50 datepicker-here" data-language="en" type="text"
-											placeholder="MM/DD/YYYY" value="" name="end_date"
+											placeholder="YYYY/MM/DD" value="" name="end_date"
 											data-date-format="yyyy-mm-dd 23:59:59" autocomplete="off">
 										<span class="absolute-icon"><i class="fa-solid fa-calendar-days"></i></span>
 									</div>
 									<div class="relative-input position-relative">
 										<label for="pclass">商品類別：</label>
-										<select id="pclassSelector" name="pclass" class="form-select"></select>
+										<select id="pclassSelector" name="pclass" class="selectpicker"></select>
 										<!-- 類別選單顯示 -->
 									</div>
 
@@ -310,14 +312,43 @@
 									</FORM>
 								</div>
 							</div>
-
 						</div>
 					</div>
 				</div>
+
 				<div class="event-list">
+
 					<!-- <div class="tab-content"> -->
 					<!-- <div class="tab-pane fade show active" id="all-tab" role="tabpanel"> -->
 					<div class="main-card mt-4">
+						<!-- 分頁區域 -->
+						<div class="col-lg-1 col-md-12" style="float:right;margin-left:2px">
+							<div class="form-group"><select name="pageSize" class="form-select form-select-lg mb-3"
+									onchange="">
+									<option value="10">一頁10筆</option>
+									<option value="20">一頁20筆</option>
+									<option value="30">一頁30筆</option>
+								</select></div>
+						</div>
+
+
+						<nav aria-label="Page navigation example">
+							<ul class="pagination justify-content-end pagination-lg">
+								<!-- <li class="page-item">
+									<a class="page-link" href="#" aria-label="Previous">
+										<span aria-hidden="true">&laquo;</span>
+									</a>
+								</li>
+								<li class="page-item"><a class="page-link" href="#">1</a></li>
+								<li class="page-item"><a class="page-link" href="#">2</a></li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item">
+									<a class="page-link" href="#" aria-label="Next">
+										<span aria-hidden="true">&raquo;</span>
+									</a>
+								</li> -->
+							</ul>
+						</nav>
 						<div class="contact-list" id="productList">
 							<!-- 上架商品標籤顯示區 -->
 						</div>
@@ -351,15 +382,15 @@
 
 	<!-- 瀏覽所有商品 -->
 	<script>
-		fetch('ProductInfoServlet', {
-			method: 'POST',
-			body: new URLSearchParams({
-				'action': "allProductList"
-			})
-		}).then(resp => resp.json())
-			.then(list => {
-				showProductList(list);
-			})
+		// fetch('ProductInfoServlet', {
+		// 	method: 'POST',
+		// 	body: new URLSearchParams({
+		// 		'action': "allProductList"
+		// 	})
+		// }).then(resp => resp.json())
+		// 	.then(list => {
+		// 		showProductList(list);
+		// 	})
 
 	</script>
 
@@ -380,16 +411,33 @@
 					// console.log(item);
 					$('#pclassSelector').append(`<option value=${item.pclassno}>${item.pclassname}</option>`);
 				}
+			}).then(function () {
+				$('.selectpicker').selectpicker('refresh');
 			})
 
 	</script>
 	<script>
-		//商品複合查詢
-		$('#ProductSearchForm').on('submit', function (e) {
-			e.preventDefault(); //取消跳轉頁面
 
-			fetch("ProductInfoServlet", {
-				method: 'POST',
+		//分頁開始
+		$(document).ready(() => {
+			//剛進來都會先執行第一頁
+			fetchData(1).then(function (data) {
+				pagination(data, 1);
+			});
+		});
+
+		function switchPage(pageNumber) {
+			//之後可以自由切頁
+			fetchData(pageNumber).then(function (data) {
+				pagination(data, pageNumber);
+			});
+		}
+
+		//執行，回傳Fetch得到的data(為獲得當前頁面並傳到另外一個函式)
+		function fetchData(pageNumber) {
+			return fetch("ProductInfoServlet", {
+				method: "post",
+				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 				body: new URLSearchParams({
 					'pname': $("[name='pname']").val(),
 					'ptag': $("[name='ptag']").val(),
@@ -399,14 +447,81 @@
 					'pclassno': $("[name='pclass']").val(),
 					'pstatus': $("[name='pstatus']:checked").val() || '',
 					'hostname': $("[name='hostname']").val(),
-					'action': $("[name='action']").val()
+					'pageNumber': pageNumber,
+					'pageSize': $("[name='pageSize']").val(),
+					'action': "ProductSearchPage"
 				}),
-				headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-			})
-				.then(resp => resp.json())
-				.then(list => {
-					showProductList(list);
-				})
+			}
+			).then(resp => resp.json())
+		}
+
+		//長出實際分頁的樣子
+		function pagination(list, pageNumber) {
+			$(".pagination").empty();
+
+			//判斷最前面的<< 可否執行，不可執行加上disabled
+			let totalPage = Math.ceil(list.totalCount / $("[name='pageSize']").val());
+			if (pageNumber - 1 < 1) {
+				$(".pagination").append(`<li class="page-item disabled" >
+									<a class="page-link" href="javascript:void(0)" aria-label="Previous">
+										<span aria-hidden="true">&laquo;</span>
+									</a>
+								</li>`);
+			} else {
+				$(".pagination").append(`<li class="page-item" onclick="switchPage(${pageNumber - 1})">
+									<a class="page-link" href="javascript:void(0)" aria-label="Previous">
+										<span aria-hidden="true">&laquo;</span>
+									</a>
+								</li>`);
+			}
+
+			//判斷是否為當前頁面，是當前頁面加上active
+			for (let item = 1; item <= Math.ceil(list.totalCount / $("[name='pageSize']").val()); item++) {
+				if (item === pageNumber) {
+
+					$(".pagination").append(`<li class="page-item active" onclick="switchPage(${item})"><a class="page-link" href="javascript:void(0);" >${item}</a></li>`);
+				} else {
+					$(".pagination").append(`<li class="page-item" onclick="switchPage(${item})"><a class="page-link" href="javascript:void(0);" >${item}</a></li>`);
+				}
+			}
+
+			//判斷最後面的>> 可否執行，不可執行加上disabled
+			if (pageNumber + 1 > totalPage) {
+				$(".pagination").append(`<li class="page-item disabled">
+									<a class="page-link" href="javascript:void(0)" aria-label="Next">
+										<span aria-hidden="true">&raquo;</span>
+									</a>
+								</li>`);
+			} else {
+				$(".pagination").append(`<li class="page-item" onclick="switchPage(${pageNumber + 1})">
+									<a class="page-link" href="javascript:void(0)" aria-label="Next">
+										<span aria-hidden="true">&raquo;</span>
+									</a>
+								</li>`);
+			}
+
+
+			showProductList(list.data);
+		}
+
+		//選擇分頁數量後重新render
+		$("[name='pageSize']").on(
+			'change', function () {
+				fetchData(1).then(function (data) {
+					pagination(data, 1);
+				});
+			}
+		)
+
+
+
+		//商品複合查詢
+		$('#ProductSearchForm').on('submit', function (e) {
+			e.preventDefault(); //取消跳轉頁面
+
+			fetchData(1).then(function (data) {
+				pagination(data, 1);
+			});
 		})
 
 		function showProductList(list) {
@@ -474,7 +589,7 @@
 											</div>`);
 			}
 		}
-		
+
 		//輸入商品名稱後在pname-suggestion-box方框內帶入資料庫原有資料(不用點選查詢即可選擇資料)
 		function selectPname(input) {
 			console.log("input: ", input);
@@ -510,7 +625,7 @@
 								for (let item of items) {
 									if (count > 10) { break; }
 									console.log("item: ", item);
-									$('#pname-suggestion-box').append(`<div onClick=selectPname("${item.pname}")>${item.pname}</div>`);
+									$('#pname-suggestion-box').append(`<div class="form-control h_40" onClick=selectPname("${item.pname}")>${item.pname}</div>`);
 									count++;
 								}
 							} else {
@@ -521,6 +636,8 @@
 				}
 			}
 		})
+
+
 	</script>
 
 	<script src="js/vertical-responsive-menu.min.js"></script>

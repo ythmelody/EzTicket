@@ -19,5 +19,9 @@ public class PfitcouponController {
     public List<PfitcouponDTO> getAllPfitcouponlist(){
         return pfitcouponService.getAllPfitcoupon();
     }
+    @GetMapping("/byProductno")
+    public List<PfitcouponDTO> getListByProductno(Integer productno){
+        return pfitcouponService.getbyProductno(productno);
+    }
 
 }

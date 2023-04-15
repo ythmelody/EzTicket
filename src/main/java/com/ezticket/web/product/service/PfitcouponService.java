@@ -28,6 +28,12 @@ public class PfitcouponService {
             .map(this::EntityToDTO)
             .collect(Collectors.toList());
     }
+    public List<PfitcouponDTO> getbyProductno(Integer productno){
+        return pfitcouponRepository.findByProductno(productno)
+                .stream()
+                .map(this::EntityToDTO)
+                .collect(Collectors.toList());
+    }
 
     public PfitcouponDTO savePfitcoupon(Integer pcouponno,Integer productno){
         PfitcouponPK pfitcouponPK = new PfitcouponPK();

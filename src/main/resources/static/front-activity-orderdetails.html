@@ -240,7 +240,7 @@
 											<td>$75.00</td>
 											<td>$75.00</td>
 											<td>
-												<div style="text-align:center">
+												<div id="commentContainer_5" style="text-align:center">
 													<button id="cmtbtn" style="border: none;  background-color:transparent"
 														data-bs-toggle="modal" data-bs-target="#couponModal"><img
 															src="images/cmtbtn.png"></button>
@@ -352,6 +352,9 @@
 				headers: {'Content-Type': 'application/json'},
 				body: JSON.stringify(reqbody)
 			})
+
+			$('#commentContainer_5').html('');
+			$('#commentContainer_5').html(`已評論`);
 		}
 	</script>
 </body>

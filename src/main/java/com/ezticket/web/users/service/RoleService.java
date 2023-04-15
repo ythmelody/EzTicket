@@ -46,7 +46,7 @@ public class RoleService {
             }
             roleDTO.setFuncs(funcMap);
 
-//          role缺少的功能
+            //role缺少的功能
             Set<Integer> roleFuncKey = funcMap.keySet();  //取角色功能的所有key
             Set<Integer> allFuncKey = new HashSet<>();
             List<Function> allFuncs = functionRepository.findAll();

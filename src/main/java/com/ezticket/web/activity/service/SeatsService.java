@@ -61,6 +61,13 @@ public class SeatsService {
         return seatsRepository.getActBlockHasSeats(actNo);
     }
 
+    public boolean isSessionBlockSeatsExist(int sessionNo, int blockNo){
+        if (!seatsRepository.getSessionBlockSeatsExist(sessionNo, blockNo).isEmpty()){
+            return true;
+        }
+        return false;
+    }
+
     public int setSessionSeats(int seatStatus, int seatNo, int sessionNo) {
 
         if (seatStatus == -1) { // 當座位變為限制座位時，將座位編號移出 Redis 中
@@ -121,10 +128,8 @@ public class SeatsService {
     public boolean getSeasBySession(int sessionNo) {
         List<Seats> list = seatsRepository.findBySessionNo(sessionNo);
         if (!list.isEmpty()) {
-            System.out.println("Not empty");
             return true;
         }
-        System.out.println("empty");
         return false;
     }
 
@@ -233,6 +238,13 @@ public class SeatsService {
         }
 
         return true;
+    }
+
+    public boolean deleteSeats(Integer sessionNo, Integer blockNo){
+        if(seatsRepository.deleteBySessionNoAndBlockNo(sessionNo, blockNo) > 0){
+            return true;
+        }
+        return false;
     }
 
 

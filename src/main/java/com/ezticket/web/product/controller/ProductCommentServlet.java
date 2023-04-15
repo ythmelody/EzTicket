@@ -4,8 +4,6 @@ package com.ezticket.web.product.controller;
 import com.ezticket.web.product.pojo.Pcomment;
 import com.ezticket.web.product.pojo.Pdetails;
 import com.ezticket.web.product.pojo.PdetailsPK;
-import com.ezticket.web.product.pojo.Product;
-import com.ezticket.web.product.repository.PdetailsRepository;
 import com.ezticket.web.product.service.PcommentService;
 import com.ezticket.web.product.service.PdetailsService;
 import com.ezticket.web.product.service.ProductService;
@@ -16,16 +14,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @WebServlet("/ProductCommentServlet")
 public class ProductCommentServlet extends HttpServlet {
@@ -34,7 +28,7 @@ public class ProductCommentServlet extends HttpServlet {
     private ProductService productSvc;
     private PdetailsService pdetailSvc;
 
-//    @Autowired
+    //    @Autowired
     private PdetailsPK pdetailsPK;
 
     @Override
@@ -47,7 +41,7 @@ public class ProductCommentServlet extends HttpServlet {
 //        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(RootConfig.class);
 //        pdetailsPK = applicationContext.getBean(PdetailsPK.class);
 
-        pdetailsPK =applicationContext.getBean(PdetailsPK.class);
+        pdetailsPK = applicationContext.getBean(PdetailsPK.class);
 
     }
 
@@ -68,7 +62,7 @@ public class ProductCommentServlet extends HttpServlet {
 
         //取得單一商品所有評論(用於前端商品單一詳情)
         if ("oneProductCommentList".equals(action)) {
-            Map<String,String[]> map =new HashMap<>();
+            Map<String, String[]> map = new HashMap<>();
             String productno[] = {request.getParameter("productno")};
             map.put("productno", productno);
             String pcommentstatus[] = {"0"};  //僅狀態顯示於前台的商品
@@ -83,27 +77,25 @@ public class ProductCommentServlet extends HttpServlet {
             Integer memberno = Integer.valueOf(request.getParameter("memberno"));
             Integer prate = Integer.valueOf(request.getParameter("prate"));
             String pcommentcont = request.getParameter("pcommentcont");
-            Pcomment pcomment =pcommentSvc.addProductComment(productno, pcommentcont, prate, memberno);
+            Pcomment pcomment = pcommentSvc.addProductComment(productno, pcommentcont, prate, memberno);
 
             //同時更新商品總評星
-            productSvc.updateProduct(productno,prate);
+            productSvc.updateProduct(productno, prate);
 
             //同時更新訂單明細評論狀態
             Integer porderno = Integer.valueOf(request.getParameter("porderno"));
 //            PdetailsPK pdetailsPK =new PdetailsPK();
             pdetailsPK.setPorderno(porderno);
             pdetailsPK.setProductno(productno);
-            pdetailSvc.updateByID(pdetailsPK,1); //0是未評論，1是已評論
+            pdetailSvc.updateByID(pdetailsPK, 1); //0是未評論，1是已評論
 
-            Gson gson =new Gson();
+            Gson gson = new Gson();
             String json = gson.toJson(pcomment);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             PrintWriter pw = response.getWriter();
             pw.print(json);
             pw.flush();
-
-
         }
 
         //取得單一筆評論
@@ -123,7 +115,7 @@ public class ProductCommentServlet extends HttpServlet {
         if ("updateOneproductCommentStatus".equals(action)) {
             Integer pcommentno = Integer.valueOf(request.getParameter("pcommentno"));
             Integer pcommentstatus = Integer.valueOf(request.getParameter("pcommentstatus"));
-            Boolean updateOK =pcommentSvc.updateProductComment(pcommentno, pcommentstatus);
+            Boolean updateOK = pcommentSvc.updateProductComment(pcommentno, pcommentstatus);
             Gson gson = new Gson();
             String json = gson.toJson(updateOK);
             response.setContentType("application/json");
@@ -133,12 +125,49 @@ public class ProductCommentServlet extends HttpServlet {
             pw.flush();
         }
 
-        //商品複合查詢
+        //評論複合查詢
         if ("CommentSearch".equals(action)) {
             Map<String, String[]> map = request.getParameterMap(); //將得到的資料轉成map
             List<Pcomment> commentList = pcommentSvc.getAllBySearch(map); //轉交進行複合查詢
             list2json(commentList, response);
         }
+
+        //取得會員按讚的商品編號(判斷會員是否按讚依據)
+        if ("getThumpupPcommentno".equals(action)) {
+            Integer memberno = Integer.valueOf(request.getParameter("memberno"));
+            Set<Integer> set = pcommentSvc.getPcommentnosByMemberno(memberno);
+            Gson gson =new Gson();
+            String json = gson.toJson(set);
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            PrintWriter pw = response.getWriter();
+            pw.print(json);
+            pw.flush();
+
+
+        }
+
+        //評論按讚
+        if ("thumpupPcomment".equals(action)) {
+            Integer memberno = Integer.valueOf(request.getParameter("memberno"));
+            Integer pcommentno = Integer.valueOf(request.getParameter("pcommentno"));
+            Boolean thumpup =pcommentSvc.addThumpUp(memberno, pcommentno);
+            Gson gson =new Gson();
+            String json = gson.toJson(thumpup);
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            PrintWriter pw = response.getWriter();
+            pw.print(json);
+            pw.flush();
+        }
+
+        //評論取消按讚
+        if ("thumpdownPcomment".equals(action)) {
+            Integer memberno = Integer.valueOf(request.getParameter("memberno"));
+            Integer pcommentno = Integer.valueOf(request.getParameter("pcommentno"));
+            pcommentSvc.removeThumpUp(memberno, pcommentno);
+        }
+
     }
 
     public void list2json(List<Pcomment> pcommentList, HttpServletResponse response) throws IOException {

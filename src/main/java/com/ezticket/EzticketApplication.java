@@ -12,4 +12,6 @@ public class EzticketApplication {
 		SpringApplication.run(EzticketApplication.class, args);
 	}
 
+
+
 }

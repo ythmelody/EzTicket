@@ -1,6 +1,8 @@
 package com.ezticket.web.users.dto;
 
-import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,12 +16,21 @@ import java.sql.Date;
 @Builder
 public class MemberDTO {
     private Integer memberno;
+    @NotBlank(message = "名字不可為空")
     private String mname;
+    @NotBlank(message = "信箱不可為空")
+    @Email(message = "請輸入正確的電子信箱格式")
     private String memail;
     private Date birth;
     private Integer gender;
+    @NotBlank(message = "手機不可為空")
+    @Pattern(regexp = "^09\\d{8}$", message = "手機必須為09開頭的10位數字")
     private String mcell;
+    @NotBlank(message = "地址不可為空")
     private String address;
+    @NotBlank(message = "市內電話不可為空")
+    @Pattern(regexp = "^0\\d{8}$", message = "室內電話必須為0開頭9碼")
+    private String mphone;
     private Integer memberstatus;
 
 }
