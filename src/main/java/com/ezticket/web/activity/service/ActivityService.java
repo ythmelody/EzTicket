@@ -1,7 +1,6 @@
 package com.ezticket.web.activity.service;
 
 import com.ezticket.web.activity.dto.ActivityDto;
-import com.ezticket.web.activity.dto.AimgtDto;
 import com.ezticket.web.activity.pojo.Activity;
 import com.ezticket.web.activity.repository.ActivityRepository;
 import org.modelmapper.ModelMapper;
@@ -90,8 +89,9 @@ public class ActivityService {
                 .map(this::entityToDTO)
                 .collect(Collectors.toList());
     }
-    public void  insertActivity(Activity activity){
-        activityRepository.save(activity);
-
+    public Activity saveActivity(Activity activity) {
+        Activity activity1 = activityRepository.save(activity);
+        activity1.setActivityNo(activityRepository.findLastInsert());
+        return activity1;
     }
 }

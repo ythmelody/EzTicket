@@ -27,4 +27,8 @@ private AclassDto entityToDTO (Aclass aclass){
     return modelMapper.map(aclass,AclassDto.class);
 }
 
+    public boolean saveAclass(Aclass jsonData) {
+        aclassRepository.save(jsonData);
+        return true;
+    }
 }
