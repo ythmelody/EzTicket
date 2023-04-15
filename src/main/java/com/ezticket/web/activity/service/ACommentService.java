@@ -5,6 +5,7 @@ import com.ezticket.web.activity.dto.AReportDto;
 import com.ezticket.web.activity.pojo.AComment;
 import com.ezticket.web.activity.pojo.AReport;
 import com.ezticket.web.activity.repository.ACommentDao;
+import com.ezticket.web.activity.repository.ACommentRedisDAO;
 import com.ezticket.web.activity.repository.ACommentRepository;
 import com.google.gson.Gson;
 import org.modelmapper.ModelMapper;
@@ -16,13 +17,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.swing.text.html.Option;
 import java.sql.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class ACommentService {
+
+    @Autowired
+    private ACommentRedisDAO aCommentRedisDAO;
     @Autowired
     private ACommentRepository aCommentRepository;
     @Autowired
@@ -88,4 +90,41 @@ public class ACommentService {
         aCommentDto = modelMapper.map(aComment, ACommentDto.class);
         return aCommentDto;
     }
+
+    // 取得會員按讚的節目評論編號
+    public Set<Integer> getACommentNosByMemberNo(Integer memberNo){
+        Set<String> aCommentNos = aCommentRedisDAO.setFindAllValues("thumbup:activity:" + memberNo);
+
+        Set<Integer> returnedSet = new HashSet<Integer>();
+
+        for(String cmtNo : aCommentNos){
+            returnedSet.add(Integer.valueOf(cmtNo));
+        }
+
+        return returnedSet;
+    }
+
+    // 針對節目評論按讚
+    public boolean addThumbUp(Integer memberNo, Integer aCommentNo){
+        try{
+            aCommentRedisDAO.setAddKV("thumbup:activity:" + memberNo, String.valueOf(aCommentNo));
+            aCommentRepository.updateALike((+1), aCommentNo);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+    }
+
+    // 針對節目評論取消按讚
+    public boolean removeThumbUp(Integer memberNo, Integer aCommentNo){
+        try{
+            aCommentRedisDAO.setDelKV("thumbup:activity:" + memberNo, String.valueOf(aCommentNo));
+            aCommentRepository.updateALike((-1), aCommentNo);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+    }
+
+
 }

@@ -37,7 +37,11 @@ public interface ActivityRepository extends JpaRepository <Activity,Integer>{
 
     @Query("SELECT a FROM Activity a WHERE a.aSDate >= :today AND a.aStatus = 0")
     List<Activity> findActiveActivity(@Param("today") LocalDate today);
+
     Optional <Activity> findByactivityNo(Integer activityNo);
 
     List<Activity>findAllByActivityNo(Integer activityNo);
+
+    @Query("SELECT LAST_INSERT_ID()")
+    Integer findLastInsert();
 }

@@ -13,13 +13,19 @@ public class TicketHolder {
     private Integer activityno;
     private String aname;
     private Integer wetherseat;
-    private Blob aimg;
+    private byte[] aimg;
     private Timestamp sessionstime;
     private Timestamp sessionetime;
+
+    private String blockname;
+
     private String realx;
+
     private String realy;
     private String anote;
     private String aticketremind;
+    private String aplace;
+    private String aplaceAddress;
 
     public Integer getCollectno() {
         return collectno;
@@ -89,17 +95,19 @@ public class TicketHolder {
         return wetherseat;
     }
 
+    public byte[] getAimg() {
+        return aimg;
+    }
+
+    public void setAimg(byte[] aimg) {
+        this.aimg = aimg;
+    }
+
     public void setWetherseat(Integer wetherseat) {
         this.wetherseat = wetherseat;
     }
 
-    public Blob getAimg() {
-        return aimg;
-    }
 
-    public void setAimg(Blob aimg) {
-        this.aimg = aimg;
-    }
 
     public Timestamp getSessionstime() {
         return sessionstime;
@@ -115,6 +123,14 @@ public class TicketHolder {
 
     public void setSessionetime(Timestamp sessionetime) {
         this.sessionetime = sessionetime;
+    }
+
+    public String getBlockname() {
+        return blockname;
+    }
+
+    public void setBlockname(String blockname) {
+        this.blockname = blockname;
     }
 
     public String getRealx() {
@@ -147,5 +163,21 @@ public class TicketHolder {
 
     public void setAticketremind(String aticketremind) {
         this.aticketremind = aticketremind;
+    }
+
+    public String getAplace() {
+        return aplace;
+    }
+
+    public void setAplace(String aplace) {
+        this.aplace = aplace;
+    }
+
+    public String getAplaceAddress() {
+        return aplaceAddress;
+    }
+
+    public void setAplaceAddress(String aplaceAddress) {
+        this.aplaceAddress = aplaceAddress;
     }
 }

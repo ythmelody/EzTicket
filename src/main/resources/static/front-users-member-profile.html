@@ -593,9 +593,9 @@
 								<a href="my_organisation_dashboard.html"
 									class="co-main-btn co-btn-width min-width d-inline-block h_40">有需要可以拿來用的按鈕連結</a>
 							</div>
-							<div class="user-btns">
-								<a href="my_organisation_dashboard.html"
-									class="co-main-btn co-btn-width min-width d-inline-block h_40">Ex.我的票夾</a>
+							<div class="user-btns" id="myCollect">
+								<a href='' style="visibility: hidden"
+									class="co-main-btn co-btn-width min-width d-inline-block h_40">我的票夾</a>
 							</div>
 							<div class="user-btns">
 								<a href="my_organisation_dashboard.html"
@@ -1538,10 +1538,9 @@
 				$("#backupUser").val(`${response.comrecipient}`);
 				$("#backupUserPhone").val(`${response.comrephone}`);
 				$("#backupUserAddress").val(`${response.comreaddress}`);
-
 			})
 			.catch(error => {
-				console.log('發生錯誤:', err);
+				console.log('發生錯誤:', error);
 			});
 
 		//按下修改密碼的按鈕時
@@ -1568,7 +1567,7 @@
 					if (resultMap.noSessionError) {
 						window.location.href = 'index.html';
 					}
-					
+
 					//成功
 					if (resultMap.success) {
 						$("#success").text(resultMap.success)
@@ -1640,7 +1639,7 @@
 					} else {
 						$("#caddressNullError").text("");
 					}
-					
+
 					//成功存入
 					if (resultMap.success) {
 						$("#success4").text(resultMap.success)
@@ -1651,7 +1650,7 @@
 			}).catch(err => {
 				console.log('發生錯誤:', err);
 			});
-		})
+		});
 
 		//按下儲存更改會員資料時
 		$("#btn1").click(() => {
@@ -1718,9 +1717,26 @@
 
 
 
-
-
-
+	</script>
+	<script>
+			fetch('member/getMemberInfo', {
+				method: 'GET',
+			})
+				.then(member => member.json())
+				.then(member => {
+					console.log('有進來');
+					// 啟用我的票夾按鈕
+					let myCollect = document.getElementById('myCollect');
+					console.log((myCollect));
+					myCollect.innerHTML = '';
+					myCollect.innerHTML += `
+						<a href='/collect?action=myCollect&memberno=${member.memberno}'
+									class="co-main-btn co-btn-width min-width d-inline-block h_40">我的票夾</a>
+					`;
+				})
+				.catch(error => {
+					console.log('發生錯誤:', error);
+				});
 	</script>
 </body>
 
