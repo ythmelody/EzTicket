@@ -11,7 +11,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/back-users-host")
+@RequestMapping("/host")
 public class HostController {
     @Autowired
     private HostService hostService;

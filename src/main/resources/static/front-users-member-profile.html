@@ -515,7 +515,7 @@
 							<li class="dropdown account-dropdown">
 								<a href="#" class="account-link" role="button" id="accountClick"
 									data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
-									<img src="images/profile-imgs/img-13.jpg" alt="">
+									<img class="mimg" src="images/profile-imgs/img-13.jpg" alt="">
 									<i class="fas fa-caret-down arrow-icon"></i>
 								</a>
 								<ul class="dropdown-menu dropdown-menu-account dropdown-menu-end"
@@ -523,10 +523,10 @@
 									<li>
 										<div class="dropdown-account-header">
 											<div class="account-holder-avatar">
-												<img src="images/profile-imgs/img-13.jpg" alt="">
+												<img class="mimg" src="images/profile-imgs/img-13.jpg" alt="">
 											</div>
-											<h5>John Doe</h5>
-											<p>johndoe@example.com</p>
+											<h5 id="memname" class="un"><!-- 會員名 --></h5>
+											<p id="mememail"><!-- 會員email --></p>
 										</div>
 									</li>
 									<li class="profile-link">
@@ -574,14 +574,14 @@
 					<div class="col-xl-4 col-lg-5 col-md-12">
 						<div class="main-card user-left-dt"> <!-- style.css 2428行改過margin 原為-70 -->
 							<div class="user-avatar-img">
-								<img src="images/profile-imgs/img-13.jpg" alt="">
+								<img class="mimg" src="images/profile-imgs/img-13.jpg" accept="image/*">
 								<div class="avatar-img-btn">
 									<input type="file" id="avatar-img">
 									<label for="avatar-img"><i class="fa-solid fa-camera"></i></label>
 								</div>
 							</div>
 							<div class="user-dts">
-								<h4 class="user-name">John Doe<span class="verify-badge"><i
+								<h4 class="user-name un"><!-- 會員名 --><span class="verify-badge"><i
 											class="fa-solid fa-circle-check"></i></span></h4>
 							</div>
 							<div class="ff-block" style="display: inline-block;">
@@ -592,9 +592,9 @@
 								<a href="my_organisation_dashboard.html"
 									class="co-main-btn co-btn-width min-width d-inline-block h_40">有需要可以拿來用的按鈕連結</a>
 							</div>
-							<div class="user-btns">
-								<a href="my_organisation_dashboard.html"
-									class="co-main-btn co-btn-width min-width d-inline-block h_40">Ex.我的票夾</a>
+							<div class="user-btns" id="myCollect">
+								<a href='' style="visibility: hidden"
+									class="co-main-btn co-btn-width min-width d-inline-block h_40">我的票夾</a>
 							</div>
 							<div class="user-btns">
 								<a href="my_organisation_dashboard.html"
@@ -660,19 +660,15 @@
 																		<input type="text" id="name" name="name"
 																			required><br><br>
 
-																		<label class="lab" for="nickname">暱稱：</label>
-																		<input type="text" id="nickname" name="nickname"
-																			required><br><br>
-
 																		<label class="lab">性別：</label>
 																		<input type="radio" id="male" name="gender"
-																			value="male" required>
+																			value="1" required>
 																		<label for="male">男性</label>
 																		<input type="radio" id="female" name="gender"
-																			value="female" required>
+																			value="2" required>
 																		<label for="female">女性</label>
 																		<input type="radio" id="unknow" name="gender"
-																			value="unknow" required>
+																			value="0" required>
 																		<label for="unknow">不便透露</label><br><br>
 
 																		<label class="lab" for="birthday">生日：</label>
@@ -693,7 +689,7 @@
 
 																		<div>
 																			<button id="btn1" type="button"
-																				class="btn btn-primary">儲存修改</button>
+																				class="btn btn-primary">儲存</button>
 																		</div>
 																	</form>
 																</div>
@@ -712,7 +708,10 @@
 																		<label class="lab"
 																			for="oldpassword">舊密碼:</label>
 																		<input type="password" id="oldpassword"
-																			name="oldpassword" required><br><br>
+																			name="oldpassword" required>
+																		<p id="oPwdError"
+																			style="color: red; display: inline-block;">
+																		</p><br><br>
 
 																		<label class="lab"
 																			for="newpassword">新密碼:</label>
@@ -722,10 +721,15 @@
 																		<label class="lab"
 																			for="confirmPassword">確認密碼:</label>
 																		<input type="password" id="confirmPassword"
-																			name="confirmPassword" required><br><br>
+																			name="confirmPassword" required>
+																		<p id="newPwdError"
+																			style="color: red;display: inline-block;">
+																		</p><br><br>
 																		<div>
 																			<button id="btn2" type="button"
-																				class="btn btn-primary">更改送出</button>
+																				class="btn btn-primary">儲存</button>
+																			<p id="success"
+																				style="color: red; display: inline-block;">
 																		</div>
 																	</form>
 																</div>
@@ -757,6 +761,8 @@
 																	<div>
 																		<button id="btn3" type="button"
 																			class="btn btn-primary">儲存</button>
+																		<p id="success2"
+																			style="color: red; display: inline-block;">
 																	</div>
 																</form>
 															</div>
@@ -1404,6 +1410,162 @@
 					}
 				})
 		}
+
+
+
+		//------------------------------------------------------------------------------------------
+		//得到會員資訊
+		fetch('member/getMemberInfo', {
+			method: 'GET',
+		})
+			.then(response => response.json())
+			.then(response => {
+				//檢視拿到的資料
+				console.log(response);
+
+				//頭貼那邊顯示會員ID資料
+				$(".un").text(`${response.mname}`)
+				$("#mememail").text(`${response.memail}`)
+
+				//頭貼圖片顯示
+				const url = `data:image/png;base64,${response.mimg}`;
+				$('.mimg').attr('src', url);
+
+				//頭貼圖片上傳
+				$("#avatar-img").change((event) => {
+					// 建立一個 FormData 物件，將使用者選擇的圖片加入
+					const file = event.target.files[0];
+					const formData = new FormData();
+					formData.append("file", file);
+					formData.append("memberno", response.memberno);
+					console.log("圖片更換")
+					// 將使用者上傳的圖片存入資料庫
+					fetch("member/upload-mimg", {
+						method: "POST",
+						body: formData
+					}).then(response => {
+						if (response.ok) {
+							const reader = new FileReader();
+							reader.onload = (e) => {
+								$('.mimg').attr('src', e.target.result);
+							}
+							reader.readAsDataURL(file);
+						} else {
+							alert("上傳失敗");
+						}
+					}).catch(error => {
+						alert("上傳失敗：" + error);
+					});
+				})
+				//顯示會員原有的資料
+				$("#email").val(`${response.memail}`)
+				$("#name").val(`${response.mname}`)
+				$("#birthday").val(`${response.birth}`)
+				$("#phone").val(`${response.mcell}`)
+				$("#alt_phone").val(`${response.mphone}`)
+				$("#address").val(`${response.address}`)
+				console.log(response.gender)
+				if (response.gender === 1) {
+					$("#male").prop("checked", true);
+				} else if (response.gender === 2) {
+					$("#female").prop("checked", true);
+				} else {
+					$("#unknow").prop("checked", true);
+				}
+
+				//顯示會員的備用收件人資料
+				$("#backupUser").val(`${response.comrecipient}`);
+				$("#backupUserPhone").val(`${response.comrephone}`);
+				$("#backupUserAddress").val(`${response.comreaddress}`);
+			})
+			.catch(error => {
+				console.log('發生錯誤:', error);
+			});
+
+		//按下修改密碼的按鈕時
+		$("#btn2").click(() => {
+			const oldPwdIpVal = $("#oldpassword").val();
+			const newPwdIpVal = $("#newpassword").val();
+			const cfPwdIpVal = $("#confirmPassword").val();
+			if (oldPwdIpVal === '' || newPwdIpVal === '' || cfPwdIpVal === '') {
+				$("#success").text("請填寫所有欄位！")
+				return;
+			}
+			if (newPwdIpVal !== cfPwdIpVal) {
+				$("#newPwdError").text("請確認您的新密碼!");
+			} else {
+				$("#newPwdError").text("");
+			}
+			fetch("member/changePwd", {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				body: `oldpassword=${oldPwdIpVal}&newpassword=${newPwdIpVal}&confirmpassword=${cfPwdIpVal}`
+			}).then(response => {
+				return response.text();
+			}).then(text => {
+
+				if (text === "success") {
+					$("#oldpassword").val("");
+					$("#newpassword").val("");
+					$("#confirmPassword").val("");
+					$("#success").text("更改成功!")
+				} else if (text === "oPwdError") {
+					$("#oPwdError").text("請確認您的舊密碼!");
+				} else if (text !== "oPwdError") {
+					$("#oPwdError").text("");
+				} else if (text === "error") {
+					$("#success").text("更改失敗!")
+				}
+
+			});
+		});
+		//按下儲存備用收件人時
+		$("#btn3").click(() => {
+			const comrecipient = $('#backupUser').val();
+			const comrephone = $('#backupUserPhone').val();
+			const comreaddress = $('#backupUserAddress').val();
+			const data = {
+				comrecipient: comrecipient,
+				comrephone: comrephone,
+				comreaddress: comreaddress
+			};
+			fetch('member/saveCpt', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(data)
+			}).then(response => {
+				return response.text();
+			}).then(text => {
+				if (text === 'success') {
+					$("#success2").text("更改成功!")
+				}
+			}).catch(err => {
+				console.log('發生錯誤:', err);
+			});
+		});
+
+	</script>
+	<script>
+			fetch('member/getMemberInfo', {
+				method: 'GET',
+			})
+				.then(member => member.json())
+				.then(member => {
+					console.log('有進來');
+					// 啟用我的票夾按鈕
+					let myCollect = document.getElementById('myCollect');
+					console.log((myCollect));
+					myCollect.innerHTML = '';
+					myCollect.innerHTML += `
+						<a href='/collect?action=myCollect&memberno=${member.memberno}'
+									class="co-main-btn co-btn-width min-width d-inline-block h_40">我的票夾</a>
+					`;
+				})
+				.catch(error => {
+					console.log('發生錯誤:', error);
+				});
 	</script>
 </body>
 

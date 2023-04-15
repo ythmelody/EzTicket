@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data // Lombok: Gene getter/setter by @getter/@setter
 public class AddPcouponDTO {
-
+    private Integer pcouponno;
     private String pcouponname;
     private Integer preachprice;
     private Integer pdiscount;

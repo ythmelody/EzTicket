@@ -2,8 +2,12 @@ package com.ezticket.web.product.controller;
 
 
 import com.ezticket.web.product.pojo.Pcomment;
+import com.ezticket.web.product.pojo.Pdetails;
+import com.ezticket.web.product.pojo.PdetailsPK;
 import com.ezticket.web.product.pojo.Product;
+import com.ezticket.web.product.repository.PdetailsRepository;
 import com.ezticket.web.product.service.PcommentService;
+import com.ezticket.web.product.service.PdetailsService;
 import com.ezticket.web.product.service.ProductService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -12,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -20,18 +25,30 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @WebServlet("/ProductCommentServlet")
 public class ProductCommentServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private PcommentService pcommentSvc;
     private ProductService productSvc;
+    private PdetailsService pdetailSvc;
+
+//    @Autowired
+    private PdetailsPK pdetailsPK;
 
     @Override
     public void init() throws ServletException {
         ApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
         pcommentSvc = applicationContext.getBean(PcommentService.class);
         productSvc = applicationContext.getBean(ProductService.class);
+        pdetailSvc = applicationContext.getBean(PdetailsService.class);
+
+//        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(RootConfig.class);
+//        pdetailsPK = applicationContext.getBean(PdetailsPK.class);
+
+        pdetailsPK =applicationContext.getBean(PdetailsPK.class);
+
     }
 
 
@@ -66,8 +83,27 @@ public class ProductCommentServlet extends HttpServlet {
             Integer memberno = Integer.valueOf(request.getParameter("memberno"));
             Integer prate = Integer.valueOf(request.getParameter("prate"));
             String pcommentcont = request.getParameter("pcommentcont");
-            pcommentSvc.addProductComment(productno, pcommentcont, prate, memberno);
+            Pcomment pcomment =pcommentSvc.addProductComment(productno, pcommentcont, prate, memberno);
+
+            //同時更新商品總評星
             productSvc.updateProduct(productno,prate);
+
+            //同時更新訂單明細評論狀態
+            Integer porderno = Integer.valueOf(request.getParameter("porderno"));
+//            PdetailsPK pdetailsPK =new PdetailsPK();
+            pdetailsPK.setPorderno(porderno);
+            pdetailsPK.setProductno(productno);
+            pdetailSvc.updateByID(pdetailsPK,1); //0是未評論，1是已評論
+
+            Gson gson =new Gson();
+            String json = gson.toJson(pcomment);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter pw = response.getWriter();
+            pw.print(json);
+            pw.flush();
+
+
         }
 
         //取得單一筆評論

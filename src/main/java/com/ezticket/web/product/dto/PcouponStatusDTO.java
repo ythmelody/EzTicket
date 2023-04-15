@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class PcouponStatusDTO {
     private Integer pcouponno;
-    private Integer pcouponstatus;
+    private byte pcouponstatus;
 
 }
