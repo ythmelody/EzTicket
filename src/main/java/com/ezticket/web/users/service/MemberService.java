@@ -75,7 +75,7 @@ public class MemberService {
     //驗證資料庫有無此會員,回傳布林值
     public boolean authenticate(String memail, String mpassword) {
         Member member = memberRepository.findByMemail(memail);
-        if (member != null && member.getMpassword().equals(mpassword)) {
+        if (member != null && member.getMpassword().equals(mpassword) && member.getMemberstatus() == 1) {
             return true;
         } else {
             return false;
