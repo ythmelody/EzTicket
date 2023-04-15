@@ -1,13 +1,8 @@
 package com.ezticket.web.product.service;
 
-import com.ezticket.web.product.dto.AddPorderDTO;
-import com.ezticket.web.product.dto.OrderProductDTO;
-import com.ezticket.web.product.dto.PorderDTO;
-import com.ezticket.web.product.dto.PorderDetailsDTO;
-import com.ezticket.web.product.pojo.Pdetails;
-import com.ezticket.web.product.pojo.PdetailsPK;
-import com.ezticket.web.product.pojo.Porder;
-import com.ezticket.web.product.pojo.Product;
+import com.ezticket.web.product.dto.*;
+import com.ezticket.web.product.pojo.*;
+import com.ezticket.web.product.repository.PcouponholdingRepository;
 import com.ezticket.web.product.repository.PdetailsRepository;
 import com.ezticket.web.product.repository.PorderRepository;
 import com.ezticket.web.product.repository.ProductDAO;
@@ -29,6 +24,8 @@ public class PorderService {
     private PorderRepository porderRepository;
     @Autowired
     private PdetailsRepository pdetailsRepository;
+    @Autowired
+    private PcouponholdingRepository pcouponholdingRepository;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -79,7 +76,13 @@ public class PorderService {
                 break;
             case 3:
                 porder.setPclosedate(LocalDateTime.now());
-//                List<Products> products = porder.getProducts();
+                List<Pdetails> pdetails = pdetailsRepository.findByPorderno(porder.getPorderno());
+                for (Pdetails pdetail : pdetails) {
+                    Product product = dao.getByPrimaryKey(pdetail.getPdetailsNo().getProductno());
+                    product.setPqty(product.getPqty() + pdetail.getPorderqty());
+                    pdetailsRepository.save(pdetail);
+                    dao.update(product);
+                }
                 break;
         }
         porder.setPprocessstatus(processStatus);
@@ -114,7 +117,11 @@ public class PorderService {
         porder.setPorderdate(LocalDateTime.now());
         porder.setPpaymentstatus(0);
         porder.setPprocessstatus(0);
-
+        if (addPorderDTO.getPcouponno() != null){
+            PcouponholdingPK pcouponholdingPK = new PcouponholdingPK(addPorderDTO.getPcouponno(),addPorderDTO.getMemberno());
+            Pcouponholding pcouponholding = pcouponholdingRepository.getReferenceById(pcouponholdingPK);
+            pcouponholding.setPcouponstatus((byte) 1);
+        }
         Porder porderno = porderRepository.save(porder);
         List<OrderProductDTO> orderProducts = addPorderDTO.getOrderProducts();
         for (int i = 0; i < orderProducts.size(); i++) {

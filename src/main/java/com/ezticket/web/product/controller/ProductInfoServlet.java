@@ -2,10 +2,9 @@ package com.ezticket.web.product.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import com.ezticket.web.product.pojo.Pclass;
 import com.ezticket.web.product.pojo.Pcomment;
@@ -48,11 +47,23 @@ public class ProductInfoServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
 
-        //前台僅顯示上架商品
+        //前台僅顯示上架商品(包含前台查詢)
         if ("availableProductList".equals(action)) {
-            Map<String, String[]> map = new HashMap<>();
+            Map<String, String[]> map = new HashMap<String, String[]>(request.getParameterMap());
             String pstatus[] = {"0"};  //0是已上架，1是已下架
             map.put("pstatus", pstatus);
+            // 建立 Timestamp 物件
+            Date date = new java.util.Date();
+            Timestamp today = new Timestamp(date.getTime());
+
+            // 建立 SimpleDateFormat 物件
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+
+            // 將 Timestamp 轉換為 String
+            String todayString = sdf.format(today);
+            String sale_date[] = {todayString};
+            map.put("sale_date", sale_date);
+
             List<Product> allAvailableProductlist = productSvc.getAllByproductSearch(map);
             list2json(allAvailableProductlist, response);
             return;
@@ -86,11 +97,12 @@ public class ProductInfoServlet extends HttpServlet {
             list2json(productList, response);
         }
 
+        //商品複合查詢搭配分頁(後台商品管理打這支)
         if ("ProductSearchPage".equals(action)) {
             Map<String, String[]> map = request.getParameterMap(); //將得到的資料轉成map
-            Integer pageNumber =Integer.valueOf(request.getParameter("pageNumber"));
-            Integer pageSize =Integer.valueOf(request.getParameter("pageSize"));
-            PageResult<Product> productList = productSvc.getAllByproductSearch(map,pageNumber,pageSize); //轉交進行複合查詢
+            Integer pageNumber = Integer.valueOf(request.getParameter("pageNumber"));
+            Integer pageSize = Integer.valueOf(request.getParameter("pageSize"));
+            PageResult<Product> productList = productSvc.getAllByproductSearch(map, pageNumber, pageSize); //轉交進行複合查詢
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
             String json = gson.toJson(productList);
             response.setContentType("application/json");
@@ -112,7 +124,6 @@ public class ProductInfoServlet extends HttpServlet {
         pw.print(json);
         pw.flush();
     }
-
 
 
 }

@@ -17,6 +17,7 @@ function fetchPcouponList(e) {
 		method: 'GET',
 	}).then(response => response.json())
 		.then(data => {
+			console.log(data);
 			data.reverse();
 			const couponlist = document.querySelector('.all-promotion-list');
 			couponlist.innerHTML = "";
@@ -30,12 +31,12 @@ function fetchPcouponList(e) {
                         <span class="icon-big rotate-icon icon icon-purple">
                           <i class="fa-solid fa-ticket"></i>
                         </span>
-                        <h5 class="font-18 mb-1 mt-1 f-weight-medium">${obj.pcouponno}<span class="font-weight-normal"> -
-                        ${obj.pcouponname}</span></h5>
+                        <h5 class="font-18 mb-1 mt-1 f-weight-medium">${obj.pcouponno}<span class="font-weight-normal"> - ${obj.pcouponname}</span></h5>
                         <p class="text-gray-50 m-0"><span class="visitor-date-time">${moment(obj.pcoupnsdate).format('YYYY-MM-DD HH:mm:ss')}
                           </span> - <span class="visitor-date-time">${moment(obj.pcoupnedate).format('YYYY-MM-DD HH:mm:ss')}</span></p>
                       </div>
                       <div class="d-flex align-items-center">
+												<button class="main-btn btn-hover h_40 w-30" onclick="takeCouponForMember(${obj.pcouponno})">發送</button>
                         <label class="btn-switch tfs-8 mb-0 me-4 mt-1">
                         <input type="checkbox" onchange="changeStatus(this)" value="" ${obj.pcouponstatus === 1 ? 'checked' : 'false'}>
                           <span class="checkbox-slider"></span>
@@ -46,7 +47,8 @@ function fetchPcouponList(e) {
                             <i class="fa-solid fa-ellipsis-vertical"></i>
                           </button>
                           <div class="dropdown-menu dropdown-menu-right">
-                            <a href="#" class="dropdown-item" onclick="editCoupon(${obj.pcouponno})"><i class="fa-solid fa-pen me-3"></i>編輯</a>
+                            <a href="#" class="dropdown-item" data-bs-toggle="modal"
+														data-bs-target="#editcouponModal" onclick="editCoupon(${obj.pcouponno})"><i class="fa-solid fa-pen me-3"></i>編輯</a>
                             <a href="#" class="dropdown-item" onclick="saveCoupon(${obj.pcouponno}, event)"><i class="fa-solid fa-floppy-disk me-3"></i>儲存</a>
                           </div>
                         </div>
@@ -148,9 +150,6 @@ function formatDate(date, time) {
 
 function editCoupon(edit) {
 	const couponno = edit;
-	const editClass = document.querySelector('#editcouponModal');
-	editClass.style.display = "block";
-	editClass.classList.add('show');
 	fetch(`/pcoupon/getbyno?id=${couponno}`, {
 		method: 'GET',
 	}).then(response => response.json())
@@ -239,4 +238,12 @@ function saveCoupon(couponno, event) {
 			return Promise.reject('取消操作');
 		}
 	});
+}
+function takeCouponForMember(pcouponno){
+  fetch(`/pcouponholding/takeAll?pcouponno=${pcouponno}`,{
+      method: 'GET',
+    }).then(response => response.json())
+    .then(data => {
+      console.log(data);
+    })
 }

@@ -1,6 +1,7 @@
 package com.ezticket.web.product.controller;
 
 import com.ezticket.web.product.dto.PcouponholdingDTO;
+import com.ezticket.web.product.pojo.PcouponholdingPK;
 import com.ezticket.web.product.service.PcouponholdingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,13 +23,21 @@ public class PcouponholdingController {
     }
 
     @GetMapping
-    public PcouponholdingDTO getPcouponHoldingByID(@RequestParam Integer id){
-        return pcouponholdingService.getPcouponHoldingByID(id);
+    public PcouponholdingDTO getPcouponHoldingByID(@RequestParam PcouponholdingPK pcouponholdingPK){
+        return pcouponholdingService.getPcouponHoldingByID(pcouponholdingPK);
     }
 
     @GetMapping("/byMemberno")
     public List<PcouponholdingDTO> getPcouponHoldingByMemberno(@RequestParam Integer memberno){
         return pcouponholdingService.getPcouponHoldingByMemberno(memberno);
+    }
+    @GetMapping("/take")
+    public boolean takeCoupon(@RequestParam Integer memberno,@RequestParam Integer pcouponno){
+        return pcouponholdingService.takePcoupon(memberno,pcouponno);
+    }
+    @GetMapping("/takeAll")
+    public boolean takeCouponForMember(@RequestParam Integer pcouponno){
+        return pcouponholdingService.takePcouponAllMember(pcouponno);
     }
 
 }

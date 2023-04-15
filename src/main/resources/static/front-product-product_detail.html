@@ -7,10 +7,10 @@
 	<meta name="viewport" content="width=device-width, shrink-to-fit=9">
 	<meta name="description" content="Gambolthemes">
 	<meta name="author" content="Gambolthemes">
-	<title>商品詳情</title>
+	<title id="productTitle">商品詳情</title>
 
 	<!-- Favicon Icon -->
-	<link rel="icon" type="image/png" href="images/fav.png">
+	<link rel="icon" type="image/png" href="images/ezTicket.png">
 
 	<!-- Stylesheets -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -86,10 +86,10 @@
 					</button>
 					<a class="navbar-brand order-1 order-lg-0 ml-lg-0 ml-2 me-auto" href="index.html">
 						<div class="res-main-logo">
-							<img src="images/logo-icon.svg" alt="">
+							<img src="images/ezTicket-icon.svg" alt="">
 						</div>
 						<div class="main-logo" id="logo">
-							<img src="images/logo.svg" alt="">
+							<img src="images/ezTicket.svg" alt="">
 							<img class="logo-inverse" src="images/dark-logo.svg" alt="">
 						</div>
 					</a>
@@ -97,124 +97,60 @@
 						aria-labelledby="offcanvasNavbarLabel">
 						<div class="offcanvas-header">
 							<div class="offcanvas-logo" id="offcanvasNavbarLabel">
-								<img src="images/logo-icon.svg" alt="">
+								<img src="images/ezTicket-icon.svg" alt="">
 							</div>
 							<button type="button" class="close-btn" data-bs-dismiss="offcanvas" aria-label="Close">
 								<i class="fa-solid fa-xmark"></i>
 							</button>
 						</div>
 						<div class="offcanvas-body">
-							<div class="offcanvas-top-area">
-								<div class="create-bg">
-									<a href="create.html" class="offcanvas-create-btn">
-										<i class="fa-solid fa-calendar-days"></i>
-										<span>Create Event</span>
-									</a>
-								</div>
-							</div>
 							<ul class="navbar-nav justify-content-end flex-grow-1 pe_5">
 								<li class="nav-item">
-									<a class="nav-link active" aria-current="page" href="index.html">Home</a>
+									<a class="nav-link active" aria-current="page" href="index.html">首頁</a>
 								</li>
 								<li class="nav-item dropdown">
 									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
 										aria-expanded="false">
-										Explore Events
+										探索活動
 									</a>
 									<ul class="dropdown-menu dropdown-submenu">
-										<li><a class="dropdown-item" href="explore_events.html">Explore Events</a></li>
-										<li><a class="dropdown-item" href="venue_event_detail_view.html">Venue Event
-												Detail View</a></li>
-										<li><a class="dropdown-item" href="online_event_detail_view.html">Online Event
-												Detail View</a></li>
+										<li><a class="dropdown-item" href="explore_events.html">探索活動</a></li>
+										<li><a class="dropdown-item" href="#">展覽</a></li>
+										<li><a class="dropdown-item" href="#">演唱會</a></li>
+										<li><a class="dropdown-item" href="#">音樂劇</a></li>
+									</ul>
+								</li>
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+										aria-expanded="false">
+										探索周邊
+									</a>
+									<ul class="dropdown-menu dropdown-submenu">
+										<li><a class="dropdown-item" href="front-product-explore_products.html">探索商品</a>
+										</li>
+										<li><a class="dropdown-item" href="#">演唱會聯名</a></li>
+										<li><a class="dropdown-item" href="#">Youtuber聯名</a>
+										</li>
+										<li><a class="dropdown-item" href="#">展覽聯名</a></li>
+									</ul>
+								</li>
+
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+										aria-expanded="false">
+										幫助中心
+									</a>
+									<ul class="dropdown-menu dropdown-submenu">
+										<li><a class="dropdown-item" href="#">常見問題</a></li>
+										<li><a class="dropdown-item" href="#">線上客服</a></li>
+										<li><a class="dropdown-item" href="#">聯絡我們</a></li>
 									</ul>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="pricing.html">Pricing</a>
+									<a class="nav-link active" aria-current="page" href="#"
+										style="color:black !important">最新消息</a>
 								</li>
-								<li class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-										aria-expanded="false">
-										Blog
-									</a>
-									<ul class="dropdown-menu dropdown-submenu">
-										<li><a class="dropdown-item" href="our_blog.html">Our Blog</a></li>
-										<li><a class="dropdown-item" href="blog_detail_view.html">Blog Detail View</a>
-										</li>
-									</ul>
-								</li>
-								<li class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-										aria-expanded="false">
-										Help
-									</a>
-									<ul class="dropdown-menu dropdown-submenu">
-										<li><a class="dropdown-item" href="faq.html">FAQ</a></li>
-										<li><a class="dropdown-item" href="help_center.html">Help Center</a></li>
-										<li><a class="dropdown-item" href="contact_us.html">Contact Us</a></li>
-									</ul>
-								</li>
-								<li class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-										aria-expanded="false">
-										Pages
-									</a>
-									<ul class="dropdown-menu dropdown-submenu">
-										<li>
-											<a class="dropdown-item submenu-item" href="#">Other Pages</a>
-											<ul class="submenu dropdown-menu">
-												<li><a class="dropdown-item pe-5" href="sign_in.html">Sign In</a></li>
-												<li><a class="dropdown-item pe-5" href="sign_up.html">Sign Up</a></li>
-												<li><a class="dropdown-item pe-5" href="forgot_password.html">Forgot
-														Password</a></li>
-												<li><a class="dropdown-item pe-5" href="about_us.html">About Us</a></li>
-												<li><a class="dropdown-item pe-5" href="checkout.html">Checkout</a></li>
-												<li><a class="dropdown-item pe-5" href="checkout_premium.html">Checkout
-														Premium</a></li>
-												<li><a class="dropdown-item pe-5" href="invoice.html">Invoice</a></li>
-												<li><a class="dropdown-item pe-5" href="coming_soon.html">Coming
-														Soon</a></li>
-												<li><a class="dropdown-item pe-5" href="error_404.html">Error 404</a>
-												</li>
-											</ul>
-										</li>
-										<li>
-											<a class="dropdown-item submenu-item" href="#">Create Event</a>
-											<ul class="submenu dropdown-menu">
-												<li><a class="dropdown-item pe-5" href="create.html">Create</a></li>
-												<li><a class="dropdown-item pe-5" href="create_venue_event.html">Create
-														Venue Event</a></li>
-												<li><a class="dropdown-item pe-5" href="create_online_event.html">Create
-														Online Event</a></li>
-											</ul>
-										</li>
-										<li>
-											<a class="dropdown-item submenu-item" href="#">Events View</a>
-											<ul class="submenu dropdown-menu">
-												<li><a class="dropdown-item pe-5"
-														href="online_event_detail_view.html">Online Event Detail
-														View</a></li>
-												<li><a class="dropdown-item pe-5"
-														href="venue_event_detail_view.html">Venue Event Detail View</a>
-												</li>
-											</ul>
-										</li>
-										<li><a class="dropdown-item" href="booking_confirmed.html">Booking Confirmed</a>
-										</li>
-										<li><a class="dropdown-item" href="attendee_profile_view.html">Attendee Profile
-												View</a></li>
-										<li><a class="dropdown-item" href="organiser_profile_view.html">Organiser
-												Profile View</a></li>
-										<li><a class="dropdown-item" href="my_organisation_dashboard.html">Organization
-												Dashboard</a></li>
-										<li><a class="dropdown-item" href="sell_tickets_online.html">Sell Tickets
-												Online</a></li>
-										<li><a class="dropdown-item" href="refer_a_friend.html">Refer a Friend</a></li>
-										<li><a class="dropdown-item" href="term_and_conditions.html">Terms &
-												Conditions</a></li>
-										<li><a class="dropdown-item" href="privacy_policy.html">Privacy Policy</a></li>
-									</ul>
-								</li>
+
 							</ul>
 						</div>
 						<div class="offcanvas-footer">
@@ -233,10 +169,17 @@
 					<div class="right-header order-2">
 						<ul class="align-self-stretch">
 							<li>
-								<a href="create.html" class="create-btn btn-hover">
+								<a href="explore_events.html" class="create-btn btn-hover">
 									<i class="fa-solid fa-calendar-days"></i>
-									<span>Create Event</span>
+									<span>活動訂票</span>
 								</a>
+								<a href="front-product-explore_products.html" class="create-btn btn-hover">
+									<i class="fa-sharp fa-solid fa-bag-shopping"></i>
+									<span>聯名商品</span>
+								</a>
+							</li>
+							<li>
+
 							</li>
 							<li class="dropdown account-dropdown">
 								<a href="#" class="account-link" role="button" id="accountClick"
@@ -251,14 +194,16 @@
 											<div class="account-holder-avatar">
 												<img src="images/profile-imgs/img-13.jpg" alt="">
 											</div>
-											<h5>John Doe</h5>
+											<h5>會員名稱</h5>
 											<p>johndoe@example.com</p>
 										</div>
 									</li>
 									<li class="profile-link">
-										<a href="my_organisation_dashboard.html" class="link-item">My Organisation</a>
-										<a href="organiser_profile_view.html" class="link-item">My Profile</a>
-										<a href="sign_in.html" class="link-item">Sign Out</a>
+										<a class="dropdown-item pe-5" href="front-users-member-profile.html">會員資訊</a>
+										<a class="dropdown-item pe-5" href="front-users-mem-sign-in.html">登入</a>
+										<a class="dropdown-item pe-5" href="front-users-sign-up.html">註冊</a>
+										<a class="dropdown-item pe-5" href="front-users-forgot-pwd.html">忘記密碼</a>
+
 									</li>
 								</ul>
 							</li>
@@ -267,14 +212,16 @@
 									<div id="night-mode" class="fas fa-moon fa-sun"></div>
 								</div>
 							</li>
-							<li>
-								<a href="front-product-shopping_cart.html">
+
+							<li class="dropdown account-dropdown">
+								<a href="front-product-shopping_cart.html" class="account-link">
 									<div id="cart">
-										<i class="fa fa-shopping-cart"></i>
-										<span class="badge">0</span>
+										<img src="images/profile-imgs/cart2.jpg">
+										<span class="badge" style="color:#102743 ;">0</span>
 									</div>
 								</a>
 							</li>
+
 						</ul>
 					</div>
 				</div>
@@ -292,9 +239,11 @@
 						<div class="barren-breadcrumb">
 							<nav aria-label="breadcrumb">
 								<ol class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-									<li class="breadcrumb-item"><a href="explore_events.html">Explore Events</a></li>
-									<li class="breadcrumb-item active" aria-current="page">Online Event Detail View</li>
+									<li class="breadcrumb-item"><a href="index.html">首頁</a></li>
+									<li class="breadcrumb-item"><a href="front-product-explore_products.html">周邊商品</a>
+									</li>
+									<li class="breadcrumb-item active" aria-current="page" id="pclassName">Online Event
+										Detail View</li>
 								</ol>
 							</nav>
 						</div>
@@ -423,9 +372,10 @@
 
 
 							<div class="booking-btn">
-								<button type="button" id="buyNow" class="main-btn btn-hover w-45" style="width:48%;">Buy Now</button>
+								<button type="button" id="buyNow" class="main-btn btn-hover w-45" style="width:48%;">Buy
+									Now</button>
 								<button type="button" class="main-btn btn-hover w-45" style="width:48%;"
-									id="product-incart">Add To Cart</button>
+									id="product-incart"><i class="fa-solid fa-cart-shopping"></i></button>
 							</div>
 						</div>
 					</div>
@@ -582,15 +532,15 @@
 			let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 			let qty = document.querySelector('#count').value;
 			let itemqty;
-			for(item of cartItems){
-				if(item.data.productno == productno){
+			for (item of cartItems) {
+				if (item.data.productno == productno) {
 					itemqty = item;
 				}
 			}
 			if (itemqty) {
 				itemqty.quantity += parseInt(qty);
 				localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  		} else {
+			} else {
 				// console.log("點擊加入購物車: " + productno);
 				addCart(productno);
 			}
@@ -623,6 +573,8 @@
 		}).then(resp => resp.json())
 			.then(item => {
 				console.log(item);
+				$("#productTitle").text(item.pname);
+				$("#pclassName").text(item.pclass.pclassname);
 				pname.textContent = item.pname;
 				pclass.textContent = item.pclass.pclassname;
 				psdate.textContent = item.psdate;
@@ -636,7 +588,7 @@
 				}
 				else if (item.prateqty >= 1) {
 					//.toFixed(2) 呈現至小數點後兩位數
-					$("#productRate").children("h4").text("商品評星：" + ((item.pratetotal / item.prateqty)).toFixed(1)).append(`<i class="fa fa-star fa-2x">`);
+					$("#productRate").children("h4").text("商品評星：" + Math.round((item.pratetotal / item.prateqty)).toFixed(1)).append(`&nbsp;<i class="fa-solid fa-star" style="color: #ffad21!important;"></i>`);
 				}
 				for (let pimgt of item.pimgts) {
 					console.log(pimgt.pimgno);
@@ -732,7 +684,7 @@
 						$("#rateAvg" + item.productno).text('尚無評星')
 					}
 					else if (item.prateqty >= 1) {
-						$("#rateAvg" + item.productno).text(item.pratetotal / item.prateqty).append(`<i class="fa fa-star fa-2x">`);
+						$("#rateAvg" + item.productno).text("商品評星：" + ((item.pratetotal / item.prateqty)).toFixed(1)).append(`&nbsp;<i class="fa-solid fa-star" style="color: #ffad21!important;"></i>`);
 					}
 				}
 			}
@@ -768,14 +720,17 @@
 			})
 
 		//商品評論
+
 		const productComment = document.querySelector('div.owl-carousel.testimonial-slider.owl-theme');
+
+		// 從 Redis 撈出會員所對應的按讚評論編號並存到一個陣列以供後續比對
+		let commentArr = [];
 
 		fetch("ProductCommentServlet", {
 			method: "POST",
 			body: new URLSearchParams({
 				'action': "oneProductCommentList",
 				'productno': productno
-
 			})
 		})
 			.then(resp => resp.json())
@@ -791,17 +746,8 @@
 															<div class=" testimonial-user-dt">
 																<h5>評論者${item.memberno}</h5>
 																<span>評論日期${item.pcommentdate}</span>
-																<ul>
-																	<li><i class="fa-solid fa-star"></i>
-																	</li>
-																	<li><i class="fa-solid fa-star"></i>
-																	</li>
-																	<li><i class="fa-solid fa-star"></i>
-																	</li>
-																	<li><i class="fa-solid fa-star"></i>
-																	</li>
-																	<li><i class="fa-solid fa-star"> ${item.prate}</i>
-																	</li>
+																<ul id="starContainer_${item.pcommentno}">
+																	
 																</ul>
 
 																<!-- 點讚/檢舉 -->
@@ -810,13 +756,13 @@
 																		<td style="padding-top: 4px; width: 35px;">
 																			<button
 																				style="border: none; background-color: transparent;">
-																				<img name="thumbbtn"
+																				<img id="thumb_${item.pcommentno}" name="thumbbtn"
 																					style="width: 30px;"
 																					src="images/thumbup_blank.png"
 																					onclick="chgthumbimg()">
 																			</button>
 																		</td>
-																		<td style="width: 30px;">100</td>
+																		<td style="width: 30px;" id="plike_${item.pcommentno}">${item.plike}</td>
 																		<td><button  name="${item.pcommentno}" data-bs-toggle="modal"
 																				data-bs-target="#couponModal" 
 																				style="border: none; background-color: transparent" onclick="comment(this.name)">
@@ -841,7 +787,37 @@
 														</div>
 													</div>
 												</div>`;
+
+					for (let star = 0; star < item.prate; star++) {
+						$(`#starContainer_${item.pcommentno}`).append(`<li><i class="fa-solid fa-star"></i></li>`);
+					}
 				}
+
+				// Document load 的時候顯示按過的讚，$(`#thumb_${i}`) 要新增在空讚的圖片中
+				$.ajax({
+					url: "ProductCommentServlet",
+					cache: false,
+					async: false,
+					type: 'POST',
+					dataType: "json",
+					data: {
+						"action": "getThumpupPcommentno",
+						"memberno": info.memberno,
+					},
+					success: function (jsondata) {
+						checkUpArr = Object.values(jsondata)
+						for (let i of checkUpArr) {
+							console.log(i);
+							if (checkUpArr.includes(i)) {
+								console.log("點讚圖示");
+								$(`#thumb_${i}`).attr('src', 'images/thumbup_clicked.png');
+								$(`#thumb_${i}`).addClass("thumbbed");
+							}
+						}
+					}
+
+				})
+
 
 			}).then(function () {
 				$('.testimonial-slider').owlCarousel({
@@ -906,8 +882,22 @@
 					'pwhy': $('#pwhy').val(),
 					'action': "addProductCommentReport"
 				})
-
-			})
+			}).then(resp => resp.json())
+				.then(item => {
+					if (item.pcommentno) {
+						swal({
+							title: "檢舉成功",
+							icon: "success",
+							closeOnClickOutside: true,
+						})
+					} else {
+						swal({
+							title: "檢舉失敗",
+							icon: "error",
+							closeOnClickOutside: true,
+						})
+					}
+				})
 		}
 		//新增商品追蹤(單一商品)
 		function followProduct() {
@@ -948,15 +938,52 @@
 	<script>
 		function chgthumbimg() {
 			const btnClass = event.target.className;
+			const pcommentno = event.target.id.replace("thumb_", "");
+
 			if (btnClass === '') {
 				event.target.src = 'images/thumbup_clicked.png';
 				event.target.classList.add("thumbbed");
+				$.ajax({
+					url: "ProductCommentServlet",
+					async: false,
+					type: 'POST',
+					dataType: "json",
+					data: {
+						"action": "thumpupPcomment",
+						"memberno": info.memberno,
+						"pcommentno": pcommentno
+					},
+					success: function (jsondata) {
+						let plikeEl = $(`plike_${pcommentno}`)
+						console.log(plikeEl);
+						let plikeOld=plikeEl.text();
+						console.log(plikeOld);
+						console.log(typeof plikeOld);
+						plikeEl.text(1+plikeOld);
+
+					}
+				})
 			}
 			else {
 				event.target.src = 'images/thumbup_blank.png';
 				event.target.classList.remove("thumbbed");
+				$.ajax({
+					url: "ProductCommentServlet",
+					async: false,
+					type: 'POST',
+					dataType: "json",
+					data: {
+						"action": "thumpdownPcomment",
+						"memberno": info.memberno,
+						"pcommentno": pcommentno
+					},
+					success: function (jsondata) {
+					}
+				})
 			}
 		}
+
+
 
 	</script>
 
