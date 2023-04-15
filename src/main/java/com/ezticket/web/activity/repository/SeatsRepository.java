@@ -30,6 +30,9 @@ public interface SeatsRepository extends JpaRepository<Seats, Integer> {
     @Query("SELECT DISTINCT s.blockNo FROM Seats s JOIN Session ss WHERE ss.activityNo = :actNo AND s.blockNo IS NOT NULL")
     public List<Integer> getActBlockHasSeats(@Param("actNo") int actNo);
 
+    @Query("SELECT DISTINCT s.seatNo FROM Seats s WHERE s.sessionNo = :sessionNo AND s.blockNo = :blockNo")
+    public List<Integer> getSessionBlockSeatsExist(@Param("sessionNo") int sessionNo, @Param("blockNo") int blockNo);
+
     @Query("SELECT s.seatNo FROM Seats s WHERE s.blockNo = :blockNo AND s.seatStatus = :seatStatus")
     public List<Integer> getIdsByBlockNoAndSeatStatus(@Param("blockNo") int blockNo, @Param("seatStatus") int seatStatus);
 
@@ -43,5 +46,9 @@ public interface SeatsRepository extends JpaRepository<Seats, Integer> {
 
     @Query("SELECT count (seatNo) FROM Seats")
     public int getSeatsNumber();
+
+    @Modifying
+    @Transactional
+    public int deleteBySessionNoAndBlockNo(Integer sessionNo, Integer blockNo);
 
 }
