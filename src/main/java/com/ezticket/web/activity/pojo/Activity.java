@@ -1,12 +1,13 @@
 package com.ezticket.web.activity.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -31,8 +32,12 @@ public class Activity {
     private String performer;
     @Column(name = "ADISCRIP")
     private String aDiscrip;
+    @JsonFormat(pattern = "yyyy/MM/dd kk:mm", timezone = "GMT+8")
+
     @Column(name = "ASDATE")
     private Date aSDate;
+    @JsonFormat(pattern = "yyyy/MM/dd kk:mm", timezone = "GMT+8")
+
     @Column(name = "AEDATE")
     private Date aEDate;
     @Column(name = "ATAG")
@@ -59,6 +64,9 @@ public class Activity {
     @JsonManagedReference
     @OneToMany(mappedBy = "activity")
     private List<Aimgt> aimgt;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "activity")
+    private List <BlockPrice> blockPrice;
 
 
 

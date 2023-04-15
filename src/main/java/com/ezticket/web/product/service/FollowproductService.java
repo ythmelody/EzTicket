@@ -16,13 +16,14 @@ public class FollowproductService {
 	private FollowproductDAO dao;
 
 	@Transactional
-	public void addFollowProduct(Integer memberno, Integer productno) {
+	public Boolean addFollowProduct(Integer memberno, Integer productno) {
 		FollowproductPK followProductPK =new FollowproductPK();
 		followProductPK.setMemberno(memberno);
 		followProductPK.setProductno(productno);
 		Followproduct followProduct =new Followproduct();
 		followProduct.setFollowproductPK(followProductPK);
 		dao.insert(followProduct);
+		return true;
 	}
 	
 

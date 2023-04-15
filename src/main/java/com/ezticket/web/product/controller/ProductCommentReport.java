@@ -69,7 +69,6 @@ public class ProductCommentReport extends HttpServlet {
             Boolean updateOK = preportSvc.updateProductReport(preportno, preportstatus);
             Gson gson = new Gson();
             String json = gson.toJson(updateOK);
-            System.out.println("印出JSON" + json);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             PrintWriter pw = response.getWriter();
@@ -90,7 +89,14 @@ public class ProductCommentReport extends HttpServlet {
             Integer memberno = Integer.valueOf(request.getParameter("memberno"));
             Integer pcommentno = Integer.valueOf(request.getParameter("pcommentno"));
             String pwhy = request.getParameter("pwhy");
-            preportSvc.addProductReport(pcommentno, memberno, pwhy);
+            Preport preport = preportSvc.addProductReport(pcommentno, memberno, pwhy);
+            Gson gson = new Gson();
+            String json =gson.toJson(preport);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter out = response.getWriter();
+            out.print(json);
+            out.flush();
         }
 
 

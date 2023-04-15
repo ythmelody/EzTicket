@@ -50,13 +50,6 @@
 					<div class="model-content main-form">
 						<div class="row">
 							<div class="col-lg-12 col-md-12">
-								<div class="form-group mt-4">
-									<label class="form-label">Ticket Name*</label>
-									<input class="form-control h_40" type="text" placeholder="Event Ticket Name"
-										value="">
-								</div>
-							</div>
-							<div class="col-lg-12 col-md-12">
 								<div class="main-card p-4 mt-4">
 									<div class="form-label mb-4 fs-16">Ticket Restrictions</div>
 									<div class="form-group border_bottom">
@@ -96,113 +89,6 @@
 												<div class="input-number">
 													<input class="form-control h_40" type="number" min="0" max="30"
 														placeholder="Enter Max. per order">
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-12 col-md-12">
-								<div class="main-card p-4 mt-4">
-									<div class="form-label mb-4 fs-16">Ticket Restrictions</div>
-									<div class="form-group">
-										<label class="form-label mb-2 fs-14">Ticket Order*</label>
-										<input class="form-control h_40" type="number" value="1" min="1" max="30"
-											placeholder="Enter Sort Order">
-									</div>
-									<div class="form-group mt-4">
-										<label class="form-label mb-2 fs-14">Ticket Description*</label>
-										<textarea class="form-textarea"
-											placeholder="Description will go here"></textarea>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-12 col-md-12">
-								<div class="main-card p-4 mt-4">
-									<div class="d-flex align-items-center justify-content-between price-variation-head">
-										<h5 class="m-0 color-black fs-16">
-											Variations (<span class="ticket-subtype-count">1</span>)</h5>
-										<span class="add-btn btn-hover">
-											<i class="fa-regular fa-square-plus"></i>
-										</span>
-									</div>
-									<div class="table-responsive">
-										<div
-											class="div-base-table border-0 mt-2 full-width small-table ticket-subtype-table">
-											<div class="table-row table-head no-bg">
-												<div class="table-col fs-14 text-light3">Price <span
-														class="red">*</span></div>
-												<div class="table-col fs-14 text-light3">Variation Name <span
-														class="red">*</span></div>
-												<div class="table-col fs-14 text-light3 text-right">Actions</div>
-											</div>
-											<div class="table-row ticket-subtype-row">
-												<div class="table-col first-col">
-													<div class="form-group m-0 form-custom-validation">
-														<input class="form-control h_40" type="number" min="0"
-															max="10000" required="" placeholder="Price" value="">
-													</div>
-												</div>
-												<div class="table-col second-col">
-													<div class="form-group m-0">
-														<input class="form-control h_40" type="text" maxlength="75"
-															required="" value="">
-													</div>
-												</div>
-												<div class="table-col third-col">
-													<button type="button" class="v-btn-close btn-hover">
-														<i class="fa-solid fa-xmark"></i>
-													</button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-12 col-md-12">
-								<div class="main-card p-4 mt-4">
-									<div class="form-group">
-										<div class="d-flex align-items-start">
-											<label class="btn-switch m-0 me-3">
-												<input type="checkbox" class="" id="bird-discount" value="">
-												<span class="checkbox-slider"></span>
-											</label>
-											<div class="d-flex flex-column">
-												<label class="color-black mb-1">I want to offer early bird
-													discount.</label>
-												<p class="mt-2 fs-14 d-block mb-3">Enabling this discount lets your
-													attendees get all the regular tickets features at a discounted
-													price. <a href="#" class="a-link">Learn more</a></p>
-											</div>
-										</div>
-										<div class="online-event-discount-wrapper" style="display: none;">
-											<div class="row g-3">
-												<div class="col-md-3">
-													<label class="form-label mt-3 fs-6">Discount*</label>
-													<input class="form-control h_40" type="text" placeholder="0"
-														value="">
-												</div>
-												<div class="col-md-3">
-													<label class="form-label mt-3 fs-6">Price*</label>
-													<select class="selectpicker">
-														<option value="Percentage" selected="">Percent(%)</option>
-														<option value="Fixed">Fixed($)</option>
-													</select>
-												</div>
-												<div class="col-md-3">
-													<label class="form-label mt-3 fs-6">Discount ends on*</label>
-													<div class="loc-group position-relative">
-														<input class="form-control h_40 datepicker-here"
-															data-language="en" data-position="top left" type="text"
-															placeholder="MM/DD/YYYY" value="">
-														<span class="absolute-icon top_0"><i
-																class="fa-solid fa-calendar-days"></i></span>
-													</div>
-												</div>
-												<div class="col-md-3">
-													<div class="clock-icon">
-														<label class="form-label mt-3 fs-6">Time</label>
-													</div>
 												</div>
 											</div>
 										</div>
@@ -606,40 +492,16 @@
 		<div class="event-dt-block p-80">
 			<div class="container">
 				<div class="row justify-content-center">
-					<div class="col-lg-12 col-md-12">
-						<div class="main-title text-center">
-							<h3>建立商品</h3>
-						</div>
-					</div>
+
 					<div class="col-xl-8 col-lg-9 col-md-12">
-						<div class="wizard-steps-block">
+						<!-- <div class="wizard-steps-block"> -->
 							<div id="add-event-tab" class="step-app">
-								<!-- <ul class="step-steps">
-									<li class="active">
-										<a href="#tab_step1">
-											<span class="number"></span>
-											<span class="step-name">Details</span>
-										</a>
-									</li>
-									<li>
-										<a href="#tab_step2">
-											<span class="number"></span>
-											<span class="step-name">Tickets</span>
-										</a>
-									</li>
-									<li>
-										<a href="#tab_step3">
-											<span class="number"></span>
-											<span class="step-name">Setting</span>
-										</a>
-									</li>
-								</ul> -->
 								<div class="step-content">
 									<!-- <div class="step-tab-panel step-tab-info active" id="tab_step1">  -->
 									<div class="tab-from-content">
 										<div class="main-card">
 											<div class="bp-title">
-												<h4><i class="fa-solid fa-circle-info step_icon me-3"></i>商品資訊</h4>
+												<h4><i class="fa-solid fa-circle-info step_icon me-3"></i></h4>
 											</div>
 											<div class="p-4 bp-form main-form">
 												<div class="row">
@@ -836,8 +698,8 @@
 																</label>
 																<p class="mt-2 fs-14 d-block mb-3">請為你的商品寫上吸引人的商品說明以增加銷售
 																</p>
-																<div class="text-editor mt-4">
-																	<textarea id="pd_editor" name="pdiscrip"></textarea>
+																<div class="text-editor mt-4" style="border:#102743">
+																	<textarea id="pd_editor" name="pdiscrip" style="border:#102743"></textarea>
 																</div>
 															</div>
 
@@ -1641,7 +1503,7 @@
 										class="btn btn-default btn-hover steps_btn">Create</button>
 								</div>
 							</div>
-						</div>
+						<!-- </div> -->
 					</div>
 
 				</div>
@@ -1789,6 +1651,10 @@
 		let count = 1
 		previewPicture();
 
+		$(document).ready(function () {
+			$("[name='pname']").focus();
+		});
+
 		function previewPicture() {
 			// const uploadPictures = document.querySelector('#uploadPictures');
 
@@ -1801,7 +1667,7 @@
 	
 											</div>
 																			</div>
-																			<img id=img${count} src="images/banners/hero-cover-01.jpg" alt="">
+																			<img id=img${count} src="images/banners/hero-cover-01.jpg" alt="" style="border:#102743">
 																		</div>`);
 
 			const input = document.querySelector(`#thumb-img${count}`);
@@ -1900,8 +1766,8 @@
 		})
 
 		function judgePprice() {
-			if (pprice.value === '') {
-				$("#ppriceErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品原價為必填欄位`);
+			if (pprice.value === '' || pprice.value < 0) {
+				$("#ppriceErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品原價為必填欄位且不得為負數`);
 				return;
 			} else {
 				$("#ppriceErr").html('');
@@ -1916,8 +1782,8 @@
 		})
 
 		function judgePspecialprice() {
-			if (pspecialprice.value === '') {
-				$("#pspecialpriceErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品特價為必填欄位`);
+			if (pspecialprice.value === '' || pspecialprice.value > $("#pprice").val() || pspecialprice.value < 0) {
+				$("#pspecialpriceErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品特價為必填欄位且不得大於原價且不得為負數`);
 				return;
 			} else {
 				$("#pspecialpriceErr").html('');
@@ -1932,8 +1798,8 @@
 		})
 
 		function judgePqty() {
-			if (pqty.value === '') {
-				$("#pqtyErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品數量為必填欄位`);
+			if (pqty.value === '' || pqty.value < 0) {
+				$("#pqtyErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品數量為必填欄位且不得為負數`);
 				return;
 			} else {
 				$("#pqtyErr").html('');

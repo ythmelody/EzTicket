@@ -4,7 +4,6 @@ import com.ezticket.web.product.pojo.Product;
 import com.ezticket.web.product.repository.ProductDAO;
 import com.ezticket.web.product.util.PageResult;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -14,6 +13,8 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -206,9 +207,9 @@ public class ProductDAOImpl implements ProductDAO {
             predicate = builder.equal(root.get(columnName), Integer.valueOf(value));
         else if ("pname".equals(columnName) || "ptag".equals(columnName)) {
             predicate = builder.like(root.get(columnName), "%" + value + "%");
-        }else if ("hostname".equals(columnName)) {
+        } else if ("hostname".equals(columnName)) {
             predicate = builder.like(root.get("host").get("hostname"), "%" + value + "%");
-        }else if ("start_date".equals(columnName)) {
+        } else if ("start_date".equals(columnName)) {
             predicate = builder.or(
                     builder.greaterThanOrEqualTo(root.get("psdate"), java.sql.Timestamp.valueOf(value))
 //                    builder.greaterThanOrEqualTo(root.get("pedate"), java.sql.Timestamp.valueOf(value))
@@ -218,6 +219,10 @@ public class ProductDAOImpl implements ProductDAO {
 //                    builder.lessThanOrEqualTo(root.get("psdate"), java.sql.Timestamp.valueOf(value)),
                     builder.lessThanOrEqualTo(root.get("pedate"), java.sql.Timestamp.valueOf(value))
             );
+        }else if ("sale_date".equals(columnName)) {
+            predicate = builder.or(
+                    builder.lessThan(root.get("psdate"), java.sql.Timestamp.valueOf(value))
+            );
         }
         return predicate;
     }
@@ -225,7 +230,7 @@ public class ProductDAOImpl implements ProductDAO {
 
     @Override
     public List<Product> findByProductName(String pname) {
-        final String SELECT_BY_NAME_SQL = "SELECT * FROM Product WHERE Pname LIKE :pname ";
+        final String SELECT_BY_NAME_SQL = "FROM Product WHERE Pname LIKE :pname ";
         Query query = session.createQuery(SELECT_BY_NAME_SQL, Product.class);
         return query.setParameter("pname", "%" + pname + "%").getResultList();
 
@@ -268,7 +273,6 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     public PageResult<Product> getAll(Map<String, String[]> map, Integer pageNumber, Integer pageSize) {
-
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Product> criteriaQuery = builder.createQuery(Product.class);
         Root<Product> root = criteriaQuery.from(Product.class);
@@ -280,23 +284,28 @@ public class ProductDAOImpl implements ProductDAO {
         for (String key : keys) {
             String value = map.get(key)[0]; //why[0]?
             //!"action".equals(key) 要加避免當成where條件傳進來
-            if (value != null && value.trim().length() != 0 && !"action".equals(key)) {
+            if (value != null && value.trim().length() != 0 && !"action".equals(key) && !"pageNumber".equals(key) && !"pageSize".equals(key)) {
                 count++;
                 predicateList.add(getPredicateForDB(builder, root, key, value));
             }
         }
         criteriaQuery.where(predicateList.toArray(new Predicate[predicateList.size()]));
 
-        //取得查詢過後的資料
+        //這個是查第一次(total)
+        Query countQuery = session.createQuery(criteriaQuery);
+        List<Product> productListTotal = countQuery.getResultList();
+        Integer totalCount = productListTotal.size();
+
+        //為了分頁再查詢一次
         Query query = session.createQuery(criteriaQuery);
         query.setFirstResult((pageNumber - 1) * pageSize);
         query.setMaxResults(pageSize);
         List<Product> productList = query.getResultList();
-
         // 計算符合條件的總筆數
-        CriteriaQuery<Long> countQuery = builder.createQuery(Long.class);
-        countQuery.select(builder.count(countQuery.from(Product.class))).where(predicateList.toArray(new Predicate[predicateList.size()]));
-        Long totalCount = session.createQuery(countQuery).getSingleResult();
+//        CriteriaQuery<Long> countQuery = builder.createQuery(Long.class);
+//        countQuery.select(builder.count(countQuery.from(Product.class))).
+//         where(predicateList.toArray(new Predicate[predicateList.size()]));
+//        Long totalCount = session.createQuery(countQuery).getSingleResult();
 
 //        Root<Product> countRoot = countQuery.from(Product.class);
 //        countQuery.select(builder.count(countRoot))
@@ -307,13 +316,25 @@ public class ProductDAOImpl implements ProductDAO {
 //        Long totalCount = session.createQuery(countQuery).uniqueResult();
 
 
-
         // 封裝分頁結果
         PageResult<Product> pageResult = new PageResult<>();
         pageResult.setTotalCount(totalCount);
         pageResult.setData(productList);
         return pageResult;
+
+
     }
 
+
+    @Override
+    public List<Product> findExpiredProduct(Timestamp today) {
+        String SELECT_BY_EDATE_SQL ="FROM Product WHERE pedate < :today AND pstatus = 0 ";
+        Query query =session.createQuery(SELECT_BY_EDATE_SQL,Product.class);
+        query.setParameter("today", today);
+        return query.getResultList();
+    }
 }
+
+
+
 

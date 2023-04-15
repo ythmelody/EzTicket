@@ -23,10 +23,10 @@ public class Session {
     @Column(name = "ACTIVITYNO")
     private Integer activityNo;
     @Column(name = "SESSIONSTIME")
-    @JsonFormat(pattern = "yyyy/MM/dd kk:mm", timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy/MM/dd kk:mm", timezone = "GMT+8", without = JsonFormat.Feature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE)
     private Date sessionsTime;
     @Column(name = "SESSIONETIME")
-    @JsonFormat(pattern = "yyyy/MM/dd kk:mm", timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy/MM/dd kk:mm", timezone = "GMT+8", without = JsonFormat.Feature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE)
     private Date sessioneTime;
     @Column(name = "MAXSEATSQTY")
     private Integer maxSeatsQty;

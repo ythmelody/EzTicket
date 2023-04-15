@@ -2,6 +2,7 @@
 $(document).ready(() => {
   let urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get('id');
+  let couponCount = 0;
   fetch(`/porder/GetPorderDetailsByID?id=${id}`, {
     method: 'GET',
   }).then(resp => resp.json())
@@ -13,15 +14,21 @@ $(document).ready(() => {
       const detailsbody = document.querySelector('tbody');
       detailsbody.innerHTML = '';
       let total = 0;
+      couponCount = data.pcoupontotal;
       for (let i = 0; i < data.products.length; i++) {
         //判斷是否已評論過
+        let imagesrc;
+        if (data.products[i].pimgts && data.products[i].pimgts[0]) {
+          imagesrc = `data:image/png;base64,${data.products[i].pimgts[0].pimg}`;
+        }
         if (data.pdetails[i].pcommentstatus === 0) {
           const detailslist = `<tr>
                               <td>${i + 1}</td>
+                              <td><img src="${imagesrc}" width="100" height="100" alt=""></td>
                               <td><a href="front-product-product_detail.html?productno=${data.products[i].productno}" target="_blank">${data.products[i].pname}</a></td>
                               <td>${data.pdetails[i].porderqty}</td>
-                              <td>$${data.products[i].pprice}</td>
-                              <td>$${data.products[i].pprice - data.products[i].pspecialprice}</td>
+                              <td><s>$${data.products[i].pprice}</s></td>
+                              <td>$${data.products[i].pspecialprice}</td>
                               <td>$${data.pdetails[i].pprice}</td>
                               <td>
                               <div style="text-align:center">
@@ -35,10 +42,11 @@ $(document).ready(() => {
         } else {
           const detailslist = `<tr>
                             <td>${i + 1}</td>
+                            <td><img src="${imagesrc}" width="100" height="100" alt=""></td>
                             <td><a href="front-product-product_detail.html?productno=${data.products[i].productno}" target="_blank">${data.products[i].pname}</a></td>
                             <td>${data.pdetails[i].porderqty}</td>
-                            <td>$${data.products[i].pprice}</td>
-                            <td>$${data.products[i].pprice - data.products[i].pspecialprice}</td>
+                            <td>$<s>${data.products[i].pprice}</s></td>
+                            <td>$${data.products[i].pspecialprice}</td>
                             <td>$${data.pdetails[i].pprice}</td>
                             <td><div style="text-align:center"><a href="front-product-product_detail.html?productno=${data.products[i].productno}" target="_blank">已評論</a></div></td>
        </tr>`;
@@ -46,11 +54,15 @@ $(document).ready(() => {
           detailsbody.innerHTML += detailslist;
         }
       }
+      let delivery = +total > 499 ? 0 : 100;
       const detailstotal = `<tr>
                               <td colspan="1"></td>
                               <td colspan="5">
-                                <div class="user_dt_trans text-end pe-xl-4">
-                                  <div class="totalinv2">總金額 : TWD $${total}</div>
+                                  <div class="user_dt_trans text-end pe-xl-4">
+                                  <div class="pdiscount-fee">優惠券折扣 : -$<span>${couponCount}</span></div>
+                                  <div class="delivery-fee">運費(滿499免運) : $<span>${delivery}</span></div>
+                                  <div class="product-fee">商品金額 : $<span>${total}</span></div>
+                                  <div class="totalinv2">結帳金額 : $<span>${total + delivery - couponCount}</span></div>
                                   <p>通過信用卡支付</p>
                                 </div>
                               </td>

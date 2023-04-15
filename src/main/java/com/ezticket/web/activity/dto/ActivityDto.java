@@ -1,12 +1,11 @@
 package com.ezticket.web.activity.dto;
 
 import com.ezticket.web.activity.pojo.Aimgt;
+import com.ezticket.web.activity.pojo.BlockPrice;
 import com.ezticket.web.activity.pojo.Session;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.Column;
-import jakarta.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 
@@ -19,7 +18,11 @@ public class ActivityDto {
     private Integer hostNo;
     private String performer;
     private String aDiscrip;
+    @JsonFormat(pattern = "yyyy/MM/dd kk:mm", timezone = "GMT+8")
+
     private Date aSDate;
+    @JsonFormat(pattern = "yyyy/MM/dd kk:mm", timezone = "GMT+8")
+
     private Date aEDate;
     private String aTag;
     private Integer wetherSeat;
@@ -32,6 +35,8 @@ public class ActivityDto {
     private String aTicketRemind;
     private List<Session> session;
     private List<Aimgt> aimgt;
+    private List <BlockPrice> blockPrice;
+
 
 
 

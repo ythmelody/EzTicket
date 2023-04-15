@@ -1,6 +1,7 @@
 package com.ezticket.web.product.pojo;
 
 
+import com.ezticket.web.users.pojo.Member;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -56,5 +57,8 @@ public class Porder {
     private List<Product> products;
     @OneToMany(mappedBy = "pdetailsNo.porderno")
     private List<Pdetails> pdetails;
+    @ManyToOne
+    @JoinColumn(name = "memberno", insertable = false, updatable = false)
+    private Member member;
 
 }

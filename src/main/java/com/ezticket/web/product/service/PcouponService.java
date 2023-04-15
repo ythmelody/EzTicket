@@ -39,6 +39,7 @@ public class PcouponService {
                 .collect(Collectors.toList());
     }
     public PcouponDTO EntityToDTO(Pcoupon pcoupon){
+        pcoupon.getPcouponholdings().forEach(holding -> holding.setPcoupon(null));
         return modelMapper.map(pcoupon, PcouponDTO.class);
     }
     public List<PcouponDTO> getAllPcoupon(){
@@ -49,9 +50,6 @@ public class PcouponService {
     }
     public boolean updateByID(Integer id, byte processStatus) {
         Pcoupon pcoupon = pcouponRepository.getReferenceById(id);
-        if (pcoupon == null) {
-            return false;
-        }
         pcoupon.setPcouponstatus(processStatus);
         pcouponRepository.save(pcoupon);
         checkPouconStatus();
@@ -82,9 +80,6 @@ public class PcouponService {
     @Transactional
     public boolean editPcoupon(AddPcouponDTO couponBody) {
         Pcoupon pcoupon = pcouponRepository.getReferenceById(couponBody.getPcouponno());
-        if (pcoupon == null) {
-            return false;
-        }
         pcoupon.setPcouponname(couponBody.getPcouponname());
         pcoupon.setPdiscount(couponBody.getPdiscount());
         pcoupon.setPreachprice(couponBody.getPreachprice());
@@ -116,7 +111,6 @@ public class PcouponService {
     // 第四個 * 代表天數，表示不限定天數。
     // 第五個 * 代表月份，表示不限定月份。
     // 第六個 * 代表星期幾，表示不限定星期幾。
-    // 第七個 ? 代表不指定，表示不需要指定任何值。
 
     // 每小時檢查Coupon使用狀態
     @Scheduled(cron = "0 0 * * * *")

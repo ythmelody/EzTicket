@@ -42,94 +42,71 @@
                         <div class="invoice-header-logo">
                             <img src="images/dark-logo.svg" alt="invoice-logo">
                         </div>
-                        <!-- <div class="invoice-header-text">
-							<a href="#" class="download-link">Download</a>
-						</div> -->
                     </div>
-                    <!-- <div class="invoice-body">
-						<div class="invoice_dts">
-							<div class="row">
-								<div class="col-md-12">
-									<h2 class="invoice_title">Invoice</h2>
-								</div>
-								<div class="col-md-6">
-									<div class="vhls140">
-										<ul>
-											<li><div class="vdt-list">Invoice to John Doe</div></li>
-											<li><div class="vdt-list">140 St Kilda Rd</div></li>
-											<li><div class="vdt-list">Melbourne, Victoria</div></li>
-											<li><div class="vdt-list">3000, Australia</div></li>
-										</ul>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="vhls140">
-										<ul>
-											<li><div class="vdt-list">Invoice ID : YCCURW-000000</div></li>
-											<li><div class="vdt-list">Order Date : 10/05/2022</div></li>
-											<li><div class="vdt-list">Near MBD Mall,</div></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="main-table bt_40">
-							<div class="table-responsive">
-								<table class="table">
-									<thead class="thead-dark">
-										<tr>
-											<th scope="col">#</th>
-											<th scope="col">Event Details</th>
-											<th scope="col">Type</th>
-											<th scope="col">Qty</th>
-											<th scope="col">Unit Price</th>
-											<th scope="col">Total</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>										
-											<td>1</td>	
-											<td><a href="#" target="_blank">Tutorial on Canvas Painting for Beginners</a></td>	
-											<td>Online</td>	
-											<td>1</td>
-											<td>$75.00</td>
-											<td>$75.00</td>
-										</tr>
-										<tr>
-											<td colspan="1"></td>
-											<td colspan="5">
-												<div class="user_dt_trans text-end pe-xl-4">
-													<div class="totalinv2">Invoice Total : USD $36.00</div>
-													<p>Paid via Paypal</p>
-												</div>
-											</td>
-										</tr>
-									</tbody>									
-								</table>
-							</div>
-						</div> -->
                     <div class="invoice_footer">
-                        <!-- <div class="cut-line">
-								<i class="fa-solid fa-scissors"></i>
-							</div> -->
                         <div class="main-card">
-                            <div class="row g-0">
+                            <div class="row g-0" id="details">
                                 <!-- <div class="col-lg-5"> -->
-                                <div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Invoice End-->
+
+
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/OwlCarousel/owl.carousel.js"></script>
+    <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="js/night-mode.js"></script>
+
+    <script>
+        const memberno = new URLSearchParams(window.location.search).get("memberno");
+        const collectno = new URLSearchParams(window.location.search).get("collectno");
+
+        const details = document.getElementById('details');
+        details.innerHTML = '';
+        fetch('collect', {
+            method: 'POST',
+            body: new URLSearchParams({
+                'action': 'ticketDetails',
+                'memberno': memberno,
+                'collectno': collectno
+            })
+        })
+            // 測試用！測完要註解
+            // .then(() => console.log('fetch success'))
+            .then(resp => resp.json())
+            .then(ticket => {
+                showDetails(ticket);
+            })
+            .catch(err => {
+				console.log('發生錯誤:', err);
+			});
+
+        function showDetails(ticket) {
+            details.innerHTML = `
+                <div>
                                     <div class="QR-dt p-4">
                                         <div>
-                                            <h4>1樓單號區 5排 9號</h4>
-                                            <p>台北市南港區市民大道八段99號</p>
-                                            <p>台北流行音樂中心表演廳</p>
+                                            <h4 id='withSeatHeader'>${ticket.blockname} ${ticket.realx}排 ${ticket.realy}號</h4>
+                                            <p>${ticket.aplaceAddress}</p>
+                                            <p>${ticket.aplace}</p>
                                         </div>
                                         <div style="text-align: center;">
                                             <img src="images/qr.png" alt="QR-Ticket-Scanner"
                                                 style="display:block; margin: 0 auto;">
                                             <p>Powered by EzTicket</p>
                                             <ul class="QR-counter-type">
-                                                <li>參加人：吳冠宏</li>
+                                                <li>參加人：${ticket.mname}</li>
                                                 <li>票券編號</li>
-                                                <li>0000000001</li>
+                                                <li>${ticket.collectno}</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -138,9 +115,6 @@
                                 <div class="col-md-12">
                                     <div class="faq-scrollspy">
                                         <div class="faq-accordion pt-0 p-2 mt-5" id="FAQforOrganisers">
-                                            <!-- <div class="faq-accordion-title">
-                                                    <h4>FAQ for Organisers</h4>
-                                                </div> -->
                                             <div class="accordion" id="accordionFAQforOrganisers">
                                                 <div class="accordion-item">
                                                     <h2 class="accordion-header" id="panelsOrgnaisersOpen-heading1">
@@ -158,9 +132,9 @@
                                                         data-bs-parent="#accordionFAQforOrganisers">
                                                         <div class="accordion-body pt-0 pe-0 ps-0">
                                                             <h6>活動名稱</h6>
-                                                            <p style="text-indent: 2rem;">黃金歲月演場會</p>
+                                                            <p style="text-indent: 2rem;">${ticket.aname}</p>
                                                             <h6>活動時間</h6>
-                                                            <p style="text-indent: 2rem;">2023-04-22（六）19:00 ~ 22:00 (GMT+8)</p>
+                                                            <p style="text-indent: 2rem;">${ticket.sessionstime} 至 ${ticket.sessionetime}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -178,9 +152,9 @@
                                                         class="accordion-collapse collapse"
                                                         aria-labelledby="panelsOrgnaisersOpen-heading2"
                                                         data-bs-parent="#accordionFAQforOrganisers">
-                                                        <div class="accordion-body pt-0 pe-0 ps-0">
+                                                        <div class="accordion-body pt-0 pe-0 ps-0" id='withSeatContent'>
                                                             <h6>對號座</h6>
-                                                            <p>1樓單號區 5排 9號</p>
+                                                            <p>${ticket.blockname} ${ticket.realx}排 ${ticket.realy}號</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -199,8 +173,8 @@
                                                         aria-labelledby="panelsOrgnaisersOpen-heading3"
                                                         data-bs-parent="#accordionFAQforOrganisers">
                                                         <div class="accordion-body pt-0 pe-0 ps-0">
-                                                            <p>姓名：吳冠宏</p>
-                                                            <p>電子郵件：vladylo98@gmail.com</p>
+                                                            <p>姓名：${ticket.mname}</p>
+                                                            <p>電子郵件：${ticket.memail}</p>
                                                             <p>行動電話：0912345678</p>
                                                         </div>
                                                     </div>
@@ -212,7 +186,7 @@
                                                             data-bs-target="#panelsOrgnaisersOpen-collapse4"
                                                             aria-expanded="false"
                                                             aria-controls="panelsOrgnaisersOpen-collapse4">
-                                                            注意事項
+                                                            購票提醒
                                                         </button>
                                                     </h2>
                                                     <div id="panelsOrgnaisersOpen-collapse4"
@@ -221,14 +195,27 @@
                                                         data-bs-parent="#accordionFAQforOrganisers">
                                                         <div class="accordion-body pt-0 pe-0 ps-0">
                                                             <p>
-                                                                <ul>
-                                                                    <li>■ 中央流行疫情指揮中心表示，自2022年11月7日起，鬆綁部分社區管制措施，進入營業場所及公共場域亦不再強制量測體溫。</li>
-                                                                    <li>■ 鼓勵民眾下載及使用「臺灣社交距離APP」。</li>
-                                                                    <li>■ 防疫期間落實個人衛生防護：入場請務必全程佩戴口罩、確實手部消毒。</li>
-                                                                    <li>■ 進入場館應遵守場館防疫規範。</li>
-                                                                    <li>■ 場館內禁止攜帶外食、飲料、任何種類之金屬、玻璃、雷射筆、煙火或任何危險物品、且不得吸煙、嚼食檳榔及飲酒。</li>
-                                                                    <li>■ 不遵守規定者，得禁止其入場或強制驅離出場。</li>
-                                                                </ul>
+                                                                ${ticket.aticketremind}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div><div class="accordion-item">
+                                                    <h2 class="accordion-header" id="panelsOrgnaisersOpen-heading4">
+                                                        <button class="accordion-btn pe-0 ps-0 collapsed" type="button"
+                                                            data-bs-toggle="collapse"
+                                                            data-bs-target="#panelsOrgnaisersOpen-collapse5"
+                                                            aria-expanded="false"
+                                                            aria-controls="panelsOrgnaisersOpen-collapse5">
+                                                            注意事項
+                                                        </button>
+                                                    </h2>
+                                                    <div id="panelsOrgnaisersOpen-collapse5"
+                                                        class="accordion-collapse collapse"
+                                                        aria-labelledby="panelsOrgnaisersOpen-heading4"
+                                                        data-bs-parent="#accordionFAQforOrganisers">
+                                                        <div class="accordion-body pt-0 pe-0 ps-0">
+                                                            <p>
+                                                                ${ticket.anote}
                                                             </p>
                                                         </div>
                                                     </div>
@@ -237,27 +224,18 @@
                                         </div>
                                     </div>
                                 </div>
-
-                            </div>
-                        </div>
-                        <!-- <div class="cut-line">
-								<i class="fa-solid fa-scissors"></i>
-							</div> -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    <!-- Invoice End-->
-
-
-    <script src="js/jquery-3.6.0.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/OwlCarousel/owl.carousel.js"></script>
-    <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-    <script src="js/custom.js"></script>
-    <script src="js/night-mode.js"></script>
+                `;
+            
+            let realx = `${ticket.realx}`;
+            let realy = `${ticket.realy}`;
+            if ((realx ?? true) && (realy ?? true)) {
+                const withSeatHeader = document.getElementById('withSeatHeader');
+                const withSeatContent = document.getElementById('withSeatContent');
+                withSeatHeader.textContent='非對號座';
+                withSeatContent.innerHTML=`<h6>對號座</h6>`;
+            }
+        }
+    </script>
 </body>
 
 </html>

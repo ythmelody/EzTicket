@@ -11,7 +11,6 @@ import java.util.List;
 
 @Data // Lombok: Gene getter/setter by @getter/@setter
 public class PcouponDTO {
-
     private Integer pcouponno;
     private String pcouponname;
     private Integer preachprice;

@@ -32,6 +32,11 @@ public class SeatsController {
         return seatsService.getActBlockHasSeats(actNo);
     }
 
+    @GetMapping("/isSessionBlockSeatsExist")
+    public boolean isSessionBlockSeatsExist(@RequestParam int sessionNo, @RequestParam int blockNo) {
+        return seatsService.isSessionBlockSeatsExist(sessionNo, blockNo);
+    }
+
     @GetMapping("/getLockedSeatsBySession")
     public Set<String> getLockedSeatsBySession(@RequestParam int sessionNo){
         return seatsService.getLockedSeatsBySession(sessionNo);
@@ -81,6 +86,11 @@ public class SeatsController {
     @GetMapping("/copyModelSeats")
     public boolean copyModelSeats (@RequestParam int modelNo, @RequestParam int sessionNo, @RequestParam int activityNo){ // HTML 對應 back-activity-seatmgt-existed.html
         return seatsService.copyModelSeats(modelNo, sessionNo, activityNo);
+    }
+
+    @GetMapping("/deleteSeats")
+    public boolean deleteSeats(@RequestParam Integer sessionNo, @RequestParam Integer blockNo){
+        return seatsService.deleteSeats(sessionNo, blockNo);
     }
 
 }

@@ -355,6 +355,7 @@
                     <div class="ocard-left" style="margin-left: 5px">
                       <button
                         class="pe-4 ps-4 co-main-btn min-width"
+                        id="addSession"
                         data-bs-toggle="modal"
                         data-bs-target="#couponModal"
                       >
@@ -543,83 +544,62 @@
               <div class="row">
                 <div class="col-lg-12 col-md-12">
                   <div class="form-group mt-4">
-                    <label class="form-label">請選擇場次：</label>
-                    <select
-                      class="selectpicker"
-                      data-size="5"
-                      data-live-search="true"
-                    >
-                      <option disabled selected>-----請選擇-----</option>
-                      <option value="2300103">
-                        五月天諾亞方舟演唱會 (2023/02/07)
-                      </option>
-                      <option value="2300104">
-                        五月天諾亞方舟演唱會 (2023/02/08)
-                      </option>
-                    </select>
+                    <label class="form-label">場次開始時間：</label>
+                    <div
+                    class="loc-group position-relative"
+                  >
+                    <input
+                      data-language="en"
+                      type="datetime-local"
+                      value=""
+                      id="sessionsTime"
+                    />
+                    
+                  </div>
                   </div>
                   <div class="form-group mt-4">
-                    <label class="form-label">自訂場次座位與否：</label>
-                    <select
-                      class="selectpicker"
-                      data-size="5"
-                      data-live-search="true"
-                    >
-                      <option disabled selected>-----請選擇-----</option>
-                      <option value="true">是</option>
-                      <option value="false">否</option>
-                    </select>
+                    <label class="form-label">場次結束時間：</label>
+                    <div
+                    class="loc-group position-relative"
+                  >
+                    <input
+                      data-language="en"
+                      type="datetime-local"
+                      value=""
+                      id="sessioneTime"
+                    />
+                    
                   </div>
-
-                  <!-- 若不自訂座位才會顯示 -->
+                  </div>
                   <div class="form-group mt-4">
-                    <label class="form-label">是否沿用既有場次規劃：</label>
-                    <select
-                      class="selectpicker"
-                      data-size="5"
-                      data-live-search="true"
-                    >
-                      <option disabled selected>-----請選擇-----</option>
-                      <option value="true">是</option>
-                      <option value="false">否</option>
-                    </select>
+                    <label class="form-label">座位數：</label>
+                    <div
+                    class="loc-group position-relative"
+                  >
+                    <input
+                      data-language="en"
+                      type="number"
+                      value=""
+                      id="maxSeatsQty"
+                      placeholder="請輸入座位數"
+                    />
+                    
                   </div>
-                  <!-- 若沿用既有場次規劃才會顯示 -->
+                  </div>
                   <div class="form-group mt-4">
-                    <label class="form-label">請選擇既有場次規劃：</label>
-                    <select
-                      class="selectpicker"
-                      data-size="5"
-                      data-live-search="true"
-                    >
-                      <option disabled selected>-----請選擇-----</option>
-                      <option value="2300101">
-                        五月天諾亞方舟演唱會 (2023/02/05)
-                      </option>
-                      <option value="2300102">
-                        五月天諾亞方舟演唱會 (2023/02/06)
-                      </option>
-                    </select>
+                    <label class="form-label">站位數:</label>
+                    <div
+                    class="loc-group position-relative"
+                  >
+                    <input
+                      data-language="en"
+                      type="number"
+                      value=""
+                      id="maxStandingQty"
+                      placeholder="請輸入站位數"
+                    />
                   </div>
-                  <!-- 若不沿用既有場次規劃才會顯示 -->
-                  <div class="form-group mt-4">
-                    <label class="form-label">請選擇場地模板：</label>
-                    <select
-                      class="selectpicker"
-                      data-size="5"
-                      data-live-search="true"
-                    >
-                      <option disabled selected>-----請選擇-----</option>
-                      <option value="Taipei_Arena">臺北小巨蛋</option>
-                      <option value="Taipei_Music_Center">
-                        台北流行音樂中心
-                      </option>
-                      <option value="K_Arena">高雄巨蛋</option>
-                      <option value="Kaohsiung_Music_Center">
-                        高雄流行音樂中心
-                      </option>
-                    </select>
-                  </div>
+                 
                 </div>
               </div>
             </div>
@@ -634,7 +614,7 @@
             >
               取消
             </button>
-            <button type="submit" class="main-btn min-width btn-hover h_40">
+            <button class="main-btn min-width btn-hover h_40" id="submitbtn">
               提交
             </button>
           </div>
@@ -844,6 +824,65 @@
           }
           listTab.innerHTML = str;
         });
+    </script>
+    <script>
+   
+
+
+
+      const options = {
+    year: 'numeric',    // 年: 使用4位數
+    month: '2-digit',   // 月: 使用2數位
+    day: '2-digit',     // 日: 使用2數位
+    hour12: false,      // 12小時制: 不使用
+    hour: '2-digit',    // 時: 使用2數位
+    minute: '2-digit',  // 分: 使用2數位
+    timeZoneName: 'short'
+};
+
+
+      document.querySelector("#addSession").addEventListener("click",()=>{
+      submitbtn.addEventListener("click",()=>{
+      const sessionsTime=document.querySelector("#sessionsTime");
+      const sessioneTime=document.querySelector("#sessioneTime");
+      const maxSeatsQty=document.querySelector("#maxSeatsQty");
+      const maxStandingQty=document.querySelector("#maxStandingQty");
+      const submitbtn=document.querySelector("#submitbtn");
+      // const formatSDate = new Date((sessionsTime.value).toISOString());
+      // const formatEDate = new Date((sessioneTime.value).toISOString());
+       const formatSDate = new Date(sessionsTime.value);
+      const formatEDate = new Date(sessioneTime.value);
+      const sDate=new Intl.DateTimeFormat('zh-TW', options).format(formatSDate)
+      const eDate=new Intl.DateTimeFormat('zh-TW', options).format(formatEDate)
+ 
+     
+      submitbtn.addEventListener("click",()=>{
+           
+          fetch('http://localhost:8085/Session/saveSession', {
+          method: 'POST', 
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            sessionsTime:sDate,
+            sessioneTime:eDate,
+            maxSeatsQty:maxSeatsQty.value,
+            maxStandingQty:maxStandingQty.value,
+            activityNo:activityNo
+        })
+        }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => console.log('Success:', response));
+        })
+      })
+      
+      })
+      
+      // console.log(new Intl.DateTimeFormat('zh-TW', options).format(formatSDate));
+      // console.log(new Intl.DateTimeFormat('zh-TW', options).format(formatEDate));
+      // console.log(maxSeatsQty.value);
+      // console.log(maxStandingQty.value);
+      // console.log(activityNo);
     </script>
   </body>
 </html>
