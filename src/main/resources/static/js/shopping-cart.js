@@ -3,45 +3,48 @@ let memberno;
 // 定義持有優惠券
 let fitlist;
 
+
+// $(document).ready(function() {
+//   $('#twcode').twzipcode({
+//   // 設定初始化時的縣市選項樣式
+//   css: ['form-control', 'h_50'],
+//   // 是否顯示縣市選項的下拉式選單
+//   countySel: true,
+//   // 是否顯示鄉鎮市區選項的下拉式選單
+//   districtSel: true,
+//   // 是否顯示郵遞區號的欄位
+//   zipcodeSel: true,
+//   // 設定縣市選項的預設值
+//   countyName: '台北市',
+//   // 設定鄉鎮市區選項的預設值
+//   districtName: '中正區',
+//   // 設定郵遞區號欄位的預設值
+//   zipcode: '100',
+//   // 設定選項欄位的名稱
+//   countyName: 'county',
+//   districtName: 'district',
+//   zipcodeName: 'zipcode',
+//   // 設定縣市選項的 class 名稱
+//   countyClass: 'county',
+//   // 設定鄉鎮市區選項的 class 名稱
+//   districtClass: 'district',
+//   // 設定郵遞區號欄位的 class 名稱
+//   zipcodeClass: 'zipcode',
+//   // 設定縣市選項的 placeholder
+//   countyPlaceholder: '請選擇縣市',
+//   // 設定鄉鎮市區選項的 placeholder
+//   districtPlaceholder: '請選擇鄉鎮市區',
+//   // 設定郵遞區號欄位的 placeholder
+//   zipcodePlaceholder: '郵遞區號'
+// });
+// });
+
 $(document).ready(async () => {
   const response = await fetch('member/getMemberInfo', {
     method: 'GET',
   });
   const data = await response.json();
   memberno = data.memberno;
-
-  // $('#twzipcode').twzipcode({
-  //   // 設定初始化時的縣市選項樣式
-  //   css: ['form-control', 'h_50'],
-  //   // 是否顯示縣市選項的下拉式選單
-  //   countySel: true,
-  //   // 是否顯示鄉鎮市區選項的下拉式選單
-  //   districtSel: true,
-  //   // 是否顯示郵遞區號的欄位
-  //   zipcodeSel: true,
-  //   // 設定縣市選項的預設值
-  //   countyName: '台北市',
-  //   // 設定鄉鎮市區選項的預設值
-  //   districtName: '中正區',
-  //   // 設定郵遞區號欄位的預設值
-  //   zipcode: '100',
-  //   // 設定選項欄位的名稱
-  //   countyName: 'county',
-  //   districtName: 'district',
-  //   zipcodeName: 'zipcode',
-  //   // 設定縣市選項的 class 名稱
-  //   countyClass: 'county',
-  //   // 設定鄉鎮市區選項的 class 名稱
-  //   districtClass: 'district',
-  //   // 設定郵遞區號欄位的 class 名稱
-  //   zipcodeClass: 'zipcode',
-  //   // 設定縣市選項的 placeholder
-  //   countyPlaceholder: '請選擇縣市',
-  //   // 設定鄉鎮市區選項的 placeholder
-  //   districtPlaceholder: '請選擇鄉鎮市區',
-  //   // 設定郵遞區號欄位的 placeholder
-  //   zipcodePlaceholder: '郵遞區號'
-  // });
   // $('#recipient').val(data.comrecipient);
   // $('#rephone').val(data.comrephone);
   // $('#email').val(data.memail);
