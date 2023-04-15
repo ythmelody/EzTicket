@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -23,11 +24,11 @@ public class Session {
     @Column(name = "ACTIVITYNO")
     private Integer activityNo;
     @Column(name = "SESSIONSTIME")
-    @JsonFormat(pattern = "yyyy/MM/dd kk:mm", timezone = "GMT+8", without = JsonFormat.Feature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE)
-    private Date sessionsTime;
+    @JsonFormat(pattern = "yyyy/MM/dd kk:mm", timezone = "GMT+8")
+    private Timestamp sessionsTime;
     @Column(name = "SESSIONETIME")
-    @JsonFormat(pattern = "yyyy/MM/dd kk:mm", timezone = "GMT+8", without = JsonFormat.Feature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE)
-    private Date sessioneTime;
+    @JsonFormat(pattern = "yyyy/MM/dd kk:mm", timezone = "GMT+8")
+    private Timestamp sessioneTime;
     @Column(name = "MAXSEATSQTY")
     private Integer maxSeatsQty;
     @Column(name = "MAXSTANDINGQTY")

@@ -61,9 +61,7 @@ public class SessionController {
         return sessionService.findById(sessionNo);
     }
     @PostMapping("/saveSession")
-    public boolean saveSession(@RequestBody String jsonData) throws ParseException {
-        Gson gson = new Gson();
-        Session session = gson.fromJson(jsonData,Session.class);
+    public boolean saveSession(@RequestBody Session session) throws ParseException {
         sessionService.saveSession(session);
         return true;
     }
