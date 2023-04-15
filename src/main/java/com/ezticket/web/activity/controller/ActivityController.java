@@ -1,12 +1,9 @@
 package com.ezticket.web.activity.controller;
 
-import com.ezticket.web.activity.dto.ACommentDto;
 import com.ezticket.web.activity.dto.ActivityDto;
-import com.ezticket.web.activity.dto.AimgtDto;
-import com.ezticket.web.activity.pojo.AComment;
 import com.ezticket.web.activity.pojo.Activity;
 import com.ezticket.web.activity.service.ActivityService;
-import com.google.gson.Gson;
+import jakarta.servlet.http.Part;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,6 +11,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,10 +81,48 @@ public class ActivityController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PostMapping("/insert")
-    public void insertActivity(@RequestBody String jsonData){
-        Gson gson = new Gson();
-        Activity activity = gson.fromJson(jsonData, Activity.class);
-        activityService.insertActivity(activity);
+
+    @PostMapping("/saveActivity")
+    public Activity saveActivity(
+            @RequestParam("aname") String aName,
+            @RequestParam("aclass") Integer aClassNo,
+            @RequestParam("aperformer") String performer,
+            @RequestParam("host") Integer hostNo,
+            @RequestParam("adiscrip") String aDiscrip,
+            @RequestParam("anote") String aNote,
+            @RequestParam("aticketremind") String aTicketRemind,
+            @RequestParam("aplace") String aPlace,
+            @RequestParam("aplaceaddress") String aPlaceAdress,
+            @RequestParam("asdate") String aSDateString,
+            @RequestParam("aedate") String aEDateString,
+            @RequestParam("wetherseat") Integer wetherSeat,
+            @RequestParam("aseatimg") Part image
+    ) throws IOException, ParseException {
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        Date aSDate = format.parse(aSDateString);
+        Date aEDate = format.parse(aEDateString);
+        Activity activity = new Activity();
+        activity.setAName(aName);
+        activity.setAClassNo(aClassNo);
+        activity.setPerformer(performer);
+        activity.setHostNo(hostNo);
+        activity.setADiscrip(aDiscrip);
+        activity.setANote(aNote);
+        activity.setATicketRemind(aTicketRemind);
+        activity.setAPlace(aPlace);
+        activity.setAPlaceAdress(aPlaceAdress);
+        activity.setASDate( aSDate);
+        activity.setAEDate( aEDate);
+        activity.setWetherSeat(wetherSeat);
+        activity.setAStatus(0);
+
+        // Handle the uploaded image
+        if (image != null) {
+            byte[] imageBytes = image.getInputStream().readAllBytes();
+            activity.setASeatsImg(imageBytes);
+        }
+
+       return activityService.saveActivity(activity);
+
     }
 }

@@ -1,5 +1,6 @@
 package com.ezticket.web.activity.pojo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,5 +26,11 @@ public class BlockPrice {
     // Add by Shawn on 04/11
     @Column(name = "BLOCKTYPE")
     private Integer blockType;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "ACTIVITYNO",
+            insertable = false, updatable = false)
+    private Activity activity;
 
 }

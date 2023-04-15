@@ -7,6 +7,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,13 +43,13 @@ public List<AimgtDto> findAll(){
     }
 
 
-
-
     private AimgtDto entityToDTO(Aimgt aimgt){
         AimgtDto aimgtDto = modelMapper.map(aimgt, AimgtDto.class);
         return aimgtDto;
    }
 
 
-
+    public List<Aimgt> saveAimgt(List<Aimgt> aimgts) {
+    return aimgtRepository.saveAll(aimgts);
+    }
 }

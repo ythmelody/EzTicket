@@ -1,7 +1,6 @@
 package com.ezticket.web.activity.service;
 
 import com.ezticket.web.activity.dto.SessionDto;
-import com.ezticket.web.activity.dto.TorderDto;
 import com.ezticket.web.activity.pojo.Session;
 import com.ezticket.web.activity.repository.SessionRepository;
 import org.modelmapper.ModelMapper;
@@ -52,5 +51,9 @@ public class SessionService {
     //    Add by Shawn on 04/11
     public Optional<SessionDto> findById(Integer sessionNo){
         return sessionRepository.findById(sessionNo).map(this::entityToDTO);
+    }
+
+    public Session saveSession(Session session) {
+        return  sessionRepository.save(session);
     }
 }

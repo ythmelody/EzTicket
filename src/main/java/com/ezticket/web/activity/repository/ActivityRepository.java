@@ -40,4 +40,7 @@ public interface ActivityRepository extends JpaRepository <Activity,Integer>{
     Optional <Activity> findByactivityNo(Integer activityNo);
 
     List<Activity>findAllByActivityNo(Integer activityNo);
+
+    @Query("SELECT LAST_INSERT_ID()")
+    Integer findLastInsert();
 }

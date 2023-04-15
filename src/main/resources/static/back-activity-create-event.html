@@ -1262,12 +1262,13 @@
                                     placeholder="輸入欲新增的活動類別"
                                     id="inputaclassname"
                                   />
-                                        <button id="inputbtn" class=" main-btn btn-hover h_40 pe-4 ps-4">新增</button>
+                                        <button id="inputclassbtn" class=" main-btn btn-hover h_40 pe-4 ps-4">新增</button>
                                   
                                 </div><br>
                                    
                                   <div id="typeList">
-                                    <select name="" id="aclass" class="btn dropdown-toggle btn-light">
+                                    <select name="" id="aclass" class="btn  dropdown-toggle btn-light" onclick="aclassList()" >
+                                      <option value="">節目類別</option>
                                       
                                     </select>
                                   </div>
@@ -1306,16 +1307,7 @@
                                 <label class="form-label fs-16"
                                   >主辦單位</label
                                 >
-                                <div>
-                                  <input
-                                  class="form-control h_50"
-                                  type="text"
-                                  placeholder="輸入欲新增的主辦單位"
-                                  id="inputHost"
-                                />
-                                      <button id="inputHostBtn" class=" main-btn btn-hover h_40 pe-4 ps-4">新增</button>
                                 
-                              </div><br>
                                  
                                 <div>
                                   <select name="" id="host" class="btn dropdown-toggle btn-light">
@@ -1330,12 +1322,12 @@
                                     >上傳活動圖片</label
                                   >
                                   <p class="mt-2 fs-14 d-block mb-3 pe_right">
-                                    上傳色彩鮮豔、充滿活力的圖片作為活動的旗幟！<br />
+                                    *第一張圖片為主圖片<br />
                                   
                                   </p>
                                   
                                   <div class="content-holder mt-4" id="eventImgList">
-                                    <input type="file" accept="image/*" id="file1" /><br>
+                                    <input type="file" accept="image/*" class="aimg" id="file1" value="1"/><br>
                                     <div class="default-event-thumb">
                                        <img id="img1"/>
                                     </div>
@@ -1396,8 +1388,7 @@
                                             <input
                                               class="form-control h_50"
                                               type="text"
-                                              placeholder=""
-                                              value="輸入場地名稱"
+                                              placeholder="輸入場地名稱"
                                               id="aplace"
                                             />
                                           </div>
@@ -1410,8 +1401,8 @@
                                             <input
                                               class="form-control h_50"
                                               type="text"
-                                              placeholder=""
-                                              value="輸入活動地址"
+                                              placeholder="輸入活動地址"
+                                              id="aplaceaddress"
                                             />
                                           </div>
                                         </div>
@@ -1442,6 +1433,7 @@
                                   <label class="form-label fs-16"
                                     >編輯區域票價</label
                                   >
+                                  <p class="mt-2 fs-14 d-block mb-3 pe_right">若此活動都不分區，請在輸入區域名稱寫為"全站"</p>
                                 </div>
                                 <div
                                   class="d-flex align-items-center justify-content-between pt-4 pb-3 full-width"
@@ -1449,7 +1441,12 @@
                                   <h3 class="fs-18 mb-0">
                                     <span
                                       class="venue-event-ticket-counter"
-                                      ></span
+                                      >
+                                      <div>
+                                        <input type="checkbox" value="0" id="wetherseat">
+                                          <label for="">是否有座位</label>
+                                        </div>
+                                      </span
                                     >
                                   </h3>
                                   <div
@@ -1562,147 +1559,6 @@
                                       </div>
                                     </div>
                                   </div>
-                    
-                                  
-                                  <div
-                                    class="setting-item border_bottom pb_30 pt_30"
-                                  >
-                                    <div class="d-flex align-items-start">
-                                      <label class="btn-switch m-0 me-3">
-                                        <input
-                                          type="checkbox"
-                                          class=""
-                                          id="refund-policies-btn"
-                                          value=""
-                                          checked
-                                        />
-                                        <span class="checkbox-slider"></span>
-                                      </label>
-                                      <div class="d-flex flex-column">
-                                        <label class="color-black fw-bold mb-1"
-                                          >此活動是否開放退票</label
-                                        >
-                                        <p class="mt-2 fs-14 d-block mb-0">
-                                         如不開放退票則選擇使選項
-                                        </p>
-                                      </div>
-                                    </div>
-                                    <div
-                                      class="refund-policies-holder"
-                                      style="display: none"
-                                    >
-                                      <div
-                                        class="refund-policies-content border_top mt-4"
-                                      >
-                                        <div class="row grid-padding-8">
-                                          <div class="col-md-12 mb-6">
-                                            <div class="refund-method">
-                                              <div class="form-group mb-0">
-                                           
-                                                <div
-                                                  class="refund-input-content"
-                                                  data-method="refund-id-1"
-                                                >
-                                                  <div
-                                                    class="input-content mb-3"
-                                                  >
-                                             
-                                                    
-                                                    <div
-                                                      class="d-block d-md-flex align-items-center flex-wrap flex-lg-wrap-reverse"
-                                                    >
-                                                      <div
-                                                        class="col-md-4 pl-0"
-                                                      >
-                                              
-                                                    
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div class="refund-method">
-                                            
-                                              <div
-                                                class="refund-input-content"
-                                                data-method="refund-id-2"
-                                              >
-                                                <div class="input-content mb-3">
-                                                  <label
-                                                    class="color-black mb-2 fs-14 fw-bold"
-                                                    >活動開始日期前多少天
-                                                    <span class="red"
-                                                      >*</span
-                                                    ></label
-                                                  >
-                                                  <div
-                                                    class="d-block d-md-flex align-items-center flex-wrap flex-lg-wrap-reverse"
-                                                  >
-                                                    <div class="col-md-4">
-                                                      <div
-                                                        class="input-group input-number"
-                                                      >
-                                                        <input
-                                                          type="number"
-                                                          min="0"
-                                                          max="30"
-                                                          class="form-control"
-                                                          placeholder=""
-                                                        />
-                                                      </div>
-                                                    </div>
-                                                    <div
-                                                      class="input-sign ms-md-3 mt-3 mb-3"
-                                                    >
-                                                      天
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                                <div class="input-content mb-3">
-                                                  <label
-                                                    class="color-black mb-2 fs-14 fw-bold"
-                                                    >退款金額
-                                                    <span class="red"
-                                                      >*</span
-                                                    ></label
-                                                  >
-                                                  <div
-                                                    class="d-block d-md-flex align-items-center flex-wrap flex-lg-wrap-reverse"
-                                                  >
-                                                    <div class="col-md-4">
-                                                      <div
-                                                        class="input-group loc-group position-relative"
-                                                      >
-                                                        <input
-                                                          type="text"
-                                                          value=""
-                                                          class="form-control"
-                                                          placeholder=""
-                                                        />
-                                                        <span
-                                                          class="percentage-icon"
-                                                          ><i
-                                                            class="fa-solid fa-percent"
-                                                          ></i
-                                                        ></span>
-                                                      </div>
-                                                    </div>
-                                                    <div
-                                                      class="input-sign ms-md-3 mt-3 mb-3"
-                                                    >
-                                                      的票券金額
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  
-                                    
                                     <div
                                       class="tags-holder"
                                       style="display: none"
@@ -1723,6 +1579,7 @@
                     <button
                       data-direction="finish"
                       class="btn btn-default btn-hover steps_btn"
+                      id="finish"
                     >
                       編輯完成
                     </button>
@@ -1891,6 +1748,7 @@
       //     console.error(err.stack);
       //   });
     </script>
+ 
     <!--是否有表演者-->>
     <script>
       $(document).ready(function(){
@@ -1956,6 +1814,7 @@
         input.type = "file";
         input.accept = "image/*";
         input.id = "file" + seq;
+        input.className="aimg";
         input.addEventListener("change", changeListener);
         div.append(input);
         imgList.append(input);
@@ -1963,6 +1822,7 @@
         imgList.append(br);
         const img = document.createElement("img");
         img.id = "img" + seq;
+        // img.className="aimg";
         div.append(img);
         const deletebtn=document.createElement("button");
         deletebtn.id="delete"+seq;
@@ -2001,18 +1861,34 @@
     </script>
     <!--活動類別顯示-->
     <script>
-      let aclass=document.querySelector('#aclass')
-      fetch(`http://localhost:8085/Aclass/findAll`)
-      .then((Response) => Response.json())
-      .then((data) => {
-        let str="";
-        for(i of data){
-          str+=`
-                <option value="${i.aclassName}">${i.aclassName}</option>`;
+      // let aclass=document.querySelector('#aclass');
 
-        }
-        aclass.innerHTML=str;
-      });
+      function aclassList(){
+        fetch(`http://localhost:8085/Aclass/findAll`)
+        .then((Response) => Response.json())
+        .then((data) => {
+         let str="";
+          for(i of data){
+          str+=`
+                <option value="${i.aclassNo}">${i.aclassName}</option>`;
+           }
+          aclass.innerHTML=str;
+        });
+      }
+      
+    
+        fetch(`http://localhost:8085/Aclass/findAll`)
+        .then((Response) => Response.json())
+        .then((data) => {
+         let str="";
+          for(i of data){
+          str+=`
+                <option value="${i.aclassNo}">${i.aclassName}</option>`;
+           }
+          aclass.innerHTML=str;
+        });
+      
+      
     </script>
     <!--主辦單位顯示-->
     <script>
@@ -2023,7 +1899,7 @@
         let str="";
         for(i of data){
           str+=`
-                <option value="${i.hostname}">${i.hostname}</option>`;
+                <option value="${i.hostno}">${i.hostname}</option>`;
 
         }
         host.innerHTML=str;
@@ -2051,7 +1927,7 @@
                                           <div>
                                             <span class="text-145">請輸入區域名稱</span>
                                           </div>
-                                        <input type="text" class="blockName">
+                                        <input type="text" class="blockname" id="blockname${count}">
                                          
                                         </div>
                                       </div>
@@ -2069,15 +1945,15 @@
                                         <div>
                                           <span class="text-145">請輸入區域票價</span>
                                         </div>
-                                      <input type="text" class="blockPrice">
+                                      <input type="text" class="blockprice" id="blockprice${count}">
                                        
                                       </div>
                                     </div>
+                                    <div >
+                                      <input type="checkbox" id="blocktype${count}" class="blocktype">
+                                        <label for="">此區是否有座位</label>
+                                      </div>
                                       <div class="d-flex align-items-center">
-                                        <div class="price-badge">
-                                      
-                                        </div>
-                                      
                                        <div
                                           class="dropdown dropdown-default dropdown-text dropdown-icon-item"
                                         >
@@ -2092,13 +1968,122 @@
                                   let blockDivId =`blockDiv${count}`;
                                   deleteBlockPriceBtn.addEventListener("click",()=>{
                                     document.getElementById(blockDivId).remove();
-                                  } )  
-                                  count++;
-      });
-   </script>
-   <!-- insert Activity data -->>
-   <script>
+                                  } );
 
+                                  count++;                           
+      }); 
+                                   
+      const wetherseat=document.querySelector('#wetherseat');
+
+      wetherseat.addEventListener('change',()=>{
+        if(wetherseat.checked){
+          wetherseat.value=1;
+        }else{
+          wetherseat.value=0;
+        }
+      });
+
+   </script>
+      <!--活動類別新增-->>
+      <script>
+        document.querySelector("#inputclassbtn").addEventListener("click",()=>{
+         const inputaclassname=document.querySelector("#inputaclassname");
+         const aclassData={aclassName:inputaclassname.value};
+         fetch('http://localhost:8085/Aclass/saveAclass', {
+          method: 'POST', 
+          headers: {
+                  'Content-Type': 'application/json'
+                   },
+                    body: JSON.stringify(aclassData),
+          }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(response => console.log('Success:', response)); 
+            aclassList()
+            
+         });
+      </script>
+
+   <script>
+    // let urlParams = new URLSearchParams(window.location.search);
+		// const aclassNo = urlParams.get('aclassno');
+    // console.log(aclassNo);
+
+    document.querySelector("#finish").addEventListener("click",()=>{
+       const formData = new FormData();
+     formData.append('aname',$("#aname").val());
+     formData.append('aclass',$("#aclass").find(":selected").val());
+     formData.append('aperformer',$("#aperformer").val());
+     formData.append('host',$("#host").find(":selected").val());
+     formData.append('adiscrip', $("#adiscrip").val());
+     formData.append('anote', $("#anote").val());
+     formData.append('aticketremind', $("#aticketremind").val());
+     formData.append('aplace', $("#aplace").val());
+     formData.append('aplaceaddress', $("#aplaceaddress").val());
+     formData.append('asdate', $("#asdate").val());
+     formData.append('aedate',$("#aedate").val());
+     formData.append('wetherseat', $("#wetherseat").val());
+     console.log($("#asdate").val())
+ 
+      const fileInput = document.querySelector("#seat");
+     formData.append("aseatimg", fileInput.files[0]);
+     fetch('http://localhost:8085/Activity/saveActivity', {
+         method: 'POST',
+         body: formData,
+        }).then(resp => resp.json())
+          .then(data => {
+            console.log(data.activityNo);
+           
+        
+//======================================================================================================
+    const fileInput2= document.querySelectorAll(".aimg");
+    const formData2 = new FormData()
+    formData2.append("activityno",data.activityNo);
+    for (let i = 0; i < fileInput2.length; i++) {
+      formData2.append("images", fileInput2[i].files[0]);
+      if(fileInput2.value===1){
+        formData2.append("aimgmain",$("#file1").val())
+      }
+    }
+     fetch('http://localhost:8085/Aimgt/saveAimgt', {
+         method: 'POST',
+         body: formData2,
+        }).then(resp => resp.json())
+          .then(data => {
+           });
+    //==========================================================================================================
+    const blockName= document.querySelectorAll(".blockname");
+    const blockPrice= document.querySelectorAll(".blockprice");
+    const blockType= document.querySelectorAll(".blocktype");
+
+const formData3 = new FormData()
+let blockDataArray = [];
+for (let i = 0; i < blockName.length; i++) {
+  let blockData = {
+    blockName: blockName[i].value,
+    activityNo: data.activityNo,
+    blockPrice: blockPrice[i].value,
+    blockType: blockType[i].checked ? 1 : 0
+  };
+  blockDataArray.push(blockData);
+}
+
+console.log(blockDataArray);
+fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
+  method: 'POST', 
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(blockDataArray),
+}).then(res => res.json())
+  .catch(error => console.error('Error:', error))
+  .then(response => console.log('Success:', response)); 
+
+
+          });
+         
+
+    });
+				
    </script>
   </body>
 </html>

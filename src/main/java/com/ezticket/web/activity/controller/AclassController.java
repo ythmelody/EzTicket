@@ -1,15 +1,13 @@
 package com.ezticket.web.activity.controller;
 
 import com.ezticket.web.activity.dto.AclassDto;
+import com.ezticket.web.activity.pojo.Aclass;
 import com.ezticket.web.activity.service.AclassService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -20,5 +18,11 @@ public class AclassController {
     @GetMapping("/findAll")
     public List<AclassDto> findAll(){
         return aclassService.findAll();
+    }
+    @PostMapping("/saveAclass")
+    public boolean saveAclass(@RequestBody Aclass jsonData) {
+
+        aclassService.saveAclass(jsonData);
+        return true;
     }
 }
