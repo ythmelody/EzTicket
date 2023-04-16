@@ -21,7 +21,9 @@ public class PlaceModel {
     private String modelName;
     @Column
     private Integer modelStatus;
-    @OneToMany
+    @Column
+    private byte[] modelImg;
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name="modelno", referencedColumnName = "modelno")
     private List<BlockModel> blockModels;
 }

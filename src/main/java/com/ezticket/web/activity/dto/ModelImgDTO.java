@@ -3,8 +3,7 @@ package com.ezticket.web.activity.dto;
 import lombok.Data;
 
 @Data
-public class PlaceModelDTO {
+public class ModelImgDTO {
     private Integer modelno;
-    private String modelName;
-    private Integer modelStatus;
+    private byte[] modelImg;
 }
