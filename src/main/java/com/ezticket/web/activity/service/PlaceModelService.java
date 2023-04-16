@@ -1,7 +1,6 @@
 package com.ezticket.web.activity.service;
 
 import com.ezticket.web.activity.dto.PlaceModelDTO;
-import com.ezticket.web.activity.dto.ModelImgDTO;
 import com.ezticket.web.activity.pojo.PlaceModel;
 import com.ezticket.web.activity.repository.BlockModelRepository;
 import com.ezticket.web.activity.repository.PlaceModelRepository;
@@ -11,9 +10,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -53,7 +49,7 @@ public class PlaceModelService {
     //    新增/修改模板
     @Transactional
     public PlaceModelDTO savePlaceModel(PlaceModelDTO placeModelDTO) {
-//      有找到修改、沒找到新增
+        //      findById 有找到修改、沒找到新增
         PlaceModel placeModel = placeModelRepository.findById(placeModelDTO.getModelno()).orElse(new PlaceModel());
         BeanUtils.copyProperties(placeModelDTO, placeModel);
         PlaceModel savedPlaceModel = placeModelRepository.save(placeModel);
@@ -61,7 +57,7 @@ public class PlaceModelService {
         return placeModelDTO;
     }
 
-//    修改模板(與上方法合併)
+    //    修改模板(與上方法合併)
 
     //    刪除模板
     @Transactional
@@ -69,16 +65,16 @@ public class PlaceModelService {
         placeModelRepository.deleteById(modelno);
     }
 
-    //    新增修改/刪除座位圖
-//    @Transactional
-//    public ModelImgDTO savePlaceModelImg(Integer modelno, byte[] modelImg) {
-//
-//    }
-
     //    查詢座位圖
     @Transactional
     public byte[] getModelImg(Integer modelno) throws Exception {
         return placeModelRepository.findById(modelno).orElseThrow().getModelImg();
     }
+
+    //    新增修改/刪除座位圖
+//    @Transactional
+//    public ModelImgDTO savePlaceModelImg(Integer modelno, byte[] modelImg) {
+//
+//    }
 //    複製模板：findAllSeatsByPlaceModelno -> insert
 }

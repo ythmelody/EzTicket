@@ -25,5 +25,5 @@ public class BlockModel {
     private Integer blockType;
     @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name="blockno", referencedColumnName = "blockno")
-    private List<SeatsModel> blockModels;
+    private List<SeatsModel> seatsModels;
 }
