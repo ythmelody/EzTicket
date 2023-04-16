@@ -7,10 +7,10 @@
 	<meta name="viewport" content="width=device-width, shrink-to-fit=9">
 	<meta name="description" content="Gambolthemes">
 	<meta name="author" content="Gambolthemes">
-	<title>Barren - Simple Online Event Ticketing System</title>
+	<title>新增商品</title>
 
 	<!-- Favicon Icon -->
-	<link rel="icon" type="image/png" href="images/fav.png">
+	<link rel="icon" type="image/png" href="images/ezTicket.png">
 
 	<!-- Stylesheets -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -278,10 +278,10 @@
 					</button>
 					<a class="navbar-brand order-1 order-lg-0 ml-lg-0 ml-2 me-auto" href="index.html">
 						<div class="res-main-logo">
-							<img src="images/logo-icon.svg" alt="">
+							<img src="images/ezTicket-icon.svg" alt="">
 						</div>
 						<div class="main-logo" id="logo">
-							<img src="images/logo.svg" alt="">
+							<img src="images/ezTicket.svg" alt="">
 							<img class="logo-inverse" src="images/dark-logo.svg" alt="">
 						</div>
 					</a>
@@ -289,7 +289,7 @@
 						aria-labelledby="offcanvasNavbarLabel">
 						<div class="offcanvas-header">
 							<div class="offcanvas-logo" id="offcanvasNavbarLabel">
-								<img src="images/logo-icon.svg" alt="">
+								<img src="images/ezTicket-icon.svg" alt="">
 							</div>
 							<button type="button" class="close-btn" data-bs-dismiss="offcanvas" aria-label="Close">
 								<i class="fa-solid fa-xmark"></i>
@@ -501,7 +501,7 @@
 									<div class="tab-from-content">
 										<div class="main-card">
 											<div class="bp-title">
-												<h4><i class="fa-solid fa-circle-info step_icon me-3"></i></h4>
+												<h4><i class="fa-solid fa-circle-info step_icon me-3"></i>新增商品</h4>
 											</div>
 											<div class="p-4 bp-form main-form">
 												<div class="row">
@@ -554,9 +554,9 @@
 																		<select class="selectpicker" data-size="5"
 																			title="選擇主辦單位" data-live-search="true"
 																			name="hostno" id="hostno">
-																			<option value="5001">詠傑股份有限公司</option>
+																			<!-- <option value="5001">詠傑股份有限公司</option>
 																			<option value="5002">尉賢股份有限公司</option>
-																			<option value="5003">晉賢股份有限公司</option>
+																			<option value="5003">晉賢股份有限公司</option> -->
 																		</select>
 																	</div>
 																</div>
@@ -1500,7 +1500,7 @@
 									<!-- <button data-direction="prev" class="btn btn-default btn-hover steps_btn">Previous</button>
 									<button data-direction="next" class="btn btn-default btn-hover steps_btn">Next</button> -->
 									<button data-direction="finish"
-										class="btn btn-default btn-hover steps_btn">Create</button>
+										class="btn btn-default btn-hover steps_btn">新增商品</button>
 								</div>
 							</div>
 						<!-- </div> -->
@@ -1639,6 +1639,18 @@
 			.then(list => {
 				for (let item of list) {
 					$('#pclassSelector').append(`<option value=${item.pclassno}>${item.pclassname}</option>`);
+				}
+			}).then(function () {
+				$('.selectpicker').selectpicker('refresh');
+			})
+
+		
+		//主辦單位從資料庫帶入
+		fetch("/host/gh")
+		.then(resp => resp.json())
+			.then(list => {
+				for (let item of list) {
+					$('#hostno').append(`<option value=${item.hostno}>${item.hostname}</option>`);
 				}
 			}).then(function () {
 				$('.selectpicker').selectpicker('refresh');
@@ -1918,6 +1930,12 @@
 		}
 
 
+	</script>
+
+	<script>
+		$("#edate").datetimepicker({
+
+		});
 	</script>
 
 

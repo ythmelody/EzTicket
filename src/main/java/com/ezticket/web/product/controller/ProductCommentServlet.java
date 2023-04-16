@@ -8,6 +8,7 @@ import com.ezticket.web.product.service.PcommentService;
 import com.ezticket.web.product.service.PdetailsService;
 import com.ezticket.web.product.service.ProductService;
 import com.ezticket.web.product.util.PageResult;
+import com.ezticket.web.users.pojo.Member;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import jakarta.servlet.ServletException;
@@ -15,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -53,8 +55,13 @@ public class ProductCommentServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        //取得所有商品評論
+
         String action = request.getParameter("action");
+        HttpSession session =request.getSession();
+        Boolean loggedin = (Boolean) session.getAttribute("loggedin");
+        Member member = (Member) session.getAttribute("member");
+
+        //取得所有商品評論
         if ("productCommentList".equals(action)) {
             List<Pcomment> pcommentList = pcommentSvc.getAllProductComment();
             list2json(pcommentList, response);
@@ -74,8 +81,13 @@ public class ProductCommentServlet extends HttpServlet {
 
         //新增商品評論 (同時更新商品總評星)
         if ("addProductComment".equals(action)) {
+            if (loggedin == null || loggedin == false) {
+                response.sendRedirect("front-users-mem-sign-in.html");
+                return;
+            }
             Integer productno = Integer.valueOf(request.getParameter("productno"));
-            Integer memberno = Integer.valueOf(request.getParameter("memberno"));
+//            Integer memberno = Integer.valueOf(request.getParameter("memberno"));
+            Integer memberno = member.getMemberno();
             Integer prate = Integer.valueOf(request.getParameter("prate"));
             String pcommentcont = request.getParameter("pcommentcont");
             Pcomment pcomment = pcommentSvc.addProductComment(productno, pcommentcont, prate, memberno);
@@ -102,6 +114,10 @@ public class ProductCommentServlet extends HttpServlet {
 
         //取得單一筆評論
         if ("getOneproductComment".equals(action)) {
+            if (loggedin == null || loggedin == false) {
+                response.sendRedirect("front-users-mem-sign-in.html");
+                return;
+            }
             Integer pcommentno = Integer.valueOf(request.getParameter("pcommentno"));
             Pcomment pcomment = pcommentSvc.getOneProductComment(pcommentno);
             Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
@@ -187,6 +203,10 @@ public class ProductCommentServlet extends HttpServlet {
 
         //提供客人更改評論內容
         if ("updateOneproductComment".equals(action)) {
+            if (loggedin == null || loggedin == false) {
+                response.sendRedirect("front-users-mem-sign-in.html");
+                return;
+            }
             Integer pcommentno = Integer.valueOf(request.getParameter("pcommentno"));
             Integer prate = Integer.valueOf(request.getParameter("prate"));
             String pcommentcont = request.getParameter("pcommentcont");

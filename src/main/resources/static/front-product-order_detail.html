@@ -93,7 +93,8 @@
 								<div class="gift-coupon-icon mt-5 pb-5">
 									<input id="pcommentno" type="hidden" value="">
 									<label class="form-label" style="font-weight: bold" id="title_prate">修改商品評星</label>
-									<label class="form-label" style="font-weight: bold" id="title_oldRate">原始商品評星</label>
+									<label class="form-label" style="font-weight: bold"
+										id="title_oldRate">原始商品評星</label>
 									<form id="ratingForm">
 										<input id="productno" type="hidden" value="">
 										<input id="porderno" type="hidden" value="">
@@ -342,7 +343,12 @@
 					'action': "addProductComment"
 				}),
 
-			}).then(resp => resp.json())
+			}).then(function (resp) {
+				if (resp.redirected) {
+					window.location.href = 'front-users-mem-sign-in.html';
+				} else {
+					resp.json();
+				}})
 				.then(item => {
 					console.log(item);
 					console.log(item.pcommentno);

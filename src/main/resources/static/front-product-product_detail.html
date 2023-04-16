@@ -365,7 +365,7 @@
 								</div>
 								<div class="counter">
 									<span class="down" onClick='decreaseCount(event, this)'>-</span>
-									<input id="count" type="text" value="1">
+									<input id="count" type="text" value="1" max="">
 									<span class="up" onClick='increaseCount(event, this)'>+</span>
 								</div>
 							</div>
@@ -583,11 +583,13 @@
 				pdiscrip.textContent = item.pdiscrip;
 				pprice.textContent = item.pprice;
 				pspecialprice.textContent = item.pspecialprice;
+				$("#count").attr("max",item.pqty);
+				
 				if (item.prateqty < 1) {
 					$("#productRate").children("h4").text('尚無評論');
 				}
 				else if (item.prateqty >= 1) {
-					//.toFixed(2) 呈現至小數點後兩位數
+					//.toFixed(1) 呈現至小數點後兩位數
 					$("#productRate").children("h4").text("商品評星：" + (item.pratetotal / item.prateqty).toFixed(1)).append(`&nbsp;<i class="fa-solid fa-star" style="color: #ffad21!important;"></i>`);
 				}
 				for (let pimgt of item.pimgts) {
@@ -809,7 +811,7 @@
 						for (let i of checkUpArr) {
 							console.log(i);
 							if (checkUpArr.includes(i)) {
-								console.log("點讚圖示");
+								// console.log("點讚圖示");
 								$(`#thumb_${i}`).attr('src', 'images/thumbup_clicked.png');
 								$(`#thumb_${i}`).addClass("thumbbed");
 							}

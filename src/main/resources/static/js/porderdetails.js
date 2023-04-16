@@ -84,7 +84,6 @@ function renewModal(porderno, productno) {
   }).then(resp => resp.json())
     .then(item => {
       console.log(item);
-      // console.log(item);
 
       if (item.pcommentstatus === 1) {
 
@@ -108,7 +107,14 @@ function showcomment(commentno) {
       'pcommentno': commentno,
       'action': "getOneproductComment"
     })
-  }).then(resp => resp.json())
+  }).then(function (response) {
+    //驗證會員是否登入
+    if (response.redirected) {
+      window.location.href = 'front-users-mem-sign-in.html';
+    } else {
+      return response.json();
+    }
+  })
     .then(item => {
       console.log(item);
       //把前面有的值先清空避免吃到舊值
@@ -146,7 +152,14 @@ function confirm_update() {
       'pcommentcont': $('#pcommentcont').val(),
       'action': "updateOneproductComment"
     })
-  }).then((resp) => resp.json())
+  }).then(function (response) {
+    //驗證會員是否登入
+    if (response.redirected) {
+      window.location.href = 'front-users-mem-sign-in.html';
+    } else {
+      return response.json();
+    }
+  })
     .then((item) => {
       console.log(item);
       if (item) {
