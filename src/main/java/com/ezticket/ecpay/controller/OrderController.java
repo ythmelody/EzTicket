@@ -17,6 +17,7 @@ public class OrderController {
 	@PostMapping("/ecpayCheckout")
 	public String ecpayCheckout(Integer porderno) {
 		String aioCheckOutALLForm = orderService.ecpayCheckout(porderno);
+		// 取得回傳的Form，然後導向綠界付款頁面
 		return "redirect:" + aioCheckOutALLForm;
 	}
 

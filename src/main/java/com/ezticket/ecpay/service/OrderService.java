@@ -29,27 +29,39 @@ public class OrderService {
 	private ProductDAO productRepository;
 
 	public String ecpayCheckout(Integer proderno) {
-		
+
+		// 綠界的方法裡面都有註解，可以點進去看
+
+		// 綠界規定須20碼
 		String uuId = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 15);
-		
+		// 建立AllInOne物件
 		AllInOne all = new AllInOne("");
+		// 取得訂單
 		Porder porder = porderRepository.getReferenceById(proderno);
 		AioCheckOutALL obj = new AioCheckOutALL();
+		// 放入訂單編號 亂數15碼+訂單編號5碼
 		obj.setMerchantTradeNo(uuId + proderno);
+		// 取得當前時間，放入時間
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 		String Now = now.format(formatter);
 		obj.setMerchantTradeDate(Now);
+		// 放入結帳金額
 		obj.setTotalAmount(porder.getPchecktotal().toString());
+		// 交易敘述
 		obj.setTradeDesc("ezTicket 售票平台");
+		// 商品明細只能是一個字串 <br> \n 能換行的都試過了，不要浪費時間
+		// 將品項一個一個加入字串中
 		String itemList = "";
 		List<Pdetails> pdetailsList = pdetailsRepository.findByPorderno(proderno);
 		for (int i = 0; i < pdetailsList.size(); i++) {
 			Pdetails pdetails = pdetailsList.get(i);
 			Product product = productRepository.getByPrimaryKey(pdetails.getPdetailsNo().getProductno());
-			itemList += (i + 1) + ". " + product.getPname() + " x " + pdetails.getPorderqty() + " ";
+			itemList += (i + 1) + ". " + product.getPname() + " x " + pdetails.getPorderqty() + ", ";
 		}
+		// 塞入商品明細
 		obj.setItemName(itemList);
+		// 因應大家IP不同，用方法取得自己的ip
 		InetAddress ip = null;
 		try {
 			// 使用可能會拋出異常的方法
@@ -58,11 +70,13 @@ public class OrderService {
 			// 處理異常
 			System.err.println(e);
 		}
-		
 		String hostname = ip.getHostAddress();
+		// 交易成功時回傳值接收的路徑，但是收不到還在測試中
 		String returnURL = "http://" + hostname + ":8085/ecpayReturn";
 		obj.setReturnURL(returnURL);
+		// 是否需要額外的付款資訊
 		obj.setNeedExtraPaidInfo("N");
+		// 會回傳一個form表單
 		String form = all.aioCheckOut(obj, null);
 		
 		return form;
