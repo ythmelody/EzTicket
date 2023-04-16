@@ -239,11 +239,18 @@ function saveCoupon(couponno, event) {
 		}
 	});
 }
+// 一次發送給全部會員
 function takeCouponForMember(pcouponno){
   fetch(`/pcouponholding/takeAll?pcouponno=${pcouponno}`,{
       method: 'GET',
     }).then(response => response.json())
     .then(data => {
-      console.log(data);
-    })
+			if (data == true){
+        swal("發送成功", {
+					icon: "success",
+          buttons: false,
+          timer: 1000,
+        });
+				}
+    });
 }

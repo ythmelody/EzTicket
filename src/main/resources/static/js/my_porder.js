@@ -1,27 +1,39 @@
-// 獲取購物車元素
-let cart = document.getElementById('cart');
-// 獲取購物車商品數量元素
-let badge = cart.querySelector('.badge');
-// 設置初始購物車商品數量為 0
-let count = 0;
+// 購物車商品清單
+let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 // 載入未結帳商品數量
 $(document).ready(() => {
+  cartCount();
+})
+$('#product-incart').click(function () {addCartByCount()});
+$('#buyNow').click(function () {
+  addCartByCount();
+  swal({
+    title: "是否前往購物車結帳?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true
+  }).then((confirm) => {
+    if (confirm) {
+      window.location.href = 'front-product-shopping_cart.html';
+    } else {
+      return Promise.reject('取消操作');
+    }
+    })
+});
+// 計算目前商品數量
+function cartCount(){
+  let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+  // 設置初始購物車商品數量為 0
+  let count = 0;
   if (cartItems.length !== 0) {
     for (item of cartItems) {
       count += Number(item.quantity);
     }
-    badge.innerHTML = count;
   }
-})
-// 購物車商品清單
-let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+  $('.badge').text(count);
+}
 // 添加事件監聽器
 function addCart(e) {
-  // 當使用者點擊加入購物車時，執行這個函數
-  // 更新購物車商品數量
-  count++;
-  badge.innerHTML = count;
-  // 存入 localStorage
   const productno = e;
   fetch(`/ProductInfoServlet?action=singleProduct&productno=${productno}`)
     .then(response => {
@@ -40,7 +52,10 @@ function addCart(e) {
         cartItems.push(newItem);
       }
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    })
+      cartCount();
+      addMsg();
+    });
+  // 刷新購物車數量
 }
 
 function buyNow(e) {
@@ -49,7 +64,6 @@ function buyNow(e) {
     title: "是否前往購物車結帳?",
     icon: "warning",
     buttons: true,
-    dangerMode: true
   }).then((confirm) => {
     if (confirm) {
       window.location.href = 'front-product-shopping_cart.html';
@@ -57,4 +71,32 @@ function buyNow(e) {
       return Promise.reject('取消操作');
     }
   })
+}
+
+function addCartByCount() {
+  let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+  let qty = document.querySelector('#count').value;
+  let cartqty = Number($('.badge').text());
+  $('.badge').text(Number(cartqty + qty));
+  let itemqty;
+  for (item of cartItems) {
+    if (item.data.productno == productno) {
+      itemqty = item;
+    }
+  }
+  if (itemqty) {
+    itemqty.quantity += parseInt(qty);
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  } else {
+    addCart(productno);
+  }
+  addMsg();
+  cartCount();
+}
+function addMsg(){
+  swal("加入購物車成功", {
+    icon: "success",
+    buttons: false,
+    timer: 1000,
+  });
 }

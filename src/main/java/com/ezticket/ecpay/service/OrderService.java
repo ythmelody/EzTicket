@@ -12,8 +12,6 @@ import ecpay.payment.integration.domain.QueryTradeInfoObj;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -60,20 +58,31 @@ public class OrderService {
 		}
 		// 塞入商品明細
 		obj.setItemName(itemList);
-		// 因應大家IP不同，用方法取得自己的ip
-		InetAddress ip = null;
-		try {
-			// 使用可能會拋出異常的方法
-			ip = InetAddress.getLocalHost();
-		} catch (UnknownHostException e) {
-			// 處理異常
-			System.err.println(e);
-		}
-		String hostname = ip.getHostAddress();
-		// 交易成功時回傳值接收的路徑，但是收不到還在測試中
-		String returnURL = "https://" + hostname + ":8085/ecpay/return";
 
-		obj.setReturnURL("https://dc38-220-134-181-136.jp.ngrok.io/ecpay/return");
+
+		// 這段沒用了，沒有HTTP收不到綠界回傳值-----------------------------------------------
+//		// 因應大家IP不同，用方法取得自己的ip
+//		InetAddress ip = null;
+//		try {
+//			// 使用可能會拋出異常的方法
+//			ip = InetAddress.getLocalHost();
+//		} catch (UnknownHostException e) {
+//			// 處理異常
+//			System.err.println(e);
+//		}
+//		String hostname = ip.getHostAddress();
+//		// 交易成功時回傳值接收的路徑，但是收不到還在測試中
+//		String returnURL = "https://" + hostname + ":8085/ecpay/return";
+		// -------------------------------------------------------------------------------
+
+		//	放入你自己架的HTTP
+		//	沒有的話下載並安裝 Ngrok，並註冊一個 Ngrok 帳號。
+		//	啟動本地伺服器，例如 Tomcat 或是 Spring Boot。
+		//	在命令列輸入 ngrok http 8080，其中 8080 是你本機伺服器的 Port，請依實際情況更改。
+		//	Ngrok 會顯示一個公開的 URL，例如 http://xxxxxx.ngrok.io，複製此 URL。
+		String returnURL = "https://dc38-220-134-181-136.jp.ngrok.io";
+
+		obj.setReturnURL(returnURL + "/ecpay/return");
 		// 是否需要額外的付款資訊
 		obj.setNeedExtraPaidInfo("N");
 		// 會回傳一個form表單

@@ -60,7 +60,9 @@ public class PcouponholdingService {
         PcouponholdingPK pcouponholdingPK = new PcouponholdingPK();
         pcouponholdingPK.setMemberno(memberno);
         pcouponholdingPK.setPcouponno(pcouponno);
-
+        if (pcouponholdingRepository.existsById(pcouponholdingPK)){
+            return false;
+        }
         Pcouponholding pcouponholding = pcouponholdingRepository.findById(pcouponholdingPK)
                 .orElseGet(() -> {
                     Pcouponholding newPcouponholding = new Pcouponholding();
