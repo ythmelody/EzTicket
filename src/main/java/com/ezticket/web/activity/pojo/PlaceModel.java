@@ -11,17 +11,17 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table
+@Table(name="placemodel")
 public class PlaceModel {
     @Column
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer modelno;
-    @Column
+    @Column(name="modelname")
     private String modelName;
-    @Column
+    @Column(name="modelstatus")
     private Integer modelStatus;
-    @Column
+    @Column(name="modelimg")
     private byte[] modelImg;
     @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name="modelno", referencedColumnName = "modelno")

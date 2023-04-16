@@ -2,7 +2,6 @@ package com.ezticket.web.activity.service;
 
 import com.ezticket.web.activity.dto.PlaceModelDTO;
 import com.ezticket.web.activity.pojo.PlaceModel;
-import com.ezticket.web.activity.repository.BlockModelRepository;
 import com.ezticket.web.activity.repository.PlaceModelRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -19,8 +18,6 @@ public class PlaceModelService {
     @Autowired
     private PlaceModelRepository placeModelRepository;
     @Autowired
-    private BlockModelRepository blockModelRepository;
-    @Autowired
     private ModelMapper modelMapper;
 
     //    turn Entity into DTO
@@ -36,6 +33,7 @@ public class PlaceModelService {
                 .collect(Collectors.toList());
     }
 
+
     public Optional<PlaceModel> findById(Integer modelno) {
         return placeModelRepository.findById(modelno);
     }
@@ -49,8 +47,13 @@ public class PlaceModelService {
     //    新增/修改模板
     @Transactional
     public PlaceModelDTO savePlaceModel(PlaceModelDTO placeModelDTO) {
-        //      findById 有找到修改、沒找到新增
-        PlaceModel placeModel = placeModelRepository.findById(placeModelDTO.getModelno()).orElse(new PlaceModel());
+        PlaceModel placeModel;
+        if (placeModelDTO.getModelno()!=null) {
+            //      findById 有找到修改、沒找到新增
+            placeModel = placeModelRepository.findById(placeModelDTO.getModelno()).orElse(new PlaceModel());
+        } else {
+            placeModel = new PlaceModel();
+        }
         BeanUtils.copyProperties(placeModelDTO, placeModel);
         PlaceModel savedPlaceModel = placeModelRepository.save(placeModel);
         BeanUtils.copyProperties(savedPlaceModel, placeModelDTO);
