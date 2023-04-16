@@ -1,5 +1,6 @@
 package com.ezticket.web.product.service;
 
+import com.ezticket.ecpay.service.OrderService;
 import com.ezticket.web.product.dto.*;
 import com.ezticket.web.product.pojo.*;
 import com.ezticket.web.product.repository.PcouponholdingRepository;
@@ -26,6 +27,8 @@ public class PorderService {
     private PdetailsRepository pdetailsRepository;
     @Autowired
     private PcouponholdingRepository pcouponholdingRepository;
+    @Autowired
+    private OrderService ecpayorderService;
     @Autowired
     private ModelMapper modelMapper;
 

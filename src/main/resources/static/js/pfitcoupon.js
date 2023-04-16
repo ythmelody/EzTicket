@@ -110,14 +110,8 @@ function addCoupon() {
 		'pcoupnsdate': formatDate($("#pcoupnsdateup").val(), $("#pcoupnsdatedown").val()),
 		'pcoupnedate': formatDate($("#pcoupnedateup").val(), $("#pcoupnedatedown").val())
 	}
-	swal({
-		title: "是否新增優惠券?",
-		icon: "warning",
-		buttons: true,
-		dangerMode: true
-	}).then((confirm) => {
-		if (confirm) {
-			fetch('/pcoupon/add', {
+
+			fetch('/pcoupon/addtest', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -125,17 +119,23 @@ function addCoupon() {
 				body: JSON.stringify(couponbody)
 			}).then(response => {
 				if (response.ok) {
+					$('#couponModal').modal('hide');
 					swal('新增成功', { icon: "success" });
 				} else {
-					swal('新增失敗', { icon: "error" });
+					response.json().then(data => {
+						console.error(data);
+						$("#pcouponname").prev("span").text(data.pcouponname);
+						$("#productno").prev("span").text(data.productno);
+						$("#pdiscount").prev("span").text(data.pdiscount);
+						$("#preachprice").prev("span").text(data.preachprice);
+					});
 				}
-			});
-		} else {
-			return Promise.reject('取消操作');
-		}
-	});
+			})
 }
 
+$('.datepicker-here').datepicker({
+	minDate: new Date() // 將最小日期設定為當前日期
+});
 
 function formatDate(date, time) {
 	const dateTime = new Date(`${date} ${time}`);

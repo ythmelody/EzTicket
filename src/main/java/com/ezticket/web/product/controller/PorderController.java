@@ -1,5 +1,6 @@
 package com.ezticket.web.product.controller;
 
+import com.ezticket.ecpay.service.OrderService;
 import com.ezticket.web.product.dto.AddPorderDTO;
 import com.ezticket.web.product.dto.PorderDTO;
 import com.ezticket.web.product.dto.PorderDetailsDTO;
@@ -15,6 +16,7 @@ import java.util.List;
 public class PorderController {
 
     @Autowired private PorderService porderService;
+    @Autowired private OrderService orderService;
 
     @GetMapping("/list")
     public List<PorderDTO> getAllPorderlist(){
@@ -43,5 +45,10 @@ public class PorderController {
     @ResponseBody
     public Integer addPorder(@RequestBody AddPorderDTO addPorderDTO){
         return porderService.addPorder(addPorderDTO).getPorderno();
+    }
+    @PostMapping("/addtest")
+    @ResponseBody
+    public String addPorder1(@RequestBody AddPorderDTO addPorderDTO){
+        return orderService.ecpayCheckout(porderService.addPorder(addPorderDTO).getPorderno());
     }
 }

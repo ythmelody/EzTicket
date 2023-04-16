@@ -317,7 +317,7 @@
 							<div class="main-card">
 
 								<div class="bp-title">
-									<h4>帳單資訊</h4>
+									<h4>配送資訊</h4>
 								</div>
 
 								<div class="bp-content bp-form">
@@ -341,21 +341,21 @@
 											<div class="col-lg-6 col-md-12">
 												<div class="form-group mt-4">
 													<label class="form-label">郵遞區號</label>
-													<input name="zipcode" class="form-control h_50" type="text" disabled>
+													<input id="readdress1" name="zipcode" class="form-control h_50" type="text" disabled>
 												</div>
 											</div>
 
 											<div class="col-lg-6 col-md-12">
 												<div class="form-group mt-4">
 													<label class="form-label">縣市</label>
-													<select name="county" class="form-control h_50"></select>
+													<select id="readdress2" name="county" class="form-control h_50"></select>
 												</div>
 											</div>
 
 											<div class="col-lg-6 col-md-12">
 												<div class="form-group main-form mt-4">
 													<label class="form-label">區域</label>
-													<select name="district" class="form-control h_50"></select>
+													<select id="readdress3" name="district" class="form-control h_50"></select>
 												</div>
 											</div>
 
@@ -376,7 +376,7 @@
 								</div>
 								<div class="bp-content bp-form">
 									<div class="row">
-										<div class="col-lg-12 col-md-12">
+										<!-- <div class="col-lg-12 col-md-12">
 											<div class="form-group mt-4">
 												<label class="form-label">信用卡卡號</label>
 												<input class="form-control h_50" type="text" placeholder="" value="">
@@ -393,10 +393,10 @@
 												<label class="form-label">信用卡安全碼(CVV)</label>
 												<input class="form-control h_50" type="text" placeholder="" value="">
 											</div>
-										</div>
+										</div> -->
 										<div class="col-lg-12 col-md-12">
 											<button class="main-btn btn-hover h_50 w-100 mt-5" type="button"
-												onclick="addPorder()">確認並付款</button>
+												onclick="addPorder()">建立訂單並前往付款</button>
 										</div>
 									</div>
 								</div>
