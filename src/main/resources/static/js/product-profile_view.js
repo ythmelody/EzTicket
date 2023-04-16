@@ -210,8 +210,6 @@ function fetchPcouponList(e) {
 			const couponlist = document.querySelector('#coupons-02');
 			couponlist.innerHTML = "";
 			const couponbody = data.map(obj => {
-        console.log(data);
-        console.log()
 				return `<div class="main-card mt-4">
                   <div class="contact-list coupon-active">
                     <div class="top d-flex flex-wrap justify-content-between align-items-center p-4 border_bottom">
