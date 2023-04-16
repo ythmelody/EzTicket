@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Entity
 @NoArgsConstructor
@@ -21,4 +23,7 @@ public class BlockModel {
     private Integer modelno;
     @Column
     private Integer blockType;
+    @OneToMany
+    @JoinColumn(name="blockno", referencedColumnName = "blockno")
+    private List<SeatsModel> blockModels;
 }

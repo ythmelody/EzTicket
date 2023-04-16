@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Entity
 @NoArgsConstructor
@@ -19,4 +21,7 @@ public class PlaceModel {
     private String modelName;
     @Column
     private Integer modelStatus;
+    @OneToMany
+    @JoinColumn(name="modelno", referencedColumnName = "modelno")
+    private List<BlockModel> blockModels;
 }
