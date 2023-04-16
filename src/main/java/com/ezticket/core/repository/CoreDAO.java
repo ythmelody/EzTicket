@@ -8,7 +8,7 @@ public interface CoreDAO <V ,I> {
 
     void insert(V vo);
 
-    void update(V vo);
+    Boolean update(V vo);
 
     V getByPrimaryKey(I pk);
 

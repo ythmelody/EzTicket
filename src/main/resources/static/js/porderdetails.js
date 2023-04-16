@@ -31,7 +31,7 @@ $(document).ready(() => {
                               <td>$${data.products[i].pspecialprice}</td>
                               <td>$${data.pdetails[i].pprice}</td>
                               <td>
-                              <div style="text-align:center">
+                              <div style="text-align:center" id="commentContainer">
                               <button style="border: none;  background-color:transparent" data-bs-toggle="modal"
                               data-bs-target="#couponModal" onclick="renewModal(${data.porderno},${data.products[i].productno})" id="commentButton"><img src="images/cmtbtn.png"></button>
                               </div>
@@ -48,7 +48,9 @@ $(document).ready(() => {
                             <td>$<s>${data.products[i].pprice}</s></td>
                             <td>$${data.products[i].pspecialprice}</td>
                             <td>$${data.pdetails[i].pprice}</td>
-                            <td><div style="text-align:center"><a href="front-product-product_detail.html?productno=${data.products[i].productno}" target="_blank">已評論</a></div></td>
+                            <td> <div style="text-align:center" id="commentContainer">
+                            <button style="border: none;  background-color:transparent" data-bs-toggle="modal"
+                            data-bs-target="#couponModal_update" onclick="showcomment(${data.pdetails[i].pcommentstatus})">查看評論</button></td>
        </tr>`;
           total += data.pdetails[i].pprice;
           detailsbody.innerHTML += detailslist;
@@ -85,7 +87,7 @@ function renewModal(porderno, productno) {
       // console.log(item);
 
       if (item.pcommentstatus === 1) {
-        $("#commentButton").html("已評論");
+
       } else {
         $("#productno").val('');
         $("#porderno").val('');
@@ -94,6 +96,73 @@ function renewModal(porderno, productno) {
         $("#productno").val(item.pdetailsNo.productno);
         $("#porderno").val(item.pdetailsNo.porderno);
         $("#pcommentstatus").val(item.pcommentstatus);
+      }
+    })
+}
+
+// 點擊單一評論並顯示
+function showcomment(commentno) {
+  fetch('ProductCommentServlet', {
+    method: 'POST',
+    body: new URLSearchParams({
+      'pcommentno': commentno,
+      'action': "getOneproductComment"
+    })
+  }).then(resp => resp.json())
+    .then(item => {
+      console.log(item);
+      //把前面有的值先清空避免吃到舊值
+      $('#pcommentno').val("");
+      $('#ccontent').text("");
+      $('#title_oldRate').html("");
+
+      $('#pcommentno').val(item.pcommentno);
+      $('#title_oldRate').html("原始商品評星");
+      for (let star = 0; star < item.prate; star++) {
+        $('#title_oldRate').append(`&nbsp;<i class="fa-solid fa-star" style="color: #ffad21!important;"></i>`);
+      }
+
+      $('#pcommentcont').text(item.pcommentcont);
+
+      if (item.pcommentstatus === -1) {
+        $("#cstatus>option[value='-1']").prop("selected", true);
+      } else if (item.pcommentstatus === 0) {
+        $("#cstatus>option[value='0']").prop("selected", true);
+      } else {
+        $("#cstatus>option[value='1']").prop("selected", true);
+
+      }
+    })
+  return commentno;
+}
+
+// 修改單一評論狀態
+function confirm_update() {
+  fetch('ProductCommentServlet', {
+    method: 'POST',
+    body: new URLSearchParams({
+      'pcommentno': $('#pcommentno').val(),
+      'prate': $("#prate").val(),
+      'pcommentcont': $('#pcommentcont').val(),
+      'action': "updateOneproductComment"
+    })
+  }).then((resp) => resp.json())
+    .then((item) => {
+      console.log(item);
+      if (item) {
+        swal({
+          title: "更新成功",
+          icon: "success",
+          closeOnClickOutside: true,
+        }).then(() => {
+          window.location.reload();
+        })
+      } else {
+        swal({
+          title: "更新失敗",
+          icon: "error",
+          closeOnClickOutside: true,
+        });
       }
     })
 }

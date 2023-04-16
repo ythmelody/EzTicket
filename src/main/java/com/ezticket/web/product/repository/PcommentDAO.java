@@ -3,6 +3,7 @@ package com.ezticket.web.product.repository;
 import com.ezticket.core.repository.CoreDAO;
 import com.ezticket.web.product.pojo.Pcomment;
 import com.ezticket.web.product.pojo.Product;
+import com.ezticket.web.product.util.PageResult;
 
 import java.util.List;
 import java.util.Map;
@@ -19,4 +20,6 @@ public interface PcommentDAO extends CoreDAO<Pcomment,Integer> {
 
     public boolean update(Integer pcommentno ,Integer pcommentstatus);
     public List<Pcomment> getAll(Map<String, String[]> map) ;
+
+    public PageResult<Pcomment> getAll(Map<String, String[]> map, Integer pageNumber, Integer pageSize);
 }

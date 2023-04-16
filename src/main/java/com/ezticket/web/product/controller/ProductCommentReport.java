@@ -3,6 +3,7 @@ package com.ezticket.web.product.controller;
 
 import com.ezticket.web.product.pojo.Preport;
 import com.ezticket.web.product.service.PreportService;
+import com.ezticket.web.product.util.PageResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import jakarta.servlet.ServletException;
@@ -94,6 +95,21 @@ public class ProductCommentReport extends HttpServlet {
             String json =gson.toJson(preport);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
+            PrintWriter out = response.getWriter();
+            out.print(json);
+            out.flush();
+            return;
+        }
+
+        if ("CommentReportSearchPage".equals(action)) {
+            Map<String, String[]> map = request.getParameterMap(); //將得到的資料轉成map
+            Integer pageNumber = Integer.valueOf(request.getParameter("pageNumber"));
+            Integer pageSize = Integer.valueOf(request.getParameter("pageSize"));
+            PageResult<Preport> commentReportList = preportSvc.getAllBySearch(map,pageNumber,pageSize); //轉交進行複合查詢
+            Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
+            String json = gson.toJson(commentReportList);
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
             PrintWriter out = response.getWriter();
             out.print(json);
             out.flush();

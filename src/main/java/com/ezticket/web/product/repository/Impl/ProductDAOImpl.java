@@ -14,7 +14,6 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +70,7 @@ public class ProductDAOImpl implements ProductDAO {
 
     @Transactional
     @Override
-    public void update(Product product) {
+    public Boolean update(Product product) {
         final StringBuilder UPDATE_SQL = new StringBuilder().append("UPDATE Product SET ");
         UPDATE_SQL.append("pclassno = :pclassno, ").append("pname =:pname, ").append("hostno =:hostno, ").append("pdiscrip = :pdiscrip, ")
                 .append("pprice =:pprice, ").append("pspecialprice =:pspecialprice, ").append("pqty =:pqty, ").append("psdate =:psdate, ")
@@ -94,6 +93,7 @@ public class ProductDAOImpl implements ProductDAO {
         query.setParameter("prateqty", product.getPrateqty());
         query.setParameter("productno", product.getProductno());
         query.executeUpdate();
+        return true;
     }
 
     @Override
