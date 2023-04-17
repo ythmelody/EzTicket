@@ -136,7 +136,7 @@ function addCoupon() {
 $('.datepicker-here').datepicker({
 	minDate: new Date() // 將最小日期設定為當前日期
 });
-
+// 時間轉換器
 function formatDate(date, time) {
 	const dateTime = new Date(`${date} ${time}`);
 	const year = dateTime.getFullYear();
@@ -147,20 +147,28 @@ function formatDate(date, time) {
 	const seconds = ('0' + dateTime.getSeconds()).slice(-2);
 	return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
-
+// 時間拆解器
+function datetimeParser(datetime) {
+  const dateParts = datetime.split(" ");
+  const date = dateParts[0];
+  const time = dateParts[1];
+  return { date, time };
+}
 function editCoupon(edit) {
 	const couponno = edit;
 	fetch(`/pcoupon/getbyno?id=${couponno}`, {
 		method: 'GET',
 	}).then(response => response.json())
 		.then(data => {
+			const { date: datestart, time: timestart } = datetimeParser(data[0].pcoupnsdate);
+			const { date: dateend, time: timeend } = datetimeParser(data[0].pcoupnedate);
 			$('#editpcouponno').val(data[0].pcouponno);
 			$('#editproductno').val(data[0].pfitcoupons && data[0].pfitcoupons[0] && data[0].pfitcoupons[0].pfitcouponNo.productno || "");
 			$('#editpcouponname').val(data[0].pcouponname);
 			$('#editpdiscount').val(data[0].pdiscount);
 			$('#editpreachprice').val(data[0].preachprice);
-			formatDate($("#editpcoupnsdateup").val(), $("#editpcoupnsdatedown").val());
-			formatDate($("#editpcoupnedateup").val(), $("#editpcoupnedatedown").val());
+			$("#editpcoupnsdateup").val(datestart), $("#editpcoupnsdatedown").val(timestart);
+			$("#editpcoupnedateup").val(dateend), $("#editpcoupnedatedown").val(timeend);
 		})
 }
 
@@ -171,7 +179,7 @@ function editsaveCoupon() {
 		'productno': $("#editproductno").val(),
 		'pdiscount': +$("#editpdiscount").val(),
 		'preachprice': +$("#editpreachprice").val(),
-		'pcoupnsdate': formatDate($("#editpcoupnsdateup").val(), $("#editpcoupnsdatedown").val()),
+		'pcoupnsdate': formatDate($("#editpcoupnsdateup").val(),$("#editpcoupnsdatedown").val()),
 		'pcoupnedate': formatDate($("#editpcoupnedateup").val(),$("#editpcoupnedatedown").val())
 	}
 	swal({

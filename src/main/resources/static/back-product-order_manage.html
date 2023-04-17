@@ -342,21 +342,23 @@
 										</div>
 										<div class="col-lg-3 col-md-6">
 											<div class="form-group">
-												<select class="selectpicker">
-													<option value="All Orders" selected>All Orders</option>
-													<option value="Refunded">Refunded</option>
-													<option value="Refund Rejected">Refund Rejected</option>
-													<option value="Refund Requested">Refund Requested</option>
-													<option value="Partially Refunded">Partially Refunded</option>
+												<select id="filterToPay" class="selectpicker">
+													<option value="all" selected>付款狀態</option>
+													<option value="0">未付款</option>
+													<option value="1">已付款</option>
+													<option value="2">已退款</option>
 												</select>
 											</div>
 										</div>
 										<div class="col-lg-3 col-md-6">
 											<div class="form-group">
-												<select class="selectpicker">
-													<option value="all">All Orders</option>
-													<option value="1">Active</option>
-													<option value="0">Canceled</option>
+												<select id="filterToActive" class="selectpicker">
+													<option value="all">訂單狀態</option>
+													<option value="0">未處理</option>
+													<option value="1">已出貨</option>
+													<option value="2">已結案</option>
+													<option value="3">已取消</option>
+													<option value="4">取消申請</option>
 												</select>
 											</div>
 										</div>
@@ -403,6 +405,7 @@
 																	<option value="1">已出貨</option>
 																	<option value="2">已結案</option>
 																	<option value="3">已取消</option>
+																	<option value="4">取消申請</option>
 																</select>
 																<button class="save-status">儲存</button>
 															</td>
