@@ -39,10 +39,12 @@ public class Session {
     private Integer standingQty;
 
 
-    @JsonBackReference
+//    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "ACTIVITYNO",insertable = false, updatable = false)
     private Activity activity;
-
-
+//    @JsonBackReference
+//    @ManyToOne
+//    @JoinColumn(name = "ACTIVITYNO",insertable = false, updatable = false)
+//    private Activity activity2;
 }

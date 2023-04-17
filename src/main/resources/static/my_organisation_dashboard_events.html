@@ -538,6 +538,7 @@
           .then((data) => {
            let str="";
            let status="";
+           let count=1;
             for(i of data){
             // if (search.value.match(i.aname)){
              
@@ -573,18 +574,18 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
                               <a href="#" class="dropdown-item"
-                                ><i class="fa-solid fa-gear me-3"></i>編輯活動</a
+                                ><i class="fa-solid fa-gear me-3" id="editbtn${count}"></i>編輯活動</a
                               >
                               <a href="#" class="dropdown-item"
-                                ><i class="fa-solid fa-eye me-3"></i>預覽活動
+                                ><i class="fa-solid fa-eye me-3" id="previewbtn${count}"></i>預覽活動
                                 </a
                               >
                               <a href="#" class="dropdown-item"
-                                ><i class="fa-solid fa-clone me-3"></i
+                                ><i class="fa-solid fa-clone me-3" id="clonebtn${count}"></i
                                 >複製活動</a
                               >
                               <a href="#" class="dropdown-item delete-event"
-                                ><i class="fa-solid fa-trash-can me-3"></i
+                                ><i class="fa-solid fa-trash-can me-3" id="deletebtn${count}"></i
                                 >刪除活動</a
                               >
                             </div>
@@ -627,7 +628,7 @@
                      
                         </div>
                       </div>`
-                    
+                    count++
                     
             }
             listTab.innerHTML=str;

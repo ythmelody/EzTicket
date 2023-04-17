@@ -971,10 +971,10 @@
 			const urlParams = new URLSearchParams(window.location.search);
       		const activityNo = urlParams.get("activityNo");
 			const title=document.querySelector('#title');
-        fetch(`http://localhost:8085/Activity/findByactivityNo?activityNo=${activityNo}`)
+        fetch(`http://localhost:8085/Session/findByactivityNo?activityNo=${activityNo}`)
         .then((Response) => Response.json())
         .then((data) => {
-			const date =new Date(data.session[0].sessionsTime);
+			const date =new Date(data[0].sessionsTime);
 			const month = date.toLocaleDateString('en-US', { month: 'short' });
 			const day=date.toLocaleDateString('en-US', { day: '2-digit' });
 			let str=`<div class="event-top-dts">
@@ -983,9 +983,9 @@
 								<span class="event-date">${day}</span>
 							</div>
 							<div class="event-top-dt">
-								<h3 class="event-main-title">${data.aname}</h3>
+								<h3 class="event-main-title">${data[0].activity.aname}</h3>
 								<div class="event-top-info-status">
-									<span class="event-type-name"><i class="fa-solid fa-location-dot"></i>${data.aplace}
+									<span class="event-type-name"><i class="fa-solid fa-location-dot"></i>${data[0].activity.aplace}
 										</span>
 								</div>
 							</div>
