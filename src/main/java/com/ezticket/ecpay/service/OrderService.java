@@ -80,10 +80,10 @@ public class OrderService {
 		//	啟動本地伺服器，例如 Tomcat 或是 Spring Boot。
 		//	在命令列輸入 ngrok http 8080，其中 8080 是你本機伺服器的 Port，請依實際情況更改。
 		//	Ngrok 會顯示一個公開的 URL，例如 http://xxxxxx.ngrok.io，複製此 URL。
-		String returnURL = "https://dc38-220-134-181-136.jp.ngrok.io";
+		String returnURL = "https://7699-111-249-7-40.jp.ngrok.io";
 
 		obj.setReturnURL(returnURL + "/ecpay/return");
-		// 是否需要額外的付款資訊
+		// 是否需要額外的付款資訊ngrok http 8080
 		obj.setNeedExtraPaidInfo("N");
 		// 會回傳一個form表單
 		String form = all.aioCheckOut(obj, null);
