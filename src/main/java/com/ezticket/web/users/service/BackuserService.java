@@ -1,16 +1,17 @@
 package com.ezticket.web.users.service;
 
 import com.ezticket.web.users.dto.BackuserDTO;
+import com.ezticket.web.users.dto.BackuserImgDTO;
 import com.ezticket.web.users.dto.RoleDTO;
 import com.ezticket.web.users.pojo.*;
 import com.ezticket.web.users.repository.BackuserRepository;
 import com.ezticket.web.users.repository.FunctionRepository;
 import com.ezticket.web.users.repository.RoleRepository;
 import com.ezticket.web.users.repository.RoleauthorityRepository;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -139,4 +140,71 @@ public class BackuserService {
 
         return roleDTO;
     }
+
+    //更改後台成員的大頭貼(上傳更換),用MultipartFile
+    public Backuser updateBaImg(BackuserImgDTO backuserImgDTO) throws IOException {
+        Optional<Backuser> backuser = Optional.ofNullable(backuserRepository.findByBaaccount(backuserImgDTO.getBaaccount()));
+        if (backuser.isPresent()){
+            Backuser updateTheBackuser = backuser.get();
+            updateTheBackuser.setBaimg(backuserImgDTO.getFile().getBytes());
+            return  backuserRepository.save(updateTheBackuser);
+        } else {
+            throw new RuntimeException("Backuser not found with baaccount: " + backuserImgDTO.getBaaccount());
+        }
+    }
+
+
+    //個人資料頁面更改密碼
+    public Map<String, String> updateBapassword(String baaccount, String oldPassword, String newPassword, String confirmPassword){
+        Map<String, String> resultMap = new HashMap<>();
+        Optional<Backuser> backuser = Optional.ofNullable(backuserRepository.findByBaaccount(baaccount));
+        if(backuser.isPresent()){
+            String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,12}$";
+            Backuser updateTheBackuser = backuser.get();
+            //舊密碼與輸入的舊密碼相同 && 新密碼與確認密碼相同 && 新密碼符合正規表式
+            if(updateTheBackuser.getBapassword().equals(oldPassword) && newPassword.equals(confirmPassword)&& newPassword.matches(passwordRegex)){
+                updateTheBackuser.setBapassword(newPassword);
+                backuserRepository.save(updateTheBackuser);
+                System.out.println("確認密碼完成存入新密碼!");
+                resultMap.put("success","更改成功");
+                return resultMap;
+            }
+            //新密碼不符合正規表達式
+            if (!newPassword.matches(passwordRegex)) {
+                resultMap.put("pwdFormatError", "密碼至少包含一個大寫和小寫字母，長度為8~12字元!");
+                System.out.println("新密碼格式不符合規定!");
+            }
+            //舊密碼與輸入的舊密碼不相同
+            if (!updateTheBackuser.getBapassword().equals(oldPassword)) {
+                resultMap.put("oPwdError", "請確認您的舊密碼!");
+                System.out.println("輸入的舊密碼與真正的舊密碼不同!");
+            }
+            //新密碼與確認密碼不相同
+            if (!newPassword.equals(confirmPassword)) {
+                resultMap.put("ChPwdError", "請確認您的新密碼!");
+                System.out.println("新密碼與確認密碼不同!");
+            }
+            return resultMap;
+        }else {
+            throw new RuntimeException("Backuser not found with Baaccount: " + baaccount);
+        }
+    }
+
+    //更改個人資料
+    public Backuser updateBackuser(BackuserDTO backuserDTO){
+        Optional<Backuser> backuser = Optional.ofNullable(backuserRepository.findByBaaccount(backuserDTO.getBaaccount()));
+        if(backuser.isPresent()){
+            Backuser updateTheBackuser = backuser.get();
+
+            updateTheBackuser.setBaname(backuserDTO.getBaname());
+            updateTheBackuser.setBacell(backuserDTO.getBacell());
+            updateTheBackuser.setBaemail(backuserDTO.getBaemail());
+            return backuserRepository.save(updateTheBackuser);
+        }else {
+            throw new RuntimeException("Backuser not found with Baaccount: " + backuserDTO.getBaaccount());
+        }
+    }
+
+
+
 }

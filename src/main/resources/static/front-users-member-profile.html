@@ -530,8 +530,7 @@
 										</div>
 									</li>
 									<li class="profile-link">
-										<a href="" class="link-item">我的後台</a>
-										<a href="back-users-profile.html" class="link-item">使用者資訊</a>
+										<a href="index.html" class="link-item">回到首頁</a>
 										<a href="front-users-mem-sign-in.html" class="link-item">登出</a>
 									</li>
 								</ul>
@@ -585,13 +584,16 @@
 								<h4 class="user-name un"><!-- 會員名 --><span class="verify-badge"><i
 											class="fa-solid fa-circle-check"></i></span></h4>
 							</div>
-							<div class="ff-block" style="display: inline-block;">
+							<div class="user-dts">
+								<h4 class="user-email"><!-- 會員emall --></h4>
+							</div>
+							<div class="ff-block" style="display: inline-block; margin-top: 15px;">
 								<a href="#" class="" role="button" data-bs-toggle="modal" data-bs-target="#FFModal"
 									onclick="followproductList()"><span>0</span>追蹤商品</a>
 							</div>
 							<div class="user-btns">
-								<a href="my_organisation_dashboard.html"
-									class="co-main-btn co-btn-width min-width d-inline-block h_40">有需要可以拿來用的按鈕連結</a>
+								<a href="index.html"
+									class="co-main-btn co-btn-width min-width d-inline-block h_40">回到首頁</a>
 							</div>
 							<div class="user-btns" id="myCollect">
 								<a href='' style="visibility: hidden"
@@ -1488,6 +1490,7 @@
 				//頭貼那邊顯示會員ID資料
 				$(".un").text(`${response.mname}`)
 				$("#mememail").text(`${response.memail}`)
+				$(".user-email").text(`${response.memail}`)
 
 				//頭貼圖片顯示
 				const url = `data:image/png;base64,${response.mimg}`;
@@ -1521,6 +1524,7 @@
 				})
 				//顯示會員原有的資料
 				$("#email").val(`${response.memail}`)
+				
 				$("#name").val(`${response.mname}`)
 				$("#birthday").val(`${response.birth}`)
 				$("#phone").val(`${response.mcell}`)
