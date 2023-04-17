@@ -16,7 +16,7 @@ public class AddPcouponDTO {
     @Max(value = 10000, message = "最低消費為0~10000")
     @NotNull(message = "最低消費不可為空值")
     private Integer preachprice;
-    @Min(value = 50, message = "折扣至少50")
+    @Min(value = 1, message = "折扣至少1")
     @Max(value = 2000, message = "折扣不可超過2000")
     @NotNull(message = "折扣金額不可為空值")
     private Integer pdiscount;

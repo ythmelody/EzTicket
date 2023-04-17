@@ -248,7 +248,7 @@ function addPorder() {
 function removeItem(e) {
   // 從 localStorage 取出 item 的值
   let itemData = JSON.parse(localStorage.getItem('cartItems'));
-  if (!e) {
+  if (e?.length === 0) {
     // 若未傳入參數，則清除所有項目
     itemData = [];
   } else {
@@ -256,7 +256,7 @@ function removeItem(e) {
     itemData.splice(e, 1);
     // 更新索引
     itemData = itemData.map((item, index) => ({ ...item, index }));
-  }
+  }  
   // 將修改後的資料存回 localStorage
   localStorage.setItem('cartItems', JSON.stringify(itemData));
   // 重新載入頁面
