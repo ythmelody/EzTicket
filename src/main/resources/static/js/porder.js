@@ -46,6 +46,9 @@ function fetchPorderList(e) {
           case 3:
             processstatus = '<span class="status-circle red-circle"></span>已取消';
             break;
+          case 4:
+            processstatus = '<span class="status-circle red-circle"></span>取消申請';
+            break;
           case 0:
             processstatus = '<span class="status-circle blue-circle"></span>未處理';
             break;
@@ -88,7 +91,7 @@ function changeStatus(selectElem) {
       statusTd.innerHTML = '<span class="status-circle yellow-circle"></span>配送中';
       break;
     case "2":
-      statusTd.innerHTML = '<span class="status-circle green-circle"></span>已結案';
+      statusTd.innerHTML = '<span class="status-circle green-circle"></span>已出貨';
       break;
     case "3":
       statusTd.innerHTML = '<span class="status-circle red-circle"></span>已取消';
@@ -151,3 +154,34 @@ function viewDelivery(img) {
       deliverybody.innerHTML += deliverylist;
     });
 }
+
+
+$(document).ready(function() {
+  // 當選擇器的值發生變化時觸發過濾功能
+  $('#filterToPay, #filterToActive').on('change', function() {
+    filterTable();
+  });
+  
+  function filterTable() {
+    var filterToPay = $('#filterToPay').val();
+    var filterToActive = $('#filterToActive').val();
+    
+    // 遍歷所有行，檢查是否符合條件，符合則顯示，否則隱藏
+    $('#order-ls-tab tr').each(function() {
+      var payStatus = $(this).find('td:nth-child(6)').text();
+      var orderStatus = $(this).find('td:nth-child(7)').text();
+      
+      // 檢查付款狀態是否符合選擇器的值
+      if (filterToPay == 'all' || (filterToPay == '0' && payStatus.indexOf('未付款') >= 0) || (filterToPay == '1' && payStatus.indexOf('已付款') >= 0) || (filterToPay == '2' && payStatus.indexOf('已退款') >= 0)) {
+        // 檢查訂單狀態是否符合選擇器的值
+        if (filterToActive == 'all' || (filterToActive == '0' && orderStatus.indexOf('未處理') >= 0) || (filterToActive == '1' && orderStatus.indexOf('已出貨') >= 0) || (filterToActive == '2' && orderStatus.indexOf('已結案') >= 0) || (filterToActive == '3' && orderStatus.indexOf('已取消') >= 0) || (filterToActive == '4' && orderStatus.indexOf('取消申請') >= 0)) {
+          $(this).show();
+        } else {
+          $(this).hide();
+        }
+      } else {
+        $(this).hide();
+      }
+    });
+  }
+});

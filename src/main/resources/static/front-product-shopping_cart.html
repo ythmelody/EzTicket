@@ -43,6 +43,17 @@
 			font-size: 1.2rem;
 		}
 	</style>
+	<!-- 在头部引入 jQuery 库 -->
+<script src="js/jquery-3.6.0.min.js"></script>
+<!-- 引入 Bootstrap、OwlCarousel、Bootstrap Select 和其他库 -->
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="vendor/OwlCarousel/owl.carousel.js"></script>
+<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="js/jquery.twzipcode.min.js"></script>
+<script src="js/custom.js"></script>
+<script src="js/night-mode.js"></script>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -304,73 +315,59 @@
 					<div class="col-xl-12 col-lg-12 col-md-12">
 						<div class="checkout-block">
 							<div class="main-card">
+
 								<div class="bp-title">
-									<h4>帳單資訊</h4>
+									<h4>配送資訊</h4>
 								</div>
+
 								<div class="bp-content bp-form">
-									<div id="twzipcode" class="row">
-										<div class="col-lg-6 col-md-12">
-											<div class="form-group mt-4">
-												<label class="form-label">收件人姓名</label>
-												<input id="recipient" class="form-control h_50" type="text" placeholder="" value="劉寶傑">
+
+										<div id="twcode" class="row">
+
+											<div class="col-lg-6 col-md-12">
+												<div class="form-group mt-4">
+													<label class="form-label">收件人姓名</label>
+													<input id="recipient" class="form-control h_50" type="text" placeholder="" value="劉寶傑">
+												</div>
 											</div>
-										</div>
-										<div class="col-lg-6 col-md-12">
-											<div class="form-group mt-4">
-												<label class="form-label">收件人電話</label>
-												<input id="rephone" class="form-control h_50" type="text" placeholder="" value="0912345678">
+
+											<div class="col-lg-6 col-md-12">
+												<div class="form-group mt-4">
+													<label class="form-label">收件人電話</label>
+													<input id="rephone" class="form-control h_50" type="text" placeholder="" value="0912345678">
+												</div>
 											</div>
-										</div>
-										<div class="col-lg-6 col-md-12">
-											<div class="form-group mt-4">
-												<label class="form-label">信箱(Email)</label>
-												<input id="email" class="form-control h_50" type="text" placeholder="" value="johndoe@example.com"
-													disabled>
+										
+											<div class="col-lg-6 col-md-12">
+												<div class="form-group mt-4">
+													<label class="form-label">郵遞區號</label>
+													<input id="readdress1" name="zipcode" class="form-control h_50" type="text" disabled>
+												</div>
 											</div>
-										</div>
-										<div class="col-lg-6 col-md-12">
-											<div class="form-group mt-4">
-												<label class="form-label">郵遞區號</label>
-												<input id="readdress1" data-role="zipcode" class="form-control h_50" type="text" placeholder="" value="51547">
+
+											<div class="col-lg-6 col-md-12">
+												<div class="form-group mt-4">
+													<label class="form-label">縣市</label>
+													<select id="readdress2" name="county" class="form-control h_50"></select>
+												</div>
 											</div>
-										</div>
-										<div class="col-lg-6 col-md-12">
-											<div class="form-group main-form mt-4">
-												<label class="form-label">城市</label>
-												<select id="readdress2" data-role="county" class="selectpicker" data-size="5" title="Nothing selected"
-													data-live-search="true">
-													<option value="Keelung">基隆市</option>
-													<option value="Taipei">台北市</option>
-													<option value="New Taipei">新北市</option>
-													<option value="Taoyuan">桃園市</option>
-													<option value="Hsinchu">新竹市</option>
-													<option value="Hsinchu County">新竹縣</option>
-													<option value="Miaoli">苗栗縣</option>
-													<option value="Taichung">台中市</option>
-													<option value="Changhua">彰化縣</option>
-													<option value="Nantou">南投縣</option>
-													<option value="Yunlin">雲林縣</option>
-													<option value="Chiayi">嘉義市</option>
-													<option value="Chiayi County">嘉義縣</option>
-													<option value="Tainan">台南市</option>
-													<option value="Kaohsiung">高雄市</option>
-													<option value="Pingtung">屏東縣</option>
-													<option value="Yilan">宜蘭縣</option>
-													<option value="Hualien">花蓮縣</option>
-													<option value="Taitung">台東縣</option>
-													<option value="Penghu">澎湖縣</option>
-													<option value="Kinmen">金門縣</option>
-													<option value="Lienchiang">連江縣</option>
-												</select>
+
+											<div class="col-lg-6 col-md-12">
+												<div class="form-group main-form mt-4">
+													<label class="form-label">區域</label>
+													<select id="readdress3" name="district" class="form-control h_50"></select>
+												</div>
 											</div>
-										</div>
-										<div class="col-lg-6 col-md-12">
-											<div class="form-group mt-4">
-												<label class="form-label">收件人地址</label>
-												<input id="readdress3" class="form-control h_50" type="text" placeholder="" value="">
+
+											<div class="col-lg-6 col-md-12">
+												<div class="form-group mt-4">
+													<label class="form-label">收件人地址</label>
+													<input id="readdress4" class="form-control h_50" type="text" placeholder="" value="">
+												</div>
 											</div>
+
 										</div>
-									</div>
+
 								</div>
 							</div>
 							<div class="main-card mt-5">
@@ -379,7 +376,7 @@
 								</div>
 								<div class="bp-content bp-form">
 									<div class="row">
-										<div class="col-lg-12 col-md-12">
+										<!-- <div class="col-lg-12 col-md-12">
 											<div class="form-group mt-4">
 												<label class="form-label">信用卡卡號</label>
 												<input class="form-control h_50" type="text" placeholder="" value="">
@@ -396,10 +393,10 @@
 												<label class="form-label">信用卡安全碼(CVV)</label>
 												<input class="form-control h_50" type="text" placeholder="" value="">
 											</div>
-										</div>
+										</div> -->
 										<div class="col-lg-12 col-md-12">
 											<button class="main-btn btn-hover h_50 w-100 mt-5" type="button"
-												onclick="addPorder()">確認並付款</button>
+												onclick="addPorder()">建立訂單並前往付款</button>
 										</div>
 									</div>
 								</div>
@@ -484,8 +481,9 @@
 	</footer>
 	<!-- Footer End-->
 
+
+
 	<script src="js/jquery-3.6.0.min.js"></script>
-	<!-- <script src="js/twzipcode.js"></script> -->
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="vendor/OwlCarousel/owl.carousel.js"></script>
 	<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
@@ -493,6 +491,15 @@
 	<script src="js/night-mode.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script src="js/jquery.twzipcode.min.js"></script>
+	<script>
+		$('#twcode').twzipcode({
+			countyName: 'county',
+			districtName: 'district',
+			zipcodeName: 'zipcode',
+		});
+		$('#twcode').children().slice(-3).remove();
+	</script>
 	<script src="js/shopping-cart.js"></script>
 </body>
 

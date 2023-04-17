@@ -20,6 +20,9 @@ public class Backuser extends Core {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "BANO")
     private Integer bano;
+
+    @Column(name = "BAIMG")
+    private byte[] baimg;
     @Column(name = "BAACCOUNT")
     private String baaccount;
     @NotBlank(message = "密碼不得為空")

@@ -10,11 +10,15 @@ import com.ezticket.web.product.repository.PfitcouponRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,7 +27,6 @@ public class PcouponService {
     private PcouponRepository pcouponRepository;
     @Autowired
     private PfitcouponRepository pfitcouponRepository;
-
     @Autowired
     private ModelMapper modelMapper;
 
@@ -77,6 +80,37 @@ public class PcouponService {
         checkPouconStatus();
         return true;
     }
+    @Transactional
+    public ResponseEntity<?> addPcouponError(AddPcouponDTO couponBody, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
+            System.out.println("資料格式,將錯誤返回前端!");
+            return ResponseEntity.badRequest().body(errors);
+        } else {
+            // 執行新增操作
+            System.out.println("開始新增資料!");
+            Pcoupon pcoupon = new Pcoupon();
+            pcoupon.setPcouponholdings(null);
+            pcoupon.setPcouponname(couponBody.getPcouponname());
+            pcoupon.setPdiscount(couponBody.getPdiscount());
+            pcoupon.setPreachprice(couponBody.getPreachprice());
+            pcoupon.setPcoupnsdate(couponBody.getPcoupnsdate());
+            pcoupon.setPcoupnedate(couponBody.getPcoupnedate());
+            Pcoupon savedPcoupon = pcouponRepository.save(pcoupon);
+            Pfitcoupon pfitcoupon = new Pfitcoupon();
+            PfitcouponPK pfitcouponPK = new PfitcouponPK();
+            pfitcouponPK.setPcouponno(savedPcoupon.getPcouponno());
+            pfitcouponPK.setProductno(couponBody.getProductno());
+            pfitcoupon.setPfitcouponNo(pfitcouponPK);
+            pfitcouponRepository.save(pfitcoupon);
+            checkPouconStatus();
+            return ResponseEntity.ok().build();
+        }
+    }
+
+
+
     @Transactional
     public boolean editPcoupon(AddPcouponDTO couponBody) {
         Pcoupon pcoupon = pcouponRepository.getReferenceById(couponBody.getPcouponno());

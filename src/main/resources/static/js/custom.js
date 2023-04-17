@@ -45,9 +45,12 @@ $(document).ready(function () {
 function increaseCount(a, b) {
 	var input = b.previousElementSibling;
 	var value = parseInt(input.value, 10);
-	value = isNaN(value) ? 0 : value;
-	value++;
-	input.value = value;
+	var max = parseInt(input.max, 10);
+	if (value < max) {
+		value = isNaN(value) ? 0 : value;
+		value++;
+		input.value = value;
+	}
 }
 
 function decreaseCount(a, b) {

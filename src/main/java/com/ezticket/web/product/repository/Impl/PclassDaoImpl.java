@@ -1,10 +1,8 @@
 package com.ezticket.web.product.repository.Impl;
 
 import java.util.List;
-import java.util.Map;
 
 import com.ezticket.web.product.pojo.Pclass;
-import com.ezticket.web.product.pojo.Product;
 import com.ezticket.web.product.repository.PclassDAO;
 import jakarta.persistence.PersistenceContext;
 import org.hibernate.Session;
@@ -21,14 +19,15 @@ public class PclassDaoImpl implements PclassDAO {
 	}
 
 	@Override
-	public void update(Pclass pclass) {
+	public Boolean update(Pclass pclass) {
 	final String hql ="UPDATE Pclass SET pclassname = :pclassname WHERE pclassno = :pclassno";
 	
 	Query<?> query =session.createQuery(hql);
 	query.setParameter("pclassname",pclass.getPclassname());
 	query.setParameter("pclassno",pclass.getPclassno());
 	query.executeUpdate();
-	}
+        return true;
+    }
 
 	@Override
 	public Pclass getByPrimaryKey(Integer pclassno) {

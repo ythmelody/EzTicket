@@ -365,7 +365,7 @@
 								</div>
 								<div class="counter">
 									<span class="down" onClick='decreaseCount(event, this)'>-</span>
-									<input id="count" type="text" value="1">
+									<input id="count" type="text" value="1" max="">
 									<span class="up" onClick='increaseCount(event, this)'>+</span>
 								</div>
 							</div>
@@ -499,7 +499,6 @@
 
 	<!-- 接收來自後端的資料 -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script src="js/my_porder.js"></script>
 	<script src="js/jquery-3.6.0.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="vendor/OwlCarousel/owl.carousel.js"></script>
@@ -507,6 +506,7 @@
 	<script src="js/custom.js"></script>
 	<script src="js/night-mode.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script src="js/my_porder.js"></script>
 
 
 
@@ -528,42 +528,6 @@
 		let urlParams = new URLSearchParams(window.location.search);
 		const productno = urlParams.get('productno');
 
-		$('#product-incart').click(function () {
-			let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-			let qty = document.querySelector('#count').value;
-			let itemqty;
-			for (item of cartItems) {
-				if (item.data.productno == productno) {
-					itemqty = item;
-				}
-			}
-			if (itemqty) {
-				itemqty.quantity += parseInt(qty);
-				localStorage.setItem('cartItems', JSON.stringify(cartItems));
-			} else {
-				// console.log("點擊加入購物車: " + productno);
-				addCart(productno);
-			}
-			// 獲取購物車元素
-			let cart = document.getElementById('cart');
-			// 獲取購物車商品數量元素
-			let badge = cart.querySelector('.badge');
-			// 設置初始購物車商品數量為 0
-			let count = 0;
-			// 載入未結帳商品數量
-			$(document).ready(() => {
-				if (cartItems.length !== 0) {
-					for (item of cartItems) {
-						count += Number(item.quantity);
-					}
-					badge.innerHTML = count;
-				}
-			})
-		});
-		$('#buyNow').click(function () {
-			buyNow(productno);
-		});
-
 		fetch('ProductInfoServlet', {
 			method: 'POST',
 			body: new URLSearchParams({
@@ -583,12 +547,14 @@
 				pdiscrip.textContent = item.pdiscrip;
 				pprice.textContent = item.pprice;
 				pspecialprice.textContent = item.pspecialprice;
+				$("#count").attr("max",item.pqty);
+				
 				if (item.prateqty < 1) {
 					$("#productRate").children("h4").text('尚無評論');
 				}
 				else if (item.prateqty >= 1) {
-					//.toFixed(2) 呈現至小數點後兩位數
-					$("#productRate").children("h4").text("商品評星：" + Math.round((item.pratetotal / item.prateqty)).toFixed(1)).append(`&nbsp;<i class="fa-solid fa-star" style="color: #ffad21!important;"></i>`);
+					//.toFixed(1) 呈現至小數點後兩位數
+					$("#productRate").children("h4").text("商品評星：" + (item.pratetotal / item.prateqty).toFixed(1)).append(`&nbsp;<i class="fa-solid fa-star" style="color: #ffad21!important;"></i>`);
 				}
 				for (let pimgt of item.pimgts) {
 					console.log(pimgt.pimgno);
@@ -809,7 +775,7 @@
 						for (let i of checkUpArr) {
 							console.log(i);
 							if (checkUpArr.includes(i)) {
-								console.log("點讚圖示");
+								// console.log("點讚圖示");
 								$(`#thumb_${i}`).attr('src', 'images/thumbup_clicked.png');
 								$(`#thumb_${i}`).addClass("thumbbed");
 							}

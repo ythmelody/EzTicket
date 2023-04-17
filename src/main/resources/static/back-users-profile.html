@@ -47,15 +47,11 @@
 		form input[type="password"],
 		form input[type="email"],
 		form input[type="tel"],
-		form input[type="date"]{
+		form input[type="date"] {
 			display: inline-block;
 			width: 200px;
 			/* 設定輸入框的寬度 */
 			border: 1px solid gray;
-		}
-
-		#workAuthority {
-			display: inline-block;
 		}
 
 		#account,
@@ -70,6 +66,16 @@
 			display: inline-block;
 			margin-bottom: 10px;
 			margin-left: 130px;
+		}
+
+		#workAuthority {
+			display: flex;
+			flex-wrap: wrap;
+			width: 450px;
+		}
+
+		#workAuthority>div {
+			width: 45%;
 		}
 	</style>
 </head>
@@ -384,7 +390,7 @@
 								</div>
 							</div> -->
 							<!-- <ul class="navbar-nav justify-content-end flex-grow-1 pe_5"> 新加的 -->
-								<!-- <li class="nav-item">
+							<!-- <li class="nav-item">
 									<a class="nav-link" href="my_organisation_dashboard.html">
 										<i class="fa-solid fa-right-left me-2"></i>回到後台
 									</a>
@@ -519,7 +525,7 @@
 							<li class="dropdown account-dropdown">
 								<a href="#" class="account-link" role="button" id="accountClick"
 									data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
-									<img src="images/profile-imgs/img-13.jpg" alt="">
+									<img class="baimg" src="images/profile-imgs/img-13.jpg" alt="">
 									<i class="fas fa-caret-down arrow-icon"></i>
 								</a>
 								<ul class="dropdown-menu dropdown-menu-account dropdown-menu-end"
@@ -527,7 +533,7 @@
 									<li>
 										<div class="dropdown-account-header">
 											<div class="account-holder-avatar">
-												<img src="images/profile-imgs/img-13.jpg" alt="">
+												<img class="baimg" src="images/profile-imgs/img-13.jpg" alt="">
 											</div>
 											<h5 class="baname"><!-- 後台成員名稱--></h5>
 											<p class="baemail"><!-- 後台成員email--></p>
@@ -536,7 +542,7 @@
 									<li class="profile-link">
 										<a href="back-users-my-team.html" class="link-item">我的後台</a>
 										<a href="back-users-profile.html" class="link-item">使用者資訊</a>
-										<a href="front-users-mem-sign-in.html" class="link-item">登出</a>
+										<a href="front-users-mem-sign-in.html" id="logOut" class="link-item">登出</a>
 									</li>
 								</ul>
 							</li>
@@ -556,30 +562,13 @@
 	<!-- Body Start-->
 	<div class="wrapper">
 		<div class="profile-banner">
-			<!-- <div class="hero-cover-block">
-				<div class="hero-cover">
-					<div class="hero-cover-img"></div>
-				</div>
-				<div class="upload-cover">
-					<div class="container">
-						<div class="row">
-							<div class="col-12">
-								<div class="cover-img-btn">
-									<input type="file" id="cover-img">
-									<label for="cover-img"><i class="fa-solid fa-panorama me-3"></i>Change Image</label>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div> -->
 			<div class="user-dt-block">
 				<div class="container">
 					<div class="row">
 						<div class="col-xl-4 col-lg-5 col-md-12">
 							<div class="main-card user-left-dt"> <!-- style.css 2428行改過margin 原為-70 -->
 								<div class="user-avatar-img">
-									<img src="images/profile-imgs/img-13.jpg" alt="">
+									<img class="baimg" src="images/profile-imgs/img-13.jpg" alt="">
 									<div class="avatar-img-btn">
 										<input type="file" id="avatar-img">
 										<label for="avatar-img"><i class="fa-solid fa-camera"></i></label>
@@ -593,7 +582,7 @@
 									<h4 class="user-name baemail"><!-- 後台成員email--></h4>
 								</div>
 								<div class="user-btns">
-									<a href="back-users-my-team.html"
+									<a href="back-index.html"
 										class="co-main-btn co-btn-width min-width d-inline-block h_40">我的後台</a>
 								</div>
 							</div>
@@ -601,28 +590,6 @@
 						<div class="col-xl-8 col-lg-7 col-md-12">
 							<div class="right-profile">
 								<div class="profile-tabs">
-									<!-- <ul class="nav nav-pills nav-fill p-2 garren-line-tab" id="myTab" role="tablist">
-										<li class="nav-item">
-											<a class="nav-link active" id="feed-tab" data-bs-toggle="tab" href="#feed"
-												role="tab" aria-controls="feed" aria-selected="true"><i
-													class="fa-solid fa-house"></i>會員帳號管理</a>
-										</li>
-										<li class="nav-item">
-											<a class="nav-link" id="about-tab" data-bs-toggle="tab" href="#about"
-												role="tab" aria-controls="about" aria-selected="false"><i
-													class="fa-solid fa-circle-info"></i>我的優惠券</a>
-										</li>
-										<li class="nav-item">
-											<a class="nav-link" id="setting-tab" data-bs-toggle="tab" href="#setting"
-												role="tab" aria-controls="setting" aria-selected="false"><i
-													class="fa-solid fa-gear"></i>商品訂單</a>
-										</li>
-										<li class="nav-item">
-											<a class="nav-link" id="orders-tab" data-bs-toggle="tab" href="#orders"
-												role="tab" aria-controls="orders" aria-selected="false"><i
-													class="fa-solid fa-box"></i>票券訂單</a>
-										</li>
-									</ul> -->
 									<div class="tab-content" id="myTabContent">
 										<div class="tab-pane fade active show" id="feed" role="tabpanel"
 											aria-labelledby="feed-tab">
@@ -637,10 +604,6 @@
 													aria-controls="organised" aria-selected="false" style="width: 50%;">
 													<!-- 修改style="width: 50%;-->
 													<span>修改密碼</span></button>
-												<!-- <button class="event-link" data-bs-toggle="tab"
-													data-bs-target="#attending" type="button" role="tab"
-													aria-controls="attending" aria-selected="false">
-													<span>備用收件人</span></button> -->
 											</div>
 											<div class="tab-content">
 												<div class="tab-pane fade show active" id="saved" role="tabpanel">
@@ -657,16 +620,16 @@
 																				readonly="readonly"><br><br>
 
 																			<label class="lab" for="name">姓名：</label>
-																			<input type="text" id="name" name="name" class="baname"
-																				required>
+																			<input type="text" id="name" name="name"
+																				class="baname" required>
 																			<p id="banameError"
 																				style="color: red; display: inline-block; margin: 0;">
 																			</p><br><br>
 
 																			<label class="lab"
 																				for="email">E-mail：</label>
-																			<input type="email" id="email" name="email" class="baemail"
-																				required> 
+																			<input type="email" id="email" name="email"
+																				class="baemail" required>
 																			<p id="baemailError"
 																				style="color: red; display: inline-block; margin: 0;">
 																			</p><br><br>
@@ -678,20 +641,25 @@
 																				style="color: red; display: inline-block; margin: 0;">
 																			</p><br><br>
 
-																			<label class="lab"
-																				for="role">後台角色：</label>
-																			<input type="text" id="role"
-																				name="role"
+																			<label class="lab" for="role">後台角色：</label>
+																			<input type="text" id="role" name="role"
 																				readonly="readonly"><br><br>
-																			<label class="lab" for="workAuthority">負責工作:</label>
-																			<p id="workAuthority">test</p>
+																			<div class="work"
+																				style="display: flex;width: 600px;">
+																				<label class="lab"
+																					style="width: 120px; text-align: right;"
+																					for="workAuthority">負責工作：</label>
+																				<div id="workAuthority"><!-- 放入表單內容 -->
+																				</div>
+																			</div>
 																			<div>
 																				<button id="btn1" type="button"
-																					class="btn btn-primary">儲存修改</button>&nbsp;
-																					<p id="success"
-																						style="color: red; display: inline-block; margin: 0;">
+																					style="margin-top: 20px;"
+																					class="btn btn-primary">儲存</button>&nbsp;
+																				<p id="success"
+																					style="color: red; display: inline-block; margin: 0;">
 																			</div>
-																			
+
 																		</form>
 																	</div>
 																</div>
@@ -737,9 +705,9 @@
 																			</p><br><br>
 																			<div>
 																				<button id="btn2" type="button"
-																					class="btn btn-primary">更改送出</button>&nbsp;
-																					<p id="success2"
-																						style="color: red; display: inline-block; margin: 0;">
+																					class="btn btn-primary">儲存</button>&nbsp;
+																				<p id="success2"
+																					style="color: red; display: inline-block; margin: 0;">
 																			</div>
 																		</form>
 																	</div>
@@ -1319,31 +1287,209 @@
 <script>
 
 	fetch("backuser/getBackuserInfo", {
-			method: 'GET',
-		})
-			.then(response => response.json())
-			.then(response => {
-				//測試檢視拿到的資料
-				console.log(response);
+		method: 'GET',
+	})
+		.then(response => response.json())
+		.then(response => {
+			//測試檢視拿到的資料
+			console.log(response);
 
-				//帶入顯示後台成員的基本資料
-				$(".baaccount").val(`${response.baaccount}`);
-				$(".baname").val(`${response.baname}`);
-				$('.babefore').before(`${response.baname}`);
-				$(".baemail").val(`${response.baemail}`);
-				$(".baemail").text(`${response.baemail}`);
-				$("#phone").val(`${response.bacell}`);
+			//帶入顯示後台成員的基本資料
+			$(".baaccount").val(`${response.baaccount}`);
+			$(".baname").val(`${response.baname}`);
+			$(".baname").text(`${response.baname}`);
+			$('.babefore').before(`${response.baname}`);
+			$(".baemail").val(`${response.baemail}`);
+			$(".baemail").text(`${response.baemail}`);
+			$("#phone").val(`${response.bacell}`);
 
+			//頭貼圖片顯示
+			const url = `data:image/png;base64,${response.baimg}`;
+			$('.baimg').attr('src', url);
 
-
-
-
-
-
+			//頭貼圖片上傳
+			$("#avatar-img").change((event) => {
+				// 建立一個 FormData 物件，將使用者選擇的圖片加入
+				const file = event.target.files[0];
+				const formData = new FormData();
+				formData.append("file", file);
+				formData.append("baaccount", response.baaccount);
+				console.log("圖片更換")
+				// 將使用者上傳的圖片存入資料庫
+				fetch("backuser/upload-baimg", {
+					method: "POST",
+					body: formData
+				}).then(response => {
+					if (response.ok) {
+						const reader = new FileReader();
+						reader.onload = (e) => {
+							$('.baimg').attr('src', e.target.result);
+						}
+						reader.readAsDataURL(file);
+					} else {
+						console.log("上傳失敗");
+					}
+				}).catch(error => {
+					console.log("上傳失敗");
+				});
 			})
 
 
 
 
+
+
+			//找到登入的後台成員的角色名稱和功能
+			fetch("backuser/getBackuserAuthInfo", {
+				method: 'GET',
+			})
+				.then(response => response.json())
+				.then(data => {
+					//測試檢視拿到的資料
+					// console.log(data);
+					$("#role").val(`${data.rolename}`);
+					//抓到後台成員的角色擁有的funcno
+					let i = 1;
+					for (const func in data.funcs) {
+						//測試有沒抓到功能
+						// console.log(`${data.funcs[func]}`)
+						$("#workAuthority").append(`<div>${i}.${data.funcs[func]}</div>`);
+						i++;
+					}
+				})
+
+
+
+
+
+
+		})
+
+	//按下修改密碼的按鈕時
+	$("#btn2").click(() => {
+		const oldPwdIpVal = $("#oldpassword").val();
+		const newPwdIpVal = $("#newpassword").val();
+		const cfPwdIpVal = $("#confirmPassword").val();
+		if (oldPwdIpVal === '' || newPwdIpVal === '' || cfPwdIpVal === '') {
+			$("#success2").text("上述欄位請勿空白！")
+			return;
+		} else {
+			$("#success2").text("")
+		}
+		fetch("backuser/changePwd", {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			},
+			body: `oldpassword=${oldPwdIpVal}&newpassword=${newPwdIpVal}&confirmpassword=${cfPwdIpVal}`
+		}).then(response => {
+			response.json().then(resultMap => {
+				console.log(resultMap);
+				//沒登入
+				if (resultMap.noSessionError) {
+					window.location.href = 'index.html';
+				}
+
+				//成功
+				if (resultMap.success) {
+					$("#success2").text(resultMap.success)
+				} else {
+					$("#success2").text("")
+				}
+				//舊密碼不同
+				if (resultMap.oPwdError) {
+					$("#oPwdError").text(resultMap.oPwdError);
+				} else {
+					$("#oPwdError").text("");
+				}
+				//新密碼確認密碼不同
+				if (resultMap.ChPwdError) {
+					$("#ChPwdError").text(resultMap.ChPwdError);
+				} else {
+					$("#ChPwdError").text("");
+				}
+				//新密碼格式錯誤
+				if (resultMap.pwdFormatError) {
+					$("#pwdFormatError").text(resultMap.pwdFormatError);
+				} else {
+					$("#pwdFormatError").text("");
+
+				}
+			});
+		}).catch(err => {
+			console.log('發生錯誤:', err);
+		});
+	});
+
+	//按下儲存更改後台資料時
+	$("#btn1").click(() => {
+
+		const data = {
+			baaccount:$("#account").val(),
+			baname: $("#name").val(),
+			baemail: $("#email").val(),
+			bacell: $("#phone").val(),
+		}
+		fetch("backuser/saveBackuserEdit", {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(data)
+		}).then(response => {
+			if (response.ok) {
+				//清空錯誤提示
+				$("#banameError").text("");
+				$("#bacellError").text("");
+				$("#baemailError").text("");
+				return response.json();
+			} else {
+				//清空成功提示
+				$("#success").text("")
+				return response.json().then(errors => {
+					console.log("Error:", errors);
+					if (errors.baname) {
+						$("#banameError").text(`${errors.baname}`);
+					} else {
+						$("#banameError").text("");
+					}
+
+					if (errors.bacell) {
+						$("#bacellError").text(`${errors.bacell}`);
+					} else {
+						$("#bacellError").text("");
+					}
+
+					if (errors.baemail) {
+						$("#baemailError").text(`${errors.baemail}`);
+					} else {
+						$("#baemailError").text("");
+					}
+					let errorMessages = Object.values(errors).join("<br>");
+					throw new Error(errorMessages);
+				})
+			}
+		}).then(success => {
+			$("#success").text("更改成功!")
+		}).catch(error => {
+			console.error('Error:', error);
+		});
+	})
+
+
+
+	$("#logOut").click(() => {
+        fetch('backuser/logout', {
+            method: "GET",
+        }).then(response => {
+            if (response.ok) {
+                window.location.href = "front-users-bu-sign-in.html";
+            } else {
+                console.log("登出失敗")
+            }
+        }).catch(error => {
+            console.log("登出失敗")
+        });
+    })
+
 </script>
+
 </html>
