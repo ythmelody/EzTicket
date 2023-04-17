@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table
+@Table(name="seatsmodel")
 public class SeatsModel {
-    @Column
+    @Column(name="seatmodelno")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seatModelno;
@@ -25,6 +25,6 @@ public class SeatsModel {
     private String realx;
     @Column
     private String realy;
-    @Column
+    @Column(name="seatstatus")
     private Integer seatStatus;
 }
