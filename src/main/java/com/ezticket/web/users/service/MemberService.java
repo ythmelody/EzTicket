@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +31,7 @@ public class MemberService {
                         .birth(member.getBirth())
                         .gender(member.getGender())
                         .mcell(member.getMcell())
+                        .mphone(member.getMphone())
                         .address(member.getAddress())
                         .memberstatus(member.getMemberstatus())
                         .build())
@@ -75,7 +75,7 @@ public class MemberService {
     //驗證資料庫有無此會員,回傳布林值
     public boolean authenticate(String memail, String mpassword) {
         Member member = memberRepository.findByMemail(memail);
-        if (member != null && member.getMpassword().equals(mpassword)) {
+        if (member != null && member.getMpassword().equals(mpassword) && member.getMemberstatus() == 1) {
             return true;
         } else {
             return false;
@@ -101,6 +101,7 @@ public class MemberService {
         }
     }
 
+    //個人資料頁面更改密碼
     public Map<String, String> updateMpassword(String email, String oldPassword, String newPassword, String confirmPassword){
         Map<String, String> resultMap = new HashMap<>();
         Optional<Member> member = Optional.ofNullable(memberRepository.findByMemail(email));
@@ -136,6 +137,7 @@ public class MemberService {
         }
     }
 
+    //更改備用收件人
     public Map<String, String> updateComrecipient(String email, String comrecipient, String comrephone, String comreaddress){
         Map<String, String> resultMap = new HashMap<>();
         Optional<Member> member = Optional.ofNullable(memberRepository.findByMemail(email));
@@ -179,6 +181,7 @@ public class MemberService {
         }
     }
 
+    //更改個人資料
     public Member updateMember(MemberDTO newmemberDTO){
         Optional<Member> member = Optional.ofNullable(memberRepository.findByMemail(newmemberDTO.getMemail()));
         if(member.isPresent()){

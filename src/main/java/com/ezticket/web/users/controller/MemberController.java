@@ -2,11 +2,11 @@ package com.ezticket.web.users.controller;
 
 import com.ezticket.web.users.dto.MemberDTO;
 import com.ezticket.web.users.dto.MemberImgDTO;
-import com.ezticket.web.users.pojo.Backuser;
 import com.ezticket.web.users.pojo.Member;
 import com.ezticket.web.users.repository.MemberRepository;
 import com.ezticket.web.users.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,15 +89,17 @@ public class MemberController {
     //會員登入後,其他網頁從Session取得會員資料
     @GetMapping("/getMemberInfo")
     @ResponseBody
-    public Member getMemberInfo(HttpSession session) {
+    public Member getMemberInfo(HttpSession session, HttpServletResponse response) throws IOException {
         Member member = (Member) session.getAttribute("member");
         if (member != null) {
             member = memberService.getMemberInfo(member.getMemail());
             member.setSuccessful(true);
             member.setMpassword("第二組everybody年薪百萬!");
         } else {
-            member.setSuccessful(false);
-            member.setMessage("會員未通過認證");
+            Member nomember = new Member();
+            nomember.setSuccessful(false);
+            nomember.setMessage("會員未通過認證");
+            response.sendRedirect("/front-users-mem-sign-in.html");
         }
         return member;
     }
@@ -107,7 +109,7 @@ public class MemberController {
     @PostMapping("/upload-mimg")
     public ResponseEntity<String> uploadMimg(@ModelAttribute MemberImgDTO memberImgDTO, @RequestParam("file") MultipartFile file, @RequestParam("memberno") Integer memberno) {
         try {
-            System.out.println("上傳成功");
+            System.out.println("會員大頭貼上傳成功");
             memberImgDTO.setFile(file);
             memberImgDTO.setMemberno(memberno);
             memberService.updateMemImg(memberImgDTO);
@@ -180,6 +182,14 @@ public class MemberController {
             Member updateMember = memberService.updateMember(memberDTO);
             return ResponseEntity.ok(updateMember);
         }
+    }
+
+
+    //登出按鈕
+    @GetMapping("/logout")
+    public ResponseEntity<String> logout(HttpSession session) {
+        session.invalidate();
+        return ResponseEntity.ok("Logout success");
     }
 
 

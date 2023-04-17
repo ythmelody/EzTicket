@@ -11,6 +11,7 @@
             src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
             crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Barren - Simple Online Event Ticketing System</title>
 
     <!-- Favicon Icon -->
@@ -138,7 +139,7 @@
 <!-- Header End-->
 <!-- Left Sidebar Start -->
 <nav class="vertical_nav" style="overflow: auto!important;">
-    <div class="left_section menu_left" id="js-menu" >
+    <div class="left_section menu_left" id="js-menu">
         <div class="left_section">
             <ul>
                 <li class="menu--item">
@@ -343,13 +344,13 @@
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <thead class="thead-dark">
-                                                    <th scope="col" style="width: 15%">評論日期</th>
-                                                    <th scope="col" style="width: 15%">會員姓名</th>
-                                                    <th scope="col" style="width: 15%">節目名稱</th>
-                                                    <th scope="col" style="width: 20%">評論內容</th>
-                                                    <th scope="col" style="width: 10%">評論星等</th>
-                                                    <th scope="col" style="width: 10%">評論讚數</th>
-                                                    <th scope="col" style="width: 15%">評論狀態</th>
+                                                <th scope="col" style="width: 15%">評論日期</th>
+                                                <th scope="col" style="width: 15%">會員姓名</th>
+                                                <th scope="col" style="width: 15%">節目名稱</th>
+                                                <th scope="col" style="width: 20%">評論內容</th>
+                                                <th scope="col" style="width: 10%">評論星等</th>
+                                                <th scope="col" style="width: 10%">評論讚數</th>
+                                                <th scope="col" style="width: 15%">評論狀態</th>
                                                 </thead>
                                                 <tbody id="commentbody">
                                                 </tbody>
@@ -365,22 +366,56 @@
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <thead class="thead-dark">
-                                                    <th scope="col" style="width: 15%">受評論日期</th>
-                                                    <th scope="col" style="width: 12.5%">檢舉者</th>
-                                                    <th scope="col" style="width: 12.5%">評論者</th>
-                                                    <th scope="col" style="width: 10%">節目名稱</th>
-                                                    <th scope="col" style="width: 15%">檢舉原因</th>
-                                                    <th scope="col" style="width: 15%">評論內容</th>
-                                                    <th scope="col" style="width: 20%">處理狀態</th>
+                                                <th scope="col" style="width: 15%">受評論日期</th>
+                                                <th scope="col" style="width: 12.5%">檢舉者</th>
+                                                <th scope="col" style="width: 12.5%">評論者</th>
+                                                <th scope="col" style="width: 10%">節目名稱</th>
+                                                <th scope="col" style="width: 15%">檢舉原因</th>
+                                                <th scope="col" style="width: 15%">評論內容</th>
+                                                <th scope="col" style="width: 20%">處理狀態</th>
                                                 </thead>
                                                 <tbody id="reportbody">
                                                 </tbody>
                                             </table>
+
+<!--                                            &lt;!&ndash; 分頁&ndash;&gt;-->
+<!--                                            <div id="reportpage" style="margin: 20px 400px">-->
+<!--                                                <nav aria-label="Page navigation example"-->
+<!--                                                     style="text-align: center">-->
+<!--                                                    <ul class="pagination">-->
+<!--                                                        <li class="page-item">-->
+<!--                                                            <a class="page-link" href="#" aria-label="Previous">-->
+<!--                                                                <span aria-hidden="true">&laquo;</span>-->
+<!--                                                                <span class="sr-only">Previous</span>-->
+<!--                                                            </a>-->
+<!--                                                        </li>-->
+<!--                                                        <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+<!--                                                        <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--                                                        <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--                                                        <li class="page-item">-->
+<!--                                                            <a class="page-link" href="#" aria-label="Next">-->
+<!--                                                                <span aria-hidden="true">&raquo;</span>-->
+<!--                                                                <span class="sr-only">Next</span>-->
+<!--                                                            </a>-->
+<!--                                                        </li>-->
+<!--                                                    </ul>-->
+<!--                                                </nav>-->
+<!--                                            </div>-->
+
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
+                                <!-- 分頁-->
+                                <div id="reportpage" style="margin: 20px 400px">
+                                    <nav aria-label="Page navigation example"
+                                         style="text-align: center">
+                                        <ul class="pagination">
+                                        </ul>
+                                    </nav>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -441,7 +476,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" >評論內容</h5>
+                <h5 class="modal-title">評論內容</h5>
                 <button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"><i
                         class="uil uil-multiply"></i></button>
             </div>
@@ -457,7 +492,6 @@
                         <select id="cstatus" class="form-select text-bg-light p-3">
                             <option value="0">取消顯示</option>
                             <option value="1" selected>正常顯示</option>
-                            <option value="2">置頂</option>
                         </select>
                     </div>
                 </div>
@@ -503,7 +537,7 @@
         // 選單(狀態)呈現
         $('#statusSelector').html(`
                 <option value="all" selected>所有狀態</option>
-                <option value="0">未處理</option>
+                <option value="0" disabled>未處理</option>
                 <option value="1">已處理 (顯示)</option>
                 <option value="2">已處理 (不顯示)</option>
             `);
@@ -605,24 +639,35 @@
 
     // 修改受檢舉評論狀態
     function confirm_bad() {
-        // 連動評論狀態
-        if($('#rstatus').val() !== "2"){ // 不是被決定為取消顯示，都會出現在評論頁面
-            fetch("/acomment/UpdateOneAComment" + `?commentId=${$('#rcommentId').val()}&commentStatus=1`)
-            console.log("跑585行");
-        } else {
-            fetch("/acomment/UpdateOneAComment" + `?commentId=${$('#rcommentId').val()}&commentStatus=0`)
-            console.log("跑588行");
-        }
+        // SweetAlert
+        Swal.fire({
+            title: '確認將此檢舉評論狀態修改？',
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: '確認',
+            denyButtonText: `取消`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // 連動評論狀態
+                if ($('#rstatus').val() !== "2") { // 不是被決定為取消顯示，都會出現在評論頁面
+                    fetch("/acomment/UpdateOneAComment" + `?commentId=${$('#rcommentId').val()}&commentStatus=1`)
+                } else {
+                    fetch("/acomment/UpdateOneAComment" + `?commentId=${$('#rcommentId').val()}&commentStatus=0`)
+                }
 
-        url = `areport/UpdateOneAReport` + `?reportId=${$('#areportNo').val()}&reportStatus=${$('#rstatus').val()}`;
-        fetch(url)
-            .then((resp) => resp.json())
-            .then((jsondata) => {
-                if (Number(jsondata) == 1) {
-                    reportbtn();
-                } else
-                    alert("請重新更新狀態");
-            })
+                url = `areport/UpdateOneAReport` + `?reportId=${$('#areportNo').val()}&reportStatus=${$('#rstatus').val()}`;
+                fetch(url)
+                    .then((resp) => resp.json())
+                    .then((jsondata) => {
+                        if (Number(jsondata) == 1) {
+                            reportbtn();
+                        } else
+                            alert("請重新更新狀態");
+                    })
+            } else if (result.isDenied) {
+                return;
+            }
+        })
     }
 
     // 顯示受檢舉評論
@@ -675,7 +720,7 @@
         ;
     }
 
-// ========================================================================================================= //
+    // ========================================================================================================= //
 
     // 點擊 "所有評論"，顯示頁面
     function commentbtn() {
@@ -686,7 +731,6 @@
                 <option value="all" selected>所有狀態</option>
                 <option value="0">取消顯示</option>
                 <option value="1">正常顯示</option>
-                <option value="2">置頂</option>
             `);
 
         // 選單(節目)呈現
@@ -776,14 +820,27 @@
 
     // 修改評論狀態
     function confirm_good() {
-        fetch(`acomment/UpdateOneAComment` + `?commentId=${$('#acommentNo').val()}&commentStatus=${$('#cstatus').val()}`)
-            .then((resp) => resp.json())
-            .then((jsondata) => {
-                if (Number(jsondata) == 1) {
-                    commentbtn();
-                } else
-                    alert("請重新更新狀態");
-            })
+        // SweetAlert
+        Swal.fire({
+            title: '確認將此評論狀態修改？',
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: '確認',
+            denyButtonText: `取消`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`acomment/UpdateOneAComment` + `?commentId=${$('#acommentNo').val()}&commentStatus=${$('#cstatus').val()}`)
+                    .then((resp) => resp.json())
+                    .then((jsondata) => {
+                        if (Number(jsondata) == 1) {
+                            commentbtn();
+                        } else
+                            alert("請重新更新狀態");
+                    })
+            } else if (result.isDenied) {
+                return;
+            }
+        })
     }
 
     // 顯示評論
@@ -822,15 +879,12 @@
             } else if (j.acommentStatus == 1) {
                 acommentstatus.innerHTML +=
                     `<span class="status-circle green-circle"></span>正常顯示`;
-            } else {
-                acommentstatus.innerHTML +=
-                    `<span class="status-circle blue-circle"></span>置頂`;
             }
         }
         ;
     }
 
-// ========================================================================================================= //
+    // ========================================================================================================= //
     // 重新整理頁面
     function refresh() {
         if ($('#allCommentTab').attr('aria-selected') == 'true')
@@ -848,7 +902,7 @@
         url_acomment = `acomment/ByActName` + `?actName=${$('#showName').val()}`;
         url_areport = `areport/ByActName` + `?actName=${$('#showName').val()}`;
 
-        if ($('#allCommentTab').attr('aria-selected') == 'true'){
+        if ($('#allCommentTab').attr('aria-selected') == 'true') {
             fetch(url_acomment)
                 .then((resp) => resp.json())
                 .then((jsondata) => {
@@ -862,6 +916,44 @@
                 })
         }
     }
+
+    // =============================================================================================
+    // 分頁
+    // $('#reportpage ul.pagination').html('');
+    // $('#reportpage ul.pagination').append(`
+    // <li class="page-item">
+    //     <a class="page-link" href="#" aria-label="Previous">
+    //         <span aria-hidden="true">&laquo;</span>
+    //         <span class="sr-only">Previous</span>
+    //     </a>
+    // </li>
+    // `);
+    //
+    // count = 0;
+    //
+    // fetch('acomment/ListAll')
+    //     .then((resp) => resp.json())
+    //     .then((jsondata) => {
+    //         for(let j of jsondata){
+    //             ++ count;
+    //         }
+    //     })
+    //
+    // for(let i = 1; i <= Math.ceil(count/5); i++){
+    //     $('#reportpage ul.pagination').append(`
+    //         <li class="page-item"><a class="page-link" href="acomment/ListByPage?page=${i}">${i}</a></li>
+    //     `);
+    // }
+    //
+    // $('#reportpage ul.pagination').append(`
+    // <li class="page-item">
+    //     <a class="page-link" href="#" aria-label="Next">
+    //         <span aria-hidden="true">&raquo;</span>
+    //         <span class="sr-only">Next</span>
+    //     </a>
+    // </li>
+    // `);
+
 
 
 </script>

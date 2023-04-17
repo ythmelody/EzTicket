@@ -138,7 +138,7 @@
 				.then(data => {
 					console.log(data);
 					if (data.successful) {
-						window.location.href = 'back-users-profile.html';
+						window.location.href = 'back-index.html';
 					} else {
 						if(data.bastatus === 0){
 							$("#statusfalse").text(data.message);

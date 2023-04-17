@@ -708,13 +708,7 @@
           let str = "";
           const curDate=new Date();
           for (i of data) {
-            const sessionsTime = [];
-            i.session.forEach(session => {
-                sessionsTime.push(session.sessionsTime);
-            });
-            const diff = dateDiffer(sessionsTime, curDate);
-            // console.log(sessionsTime[0]);
-            // console.log(curDate);
+       
 
 
             str += `<div
@@ -740,9 +734,9 @@
                         </div>
                         <div class="event-footer">
                           <div class="event-timing">
-                            <h6 class="coupon-status">${sessionsTime[0]}</h6>
+                            <h6 class="coupon-status"></h6>
                             <span class="publish-time"
-                              ><i class="fa-solid fa-clock me-2"></i>倒數${diff.days}天${diff.hours} 小時</span
+                              ><i class="fa-solid fa-clock me-2"></i>倒數 小時</span
                             >
                           </div>  
                         </div>
@@ -761,14 +755,12 @@
           const curDate=new Date();
            
               for(i of data){
-                const sessionsTime = [];
+                
             i.session.forEach(session => {
                 sessionsTime.push(session.sessionsTime);
             });
-            const diff = dateDiffer(sessionsTime, curDate);
-            // console.log(sessionsTime[0]);
-            // console.log(curDate);
-            console.log(diff);
+        
+       
           
                 str+=`<div
                       class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mix arts concert workshops volunteer sports health_Wellness"
@@ -793,9 +785,9 @@
                         </div>
                         <div class="event-footer">
                           <div class="event-timing">
-                            <h6 class="coupon-status">${sessionsTime[0]}</h6>
+                            <h6 class="coupon-status"></h6>
                             <span class="publish-time"
-                              ><i class="fa-solid fa-clock me-2"></i>倒數${diff.days}天${diff.hours} 小時</span
+                              ><i class="fa-solid fa-clock me-2"></i>倒數 小時</span
                             >
                           </div>  
                         </div>

@@ -71,7 +71,7 @@
 
 .menu--link:hover {
 	background: #e8f7f7;
-	color: #6ac045 !important;
+	color: #102743 !important;
 }
 
 .menu--link.active {
@@ -113,7 +113,7 @@
 }
 
 .menu--link:hover,.menu--link:hover .menu--label {
-	background: #e8f7f7;
+	background: #F0EDF5;
 }
 
 .menu--icon {
@@ -223,7 +223,7 @@
     height: 60px;
     padding: 0;
     border: 0;
-    background: #6ac045;
+    background: #102743;
     color: #fff;
     font-size: 30px;
     margin: 0;
@@ -233,7 +233,7 @@
 
 .collapse_menu:hover {
 	color: #fff;
-	background: #7ad254;
+	background: #0444BF;
 }
 
 .collapse_menu .collapse_menu--icon {

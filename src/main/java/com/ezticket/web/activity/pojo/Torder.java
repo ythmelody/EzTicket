@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.List;
 
 @Data
 @Entity
@@ -35,11 +36,11 @@ public class Torder {
 	private Integer tcouponNo;
 	@Column(name = "torderdate")
 	@JsonFormat(pattern = "yyyy/MM/dd kk:mm:ss", timezone = "GMT+8")
-	private Date torderDate;
+	private Timestamp torderDate;
 	@Column(name = "tpaydate")
-	private Calendar tpayDate;
+	private Timestamp tpayDate;
 	@Column(name = "treceivedate")
-	private Calendar treceiveDate;
+	private Timestamp treceiveDate;
 	@Column(name = "tpaymentstatus")
 	private String tpaymentStatus;
 	@Column(name = "tprocessstatus")
@@ -47,6 +48,22 @@ public class Torder {
 	@ManyToOne
 	@JoinColumn(name = "MEMBERNO" ,insertable = false, updatable = false)
 	private Member member;
+
+//	@OneToMany
+//	@JoinColumn(name = "TDETAILSNO",
+//			referencedColumnName = "torderno")
+//	private List<Tdetails> tdetails;
+@ManyToMany
+@JoinTable(
+		joinColumns = @JoinColumn(
+				referencedColumnName = "torderno",
+				name = "TORDERNO"),
+		name = "Tdetails",
+		inverseJoinColumns = @JoinColumn(
+				name = "SESSIONNO",
+				referencedColumnName = "SESSIONNO")
+)
+private List<Session> session;
 
 
 }
