@@ -2005,10 +2005,12 @@
 
 <!--活動新增開始-->
    <script>
-    // let urlParams = new URLSearchParams(window.location.search);
-		// const aclassNo = urlParams.get('aclassno');
-    // console.log(aclassNo);
+    let urlParams = new URLSearchParams(window.location.search);
+		const activityNo = urlParams.get('activityNo');
+    console.log(activityNo);
 
+
+if(activityNo=null){
     document.querySelector("#finish").addEventListener("click",()=>{
        const formData = new FormData();
      formData.append('aname',$("#aname").val());
@@ -2084,12 +2086,48 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
          
 
     });
-				
+	}	//判斷式結束		
    </script>
 <!--活動新增結束-->
 <!--活動複製新增開始-->
 <script>
-  
+  fetch(`http://localhost:8085/Activity/findByActNo?activityNo=${activityNo}`, {
+    method: 'get',
+    body: formData,
+  }).then(resp => resp.json())
+    .then(data => {
+      $("#aname").val(data.aname);
+      $("#aclass").val(data.aclass);
+      $("#aperformer").val(data.aperformer);
+      $("#host").val(data.host);
+      $("#anote").val(data.anote);
+      $("#aticketremind").val(data.aticketremind);
+      $("#aplace").val(data.aplace);
+      $("#asdate").val(data.asdate);
+      $("#aedate").val(data.aedate);
+      $("#wetherseat").val(data.wetherseat);
+      $("#seat").val(data.aseatimg); 
+      $("#aimage").val(data.aseatimg); 
+
+
+    })
+
+         formData.append('aname', $("#aname").val());
+          formData.append('aclass', $("#aclass").find(":selected").val());
+          formData.append('aperformer', $("#aperformer").val());
+          formData.append('host', $("#host").find(":selected").val());
+          formData.append('adiscrip', $("#adiscrip").val());
+          formData.append('anote', $("#anote").val());
+          formData.append('aticketremind', $("#aticketremind").val());
+          formData.append('aplace', $("#aplace").val());
+          formData.append('aplaceaddress', $("#aplaceaddress").val());
+          formData.append('asdate', $("#asdate").val());
+          formData.append('aedate', $("#aedate").val());
+          formData.append('wetherseat', $("#wetherseat").val());
+          console.log($("#asdate").val())
+
+          const fileInput = document.querySelector("#seat");
+          formData.append("aseatimg", fileInput.files[0]);
 </script>
 <!--活動複製新增結束-->
 
