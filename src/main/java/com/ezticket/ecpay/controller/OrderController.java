@@ -31,7 +31,7 @@ public class OrderController {
 		// 取得回傳的Form，然後導向綠界付款頁面
 		return "redirect:" + aioCheckOutALLForm;
 	}
-	// 本機無法拿到資料要上http
+	// 本機無法拿到資料要上Https
 	@PostMapping("/return")
 	public String ecpayReturn(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Enumeration<String> parameterNames = request.getParameterNames();
@@ -45,13 +45,11 @@ public class OrderController {
 		// 更改付款狀態
 		porder.setPpaymentstatus(Integer.valueOf(rtnCode));
 		porderRepository.save(porder);
-		// 印出所有K,V，參考看看
+		// 印出所有K,V，參考看看，單純看有哪些回傳值..可以註解掉
 		while (parameterNames.hasMoreElements()) {
 			String paramName = parameterNames.nextElement();
 			System.out.println(paramName + ": " + request.getParameter(paramName));
 		}
-		String url = "/front-product-order_confirmed.html?id=" + porderno;
-		response.sendRedirect(url);
 		return "1|OK";
 	}
 
