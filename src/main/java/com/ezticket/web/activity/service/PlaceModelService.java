@@ -12,7 +12,6 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -104,10 +103,7 @@ public class PlaceModelService {
         return img;
     }
 
-    //    新增修改/刪除座位圖
-//    @Transactional
-//    public ModelImgDTO savePlaceModelImg(Integer modelno, byte[] modelImg) {
-//
-//    }
+//    新增修改/刪除座位圖
+
 //    複製模板：findAllSeatsByPlaceModelno -> insert
 }
