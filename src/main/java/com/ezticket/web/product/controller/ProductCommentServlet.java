@@ -90,6 +90,7 @@ public class ProductCommentServlet extends HttpServlet {
             Integer memberno = member.getMemberno();
             Integer prate = Integer.valueOf(request.getParameter("prate"));
             String pcommentcont = request.getParameter("pcommentcont");
+            System.out.print("有接到來自前端的資料"+pcommentcont);
             Pcomment pcomment = pcommentSvc.addProductComment(productno, pcommentcont, prate, memberno);
 
             //同時更新商品總評星
@@ -105,6 +106,7 @@ public class ProductCommentServlet extends HttpServlet {
 
             Gson gson = new Gson();
             String json = gson.toJson(pcomment);
+            System.out.print(json);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             PrintWriter pw = response.getWriter();
