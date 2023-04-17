@@ -1,6 +1,7 @@
 package com.ezticket.web.activity.controller;
 
 import com.ezticket.web.activity.dto.TorderDto;
+import com.ezticket.web.activity.pojo.Torder;
 import com.ezticket.web.activity.service.TorderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

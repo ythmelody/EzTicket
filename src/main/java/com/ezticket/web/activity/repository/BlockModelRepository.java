@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BlockModelRepository extends JpaRepository<BlockModel, Integer> {
-    BlockModel findByModelno(Integer modelno);
+    <List>BlockModel findByModelnoOrderByBlockno(Integer modelno);
 }

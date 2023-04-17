@@ -4,6 +4,7 @@ import com.ezticket.web.users.pojo.Member;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -14,7 +15,7 @@ public class TorderDto {
     private Integer tcheckTotal;
 
     @JsonFormat(pattern = "yyyy/MM/dd kk:mm:ss", timezone = "GMT+8")
-    private Date torderDate;
+    private Timestamp torderDate;
     private Integer tpaymentStatus;
     private String tprocessStatus;
 

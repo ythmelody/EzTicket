@@ -1267,7 +1267,7 @@
                                 </div><br>
                                    
                                   <div id="typeList">
-                                    <select name="" id="aclass" class="btn  dropdown-toggle btn-light" onclick="aclassList()" >
+                                    <select name="" id="aclass" class="btn  dropdown-toggle btn-light"  >
                                       <option value="">節目類別</option>
                                       
                                     </select>
@@ -1893,7 +1893,7 @@
     <!--主辦單位顯示-->
     <script>
       let host=document.querySelector('#host');
-      fetch(`http://localhost:8085/back-users-host/gh`)
+      fetch(`http://localhost:8085/host/gh`)
       .then((Response) => Response.json())
       .then((data) => {
         let str="";
@@ -1997,12 +1997,13 @@
                     body: JSON.stringify(aclassData),
           }).then(res => res.json())
             .catch(error => console.error('Error:', error))
-            .then(response => console.log('Success:', response)); 
-            aclassList()
+            .then(response => window.location.replace(window.location.href)); 
+            // aclassList();
             
          });
       </script>
 
+<!--活動新增開始-->
    <script>
     // let urlParams = new URLSearchParams(window.location.search);
 		// const aclassNo = urlParams.get('aclassno');
@@ -2085,5 +2086,13 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
     });
 				
    </script>
+<!--活動新增結束-->
+<!--活動複製新增開始-->
+<script>
+  
+</script>
+<!--活動複製新增結束-->
+
+
   </body>
 </html>

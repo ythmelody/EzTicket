@@ -61,32 +61,11 @@ public class SessionController {
         return sessionService.findById(sessionNo);
     }
     @PostMapping("/saveSession")
-    public boolean saveSession(@RequestBody String jsonData) throws ParseException {
-        Gson gson = new Gson();
-        Session session = gson.fromJson(jsonData,Session.class);
+    public boolean saveSession(@RequestBody Session session) throws ParseException {
         sessionService.saveSession(session);
         return true;
     }
-//    @PostMapping("/saveSession")
-//    public Session saveSession(@RequestParam("sessionsTime") String sessionsTime,
-//                               @RequestParam("sessioneTime") String sessioneTime,
-//                               @RequestParam("maxSeatsQty") Integer maxSeatsQty,
-//                               @RequestParam("maxStandingQty") Integer maxStandingQty,
-//                               @RequestParam("activityNo") Integer activityNo) throws ParseException {
-//        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-//        Date sessionsTime1 = format.parse(sessionsTime);
-//        Date sessioneTime1 = format.parse(sessioneTime);
-//        Session session = new Session();
-//        session.setSessionsTime(sessionsTime1);
-//        session.setSessioneTime(sessioneTime1);
-//        session.setMaxSeatsQty(maxSeatsQty);
-//        session.setMaxStandingQty(maxStandingQty);
-//        session.setActivityNo(activityNo);
-//        session.setSeatsQty(0);
-//        session.setStandingQty(0);
-//
-//        return sessionService.saveSession(session);
-//    }
+
 }
 
 

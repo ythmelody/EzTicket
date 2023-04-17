@@ -5,20 +5,25 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table
+@Table(name="blockmodel")
 public class BlockModel {
     @Column
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer blockno;
-    @Column
+    @Column(name="blockname")
     private String blockName;
     @Column
     private Integer modelno;
-    @Column
+    @Column(name="blocktype")
     private Integer blockType;
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinColumn(name="blockno", referencedColumnName = "blockno")
+    private List<SeatsModel> seatsModels;
 }
