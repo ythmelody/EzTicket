@@ -91,7 +91,7 @@
 						<div class="row">
 							<div class="col-lg-12 col-md-12">
 								<div class="gift-coupon-icon mt-5 pb-5">
-									<input id="pcommentno" type="hidden" value="">
+									<input id="pcommentno" type="text" value="">
 									<label class="form-label" style="font-weight: bold" id="title_prate">修改商品評星</label>
 									<label class="form-label" style="font-weight: bold"
 										id="title_oldRate">原始商品評星</label>
@@ -312,9 +312,9 @@
 	<script src="js/porderdetails.js"></script>
 	<!-- 評星 -->
 	<script>
-		const info = {
-			memberNo: 85346
-		}
+		// const info = {
+		// 	memberNo: 85346
+		// }
 
 		$('.starRating span').click(function () {
 			$(this).siblings().removeClass('active');
@@ -335,7 +335,7 @@
 				method: "POST",
 				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 				body: new URLSearchParams({
-					'memberno': info.memberNo,
+					// 'memberno': info.memberNo,
 					'productno': $("#productno").val(),
 					'porderno': $("#porderno").val(),
 					'prate': $("#prate").val(),
@@ -343,16 +343,18 @@
 					'action': "addProductComment"
 				}),
 
-			}).then(function (resp) {
-				if (resp.redirected) {
+			}).then(function (response) {
+				if (response.redirected) {
 					window.location.href = 'front-users-mem-sign-in.html';
 				} else {
-					resp.json();
-				}})
+					　resp.json();
+				}
+			}
+			)
 				.then(item => {
 					console.log(item);
-					console.log(item.pcommentno);
-					if (item.pcommentno) {
+					// console.log(item.pcommentno);
+					if (item) {
 						swal({
 							title: "建立成功",
 							icon: "success",

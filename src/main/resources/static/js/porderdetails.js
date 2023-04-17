@@ -112,7 +112,9 @@ function showcomment(commentno) {
     if (response.redirected) {
       window.location.href = 'front-users-mem-sign-in.html';
     } else {
+      console.log("有登入狀態，進入到下一步");
       return response.json();
+      
     }
   })
     .then(item => {
