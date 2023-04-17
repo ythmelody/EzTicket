@@ -166,6 +166,10 @@
 <script>
 	$(document).ready(() => {
 
+		//檢查是否有refer
+		const referer = document.referrer;
+		// console.log(referer);
+
 		$("#loginButton").click(function (event) {
 			event.preventDefault();
 
@@ -185,6 +189,11 @@
 				.then(response => response.json())
 				.then(data => {
 					if (data.successful) {
+						//如果有就導回前一頁
+						if (referer) {
+							window.location.href = referer;
+							return;
+						}
 						window.location.href = 'index.html';
 					} else {
 						$("#statusfalse").text("請輸入正確的帳號或密碼!");
