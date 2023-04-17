@@ -4,12 +4,14 @@ import com.ezticket.ecpay.service.OrderService;
 import com.ezticket.web.product.pojo.Porder;
 import com.ezticket.web.product.repository.PorderRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Enumeration;
@@ -31,7 +33,7 @@ public class OrderController {
 	}
 	// 本機無法拿到資料要上http
 	@PostMapping("/return")
-	public String ecpayReturn(HttpServletRequest request) {
+	public String ecpayReturn(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Enumeration<String> parameterNames = request.getParameterNames();
 		String rtnCode = request.getParameter("RtnCode");
 		String paymentDate = request.getParameter("PaymentDate");
@@ -48,8 +50,11 @@ public class OrderController {
 			String paramName = parameterNames.nextElement();
 			System.out.println(paramName + ": " + request.getParameter(paramName));
 		}
+		String url = "/front-product-order_confirmed.html?id=" + porderno;
+		response.sendRedirect(url);
 		return "1|OK";
 	}
+
 	// 訂單查詢 (/ecpay?merchantTradeNo=??????????)
 	@GetMapping
 	public String getEcpayStatus(String merchantTradeNo) {
