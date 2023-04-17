@@ -7,8 +7,12 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,6 +23,11 @@ public class PlaceModelService {
     private PlaceModelRepository placeModelRepository;
     @Autowired
     private ModelMapper modelMapper;
+    private final ResourceLoader resourceLoader;
+
+    public PlaceModelService(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
 
     //    turn Entity into DTO
     public PlaceModelDTO EntityToDTO(PlaceModel placeModel) {
@@ -71,7 +80,28 @@ public class PlaceModelService {
     //    查詢座位圖
     @Transactional
     public byte[] getModelImg(Integer modelno) throws Exception {
-        return placeModelRepository.findById(modelno).orElseThrow().getModelImg();
+//        Optional<PlaceModel> opt = placeModelRepository.findById(modelno);
+//        System.out.println(opt);
+//        byte[] test = placeModelRepository.findById(modelno).orElseThrow().getModelImg();
+//        System.out.println(test);
+
+        byte[] img = null;
+        try {
+            img = placeModelRepository.findById(modelno).orElseThrow().getModelImg();
+            System.out.println(img + ".......................DB資料有進來 service");
+            if (img != null) {
+                System.out.println("............................有圖片");
+                return img;
+            }
+        } catch (Exception e) {
+            System.out.println("..................data base img error");
+        }
+        Resource resource = resourceLoader.getResource("classpath:static/images/event-imgs/qmark.jpg");
+        try (InputStream inputStream = resource.getInputStream()) {
+            img = inputStream.readAllBytes();
+        }
+        System.out.println("................................無圖片，顯示預設圖");
+        return img;
     }
 
     //    新增修改/刪除座位圖
