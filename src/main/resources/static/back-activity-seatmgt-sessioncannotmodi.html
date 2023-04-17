@@ -126,7 +126,7 @@
 <!-- Header End-->
 <!-- Left Sidebar Start -->
 <nav class="vertical_nav" style="overflow: auto!important;">
-    <div class="left_section menu_left" id="js-menu" >
+    <div class="left_section menu_left" id="js-menu">
         <div class="left_section">
             <ul>
                 <li class="menu--item">
@@ -353,7 +353,7 @@
             <div class="modal-body">
                 <div class="model-content main-form">
                     <div class="row">
-                        <div class="col-lg-6 col-md-12">
+                        <div class="col-md-12">
                             <div class="form-group main-form mt-4">
                                 <input id="noSeatTickets" type="number" class="form-control" aria-describedby=""
                                        placeholder="無非席次座位資訊" min="1" max="10000" disabled>
@@ -417,7 +417,7 @@
         }
     })
 
-    function showAllSessionBlocks(){
+    function showAllSessionBlocks() {
         $.ajax({
             async: false,
             type: 'GET',
@@ -463,7 +463,7 @@
     // 查詢區域
     blockSelector.addEventListener('change', function () {
 
-        if(blockSelector.value === "all"){
+        if (blockSelector.value === "all") {
             showAllSessionBlocks();
             return;
         }
@@ -526,57 +526,88 @@
 									<i class="fa-solid fa-ticket"></i>
 								</span>
                                 <p>票券總數量</p>
-                                <h6 class="coupon-status">${toSellNumber}</h6>
+                                <h6 id="toSellNumber_${j.blockNo}">${toSellNumber}</h6>
                             </div>
                             <div class="icon-box">
 								<span class="icon">
 									<i class="fa-solid fa-tag"></i>
 								</span>
                                 <p>已售出數量</p>
-                                <h6 class="coupon-status">${soldNumber}</h6>
+                                <h6 id="soldNumber_${j.blockNo}">${soldNumber}</h6>
                             </div>
                         </div>
                     </div>
                 </div>`;
 
+            // 節目類型為 0 (展覽類型)
+            if (j.blockName === "無區分") {
+                fetch('/Session/findById' + `?sessionNo=${sessionStorage.getItem("sessionNo")}`)
+                    .then(resp => resp.json())
+                    .then((jsondata) => {
+                        $(`#toSellNumber_${j.blockNo}`).text(`${jsondata.maxStandingQty}`);
+                        $(`#soldNumber_${j.blockNo}`).text(`${jsondata.standingQty}`);
+                    })
+            }
+
+            // 區域類型為 0 時，應該要將讀取座位按鈕更改為讀取數量而非座位
             if (j.blockType === 0) {
                 document.getElementById(`manageSeats_${j.blockNo}`).href = "#changeToSellNumbers";
                 document.getElementById(`manageSeats_${j.blockNo}`).setAttribute("data-bs-toggle", "modal");
                 document.getElementById(`manageSeats_${j.blockNo}`).classList.add("addFcn");
-            };
+            }
+            ;
 
-        };
+            // 錯誤提醒
+            if (toSellNumber === 0) {
+                $(`#toSellNumber_${j.blockNo}`).html(`<span style="color: red">無票券或座位資訊</span>`);
+            }
+            ;
 
-        for(let e of document.querySelectorAll(".addFcn")){
+        }
+        ;
+
+        for (let e of document.querySelectorAll(".addFcn")) {
             e.addEventListener("click", addClickFcn);
         }
     }
 
-    function addClickFcn(){
-        $.ajax({
-            async: false,
-            type: 'GET',
-            url: "/seats/getSeatsNumbers" + `?sessionNo=${sessionStorage.getItem("sessionNo")}&blockNo=${sessionStorage.getItem("blockNo")}`,
-            dataType: "json",
-            success: function (jsondata) {
-                if(jsondata[0] !== 0) {
-                    document.getElementById('noSeatTickets').value = jsondata[0];
+    function addClickFcn() {
+        fetch("/Activity/findByActNo" + `?actNo=${sessionStorage.getItem("activityNo")}`)
+            .then(resp => resp.json())
+            .then((jsondata) => {
+                if (jsondata.wetherSeat === 0) {
+                    fetch('/Session/findById' + `?sessionNo=${sessionStorage.getItem("sessionNo")}`)
+                        .then(resp => resp.json())
+                        .then((jsondata) => {
+                            document.getElementById('noSeatTickets').value = jsondata.maxStandingQty;
+                        })
+                    return;
                 }
-                else{
-                    document.getElementById('noSeatTickets').value = "";
-                }
-            }
-        });
 
-        $.ajax({
-            async: false,
-            type: 'GET',
-            url: "/BlockPrice/findById"+`?blockNo=${sessionStorage.getItem("blockNo")}`,
-            dataType: "json",
-            success: function (jsondata) {
-                $('#standingSeatsBN').val(`${jsondata.blockName}`);
-            }
-        });
+                $.ajax({
+                    async: false,
+                    type: 'GET',
+                    url: "/seats/getSeatsNumbers" + `?sessionNo=${sessionStorage.getItem("sessionNo")}&blockNo=${sessionStorage.getItem("blockNo")}`,
+                    dataType: "json",
+                    success: function (jsondata) {
+                        if (jsondata[0] !== 0) {
+                            document.getElementById('noSeatTickets').value = jsondata[0];
+                        } else {
+                            document.getElementById('noSeatTickets').value = "";
+                        }
+                    }
+                });
+
+                $.ajax({
+                    async: false,
+                    type: 'GET',
+                    url: "/BlockPrice/findById" + `?blockNo=${sessionStorage.getItem("blockNo")}`,
+                    dataType: "json",
+                    success: function (jsondata) {
+                        $('#standingSeatsBN').val(`${jsondata.blockName}`);
+                    }
+                });
+            })
     }
 
 </script>

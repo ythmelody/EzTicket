@@ -1,5 +1,6 @@
 package com.ezticket.web.activity.pojo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +26,10 @@ public class Tdetails {
     @Column(name = "ACOMMENTSTATUS")
     private Integer acommentStatus;
 
+
+//    @ManyToOne
+//    @JoinColumn(name = "SESSIONNO",insertable = false, updatable = false)
+//    private Session session;
 
 
 }

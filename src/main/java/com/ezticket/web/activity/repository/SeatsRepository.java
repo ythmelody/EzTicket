@@ -15,7 +15,10 @@ import java.util.Set;
 @Repository
 public interface SeatsRepository extends JpaRepository<Seats, Integer> {
 
-    public List<Seats> findBySessionNoAndBlockNo(Integer sessionNo, Integer blockNo);
+//    public List<Seats> findBySessionNoAndBlockNo(Integer sessionNo, Integer blockNo);
+
+    @Query(value = "SELECT * FROM seats WHERE sessionNo = :sessionNo AND blockNo = :blockNo ORDER BY x asc , y asc;", nativeQuery = true)
+    public List<Seats> findBySessionNoAndBlockNo(@Param("sessionNo") Integer sessionNo, @Param("blockNo") Integer blockNo);
 
     @Transactional
     @Modifying

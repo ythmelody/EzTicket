@@ -58,9 +58,9 @@ public class Activity {
     private String aNote;
     @Column(name = "ATICKETREMIND")
     private String aTicketRemind;
-    @JsonManagedReference
-    @OneToMany(mappedBy = "activity")
-    private List<Session> session;
+//    @JsonManagedReference
+//    @OneToMany(mappedBy = "activity")
+//    private List<Session> session;
     @JsonManagedReference
     @OneToMany(mappedBy = "activity")
     private List<Aimgt> aimgt;

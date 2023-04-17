@@ -356,7 +356,7 @@
                                 style="background-color: gray;" onclick="seatsmgt.cancel();">重設選位
                         </button>
                         <button type="submit" class="main-btn btn-hover"
-                                onclick="seatsmgt.save(); window.location.href='#'">確定選位
+                                onclick="seatsmgt.save()">確定選位
                         </button>
                     </form>
                 </div>
@@ -389,8 +389,8 @@
                             <div class="form-group main-form mt-4">
                                 <input id="blockNo" type="hidden" value="">
                                 <label class="form-label">選擇張數</label>
-                                <select id="ticketDecr" class="selectpicker" data-size="5" title="Nothing selected"
-                                        data-live-search="true">
+                                <select id="ticketDecr" class="form-control" data-size="5" title="Nothing selected"
+                                        data-live-search="true" >
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -793,7 +793,8 @@
                 seatNos.push(s.id);
             }
 
-            sessionStorage.setItem("toBuySeats", seatNos);
+            sessionStorage.setItem("toBuySeats", JSON.stringify(seatNos));
+            window.location.href = "/front-activity-checkout.html";
         },
 
         cancel: () => {
@@ -1002,8 +1003,8 @@
             .then(resp => resp.json())
             .then(jsondata => {
                 if (jsondata.wetherSeat != 1) { // 若節目完全沒有座位區分，將要購買的票券數量存在 SessionStorage
-                    // fetch("/Session/updateTicketQTY" + `?ticketChange=-${$('#ticketDecr').val()}&sessionNo=${sessionStorage.getItem("sessionNo")}`);
                     sessionStorage.setItem("toBuyTickets", $('#ticketDecr').val());
+                    window.location.href = "/front-activity-checkout.html";
                 } else { // 若節目有座位區分，發送請求到後端取得座位陣列
                     fetch("/seats/getTicketsBystem" + `?ticketQTY=${$('#ticketDecr').val()}&blockNo=${sessionStorage.getItem("blockNo")}&sessionNo=${sessionStorage.getItem("sessionNo")}`)
                         .then(resp => resp.json())
@@ -1020,8 +1021,8 @@
                                     }
 
                                     // 將要購買的座位編號以陣列的格式存在 SessionStorage
-                                    sessionStorage.setItem("toBuySeats", seatNos);
-
+                                    sessionStorage.setItem("toBuySeats", JSON.stringify(seatNos));
+                                    window.location.href = "/front-activity-checkout.html";
                                     return;
                                 }
 

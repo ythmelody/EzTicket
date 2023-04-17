@@ -4,15 +4,17 @@ import com.ezticket.web.activity.pojo.Activity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
+
+import java.sql.Timestamp;
 import java.util.Calendar;
 @Data
 public class SessionDto {
     private Integer sessionNo;
     @JsonFormat(pattern = "yyyy/MM/dd kk:mm", timezone = "GMT+8")
-    private Calendar sessionsTime;
+    private Timestamp sessionsTime;
     @JsonFormat(pattern = "yyyy/MM/dd kk:mm", timezone = "GMT+8")
 
-    private Calendar sessioneTime;
+    private Timestamp sessioneTime;
 
     private Integer maxSeatsQty;
 

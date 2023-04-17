@@ -2,6 +2,7 @@ package com.ezticket.web.activity.pojo;
 
 import com.ezticket.web.users.pojo.Member;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public class AComment {
     private Integer activityNo;
     @Column(name = "MEMBERNO")
     private Integer memberNo;
+    @NotBlank(message = "評論不得為空")
     @Column(name = "ACOMMENTCONT")
     private String aCommentCont;
     @Column(name = "ARATE")
@@ -30,6 +32,7 @@ public class AComment {
     private Date aCommentDate;
     @Column(name = "ACOMMENTSTATUS")
     private Integer aCommentStatus;
+    @NotBlank(message = "評星不得為空")
     @Column(name = "ALIKE")
     private Integer aLike;
 

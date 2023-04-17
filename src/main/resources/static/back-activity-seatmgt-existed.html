@@ -35,6 +35,7 @@
             src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
             crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         /* SEAT & "COLOR CODE" */
@@ -358,7 +359,7 @@
 
                     </div>
                     <div class="mt-5" style="display: inline-block;">
-                            <a href="back-activity-seatmgt-notexisted.html" class="main-btn btn-hover"
+                            <a href="#" class="main-btn btn-hover"
                                style="background-color: orange; border: orange;" onmousedown="clearSeats()">清空座位</a>
                     </div>
                 </div>
@@ -553,38 +554,57 @@
 
         // SAVE RESERVATION
         save: () => {
-            // GET SELECTED SEATS
-            let seats = document.querySelectorAll("#layout div");
-            console.log(seats);
+            // SweetAlert
+            Swal.fire({
+                title: '確認儲存目前座位配置？',
+                showDenyButton: true,
+                showCancelButton: false,
+                confirmButtonText: '確認',
+                denyButtonText: `取消`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // GET SELECTED SEATS
+                    let seats = document.querySelectorAll("#layout div");
+                    console.log(seats);
 
-            for(let s of seats){
-                let status;
-                if(s.classList.contains("banned")){
-                    status = (-1);
-                } else if(s.classList.contains("reserved")){
-                    status = (0);
-                } else if(s.classList.contains("toSell")){
-                    status = (1);
-                } else {
-                    status = (2);
+                    for(let s of seats){
+                        let status;
+                        if(s.classList.contains("banned")){
+                            status = (-1);
+                        } else if(s.classList.contains("reserved")){
+                            status = (0);
+                        } else if(s.classList.contains("toSell")){
+                            status = (1);
+                        } else {
+                            status = (2);
+                        }
+
+                        const aSeatInfo = {
+                            "blockName": $('#blockName').val(),
+                            "seatNo" : s.id,
+                            "realX" : $(`#${s.id} input:eq(0)`).val(),
+                            "realY" : $(`#${s.id} input:eq(1)`).val(),
+                            "seatStatus": status
+                        };
+
+                        fetch('/seats/updateOneSeat', {
+                            method: "POST",
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify(aSeatInfo)
+                        })
+                    }
+
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: '儲存成功',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                } else if (result.isDenied) {
+                    return;
                 }
-
-                const aSeatInfo = {
-                    "blockName": $('#blockName').val(),
-                    "seatNo" : s.id,
-                    "realX" : $(`#${s.id} input:eq(0)`).val(),
-                    "realY" : $(`#${s.id} input:eq(1)`).val(),
-                    "seatStatus": status
-                };
-
-                fetch('/seats/updateOneSeat', {
-                    method: "POST",
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(aSeatInfo)
-                })
-            }
-
-            alert("儲存成功!");
+            })
         },
 
         goBack: () => {
@@ -610,10 +630,22 @@
     })
 
     function clearSeats(){
-        fetch("/seats/deleteSeats" + `?sessionNo=${sessionStorage.getItem("sessionNo")}&blockNo=${sessionStorage.getItem("blockNo")}`);
+        // SweetAlert
+        Swal.fire({
+            title: '確認要清空座位？',
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: '確認',
+            denyButtonText: `取消`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch("/seats/deleteSeats" + `?sessionNo=${sessionStorage.getItem("sessionNo")}&blockNo=${sessionStorage.getItem("blockNo")}`);
+                location.href = "back-activity-seatmgt-notexisted.html";
+            } else if (result.isDenied) {
+                return;
+            }
+        })
     }
-
-
 
 </script>
 

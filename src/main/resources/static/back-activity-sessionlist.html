@@ -549,10 +549,10 @@
                     class="loc-group position-relative"
                   >
                     <input
-                      data-language="en"
-                      type="datetime-local"
+                      type="text"
                       value=""
                       id="sessionsTime"
+                      placeholder="請輸入開始時間"
                     />
                     
                   </div>
@@ -563,10 +563,10 @@
                     class="loc-group position-relative"
                   >
                     <input
-                      data-language="en"
-                      type="datetime-local"
+                      type="text"
                       value=""
                       id="sessioneTime"
+                      placeholder="請輸入結束時間"
                     />
                     
                   </div>
@@ -633,7 +633,6 @@
     <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script src="js/custom.js"></script>
     <script src="js/night-mode.js"></script>
-
     <script>
       const listTab = document.querySelector("#listTab");
       const urlParams = new URLSearchParams(window.location.search);
@@ -830,53 +829,89 @@
 
 
 
-      const options = {
-    year: 'numeric',    // 年: 使用4位數
-    month: '2-digit',   // 月: 使用2數位
-    day: '2-digit',     // 日: 使用2數位
-    hour12: false,      // 12小時制: 不使用
-    hour: '2-digit',    // 時: 使用2數位
-    minute: '2-digit',  // 分: 使用2數位
-    timeZoneName: 'short'
+   Date.prototype.format = function(format) {
+  const monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+  const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+  const padZero = (value) => {
+    return (value < 10) ? "0" + value : value;
+  };
+
+  const year = this.getFullYear();
+  const month = this.getMonth();
+  const day = this.getDate();
+  const dayOfWeek = this.getDay();
+  const hours = this.getHours();
+  const minutes = this.getMinutes();
+  const seconds = this.getSeconds();
+  const timezoneOffset = this.getTimezoneOffset();
+  const timezoneOffsetHours = Math.floor(Math.abs(timezoneOffset) / 60);
+  const timezoneOffsetMinutes = Math.abs(timezoneOffset) % 60;
+  const timezoneOffsetString = (timezoneOffset >= 0 ? '+' : '-') +
+    padZero(timezoneOffsetHours) +
+    padZero(timezoneOffsetMinutes);
+
+  return format
+    .replace("yyyy", year)
+    .replace("MMMM", monthNames[month])
+    .replace("MM", padZero(month + 1))
+    .replace("dd", padZero(day))
+    .replace("EEEE", dayNames[dayOfWeek])
+    .replace("kk", padZero(hours))
+    .replace("mm", padZero(minutes))
+    .replace("ss", padZero(seconds))
+    .replace("ZZZZ", timezoneOffsetString);
 };
-
-
+  
       document.querySelector("#addSession").addEventListener("click",()=>{
-      submitbtn.addEventListener("click",()=>{
+   
       const sessionsTime=document.querySelector("#sessionsTime");
       const sessioneTime=document.querySelector("#sessioneTime");
       const maxSeatsQty=document.querySelector("#maxSeatsQty");
       const maxStandingQty=document.querySelector("#maxStandingQty");
       const submitbtn=document.querySelector("#submitbtn");
-      // const formatSDate = new Date((sessionsTime.value).toISOString());
-      // const formatEDate = new Date((sessioneTime.value).toISOString());
-       const formatSDate = new Date(sessionsTime.value);
-      const formatEDate = new Date(sessioneTime.value);
-      const sDate=new Intl.DateTimeFormat('zh-TW', options).format(formatSDate)
-      const eDate=new Intl.DateTimeFormat('zh-TW', options).format(formatEDate)
- 
-     
+          $('#sessionsTime').datetimepicker({
+        theme: '',          //theme: 'dark',
+        timepicker: true,   //timepicker: false,
+        step: 15,
+        format: 'Y/m/d H:i',
+        // defaultDate: '-1969-12-17', //disable 15天後才能選擇天數
+        // minDate: '-1969-12-17' //選擇時預設值在15天後
+      });
+      $('#sessioneTime').datetimepicker({
+        theme: '',          //theme: 'dark',
+        timepicker: true,   //timepicker: false,
+        step: 15,
+        format: 'Y/m/d H:i',
+        // defaultDate: '-1969-12-17', //disable 15天後才能選擇天數
+        // minDate: '-1969-12-17' //選擇時預設值在15天後
+      });
+        $.datetimepicker.setLocale('zh'); // kr ko ja en
       submitbtn.addEventListener("click",()=>{
-           
           fetch('http://localhost:8085/Session/saveSession', {
           method: 'POST', 
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            sessionsTime:sDate,
-            sessioneTime:eDate,
+            sessionsTime:$('#sessionsTime').val(),
+            sessioneTime:$('#sessioneTime').val(),
             maxSeatsQty:maxSeatsQty.value,
             maxStandingQty:maxStandingQty.value,
-            activityNo:activityNo
+            activityNo:activityNo,
+            seatsQty:0,
+            standingQty:0
         })
+        
         }).then(res => res.json())
         .catch(error => console.error('Error:', error))
-        .then(response => console.log('Success:', response));
-        })
+        .then(response => window.location.replace(window.location.href))
       })
+    });
       
-      })
+    
       
       // console.log(new Intl.DateTimeFormat('zh-TW', options).format(formatSDate));
       // console.log(new Intl.DateTimeFormat('zh-TW', options).format(formatEDate));
@@ -885,4 +920,6 @@
       // console.log(activityNo);
     </script>
   </body>
+  <link rel="stylesheet" type="text/css" href="css\jquery.datetimepicker.css" />
+  <script src="js\jquery.datetimepicker.full.js"></script>
 </html>

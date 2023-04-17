@@ -30,6 +30,7 @@
     <link href="vendor/OwlCarousel/assets/owl.theme.default.min.css" rel="stylesheet">
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -403,7 +404,7 @@
             <div class="modal-body">
                 <div class="model-content main-form">
                     <div class="row">
-                        <div class="col-lg-6 col-md-12">
+                        <div class="col-md-12">
                             <div class="form-group main-form mt-4">
                                 <p>目前票券數量： </p>
                                 <input id="noSeatTickets" class="form-control" aria-describedby=""
@@ -411,17 +412,17 @@
                                 <br>
                                 <p>欲新增票券數量： </p>
                                 <input id="modiSeatTickets" type="number" class="form-control" aria-describedby=""
-                                       placeholder="0" min="-10000" max="10000">
+                                       placeholder="0" min="0" max="10000">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="co-main-btn min-width btn-hover h_40"
-                        data-bs-dismiss="modal" onclick="clearSeats()">清空座位
+                <button id="clearBtn" type="button" class="co-main-btn min-width btn-hover h_40"
+                        data-bs-dismiss="modal" onclick="clearSeats()">清空票券數量
                 </button>
-                <button type="button" class="main-btn min-width btn-hover h_40" data-bs-dismiss="modal"
+                <button id="saveBtn" type="button" class="main-btn min-width btn-hover h_40" data-bs-dismiss="modal"
                         onclick="updateNumbers()">儲存變更
                 </button>
             </div>
@@ -612,8 +613,6 @@
                                     <a id="manageSeats_${j.blockNo}" href="back-activity-seatmgt-existed.html"
                                        class="dropdown-item" onmousedown="sessionStorage.setItem('blockNo', ${j.blockNo})"><i
                                         class="fa-solid fa-gear me-3"></i>管理座位</a>
-                                    <a href="#" class="dropdown-item delete-event"><i
-                                        class="fa-solid fa-trash-can me-3"></i>刪除區域</a>
                                 </div>
                             </div>
                         </div>
@@ -624,19 +623,20 @@
 									<i class="fa-solid fa-ticket"></i>
 								</span>
                                 <p>票券總數量</p>
-                                <h6 class="coupon-status">${toSellNumber}</h6>
+                                <h6 id="toSellNumber_${j.blockNo}">${toSellNumber}</h6>
                             </div>
                             <div class="icon-box">
 								<span class="icon">
 									<i class="fa-solid fa-tag"></i>
 								</span>
                                 <p>已售出數量</p>
-                                <h6 class="coupon-status">${soldNumber}</h6>
+                                <h6 id="soldNumber_${j.blockNo}">${soldNumber}</h6>
                             </div>
                         </div>
                     </div>
                 </div>`;
 
+            // 如果找不到座位就要導到 "back-activity-seatmgt-notexisted.html"
             $.ajax({
                 async: false,
                 type: 'GET',
@@ -649,13 +649,27 @@
                 }
             });
 
-            if (j.blockType === 0) {
+            // 節目類型為 0 (展覽類型)
+            if(j.blockName === "無區分"){
+                fetch('/Session/findById' + `?sessionNo=${sessionStorage.getItem("sessionNo")}`)
+                    .then(resp => resp.json())
+                    .then((jsondata) => {
+                        $(`#toSellNumber_${j.blockNo}`).text(`${jsondata.maxStandingQty}`);
+                        $(`#soldNumber_${j.blockNo}`).text(`${jsondata.standingQty}`);
+                    })
+            }
+
+            // 區域類型為 0 時，應該要將管理座位按鈕更改為調整數量而非座位
+            if (j.blockType === 0 ) {
                 document.getElementById(`manageSeats_${j.blockNo}`).href = "#changeToSellNumbers";
                 document.getElementById(`manageSeats_${j.blockNo}`).setAttribute("data-bs-toggle", "modal");
                 document.getElementById(`manageSeats_${j.blockNo}`).classList.add("addFcn");
-            }
-            ;
+            };
 
+            // 錯誤提醒
+            if (toSellNumber === 0) {
+                $(`#toSellNumber_${j.blockNo}`).html(`<span style="color: red">無票券或座位資訊</span>`);
+            };
         }
         ;
 
@@ -667,32 +681,49 @@
     let originalTicketQTY = 0;
 
     function addClickFcn() {
-        $.ajax({
-            async: false,
-            type: 'GET',
-            url: "/seats/getSeatsNumbers" + `?sessionNo=${sessionStorage.getItem("sessionNo")}&blockNo=${sessionStorage.getItem("blockNo")}`,
-            dataType: "json",
-            success: function (jsondata) {
-                if (jsondata[0] !== 0) {
-                    originalTicketQTY = jsondata[0];
-                    document.getElementById('noSeatTickets').value = jsondata[0];
-                    $('#modiSeatTickets').val(0);
-                } else {
-                    document.getElementById('noSeatTickets').value = "";
-                    $('#modiSeatTickets').val(0);
+        fetch("/Activity/findByActNo" + `?actNo=${sessionStorage.getItem("activityNo")}`)
+            .then(resp => resp.json())
+            .then((jsondata) => {
+                if(jsondata.wetherSeat === 0){
+                    fetch('/Session/findById' + `?sessionNo=${sessionStorage.getItem("sessionNo")}`)
+                        .then(resp => resp.json())
+                        .then((jsondata) => {
+                            document.getElementById('noSeatTickets').value = jsondata.maxStandingQty;
+                            $('#modiSeatTickets').prev().append(`<br><span style="color: red">此節目無任何座位需求，請至節目管理修改票券數量</span>`);
+                            $('#modiSeatTickets').prop('disabled', 'true');
+                            $('#clearBtn').prop('hidden', 'true');
+                            $('#saveBtn').prop('hidden', 'true');
+                        })
+                    return;
                 }
-            }
-        });
 
-        $.ajax({
-            async: false,
-            type: 'GET',
-            url: "/BlockPrice/findById" + `?blockNo=${sessionStorage.getItem("blockNo")}`,
-            dataType: "json",
-            success: function (jsondata) {
-                $('#standingSeatsBN').val(`${jsondata.blockName}`);
-            }
-        });
+                $.ajax({
+                    async: false,
+                    type: 'GET',
+                    url: "/seats/getSeatsNumbers" + `?sessionNo=${sessionStorage.getItem("sessionNo")}&blockNo=${sessionStorage.getItem("blockNo")}`,
+                    dataType: "json",
+                    success: function (jsondata) {
+                        if (jsondata[0] !== 0) {
+                            originalTicketQTY = jsondata[0];
+                            document.getElementById('noSeatTickets').value = jsondata[0];
+                            $('#modiSeatTickets').val(0);
+                        } else {
+                            document.getElementById('noSeatTickets').value = "";
+                            $('#modiSeatTickets').val(0);
+                        }
+                    }
+                });
+
+                $.ajax({
+                    async: false,
+                    type: 'GET',
+                    url: "/BlockPrice/findById" + `?blockNo=${sessionStorage.getItem("blockNo")}`,
+                    dataType: "json",
+                    success: function (jsondata) {
+                        $('#standingSeatsBN').val(`${jsondata.blockName}`);
+                    }
+                });
+            })
     }
 
     function updateNumbers() {
@@ -724,16 +755,46 @@
     }
 
     function clearSeats(){
+
+        let blockType;
+
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: "/BlockPrice/findById" + `?blockNo=${sessionStorage.getItem("blockNo")}`,
+            dataType: "json",
+            success: function (jsondata) {
+                blockType = jsondata.blockType;
+            }
+        });
+
+        if(blockType === 0){
+            console.log("跑到762");
+        }
+
         fetch("/seats/deleteSeats" +
             `?sessionNo=${sessionStorage.getItem("sessionNo")}&blockNo=${sessionStorage.getItem("blockNo")}`);
 
-        window.location.reload();
+        // window.location.reload();
     }
 
     function readyToCopy() {
-        fetch("/seats/copySessionSeats" +
-            `?copiedSessionNo=${$('#copiedSession').val()}&sessionNo=${sessionStorage.getItem("sessionNo")}&activityNo=${sessionStorage.getItem("activityNo")}`);
-        window.location.reload();
+        // SweetAlert
+        Swal.fire({
+            title: '確認要複製既有場次或模板座位？',
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: '確認',
+            denyButtonText: `取消`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch("/seats/copySessionSeats" +
+                    `?copiedSessionNo=${$('#copiedSession').val()}&sessionNo=${sessionStorage.getItem("sessionNo")}&activityNo=${sessionStorage.getItem("activityNo")}`);
+                window.location.reload();
+            } else if (result.isDenied) {
+                return;
+            }
+        })
     }
 
 </script>
