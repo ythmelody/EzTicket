@@ -210,8 +210,6 @@ function fetchPcouponList(e) {
 			const couponlist = document.querySelector('#coupons-02');
 			couponlist.innerHTML = "";
 			const couponbody = data.map(obj => {
-        console.log(data);
-        console.log()
 				return `<div class="main-card mt-4">
                   <div class="contact-list coupon-active">
                     <div class="top d-flex flex-wrap justify-content-between align-items-center p-4 border_bottom">
@@ -270,8 +268,19 @@ function fetchPcouponList(e) {
 function takeCoupon(memberno,pcouponno){
   fetch(`/pcouponholding/take?memberno=${memberno}&pcouponno=${pcouponno}`,{
       method: 'GET',
-    }).then(response => response.json())
-    .then(data => {
-      console.log(data);
-    })
+    }).then(result => result.json())
+      .then(result =>{
+      if (result == true){
+        swal("領取成功", {
+          buttons: false,
+          timer: 500,
+        });
+      } else {
+        swal("您已經領取過!!!", {
+          background: "blue",
+          buttons: false,
+          timer: 500,
+        });
+      };
+    });
 }

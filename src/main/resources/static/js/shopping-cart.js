@@ -9,46 +9,16 @@ $(document).ready(async () => {
   });
   const data = await response.json();
   memberno = data.memberno;
-
-  // $('#twzipcode').twzipcode({
-  //   // 設定初始化時的縣市選項樣式
-  //   css: ['form-control', 'h_50'],
-  //   // 是否顯示縣市選項的下拉式選單
-  //   countySel: true,
-  //   // 是否顯示鄉鎮市區選項的下拉式選單
-  //   districtSel: true,
-  //   // 是否顯示郵遞區號的欄位
-  //   zipcodeSel: true,
-  //   // 設定縣市選項的預設值
-  //   countyName: '台北市',
-  //   // 設定鄉鎮市區選項的預設值
-  //   districtName: '中正區',
-  //   // 設定郵遞區號欄位的預設值
-  //   zipcode: '100',
-  //   // 設定選項欄位的名稱
-  //   countyName: 'county',
-  //   districtName: 'district',
-  //   zipcodeName: 'zipcode',
-  //   // 設定縣市選項的 class 名稱
-  //   countyClass: 'county',
-  //   // 設定鄉鎮市區選項的 class 名稱
-  //   districtClass: 'district',
-  //   // 設定郵遞區號欄位的 class 名稱
-  //   zipcodeClass: 'zipcode',
-  //   // 設定縣市選項的 placeholder
-  //   countyPlaceholder: '請選擇縣市',
-  //   // 設定鄉鎮市區選項的 placeholder
-  //   districtPlaceholder: '請選擇鄉鎮市區',
-  //   // 設定郵遞區號欄位的 placeholder
-  //   zipcodePlaceholder: '郵遞區號'
-  // });
-  // $('#recipient').val(data.comrecipient);
-  // $('#rephone').val(data.comrephone);
-  // $('#email').val(data.memail);
-  // $('#readdress1').val(data.memail);
-  // $('#readdress2').val(data.comrecipient);
-  // $('#readdress3').val(data.comrecipient);
   if(memberno){
+    // let address = data.comreaddress;
+    // let twz = new TWzipcode();
+    // let result = twz.find(address);
+    $('#recipient').val(data.comrecipient);
+    $('#rephone').val(data.comrephone);
+    $('#email').val(data.memail);
+    // $('#readdress2').val(result.county);
+    // $('#readdress3').val(result.district);
+    // $('#readdress4').val(result.address);
     getcart();
   } else {
     // 請前往登入
@@ -203,7 +173,7 @@ function addPorder() {
     'pcouponno': pcouponno,
     'recipient': $("#recipient").val(),
     'rephone': $("#rephone").val(),
-    'readdress': ($("#readdress1").val() + ',' + $("#readdress2").val() + $("#readdress3").val()),
+    'readdress': ($("#readdress1").val() + ',' + $("#readdress2").val() + $("#readdress3").val() + $("#readdress4").val()),
     'orderProducts': products,
   }
   swal({
@@ -213,25 +183,18 @@ function addPorder() {
     dangerMode: true
   }).then((confirm) => {
     if (confirm) {
-      fetch('/porder/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
+      $.ajax({
+        url: '/porder/addtest',
+        type: 'POST',
+        data: JSON.stringify(porderbody),
+        contentType: 'application/json',
+        async: false,
+        success: function(data) {
+          localStorage.clear();
+          $('body').append(data);
+          $('#allPayAPIForm').submit();
         },
-        body: JSON.stringify(porderbody)
-      }).then(response => {
-        if (response.ok) {
-          response.json().then(porderno => {
-            swal({
-              title: "建立成功",
-              icon: "success",
-              closeOnClickOutside: false,
-            }).then(() => {
-              localStorage.clear();
-              window.location.href = `front-product-order_confirmed.html?id=${porderno}`;
-            })
-          });
-        } else {
+        error: function() {
           swal({
             title: "建立失敗",
             icon: "error",
@@ -243,12 +206,49 @@ function addPorder() {
       return Promise.reject('取消操作');
     }
   });
+  // swal({
+  //   title: "是否建立訂單?",
+  //   icon: "warning",
+  //   buttons: true,
+  //   dangerMode: true
+  // }).then((confirm) => {
+  //   if (confirm) {
+  //     fetch('/porder/add', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify(porderbody)
+  //     }).then(response => {
+  //       if (response.ok) {
+  //         response.json().then(porderno => {
+  //           swal({
+  //             title: "建立成功",
+  //             icon: "success",
+  //             closeOnClickOutside: false,
+  //           }).then(() => {
+  //             localStorage.clear();
+  //             window.location.href = `front-product-order_confirmed.html?id=${porderno}`;
+  //           })
+  //         });
+  //       } else {
+  //         swal({
+  //           title: "建立失敗",
+  //           icon: "error",
+  //           closeOnClickOutside: false,
+  //         });
+  //       }
+  //     });
+  //   } else {
+  //     return Promise.reject('取消操作');
+  //   }
+  // });
 }
 
 function removeItem(e) {
   // 從 localStorage 取出 item 的值
   let itemData = JSON.parse(localStorage.getItem('cartItems'));
-  if (!e) {
+  if (e?.length === 0) {
     // 若未傳入參數，則清除所有項目
     itemData = [];
   } else {
@@ -256,7 +256,7 @@ function removeItem(e) {
     itemData.splice(e, 1);
     // 更新索引
     itemData = itemData.map((item, index) => ({ ...item, index }));
-  }
+  }  
   // 將修改後的資料存回 localStorage
   localStorage.setItem('cartItems', JSON.stringify(itemData));
   // 重新載入頁面

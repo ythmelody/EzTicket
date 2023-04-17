@@ -7,6 +7,8 @@ import com.ezticket.web.product.pojo.PdetailsPK;
 import com.ezticket.web.product.service.PcommentService;
 import com.ezticket.web.product.service.PdetailsService;
 import com.ezticket.web.product.service.ProductService;
+import com.ezticket.web.product.util.PageResult;
+import com.ezticket.web.users.pojo.Member;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import jakarta.servlet.ServletException;
@@ -14,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -52,8 +55,13 @@ public class ProductCommentServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        //取得所有商品評論
+
         String action = request.getParameter("action");
+        HttpSession session =request.getSession();
+        Boolean loggedin = (Boolean) session.getAttribute("loggedin");
+        Member member = (Member) session.getAttribute("member");
+
+        //取得所有商品評論
         if ("productCommentList".equals(action)) {
             List<Pcomment> pcommentList = pcommentSvc.getAllProductComment();
             list2json(pcommentList, response);
@@ -73,8 +81,13 @@ public class ProductCommentServlet extends HttpServlet {
 
         //新增商品評論 (同時更新商品總評星)
         if ("addProductComment".equals(action)) {
+            if (loggedin == null || loggedin == false) {
+                response.sendRedirect("front-users-mem-sign-in.html");
+                return;
+            }
             Integer productno = Integer.valueOf(request.getParameter("productno"));
-            Integer memberno = Integer.valueOf(request.getParameter("memberno"));
+//            Integer memberno = Integer.valueOf(request.getParameter("memberno"));
+            Integer memberno = member.getMemberno();
             Integer prate = Integer.valueOf(request.getParameter("prate"));
             String pcommentcont = request.getParameter("pcommentcont");
             Pcomment pcomment = pcommentSvc.addProductComment(productno, pcommentcont, prate, memberno);
@@ -87,7 +100,8 @@ public class ProductCommentServlet extends HttpServlet {
 //            PdetailsPK pdetailsPK =new PdetailsPK();
             pdetailsPK.setPorderno(porderno);
             pdetailsPK.setProductno(productno);
-            pdetailSvc.updateByID(pdetailsPK, 1); //0是未評論，1是已評論
+            //用怪方法存進pcommentno
+            pdetailSvc.updateByID(pdetailsPK, pcomment.getPcommentno()); //0是未評論，1是已評論
 
             Gson gson = new Gson();
             String json = gson.toJson(pcomment);
@@ -100,6 +114,10 @@ public class ProductCommentServlet extends HttpServlet {
 
         //取得單一筆評論
         if ("getOneproductComment".equals(action)) {
+            if (loggedin == null || loggedin == false) {
+                response.sendRedirect("front-users-mem-sign-in.html");
+                return;
+            }
             Integer pcommentno = Integer.valueOf(request.getParameter("pcommentno"));
             Pcomment pcomment = pcommentSvc.getOneProductComment(pcommentno);
             Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
@@ -136,7 +154,7 @@ public class ProductCommentServlet extends HttpServlet {
         if ("getThumpupPcommentno".equals(action)) {
             Integer memberno = Integer.valueOf(request.getParameter("memberno"));
             Set<Integer> set = pcommentSvc.getPcommentnosByMemberno(memberno);
-            Gson gson =new Gson();
+            Gson gson = new Gson();
             String json = gson.toJson(set);
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json");
@@ -151,8 +169,8 @@ public class ProductCommentServlet extends HttpServlet {
         if ("thumpupPcomment".equals(action)) {
             Integer memberno = Integer.valueOf(request.getParameter("memberno"));
             Integer pcommentno = Integer.valueOf(request.getParameter("pcommentno"));
-            Boolean thumpup =pcommentSvc.addThumpUp(memberno, pcommentno);
-            Gson gson =new Gson();
+            Boolean thumpup = pcommentSvc.addThumpUp(memberno, pcommentno);
+            Gson gson = new Gson();
             String json = gson.toJson(thumpup);
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json");
@@ -166,6 +184,40 @@ public class ProductCommentServlet extends HttpServlet {
             Integer memberno = Integer.valueOf(request.getParameter("memberno"));
             Integer pcommentno = Integer.valueOf(request.getParameter("pcommentno"));
             pcommentSvc.removeThumpUp(memberno, pcommentno);
+            return;
+        }
+        //評論複合查詢搭配分頁(後台商品管理打這支)
+        if ("CommentSearchPage".equals(action)) {
+            Map<String, String[]> map = request.getParameterMap();
+            Integer pageNumebr = Integer.valueOf(request.getParameter("pageNumber"));
+            Integer pageSize = Integer.valueOf(request.getParameter("pageSize"));
+            PageResult<Pcomment> pcommentList = pcommentSvc.getAllBySearch(map, pageNumebr, pageSize);
+            Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
+            String json = gson.toJson(pcommentList);
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+            out.print(json);
+            out.flush();
+        }
+
+        //提供客人更改評論內容
+        if ("updateOneproductComment".equals(action)) {
+            if (loggedin == null || loggedin == false) {
+                response.sendRedirect("front-users-mem-sign-in.html");
+                return;
+            }
+            Integer pcommentno = Integer.valueOf(request.getParameter("pcommentno"));
+            Integer prate = Integer.valueOf(request.getParameter("prate"));
+            String pcommentcont = request.getParameter("pcommentcont");
+            Boolean updateOK = pcommentSvc.updateProductComment(pcommentno, prate,pcommentcont);
+            Gson gson = new Gson();
+            String json = gson.toJson(updateOK);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter pw = response.getWriter();
+            pw.print(json);
+            pw.flush();
         }
 
     }

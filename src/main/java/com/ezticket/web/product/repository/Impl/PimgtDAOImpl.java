@@ -19,10 +19,11 @@ public class PimgtDAOImpl implements PimgtDAO {
 	}
 
 	@Override
-	public void update(Pimgt pimgvo) {
+	public Boolean update(Pimgt pimgvo) {
 		// TODO Auto-generated method stub
 
-	}
+        return null;
+    }
 
 	@Override
 	public Pimgt getByPrimaryKey(Integer pimgno) {

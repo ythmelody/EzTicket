@@ -4,10 +4,8 @@ import java.util.List;
 
 import com.ezticket.web.product.pojo.Followproduct;
 import com.ezticket.web.product.pojo.FollowproductPK;
-import com.ezticket.web.product.pojo.Pclass;
 import com.ezticket.web.product.repository.FollowproductDAO;
 import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -24,9 +22,10 @@ public class FollowproductDAOImpl implements FollowproductDAO {
 	}
 
 	@Override
-	public void update(Followproduct followproductVO) {
+	public Boolean update(Followproduct followproductVO) {
 		// TODO 用不到這個方法
 
+		return null;
 	}
 
 	@Override
