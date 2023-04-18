@@ -59,27 +59,6 @@ public class PcouponService {
         return true;
     }
 
-//    @Transactional
-//    public boolean addPcoupon(AddPcouponDTO couponBody) {
-//        Pcoupon pcoupon = pcouponRepository.findByPcouponname(couponBody.getPcouponname());
-//        if (pcoupon == null) {
-//            pcoupon = new Pcoupon();
-//        }
-//        pcoupon.setPcouponname(couponBody.getPcouponname());
-//        pcoupon.setPdiscount(couponBody.getPdiscount());
-//        pcoupon.setPreachprice(couponBody.getPreachprice());
-//        pcoupon.setPcoupnsdate(couponBody.getPcoupnsdate());
-//        pcoupon.setPcoupnedate(couponBody.getPcoupnedate());
-//        Pcoupon savedPcoupon = pcouponRepository.save(pcoupon);
-//        Pfitcoupon pfitcoupon = new Pfitcoupon();
-//        PfitcouponPK pfitcouponPK = new PfitcouponPK();
-//        pfitcouponPK.setPcouponno(savedPcoupon.getPcouponno());
-//        pfitcouponPK.setProductno(couponBody.getProductno());
-//        pfitcoupon.setPfitcouponNo(pfitcouponPK);
-//        pfitcouponRepository.save(pfitcoupon);
-//        checkPouconStatus();
-//        return true;
-//    }
     @Transactional
     public ResponseEntity<?> addPcouponError(AddPcouponDTO couponBody, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
