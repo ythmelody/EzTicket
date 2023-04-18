@@ -547,8 +547,8 @@
 				pdiscrip.textContent = item.pdiscrip;
 				pprice.textContent = item.pprice;
 				pspecialprice.textContent = item.pspecialprice;
-				$("#count").attr("max",item.pqty);
-				
+				$("#count").attr("max", item.pqty);
+
 				if (item.prateqty < 1) {
 					$("#productRate").children("h4").text('尚無評論');
 				}
@@ -911,21 +911,34 @@
 				event.target.classList.add("thumbbed");
 				$.ajax({
 					url: "ProductCommentServlet",
-					async: false,
+					// async: false,
 					type: 'POST',
 					dataType: "json",
 					data: {
 						"action": "thumpupPcomment",
-						"memberno": info.memberno,
+						// "memberno": info.memberno,
 						"pcommentno": pcommentno
 					},
 					success: function (jsondata) {
+						console.log(jsondata);
+						if (jsondata.status === 302) {
+							swal({
+								title: "點讚需要登入，是否前往登入?",
+								icon: "warning",
+								buttons: true,
+								dangerMode: true
+							}).then((confirm) => {
+								if (confirm) {
+									window.location.href = jsondata.location;
+								}
+							})
+						}
 						let plikeEl = $(`plike_${pcommentno}`)
-						console.log(plikeEl);
-						let plikeOld=plikeEl.text();
-						console.log(plikeOld);
-						console.log(typeof plikeOld);
-						plikeEl.text(1+plikeOld);
+						// console.log(plikeEl);
+						let plikeOld = plikeEl.text();
+						// console.log(plikeOld);
+						// console.log(typeof plikeOld);
+						plikeEl.text(1 + plikeOld);
 
 					}
 				})
@@ -935,21 +948,35 @@
 				event.target.classList.remove("thumbbed");
 				$.ajax({
 					url: "ProductCommentServlet",
-					async: false,
+					// async: false,
 					type: 'POST',
 					dataType: "json",
 					data: {
 						"action": "thumpdownPcomment",
-						"memberno": info.memberno,
+						// "memberno": info.memberno,
 						"pcommentno": pcommentno
 					},
 					success: function (jsondata) {
+						console.log(jsondata);
+						if (jsondata.status === 302) {
+							swal({
+								title: "點讚需要登入，是否前往登入?",
+								icon: "warning",
+								buttons: true,
+								dangerMode: true
+							}).then((confirm) => {
+								if (confirm) {
+									window.location.href = jsondata.location;
+								}
+							})
+						}
 					}
 				})
 			}
 		}
 
-
+		//返回先前頁面
+		localStorage.setItem('currentUrl', window.location.href);
 
 	</script>
 
