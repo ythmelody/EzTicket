@@ -4,6 +4,8 @@ package com.ezticket.web.product.controller;
 import com.ezticket.web.product.pojo.Preport;
 import com.ezticket.web.product.service.PreportService;
 import com.ezticket.web.product.util.PageResult;
+import com.ezticket.web.users.pojo.Member;
+import com.ezticket.web.users.service.MemberService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import jakarta.servlet.ServletException;
@@ -11,6 +13,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.aspectj.weaver.NewMemberClassTypeMunger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -24,10 +28,14 @@ public class ProductCommentReport extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private PreportService preportSvc;
 
+    Member newMember;
+    private MemberService memberSvc;
+
     @Override
     public void init() throws ServletException {
         ApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
         preportSvc = applicationContext.getBean(PreportService.class);
+        memberSvc = applicationContext.getBean(MemberService.class);
 
     }
 
@@ -39,19 +47,26 @@ public class ProductCommentReport extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
+        //從請求得到session
+        HttpSession session = request.getSession();
+        //確認是否為登入狀態
+        Boolean loggedin =(Boolean)session.getAttribute("loggedin");
+        //如果是登入狀態得到member拿來用
+        if(loggedin != null && loggedin == true){
+            //這邊的member只有email跟password(沒有memberno)
+            Member member =(Member) session.getAttribute("member");
+            //取得所有member pojo資訊(包含memberno)
+            newMember =memberSvc.getMemberInfo(member.getMemail());
 
-        if ("productCommentRepostList".equals(action)) {
-            List<Preport> preportList = preportSvc.getAllProductReport();
-            Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
-            String json = gson.toJson(preportList);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            PrintWriter pw = response.getWriter();
-            pw.print(json);
-            pw.flush();
         }
 
+        //取得所有商品評論檢舉
+        if ("productCommentRepostList".equals(action)) {
+            List<Preport> preportList = preportSvc.getAllProductReport();
+            list2json(preportList,response);
+        }
 
+        //取得單一筆商品評論檢舉(後台的方法)
         if ("productOneCommentRepost".equals(action)) {
             Integer preportno = Integer.valueOf(request.getParameter("preportno"));
             Preport preport = preportSvc.getOneProductReport(preportno);
@@ -63,7 +78,7 @@ public class ProductCommentReport extends HttpServlet {
             pw.print(json);
             pw.flush();
         }
-
+        //更新單一筆商品評論檢舉(後台的方法)
         if ("updateOneproductCommentReportStatus".equals(action)) {
             Integer preportno = Integer.valueOf(request.getParameter("preportno"));
             Integer preportstatus = Integer.valueOf(request.getParameter("preportstatus"));
@@ -77,7 +92,7 @@ public class ProductCommentReport extends HttpServlet {
             pw.flush();
 
         }
-
+        //複合查詢(現在被複合查詢+分頁取代)
         if ("CommentReportSearch".equals(action)) {
             Map<String, String[]> map = request.getParameterMap(); //將得到的資料轉成map
             System.out.println("CommentReportSearch" + map);
@@ -87,7 +102,11 @@ public class ProductCommentReport extends HttpServlet {
 
         //新增評論檢舉-(前台)商品詳情評論輪播
         if ("addProductCommentReport".equals(action)) {
-            Integer memberno = Integer.valueOf(request.getParameter("memberno"));
+            if(loggedin ==null || loggedin ==false){
+                response.sendRedirect("front-users-mem-sign-in.html");
+                return;
+            }
+            Integer memberno = newMember.getMemberno();
             Integer pcommentno = Integer.valueOf(request.getParameter("pcommentno"));
             String pwhy = request.getParameter("pwhy");
             Preport preport = preportSvc.addProductReport(pcommentno, memberno, pwhy);
