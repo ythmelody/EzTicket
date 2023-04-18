@@ -824,13 +824,35 @@
 
 		//會員編號假資料
 		const info = {
-			memberno: 85346,
+			// memberno: 85346,
 		}
 
 		//從評論取得評論編號
 		function comment(pcommentno) {
-			$('#pcommentno').val(pcommentno);
-			$('#memberno').val(info.memberno);
+			fetch('member/getMemberInfo', {
+				method: 'GET',
+			}).then(resp => {
+				if (resp.redirected) {
+					swal({
+						title: "檢舉需要登入,是否要登入?",
+						icon: "warning",
+						buttons: true,
+						dangerMode: true
+					}).then((confirm) => {
+						if (confirm) {
+							window.location.href = "front-users-mem-sign-in.html";
+						}
+					})
+				} else {
+					return resp.json()
+				}
+			})
+				.then(() => {
+					$('#pcommentno').val(pcommentno);
+				})
+
+
+			// $('#memberno').val(info.memberno);
 			console.log("comment" + $("#pcommentno").val());
 		}
 
@@ -848,19 +870,39 @@
 					'pwhy': $('#pwhy').val(),
 					'action': "addProductCommentReport"
 				})
-			}).then(resp => resp.json())
+			}).then(resp => {
+				//驗證會員是否登入
+				if (resp.redirected) {
+					swal({
+						title: "檢舉需要登入,是否要登入?",
+						icon: "warning",
+						buttons: true,
+						dangerMode: true
+					}).then((confirm) => {
+						if (confirm) {
+							window.location.href = "front-users-mem-sign-in.html";
+						}
+					})
+				} else {
+					return resp.json()
+				}
+			})
 				.then(item => {
 					if (item.pcommentno) {
 						swal({
 							title: "檢舉成功",
 							icon: "success",
 							closeOnClickOutside: true,
+						}).then(() => {
+							window.location.reload();
 						})
 					} else {
 						swal({
 							title: "檢舉失敗",
 							icon: "error",
 							closeOnClickOutside: true,
+						}).then(() => {
+							window.location.reload();
 						})
 					}
 				})

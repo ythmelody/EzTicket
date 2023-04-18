@@ -55,15 +55,15 @@ public class ProductCommentServlet extends HttpServlet {
 
 
         String action = request.getParameter("action");
-        //從請求得到request
+        //從請求得到session
         HttpSession session = request.getSession();
         //確認是否為登入狀態
         Boolean loggedin = (Boolean) session.getAttribute("loggedin");
         //如果是登入狀態得到member拿來用
         if (loggedin != null && loggedin == true) {
-            //這邊的member只有email跟password
+            //這邊的member只有email跟password(沒有memberno)
             Member member = (Member) session.getAttribute("member");
-            //取得所有member pojo資訊
+            //取得所有member pojo資訊(包含memberno)
             newMember = memberSvc.getMemberInfo(member.getMemail());
         }
 
