@@ -49,8 +49,8 @@ public class Member extends Core {
     @Column(name = "MEMBERSTATUS")
     private Integer memberstatus;
 
-    @OneToMany
-    @JoinColumn(name = "torderno",
-            referencedColumnName = "MEMBERNO")
-    private List<Torder> torder;
+//    @OneToMany
+//    @JoinColumn(name = "torderno",
+//            referencedColumnName = "MEMBERNO")
+//    private List<Torder> torder;
 }
