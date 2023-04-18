@@ -8,7 +8,9 @@ import com.ezticket.web.product.service.PcommentService;
 import com.ezticket.web.product.service.PdetailsService;
 import com.ezticket.web.product.service.ProductService;
 import com.ezticket.web.product.util.PageResult;
+import com.ezticket.web.users.pojo.Backuser;
 import com.ezticket.web.users.pojo.Member;
+import com.ezticket.web.users.service.BackuserService;
 import com.ezticket.web.users.service.MemberService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -33,7 +35,10 @@ public class ProductCommentServlet extends HttpServlet {
     private PdetailsService pdetailSvc;
     private PdetailsPK pdetailsPK;
     private MemberService memberSvc;
+    private BackuserService backuserSvc;
     Member newMember;
+
+    Backuser newbackuser;
 
     @Override
     public void init() throws ServletException {
@@ -43,6 +48,7 @@ public class ProductCommentServlet extends HttpServlet {
         pdetailSvc = applicationContext.getBean(PdetailsService.class);
         pdetailsPK = applicationContext.getBean(PdetailsPK.class);
         memberSvc = applicationContext.getBean(MemberService.class);
+        backuserSvc =applicationContext.getBean(BackuserService.class);
 
     }
 
@@ -58,14 +64,31 @@ public class ProductCommentServlet extends HttpServlet {
         //從請求得到session
         HttpSession session = request.getSession();
         //確認是否為登入狀態
-        Boolean loggedin = (Boolean) session.getAttribute("loggedin");
-        //如果是登入狀態得到member拿來用
-        if (loggedin != null && loggedin == true) {
-            //這邊的member只有email跟password(沒有memberno)
-            Member member = (Member) session.getAttribute("member");
-            //取得所有member pojo資訊(包含memberno)
+        Boolean isMember = false;
+        Boolean isAdmin = false;
+        Member member = (Member) session.getAttribute("member");
+        Backuser backuser = (Backuser) session.getAttribute("backuser");
+        if (member != null) {
+            isMember = true;
             newMember = memberSvc.getMemberInfo(member.getMemail());
         }
+        if (backuser != null) {
+            isAdmin = true;
+            newbackuser = backuserSvc.getBackuserInfo(backuser.getBaaccount());
+        }
+        //如果是登入狀態得到member拿來用
+//        if (loggedin != null && loggedin == true) {
+//            //這邊的member只有email跟password(沒有memberno)
+//            Member member = (Member) session.getAttribute("member");
+//            Backuser backuser = (Backuser) session.getAttribute("backuser");
+//            if (backuser.getBaaccount() != null) {
+//
+//            }
+//            else if(member.getMemail() != null){
+//                //取得所有member pojo資訊(包含memberno)
+//                newMember = memberSvc.getMemberInfo(member.getMemail());
+//            }
+//        }
 
         //取得所有商品評論
         if ("productCommentList".equals(action)) {
@@ -87,7 +110,7 @@ public class ProductCommentServlet extends HttpServlet {
 
         //新增商品評論 (同時更新商品總評星) --> 會員綁定才可以新增
         if ("addProductComment".equals(action)) {
-            if (loggedin == null || loggedin == false) {
+            if (!isMember) {
                 response.sendRedirect("front-users-mem-sign-in.html");
                 return;
             }
@@ -119,7 +142,7 @@ public class ProductCommentServlet extends HttpServlet {
 
         //取得單一筆評論 --> 會員綁定才可以查看 (查看已評論的才會跳出會員登入驗證，如果是還沒有評論要加上去的話要改pdtailController)
         if ("getOneproductComment".equals(action)) {
-            if (loggedin == null || loggedin == false) {
+            if (!isMember) {
                 response.sendRedirect("front-users-mem-sign-in.html");
                 return;
             }
@@ -134,7 +157,7 @@ public class ProductCommentServlet extends HttpServlet {
             pw.flush();
         }
 
-        //更新單一評論狀態 --> 會員綁定才可以修改
+        //更新單一評論狀態
         if ("updateOneproductCommentStatus".equals(action)) {
             Integer pcommentno = Integer.valueOf(request.getParameter("pcommentno"));
             Integer pcommentstatus = Integer.valueOf(request.getParameter("pcommentstatus"));
@@ -157,7 +180,7 @@ public class ProductCommentServlet extends HttpServlet {
 
         //取得會員按讚的商品編號(判斷會員是否按讚依據) --> 會員綁定才可以看的到，但不強制登入
         if ("getThumpupPcommentno".equals(action)) {
-            if (loggedin == null || loggedin == false) {
+            if (!isMember) {
                 return;
             }
             //用session取得會員編號
@@ -176,7 +199,7 @@ public class ProductCommentServlet extends HttpServlet {
 
         //評論按讚　--> 會員綁定才可以點讚，用swal詢問是否導到登入畫面
         if ("thumpupPcomment".equals(action)) {
-            if (loggedin == null || loggedin == false) {
+            if (!isMember) {
                 Map map = new HashMap();
                 map.put("status", 302);
                 map.put("location", "front-users-mem-sign-in.html");
@@ -205,7 +228,7 @@ public class ProductCommentServlet extends HttpServlet {
 
         //評論取消按讚 --> 會員綁定才可以取消點讚，用swal詢問是否導到登入畫面
         if ("thumpdownPcomment".equals(action)) {
-            if (loggedin == null || loggedin == false) {
+            if (!isMember) {
                 Map map = new HashMap();
                 map.put("status", 302);
                 map.put("location", "front-users-mem-sign-in.html");
@@ -241,7 +264,7 @@ public class ProductCommentServlet extends HttpServlet {
 
         //提供客人更改評論內容 --> 會員綁定才可以修改評論
         if ("updateOneproductComment".equals(action)) {
-            if (loggedin == null || loggedin == false) {
+            if (!isMember) {
                 response.sendRedirect("front-users-mem-sign-in.html");
                 return;
             }
