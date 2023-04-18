@@ -29,7 +29,8 @@ public class OrderController {
 	public String ecpayCheckout(Integer porderno) {
 		String aioCheckOutALLForm = orderService.ecpayCheckout(porderno);
 		// 取得回傳的Form，然後導向綠界付款頁面
-		return "redirect:" + aioCheckOutALLForm;
+		// 用JS重導
+		return aioCheckOutALLForm;
 	}
 	// 本機無法拿到資料要上Https
 	@PostMapping("/return")
@@ -50,6 +51,7 @@ public class OrderController {
 			String paramName = parameterNames.nextElement();
 			System.out.println(paramName + ": " + request.getParameter(paramName));
 		}
+		// 綠界規定如有收到回傳，回饋給他的值
 		return "1|OK";
 	}
 

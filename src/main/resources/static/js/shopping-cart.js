@@ -9,6 +9,7 @@ $(document).ready(async () => {
   });
   const data = await response.json();
   memberno = data.memberno;
+  console.log(memberno);
   if(memberno){
     let address = data.comreaddress;
     const twzipcode = new TWzipcode({combine: false});
@@ -29,7 +30,11 @@ $(document).ready(async () => {
     window.location.href = 'front-users-mem-sign-in.html';
   }
 });
-
+// 頁面載入前驗證是否登入
+if (!memberno) {
+  // 請前往登入
+  window.location.href = 'front-users-mem-sign-in.html';
+}
 async function getcart() {
   let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
   const itemlist = document.querySelector('tbody');
@@ -195,7 +200,6 @@ function addPorder() {
         success: function(data) {
           localStorage.clear();
           $('body').append(data);
-          $('#allPayAPIForm').submit();
         },
         error: function() {
           swal({

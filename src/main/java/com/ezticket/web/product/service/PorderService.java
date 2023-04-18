@@ -62,8 +62,10 @@ public class PorderService {
     @Transactional
     public PorderDTO updateByID(Integer id, Integer processStatus) {
         Porder porder = porderRepository.getReferenceById(id);
-        // 付款狀態 Ppaymentstatus 0 未付款 1 已付款 2 已退款
-        // 訂單狀態 Pprocessstatus 0 未處理 1 配送中 2 已結案 3 取消
+        // 付款狀態 Ppaymentstatus
+        // 0 未付款 1 已付款 2 已退款 3 付款失敗
+        // 訂單狀態 Pprocessstatus
+        // 0 未處理 1 已出貨 2 已結案 3 已取消 4 取消確認
         if (porder.getPpaymentstatus() == 0 && processStatus != 3) {
             throw new IllegalStateException("未付款的訂單只能取消");
         }
@@ -139,6 +141,9 @@ public class PorderService {
             pdetails.setPcommentstatus(0);
             pdetailsRepository.save(pdetails);
             Product product = dao.getByPrimaryKey(orderProducts.get(i).getProductno());
+            if(product.getPqty() < orderProducts.get(i).getQuantity()){
+                throw new RuntimeException("庫存不足");
+            }
             product.setPqty(product.getPqty() - orderProducts.get(i).getQuantity());
             dao.update(product);
         }
@@ -147,24 +152,33 @@ public class PorderService {
 
 
     @Scheduled(cron = "0 0 * * * *")
+    @Transactional
     public void checkOrderPayStatus() {
-        LocalDateTime today = LocalDateTime.now();
         List<Porder> porders = porderRepository.findAll();
-
         for (Porder porder : porders) {
-            //  當付款狀態為0
-            if (porder.getPpaymentstatus() == 0){
-                LocalDateTime start = porder.getPorderdate();
-                // 加上10分鐘
-                LocalDateTime end = start.plusMinutes(10);
-                byte status = 0;
-                if (today.isEqual(start) || today.isEqual(end)) {
-                    status = 1;
-                } else if (today.isAfter(start) && today.isBefore(end)) {
-                    status = 1;
-                }
-                porder.getPprocessstatus();
+            // 取得訂單成立時間
+            LocalDateTime start = porder.getPorderdate();
+            // 設定成立的11分後
+            LocalDateTime end = start.plusMinutes(11);
+            //  當付款狀態為0 未付款且已超過11分鐘
+            if (porder.getPpaymentstatus() == 0 && LocalDateTime.now().isAfter(end)) {
+                // 在這裡執行超過11分鐘的動作
+                // 設定付款失敗
+                // 0 未付款 1 已付款 2 已退款 3 付款失敗
+                porder.setPpaymentstatus(3);
+                // 0 未處理 1 已出貨 2 已結案 3 已取消 4 取消確認
+                porder.setPprocessstatus(3);
+                porder.setPclosedate(LocalDateTime.now());
                 porderRepository.save(porder);
+                // 取得訂單明細
+                List<Pdetails> pdetailsList = pdetailsRepository.findByPorderno(porder.getPorderno());
+                for (Pdetails pdetails : pdetailsList){
+                    // 取得商品
+                    Product product = dao.getByPrimaryKey(pdetails.getPdetailsNo().getProductno());
+                    // 返回庫存
+                    product.setPqty(product.getPqty() + pdetails.getPorderqty());
+                    dao.update(product);
+                }
             }
         }
     }

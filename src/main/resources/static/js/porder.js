@@ -32,6 +32,9 @@ function fetchPorderList(e) {
           case 2:
             paystatus = '<span class="status-circle blue-circle"></span>已退款';
             break;
+          case 3:
+            paystatus = '<span class="status-circle red-circle"></span>付款失敗';
+            break;
           case 0:
             paystatus = '<span class="status-circle red-circle"></span>未付款';
             break;
@@ -70,7 +73,7 @@ function fetchPorderList(e) {
                             <select class="filter-option" onchange="changeStatus(this)">
                               <option selected disabled>請選擇</option>
                               <option value="0">未處理</option>
-                              <option value="1">已出貨</option>
+                              <option value="1">配送中</option>
                               <option value="2">已結案</option>
                               <option value="3">已取消</option>
                             </select>
@@ -91,7 +94,7 @@ function changeStatus(selectElem) {
       statusTd.innerHTML = '<span class="status-circle yellow-circle"></span>配送中';
       break;
     case "2":
-      statusTd.innerHTML = '<span class="status-circle green-circle"></span>已出貨';
+      statusTd.innerHTML = '<span class="status-circle green-circle"></span>已結案';
       break;
     case "3":
       statusTd.innerHTML = '<span class="status-circle red-circle"></span>已取消';

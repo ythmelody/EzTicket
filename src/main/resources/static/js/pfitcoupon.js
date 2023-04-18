@@ -110,27 +110,26 @@ function addCoupon() {
 		'pcoupnsdate': formatDate($("#pcoupnsdateup").val(), $("#pcoupnsdatedown").val()),
 		'pcoupnedate': formatDate($("#pcoupnedateup").val(), $("#pcoupnedatedown").val())
 	}
-
-			fetch('/pcoupon/addtest', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(couponbody)
-			}).then(response => {
-				if (response.ok) {
-					$('#couponModal').modal('hide');
-					swal('新增成功', { icon: "success" });
-				} else {
-					response.json().then(data => {
-						console.error(data);
-						$("#pcouponname").prev("span").text(data.pcouponname);
-						$("#productno").prev("span").text(data.productno);
-						$("#pdiscount").prev("span").text(data.pdiscount);
-						$("#preachprice").prev("span").text(data.preachprice);
-					});
-				}
-			})
+	fetch('/pcoupon/add', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(couponbody)
+	}).then(response => {
+		if (response.ok) {
+			$('#couponModal').modal('hide');
+			swal('新增成功', { icon: "success" });
+		} else {
+			response.json().then(data => {
+				console.error(data);
+				$("#pcouponname").prev("span").text(data.pcouponname);
+				$("#productno").prev("span").text(data.productno);
+				$("#pdiscount").prev("span").text(data.pdiscount);
+				$("#preachprice").prev("span").text(data.preachprice);
+			});
+		}
+	})
 }
 
 $('.datepicker-here').datepicker({

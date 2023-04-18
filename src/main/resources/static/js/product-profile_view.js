@@ -41,7 +41,7 @@ function fetchPorderList(e) {
             }
             switch (obj.pprocessstatus) {
               case 1:
-                processstatus = '<span class="status-circle yellow-circle"></span>已出貨';
+                processstatus = '<span class="status-circle yellow-circle"></span>配送中';
                 break;
               case 2:
                 processstatus = '<span class="status-circle green-circle"></span>已結案';

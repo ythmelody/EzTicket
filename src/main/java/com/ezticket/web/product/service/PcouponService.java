@@ -74,6 +74,8 @@ public class PcouponService {
             pcoupon.setPcouponname(couponBody.getPcouponname());
             pcoupon.setPdiscount(couponBody.getPdiscount());
             pcoupon.setPreachprice(couponBody.getPreachprice());
+            System.out.println(couponBody.getPcoupnsdate());
+            System.out.println(couponBody.getPcoupnedate());
             pcoupon.setPcoupnsdate(couponBody.getPcoupnsdate());
             pcoupon.setPcoupnedate(couponBody.getPcoupnedate());
             Pcoupon savedPcoupon = pcouponRepository.save(pcoupon);
