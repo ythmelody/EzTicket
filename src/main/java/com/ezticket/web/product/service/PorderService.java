@@ -9,6 +9,7 @@ import com.ezticket.web.product.repository.PorderRepository;
 import com.ezticket.web.product.repository.ProductDAO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -143,4 +144,29 @@ public class PorderService {
         }
         return EntityToDTO(porder);
     }
+
+
+    @Scheduled(cron = "0 0 * * * *")
+    public void checkOrderPayStatus() {
+        LocalDateTime today = LocalDateTime.now();
+        List<Porder> porders = porderRepository.findAll();
+
+        for (Porder porder : porders) {
+            //  當付款狀態為0
+            if (porder.getPpaymentstatus() == 0){
+                LocalDateTime start = porder.getPorderdate();
+                // 加上10分鐘
+                LocalDateTime end = start.plusMinutes(10);
+                byte status = 0;
+                if (today.isEqual(start) || today.isEqual(end)) {
+                    status = 1;
+                } else if (today.isAfter(start) && today.isBefore(end)) {
+                    status = 1;
+                }
+                porder.getPprocessstatus();
+                porderRepository.save(porder);
+            }
+        }
+    }
+
 }

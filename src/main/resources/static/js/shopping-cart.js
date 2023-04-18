@@ -12,21 +12,14 @@ $(document).ready(async () => {
   if(memberno){
     let address = data.comreaddress;
     const twzipcode = new TWzipcode({combine: false});
-    let result = twzipcode.parseAddress(address);
+    const result = twzipcode.parseAddress(address);
     console.log(result);
-    let test = twzipcode.get(result.zipcode);
-    console.log(test);
-    // if (!result.zipcode) {
-    // // 如果沒有找到郵遞區號，使用 TWzipcode 的 findZipcode 方法進行查詢
-    // let zipcodes = twzipcode.findZipcode(result.district);
-    //   if (zipcodes.length > 0) {
-    //     result.zipcode = zipcodes[0].zipcode; // 選取第一個郵遞區號
-    //   }
-    // }
-    // 將解析結果填回表單中
-    $('#readdress1').val(result.zipcode);
-    $('#readdress2').val(result.county);
-    $('#readdress3').val(result.district);
+    twzipcode.district(result.district);
+    twzipcode.zipcode(result.zipcode);
+    twzipcode.county(result.county);
+    const startIndex = address.indexOf(result.district) + result.district.length;
+    const secondPart = address.slice(startIndex);
+    $('#readdress4').val(secondPart);
     $('#recipient').val(data.comrecipient);
     $('#rephone').val(data.comrephone);
     $('#email').val(data.memail);
@@ -61,10 +54,10 @@ async function getcart() {
     let totalPay = 0;
     const itembody = cartItems.map(item => {
       totalPay += (item.data.pspecialprice * item.quantity);
-      const imagesrc = `data:image/png;base64,${item.data.pimgts[0].pimg}`;   
+      const imagesrc = item.data.pimgts[0].pimgno;   
       return `<tr>
                 <td>${++index}</td>
-                <td><img src="${imagesrc}" width="100" height="100" alt=""></td>
+                <td><img src="ProductImg?pimgno=${imagesrc}" width="100" height="100" alt=""></td>
                 <td><a href="front-product-product_detail.html?productno=${item.data.productno}" target="_blank">${item.data.pname}</a></td>
                 <td>
                   <span class="number-top">$<s>${item.data.pprice}</s></span>
@@ -81,7 +74,7 @@ async function getcart() {
     let pdiscount = 0;
     const coupon = `<tr>
                       <td colspan="3">
-                        <label class="form-label">優惠券</label>
+                        <label class="form-label"><h2>優惠券</h2></label>
                         <div class="position-relative">
                           <select id="couponCode" class="form-select h_50" onchange="disCoupon()">
                             <option value="">請選擇</option>
