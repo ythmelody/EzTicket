@@ -128,7 +128,7 @@ function cancelPorder(orderno) {
         fetch(`/porder/updatestatusbyid`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ porderno: orderno, pprocessstatus: 3 }),
+          body: JSON.stringify({ porderno: orderno, pprocessstatus: 4 }),
         }).then(response => {
           if (response.ok) {
             swal('訂單已取消', { icon: "success" });

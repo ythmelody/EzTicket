@@ -43,17 +43,16 @@
 			font-size: 1.2rem;
 		}
 	</style>
-	<!-- 在头部引入 jQuery 库 -->
+
 <script src="js/jquery-3.6.0.min.js"></script>
-<!-- 引入 Bootstrap、OwlCarousel、Bootstrap Select 和其他库 -->
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="vendor/OwlCarousel/owl.carousel.js"></script>
 <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="js/jquery.twzipcode.min.js"></script>
 <script src="js/custom.js"></script>
 <script src="js/night-mode.js"></script>
+<script src="js/jquery.twzipcode.min.js"></script>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -322,7 +321,7 @@
 
 								<div class="bp-content bp-form">
 
-										<div id="twcode" class="row">
+									<div class="twzipcode row">
 
 											<div class="col-lg-6 col-md-12">
 												<div class="form-group mt-4">
@@ -337,36 +336,36 @@
 													<input id="rephone" class="form-control h_50" type="text" placeholder="" value="0912345678">
 												</div>
 											</div>
-										
+
+
 											<div class="col-lg-6 col-md-12">
 												<div class="form-group mt-4">
 													<label class="form-label">郵遞區號</label>
-													<input id="readdress1" name="zipcode" class="form-control h_50" type="text" disabled>
+													<input id="readdress1" type="text" data-role="zipcode" class="form-control h_50" disabled>
 												</div>
 											</div>
 
 											<div class="col-lg-6 col-md-12">
 												<div class="form-group mt-4">
 													<label class="form-label">縣市</label>
-													<select id="readdress2" name="county" class="form-control h_50"></select>
+													<select id="readdress2" data-role="county" class="form-control h_50"></select>
 												</div>
 											</div>
 
 											<div class="col-lg-6 col-md-12">
 												<div class="form-group main-form mt-4">
 													<label class="form-label">區域</label>
-													<select id="readdress3" name="district" class="form-control h_50"></select>
+													<select id="readdress3"  data-role="district" class="form-control h_50"></select>
 												</div>
 											</div>
 
 											<div class="col-lg-6 col-md-12">
 												<div class="form-group mt-4">
 													<label class="form-label">收件人地址</label>
-													<input id="readdress4" class="form-control h_50" type="text" placeholder="" value="">
+													<input id="readdress4" data-role="address" class="form-control h_50" type="text">
 												</div>
 											</div>
-
-										</div>
+									</div>
 
 								</div>
 							</div>
@@ -480,26 +479,9 @@
 		</div>
 	</footer>
 	<!-- Footer End-->
-
-
-
-	<script src="js/jquery-3.6.0.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="vendor/OwlCarousel/owl.carousel.js"></script>
-	<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-	<script src="js/custom.js"></script>
-	<script src="js/night-mode.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<script src="js/jquery.twzipcode.min.js"></script>
-	<script>
-		$('#twcode').twzipcode({
-			countyName: 'county',
-			districtName: 'district',
-			zipcodeName: 'zipcode',
-		});
-		$('#twcode').children().slice(-3).remove();
-	</script>
+	<!-- <script>
+		const twzipcode = new TWzipcode();
+	</script> -->
 	<script src="js/shopping-cart.js"></script>
 </body>
 

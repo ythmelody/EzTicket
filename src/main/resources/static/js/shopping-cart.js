@@ -10,15 +10,26 @@ $(document).ready(async () => {
   const data = await response.json();
   memberno = data.memberno;
   if(memberno){
-    // let address = data.comreaddress;
-    // let twz = new TWzipcode();
-    // let result = twz.find(address);
+    let address = data.comreaddress;
+    const twzipcode = new TWzipcode({combine: false});
+    let result = twzipcode.parseAddress(address);
+    console.log(result);
+    let test = twzipcode.get(result.zipcode);
+    console.log(test);
+    // if (!result.zipcode) {
+    // // 如果沒有找到郵遞區號，使用 TWzipcode 的 findZipcode 方法進行查詢
+    // let zipcodes = twzipcode.findZipcode(result.district);
+    //   if (zipcodes.length > 0) {
+    //     result.zipcode = zipcodes[0].zipcode; // 選取第一個郵遞區號
+    //   }
+    // }
+    // 將解析結果填回表單中
+    $('#readdress1').val(result.zipcode);
+    $('#readdress2').val(result.county);
+    $('#readdress3').val(result.district);
     $('#recipient').val(data.comrecipient);
     $('#rephone').val(data.comrephone);
     $('#email').val(data.memail);
-    // $('#readdress2').val(result.county);
-    // $('#readdress3').val(result.district);
-    // $('#readdress4').val(result.address);
     getcart();
   } else {
     // 請前往登入
@@ -172,7 +183,7 @@ function addPorder() {
     'pcouponno': pcouponno,
     'recipient': $("#recipient").val(),
     'rephone': $("#rephone").val(),
-    'readdress': ($("#readdress1").val() + ',' + $("#readdress2").val() + $("#readdress3").val() + $("#readdress4").val()),
+    'readdress': ($("#readdress1").val() + $("#readdress2").val() + $("#readdress3").val() + $("#readdress4").val()),
     'orderProducts': products,
   }
   swal({
@@ -183,7 +194,7 @@ function addPorder() {
   }).then((confirm) => {
     if (confirm) {
       $.ajax({
-        url: '/porder/addtest',
+        url: '/porder/add',
         type: 'POST',
         data: JSON.stringify(porderbody),
         contentType: 'application/json',

@@ -1,8 +1,5 @@
 package com.ezticket.core.config;
 
-import com.ezticket.web.users.dto.RoleDTO;
-import com.ezticket.web.users.pojo.Backuser;
-import com.ezticket.web.users.pojo.Roleauthority;
 import com.ezticket.web.users.service.BackuserService;
 import com.ezticket.web.users.service.RoleauthorityService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,10 +8,6 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @Component
 public class AuthenticationInterceptor implements HandlerInterceptor {
@@ -50,10 +43,10 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 //            htmlMap.put(9, "back-users-my-team.html"); //後台帳號及權限管理
 //            htmlMap.put(10, ""); //最新消息管理
 //            htmlMap.put(11, ""); //票券優惠券管理
-//            htmlMap.put(12, ""); //商品優惠券管理
+//            htmlMap.put(12, "back-product-coupon_manage.html"); //商品優惠券管理
 //            htmlMap.put(13, ""); //帳務管理
 //            htmlMap.put(14, "back-users-host.html"); //主辦單位管理
-//            htmlMap.put(15, ""); //商品訂單管理
+//            htmlMap.put(15, "back-product-order_manage.html"); //商品訂單管理
 //            htmlMap.put(16, "back-product-comment_manager.html"); //商品評論管理
 //            htmlMap.put(17, "back-product-product_manage.html"); //商品管理
 //            htmlMap.put(18, ""); //票券訂單管理
