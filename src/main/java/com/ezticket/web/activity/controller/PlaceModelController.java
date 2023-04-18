@@ -31,7 +31,7 @@ public class PlaceModelController {
         return placeModelService.getDisabled();
     }
 
-    @GetMapping("/get/{modelno}")
+    @GetMapping("/Get/{modelno}")
     public PlaceModelDTO getOne(@PathVariable("modelno") Integer modelno) {
         return placeModelService.findByIdDTO(modelno);
     }
