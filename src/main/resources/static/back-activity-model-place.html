@@ -16,8 +16,8 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link
-		href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-		rel="stylesheet">
+			href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+			rel="stylesheet">
 	<link href='vendor/unicons-2.0.1/css/unicons.css' rel='stylesheet'>
 	<link href="css/style.css" rel="stylesheet">
 	<link href="css/vertical-responsive-menu.min.css" rel="stylesheet">
@@ -34,632 +34,279 @@
 </head>
 
 <body class="d-flex flex-column h-100">
-	<!-- Header Start-->
-	<header class="header">
-		<div class="header-inner">
-			<nav
+
+<!-- Header Start-->
+<!-- 請加上這行-->
+<link href="css/shawn-scroll-bar.css" rel="stylesheet">
+
+<header class="header">
+	<div class="header-inner">
+		<nav
 				class="navbar navbar-expand-lg bg-barren barren-head navbar fixed-top justify-content-sm-start pt-0 pb-0 ps-lg-0 pe-2">
-				<div class="container-fluid ps-0">
-					<button type="button" id="toggleMenu" class="toggle_menu">
-						<i class="fa-solid fa-bars-staggered"></i>
-					</button>
-					<button id="collapse_menu" class="collapse_menu me-4">
-						<i class="fa-solid fa-bars collapse_menu--icon "></i>
-						<span class="collapse_menu--label"></span>
-					</button>
-					<button class="navbar-toggler order-3 ms-2 pe-0" type="button" data-bs-toggle="offcanvas"
+			<div class="container-fluid ps-0">
+				<button type="button" id="toggleMenu" class="toggle_menu">
+					<i class="fa-solid fa-bars-staggered"></i>
+				</button>
+				<button id="collapse_menu" class="collapse_menu me-4">
+					<i class="fa-solid fa-bars collapse_menu--icon "></i>
+					<span class="collapse_menu--label"></span>
+				</button>
+				<button class="navbar-toggler order-3 ms-2 pe-0" type="button" data-bs-toggle="offcanvas"
 						data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-						<span class="navbar-toggler-icon">
-							<i class="fa-solid fa-bars"></i>
-						</span>
-					</button>
-					<a class="navbar-brand order-1 order-lg-0 ml-lg-0 ml-2 me-auto" href="index.html">
-						<div class="res-main-logo">
+                        <span class="navbar-toggler-icon">
+                            <i class="fa-solid fa-bars"></i>
+                        </span>
+				</button>
+				<a class="navbar-brand order-1 order-lg-0 ml-lg-0 ml-2 me-auto" href="index.html">
+					<div class="res-main-logo">
+						<img src="images/logo-icon.svg" alt="">
+					</div>
+					<div class="main-logo" id="logo">
+						<img src="images/logo.svg" alt="">
+						<img class="logo-inverse" src="images/dark-logo.svg" alt="">
+					</div>
+				</a>
+				<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
+					 aria-labelledby="offcanvasNavbarLabel">
+					<div class="offcanvas-header">
+						<div class="offcanvas-logo" id="offcanvasNavbarLabel">
 							<img src="images/logo-icon.svg" alt="">
 						</div>
-						<div class="main-logo" id="logo">
-							<img src="images/logo.svg" alt="">
-							<img class="logo-inverse" src="images/dark-logo.svg" alt="">
-						</div>
-					</a>
-					<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
-						aria-labelledby="offcanvasNavbarLabel">
-						<div class="offcanvas-header">
-							<div class="offcanvas-logo" id="offcanvasNavbarLabel">
-								<img src="images/logo-icon.svg" alt="">
-							</div>
-							<button type="button" class="close-btn" data-bs-dismiss="offcanvas" aria-label="Close">
-								<i class="fa-solid fa-xmark"></i>
-							</button>
-						</div>
-						<div class="offcanvas-body">
-							<div class="offcanvas-top-area">
-								<div class="create-bg">
-									<a href="create.html" class="offcanvas-create-btn">
-										<i class="fa-solid fa-calendar-days"></i>
-										<span>Create Event</span>
-									</a>
-								</div>
-							</div>
-							<ul class="navbar-nav justify-content-end flex-grow-1 pe_5">
-								<li class="nav-item">
-									<a class="nav-link" href="organiser_profile_view.html">
-										<i class="fa-solid fa-right-left me-2"></i>My Home
-									</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="explore_events.html">
-										<i class="fa-solid fa-compass me-2"></i>Explore Events
-									</a>
-								</li>
-							</ul>
-						</div>
-						<div class="offcanvas-footer">
-							<div class="offcanvas-social">
-								<h5>Follow Us</h5>
-								<ul class="social-links">
-									<li><a href="#" class="social-link"><i class="fab fa-facebook-square"></i></a>
-									</li>
-									<li><a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-									</li>
-									<li><a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-									</li>
-									<li><a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-									</li>
-									<li><a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-									</li>
-								</ul>
-							</div>
-						</div>
+						<button type="button" class="close-btn" data-bs-dismiss="offcanvas" aria-label="Close">
+							<i class="fa-solid fa-xmark"></i>
+						</button>
 					</div>
-					<div class="right-header order-2">
-						<ul class="align-self-stretch">
-							<li>
-								<a href="create.html" class="create-btn btn-hover">
-									<i class="fa-solid fa-calendar-days"></i>
-									<span>Create Event</span>
+					<div class="offcanvas-body">
+						<ul class="navbar-nav justify-content-end flex-grow-1 pe_5">
+							<li class="nav-item">
+								<a class="nav-link" href="back-index.html">
+									<i class="fa-solid fa-house me-2"></i>首頁
 								</a>
-							</li>
-							<li class="dropdown account-dropdown order-3">
-								<a href="#" class="account-link" role="button" id="accountClick"
-									data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
-									<img src="images/profile-imgs/img-13.jpg" alt="">
-									<i class="fas fa-caret-down arrow-icon"></i>
-								</a>
-								<ul class="dropdown-menu dropdown-menu-account dropdown-menu-end"
-									aria-labelledby="accountClick">
-									<li>
-										<div class="dropdown-account-header">
-											<div class="account-holder-avatar">
-												<img src="images/profile-imgs/img-13.jpg" alt="">
-											</div>
-											<h5>John Doe</h5>
-											<p>johndoe@example.com</p>
-										</div>
-									</li>
-									<li class="profile-link">
-										<a href="organiser_profile_view.html" class="link-item">My Profile</a>
-										<a href="sign_in.html" class="link-item">Sign Out</a>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="night_mode_switch__btn">
-									<div id="night-mode" class="fas fa-moon fa-sun"></div>
-								</div>
 							</li>
 						</ul>
 					</div>
 				</div>
-			</nav>
-			<div class="overlay"></div>
-		</div>
-	</header>
-	<!-- Header End-->
-	<!-- Left Sidebar Start -->
-	<nav class="vertical_nav">
-		<div class="left_section menu_left" id="js-menu">
-			<div class="left_section">
-				<ul>
-					<li class="menu--item">
-						<a href="my_organisation_dashboard.html" class="menu--link" title="Dashboard"
-							data-bs-toggle="tooltip" data-bs-placement="right">
-							<i class="fa-solid fa-gauge menu--icon"></i>
-							<span class="menu--label">Dashboard</span>
-						</a>
-					</li>
-					<li class="menu--item">
-						<a href="my_organisation_dashboard_events.html" class="menu--link active" title="Events"
-							data-bs-toggle="tooltip" data-bs-placement="right">
-							<i class="fa-solid fa-calendar-days menu--icon"></i>
-							<span class="menu--label">Events</span>
-						</a>
-					</li>
-					<li class="menu--item">
-						<a href="my_organisation_dashboard_promotion.html" class="menu--link" title="Promotion"
-							data-bs-toggle="tooltip" data-bs-placement="right">
-							<i class="fa-solid fa-rectangle-ad menu--icon"></i>
-							<span class="menu--label">Promotion</span>
-						</a>
-					</li>
-					<li class="menu--item">
-						<a href="my_organisation_dashboard_contact_lists.html" class="menu--link" title="Contact List"
-							data-bs-toggle="tooltip" data-bs-placement="right">
-							<i class="fa-regular fa-address-card menu--icon"></i>
-							<span class="menu--label">Contact List</span>
-						</a>
-					</li>
-					<li class="menu--item">
-						<a href="my_organisation_dashboard_payout.html" class="menu--link" title="Payouts"
-							data-bs-toggle="tooltip" data-bs-placement="right">
-							<i class="fa-solid fa-credit-card menu--icon"></i>
-							<span class="menu--label">Payouts</span>
-						</a>
-					</li>
-					<li class="menu--item">
-						<a href="my_organisation_dashboard_reports.html" class="menu--link" title="Reports"
-							data-bs-toggle="tooltip" data-bs-placement="right">
-							<i class="fa-solid fa-chart-pie menu--icon"></i>
-							<span class="menu--label">Reports</span>
-						</a>
-					</li>
-					<li class="menu--item">
-						<a href="my_organisation_dashboard_subscription.html" class="menu--link" title="Subscription"
-							data-bs-toggle="tooltip" data-bs-placement="right">
-							<i class="fa-solid fa-bahai menu--icon"></i>
-							<span class="menu--label">Subscription</span>
-						</a>
-					</li>
-					<li class="menu--item">
-						<a href="my_organisation_dashboard_conversion_setup.html" class="menu--link"
-							title="Conversion Setup" data-bs-toggle="tooltip" data-bs-placement="right">
-							<i class="fa-solid fa-square-plus menu--icon"></i>
-							<span class="menu--label">Conversion Setup</span>
-						</a>
-					</li>
-					<li class="menu--item">
-						<a href="my_organisation_dashboard_about.html" class="menu--link" title="About"
-							data-bs-toggle="tooltip" data-bs-placement="right">
-							<i class="fa-solid fa-circle-info menu--icon"></i>
-							<span class="menu--label">About</span>
-						</a>
-					</li>
-					<li class="menu--item">
-						<a href="my_organisation_dashboard_my_team.html" class="menu--link team-lock" title="My Team"
-							data-bs-toggle="tooltip" data-bs-placement="right">
-							<i class="fa-solid fa-user-group menu--icon"></i>
-							<span class="menu--label">My Team</span>
-						</a>
-					</li>
-				</ul>
+				<div class="right-header order-2">
+					<ul class="align-self-stretch">
+						<li>
+							<a href="back-activity-ticket-inspec.html" class="create-btn btn-hover">
+								<i class="fa-solid fa-ticket"></i>
+								<span>票務</span>
+							</a>
+						</li>
+						<li class="dropdown account-dropdown order-3">
+							<a href="#" class="account-link" role="button" id="accountClick"
+							   data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
+								<img src="images/profile-imgs/img-13.jpg" alt="">
+								<i class="fas fa-caret-down arrow-icon"></i>
+							</a>
+							<ul class="dropdown-menu dropdown-menu-account dropdown-menu-end"
+								aria-labelledby="accountClick">
+								<li>
+									<div class="dropdown-account-header">
+										<div class="account-holder-avatar">
+											<img class="D-baimg" alt="">
+										</div>
+										<h5 class="D-baname"></h5>
+										<p class="D-baemail"></p>
+									</div>
+								</li>
+								<li class="profile-link">
+									<a href="back-users-profile.html" class="link-item">個人資料管理</a>
+									<a href="" class="link-item logOut">登出</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
 			</div>
+		</nav>
+		<div class="overlay"></div>
+	</div>
+</header>
+<!-- Header End-->
+<!-- Left Sidebar Start -->
+<nav class="vertical_nav" style="overflow: auto!important;">
+	<div class="left_section menu_left" id="js-menu">
+		<div class="left_section">
+			<ul>
+				<li class="menu--item">
+					<a href="#" class="menu--link" title="最新消息管理" data-bs-toggle="tooltip"
+					   data-bs-placement="right">
+						<i class="fa-solid fa-newspaper menu--icon"></i>
+						<span class="menu--label">最新消息管理</span>
+					</a>
+				</li>
+				<li class="menu--item">
+					<a href="#" class="menu--link" title="節目管理" data-bs-toggle="tooltip" data-bs-placement="right">
+						<i class="fa-solid fa-calendar-days menu--icon"></i>
+						<span class="menu--label">節目管理</span>
+					</a>
+				</li>
+				<li class="menu--item">
+					<a href="#" class="menu--link" title="節目類別管理" data-bs-toggle="tooltip"
+					   data-bs-placement="right">
+						<i class="fa-solid fa-folder menu--icon"></i>
+						<span class="menu--label">節目類別管理</span>
+					</a>
+				</li>
+				<li class="menu--item">
+					<a href="back-activity-seatmgt-allactivity.html" class="menu--link" title="節目座位管理"
+					   data-bs-toggle="tooltip" data-bs-placement="right">
+						<i class="fa-solid fa-chair menu--icon"></i>
+						<span class="menu--label">節目座位管理</span>
+					</a>
+				</li>
+				<li class="menu--item">
+					<a href="back-activity-commentmgt.html" class="menu--link" title="節目評論管理"
+					   data-bs-toggle="tooltip" data-bs-placement="right">
+						<i class="fa-solid fa-comments menu--icon"></i>
+						<span class="menu--label">節目評論管理</span>
+					</a>
+				</li>
+				<li class="menu--item">
+					<a href="back-activity-model-place.html" class="menu--link" title="場地模板管理"
+					   data-bs-toggle="tooltip" data-bs-placement="right">
+						<i class="fa-solid fa-couch menu--icon"></i>
+						<span class="menu--label">場地模板管理</span>
+					</a>
+				</li>
+				<li class="menu--item">
+					<a href="back-product-product_manage.html" class="menu--link" title="商品管理"
+					   data-bs-toggle="tooltip" data-bs-placement="right">
+						<i class="fa-solid fa-bag-shopping menu--icon"></i>
+						<span class="menu--label">商品管理</span>
+					</a>
+				</li>
+				<li class="menu--item">
+					<a href="back-product-pclass_manager.html" class="menu--link" title="商品類別管理"
+					   data-bs-toggle="tooltip" data-bs-placement="right">
+						<i class="fa-regular fa-folder menu--icon"></i>
+						<span class="menu--label">商品類別管理</span>
+					</a>
+				</li>
+				<li class="menu--item">
+					<a href="back-product-coupon_manage.html" class="menu--link" title="商品優惠券管理"
+					   data-bs-toggle="tooltip" data-bs-placement="right">
+						<i class="fa-solid fa-percent menu--icon"></i>
+						<span class="menu--label">商品優惠券管理</span>
+					</a>
+				</li>
+				<li class="menu--item">
+					<a href="back-product-comment_manager.html" class="menu--link" title="商品評論管理"
+					   data-bs-toggle="tooltip" data-bs-placement="right">
+						<i class="fa-regular fa-comments menu--icon"></i>
+						<span class="menu--label">商品評論管理</span>
+					</a>
+				</li>
+				<li class="menu--item">
+					<a href="back-product-order_manage.html" class="menu--link" title="訂單管理"
+					   data-bs-toggle="tooltip" data-bs-placement="right">
+						<i class="fa-solid fa-file-invoice menu--icon"></i>
+						<span class="menu--label">訂單管理</span>
+					</a>
+				</li>
+				<li class="menu--item">
+					<a href="#" class="menu--link" title="帳務管理" data-bs-toggle="tooltip" data-bs-placement="right">
+						<i class="fa-solid fa-coins menu--icon"></i>
+						<span class="menu--label">帳務管理</span>
+					</a>
+				</li>
+				<li class="menu--item">
+					<a href="#" class="menu--link" title="常見問題管理" data-bs-toggle="tooltip"
+					   data-bs-placement="right">
+						<i class="fa-solid fa-question-circle menu--icon"></i>
+						<span class="menu--label">常見問題管理</span>
+					</a>
+				</li>
+				<li class="menu--item">
+					<a href="#" class="menu--link" title="客服即時通" data-bs-toggle="tooltip" data-bs-placement="right">
+						<i class="fa-solid fa-headset menu--icon"></i>
+						<span class="menu--label">客服即時通</span>
+					</a>
+				</li>
+				<li class="menu--item">
+					<a href="back-users-host.html" class="menu--link" title="主辦單位管理" data-bs-toggle="tooltip"
+					   data-bs-placement="right">
+						<i class="fa-solid fa-square-plus menu--icon"></i>
+						<span class="menu--label">主辦單位管理</span>
+					</a>
+				</li>
+				<li class="menu--item">
+					<a href="back-users-member.html" class="menu--link" title="會員資料管理" data-bs-toggle="tooltip"
+					   data-bs-placement="right">
+						<i class="fa-solid fa-user-group menu--icon"></i>
+						<span class="menu--label">會員資料管理</span>
+					</a>
+				</li>
+				<li class="menu--item">
+					<a href="back-users-my-team.html" class="menu--link" title="使用者帳號管理" data-bs-toggle="tooltip"
+					   data-bs-placement="right">
+						<i class="fa-solid fa-user-secret menu--icon"></i>
+						<span class="menu--label">使用者帳號權限管理</span>
+					</a>
+				</li>
+				<li class="menu--item">
+					<a href="#" class="menu--link" title="系統參數管理" data-bs-toggle="tooltip"
+					   data-bs-placement="right">
+						<i class="fa-solid fa-gear menu--icon"></i>
+						<span class="menu--label">系統參數管理</span>
+					</a>
+				</li>
+			</ul>
 		</div>
-	</nav>
-	<!-- Left Sidebar End -->
-	<!-- Body Start -->
-	<div class="wrapper wrapper-body">
-		<div class="dashboard-body">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="d-main-title">
-							<h3>場地模板管理</h3>
-						</div>
-
+	</div>
+</nav>
+<!-- Left Sidebar End -->
+<!-- Body Start -->
+<div class="wrapper wrapper-body">
+	<div class="dashboard-body">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="d-main-title">
+						<h3>場地模板管理</h3>
 					</div>
-					<div class="col-md-12">
-						<div class="main-card mt-5">
-							<div class="dashboard-wrap-content p-4">
-								<div class="d-md-flex flex-wrap align-items-center">
-									<div class="dashboard-date-wrap">
-										<div class="form-group">
-											<div class="relative-input position-relative">
-												<input class="form-control h_40" type="text" placeholder="請填寫場地模板名稱"
-													value="">
-												<i class="uil uil-search"></i>
-											</div>
+
+				</div>
+				<div class="col-md-12">
+					<div class="main-card mt-5">
+						<div class="dashboard-wrap-content p-4" style="border: 1px solid #EFEFEF">
+							<div class="d-md-flex flex-wrap align-items-center">
+								<div class="dashboard-date-wrap">
+									<div class="form-group">
+										<div class="relative-input position-relative">
+											<select id="placeSelector" class="form-control" data-size="5"
+													data-live-search="true">
+											</select>
+											<i class="fa-solid fa-caret-down"></i>
 										</div>
 									</div>
-									<div class="ocard-left" style="margin-left: 5px;">
-										<button class="pe-4 ps-4 co-main-btn min-width" data-bs-toggle="modal"
+								</div>
+								<div class="ocard-left" style="margin-left: 5px;">
+									<button class="pe-4 ps-4 co-main-btn min-width" data-bs-toggle="modal"
 											data-bs-target="#couponModal">新增模板</button>
-									</div>
-									<div class="rs ms-auto mt_r4">
-										<div class="nav custom2-tabs btn-group" role="tablist">
-											<button class="tab-link active" data-bs-toggle="tab"
-												data-bs-target="#all-tab" type="button" role="tab"
-												aria-controls="all-tab" aria-selected="true">啟用(<span
-													class="total_event_counter">4</span>)</button>
-											<button class="tab-link" data-bs-toggle="tab" data-bs-target="#online-tab"
-												type="button" role="tab" aria-controls="online-tab"
-												aria-selected="false">停用 (<span
-													class="total_event_counter">1</span>)</button>
-										</div>
+								</div>
+								<div class="rs ms-auto mt_r4">
+									<div class="nav custom2-tabs btn-group" role="tablist">
+										<button class="tab-link active" data-bs-toggle="tab"
+												data-bs-target="#active" type="button" role="tab" aria-controls="active"
+												aria-selected="true" id="activeBtn" onclick="activeTab()">啟用
+										</button>
+										<button class="tab-link" data-bs-toggle="tab" data-bs-target="#disabled"
+												type="button" role="tab" aria-controls="disabled" aria-selected="false"
+												id="disabledBtn" onclick="disabledTab()">停用
+										</button>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="event-list">
-							<div class="tab-content">
-								<div class="tab-pane fade show active" id="all-tab" role="tabpanel">
-									<div class="main-card mt-4">
-										<div class="contact-list">
-											<div
-												class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between">
-												<div class="d-md-flex align-items-center event-top-info">
-													<div class="card-event-img">
-														<img src="images/event-imgs/img-7.jpg" alt="">
-													</div>
-													<div class="card-event-dt">
-														<h5>台北國際會議中心大會堂(TICC)</h5>
-														<h6>模板編號：</h6>
-														<h6>1</h6>
-													</div>
-												</div>
-												<div class="dropdown">
-													<button class="option-btn" type="button" data-bs-toggle="dropdown"
-														aria-haspopup="true" aria-expanded="false"><i
-															class="fa-solid fa-ellipsis-vertical"></i></button>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a href="#" class="dropdown-item"><i
-																class="fa-solid fa-gear me-3"></i>管理模板</a>
-														<a href="#" class="dropdown-item"><i
-																class="fa-solid fa-clone me-3"></i>複製模板</a>
-														<a href="#" class="dropdown-item delete-event"><i
-																class="fa-solid fa-trash-can me-3"></i>刪除模板</a>
-													</div>
-												</div>
-											</div>
-											<div
-												class="bottom d-flex flex-wrap justify-content-between align-items-center p-4">
-												<!-- <div class="icon-box ">
-													<span class="icon">
-														<i class="fa-solid fa-location-dot"></i>
-													</span>
-													<p>演出位置</p>
-													<h6 class="coupon-status">高雄巨蛋</h6>
-												</div>
-												<div class="icon-box">
-													<span class="icon">
-														<i class="fa-solid fa-calendar-days"></i>
-													</span>
-													<p>表演時間</p>
-													<h6 class="coupon-status">2022/09/09 19:30</h6>
-												</div> -->
-												<div class="icon-box">
-													<span class="icon">
-														<i class="fa-solid fa-ticket"></i>
-													</span>
-													<p>票券總數量</p>
-													<h6 class="coupon-status">12000</h6>
-												</div>
-												<!-- <div class="icon-box">
-													<span class="icon">
-														<i class="fa-solid fa-tag"></i>
-													</span>
-													<p>已售出數量</p>
-													<h6 class="coupon-status">11000</h6>
-												</div> -->
-											</div>
-										</div>
-									</div>
-									<div class="main-card mt-4">
-										<div class="contact-list">
-											<div
-												class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between">
-												<div class="d-md-flex align-items-center event-top-info">
-													<div class="card-event-img">
-														<img src="images/event-imgs/img-7.jpg" alt="">
-													</div>
-													<div class="card-event-dt">
-														<h5>台北流行音樂中心表演廳</h5>
-														<h6>模板編號：</h6>
-														<h6>2</h6>
-													</div>
-												</div>
-												<div class="dropdown">
-													<button class="option-btn" type="button" data-bs-toggle="dropdown"
-														aria-haspopup="true" aria-expanded="false"><i
-															class="fa-solid fa-ellipsis-vertical"></i></button>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a href="#" class="dropdown-item"><i
-																class="fa-solid fa-gear me-3"></i>管理模板</a>
-														<a href="#" class="dropdown-item"><i
-																class="fa-solid fa-clone me-3"></i>複製模板</a>
-														<a href="#" class="dropdown-item delete-event"><i
-																class="fa-solid fa-trash-can me-3"></i>刪除模板</a>
-													</div>
-												</div>
-											</div>
-											<div
-												class="bottom d-flex flex-wrap justify-content-between align-items-center p-4">
-												<!-- <div class="icon-box ">
-													<span class="icon">
-														<i class="fa-solid fa-location-dot"></i>
-													</span>
-													<p>演出位置</p>
-													<h6 class="coupon-status">高雄巨蛋</h6>
-												</div>
-												<div class="icon-box">
-													<span class="icon">
-														<i class="fa-solid fa-calendar-days"></i>
-													</span>
-													<p>表演時間</p>
-													<h6 class="coupon-status">2022/09/10 19:30</h6>
-												</div> -->
-												<div class="icon-box">
-													<span class="icon">
-														<i class="fa-solid fa-ticket"></i>
-													</span>
-													<p>票券總數量</p>
-													<h6 class="coupon-status">12000</h6>
-												</div>
-												<!-- <div class="icon-box">
-													<span class="icon">
-														<i class="fa-solid fa-tag"></i>
-													</span>
-													<p>已售出數量</p>
-													<h6 class="coupon-status">11000</h6>
-												</div> -->
-											</div>
-										</div>
-									</div>
-									<div class="main-card mt-4">
-										<div class="contact-list">
-											<div
-												class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between">
-												<div class="d-md-flex align-items-center event-top-info">
-													<div class="card-event-img">
-														<img src="images/event-imgs/img-7.jpg" alt="">
-													</div>
-													<div class="card-event-dt">
-														<h5>台南文化中心演藝廳</h5>
-														<h6>模板編號：</h6>
-														<h6>3</h6>
-													</div>
-												</div>
-												<div class="dropdown">
-													<button class="option-btn" type="button" data-bs-toggle="dropdown"
-														aria-haspopup="true" aria-expanded="false"><i
-															class="fa-solid fa-ellipsis-vertical"></i></button>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a href="#" class="dropdown-item"><i
-																class="fa-solid fa-gear me-3"></i>管理模板</a>
-														<a href="#" class="dropdown-item"><i
-																class="fa-solid fa-clone me-3"></i>複製模板</a>
-														<a href="#" class="dropdown-item delete-event"><i
-																class="fa-solid fa-trash-can me-3"></i>刪除模板</a>
-													</div>
-												</div>
-											</div>
-											<div
-												class="bottom d-flex flex-wrap justify-content-between align-items-center p-4">
-												<!-- <div class="icon-box ">
-													<span class="icon">
-														<i class="fa-solid fa-location-dot"></i>
-													</span>
-													<p>演出位置</p>
-													<h6 class="coupon-status">高雄巨蛋</h6>
-												</div>
-												<div class="icon-box">
-													<span class="icon">
-														<i class="fa-solid fa-calendar-days"></i>
-													</span>
-													<p>表演時間</p>
-													<h6 class="coupon-status">2022/09/11 19:30</h6>
-												</div> -->
-												<div class="icon-box">
-													<span class="icon">
-														<i class="fa-solid fa-ticket"></i>
-													</span>
-													<p>票券總數量</p>
-													<h6 class="coupon-status">12000</h6>
-												</div>
-												<!-- <div class="icon-box">
-													<span class="icon">
-														<i class="fa-solid fa-tag"></i>
-													</span>
-													<p>已售出數量</p>
-													<h6 class="coupon-status">11000</h6>
-												</div> -->
-											</div>
-										</div>
-									</div>
-									<div class="main-card mt-4">
-										<div class="contact-list">
-											<div
-												class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between">
-												<div class="d-md-flex align-items-center event-top-info">
-													<div class="card-event-img">
-														<img src="images/event-imgs/img-7.jpg" alt="">
-													</div>
-													<div class="card-event-dt">
-														<h5>新北市工商展覽中心</h5>
-														<h6>模板編號：</h6>
-														<h6>5</h6>
-													</div>
-												</div>
-												<div class="dropdown">
-													<button class="option-btn" type="button" data-bs-toggle="dropdown"
-														aria-haspopup="true" aria-expanded="false"><i
-															class="fa-solid fa-ellipsis-vertical"></i></button>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a href="#" class="dropdown-item"><i
-																class="fa-solid fa-gear me-3"></i>管理模板</a>
-														<a href="#" class="dropdown-item"><i
-																class="fa-solid fa-clone me-3"></i>複製模板</a>
-														<a href="#" class="dropdown-item delete-event"><i
-																class="fa-solid fa-trash-can me-3"></i>刪除模板</a>
-													</div>
-												</div>
-											</div>
-											<div
-												class="bottom d-flex flex-wrap justify-content-between align-items-center p-4">
-												<!-- <div class="icon-box ">
-													<span class="icon">
-														<i class="fa-solid fa-location-dot"></i>
-													</span>
-													<p>演出位置</p>
-													<h6 class="coupon-status">高雄巨蛋</h6>
-												</div>
-												<div class="icon-box">
-													<span class="icon">
-														<i class="fa-solid fa-calendar-days"></i>
-													</span>
-													<p>表演時間</p>
-													<h6 class="coupon-status">2022/09/12 19:30</h6>
-												</div> -->
-												<div class="icon-box">
-													<span class="icon">
-														<i class="fa-solid fa-ticket"></i>
-													</span>
-													<p>票券總數量</p>
-													<h6 class="coupon-status">12000</h6>
-												</div>
-												<!-- <div class="icon-box">
-													<span class="icon">
-														<i class="fa-solid fa-tag"></i>
-													</span>
-													<p>已售出數量</p>
-													<h6 class="coupon-status">11000</h6>
-												</div> -->
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="tab-pane fade" id="online-tab" role="tabpanel">
-									<div class="main-card d-none mt-4">
-										<div
-											class="d-flex align-items-center justify-content-center flex-column min-height-430">
-											<div class="event-list-icon">
-												<img src="images/calendar.png" alt="">
-											</div>
-											<p class="font-16 mt-4 text-light3">No Model found</p>
-										</div>
-									</div>
-									<div class="main-card mt-4">
-										<div class="contact-list">
-											<div
-												class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between">
-												<div class="d-md-flex align-items-center event-top-info">
-													<div class="card-event-img">
-														<img src="images/event-imgs/img-2.jpg" alt="">
-													</div>
-													<div class="card-event-dt">
-														<h5>台北小巨蛋</h5>
-                                                        <h6>模板編號：</h6>
-														<h6>4</h6>
-													</div>
-												</div>
-												<div class="dropdown">
-													<button class="option-btn" type="button" data-bs-toggle="dropdown"
-														aria-haspopup="true" aria-expanded="false"><i
-															class="fa-solid fa-ellipsis-vertical"></i></button>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a href="#" class="dropdown-item"><i
-																class="fa-solid fa-gear me-3"></i>管理模板</a>
-														<a href="#" class="dropdown-item"><i
-																class="fa-solid fa-clone me-3"></i>複製模板</a>
-														<a href="#" class="dropdown-item delete-event"><i
-																class="fa-solid fa-trash-can me-3"></i>刪除模板</a>
-													</div>
-												</div>
-											</div>
-											<div
-												class="bottom d-flex flex-wrap justify-content-between align-items-center p-4">
-												<!-- <div class="icon-box ">
-													<span class="icon">
-														<i class="fa-solid fa-location-dot"></i>
-													</span>
-													<p>演出位置</p>
-													<h6 class="coupon-status">高雄巨蛋</h6>
-												</div>
-												<div class="icon-box">
-													<span class="icon">
-														<i class="fa-solid fa-calendar-days"></i>
-													</span>
-													<p>表演時間</p>
-													<h6 class="coupon-status">2022/09/12 19:30</h6>
-												</div> -->
-												<div class="icon-box">
-													<span class="icon">
-														<i class="fa-solid fa-ticket"></i>
-													</span>
-													<p>票券總數量</p>
-													<h6 class="coupon-status">12000</h6>
-												</div>
-												<!-- <div class="icon-box">
-													<span class="icon">
-														<i class="fa-solid fa-tag"></i>
-													</span>
-													<p>已售出數量</p>
-													<h6 class="coupon-status">11000</h6>
-												</div> -->
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="tab-pane fade" id="venue-tab" role="tabpanel">
-									<div class="main-card mt-4">
-										<div class="contact-list">
-											<div
-												class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between">
-												<div class="d-md-flex align-items-center event-top-info">
-													<div class="card-event-img">
-														<img src="images/event-imgs/img-7.jpg" alt="">
-													</div>
-													<div class="card-event-dt">
-														<h5>Tutorial on Canvas Painting for Beginners</h5>
-													</div>
-												</div>
-												<div class="dropdown">
-													<button class="option-btn" type="button" data-bs-toggle="dropdown"
-														aria-haspopup="true" aria-expanded="false"><i
-															class="fa-solid fa-ellipsis-vertical"></i></button>
-													<div class="dropdown-menu dropdown-menu-right">
-														<a href="#" class="dropdown-item"><i
-																class="fa-solid fa-gear me-3"></i>管理模板</a>
-														<a href="#" class="dropdown-item"><i
-																class="fa-solid fa-clone me-3"></i>複製模板</a>
-														<a href="#" class="dropdown-item delete-event"><i
-																class="fa-solid fa-trash-can me-3"></i>刪除模板</a>
-													</div>
-												</div>
-											</div>
-											<div
-												class="bottom d-flex flex-wrap justify-content-between align-items-center p-4">
-												<div class="icon-box ">
-													<span class="icon">
-														<i class="fa-solid fa-location-dot"></i>
-													</span>
-													<p>Status</p>
-													<h6 class="coupon-status">Publish</h6>
-												</div>
-												<div class="icon-box">
-													<span class="icon">
-														<i class="fa-solid fa-calendar-days"></i>
-													</span>
-													<p>Starts on</p>
-													<h6 class="coupon-status">30 Jun, 2022 10:00 AM</h6>
-												</div>
-												<div class="icon-box">
-													<span class="icon">
-														<i class="fa-solid fa-ticket"></i>
-													</span>
-													<p>Ticket</p>
-													<h6 class="coupon-status">250</h6>
-												</div>
-												<div class="icon-box">
-													<span class="icon">
-														<i class="fa-solid fa-tag"></i>
-													</span>
-													<p>Tickets sold</p>
-													<h6 class="coupon-status">20</h6>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+					</div>
+					<div class="event-list">
+						<div class="tab-content">
+							<div class="tab-pane fade show active" id="active" role="tabpanel">
+							</div>
+							<div class="tab-pane fade" id="disabled" role="tabpanel">
 							</div>
 						</div>
 					</div>
@@ -667,59 +314,64 @@
 			</div>
 		</div>
 	</div>
+</div>
 
-	<!-- 新增模板開始-->
-	<div class="modal fade" id="couponModal" tabindex="-1" aria-labelledby="couponModalLabel" aria-hidden="false">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="couponModalLabel">新增模板</h5>
-					<button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"><i
-							class="uil uil-multiply"></i></button>
-				</div>
-				<div class="modal-body">
-					<div class="model-content main-form">
-						<div class="row">
-							<div class="col-lg-12 col-md-12">
-								
-								<div class="form-group mt-4">
-									<label class="form-label">是否複製既有模板來使用：</label>
-									<select class="selectpicker" data-size="5" data-live-search="true">
-										<option disabled selected>-----請選擇-----</option>
-										<option value="true">是</option>
-										<option value="false">否</option>
-									</select>
+<!-- 新增模板開始-->
+<div class="modal fade" id="couponModal" tabindex="-1" aria-labelledby="couponModalLabel" aria-hidden="false">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="couponModalLabel">新增模板</h5>
+				<button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close">
+					<i class="fa-solid fa-xmark"></i></button>
+			</div>
+			<div class="modal-body">
+				<div class="model-content main-form">
+					<div class="row">
+						<div class="col-lg-12 col-md-12">
+							<div class="form-group">
+								<div class="relative-input position-relative">
+									<input id="newModelName" class="form-control h_40" type="text"
+										   placeholder="請填寫場地模板名稱" value="">
 								</div>
+								<!-- <div class="form-group mt-4">
+                                    <label class="form-label">是否複製既有模板來使用：</label>
+                                    <select class="selectpicker" data-size="5" data-live-search="true" id="copy">
+                                        <option disabled selected>-----請選擇-----</option>
+                                        <option value="true">是</option>
+                                        <option value="false">否</option>
+                                    </select>
+                                </div> -->
 
 								<!-- 若沿用既有模板才會顯示 -->
-								<div class="form-group mt-4">
-									<label class="form-label">請選擇欲複製的場地模板：</label>
-									<select class="selectpicker" data-size="5" data-live-search="true">
-										<option disabled selected>-----請選擇-----</option>
-										<option value="TICC">台北國際會議中心大會堂(TICC)</option>
-										<option value="Taipei_Music_Center">台北流行音樂中心表演廳</option>
-										<option value="Tainan_Cul_Center">台南文化中心演藝廳</option>
-										<option value="Taipei_Arena">台北小巨蛋</option>
-										<option value="NewTaipei_Expo_Center">新北市工商展覽中心</option>
-									</select>
-								</div>
+								<!-- <div class="form-group mt-4">
+                                    <label class="form-label">請選擇欲複製的場地模板：</label>
+                                    <select class="selectpicker" data-size="5" data-live-search="true"
+                                        id="copiedModelno">
+                                        <option disabled selected>-----請選擇-----</option>
+                                        <option value="TICC">台北國際會議中心大會堂(TICC)</option>
+                                        <option value="Taipei_Music_Center">台北流行音樂中心表演廳</option>
+                                        <option value="Tainan_Cul_Center">台南文化中心演藝廳</option>
+                                        <option value="Taipei_Arena">台北小巨蛋</option>
+                                        <option value="NewTaipei_Expo_Center">新北市工商展覽中心</option>
+                                    </select>
+                                </div> -->
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="co-main-btn min-width btn-hover h_40" data-bs-target="#aboutModal"
-						data-bs-toggle="modal" data-bs-dismiss="modal">取消</button>
-					<button type="submit" class="main-btn min-width btn-hover h_40">提交</button>
+							data-bs-toggle="modal" data-bs-dismiss="modal">取消</button>
+					<button type="button" class="main-btn min-width btn-hover h_40"
+							onclick="insertModel()">提交</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- 新增場次結束-->
+	<!-- 新增模板結束-->
 
 	<!-- Body End -->
-
-
 	<script src="js/vertical-responsive-menu.min.js"></script>
 	<script src="js/jquery-3.6.0.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -727,6 +379,279 @@
 	<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 	<script src="js/custom.js"></script>
 	<script src="js/night-mode.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<!-- Kai  backuserData -->
+	<script src="js/backuserData.js"></script>
+
+	<!-- 新增模板按鈕 -->
+	<script>
+		function insertModel() {
+			if ($.trim($("#newModelName").val()) === "") {
+				Swal.fire(
+						{
+							title: "內容不能空白！",
+							text: "請再次檢查您輸入的字是否正確",
+							icon: 'error',
+							confirmButtonText: '確定'
+						}
+				);
+			} else {
+				Swal.fire({
+					title: "確定要新增模板嗎？",
+					icon: 'warning',
+					showCancelButton: true,
+					// cancelButtonColor: '#efedf5',
+					confirmButtonColor: '#102743',
+					cancelButtonText: "取消",
+					confirmButtonText: '確定',
+					reverseButtons: true
+				}).then(function (result) {
+					if (result.value) {
+						// if ($("#copy").val === true) {
+						//     const formData = {
+						//         "copiedModelno": $("#copiedModelno").val(),
+						//         "modelName": $("#newModelName").val(),
+						//         "modelStatus": 1
+						//     }
+						// } else {
+						const formData = {
+							"modelName": $("#newModelName").val(),
+							"modelStatus": 1
+						};
+						fetch('/PlaceModel/insert', {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json'
+							},
+							body: JSON.stringify(formData)
+						})
+								.then(response => {
+									if (!response.ok) {
+										throw new Error('Event not update');
+									}
+									return response.json()
+								})
+								.catch(error => {
+									console.error('Error:', error.message);
+								});
+						// }
+						Swal.fire({
+							title: "已送出資料！",
+							icon: 'success',
+							confirmButtonText: '確定',
+							confirmButtonColor: '#102743',
+							preConfirm: setTimeout(() => {
+								document.location.reload();
+							}, 2000)
+						});
+					}
+				});
+			}
+
+		};
+	</script>
+
+	<script>
+		// 當網頁載入時先呈現 "未上架節目"
+		$(document).ready(function () {
+			activeTab();
+		})
+
+		// 共用實體變數
+		const placeSelector = document.getElementById('placeSelector');
+
+		// ====================================================================================================
+
+		// 所有 "啟用中場地模板"
+		const activebody = document.querySelector('#active');
+
+		// 點擊 "啟用"，顯示頁面
+		function activeTab() {
+			// 選單
+			$('#placeSelector').html(`
+                <option value="all" selected>瀏覽所有場地模板</option>
+            `);
+
+			fetch('PlaceModel/GetActive')
+					.then((resp) => resp.json())
+					.then((jsondata) => {
+						// 場地模板呈現 - 動態
+						for (let j of jsondata) {
+							document.getElementById('placeSelector').innerHTML += `
+                            <option value="${j.modelno}">${j.modelName}</option>
+                        `
+						}
+
+						// 呈現所有啟用中模板
+						displayActiveModel(jsondata);
+					})
+		}
+
+		// 顯示 "啟用中場地模板"
+		function displayActiveModel(jsondata) {
+			activebody.innerHTML = "";
+
+			for (let j of jsondata) {
+				activebody.innerHTML += `
+                <div class="s-container"
+                     style="border: 1px solid #EFEFEF; width: 100%; height: 210px; border-radius: 5px; background-color: white; margin-top: 10px">
+                    <div class="s-container-upper" style="height: 60%; border-bottom: 1px solid #EFEFEF;">
+                        <div style="width: 100%; height: 100%; padding: 20px;">
+                            <div
+                                style="width: 50%; height: 100%; display: inline-block; margin-left: 15px; vertical-align: top;">
+                                <h5 style="font-weight: bold;">${j.modelName}</h5>
+                                <div style="width: 50%; margin-top: 20px;">
+                                    <div style="display: inline-block; vertical-align: middle; width: 45%;">
+                                        <h6 style="color: #717171;">節目編號：</h6>
+                                        <h6>${j.modelno}</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dropdown" style="width: 40px; float:right;">
+                                <button
+                                    class="" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                    style="float:right; border: 0; background-color: transparent;">
+                                    <div
+                                        style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-selection.png') center no-repeat; background-size: 20px; border-radius: 5px; float:right;">
+                                    </div>
+                                </button>
+
+                                <ul class="dropdown-menu">
+                                    <li><a id="${j.modelno}" href="back-activity-model-block.html" class="dropdown-item" onclick="manageBlockModel(this.id)">編輯模板區域</a></li>
+                                </ul>
+                                <ul class="dropdown-menu">
+                                    <li><a id="${j.modelno}" href="back-activity-model-block.html" class="dropdown-item" onclick="">修改場地名稱、狀態</a></li>
+                                </ul>
+                                <ul class="dropdown-menu">
+                                    <li><a id="${j.modelno}" href="back-activity-model-block.html" class="dropdown-item" onclick="">刪除模板</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+
+			}
+			;
+		}
+
+
+		// ====================================================================================================
+
+		// 所有停用中場地模板
+		const disabledbody = document.querySelector('#disabled');
+
+		// 點擊 "停用"，顯示頁面
+		function disabledTab() {
+			// 選單
+			$('#placeSelector').html(`
+                <option value="all" selected>瀏覽所有場地模板</option>
+            `);
+
+			fetch('PlaceModel/GetDisabled')
+					.then((resp) => resp.json())
+					.then((jsondata) => {
+						// 場地模板呈現 - 動態
+						for (let j of jsondata) {
+							document.getElementById('placeSelector').innerHTML += `
+                            <option value="${j.modelno}">${j.modelName}</option>
+                        `
+						}
+
+						// 呈現所有停用中模板
+						displayDisabledModel(jsondata);
+					})
+		}
+
+		// 顯示 "停用中場地模板"
+		function displayDisabledModel(jsondata) {
+			disabledbody.innerHTML = "";
+
+			for (let j of jsondata) {
+				disabledbody.innerHTML += `
+                <div class="s-container"
+                     style="border: 1px solid #EFEFEF; width: 100%; height: 210px; border-radius: 5px; background-color: white; margin-top: 10px">
+                    <div class="s-container-upper" style="height: 60%; border-bottom: 1px solid #EFEFEF;">
+                        <div style="width: 100%; height: 100%; padding: 20px;">
+                            <div
+                                style="width: 50%; height: 100%; display: inline-block; margin-left: 15px; vertical-align: top;">
+                                <h5 style="font-weight: bold;">${j.modelName}</h5>
+                                <div style="width: 50%; margin-top: 20px;">
+                                    <div style="display: inline-block; vertical-align: middle; width: 45%;">
+                                        <h6 style="color: #717171;">節目編號：</h6>
+                                        <h6>${j.modelno}</h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dropdown" style="width: 40px; float:right;">
+                                <button
+                                    class="" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                    style="float:right; border: 0; background-color: transparent;">
+                                    <div
+                                        style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-selection.png') center no-repeat; background-size: 20px; border-radius: 5px; float:right;">
+                                    </div>
+                                </button>
+
+                                <ul class="dropdown-menu">
+                                    <li><a id="${j.modelno}" href="back-activity-model-block.html" class="dropdown-item" onclick="manageBlockModel(this.id)">編輯模板區域</a></li>
+                                </ul>
+                                <ul class="dropdown-menu">
+                                    <li><a id="${j.modelno}" href="back-activity-model-block.html" class="dropdown-item" onclick="">修改場地名稱、狀態</a></li>
+                                </ul>
+                                <ul class="dropdown-menu">
+                                    <li><a id="${j.modelno}" href="back-activity-model-block.html" class="dropdown-item" onclick="">刪除模板</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+
+			};
+		}
+
+
+		// ==========================================================================================================================
+		// 查詢啟用/停用模板
+		placeSelector.addEventListener('change', function () {
+
+			if (placeSelector.value == 'all') {
+				if ($('#activeBtn').attr('aria-selected') === "true") {
+					activeTab();
+					return;
+				}
+
+				if ($('#disabledBtn').attr('aria-selected') === "true") {
+					disabledTab();
+					return;
+				}
+
+			}
+
+
+			fetch(`PlaceModel/get/${placeSelector.value}`)
+					.then((resp) => resp.json())
+					.then((jsondata) => {
+						let array = [jsondata];
+
+						if ($('#activeBtn').attr('aria-selected') === "true") {
+							displayActiveModel(array);
+							return;
+						}
+
+						if ($('#disabledBtn').attr('aria-selected') === "true") {
+							displaySellingActivity(array);
+							return;
+						}
+
+					})
+		})
+
+		function manageBlockModel(modelno) {
+			sessionStorage.setItem('modelno', modelno);
+		}
+
+	</script>
 
 </body>
 
