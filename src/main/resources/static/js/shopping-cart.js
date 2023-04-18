@@ -48,10 +48,9 @@ async function getcart() {
   } else {
     let index = 0;
     let totalPay = 0;
-    let imagesrc = '';
     const itembody = cartItems.map(item => {
       totalPay += (item.data.pspecialprice * item.quantity);
-      imagesrc = `data:image/png;base64,${item.data.pimgts[0].pimg}`;
+      const imagesrc = `data:image/png;base64,${item.data.pimgts[0].pimg}`;   
       return `<tr>
                 <td>${++index}</td>
                 <td><img src="${imagesrc}" width="100" height="100" alt=""></td>
@@ -206,49 +205,12 @@ function addPorder() {
       return Promise.reject('取消操作');
     }
   });
-  // swal({
-  //   title: "是否建立訂單?",
-  //   icon: "warning",
-  //   buttons: true,
-  //   dangerMode: true
-  // }).then((confirm) => {
-  //   if (confirm) {
-  //     fetch('/porder/add', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify(porderbody)
-  //     }).then(response => {
-  //       if (response.ok) {
-  //         response.json().then(porderno => {
-  //           swal({
-  //             title: "建立成功",
-  //             icon: "success",
-  //             closeOnClickOutside: false,
-  //           }).then(() => {
-  //             localStorage.clear();
-  //             window.location.href = `front-product-order_confirmed.html?id=${porderno}`;
-  //           })
-  //         });
-  //       } else {
-  //         swal({
-  //           title: "建立失敗",
-  //           icon: "error",
-  //           closeOnClickOutside: false,
-  //         });
-  //       }
-  //     });
-  //   } else {
-  //     return Promise.reject('取消操作');
-  //   }
-  // });
 }
 
 function removeItem(e) {
   // 從 localStorage 取出 item 的值
   let itemData = JSON.parse(localStorage.getItem('cartItems'));
-  if (e?.length === 0) {
+  if (e === undefined) {
     // 若未傳入參數，則清除所有項目
     itemData = [];
   } else {

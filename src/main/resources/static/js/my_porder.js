@@ -6,13 +6,13 @@ $(document).ready(() => {
 })
 $('#product-incart').click(function () {addCartByCount()});
 $('#buyNow').click(function () {
-  addCartByCount();
   swal({
     title: "是否前往購物車結帳?",
     icon: "warning",
     buttons: true,
     dangerMode: true
   }).then((confirm) => {
+    addCartByCount();
     if (confirm) {
       window.location.href = 'front-product-shopping_cart.html';
     } else {
@@ -59,12 +59,12 @@ function addCart(e) {
 }
 
 function buyNow(e) {
-  addCart(e);
   swal({
     title: "是否前往購物車結帳?",
     icon: "warning",
     buttons: true,
   }).then((confirm) => {
+    addCart(e);
     if (confirm) {
       window.location.href = 'front-product-shopping_cart.html';
     } else {
