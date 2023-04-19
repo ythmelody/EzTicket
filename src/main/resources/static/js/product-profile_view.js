@@ -24,8 +24,14 @@ function fetchPorderList(e) {
   }).then(response => response.json())
     .then(data => {
       data.reverse();
-      const ordersbody = document.querySelector('#orders-01');
-      ordersbody.innerHTML = "";
+      const ordersbody01 = document.querySelector('#orders-01');
+      const ordersbody02 = document.querySelector('#orders-02');
+      const ordersbody03 = document.querySelector('#orders-03');
+      const ordersbody04 = document.querySelector('#orders-04');
+      ordersbody01.innerHTML = "";
+      ordersbody02.innerHTML = "";
+      ordersbody03.innerHTML = "";
+      ordersbody04.innerHTML = "";
       const orders = data.map(obj => {
         return fetch(`/porder/GetPorderDetailsByID?id=${obj.porderno}`, {
           method: 'GET',
@@ -42,29 +48,46 @@ function fetchPorderList(e) {
             switch (obj.pprocessstatus) {
               case 1:
                 processstatus = '<span class="status-circle yellow-circle"></span>配送中';
+                cancelButtom = `<a onclick="cancelPorder(${obj.porderno})">取消申請</a>`;
                 break;
               case 2:
                 processstatus = '<span class="status-circle green-circle"></span>已結案';
+                orderButton = `<a class="main-btn btn-hover h_40 w-100" href="front-product-order_detail.html?id=${obj.porderno}">前往評論</a>`;
+                cancelButtom = `<a onclick="cancelPorder(${obj.porderno})">退貨申請</a>`;;
                 break;
               case 3:
                 processstatus = '<span class="status-circle red-circle"></span>已取消';
+                orderButton = "";
+                cancelButtom = "";
+                break;
+              case 4:
+                processstatus = '<span class="status-circle red-circle"></span>取消確認中';
+                orderButton = "";
+                cancelButtom = "";
                 break;
               case 0:
                 processstatus = '<span class="status-circle blue-circle"></span>未處理';
+                orderButton = "";
+                cancelButtom = `<a onclick="cancelPorder(${obj.porderno})">取消申請</a>`;
                 break;
             }
             const orderHtml = `<div class="main-card mt-4">
-              <div class="card-top p-4">
+              <div class="card-top p-4 d-flex justify-content-between">
+                <h5>訂單編號: ${obj.porderno}</h5>
                 <div class="card-event-img">
                   <img src="${imagesrc}" alt="">
                 </div>
                 <div class="card-event-dt">
-                  <h5>訂單編號 : ${obj.porderno}</h5>
                   <div class="invoice-id">
                     ${detailslist}
                   </div>
                 </div>
-              </div>
+                <div class="d-flex align-items-center">
+                  <div class="rs ms-auto mt_r4">
+                  ${orderButton}
+                  </div>
+                </div>
+              </div>          
               <div class="card-bottom">
                 <div class="card-bottom-item">
                   <div class="card-icon">
@@ -82,9 +105,6 @@ function fetchPorderList(e) {
                   <div class="card-dt-text">
                     <h6>訂單狀態</h6>
                     <span>${processstatus}</span>
-                    <span>
-                    <a onclick="cancelPorder(${obj.porderno})">取消訂單</a>
-                    </span>
                   </div>
                 </div>
                 <div class="card-bottom-item">
@@ -101,8 +121,8 @@ function fetchPorderList(e) {
                     <i class="fa-solid fa-money-bill"></i>
                   </div>
                   <div class="card-dt-text">
-                    <h6>訂單詳情</h6>
-                    <a href="front-product-order_detail.html?id=${obj.porderno}">明細</a>
+                    <h6>其他詳情</h6>
+                    ${cancelButtom}
                   </div>
                 </div>
               </div>
@@ -111,8 +131,20 @@ function fetchPorderList(e) {
           });
       });
       Promise.all(orders).then(values => {
-        ordersbody.innerHTML = values.join('');
+        values.forEach(orderHtml => {
+          if (orderHtml.includes('<span class="status-circle yellow-circle"></span>配送中') || 
+              orderHtml.includes('<span class="status-circle blue-circle"></span>未處理')) {
+            ordersbody01.innerHTML += orderHtml;
+          } else if (orderHtml.includes('<span class="status-circle green-circle"></span>已結案')) {
+            ordersbody02.innerHTML += orderHtml;
+          } else if (orderHtml.includes('<span class="status-circle red-circle"></span>已取消')) {
+            ordersbody03.innerHTML += orderHtml;
+          } else if (orderHtml.includes('<span class="status-circle red-circle"></span>取消確認中')) {
+            ordersbody04.innerHTML += orderHtml;
+            } 
+        });
       });
+      
     });
 }
 
@@ -132,6 +164,7 @@ function cancelPorder(orderno) {
         }).then(response => {
           if (response.ok) {
             swal('訂單取消申請成功', { icon: "success" });
+            fetchPorderList(`/porder/getordersbyid?id=${memberno}`);
           } else {
             swal('訂單取消失敗', { icon: "error" });
           }
@@ -317,28 +350,3 @@ function takeCoupon(memberno,pcouponno){
       };
     });
 }
-// function takeCoupon(memberno, pcouponno) {
-//   $.ajax({
-//     url: `/pcouponholding/take?memberno=${memberno}&pcouponno=${pcouponno}`,
-//     type: 'GET',
-//     success: function(result) {
-//       if (result === true) {
-//         swal('領取成功', {
-//           buttons: false,
-//           timer: 500,
-//         });
-//         fetchPcouponList(`/pcoupon/list`);
-//         fetchPcouponHoldingList(`/pcouponholding/byMemberno?memberno=${memberno}`);
-//       } else {
-//         swal('您已經領取過!!!', {
-//           background: 'blue',
-//           buttons: false,
-//           timer: 500,
-//         });
-//       }
-//     },
-//     error: function() {
-//       console.log('領取失敗');
-//     }
-//   });
-// }

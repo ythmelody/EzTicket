@@ -31,9 +31,10 @@ function fetchPcouponList(e) {
                           <i class="fa-solid fa-ticket"></i>
                         </span>
                         <h5 class="font-18 mb-1 mt-1 f-weight-medium">${obj.pcouponno}<span class="font-weight-normal"> - ${obj.pcouponname}</span></h5>
-                        <p class="text-gray-50 m-0"><span class="visitor-date-time">${moment(obj.pcoupnsdate).format('YYYY-MM-DD HH:mm:ss')}
-                          </span> - <span class="visitor-date-time">${moment(obj.pcoupnedate).format('YYYY-MM-DD HH:mm:ss')}</span></p>
+                        <p class="text-gray-50 m-0"><span class="visitor-date-time">${moment(obj.pcoupnsdate).format('YYYY-MM-DD kk:mm:ss')}
+                          </span> - <span class="visitor-date-time">${moment(obj.pcoupnedate).format('YYYY-MM-DD kk:mm:ss')}</span></p>
                       </div>
+											<div class="ms-auto">
                       <div class="d-flex align-items-center">
 												<button class="main-btn btn-hover h_40 w-30" onclick="takeCouponForMember(${obj.pcouponno})">發送</button>
                         <label class="btn-switch tfs-8 mb-0 me-4 mt-1">
@@ -52,6 +53,7 @@ function fetchPcouponList(e) {
                           </div>
                         </div>
                       </div>
+											</div>
                     </div>
                     <div class="bottom d-flex flex-wrap justify-content-between align-items-center p-4">
                       <div class="icon-box ">
@@ -116,7 +118,7 @@ function addCoupon() {
 	if ($("#pcoupnedateup").val() == "") {
 		$("#pcoupnedateup").prev("span").text("日期格式錯誤");
 		return;
-	}	
+	}
 	fetch('/pcoupon/add', {
 		method: 'POST',
 		headers: {
@@ -157,7 +159,7 @@ function formatDate(date, time) {
 function datetimeParser(datetime) {
   const dateParts = datetime.split(" ");
   const date = dateParts[0];
-  const time = dateParts[1];
+  const time = dateParts[1].slice(0, -3);
   return { date, time };
 }
 function editCoupon(edit) {
@@ -173,8 +175,10 @@ function editCoupon(edit) {
 			$('#editpcouponname').val(data[0].pcouponname);
 			$('#editpdiscount').val(data[0].pdiscount);
 			$('#editpreachprice').val(data[0].preachprice);
-			$("#editpcoupnsdateup").val(datestart), $("#editpcoupnsdatedown").val(timestart);
-			$("#editpcoupnedateup").val(dateend), $("#editpcoupnedatedown").val(timeend);
+			$("#editpcoupnsdateup").val(datestart);
+			$("#editpcoupnsdatedown").val(timestart).selectpicker("refresh");
+			$("#editpcoupnedateup").val(dateend);
+			$("#editpcoupnedatedown").val(timeend).selectpicker("refresh");
 		})
 }
 
@@ -185,8 +189,8 @@ function editsaveCoupon() {
 		'productno': $("#editproductno").val(),
 		'pdiscount': +$("#editpdiscount").val(),
 		'preachprice': +$("#editpreachprice").val(),
-		'pcoupnsdate': formatDate($("#editpcoupnsdateup").val(),$("#editpcoupnsdatedown").val()),
-		'pcoupnedate': formatDate($("#editpcoupnedateup").val(),$("#editpcoupnedatedown").val())
+		'pcoupnsdate': formatDate($("#editpcoupnsdateup").val(), $("#editpcoupnsdatedown").val()),
+		'pcoupnedate': formatDate($("#editpcoupnedateup").val(), $("#editpcoupnedatedown").val())
 	}
 	// 日期錯誤處理
 	if ($("#editpcoupnsdateup").val() === "" || $("#editpcoupnsdateup").val().includes("Na")) {
@@ -196,29 +200,24 @@ function editsaveCoupon() {
 		$("#editpcoupnedateup").prev("span").text("日期格式錯誤");
 		return;
 	}
-	console.log(editcouponbody);
-	swal({
-		title: "是否更新優惠券?",
-		icon: "warning",
-		buttons: true,
-		dangerMode: true
-	}).then((confirm) => {
-		if (confirm) {
-			fetch('/pcoupon/edit', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(editcouponbody)
-			}).then(response => {
-				if (response.ok) {
-					swal('更新成功', { icon: "success" });
-				} else {
-					swal('更新失敗', { icon: "error" });
-				}
-			});
+
+	fetch('/pcoupon/edit', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(editcouponbody)
+	}).then(response => {
+		if (response.ok) {
+			$('#couponModal').modal('hide');
+			swal('更新成功', { icon: "success" });
 		} else {
-			return Promise.reject('取消操作');
+			response.json().then(data => {
+				$("#editpcouponname").prev("span").text(data.pcouponname);
+				$("#editproductno").prev("span").text(data.productno);
+				$("#editpdiscount").prev("span").text(data.pdiscount);
+				$("#editpreachprice").prev("span").text(data.preachprice);
+			});
 		}
 	});
 	fetchPcouponList(`/pcoupon/list`);
@@ -268,16 +267,12 @@ function saveCoupon(couponno, event) {
 function takeCouponForMember(pcouponno){
   fetch(`/pcouponholding/takeAll?pcouponno=${pcouponno}`,{
       method: 'GET',
-    }).then(response => response.json())
-    .then(data => {
-			if (data == true){
-        swal("發送成功", {
-					icon: "success",
-          buttons: false,
-          timer: 1000,
-        });
-				}
     });
+	swal("發送成功", {
+		icon: "success",
+		buttons: false,
+		timer: 1000,
+	});
 }
 $("#pcouponname, #productno, #pdiscount, #preachprice").on("change", function() {
   $(this).prev("span").text("");
@@ -291,4 +286,49 @@ $("#pcoupnsdateup, #pcoupnedateup, #editpcoupnsdateup, #editpcoupnedateup").on("
   } else {
     $(this).prev("span").text("");
   }
+});
+
+// 優惠券名稱
+$("#pcouponname, #editpcouponname").on("input", function() {
+	if ($(this).val().trim() === "") {
+			$(this).prev("span").text("優惠券名稱不可為空值");
+	} else {
+			$(this).prev("span").text("");
+	}
+});
+
+// 最低消費
+$("#preachprice, #editpreachprice").on("input", function() {
+	let value = $(this).val();
+	if (value === "") {
+			$(this).prev("span").text("最低消費不可為空值");
+	} else if (value < 1 || value > 10000) {
+			$(this).prev("span").text("最低消費必須介於 1 和 10000 之間");
+	} else {
+			$(this).prev("span").text("");
+	}
+});
+
+// 折扣金額
+$("#pdiscount, #editpdiscount").on("input", function() {
+	let value = $(this).val();
+	if (value === "") {
+			$(this).prev("span").text("折扣金額不可為空值");
+	} else if (value < 1 || value > 2000) {
+			$(this).prev("span").text("折扣金額必須介於 1 和 2000 之間");
+	} else {
+			$(this).prev("span").text("");
+	}
+});
+
+// 適用商品
+$("#productno, #editproductno").on("input", function() {
+	let value = $(this).val();
+	if (value === "") {
+			$(this).prev("span").text("適用商品不可為空值");
+	} else if (value < 10000 || value > 19999) {
+			$(this).prev("span").text("適用商品必須為五位數");
+	} else {
+			$(this).prev("span").text("");
+	}
 });

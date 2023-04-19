@@ -76,12 +76,37 @@ public class PorderService {
         // 0 未付款 1 已付款 2 已退款 3 付款失敗
         // 訂單狀態 Pprocessstatus
         // 0 未處理 1 已出貨 2 已結案 3 已取消 4 取消申請
-        if (porder.getPpaymentstatus() == 0 && processStatus != 3) {
-            throw new IllegalStateException("未付款的訂單只能取消");
+        Integer paymentStatus = porder.getPpaymentstatus();
+
+        if (paymentStatus == 0) {
+            // 如果訂單未付款，只能取消訂單，不能執行其他操作
+            if (processStatus != 3) {
+                throw new IllegalStateException("未付款的訂單只能取消");
+            }
+        } else if (paymentStatus == 1) {
+            // 如果訂單已付款
+            if (processStatus == 3) {
+                // 如果要取消訂單，則付款狀態改為退款
+                porder.setPpaymentstatus(2);
+                porder.setPprocessstatus(3);
+            } else if (processStatus == 4) {
+                // 如果要將訂單標記為“取消申請”狀態
+                porder.setPprocessstatus(4);
+            } else if (processStatus == 1) {
+                // 如果訂單付款，則可以出貨
+                porder.setPprocessstatus(2);
+            } else if (processStatus == 2) {
+                // 如果訂單已出貨，則可以結案
+                porder.setPprocessstatus(2);
+            } else {
+                // 其他狀態都不允許
+                throw new IllegalStateException("訂單已付款，不能執行此操作");
+            }
+        } else {
+            // 其他付款狀態都不允許
+            throw new IllegalStateException("未知的訂單付款狀態");
         }
-        if (porder.getPprocessstatus() == 2 && processStatus == 3) {
-            throw new IllegalStateException("已結案的訂單不能取消");
-        }
+
         switch (processStatus) {
             case 1:
                 porder.setPshipdate(LocalDateTime.now());

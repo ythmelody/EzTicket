@@ -1,4 +1,27 @@
 $(document).ready(() => {
+  // $('#orderTable').DataTable({
+  //       //屬性區塊,
+  //       "searching": false,
+  //       "sPaginationType": "full_numbers", 
+  //       "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], 
+  //       "processing": true, 
+  //       "serverSide": false, 
+  //       "stateSave": true,
+  //       "destroy": true, 
+  //       "info": true,
+  //       "autoWidth": false, 
+  //       "ordering": true, 
+  //       "scrollCollapse": false, 
+  //       "scrollX": "500px",
+  //       "scrollY": "200px",    
+  //       "paging": true, 
+  //       "dom": '<"top">rt<"bottom"><"clear">',
+  //       //ajax區塊,
+  //       //資料欄位區塊(columns),
+  //       //語言區塊(language),
+  //       //欄位元素定義區塊(columnDefs),
+  //       //列元素區塊(rowCallback)
+  // });
   fetchPorderList(`/porder/list`);
 });
 $('#reload').click(() => {
@@ -27,6 +50,7 @@ function fetchPorderList(e) {
       const tbody = document.querySelector('#order-ls-tab');
       tbody.innerHTML = "";
       const extraCells = data.map(obj => {
+        let changeButton = "";
         switch (obj.ppaymentstatus) {
           case 1:
             paystatus = '<span class="status-circle green-circle"></span>已付款';
@@ -43,7 +67,13 @@ function fetchPorderList(e) {
         }
         switch (obj.pprocessstatus) {
           case 1:
-            processstatus = '<span class="status-circle yellow-circle"></span>已出貨';
+            processstatus = '<span class="status-circle yellow-circle"></span>配送中';
+            changeButton = `<select class="filter-option" onchange="changeStatus(this)">
+                              <option selected disabled>請選擇</option>
+                              <option value="2">已結案</option>
+                              <option value="3">已取消</option>
+                            </select>
+                            <button onclick="saveStatus(this)" class="save-status">儲存</button>`
             break;
           case 2:
             processstatus = '<span class="status-circle green-circle"></span>已結案';
@@ -53,12 +83,22 @@ function fetchPorderList(e) {
             break;
           case 4:
             processstatus = '<span class="status-circle red-circle"></span>取消申請';
+            changeButton = `<select class="filter-option" onchange="changeStatus(this)">
+                              <option selected disabled>請選擇</option>
+                              <option value="3">已取消</option>
+                            </select>
+                            <button onclick="saveStatus(this)" class="save-status">儲存</button>`
             break;
           case 0:
             processstatus = '<span class="status-circle blue-circle"></span>未處理';
+            changeButton = `<select class="filter-option" onchange="changeStatus(this)">
+                              <option selected disabled>請選擇</option>
+                              <option value="1">配送中</option>
+                              <option value="3">已取消</option>
+                            </select>
+                            <button onclick="saveStatus(this)" class="save-status">儲存</button>`
             break;
         }
-
         return `<tr>
                           <td><a href="front-product-order_detail.html?id=${obj.porderno}">${obj.porderno}</a></td>
                           <td>${obj.memberno}</td>
@@ -71,16 +111,7 @@ function fetchPorderList(e) {
                           </td>
                           <td>${paystatus}</td>
                           <td>${processstatus}</td>
-                          <td>
-                            <select class="filter-option" onchange="changeStatus(this)">
-                              <option selected disabled>請選擇</option>
-                              <option value="0">未處理</option>
-                              <option value="1">配送中</option>
-                              <option value="2">已結案</option>
-                              <option value="3">已取消</option>
-                            </select>
-                            <button onclick="saveStatus(this)" class="save-status">儲存</button>
-                          </td>
+                          <td>${changeButton}</td>
                       </tr>`;
       }).join('');
       tbody.innerHTML = extraCells;
@@ -125,6 +156,7 @@ function saveStatus(button) {
         }).then(response => {
           if (response.ok) {
             swal('狀態已更新', { icon: "success" });
+            fetchPorderList(`/porder/list`);
           } else {
             swal('狀態更新異常', { icon: "error" });
           }
@@ -179,7 +211,7 @@ $(document).ready(function() {
       // 檢查付款狀態是否符合選擇器的值
       if (filterToPay == 'all' || (filterToPay == '0' && payStatus.indexOf('未付款') >= 0) || (filterToPay == '1' && payStatus.indexOf('已付款') >= 0) || (filterToPay == '2' && payStatus.indexOf('已退款') >= 0)) {
         // 檢查訂單狀態是否符合選擇器的值
-        if (filterToActive == 'all' || (filterToActive == '0' && orderStatus.indexOf('未處理') >= 0) || (filterToActive == '1' && orderStatus.indexOf('已出貨') >= 0) || (filterToActive == '2' && orderStatus.indexOf('已結案') >= 0) || (filterToActive == '3' && orderStatus.indexOf('已取消') >= 0) || (filterToActive == '4' && orderStatus.indexOf('取消申請') >= 0)) {
+        if (filterToActive == 'all' || (filterToActive == '0' && orderStatus.indexOf('未處理') >= 0) || (filterToActive == '1' && orderStatus.indexOf('配送中') >= 0) || (filterToActive == '2' && orderStatus.indexOf('已結案') >= 0) || (filterToActive == '3' && orderStatus.indexOf('已取消') >= 0) || (filterToActive == '4' && orderStatus.indexOf('取消申請') >= 0)) {
           $(this).show();
         } else {
           $(this).hide();
