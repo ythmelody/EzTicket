@@ -15,5 +15,7 @@ public interface FollowproductDAO extends CoreDAO<Followproduct,Integer> {
 
 	public Followproduct getByPrimaryKey(FollowproductPK followproductPK);
 
+	public List<Followproduct> getFollowProductByProductno(Integer productno);
+
 
 }
