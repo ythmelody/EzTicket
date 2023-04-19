@@ -1,7 +1,9 @@
 $(document).ready(() => {
   fetchPorderList(`/porder/list`);
 });
-
+$('#reload').click(() => {
+  fetchPorderList(`/porder/list`);
+});
 $('.tab-link[data-bs-target="#orders-tab"]').click(() => {
   fetchPorderList(`/porder/list`);
 });
