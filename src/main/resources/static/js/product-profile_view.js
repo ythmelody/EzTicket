@@ -131,7 +131,7 @@ function cancelPorder(orderno) {
           body: JSON.stringify({ porderno: orderno, pprocessstatus: 4 }),
         }).then(response => {
           if (response.ok) {
-            swal('訂單已取消', { icon: "success" });
+            swal('訂單取消申請成功', { icon: "success" });
           } else {
             swal('訂單取消失敗', { icon: "error" });
           }
