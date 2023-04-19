@@ -1,15 +1,12 @@
 package com.ezticket.web.users.pojo;
 
 import com.ezticket.core.pojo.Core;
-import com.ezticket.web.activity.pojo.Session;
-import com.ezticket.web.activity.pojo.Torder;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
-import java.util.List;
 
 @Data
 @Entity
