@@ -21,6 +21,9 @@ public class TorderDto {
 
     private Member member;
 
+//    Add by Shawn on 04/17
+    private Integer ttotal;
+
 
 
 

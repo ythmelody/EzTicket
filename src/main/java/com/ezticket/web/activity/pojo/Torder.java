@@ -42,28 +42,29 @@ public class Torder {
 	@Column(name = "treceivedate")
 	private Timestamp treceiveDate;
 	@Column(name = "tpaymentstatus")
-	private String tpaymentStatus;
+	private Integer tpaymentStatus;
 	@Column(name = "tprocessstatus")
-	private String tprocessStatus;
-	@ManyToOne
-	@JoinColumn(name = "MEMBERNO" ,insertable = false, updatable = false)
-	private Member member;
+	private Integer tprocessStatus;
+
+//	@ManyToOne
+//	@JoinColumn(name = "MEMBERNO" ,insertable = false, updatable = false)
+//	private Member member;
 
 //	@OneToMany
 //	@JoinColumn(name = "TDETAILSNO",
 //			referencedColumnName = "torderno")
 //	private List<Tdetails> tdetails;
-@ManyToMany
-@JoinTable(
-		joinColumns = @JoinColumn(
-				referencedColumnName = "torderno",
-				name = "TORDERNO"),
-		name = "Tdetails",
-		inverseJoinColumns = @JoinColumn(
-				name = "SESSIONNO",
-				referencedColumnName = "SESSIONNO")
-)
-private List<Session> session;
+//@ManyToMany
+//@JoinTable(
+//		joinColumns = @JoinColumn(
+//				referencedColumnName = "torderno",
+//				name = "TORDERNO"),
+//		name = "Tdetails",
+//		inverseJoinColumns = @JoinColumn(
+//				name = "SESSIONNO",
+//				referencedColumnName = "SESSIONNO")
+//)
+//private List<Session> session;
 
 
 }

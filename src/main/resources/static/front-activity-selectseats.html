@@ -34,6 +34,7 @@
             src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
             crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         /* (A) SEAT & "COLOR CODE" */
@@ -112,6 +113,9 @@
         body {
             min-width: 745px;
         }
+
+        #mycanvas{cursor: pointer;text-align:center}
+
     </style>
 </head>
 
@@ -351,14 +355,12 @@
                     <button class="statusBtn selected" style="margin: 5px;" disabled>已選擇</button>
                 </div>
                 <div style="margin: 35px 0px; position: relative; right: 0;">
-                    <form action="">
-                        <button type="submit" class="main-btn btn-hover"
+                        <button class="main-btn btn-hover"
                                 style="background-color: gray;" onclick="seatsmgt.cancel();">重設選位
                         </button>
-                        <button type="submit" class="main-btn btn-hover"
+                        <button class="main-btn btn-hover"
                                 onclick="seatsmgt.save()">確定選位
                         </button>
-                    </form>
                 </div>
             </div>
             <!-- (A) SEAT LAYOUT -->
@@ -391,7 +393,7 @@
                                 <label class="form-label">選擇張數</label>
                                 <select id="ticketDecr" class="form-control" data-size="5" title="Nothing selected"
                                         data-live-search="true" >
-                                    <option value="1">1</option>
+                                    <option value="1" selected>1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
                                     <option value="4">4</option>
@@ -408,22 +410,20 @@
                         <div class="col-lg-6 col-md-12">
                             <div class="form-group mt-4">
                                 <label class="form-label">請輸入驗證碼</label>
-                                <input class="form-control h_40" type="text" placeholder="" value="">
+                                <input id="toBeVerified" class="form-control h_40" type="text" placeholder="" value="" maxlength="6">
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-12">
                             <div class="form-group mt-4">
                                 <label class="form-label">驗證碼</label>
-                                <input class="form-control h_40" type="text" placeholder="" value="fj21fd" disabled
-                                       style="background-color: lightgray!important; color: black!important;">
+                                <canvas id="mycanvas" width='150' height='40'></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="main-btn min-width btn-hover h_40" data-bs-dismiss="modal"
-                        onclick="TicketBySystem()">確定選位
+                <button type="button" class="main-btn min-width btn-hover h_40" onclick="TicketBySystem()">確定選位
                 </button>
             </div>
         </div>
@@ -660,9 +660,6 @@
     function disconnect() {
         webSocket.close();
     }
-
-    // 測試用: 假設會員已登入
-    sessionStorage.setItem("memberNo", "85341");
 
     // 選位相關變數與函式
     let seats;
@@ -971,6 +968,7 @@
 
     // 系統選位的顯示視窗，應顯示對應區域名稱
     function setBlockNoAndName() {
+        clickChange();
         fetch("/BlockPrice/findById" + `?blockNo=${sessionStorage.getItem("blockNo")}`)
             .then(resp => resp.json())
             .then(jsondata => {
@@ -982,6 +980,11 @@
     // 監聽浮動視窗點擊空白 => 清空 Redis 所存的鎖定座位
     $('#orgSettings').on('hidden.bs.modal', function (e) {
         seatsmgt.cancel();
+    });
+
+    // 監聽浮動視窗點擊空白 => 歸零票券數量
+    $('#orgSettings_system').on('hidden.bs.modal', function (e) {
+        $('#ticketDecr option[value="1"]').prop("selected", true);
     });
 
     // 取得最新的 Redis 座位狀態
@@ -999,6 +1002,11 @@
 
     // 系統選位 => 購票
     function TicketBySystem() {
+
+        if(verify() === false){
+            return;
+        }
+
         fetch("/Activity/findByActNo" + `?actNo=${sessionStorage.getItem("activityNo")}`)
             .then(resp => resp.json())
             .then(jsondata => {
@@ -1034,6 +1042,10 @@
     }
 
 </script>
+<!--<script src="js/memberLoginCheck.js"></script>-->
+<script src="js/memberLoginCheck-location.href.js"></script>
+<script src="js/verification.js"></script>
+
 
 </body>
 

@@ -1,10 +1,15 @@
 package com.ezticket.web.activity.controller;
 
+import com.ezticket.ecpay.service.OrderService;
+import com.ezticket.web.activity.dto.AddTorderDTO;
 import com.ezticket.web.activity.dto.TorderDto;
 import com.ezticket.web.activity.pojo.Torder;
 import com.ezticket.web.activity.service.TorderService;
+import com.ezticket.web.product.dto.AddPorderDTO;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -14,17 +19,31 @@ import java.util.Optional;
 public class TorderController {
     @Autowired
     private TorderService torderService;
+    @Autowired
+    private OrderService orderService;
 
-    @GetMapping ("/findAll")
-    public List<TorderDto> findByOrderByTorderNoDesc(){
+    @GetMapping("/findAll")
+    public List<TorderDto> findByOrderByTorderNoDesc() {
 
         return torderService.findByOrderByTorderNoDesc();
     }
-    @GetMapping("/findById")
-    public Optional<TorderDto> findById( Integer torderNo){
 
+    @GetMapping("/findById")
+    public Optional<TorderDto> findById(Integer torderNo) {
         return torderService.findById(torderNo);
     }
 
+    // Add by Shawn on 04/17
+    @PostMapping("/addTorder")
+    @ResponseBody
+    public String addTOrder(@RequestBody AddTorderDTO addTorderDTO) {
+        return orderService.ecpayTCheckout(torderService.addTOrder(addTorderDTO).getTorderNo());
+    }
+
+    // Add by Shawn on 04/19
+    @GetMapping("/getById")
+    public Torder getById(@RequestParam Integer torderNo) {
+        return torderService.getById(torderNo);
+    }
 
 }

@@ -5,10 +5,7 @@ import com.ezticket.web.activity.dto.TdetailsDto;
 import com.ezticket.web.activity.pojo.Tdetails;
 import com.ezticket.web.activity.service.TdetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,4 +22,9 @@ public class TdetailsController {
         return  adetailsService.findAll();
     }
 
+    // Add by Shawn on 04/19
+    @GetMapping("/getById")
+    public List<Tdetails> getDetailsByOrderNo(@RequestParam Integer torderNo) {
+        return adetailsService.getByOrderNo(torderNo);
+    }
 }

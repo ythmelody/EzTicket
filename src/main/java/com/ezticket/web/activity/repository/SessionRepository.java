@@ -25,15 +25,16 @@ public interface SessionRepository extends JpaRepository<Session,Integer> {
     List<Session> findByactivityNo(Integer activityNo);
 
 
-//    Add by Shawn on 4/3
+    //    Add by Shawn on 4/3
     public List<Session> findByActivityNo(Integer actNo);
 
     @Query("SELECT s.sessionNo FROM Session s JOIN Activity act WHERE act.aEDate > current_date")
     public Set<Integer> getToSellSessions();
 
-//    Add by Shawn on 04/08
+    //    Add by Shawn on 04/08
     @Transactional
     @Modifying
     @Query("UPDATE Session SET standingQty = standingQty + :ticketChange where sessionNo = :sessionNo")
-    public int updateById(@Param("ticketChange") Integer ticketChange, @Param("sessionNo") Integer sessionNo);
+    public int updateStandingQtyById(@Param("ticketChange") Integer ticketChange, @Param("sessionNo") Integer sessionNo);
+
 }

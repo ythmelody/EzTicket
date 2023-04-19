@@ -5,9 +5,11 @@ import com.ezticket.web.activity.pojo.Session;
 import com.ezticket.web.activity.repository.SessionRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -17,6 +19,12 @@ public class SessionService {
     private SessionRepository sessionRepository;
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private ActivityService activityService;
+
+    @Autowired
+    private SeatsService seatsService;
 
     public List<SessionDto> findAll() {
         return sessionRepository.findAll()
@@ -45,7 +53,7 @@ public class SessionService {
 
     //    Add by Shawn on 04/08
     public Integer updateTicketQTY(Integer ticketChange, Integer sessionNo) {
-        return sessionRepository.updateById(ticketChange, sessionNo);
+        return sessionRepository.updateStandingQtyById(ticketChange, sessionNo);
     }
 
     //    Add by Shawn on 04/11
@@ -54,6 +62,24 @@ public class SessionService {
     }
 
     public Session saveSession(Session session) {
-        return  sessionRepository.save(session);
+        return sessionRepository.save(session);
+    }
+
+    //    Add by Shawn on 04/19
+    @Scheduled(cron = "0 30 * * * *")
+    public void updateSessionInfo(){
+        List<Integer> actNos = activityService.findActNosByWetherSeatIsTrue();
+
+        for(Integer actNo: actNos){
+            List<Session> sessions = sessionRepository.findByActivityNo(actNo);
+            for(Session session: sessions){
+                Map<String, Integer> info = seatsService.getSessionInfo(session.getSessionNo());
+                session.setMaxSeatsQty(info.get("maxSeatsQty"));
+                session.setMaxStandingQty(info.get("maxStandingQty"));
+                session.setSeatsQty(info.get("seatsQty"));
+                session.setStandingQty(info.get("standingQty"));
+                sessionRepository.save(session);
+            }
+        }
     }
 }
