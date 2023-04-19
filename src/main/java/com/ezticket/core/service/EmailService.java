@@ -10,4 +10,6 @@ public interface EmailService {
     // Method
     // To send an email with attachment
     String sendMailWithAttachment(EmailDetails details);
+
+    String sendOrderMail(String name, String to, String porderno,String status);
 }
