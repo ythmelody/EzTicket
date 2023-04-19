@@ -7,7 +7,9 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class FollowproductService {
@@ -44,7 +46,21 @@ public class FollowproductService {
 	}
 
 	public List<Followproduct> getFollowProductByMemberno(Integer memberno) {
-		return dao.getFollowProductByMemberno(memberno);
+		List<Followproduct> followproductList =dao.getFollowProductByMemberno(memberno);
+		System.out.println(followproductList);
+		return  followproductList;
+
+
+	}
+
+	public Set<Integer> getFollowerByProduct(Integer productno) {
+		List<Followproduct> followproductList = dao.getFollowProductByProductno(productno);
+		Set<Integer> set = new HashSet<>();
+		for (Followproduct followproduct : followproductList) {
+			set.add(followproduct.getFollowproductPK().getMemberno());
+		}
+		return set;
+
 
 	}
 

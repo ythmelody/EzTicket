@@ -47,15 +47,13 @@ public class FollowproductController extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
-        HttpSession session =request.getSession();
-        Boolean isMember =false;
-        Member member =(Member) session.getAttribute("member");
-        if( member !=null){
-            isMember =true;
-            newMember =memberSvc.getMemberInfo(member.getMemail());
+        HttpSession session = request.getSession();
+        Boolean isMember = false;
+        Member member = (Member) session.getAttribute("member");
+        if (member != null) {
+            isMember = true;
+            newMember = memberSvc.getMemberInfo(member.getMemail());
         }
-
-//        top10Svc.test();
 
         if ("getFollowProductList".equals(action)) {
             if (!isMember) {
@@ -63,8 +61,8 @@ public class FollowproductController extends HttpServlet {
             }
             Integer memberno = newMember.getMemberno();
             List<Followproduct> followproductList = followproductSvc.getFollowProductByMemberno(memberno);
-            Gson gson =new Gson();
-            String json =gson.toJson(followproductList);
+            Gson gson = new Gson();
+            String json = gson.toJson(followproductList);
             PrintWriter out = response.getWriter();
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json");
@@ -81,9 +79,9 @@ public class FollowproductController extends HttpServlet {
             }
             Integer memberno = newMember.getMemberno();
             Integer productno = Integer.valueOf(request.getParameter("productno"));
-            Boolean unfollowOneProductOK = followproductSvc.deleteOneProductFollowing(memberno,productno);
-            Gson gson =new Gson();
-            String json =gson.toJson(unfollowOneProductOK);
+            Boolean unfollowOneProductOK = followproductSvc.deleteOneProductFollowing(memberno, productno);
+            Gson gson = new Gson();
+            String json = gson.toJson(unfollowOneProductOK);
             PrintWriter out = response.getWriter();
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json");
@@ -92,15 +90,15 @@ public class FollowproductController extends HttpServlet {
             return;
         }
 
-        if ("addOneProductFollow".equals(action)){
+        if ("addOneProductFollow".equals(action)) {
             if (!isMember) {
                 response.sendRedirect("front-users-mem-sign-in.html");
                 return;
             }
             Integer memberno = newMember.getMemberno();
             Integer productno = Integer.valueOf(request.getParameter("productno"));
-            Boolean successful = followproductSvc.addFollowProduct(memberno,productno);
-            boolean2Json(successful,response);
+            Boolean successful = followproductSvc.addFollowProduct(memberno, productno);
+            boolean2Json(successful, response);
         }
 
         if ("unfollowAllproduct".equals(action)) {
@@ -110,8 +108,8 @@ public class FollowproductController extends HttpServlet {
             }
             Integer memberno = newMember.getMemberno();
             Boolean unfollowAllProductOK = followproductSvc.deleteFollowProductByMemberno(memberno);
-            Gson gson =new Gson();
-            String json =gson.toJson(unfollowAllProductOK);
+            Gson gson = new Gson();
+            String json = gson.toJson(unfollowAllProductOK);
             PrintWriter out = response.getWriter();
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json");
@@ -122,8 +120,8 @@ public class FollowproductController extends HttpServlet {
     }
 
     public void boolean2Json(Boolean successful, HttpServletResponse response) throws IOException {
-        Gson gson =new Gson();
-        String json =gson.toJson(successful);
+        Gson gson = new Gson();
+        String json = gson.toJson(successful);
         PrintWriter out = response.getWriter();
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
