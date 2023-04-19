@@ -1,8 +1,12 @@
 package com.ezticket.web.product.service;
 
+import com.ezticket.core.service.EmailService;
+import com.ezticket.web.product.pojo.Followproduct;
 import com.ezticket.web.product.pojo.Product;
 import com.ezticket.web.product.repository.ProductDAO;
 import com.ezticket.web.product.util.PageResult;
+import com.ezticket.web.users.pojo.Member;
+import com.ezticket.web.users.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -11,15 +15,21 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 
 public class ProductService {
     @Autowired
     private ProductDAO dao;
+    @Autowired
+    private MemberRepository memberRepository;
+
+    @Autowired
+    private FollowproductService followproductSvc;
+
+    @Autowired
+    private EmailService emailSvc;
 
     @Transactional
     public Product addProduct(Integer pclassno, String pname, Integer hostno, String pdiscrip, Integer pprice,
@@ -27,7 +37,6 @@ public class ProductService {
         Product productVO = new Product();
         productVO.setPratetotal(0);
         productVO.setPrateqty(0);
-
         productVO.setPclassno(pclassno);
         productVO.setPname(pname);
         productVO.setHostno(hostno);
@@ -49,24 +58,35 @@ public class ProductService {
                                  Integer pprice, Integer pspecialprice, Integer pqty, Timestamp psdate, Timestamp pedate, String ptag,
                                  Integer pstatus, Integer pratetotal, Integer prateqty) {
 
-        Product productVO = new Product();
-        productVO.setProductno(productno);
-        productVO.setPclassno(pclassno);
-        productVO.setPname(pname);
-        productVO.setHostno(hostno);
-        productVO.setPdiscrip(pdiscrip);
-        productVO.setPprice(pprice);
-        productVO.setPspecialprice(pspecialprice);
-        productVO.setPqty(pqty);
-        productVO.setPsdate(psdate);
-        productVO.setPedate(pedate);
-        productVO.setPtag(ptag);
-        productVO.setPstatus(pstatus);
-        productVO.setPratetotal(pratetotal);
-        productVO.setPrateqty(prateqty);
-        dao.update(productVO);
+        Product product = dao.getByPrimaryKey(productno);
+        if (product.getPspecialprice() > pspecialprice) {
+            Set<Integer> memberSet = followproductSvc.getFollowerByProduct(productno);
+            for (Integer memberno : memberSet) {
+                Member member = memberRepository.getReferenceById(memberno);
+                try {
+                    emailSvc.sendFollowProductSale(member.getMname(), member.getMemail(), pname, String.valueOf(pspecialprice), String.valueOf(productno));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-        return productVO;
+            }
+        }
+        product.setPclassno(pclassno);
+        product.setPname(pname);
+        product.setHostno(hostno);
+        product.setPdiscrip(pdiscrip);
+        product.setPprice(pprice);
+        product.setPspecialprice(pspecialprice);
+        product.setPqty(pqty);
+        product.setPsdate(psdate);
+        product.setPedate(pedate);
+        product.setPtag(ptag);
+        product.setPstatus(pstatus);
+        product.setPratetotal(pratetotal);
+        product.setPrateqty(prateqty);
+        dao.update(product);
+
+        return product;
     }
 
     public Product updateProduct(Integer productno, Integer prate) {
