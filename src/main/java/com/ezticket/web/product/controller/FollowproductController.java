@@ -25,7 +25,7 @@ public class FollowproductController extends HttpServlet {
 
     private FollowproductService followproductSvc;
 
-    private Top10 top10Svc;
+//    private Top10 top10Svc;
 
     private MemberService memberSvc;
 
@@ -35,7 +35,7 @@ public class FollowproductController extends HttpServlet {
         ApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
         followproductSvc = applicationContext.getBean(FollowproductService.class);
         memberSvc = applicationContext.getBean(MemberService.class);
-        top10Svc = applicationContext.getBean(Top10.class);
+//        top10Svc = applicationContext.getBean(Top10.class);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

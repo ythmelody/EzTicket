@@ -17,7 +17,6 @@ function fetchPcouponList(e) {
 		method: 'GET',
 	}).then(response => response.json())
 		.then(data => {
-			console.log(data);
 			data.reverse();
 			const couponlist = document.querySelector('.all-promotion-list');
 			couponlist.innerHTML = "";
@@ -110,6 +109,14 @@ function addCoupon() {
 		'pcoupnsdate': formatDate($("#pcoupnsdateup").val(), $("#pcoupnsdatedown").val()),
 		'pcoupnedate': formatDate($("#pcoupnedateup").val(), $("#pcoupnedatedown").val())
 	}
+	// 日期錯誤處理
+	if ($("#pcoupnsdateup").val() == "") {
+		$("#pcoupnsdateup").prev("span").text("日期格式錯誤");
+	}
+	if ($("#pcoupnedateup").val() == "") {
+		$("#pcoupnedateup").prev("span").text("日期格式錯誤");
+		return;
+	}	
 	fetch('/pcoupon/add', {
 		method: 'POST',
 		headers: {
@@ -122,7 +129,6 @@ function addCoupon() {
 			swal('新增成功', { icon: "success" });
 		} else {
 			response.json().then(data => {
-				console.error(data);
 				$("#pcouponname").prev("span").text(data.pcouponname);
 				$("#productno").prev("span").text(data.productno);
 				$("#pdiscount").prev("span").text(data.pdiscount);
@@ -130,6 +136,7 @@ function addCoupon() {
 			});
 		}
 	})
+	fetchPcouponList(`/pcoupon/list`);
 }
 
 $('.datepicker-here').datepicker({
@@ -172,7 +179,7 @@ function editCoupon(edit) {
 }
 
 function editsaveCoupon() {
-	const couponbody = {
+	const editcouponbody = {
 		'pcouponno': $("#editpcouponno").val(),
 		'pcouponname': $("#editpcouponname").val(),
 		'productno': $("#editproductno").val(),
@@ -181,6 +188,15 @@ function editsaveCoupon() {
 		'pcoupnsdate': formatDate($("#editpcoupnsdateup").val(),$("#editpcoupnsdatedown").val()),
 		'pcoupnedate': formatDate($("#editpcoupnedateup").val(),$("#editpcoupnedatedown").val())
 	}
+	// 日期錯誤處理
+	if ($("#editpcoupnsdateup").val() === "" || $("#editpcoupnsdateup").val().includes("Na")) {
+		$("#editpcoupnsdateup").prev("span").text("日期格式錯誤");
+	}
+	if ($("#editpcoupnedateup").val() === "" || $("#editpcoupnedateup").val().includes("Na")) {
+		$("#editpcoupnedateup").prev("span").text("日期格式錯誤");
+		return;
+	}
+	console.log(editcouponbody);
 	swal({
 		title: "是否更新優惠券?",
 		icon: "warning",
@@ -193,7 +209,7 @@ function editsaveCoupon() {
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify(couponbody)
+				body: JSON.stringify(editcouponbody)
 			}).then(response => {
 				if (response.ok) {
 					swal('更新成功', { icon: "success" });
@@ -205,6 +221,7 @@ function editsaveCoupon() {
 			return Promise.reject('取消操作');
 		}
 	});
+	fetchPcouponList(`/pcoupon/list`);
 }
 function saveCoupon(couponno, event) {
 		const btn = event.target;
@@ -245,6 +262,7 @@ function saveCoupon(couponno, event) {
 			return Promise.reject('取消操作');
 		}
 	});
+	fetchPcouponList(`/pcoupon/list`);
 }
 // 一次發送給全部會員
 function takeCouponForMember(pcouponno){
@@ -261,3 +279,16 @@ function takeCouponForMember(pcouponno){
 				}
     });
 }
+$("#pcouponname, #productno, #pdiscount, #preachprice").on("change", function() {
+  $(this).prev("span").text("");
+});
+$("#editpcouponname, #editproductno, #editpdiscount, #editpreachprice").on("change", function() {
+  $(this).prev("span").text("");
+});
+$("#pcoupnsdateup, #pcoupnedateup, #editpcoupnsdateup, #editpcoupnedateup").on("blur", function() {
+  if ($(this).val() == "") {
+    $(this).prev("span").text("日期格式錯誤");
+  } else {
+    $(this).prev("span").text("");
+  }
+});

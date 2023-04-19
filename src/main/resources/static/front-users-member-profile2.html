@@ -617,7 +617,7 @@
 									<li class="nav-item">
 										<a class="nav-link" id="coupons-tab" data-bs-toggle="tab" href="#coupons" role="tab"
 											aria-controls="coupons" aria-selected="false"><i
-												class="fa-solid fa-circle-info"></i>我的優惠券</a>
+												class="fa-solid fa-circle-info"></i>優惠券</a>
 									</li>
 									<li class="nav-item">
 										<a class="nav-link" id="orders-tab" data-bs-toggle="tab" href="#orders"
@@ -875,6 +875,7 @@
 											</div>
 										</div>
 									</div>
+									<!-- 優惠券管理 Start -->
 									<div class="tab-pane fade" id="coupons" role="tabpanel" aria-labelledby="coupons-tab">
 										<div class="row">
 											<div class="col-lg-12">
@@ -905,59 +906,46 @@
 											</div>
 										</div>
 									</div>
+									<!-- 優惠券管理 End -->
+									<!-- 商品訂單管理 Start -->
 									<div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
-										<div class="main-card mt-4">
-											<div class="card-top p-4">
-												<div class="card-event-img">
-													<img src="images/event-imgs/img-7.jpg" alt="">
-												</div>
-												<div class="card-event-dt">
-													<h5>Tutorial on Canvas Painting for Beginners</h5>
-													<div class="invoice-id">Invoice ID :
-														<span>BRCCRW-11111111</span>
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="main-card mt-4 p-0">
+													<div class="nav custom-tabs me-3" role="tablist">
+														<button class="tab-link active" data-bs-toggle="tab"
+															data-bs-target="#orders-01" type="button" role="tab"
+															aria-controls="orders-01" aria-selected="true"><i
+																class="fa-solid fa-envelope me-3"></i>處理中</button>
+														<button class="tab-link" data-bs-toggle="tab"
+															data-bs-target="#orders-02" type="button" role="tab"
+															aria-controls="orders-02" aria-selected="false"><i
+																class="fa-solid fa-key me-3"></i>已完成</button>
+														<button class="tab-link" data-bs-toggle="tab"
+																data-bs-target="#orders-03" type="button" role="tab"
+																aria-controls="orders-03" aria-selected="false"><i
+																	class="fa-solid fa-key me-3"></i>已取消</button>
 													</div>
 												</div>
 											</div>
-											<div class="card-bottom">
-												<div class="card-bottom-item">
-													<div class="card-icon">
-														<i class="fa-solid fa-calendar-days"></i>
-													</div>
-													<div class="card-dt-text">
-														<h6>Event Starts on</h6>
-														<span>01 June 2022</span>
-													</div>
-												</div>
-												<div class="card-bottom-item">
-													<div class="card-icon">
-														<i class="fa-solid fa-ticket"></i>
-													</div>
-													<div class="card-dt-text">
-														<h6>Total Tickets</h6>
-														<span>1</span>
-													</div>
-												</div>
-												<div class="card-bottom-item">
-													<div class="card-icon">
-														<i class="fa-solid fa-money-bill"></i>
-													</div>
-													<div class="card-dt-text">
-														<h6>Paid Amount</h6>
-														<span>AUD $50.00</span>
-													</div>
-												</div>
-												<div class="card-bottom-item">
-													<div class="card-icon">
-														<i class="fa-solid fa-money-bill"></i>
-													</div>
-													<div class="card-dt-text">
-														<h6>Invoice</h6>
-														<a href="invoice.html">Download</a>
+											<div class="col-lg-12">
+												<div class="main-card mt-4">
+													<div class="tab-content">
+														<div class="tab-pane fade show active" id="orders-01" role="tabpanel">
+															<!-- 處理中內容 -->
+														</div>
+														<div class="tab-pane fade" id="orders-02" role="tabpanel">
+															<!-- 已結案內容 -->
+														</div>
+														<div class="tab-pane fade" id="orders-03" role="tabpanel">
+															<!-- 已取消內容 -->
+														</div>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
+									<!-- 商品訂單管理 End -->
 								</div>
 							</div>
 						</div>
