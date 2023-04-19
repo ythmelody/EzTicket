@@ -203,6 +203,11 @@ function addPorder() {
         async: false,
         success: function(data) {
           localStorage.clear();
+          swal("訂單建立成功，等待前往綠界金流付款", {
+            icon: "success",
+            buttons: false,
+            timer: 3000,
+          });
           $('body').append(data);
         },
         error: function() {

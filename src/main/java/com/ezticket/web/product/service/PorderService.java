@@ -75,7 +75,7 @@ public class PorderService {
         // 付款狀態 Ppaymentstatus
         // 0 未付款 1 已付款 2 已退款 3 付款失敗
         // 訂單狀態 Pprocessstatus
-        // 0 未處理 1 已出貨 2 已結案 3 已取消 4 取消確認
+        // 0 未處理 1 已出貨 2 已結案 3 已取消 4 取消申請
         if (porder.getPpaymentstatus() == 0 && processStatus != 3) {
             throw new IllegalStateException("未付款的訂單只能取消");
         }
