@@ -30,13 +30,13 @@ public class BlockModelService {
     //    新增/修改區域
     @Transactional
     public BlockModelDTO saveBlockModel(BlockModelDTO blockModelDTO) {
-        BlockModel blockModel;
-        if (blockModelDTO.getModelno() != null) {
-            //      findById 有找到修改、沒找到新增
-            blockModel = blockModelRepository.findById(blockModelDTO.getModelno()).orElse(new BlockModel());
-        } else {
-            blockModel = new BlockModel();
-        }
+        BlockModel blockModel = new BlockModel();
+//        if (blockModelDTO.getModelno() != null) {
+//            //      findById 有找到修改、沒找到新增
+//            blockModel = blockModelRepository.findById(blockModelDTO.getBlockno()).orElse(new BlockModel());
+//        } else {
+//            blockModel = new BlockModel();
+//        }
         BeanUtils.copyProperties(blockModelDTO, blockModel);
         BlockModel savedBlockModel = blockModelRepository.save(blockModel);
         BeanUtils.copyProperties(savedBlockModel, blockModelDTO);
