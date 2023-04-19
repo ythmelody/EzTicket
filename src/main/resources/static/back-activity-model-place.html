@@ -363,10 +363,10 @@
                                 </div> -->
 									<div class="form-group mt-4">
 										<label class="form-label">模板狀態</label>
-										<select class="selectpicker" data-size="5" data-live-search="true"
+										<select class="selectpicker" data-size="5"
 											id="newModelStatus">
-											<option value="1" selected>啟用</option>
 											<option value="0">停用</option>
+											<option value="1" selected>啟用</option>
 										</select>
 									</div>
 								</div>
@@ -415,7 +415,11 @@
 						.then((jsondata) => {
 							$("#hiddenModelno").val(jsondata.modelno);
 							$("#newModelName").val(jsondata.modelName);
-							$("#newModelStatus").val(jsondata.modelStatus);
+							const num = jsondata.modelStatus;
+							console.log(jsondata.modelStatus);
+							$("#newModelStatus").val(num);
+							console.log($("#newModelStatus").val(num));
+							$("#newModelStatus").selectpicker("refresh");
 						});
 					modalTitle.textContent = '修改模板';
 				}
@@ -621,7 +625,7 @@
 
 		<!-- 新增/修改模板按鈕 -->
 		<script>
-			function insertModel(hidden) {
+			function insertModel() {
 				if ($.trim($("#newModelName").val()) === "") {
 					Swal.fire(
 						{
@@ -678,7 +682,7 @@
 								confirmButtonColor: '#102743',
 								preConfirm: setTimeout(() => {
 									document.location.reload();
-								}, 2000)
+								}, 1000)
 							});
 						} else {
 							Swal.fire({text:"返回編輯", timer: 1500, showConfirmButton: true, confirmButtonColor: '#102743'});
@@ -693,7 +697,7 @@
 		<script>
 			function deleteModel(modelno) {
 				Swal.fire({
-					title: "模板及關聯的座位將被永久刪除，你確定嗎？",
+					title: "模板及關聯的座位將被永久刪除，您確定嗎？",
 					icon: "warning",
 					showCancelButton: true,
 					confirmButtonColor: '#102743',
