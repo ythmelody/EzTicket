@@ -7,10 +7,7 @@ import com.ezticket.web.product.dto.OrderProductDTO;
 import com.ezticket.web.product.dto.PorderDTO;
 import com.ezticket.web.product.dto.PorderDetailsDTO;
 import com.ezticket.web.product.pojo.*;
-import com.ezticket.web.product.repository.PcouponholdingRepository;
-import com.ezticket.web.product.repository.PdetailsRepository;
-import com.ezticket.web.product.repository.PorderRepository;
-import com.ezticket.web.product.repository.ProductDAO;
+import com.ezticket.web.product.repository.*;
 import com.ezticket.web.users.pojo.Member;
 import com.ezticket.web.users.repository.MemberRepository;
 import org.modelmapper.ModelMapper;
@@ -42,6 +39,9 @@ public class PorderService {
     private ModelMapper modelMapper;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private Top10DAO top10Dao;
+
 
     // GetPordersByID
     public List<PorderDTO> getPordersByID(Integer id) {
@@ -158,6 +158,8 @@ public class PorderService {
             }
             product.setPqty(product.getPqty() - orderProducts.get(i).getQuantity());
             dao.update(product);
+            top10Dao.addKeyValue(String.valueOf(product.getProductno()),orderProducts.get(i).getQuantity());
+
         }
         return EntityToDTO(porder);
     }
