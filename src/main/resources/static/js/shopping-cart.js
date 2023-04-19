@@ -7,14 +7,15 @@ $(document).ready(async () => {
   const response = await fetch('member/getMemberInfo', {
     method: 'GET',
   });
+  if(response.redirected == true){
+    window.location.href = 'front-users-mem-sign-in.html';
+  }
   const data = await response.json();
   memberno = data.memberno;
-  console.log(memberno);
   if(memberno){
     let address = data.comreaddress;
     const twzipcode = new TWzipcode({combine: false});
     const result = twzipcode.parseAddress(address);
-    console.log(result);
     twzipcode.district(result.district);
     twzipcode.zipcode(result.zipcode);
     twzipcode.county(result.county);
@@ -25,16 +26,9 @@ $(document).ready(async () => {
     $('#rephone').val(data.comrephone);
     $('#email').val(data.memail);
     getcart();
-  } else {
-    // 請前往登入
-    window.location.href = 'front-users-mem-sign-in.html';
   }
 });
-// 頁面載入前驗證是否登入
-if (!memberno) {
-  // 請前往登入
-  window.location.href = 'front-users-mem-sign-in.html';
-}
+
 async function getcart() {
   let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
   const itemlist = document.querySelector('tbody');
@@ -68,18 +62,18 @@ async function getcart() {
                   <span class="number-top">$<s>${item.data.pprice}</s></span>
                   <span class="number-bottom">$${item.data.pspecialprice}</span>
                 </td>
-                <td><input style="width: 25%;" class="form-control h_50" type="number" value="${item.quantity}" min="1" max="${item.data.pqty}"></td>
+                <td><input style="width:35%;" class="form-control h_50" type="number" value="${item.quantity}" min="1" max="${item.data.pqty}" onkeydown="return false" onkeyup="this.value='';"></td>
                 <td>$${item.data.pspecialprice * item.quantity}</td>
                 <td><a href="#" onClick="removeItem(${(index - 1)})">移除</a></td>
               </tr>`
     }).join('');
     const couponuse = await getpcouponlist(memberno);
     // 定義運費 滿499免運
-    let delivery = totalPay > 499 ? 0 : 100;
+    let delivery = totalPay >= 499 ? 0 : 100;
     let pdiscount = 0;
     const coupon = `<tr>
                       <td colspan="3">
-                        <label class="form-label"><h2>優惠券</h2></label>
+                        <label class="form-label"><h2>優惠券</h2></label><span id="coupon-error-msg" class="error-msg"></span>
                         <div class="position-relative">
                           <select id="couponCode" class="form-select h_50" onchange="disCoupon()">
                             <option value="">請選擇</option>
@@ -117,7 +111,7 @@ async function getcart() {
       tr.querySelector('td:nth-last-child(2)').innerText = `$${item.data.pspecialprice * item.quantity}`;
     });
     // 定義運費 滿499免運
-    let delivery = totalPay > 499 ? 0 : 100;
+    let delivery = totalPay >= 499 ? 0 : 100;
     itemlist.querySelector('.product-fee span').innerText = totalPay;
     $('.delivery-fee span').text(delivery);
     $('.totalinv2 span').text(totalPay + delivery);
@@ -133,11 +127,13 @@ function disCoupon() {
   const minimum = +couponCode.data('minimum');
   let delivery = Number(productpay > 499 ? 0 : 100);
   if(productpay > minimum){
+    $('#coupon-error-msg').text("");
     $('.pdiscount-fee span').text(discount);
     $('.totalinv2 span').text(productpay + delivery - discount);
     $('#TWD').text(`應支付總金額 : $${productpay + delivery - discount}`);
   }
   else{
+    $('#coupon-error-msg').text("");
     $('.pdiscount-fee span').text(0);
     $('.totalinv2 span').text(productpay + delivery);
     $('#TWD').text(`應支付總金額 : $${productpay + delivery}`);
@@ -145,14 +141,22 @@ function disCoupon() {
 }
 
 function useCoupon(){
-  // 获取下拉选项框
   const couponCode = $('#couponCode');
-  // 点击按钮时切换下拉选项框的禁用状态
-  if (couponCode.prop('disabled')) {
-    couponCode.prop('disabled', false);
-  } else {
-    couponCode.prop('disabled', true);
-  };
+  const productpay = Number($('.product-fee span').text());
+  const minimum = +$('#couponCode option:selected').data('minimum');
+  if (productpay >= minimum){
+    if (couponCode.prop('disabled')) {
+      couponCode.prop('disabled', false);
+    } else {
+      couponCode.prop('disabled', true);
+    }
+  } else{
+    if (couponCode.val() >= 3) {
+      $('#coupon-error-msg').text('不符使用規則!!!');
+    } else {
+      $('#coupon-error-msg').text('請選擇優惠券!!!');
+    }
+  }
 }
 
 function addPorder() {

@@ -1,12 +1,18 @@
 package com.ezticket.web.product.service;
 
+import com.ezticket.core.service.EmailService;
 import com.ezticket.ecpay.service.OrderService;
-import com.ezticket.web.product.dto.*;
+import com.ezticket.web.product.dto.AddPorderDTO;
+import com.ezticket.web.product.dto.OrderProductDTO;
+import com.ezticket.web.product.dto.PorderDTO;
+import com.ezticket.web.product.dto.PorderDetailsDTO;
 import com.ezticket.web.product.pojo.*;
 import com.ezticket.web.product.repository.PcouponholdingRepository;
 import com.ezticket.web.product.repository.PdetailsRepository;
 import com.ezticket.web.product.repository.PorderRepository;
 import com.ezticket.web.product.repository.ProductDAO;
+import com.ezticket.web.users.pojo.Member;
+import com.ezticket.web.users.repository.MemberRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -29,9 +35,13 @@ public class PorderService {
     @Autowired
     private PcouponholdingRepository pcouponholdingRepository;
     @Autowired
+    private MemberRepository memberRepository;
+    @Autowired
     private OrderService ecpayorderService;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private EmailService emailService;
 
     // GetPordersByID
     public List<PorderDTO> getPordersByID(Integer id) {
@@ -179,6 +189,9 @@ public class PorderService {
                     product.setPqty(product.getPqty() + pdetails.getPorderqty());
                     dao.update(product);
                 }
+                // 寄送取消通知信
+                Member member = memberRepository.getReferenceById(porder.getMemberno());
+                emailService.sendCancelOrderMail(member.getMname(),member.getMemail(),porder.getPorderno().toString());
             }
         }
     }

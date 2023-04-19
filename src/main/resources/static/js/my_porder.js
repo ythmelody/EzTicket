@@ -10,11 +10,12 @@ $('#buyNow').click(function () {
     title: "是否前往購物車結帳?",
     icon: "warning",
     buttons: true,
-    dangerMode: true
   }).then((confirm) => {
     addCartByCount();
     if (confirm) {
-      window.location.href = 'front-product-shopping_cart.html';
+      setTimeout(() => {
+        window.location.href = 'front-product-shopping_cart.html';
+      }, 1000); // 等待1秒後跳轉頁面
     } else {
       return Promise.reject('取消操作');
     }
@@ -48,7 +49,8 @@ function addCart(e) {
       if (existingItem) {
         existingItem.quantity++;
       } else {
-        let newItem = { data: data, quantity: 1 };  // 新增一個商品物件到購物車中
+        let qty = document.querySelector('#count') ? document.querySelector('#count').value : 1;
+        let newItem = { data: data, quantity: Number(qty) };  // 新增一個商品物件到購物車中
         cartItems.push(newItem);
       }
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
@@ -66,7 +68,9 @@ function buyNow(e) {
   }).then((confirm) => {
     addCart(e);
     if (confirm) {
-      window.location.href = 'front-product-shopping_cart.html';
+      setTimeout(() => {
+        window.location.href = 'front-product-shopping_cart.html';
+      }, 1000); // 等待1秒後跳轉頁面
     } else {
       return Promise.reject('取消操作');
     }
