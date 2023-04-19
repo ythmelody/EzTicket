@@ -76,19 +76,7 @@ public class ProductCommentServlet extends HttpServlet {
             isAdmin = true;
             newbackuser = backuserSvc.getBackuserInfo(backuser.getBaaccount());
         }
-        //如果是登入狀態得到member拿來用
-//        if (loggedin != null && loggedin == true) {
-//            //這邊的member只有email跟password(沒有memberno)
-//            Member member = (Member) session.getAttribute("member");
-//            Backuser backuser = (Backuser) session.getAttribute("backuser");
-//            if (backuser.getBaaccount() != null) {
-//
-//            }
-//            else if(member.getMemail() != null){
-//                //取得所有member pojo資訊(包含memberno)
-//                newMember = memberSvc.getMemberInfo(member.getMemail());
-//            }
-//        }
+
 
         //取得所有商品評論
         if ("productCommentList".equals(action)) {

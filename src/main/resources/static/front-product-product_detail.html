@@ -354,28 +354,19 @@
 									<h4>NTD</h4>
 									<h5 class="mb-0" id="pprice" style="text-decoration: line-through">$50.00</h5>
 									<h5 class="mb-0" id="pspecialprice" style="font-size: 20px;">$50.00</h5>
-									<!-- <div class="quantity"> -->
-									<!-- </div> -->
-									<!-- <div class="col-md-6">
-										<label class="form-label mt-3 fs-6">欲購買數量</label>
-										<div class="input-number">
-											<input class="form-control h_50" type="number" placeholder="" value="1">
-										</div>
-									</div> -->
 								</div>
 								<div class="counter">
 									<span class="down" onClick='decreaseCount(event, this)'>-</span>
-									<input id="count" type="text" value="1" max="">
+									<input id="count" type="text" value="1" max="" onkeydown="return false" onkeyup="this.value='1';">
 									<span class="up" onClick='increaseCount(event, this)'>+</span>
 								</div>
 							</div>
 
 
 							<div class="booking-btn">
-								<button type="button" id="buyNow" class="main-btn btn-hover w-45" style="width:48%;">Buy
-									Now</button>
+								<button type="button" id="buyNow" class="main-btn btn-hover w-45" style="width:48%;">立即購買 <i class="fa-solid fa-right-from-bracket"></i></button>
 								<button type="button" class="main-btn btn-hover w-45" style="width:48%;"
-									id="product-incart"><i class="fa-solid fa-cart-shopping"></i></button>
+									id="product-incart">加入購物車 <i class="fa-solid fa-cart-shopping"></i></button>
 							</div>
 						</div>
 					</div>
@@ -536,7 +527,6 @@
 			})
 		}).then(resp => resp.json())
 			.then(item => {
-				console.log(item);
 				$("#productTitle").text(item.pname);
 				$("#pclassName").text(item.pclass.pclassname);
 				pname.textContent = item.pname;
@@ -557,7 +547,6 @@
 					$("#productRate").children("h4").text("商品評星：" + (item.pratetotal / item.prateqty).toFixed(1)).append(`&nbsp;<i class="fa-solid fa-star" style="color: #ffad21!important;"></i>`);
 				}
 				for (let pimgt of item.pimgts) {
-					console.log(pimgt.pimgno);
 					$("#moreProductImg").append(
 						`<div class="item">
 													<div class="main-card mt-4">
@@ -627,7 +616,7 @@
 						<img src="ProductImg?pimgno=${image}" alt="">
 
 					</a>
-					<span class="bookmark-icon" title="Bookmark" onclick="moreProductFollowProduct(${item.productno})"></span>
+					<span id="followProduct_${item.productno}" class="bookmark-icon" title="Bookmark" onclick="moreProductFollowProduct(${item.productno})"></span>
 				</div>
 				<div class="event-content">
 					<a href="front-product-product_detail.html?productno=${item.productno}" class="event-title">${item.pname}</a>
@@ -639,7 +628,7 @@
 				</div>
 				<div class="event-footer">
 					
-						<a onclick="buyNow(${item.productno})" class="main-btn btn-hover w-45" style="width:48%;">Buy Now</a>
+						<a onclick="buyNow(${item.productno})" class="main-btn btn-hover w-45" style="width:48%;">立即購買</a>
 						<button type="button" class="main-btn btn-hover w-45" style="width:48%;" onclick="addCart(${item.productno})" id="product-incart"><i class="fa-solid fa-cart-shopping"></i></button>
 					
 					
@@ -653,6 +642,27 @@
 						$("#rateAvg" + item.productno).text("商品評星：" + ((item.pratetotal / item.prateqty)).toFixed(1)).append(`&nbsp;<i class="fa-solid fa-star" style="color: #ffad21!important;"></i>`);
 					}
 				}
+
+				// Document load 的時候顯示追蹤過的商品，$(`#followProduct_${i}`) 要新增在空讚的圖片中
+				$.ajax({
+					url: "FollowproductController",
+					cache: false,
+					async: false,
+					type: 'POST',
+					dataType: "json",
+					data: {
+						"action": "getFollowProductList",
+						// "memberno": info.memberno,
+					},
+					success: function (jsondata) {
+						// console.log(jsondata);
+						for (let item of jsondata) {
+							// console.log(item.followproductPK.productno);
+							$(`#followProduct_${item.followproductPK.productno}`).addClass("bookmarked");
+						}
+					}
+
+				})
 			}
 			).then(function () {
 				$('.moreEvents-slider').owlCarousel({
@@ -690,7 +700,7 @@
 		const productComment = document.querySelector('div.owl-carousel.testimonial-slider.owl-theme');
 
 		// 從 Redis 撈出會員所對應的按讚評論編號並存到一個陣列以供後續比對
-		let commentArr = [];
+		// let commentArr = [];
 
 		fetch("ProductCommentServlet", {
 			method: "POST",
@@ -829,7 +839,7 @@
 
 		//從評論取得評論編號
 		function comment(pcommentno) {
-			// 下面這一塊fetch流程變得很奇怪
+			// 下面這一塊fetch流程變得很奇怪所以先刪除
 			// fetch('member/getMemberInfo', {
 			// 	method: 'GET',
 			// }).then(resp => {
@@ -849,17 +859,16 @@
 			// 	}
 			// })
 			// 	.then(() => {
-					$('#pcommentno').val(pcommentno);
-				// })
+			$('#pcommentno').val(pcommentno);
+			// })
 
 
 			// $('#memberno').val(info.memberno);
-			console.log("comment" + $("#pcommentno").val());
+			// console.log("comment" + $("#pcommentno").val());
 		}
 
 		//新增商品評論檢舉
 		function submitComment() {
-			console.log($("#pcommentno").val());
 
 			fetch('ProductCommentReportServlet', {
 				method: 'POST',
@@ -923,25 +932,44 @@
 
 		//相關聯商品的追蹤
 		function moreProductFollowProduct(productno) {
+			const btnClass = event.target.className;
 
-			fetch("FollowproductController", {
-				method: "POST",
-				body: new URLSearchParams({
-					'memberno': info.memberno,
-					'productno': productno,
-					'action': "addOneProductFollow"
-				})
-			})
+			if (btnClass === 'bookmark-icon') {
+
+				fetch("FollowproductController", {
+					method: "POST",
+					body: new URLSearchParams({
+						'productno': productno,
+						'action': "addOneProductFollow"
+					})
+				}).then(resp => resp.json())
+					.then(item => {
+						console.log(item);
+						if (item) {
+							console.log(productno);
+							$('#followProduct_' + productno).addClass("bookmarked");
+
+						}
+					})
+			} else if (btnClass === 'bookmark-icon bookmarked') {
+
+				fetch("FollowproductController", {
+					method: "POST",
+					body: new URLSearchParams({
+						'productno': productno,
+						'action': "unfollowOneProduct"
+					})
+				}).then(resp => resp.json())
+					.then(item => {
+						console.log(item);
+						if (item) {
+							console.log(productno);
+							$('#followProduct_' + productno).removeClass("bookmarked");
+						}
+					})
+			}
 		}
-
-
 	</script>
-
-
-
-
-
-
 
 	<!-- 點讚換圖 -->
 	<script>
@@ -954,7 +982,7 @@
 				event.target.classList.add("thumbbed");
 				$.ajax({
 					url: "ProductCommentServlet",
-					// async: false,
+					async: false,
 					type: 'POST',
 					dataType: "json",
 					data: {
@@ -963,7 +991,6 @@
 						"pcommentno": pcommentno
 					},
 					success: function (jsondata) {
-						console.log(jsondata);
 						if (jsondata.status === 302) {
 							swal({
 								title: "點讚需要登入，是否前往登入?",
@@ -991,7 +1018,7 @@
 				event.target.classList.remove("thumbbed");
 				$.ajax({
 					url: "ProductCommentServlet",
-					// async: false,
+					async: false,
 					type: 'POST',
 					dataType: "json",
 					data: {
@@ -1000,7 +1027,6 @@
 						"pcommentno": pcommentno
 					},
 					success: function (jsondata) {
-						console.log(jsondata);
 						if (jsondata.status === 302) {
 							swal({
 								title: "點讚需要登入，是否前往登入?",

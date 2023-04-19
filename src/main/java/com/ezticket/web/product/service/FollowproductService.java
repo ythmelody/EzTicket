@@ -33,6 +33,7 @@ public class FollowproductService {
 	}
 
 
+	//刪除單一追蹤
 	@Transactional
 	public boolean deleteOneProductFollowing(Integer memberno, Integer productno) {
 		FollowproductPK followProductPKVO = new FollowproductPK();
@@ -45,6 +46,16 @@ public class FollowproductService {
 	public List<Followproduct> getFollowProductByMemberno(Integer memberno) {
 		return dao.getFollowProductByMemberno(memberno);
 
+	}
+
+	//刪除所有追蹤
+	@Transactional
+	public boolean deleteFollowProductByMemberno(Integer memberno){
+		List<Followproduct> followproductList = dao.getFollowProductByMemberno(memberno);
+		for(Followproduct followproduct :followproductList){
+			dao.delete(followproduct);
+		}
+		return true;
 	}
 
 
