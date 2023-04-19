@@ -139,6 +139,8 @@ public class PorderService {
             pcouponholding.setPcouponstatus((byte) 1);
         }
         Porder porderno = porderRepository.save(porder);
+        Member member = memberRepository.getReferenceById(porderno.getMemberno());
+        emailService.sendOrderMail(member.getMname(),member.getMemail(),porder.getPorderno().toString(), String.valueOf(1));
         List<OrderProductDTO> orderProducts = addPorderDTO.getOrderProducts();
         for (int i = 0; i < orderProducts.size(); i++) {
             Pdetails pdetails = new Pdetails();
@@ -190,8 +192,9 @@ public class PorderService {
                     dao.update(product);
                 }
                 // 寄送取消通知信
+                // status 1 成立 2 付款 3 取消
                 Member member = memberRepository.getReferenceById(porder.getMemberno());
-                emailService.sendCancelOrderMail(member.getMname(),member.getMemail(),porder.getPorderno().toString());
+                emailService.sendOrderMail(member.getMname(),member.getMemail(),porder.getPorderno().toString(), String.valueOf(3));
             }
         }
     }

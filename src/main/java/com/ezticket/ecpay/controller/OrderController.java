@@ -1,8 +1,11 @@
 package com.ezticket.ecpay.controller;
 
+import com.ezticket.core.service.EmailService;
 import com.ezticket.ecpay.service.OrderService;
 import com.ezticket.web.product.pojo.Porder;
 import com.ezticket.web.product.repository.PorderRepository;
+import com.ezticket.web.users.pojo.Member;
+import com.ezticket.web.users.repository.MemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,10 @@ public class OrderController {
 	OrderService orderService;
 	@Autowired
 	PorderRepository porderRepository;
+	@Autowired
+	MemberRepository memberRepository;
+	@Autowired
+	EmailService emailService;
 
 	@PostMapping("/checkout")
 	public String ecpayCheckout(Integer porderno) {
@@ -46,6 +53,8 @@ public class OrderController {
 		// 更改付款狀態
 		porder.setPpaymentstatus(Integer.valueOf(rtnCode));
 		porderRepository.save(porder);
+		Member member = memberRepository.getReferenceById(porder.getMemberno());
+		emailService.sendOrderMail(member.getMname(),member.getMemail(),porder.getPorderno().toString(), String.valueOf(2));
 		// 印出所有K,V，參考看看，單純看有哪些回傳值..可以註解掉
 		while (parameterNames.hasMoreElements()) {
 			String paramName = parameterNames.nextElement();

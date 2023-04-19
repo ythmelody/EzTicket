@@ -93,19 +93,41 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public String sendCancelOrderMail(String name, String to, String porderno) {
+    public String sendOrderMail(String name, String to, String porderno, String status) {
         SimpleMailMessage sendCancelOrder = new SimpleMailMessage();
+        // 寄件人
         sendCancelOrder.setFrom(sender);
+        // 收件人
         sendCancelOrder.setTo(to);
-        sendCancelOrder.setSubject("ezTicket： " + porderno + " 訂單通知");
+        // 標題
+        // status 1 成立 2 付款 3 取消
+        String mailText = "";
+        String mailTitle = "";
+        if (status.equals("1")){
+            mailTitle = "訂單成立";
+            mailText = "您的訂單已成功成立，請盡快前往綠界金流完成付款手續。\n" +
+                    "\n" +
+                    "如需購買其他商品，歡迎再次光臨我們的網站。如有任何疑問，請隨時聯繫我們的客服人員。\n";
+        }
+        if (status.equals("2")){
+            mailTitle = "訂單付款";
+            mailText = "您的訂單已完成付款，感謝您的購買。\n" +
+                    "\n" +
+                    "我們將盡快處理您的訂單，如有任何問題，請隨時聯繫我們的客服人員。\n";
+        }
+        if (status.equals("3")){
+            mailTitle = "訂單取消";
+            mailText = "很抱歉地通知您，由於逾期未付款，您的訂單已被取消。\n" +
+                    "\n" +
+                    "如有需要，請重新下單。如有任何疑問，請隨時聯繫我們的客服人員。\n";
+        }
+        sendCancelOrder.setSubject("ezTicket： " + porderno + " " + mailTitle + "通知");
         sendCancelOrder.setText(
             "親愛的" + name + "先生/小姐：\n" +
             "\n" +
             "此為系統通知信件：\n" +
             "\n" +
-            "您的訂單已因逾期未付款而取消。造成您的不便，敬請見諒。\n" +
-            "\n" +
-            "如需購買，請重新下單。如有任何疑問，請隨時聯繫我們的客服人員。\n" +
+            mailText +
             "\n" +
             "再次感謝您對我們網站的支持。祝您購物愉快！\n" +
             "\n" +
