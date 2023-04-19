@@ -829,27 +829,28 @@
 
 		//從評論取得評論編號
 		function comment(pcommentno) {
-			fetch('member/getMemberInfo', {
-				method: 'GET',
-			}).then(resp => {
-				if (resp.redirected) {
-					swal({
-						title: "檢舉需要登入,是否要登入?",
-						icon: "warning",
-						buttons: true,
-						dangerMode: true
-					}).then((confirm) => {
-						if (confirm) {
-							window.location.href = "front-users-mem-sign-in.html";
-						}
-					})
-				} else {
-					return resp.json()
-				}
-			})
-				.then(() => {
+			// 下面這一塊fetch流程變得很奇怪
+			// fetch('member/getMemberInfo', {
+			// 	method: 'GET',
+			// }).then(resp => {
+			// 	if (resp.redirected) {
+			// 		swal({
+			// 			title: "檢舉需要登入,是否要登入?",
+			// 			icon: "warning",
+			// 			buttons: true,
+			// 			dangerMode: true
+			// 		}).then((confirm) => {
+			// 			if (confirm) {
+			// 				window.location.href = "front-users-mem-sign-in.html";
+			// 			}
+			// 		})
+			// 	} else {
+			// 		return resp.json()
+			// 	}
+			// })
+			// 	.then(() => {
 					$('#pcommentno').val(pcommentno);
-				})
+				// })
 
 
 			// $('#memberno').val(info.memberno);
