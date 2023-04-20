@@ -42,7 +42,7 @@ public class TorderDetailsView {
     @Column(name = "SESSIONSTIME")
     private Timestamp sessionsTime;
     @JsonFormat(pattern = "yyyy/MM/dd kk:mm:ss", timezone = "GMT+8")
-    @Column(name = "SESSIONSTIME")
+    @Column(name = "SESSIONETIME")
     private Timestamp sessioneTime;
     @Column(name = "SESSIONNO")
     private Integer sessionNo;

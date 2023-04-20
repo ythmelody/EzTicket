@@ -14,7 +14,9 @@ import org.springframework.data.redis.core.TimeToLive;
 public class CollectRedis {
     @Id
     private String collectno;
+    private String tstatus;
     private String qrcode;
+    //    過期時間，秒
     @TimeToLive
-    private long time;
+    private long expirationInSeconds;
 }
