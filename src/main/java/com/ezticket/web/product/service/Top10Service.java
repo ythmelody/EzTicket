@@ -17,15 +17,13 @@ public class Top10Service {
     private Top10DAO top10DAO;
 
     @Autowired
-    private  ProductService productSvc;
+    private ProductService productSvc;
 
-    @Autowired
-    Pimgt pimgt;
 
-    public List top10List(){
+    public List top10List() {
         List results = new ArrayList();
         Set<ZSetOperations.TypedTuple<String>> top10set = top10DAO.findAllValues();
-        for(ZSetOperations.TypedTuple<String> item : top10set){
+        for (ZSetOperations.TypedTuple<String> item : top10set) {
             Map result = new HashMap<>();
             String pno = item.getValue();
             Integer num = item.getScore().intValue();
@@ -34,10 +32,10 @@ public class Top10Service {
             result.put("productno", product.getProductno());
             result.put("pname", product.getPname());
             result.put("sale_num", num);
-            List<Pimgt> pimgts= product.getPimgts();
-//            for(int i = 0;;){
-//                result.put("pimg", pimgts[i]);
-//            }
+            List<Pimgt> pimgts = product.getPimgts();
+            System.out.println(pimgts);
+            result.put("pimgno", pimgts.get(0).getPimgno());
+
             results.add(result);
         }
         return results;
