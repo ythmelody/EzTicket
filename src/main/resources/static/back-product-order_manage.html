@@ -34,6 +34,9 @@
 		.img-btn {
 			cursor: pointer;
 		}
+		.selectpicker {
+  		display: none;
+		}
 	</style>
 </head>
 
@@ -313,10 +316,10 @@
 						<div class="main-card mt-5">
 							<div class="dashboard-wrap-content p-4">
 								<div class="nav custom2-tabs btn-group" role="tablist">
-									<button class="tab-link ms-0 active" data-bs-toggle="tab" data-bs-target="#orders-tab" type="button"
+									<!-- <button class="tab-link ms-0 active" data-bs-toggle="tab" data-bs-target="#orders-tab" type="button"
 										role="tab" aria-controls="orders-tab" aria-selected="true">訂單列表 (<span
-											class="total_event_counter">1</span>)</button>
-									<button class="tab-link" data-bs-toggle="tab" data-bs-target="#customers-tab" type="button" role="tab"
+											class="total_event_counter">1</span>)</button> -->
+									<!-- <button class="tab-link" data-bs-toggle="tab" data-bs-target="#customers-tab" type="button" role="tab"
 										aria-controls="customers-tab" aria-selected="false">Customers (<span
 											class="total_event_counter">0</span>)</button>
 									<button class="tab-link" data-bs-toggle="tab" data-bs-target="#tickets-tab" type="button" role="tab"
@@ -324,13 +327,13 @@
 											class="total_event_counter">1</span>)</button>
 									<button class="tab-link" data-bs-toggle="tab" data-bs-target="#payouts-tab" type="button" role="tab"
 										aria-controls="payouts-tab" aria-selected="false">Payouts (<span
-											class="total_event_counter">1</span>)</button>
+											class="total_event_counter">1</span>)</button> -->
 								</div>
 								<div class="d-md-flex flex-wrap align-items-center">
 									<div class="dashboard-date-wrap mt-4">
 										<div class="form-group">
 											<div class="relative-input position-relative">
-												<input class="form-control h_40" type="text" placeholder="Search by name" value="">
+												<input id="orderInput" class="form-control h_40" type="search" placeholder="Search by name" value="">
 												<i class="uil uil-search"></i>
 											</div>
 										</div>
@@ -340,7 +343,7 @@
 												class="fa-solid fa-arrow-rotate-right me-3"></i>重新整理</a>
 									</div>
 								</div>
-								<div class="main-form mt-4">
+								<!-- <div class="main-form mt-4">
 									<div class="row g-3">
 										<div class="col-lg-3 col-md-6">
 											<div class="form-group">
@@ -385,7 +388,7 @@
 											</div>
 										</div>
 									</div>
-								</div>
+								</div> -->
 							</div>
 						</div>
 						<div class="event-list">
@@ -636,8 +639,8 @@
 	<script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-	<script src="js/porder.js"></script>
-	<!-- <script src="js/orderDataTable.js"></script> -->
+	<!-- <script src="js/porder.js"></script> -->
+	<script src="js/orderDataTable.js"></script>
 </body>
 
 </html>
