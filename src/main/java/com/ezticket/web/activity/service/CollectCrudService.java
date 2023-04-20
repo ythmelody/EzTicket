@@ -34,8 +34,8 @@ public class CollectCrudService {
         Integer memberno = newOD.get().getMemberNo();
         Collect newCollect = new Collect();
         newCollect.setMemberno(memberno);
-        newCollect.setTDetailsno(tdetailsno);
-        newCollect.setTStatus(0);
+        newCollect.setTdetailsno(tdetailsno);
+        newCollect.setTstatus(0);
         collectRepository.save(newCollect);
 
 //      新增進 Redis tStatus 及 控制器 QRcode 進入 Redis
@@ -52,7 +52,7 @@ public class CollectCrudService {
             return false;
         }
         Collect newCollect = optC.get();
-        newCollect.setTStatus(gstatus);
+        newCollect.setTstatus(gstatus);
         collectRepository.save(newCollect);
         return true;
     }
@@ -74,7 +74,7 @@ public class CollectCrudService {
 //         查出一筆明細編號
             Integer dno = d.getTdetailsNo();
 //         查出一筆票券編號
-            Integer cno = collectRepository.findByTDetailsno(dno).getCollectno();
+            Integer cno = collectRepository.findByTdetailsno(dno).getCollectno();
             boolean mysqlResult = changeStatus(cno, -1);
             System.out.println("MySQL 已改變票券狀態"+mysqlResult);
 //  刪除 Redis 的該筆票券

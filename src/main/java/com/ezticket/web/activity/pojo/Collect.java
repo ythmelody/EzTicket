@@ -11,16 +11,18 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table
+@Table(name = "COLLECT")
 public class Collect {
-    @Column
+    @Column(name = "COLLECTNO")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer collectno;
-    @Column
+    @Column(name = "MEMBERNO")
     private Integer memberno;
-    @Column
-    private Integer tDetailsno;
-    @Column
-    private Integer tStatus;
+    @Column(name = "TDETAILSNO")
+    private Integer tdetailsno;
+    @Column(name = "TSTATUS")
+    private Integer tstatus;
+    @Column(name = "QRCODE")
+    private String qrcode;
 }

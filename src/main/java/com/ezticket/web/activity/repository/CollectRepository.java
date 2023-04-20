@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CollectRepository extends JpaRepository<Collect, Integer> {
-    public Collect findByTDetailsno(Integer tDetailsno);
+    public Collect findByTdetailsno(Integer tdetailsno);
 }
