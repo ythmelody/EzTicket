@@ -30,6 +30,21 @@
 	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
 
+	<style>
+		.main-btn {
+			font-size: 16px;
+			color: #fff;
+			font-weight: 400;
+			text-align: center;
+			background: #102743;
+			height: 50px;
+			display: inline-block;
+			line-height: 49px;
+			padding: 0 13px;
+			border-radius: 3px;
+			border: 1px solid #102743;
+		}
+	</style>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -357,14 +372,16 @@
 								</div>
 								<div class="counter">
 									<span class="down" onClick='decreaseCount(event, this)'>-</span>
-									<input id="count" type="text" value="1" max="" onkeydown="return false" onkeyup="this.value='1';">
+									<input id="count" type="text" value="1" max="" onkeydown="return false"
+										onkeyup="this.value='1';">
 									<span class="up" onClick='increaseCount(event, this)'>+</span>
 								</div>
 							</div>
 
 
 							<div class="booking-btn">
-								<button type="button" id="buyNow" class="main-btn btn-hover w-45" style="width:48%;">立即購買 <i class="fa-solid fa-right-from-bracket"></i></button>
+								<button type="button" id="buyNow" class="main-btn btn-hover w-45"
+									style="width:48%;">立即購買 <i class="fa-solid fa-right-from-bracket"></i></button>
 								<button type="button" class="main-btn btn-hover w-45" style="width:48%;"
 									id="product-incart">加入購物車 <i class="fa-solid fa-cart-shopping"></i></button>
 							</div>
@@ -628,8 +645,8 @@
 				</div>
 				<div class="event-footer">
 					
-						<a onclick="buyNow(${item.productno})" class="main-btn btn-hover w-45" style="width:48%;">立即購買</a>
-						<button type="button" class="main-btn btn-hover w-45" style="width:48%;" onclick="addCart(${item.productno})" id="product-incart"><i class="fa-solid fa-cart-shopping"></i></button>
+						<a onclick="buyNow(${item.productno})" class="main-btn btn-hover w-45" style="width:48%;">立即購買 <i class="fa-solid fa-right-from-bracket"></i></a>
+						<button type="button" class="main-btn btn-hover w-45" style="width:48%;padding: 0 13px!important" onclick="addCart(${item.productno})" id="product-incart">購物車<i class="fa-solid fa-cart-shopping"></i></button>
 					
 					
 				</div>

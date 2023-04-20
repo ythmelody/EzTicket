@@ -693,9 +693,9 @@
 																		<select class="selectpicker" data-size="5"
 																			title="選擇主辦單位" data-live-search="true"
 																			name="hostno" id="hostno">
-																			<option value="5001">詠傑股份有限公司</option>
+																			<!-- <option value="5001">詠傑股份有限公司</option>
 																			<option value="5002">尉賢股份有限公司</option>
-																			<option value="5003">晉賢股份有限公司</option>
+																			<option value="5003">晉賢股份有限公司</option> -->
 																		</select>
 																	</div>
 																</div>
@@ -1589,6 +1589,18 @@
 			.then(list => {
 				for (let item of list) {
 					$('#pclassSelector').append(`<option value=${item.pclassno}>${item.pclassname}</option>`);
+				}
+			}).then(function () {
+				$('.selectpicker').selectpicker('refresh');
+			})
+
+		
+		//主辦單位從資料庫帶入
+		fetch("/host/gh")
+		.then(resp => resp.json())
+			.then(list => {
+				for (let item of list) {
+					$('#hostno').append(`<option value=${item.hostno}>${item.hostname}</option>`);
 				}
 			}).then(function () {
 				$('.selectpicker').selectpicker('refresh');
