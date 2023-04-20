@@ -1,27 +1,4 @@
 $(document).ready(() => {
-  // $('#orderTable').DataTable({
-  //       //屬性區塊,
-  //       "searching": false,
-  //       "sPaginationType": "full_numbers", 
-  //       "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], 
-  //       "processing": true, 
-  //       "serverSide": false, 
-  //       "stateSave": true,
-  //       "destroy": true, 
-  //       "info": true,
-  //       "autoWidth": false, 
-  //       "ordering": true, 
-  //       "scrollCollapse": false, 
-  //       "scrollX": "500px",
-  //       "scrollY": "200px",    
-  //       "paging": true, 
-  //       "dom": '<"top">rt<"bottom"><"clear">',
-  //       //ajax區塊,
-  //       //資料欄位區塊(columns),
-  //       //語言區塊(language),
-  //       //欄位元素定義區塊(columnDefs),
-  //       //列元素區塊(rowCallback)
-  // });
   fetchPorderList(`/porder/list`);
 });
 $('#reload').click(() => {
@@ -222,3 +199,136 @@ $(document).ready(function() {
     });
   }
 });
+// function table(){
+// $('#orderTable').DataTable({
+//   //屬性區塊,
+//   "searching": false,
+//   "sPaginationType": "full_numbers", 
+//   "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]], 
+//   "processing": true, 
+//   "serverSide": false, 
+//   "stateSave": true,
+//   "destroy": true, 
+//   "info": true,
+//   "autoWidth": false, 
+//   "ordering": true, 
+//   "scrollCollapse": false, 
+//   "scrollX": "500px",
+//   "scrollY": "200px",    
+//   "paging": true, 
+//   "dom": '<"top">rt<"bottom"><"clear">',
+//   //ajax區塊,
+//   //資料欄位區塊(columns),
+//   //語言區塊(language),
+//   //欄位元素定義區塊(columnDefs),
+//   //列元素區塊(rowCallback)
+// });
+// }
+
+// Promise.all([
+//   fetch('/event/ls-event').then(response => response.json()),
+//   fetch('/eventord/ls').then(response => response.json())
+// ]).then(dataArray => {
+//   const eventData = dataArray[0];
+//   const eventordData = dataArray[1];
+//   PromiseData(eventData, eventordData);
+//   PromiseData2(eventData, eventordData);
+// }).catch(error => {
+//   console.log('Error: ', error);
+// });
+
+//   // DataTable
+// function PromiseData(eventData, eventordData) {
+//   let table = $("#ordList").DataTable({
+//     autoWidth: true,
+//     // stateSave: true,
+//     "lengthMenu": [[10, 20, 30, -1], [10, 20, 30, "全部"]],
+//     language: {
+//       "emptyTable": "無資料...",
+//       "processing": "處理中...",
+//       "loadingRecords": "載入中...",
+//       "lengthMenu": "每頁 MENU 筆資料",
+//       "zeroRecords": "無搜尋結果",
+//       "info": "_START_ 至 END / 共 TOTAL 筆",
+//       "infoEmpty": "尚無資料",
+//       "infoFiltered": "(從 MAX 筆資料過濾)",
+//       "infoPostFix": "",
+//       "search": "搜尋字串:",
+//       "paginate": {
+//         "first": "首頁",
+//         "last": "末頁",
+//         "next": "＞",
+//         "previous": "＜"
+//       },
+//       "aria": {
+//         "sortAscending": ": 升冪",
+//         "sortDescending": ": 降冪",
+//       },
+//     },
+//     data: eventData,
+//     columns: [
+//       {
+//         className: "details-control",
+//         orderable: false,
+//         data: null,
+//         defaultContent: '<i class="material-icons">expand_more</i>'
+//       },
+//       { data: "eventNo", visible: false },
+//       { data: "eventName" },
+//       { data: "eventDate" },
+//       { data: "eventStarttime" },
+//       { data: "eventEndtime" },
+//       { data: "signupNum" },
+//       { data: "eventFee" },
+//       {
+//         data: "eventNo",
+//         render: (data, type, row, meta) => {
+//           if (row.eventStatus === 0) {
+//             return (
+//               <td><button value= + data +  id="cancel" type="button" class="btn btn-danger btn-xxs" style="padding: 0.4rem 0.8rem;">取消賽事</button></td> 
+//             );
+//           } else {
+//             return (
+//               <td><button value= + data +  id="cancel" type="button" class="btn  btn-success btn-xxs" style="padding: 0.4rem 0.8rem;" disabled>已完成</button></td> 
+//             );
+//           }
+//         }
+//       },
+
+//       { data: "eventStatus", orderable: false }
+//     ],
+//     order: [[1, "desc"]],
+//     rowCallback: function (row, data) {
+//       let $row = $(row);
+//       $row.attr('class', "eventNo." + data.eventNo);
+//       $row.attr('style', "text-align:center;");
+//     }
+//   });
+
+//   // 去掉狀態:2的賽事名稱不顯示至 DataTable
+//   const rowsToRemove = $('#ordList tbody tr').filter(function () {
+//     return $('td:last', this).text() === '2';
+//   });
+
+//   // 從DataTable中刪除這些行
+//   $('#ordList').DataTable();
+//   table.rows(rowsToRemove).remove().draw();
+
+//   // 隱藏DataTable第10欄位
+//   table.columns([9]).visible(false);
+
+//    // 第一顆按鈕切換顯示會員資訊
+//   $("#ordList tbody").on("click", "td.details-control", function () {
+//     let tr = $(this).closest("tr");
+//     let row = table.row(tr);
+
+//     if (row.child.isShown()) {
+//       row.child.hide();
+//       tr.removeClass("shown");
+//     } else {
+//       row.child(format(row.data(), eventordData), "p-0").show();
+//       tr.addClass("shown");
+//     }
+//   });
+
+// }
