@@ -33,11 +33,9 @@ public class Activity {
     @Column(name = "ADISCRIP")
     private String aDiscrip;
     @JsonFormat(pattern = "yyyy/MM/dd kk:mm", timezone = "GMT+8")
-
     @Column(name = "ASDATE")
     private Date aSDate;
     @JsonFormat(pattern = "yyyy/MM/dd kk:mm", timezone = "GMT+8")
-
     @Column(name = "AEDATE")
     private Date aEDate;
     @Column(name = "ATAG")
@@ -58,9 +56,9 @@ public class Activity {
     private String aNote;
     @Column(name = "ATICKETREMIND")
     private String aTicketRemind;
-//    @JsonManagedReference
-//    @OneToMany(mappedBy = "activity")
-//    private List<Session> session;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "activity")
+    private List<Session> session;
     @JsonManagedReference
     @OneToMany(mappedBy = "activity")
     private List<Aimgt> aimgt;

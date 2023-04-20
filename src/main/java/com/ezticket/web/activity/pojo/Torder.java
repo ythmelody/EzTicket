@@ -42,9 +42,9 @@ public class Torder {
 	@Column(name = "treceivedate")
 	private Timestamp treceiveDate;
 	@Column(name = "tpaymentstatus")
-	private String tpaymentStatus;
+	private Integer tpaymentStatus;
 	@Column(name = "tprocessstatus")
-	private String tprocessStatus;
+	private Integer tprocessStatus;
 	@ManyToOne
 	@JoinColumn(name = "MEMBERNO" ,insertable = false, updatable = false)
 	private Member member;

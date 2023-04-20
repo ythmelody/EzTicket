@@ -3,6 +3,7 @@ package com.ezticket.web.activity.controller;
 import com.ezticket.web.activity.dto.ActivityDto;
 import com.ezticket.web.activity.pojo.Activity;
 import com.ezticket.web.activity.service.ActivityService;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.servlet.http.Part;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,9 +30,9 @@ public class ActivityController {
     private ActivityService activityService;
 
     @GetMapping("/findAll")
-    public List<ActivityDto> findByOrderByActivityNoDesc(){
+    public List<ActivityDto> findAllByOrderByActivityNoDesc(){
 
-        return activityService.findByOrderByActivityNoDesc();
+        return activityService.findAllByOrderByActivityNoDesc();
     }
     @GetMapping("/findByaName")
     public Optional<ActivityDto> findByAname(String aName){
@@ -98,7 +100,7 @@ public class ActivityController {
             @RequestParam("wetherseat") Integer wetherSeat,
             @RequestParam("aseatimg") Part image
     ) throws IOException, ParseException {
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        DateFormat format = new SimpleDateFormat("yyyy/MM/dd kk:mm");
         Date aSDate = format.parse(aSDateString);
         Date aEDate = format.parse(aEDateString);
         Activity activity = new Activity();
@@ -111,8 +113,8 @@ public class ActivityController {
         activity.setATicketRemind(aTicketRemind);
         activity.setAPlace(aPlace);
         activity.setAPlaceAdress(aPlaceAdress);
-        activity.setASDate( aSDate);
-        activity.setAEDate( aEDate);
+        activity.setASDate(aSDate);
+        activity.setAEDate(aEDate);
         activity.setWetherSeat(wetherSeat);
         activity.setAStatus(0);
 
@@ -125,4 +127,19 @@ public class ActivityController {
        return activityService.saveActivity(activity);
 
     }
+    @PostMapping("/updateActivity")
+    public void updateActivity(@RequestBody Activity activity) {
+        activityService.updateActivity(activity);
+    }
+
+    @PostMapping("/deleteActivity")
+    public boolean deleteActivity(@RequestParam("activityNo") Integer activityNo, @RequestParam("aStatus") Integer aStatus) {
+        activityService.deleteActivity(activityNo, aStatus);
+    return true;
+    }
+
+//    @PostMapping("/updateActivityById")
+//    public Activity updateActivityById(@PathVariable Integer activityNo, @RequestBody Activity activity) {
+//        return activityService.updateActivityById(activityNo, activity);
+//    }
 }

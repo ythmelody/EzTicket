@@ -34,11 +34,10 @@ public List<AimgtDto> findAll(){
         return aimgtRepository.findById(aimgNo).map(this::entityToDTO);
     }
 
-    public List<AimgtDto> findAllByActivityNo(Integer activityNo){
+    public List<Aimgt> findAllByActivityNo(Integer activityNo){
 
         return aimgtRepository.findAllByActivityNo(activityNo)
                 .stream()
-                .map(this::entityToDTO)
                 .collect(Collectors.toList());
     }
 

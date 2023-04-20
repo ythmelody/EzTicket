@@ -94,7 +94,7 @@
                             id="is-restrict-total-ticket"
                             checked=""
                           />
-                          <span class="checkbox-slider"></span>
+                          <span-card mt-4n class="checkbox-slider"></span-card>
                         </label>
                         <div>
                           <label class="fs-12 m-0">Unlimited</label>
@@ -1533,12 +1533,11 @@
                                               class="loc-group position-relative"
                                             >
                                               <input
-                                                data-language="en"
-                                                type="datetime-local"
+                                                type="text"
                                                 value=""
                                                 id="asdate"
+                                                placeholder="請輸入上架時間"
                                               />
-                                              
                                             </div>
                                           </div>
                                           <div class="col-md-6">
@@ -1548,10 +1547,10 @@
                                                 >下架時間</label
                                               >
                                               <input
-                                              data-language="en"
-                                              type="datetime-local"
+                                              type="text"
                                               value=""
                                               id="aedate"
+                                              placeholder="請輸入下架時間"
                                             />
                                             
                                           </div>
@@ -1730,6 +1729,8 @@
     <script src="js/jquery-steps.min.js"></script>
     <script src="js/datepicker.min.js"></script>
     <script src="js/i18n/datepicker.en.js"></script>
+    <script src="js\jquery.datetimepicker.full.js"></script>
+    <link rel="stylesheet" type="text/css" href="css\jquery.datetimepicker.css" />
     <script>
       $("#add-event-tab").steps({
         onFinish: function () {
@@ -1765,6 +1766,7 @@
           const performerNo=document.querySelector('#no');
 
           const typePerformer=document.querySelector('#typePerformer')
+
           
           performerYes.addEventListener('change', () => {
             if (performerYes.checked) {
@@ -1890,6 +1892,26 @@
       
       
     </script>
+  <!--日期選擇-->
+    <script>  
+               $('#asdate').datetimepicker({
+                  theme: '',          //theme: 'dark',
+                  timepicker: true,   //timepicker: false,
+                  step: 15,
+                  format: 'Y/m/d H:i',
+                  // defaultDate: '-1969-12-17', //disable 15天後才能選擇天數
+                  // minDate: '-1969-12-17' //選擇時預設值在15天後
+                });
+                $('#aedate').datetimepicker({
+                  theme: '',          //theme: 'dark',
+                  timepicker: true,   //timepicker: false,
+                  step: 15,
+                  format: 'Y/m/d H:i',
+                  // defaultDate: '-1969-12-17', //disable 15天後才能選擇天數
+                  // minDate: '-1969-12-17' //選擇時預設值在15天後
+                });
+                $.datetimepicker.setLocale('zh'); // kr ko ja en
+    </script>
     <!--主辦單位顯示-->
     <script>
       let host=document.querySelector('#host');
@@ -2005,12 +2027,8 @@
 
 <!--活動新增開始-->
    <script>
-    let urlParams = new URLSearchParams(window.location.search);
-		const activityNo = urlParams.get('activityNo');
-    console.log(activityNo);
+  
 
-
-if(activityNo=null){
     document.querySelector("#finish").addEventListener("click",()=>{
        const formData = new FormData();
      formData.append('aname',$("#aname").val());
@@ -2086,49 +2104,171 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
          
 
     });
-	}	//判斷式結束		
+	//判斷式結束		
    </script>
 <!--活動新增結束-->
+
 <!--活動複製新增開始-->
-<script>
-  fetch(`http://localhost:8085/Activity/findByActNo?activityNo=${activityNo}`, {
-    method: 'get',
-    body: formData,
-  }).then(resp => resp.json())
+<!-- <script>
+  fetch(`http://localhost:8085/Activity/findByactivityNo?activityNo=${1}`)
+    .then(resp => resp.json())
     .then(data => {
       $("#aname").val(data.aname);
-      $("#aclass").val(data.aclass);
-      $("#aperformer").val(data.aperformer);
-      $("#host").val(data.host);
+      $("#aclass option:selected").val(data.aclass);
+      if(data.performer!=null){
+        $("#yes").attr('checked',true);
+        typePerformer.style.display = 'block';
+      }
+      console.log(data);
+      $("#aperformer").val(data.performer);
+      $("#host option:selected").val(data.host);
+      $("#adiscrip").val(data.adiscrip);
       $("#anote").val(data.anote);
-      $("#aticketremind").val(data.aticketremind);
+      $("#aticketremind").val(data.aticketRemind);
       $("#aplace").val(data.aplace);
+      $("#aplaceaddress").val(data.aplaceAdress);
       $("#asdate").val(data.asdate);
       $("#aedate").val(data.aedate);
-      $("#wetherseat").val(data.wetherseat);
+      $("#wetherseat").attr('checked', !!data.wetherSeat);
+      $("#wetherseat").val(data.wetherSeat);
       $("#seat").val(data.aseatimg); 
-      $("#aimage").val(data.aseatimg); 
+      $("#aseatimg").attr("src", `data:image/jpeg;base64,${data.aseatsImg}`); 
 
 
     })
 
-         formData.append('aname', $("#aname").val());
-          formData.append('aclass', $("#aclass").find(":selected").val());
-          formData.append('aperformer', $("#aperformer").val());
-          formData.append('host', $("#host").find(":selected").val());
-          formData.append('adiscrip', $("#adiscrip").val());
-          formData.append('anote', $("#anote").val());
-          formData.append('aticketremind', $("#aticketremind").val());
-          formData.append('aplace', $("#aplace").val());
-          formData.append('aplaceaddress', $("#aplaceaddress").val());
-          formData.append('asdate', $("#asdate").val());
-          formData.append('aedate', $("#aedate").val());
-          formData.append('wetherseat', $("#wetherseat").val());
-          console.log($("#asdate").val())
+    
+      fetch(`http://localhost:8085/BlockPrice/findByActNo?activityNo=${1}`)
+        .then(resp => resp.json())
+        .then(data => {
+          let str="";
+          let count=1001;
+          for(i of data){
+            console.log(i);
+             str+=`<div
+              class="price-ticket-card-head d-md-flex flex-wrap align-items-start justify-content-between position-relative p-4"
+              id="blockDiv${count}">
+              <div
+                class="d-flex align-items-center top-name"
+              >
+                <div class="icon-box">
+                  <span
+                    class="icon-big rotate-icon icon icon-purple"
+                  >
+                    <i class="fa-solid fa-ticket"></i>
+                  </span>
+                  <div>
+                    <span class="text-145">請輸入區域名稱</span>
+                  </div>
+                  <input type="text" class="blockname" id="blockname${count}" value="${i.blockName}">
 
-          const fileInput = document.querySelector("#seat");
-          formData.append("aseatimg", fileInput.files[0]);
-</script>
+                </div>
+              </div>
+              <div
+                class="d-flex align-items-center top-name"
+              >
+                <div class="icon-box">
+                  <span
+                    class="icon-big  icon icon-purple"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 17 20">
+                      <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z" />
+                    </svg>
+                  </span>
+                  <div>
+                    <span class="text-145">請輸入區域票價</span>
+                  </div>
+                  <input type="text" class="blockprice" id="blockprice${count}" value="${i.blockPrice}">
+
+                </div>
+              </div>
+              <div >
+                <input type="checkbox" id="blocktype${count}" class="blocktype" value="${i.blockType}">
+                  <label for="">此區是否有座位</label>
+              </div>
+              <div class="d-flex align-items-center">
+                <div
+                  class="dropdown dropdown-default dropdown-text dropdown-icon-item"
+                >
+                  <button class="option-btn-1" id="deleteBlockPriceBtn${count}">
+                    刪除
+                  </button>
+                </div>
+              </div>
+            </div>`;
+            
+      
+            
+            count++;
+          }
+          blockPriceList.insertAdjacentHTML('beforeend', str);
+          let deletebtnArray=document.querySelectorAll(".option-btn-1");
+          let count2=1001;
+          for(let i=1001;i<count;i++){
+            let deleteBlockPriceBtn = document.querySelector(`#deleteBlockPriceBtn${i}`);
+            let blockDivId = `blockDiv${i}`;
+             $(`#blocktype${i}`).attr('checked', !!$(`#blocktype${i}`).val());
+            deleteBlockPriceBtn.addEventListener("click", () => {
+            document.getElementById(blockDivId).remove();
+           
+            });
+          
+          }
+          // $("#blockname").val(data.blockname);
+          // $("#blockprice").val(data.blockprice);
+          
+        })  
+
+      fetch(`http://localhost:8085/Aimgt/findAllByActivityNo?activityNo=${1}`
+        ).then(resp => resp.json())
+        .then(data => {
+          
+          let str="";
+          let count=2;
+    
+          for(let i=1;i<data.length;i++){
+            if((i-1)==0){
+              $(`#img1`).attr("src", `data:image/jpeg;base64,${data[i-1].aimg}`); 
+            }
+            const br = document.createElement("br");
+            imgList.append(br);
+            const div = document.createElement("div");
+            div.className = "default-event-thumb";
+            const input = document.createElement("input");
+            input.type = "file";
+            input.accept = "image/*";
+            input.id = "file" + count;
+            input.className = "aimg";
+            input.addEventListener("change", changeListener);
+            div.append(input);
+            imgList.append(input);
+            imgList.append(div);
+            imgList.append(br);
+            const img = document.createElement("img");
+            img.id = "img" + count;
+            // img.className="aimg";
+            div.append(img);
+            const deletebtn = document.createElement("button");
+            deletebtn.id = "delete" + count;
+            deletebtn.className = "option-btn-1";
+            deletebtn.innerHTML = "刪除"
+            imgList.append(deletebtn);
+            imgList.append(br)
+            const deleteimg = document.getElementById(`img${count}`);
+            deletebtn.addEventListener("click", () => {
+              deleteimg.remove();
+              div.remove();
+              input.remove();
+              deletebtn.remove();
+              br.remove();     
+            })
+            $(`#img${count}`).attr("src", `data:image/jpeg;base64,${data[i].aimg}`);
+            count++;
+            }       
+
+        })  
+
+</script> -->
 <!--活動複製新增結束-->
 
 
