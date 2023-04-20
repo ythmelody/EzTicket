@@ -16,6 +16,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -94,8 +96,11 @@ public class PcouponholdingService {
                         return pcouponholdingRepository.save(newPcouponholding);
                     });
             Pcoupon pcoupon = pcouponRepository.getReferenceById(pcouponno);
+            LocalDateTime localDateTime = pcoupon.getPcoupnedate();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            String formattedDateTime = localDateTime.format(formatter);
             EmailDetails emailDetails = new EmailDetails();
-            emailDetails.setRecipient("ezticketsystem@gmail.com");
+            emailDetails.setRecipient(member.getMemail());
             emailDetails.setSubject("ezTicket: 恭喜您獲得一張" + pcoupon.getPcouponname() + "優惠券");
             emailDetails.setMsgBody(
                     "此為系統通知信件:\n" +
@@ -111,7 +116,7 @@ public class PcouponholdingService {
                             "\n" +
                             "優惠金額：["+ pcoupon.getPdiscount() + "]\n" +
                             "\n" +
-                            "使用期限：["+ pcoupon.getPcoupnedate() + "]\n" +
+                            "使用期限：["+ formattedDateTime + "]\n" +
                             "\n" +
                             "使用條件：["+ pcoupon.getPreachprice() + "]\n" +
                             "\n" +
@@ -126,7 +131,7 @@ public class PcouponholdingService {
                             "敬禮\n" +
                             "\n" +
                             "\n" +
-                            "                                   [ezTicket - 一站式購票體驗]");
+                            "                                   ezTicket - 一站式購票體驗");
             emailService.sendSimpleMail(emailDetails);
             System.out.println(member.getMname() + "發送成功");
         }
