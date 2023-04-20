@@ -1,0 +1,2335 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="h-100">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, shrink-to-fit=9" />
+    <meta name="description" content="Gambolthemes" />
+    <meta name="author" content="Gambolthemes" />
+    <title>Barren - Simple Online Event Ticketing System</title>
+
+    <!-- Favicon Icon -->
+    <link rel="icon" type="image/png" href="images/fav.png" />
+
+    <!-- Stylesheets -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link href="vendor/unicons-2.0.1/css/unicons.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/datepicker.min.css" rel="stylesheet" />
+    <link href="css/jquery-steps.css" rel="stylesheet" />
+    <link href="css/responsive.css" rel="stylesheet" />
+    <link href="css/night-mode.css" rel="stylesheet" />
+
+    <!-- Vendor Stylesheets -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link href="vendor/OwlCarousel/assets/owl.carousel.css" rel="stylesheet" />
+    <link
+      href="vendor/OwlCarousel/assets/owl.theme.default.min.css"
+      rel="stylesheet"
+    />
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link
+      href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css"
+      rel="stylesheet"
+    />
+    <link href="vendor/ckeditor5/sample/css/sample.css" rel="stylesheet" />
+  </head>
+
+  <body class="d-flex flex-column h-100" >
+    <!-- Create Single Ticket Model Start-->
+    <div
+      class="modal fade"
+      id="singleTicketModal"
+      tabindex="-1"
+      aria-labelledby="singleTicketModalLabel"
+      aria-hidden="false"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="singleTicketModalLabel">
+              Create Single Ticket
+            </h5>
+            <button
+              type="button"
+              class="close-model-btn"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
+              <i class="uil uil-multiply"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="model-content main-form">
+              <div class="row">
+                <div class="col-lg-12 col-md-12">
+                  <div class="form-group mt-4">
+                    <label class="form-label">Ticket Name*</label>
+                    <input
+                      class="form-control h_40"
+                      type="text"
+                      placeholder="Event Ticket Name"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                  <div class="main-card p-4 mt-4">
+                    <div class="form-label mb-4 fs-16">Ticket Restrictions</div>
+                    <div class="form-group border_bottom">
+                      <div
+                        class="d-flex align-items-center flex-wrap pb-4 flex-nowrap"
+                      >
+                        <h4 class="fs-14 mb-0 me-auto">
+                          Total number of tickets available
+                        </h4>
+                        <label class="btn-switch m-0 me-3">
+                          <input
+                            type="checkbox"
+                            id="is-restrict-total-ticket"
+                            checked=""
+                          />
+                          <span-card mt-4n class="checkbox-slider"></span-card>
+                        </label>
+                        <div>
+                          <label class="fs-12 m-0">Unlimited</label>
+                        </div>
+                      </div>
+                      <div
+                        class="p-0 mb-4 total_ticket_per_level"
+                        style="display: none"
+                      >
+                        <div class="form-group">
+                          <div class="input-number">
+                            <input
+                              class="form-control h_40"
+                              type="number"
+                              min="0"
+                              max="30"
+                              placeholder="Enter Total Tickets"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div
+                        class="d-flex align-items-center flex-wrap pt-4 flex-nowrap"
+                      >
+                        <h4 class="fs-14 mb-0 me-auto">
+                          Maximum number of tickets for each customer
+                        </h4>
+                        <label class="btn-switch m-0 me-3">
+                          <input
+                            type="checkbox"
+                            id="is-restrict-ticket-per-user"
+                            checked=""
+                          />
+                          <span class="checkbox-slider"></span>
+                        </label>
+                        <div>
+                          <label class="fs-12 m-0">Unlimited</label>
+                        </div>
+                      </div>
+                      <div
+                        class="p-0 mt-4 total_ticket_per_user"
+                        style="display: none"
+                      >
+                        <div class="form-group">
+                          <div class="input-number">
+                            <input
+                              class="form-control h_40"
+                              type="number"
+                              min="0"
+                              max="30"
+                              placeholder="Enter Max. per order"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                  <div class="main-card p-4 mt-4">
+                    <div class="form-label mb-4 fs-16">Ticket Restrictions</div>
+                    <div class="form-group">
+                      <label class="form-label mb-2 fs-14">Ticket Order*</label>
+                      <input
+                        class="form-control h_40"
+                        type="number"
+                        value="1"
+                        min="1"
+                        max="30"
+                        placeholder="Enter Sort Order"
+                      />
+                    </div>
+                    <div class="form-group mt-4">
+                      <label class="form-label mb-2 fs-14"
+                        >Ticket Description*</label
+                      >
+                      <textarea
+                        class="form-textarea"
+                        placeholder="Description will go here"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                  <div class="main-card p-4 mt-4">
+                    <div
+                      class="d-flex align-items-center justify-content-between price-variation-head"
+                    >
+                      <h5 class="m-0 color-black fs-16">
+                        Variations (<span class="ticket-subtype-count">1</span>)
+                      </h5>
+                      <span class="add-btn btn-hover">
+                        <i class="fa-regular fa-square-plus"></i>
+                      </span>
+                    </div>
+                    <div class="table-responsive">
+                      <div
+                        class="div-base-table border-0 mt-2 full-width small-table ticket-subtype-table"
+                      >
+                        <div class="table-row table-head no-bg">
+                          <div class="table-col fs-14 text-light3">
+                            Price <span class="red">*</span>
+                          </div>
+                          <div class="table-col fs-14 text-light3">
+                            Variation Name <span class="red">*</span>
+                          </div>
+                          <div class="table-col fs-14 text-light3 text-right">
+                            Actions
+                          </div>
+                        </div>
+                        <div class="table-row ticket-subtype-row">
+                          <div class="table-col first-col">
+                            <div class="form-group m-0 form-custom-validation">
+                              <input
+                                class="form-control h_40"
+                                type="number"
+                                min="0"
+                                max="10000"
+                                required=""
+                                placeholder="Price"
+                                value=""
+                              />
+                            </div>
+                          </div>
+                          <div class="table-col second-col">
+                            <div class="form-group m-0">
+                              <input
+                                class="form-control h_40"
+                                type="text"
+                                maxlength="75"
+                                required=""
+                                value=""
+                              />
+                            </div>
+                          </div>
+                          <div class="table-col third-col">
+                            <button type="button" class="v-btn-close btn-hover">
+                              <i class="fa-solid fa-xmark"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                  <div class="main-card p-4 mt-4">
+                    <div class="form-group">
+                   
+                      <div
+                        class="online-event-discount-wrapper"
+                        style="display: none"
+                      >
+                        <div class="row g-3">
+                          <div class="col-md-3">
+                            <label class="form-label mt-3 fs-6"
+                              >Discount*</label
+                            >
+                            <input
+                              class="form-control h_40"
+                              type="text"
+                              placeholder="0"
+                              value=""
+                            />
+                          </div>
+                          <div class="col-md-3">
+                            <label class="form-label mt-3 fs-6">Price*</label>
+                            <select class="selectpicker">
+                              <option value="Percentage" selected="">
+                                Percent(%)
+                              </option>
+                              <option value="Fixed">Fixed($)</option>
+                            </select>
+                          </div>
+                          <div class="col-md-3">
+                            <label class="form-label mt-3 fs-6"
+                              >Discount ends on*</label
+                            >
+                            <div class="loc-group position-relative">
+                              <input
+                                class="form-control h_40 datepicker-here"
+                                data-language="en"
+                                data-position="top left"
+                                type="text"
+                                placeholder="MM/DD/YYYY"
+                                value=""
+                              />
+                              <span class="absolute-icon top_0"
+                                ><i class="fa-solid fa-calendar-days"></i
+                              ></span>
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="clock-icon">
+                              <label class="form-label mt-3 fs-6">Time</label>
+                              <select
+                                class="selectpicker"
+                                data-size="5"
+                                data-live-search="true"
+                              >
+                                <option value="00:00">12:00 AM</option>
+                                <option value="00:15">12:15 AM</option>
+                                <option value="00:30">12:30 AM</option>
+                                <option value="00:45">12:45 AM</option>
+                                <option value="01:00">01:00 AM</option>
+                                <option value="01:15">01:15 AM</option>
+                                <option value="01:30">01:30 AM</option>
+                                <option value="01:45">01:45 AM</option>
+                                <option value="02:00">02:00 AM</option>
+                                <option value="02:15">02:15 AM</option>
+                                <option value="02:30">02:30 AM</option>
+                                <option value="02:45">02:45 AM</option>
+                                <option value="03:00">03:00 AM</option>
+                                <option value="03:15">03:15 AM</option>
+                                <option value="03:30">03:30 AM</option>
+                                <option value="03:45">03:45 AM</option>
+                                <option value="04:00">04:00 AM</option>
+                                <option value="04:15">04:15 AM</option>
+                                <option value="04:30">04:30 AM</option>
+                                <option value="04:45">04:45 AM</option>
+                                <option value="05:00">05:00 AM</option>
+                                <option value="05:15">05:15 AM</option>
+                                <option value="05:30">05:30 AM</option>
+                                <option value="05:45">05:45 AM</option>
+                                <option value="06:00">06:00 AM</option>
+                                <option value="06:15">06:15 AM</option>
+                                <option value="06:30">06:30 AM</option>
+                                <option value="06:45">06:45 AM</option>
+                                <option value="07:00">07:00 AM</option>
+                                <option value="07:15">07:15 AM</option>
+                                <option value="07:30">07:30 AM</option>
+                                <option value="07:45">07:45 AM</option>
+                                <option value="08:00">08:00 AM</option>
+                                <option value="08:15">08:15 AM</option>
+                                <option value="08:30">08:30 AM</option>
+                                <option value="08:45">08:45 AM</option>
+                                <option value="09:00">09:00 AM</option>
+                                <option value="09:15">09:15 AM</option>
+                                <option value="09:30">09:30 AM</option>
+                                <option value="09:45">09:45 AM</option>
+                                <option value="10:00" selected="selected">
+                                  10:00 AM
+                                </option>
+                                <option value="10:15">10:15 AM</option>
+                                <option value="10:30">10:30 AM</option>
+                                <option value="10:45">10:45 AM</option>
+                                <option value="11:00">11:00 AM</option>
+                                <option value="11:15">11:15 AM</option>
+                                <option value="11:30">11:30 AM</option>
+                                <option value="11:45">11:45 AM</option>
+                                <option value="12:00">12:00 PM</option>
+                                <option value="12:15">12:15 PM</option>
+                                <option value="12:30">12:30 PM</option>
+                                <option value="12:45">12:45 PM</option>
+                                <option value="13:00">01:00 PM</option>
+                                <option value="13:15">01:15 PM</option>
+                                <option value="13:30">01:30 PM</option>
+                                <option value="13:45">01:45 PM</option>
+                                <option value="14:00">02:00 PM</option>
+                                <option value="14:15">02:15 PM</option>
+                                <option value="14:30">02:30 PM</option>
+                                <option value="14:45">02:45 PM</option>
+                                <option value="15:00">03:00 PM</option>
+                                <option value="15:15">03:15 PM</option>
+                                <option value="15:30">03:30 PM</option>
+                                <option value="15:45">03:45 PM</option>
+                                <option value="16:00">04:00 PM</option>
+                                <option value="16:15">04:15 PM</option>
+                                <option value="16:30">04:30 PM</option>
+                                <option value="16:45">04:45 PM</option>
+                                <option value="17:00">05:00 PM</option>
+                                <option value="17:15">05:15 PM</option>
+                                <option value="17:30">05:30 PM</option>
+                                <option value="17:45">05:45 PM</option>
+                                <option value="18:00">06:00 PM</option>
+                                <option value="18:15">06:15 PM</option>
+                                <option value="18:30">06:30 PM</option>
+                                <option value="18:45">06:45 PM</option>
+                                <option value="19:00">07:00 PM</option>
+                                <option value="19:15">07:15 PM</option>
+                                <option value="19:30">07:30 PM</option>
+                                <option value="19:45">07:45 PM</option>
+                                <option value="20:00">08:00 PM</option>
+                                <option value="20:15">08:15 PM</option>
+                                <option value="20:30">08:30 PM</option>
+                                <option value="20:45">08:45 PM</option>
+                                <option value="21:00">09:00 PM</option>
+                                <option value="21:15">09:15 PM</option>
+                                <option value="21:30">09:30 PM</option>
+                                <option value="21:45">09:45 PM</option>
+                                <option value="22:00">10:00 PM</option>
+                                <option value="22:15">10:15 PM</option>
+                                <option value="22:30">10:30 PM</option>
+                                <option value="22:45">10:45 PM</option>
+                                <option value="23:00">11:00 PM</option>
+                                <option value="23:15">11:15 PM</option>
+                                <option value="23:30">11:30 PM</option>
+                                <option value="23:45">11:45 PM</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="co-main-btn min-width btn-hover h_40"
+              data-bs-target="#aboutModal"
+              data-bs-toggle="modal"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="button" class="main-btn min-width btn-hover h_40">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Create Single Ticket Model End-->
+    <!-- Create Group Ticket Model Start-->
+    <div
+      class="modal fade"
+      id="groupTicketModal"
+      tabindex="-1"
+      aria-labelledby="groupTicketModalLabel"
+      aria-hidden="false"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="groupTicketModalLabel">
+              Create Group Ticket
+            </h5>
+            <button
+              type="button"
+              class="close-model-btn"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
+              <i class="uil uil-multiply"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="model-content main-form">
+              <div class="row">
+                <div class="col-lg-12 col-md-12">
+                  <div class="form-group mt-4">
+                    <label class="form-label">Ticket Name*</label>
+                    <input
+                      class="form-control h_40"
+                      type="text"
+                      placeholder="Enter Ticket Type - Group Name (E.g Gold - Family Pass)"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                  <div class="main-card p-4 mt-4">
+                    <div class="form-label mb-4 fs-16">Ticket Restrictions</div>
+                    <div class="form-group border_bottom">
+                      <div
+                        class="d-flex align-items-center flex-wrap pb-4 flex-nowrap"
+                      >
+                        <h4 class="fs-14 mb-0 me-auto">
+                          Total number of tickets available
+                        </h4>
+                        <label class="btn-switch m-0 me-3">
+                          <input
+                            type="checkbox"
+                            id="is-restrict-total-ticket2"
+                            checked=""
+                          />
+                          <span class="checkbox-slider"></span>
+                        </label>
+                        <div>
+                          <label class="fs-12 m-0">Unlimited</label>
+                        </div>
+                      </div>
+                      <div
+                        class="p-0 mb-4 total_ticket_per_level2"
+                        style="display: none"
+                      >
+                        <div class="form-group">
+                          <div class="input-number">
+                            <input
+                              class="form-control h_40"
+                              type="number"
+                              min="0"
+                              max="30"
+                              placeholder="Enter Total Tickets"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div
+                        class="d-flex align-items-center flex-wrap pt-4 flex-nowrap"
+                      >
+                        <h4 class="fs-14 mb-0 me-auto">
+                          Maximum number of tickets for each customer
+                        </h4>
+                        <label class="btn-switch m-0 me-3">
+                          <input
+                            type="checkbox"
+                            id="is-restrict-ticket-per-user2"
+                            checked=""
+                          />
+                          <span class="checkbox-slider"></span>
+                        </label>
+                        <div>
+                          <label class="fs-12 m-0">Unlimited</label>
+                        </div>
+                      </div>
+                      <div
+                        class="p-0 mt-4 total_ticket_per_user2"
+                        style="display: none"
+                      >
+                        <div class="form-group">
+                          <div class="input-number">
+                            <input
+                              class="form-control h_40"
+                              type="number"
+                              min="0"
+                              max="30"
+                              placeholder="Enter Max. per order"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                  <div class="main-card p-4 mt-4">
+                    <div class="form-label mb-4 fs-16">Ticket Restrictions</div>
+                    <div class="form-group">
+                      <label class="form-label mb-2 fs-14">Ticket Order*</label>
+                      <input
+                        class="form-control h_40"
+                        type="number"
+                        value="1"
+                        min="1"
+                        max="30"
+                        placeholder="Enter Sort Order"
+                      />
+                    </div>
+                    <div class="form-group mt-4">
+                      <label class="form-label mb-2 fs-14"
+                        >Ticket Description*</label
+                      >
+                      <textarea
+                        class="form-textarea"
+                        placeholder="Description will go here"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                  <div class="form-group mt-4">
+                    <label class="form-label mb-2 fs-14">Ticket Price*</label>
+                    <input
+                      class="form-control h_40"
+                      type="number"
+                      value="10"
+                      placeholder="Enter Ticket Price"
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                  <div class="form-group mt-4">
+                    <label class="form-label mb-2 fs-14"
+                      >Number of tickets for each group*</label
+                    >
+                    <input
+                      class="form-control h_40"
+                      type="number"
+                      min="0"
+                      value=""
+                      placeholder="Enter Total Tickets Per Group"
+                    />
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                  <div class="main-card p-4 mt-4">
+                 
+                      <div
+                        class="online-event-discount-wrapper2"
+                        style="display: none"
+                      >
+                        <div class="row g-3">
+                          <div class="col-md-3">
+                            <label class="form-label mt-3 fs-6"
+                              >Discount*</label
+                            >
+                            <input
+                              class="form-control h_40"
+                              type="text"
+                              placeholder="0"
+                              value=""
+                            />
+                          </div>
+                          <div class="col-md-3">
+                            <label class="form-label mt-3 fs-6">Price*</label>
+                            <select class="selectpicker">
+                              <option value="Percentage" selected="">
+                                Percent(%)
+                              </option>
+                              <option value="Fixed">Fixed($)</option>
+                            </select>
+                          </div>
+                          <div class="col-md-3">
+                            <label class="form-label mt-3 fs-6"
+                              >Discount ends on*</label
+                            >
+                            <div class="loc-group position-relative">
+                              <input
+                                class="form-control h_40 datepicker-here"
+                                data-language="en"
+                                data-position="top left"
+                                type="text"
+                                placeholder="MM/DD/YYYY"
+                                value=""
+                              />
+                              <span class="absolute-icon top_0"
+                                ><i class="fa-solid fa-calendar-days"></i
+                              ></span>
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="clock-icon">
+                              <label class="form-label mt-3 fs-6">Time</label>
+                              <select
+                                class="selectpicker"
+                                data-size="5"
+                                data-live-search="true"
+                              >
+                                <option value="00:00">12:00 AM</option>
+                                <option value="00:15">12:15 AM</option>
+                                <option value="00:30">12:30 AM</option>
+                                <option value="00:45">12:45 AM</option>
+                                <option value="01:00">01:00 AM</option>
+                                <option value="01:15">01:15 AM</option>
+                                <option value="01:30">01:30 AM</option>
+                                <option value="01:45">01:45 AM</option>
+                                <option value="02:00">02:00 AM</option>
+                                <option value="02:15">02:15 AM</option>
+                                <option value="02:30">02:30 AM</option>
+                                <option value="02:45">02:45 AM</option>
+                                <option value="03:00">03:00 AM</option>
+                                <option value="03:15">03:15 AM</option>
+                                <option value="03:30">03:30 AM</option>
+                                <option value="03:45">03:45 AM</option>
+                                <option value="04:00">04:00 AM</option>
+                                <option value="04:15">04:15 AM</option>
+                                <option value="04:30">04:30 AM</option>
+                                <option value="04:45">04:45 AM</option>
+                                <option value="05:00">05:00 AM</option>
+                                <option value="05:15">05:15 AM</option>
+                                <option value="05:30">05:30 AM</option>
+                                <option value="05:45">05:45 AM</option>
+                                <option value="06:00">06:00 AM</option>
+                                <option value="06:15">06:15 AM</option>
+                                <option value="06:30">06:30 AM</option>
+                                <option value="06:45">06:45 AM</option>
+                                <option value="07:00">07:00 AM</option>
+                                <option value="07:15">07:15 AM</option>
+                                <option value="07:30">07:30 AM</option>
+                                <option value="07:45">07:45 AM</option>
+                                <option value="08:00">08:00 AM</option>
+                                <option value="08:15">08:15 AM</option>
+                                <option value="08:30">08:30 AM</option>
+                                <option value="08:45">08:45 AM</option>
+                                <option value="09:00">09:00 AM</option>
+                                <option value="09:15">09:15 AM</option>
+                                <option value="09:30">09:30 AM</option>
+                                <option value="09:45">09:45 AM</option>
+                                <option value="10:00" selected="selected">
+                                  10:00 AM
+                                </option>
+                                <option value="10:15">10:15 AM</option>
+                                <option value="10:30">10:30 AM</option>
+                                <option value="10:45">10:45 AM</option>
+                                <option value="11:00">11:00 AM</option>
+                                <option value="11:15">11:15 AM</option>
+                                <option value="11:30">11:30 AM</option>
+                                <option value="11:45">11:45 AM</option>
+                                <option value="12:00">12:00 PM</option>
+                                <option value="12:15">12:15 PM</option>
+                                <option value="12:30">12:30 PM</option>
+                                <option value="12:45">12:45 PM</option>
+                                <option value="13:00">01:00 PM</option>
+                                <option value="13:15">01:15 PM</option>
+                                <option value="13:30">01:30 PM</option>
+                                <option value="13:45">01:45 PM</option>
+                                <option value="14:00">02:00 PM</option>
+                                <option value="14:15">02:15 PM</option>
+                                <option value="14:30">02:30 PM</option>
+                                <option value="14:45">02:45 PM</option>
+                                <option value="15:00">03:00 PM</option>
+                                <option value="15:15">03:15 PM</option>
+                                <option value="15:30">03:30 PM</option>
+                                <option value="15:45">03:45 PM</option>
+                                <option value="16:00">04:00 PM</option>
+                                <option value="16:15">04:15 PM</option>
+                                <option value="16:30">04:30 PM</option>
+                                <option value="16:45">04:45 PM</option>
+                                <option value="17:00">05:00 PM</option>
+                                <option value="17:15">05:15 PM</option>
+                                <option value="17:30">05:30 PM</option>
+                                <option value="17:45">05:45 PM</option>
+                                <option value="18:00">06:00 PM</option>
+                                <option value="18:15">06:15 PM</option>
+                                <option value="18:30">06:30 PM</option>
+                                <option value="18:45">06:45 PM</option>
+                                <option value="19:00">07:00 PM</option>
+                                <option value="19:15">07:15 PM</option>
+                                <option value="19:30">07:30 PM</option>
+                                <option value="19:45">07:45 PM</option>
+                                <option value="20:00">08:00 PM</option>
+                                <option value="20:15">08:15 PM</option>
+                                <option value="20:30">08:30 PM</option>
+                                <option value="20:45">08:45 PM</option>
+                                <option value="21:00">09:00 PM</option>
+                                <option value="21:15">09:15 PM</option>
+                                <option value="21:30">09:30 PM</option>
+                                <option value="21:45">09:45 PM</option>
+                                <option value="22:00">10:00 PM</option>
+                                <option value="22:15">10:15 PM</option>
+                                <option value="22:30">10:30 PM</option>
+                                <option value="22:45">10:45 PM</option>
+                                <option value="23:00">11:00 PM</option>
+                                <option value="23:15">11:15 PM</option>
+                                <option value="23:30">11:30 PM</option>
+                                <option value="23:45">11:45 PM</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="co-main-btn min-width btn-hover h_40"
+              data-bs-target="#aboutModal"
+              data-bs-toggle="modal"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="button" class="main-btn min-width btn-hover h_40">
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Create Group Ticket Model End-->
+    <!-- Header Start-->
+    <header class="header">
+      <div class="header-inner">
+        <nav
+          class="navbar navbar-expand-lg bg-barren barren-head navbar fixed-top justify-content-sm-start pt-0 pb-0"
+        >
+          <div class="container">
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasNavbar"
+              aria-controls="offcanvasNavbar"
+            >
+              <span class="navbar-toggler-icon">
+                <i class="fa-solid fa-bars"></i>
+              </span>
+            </button>
+            <a
+              class="navbar-brand order-1 order-lg-0 ml-lg-0 ml-2 me-auto"
+              href="index.html"
+            >
+              <div class="res-main-logo">
+                <img src="images/logo-icon.svg" alt="" />
+              </div>
+              <div class="main-logo" id="logo">
+                <img src="images/logo.svg" alt="" />
+                <img class="logo-inverse" src="images/dark-logo.svg" alt="" />
+              </div>
+            </a>
+            <div
+              class="offcanvas offcanvas-start"
+              tabindex="-1"
+              id="offcanvasNavbar"
+              aria-labelledby="offcanvasNavbarLabel"
+            >
+              <div class="offcanvas-header">
+                <div class="offcanvas-logo" id="offcanvasNavbarLabel">
+                  <img src="images/logo-icon.svg" alt="" />
+                </div>
+                <button
+                  type="button"
+                  class="close-btn"
+                  data-bs-dismiss="offcanvas"
+                  aria-label="Close"
+                >
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </div>
+              <div class="offcanvas-body">
+                <div class="offcanvas-top-area">
+                  <div class="create-bg">
+                    <a href="create.html" class="offcanvas-create-btn">
+                      <i class="fa-solid fa-calendar-days"></i>
+                      <span>Create Event</span>
+                    </a>
+                  </div>
+                </div>
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe_5">
+                  <li class="nav-item">
+                    <a
+                      class="nav-link active"
+                      aria-current="page"
+                      href="index.html"
+                      >Home</a
+                    >
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a
+                      class="nav-link dropdown-toggle"
+                      href="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Explore Events
+                    </a>
+                    <ul class="dropdown-menu dropdown-submenu">
+                      <li>
+                        <a class="dropdown-item" href="explore_events.html"
+                          >Explore Events</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          href="venue_event_detail_view.html"
+                          >Venue Event Detail View</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          href="online_event_detail_view.html"
+                          >Online Event Detail View</a
+                        >
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="pricing.html">Pricing</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a
+                      class="nav-link dropdown-toggle"
+                      href="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Blog
+                    </a>
+                    <ul class="dropdown-menu dropdown-submenu">
+                      <li>
+                        <a class="dropdown-item" href="our_blog.html"
+                          >Our Blog</a
+                        >
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="blog_detail_view.html"
+                          >Blog Detail View</a
+                        >
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a
+                      class="nav-link dropdown-toggle"
+                      href="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Help
+                    </a>
+                    <ul class="dropdown-menu dropdown-submenu">
+                      <li><a class="dropdown-item" href="faq.html">FAQ</a></li>
+                      <li>
+                        <a class="dropdown-item" href="help_center.html"
+                          >Help Center</a
+                        >
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="contact_us.html"
+                          >Contact Us</a
+                        >
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a
+                      class="nav-link dropdown-toggle"
+                      href="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      Pages
+                    </a>
+                    <ul class="dropdown-menu dropdown-submenu">
+                      <li>
+                        <a class="dropdown-item submenu-item" href="#"
+                          >Other Pages</a
+                        >
+                        <ul class="submenu dropdown-menu">
+                          <li>
+                            <a class="dropdown-item pe-5" href="sign_in.html"
+                              >Sign In</a
+                            >
+                          </li>
+                          <li>
+                            <a class="dropdown-item pe-5" href="sign_up.html"
+                              >Sign Up</a
+                            >
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item pe-5"
+                              href="forgot_password.html"
+                              >Forgot Password</a
+                            >
+                          </li>
+                          <li>
+                            <a class="dropdown-item pe-5" href="about_us.html"
+                              >About Us</a
+                            >
+                          </li>
+                          <li>
+                            <a class="dropdown-item pe-5" href="checkout.html"
+                              >Checkout</a
+                            >
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item pe-5"
+                              href="checkout_premium.html"
+                              >Checkout Premium</a
+                            >
+                          </li>
+                          <li>
+                            <a class="dropdown-item pe-5" href="invoice.html"
+                              >Invoice</a
+                            >
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item pe-5"
+                              href="coming_soon.html"
+                              >Coming Soon</a
+                            >
+                          </li>
+                          <li>
+                            <a class="dropdown-item pe-5" href="error_404.html"
+                              >Error 404</a
+                            >
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a class="dropdown-item submenu-item" href="#"
+                          >Create Event</a
+                        >
+                        <ul class="submenu dropdown-menu">
+                          <li>
+                            <a class="dropdown-item pe-5" href="create.html"
+                              >Create</a
+                            >
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item pe-5"
+                              href="create_venue_event.html"
+                              >建立活動</a
+                            >
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item pe-5"
+                              href="create_online_event.html"
+                              >Create Online Event</a
+                            >
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a class="dropdown-item submenu-item" href="#"
+                          >Events View</a
+                        >
+                        <ul class="submenu dropdown-menu">
+                          <li>
+                            <a
+                              class="dropdown-item pe-5"
+                              href="online_event_detail_view.html"
+                              >Online Event Detail View</a
+                            >
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item pe-5"
+                              href="venue_event_detail_view.html"
+                              >Venue Event Detail View</a
+                            >
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="booking_confirmed.html"
+                          >Booking Confirmed</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          href="attendee_profile_view.html"
+                          >Attendee Profile View</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          href="organiser_profile_view.html"
+                          >Organiser Profile View</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="dropdown-item"
+                          href="my_organisation_dashboard.html"
+                          >Organization Dashboard</a
+                        >
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="sell_tickets_online.html"
+                          >Sell Tickets Online</a
+                        >
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="refer_a_friend.html"
+                          >Refer a Friend</a
+                        >
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="term_and_conditions.html"
+                          >Terms & Conditions</a
+                        >
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="privacy_policy.html"
+                          >Privacy Policy</a
+                        >
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="offcanvas-footer">
+                <div class="offcanvas-social">
+                  <h5>Follow Us</h5>
+                  <ul class="social-links">
+                    <li>
+                      <a href="#" class="social-link"
+                        ><i class="fab fa-facebook-square"></i
+                      ></a>
+                    </li>
+                    <li>
+                      <a href="#" class="social-link"
+                        ><i class="fab fa-instagram"></i
+                      ></a>
+                    </li>
+                    <li>
+                      <a href="#" class="social-link"
+                        ><i class="fab fa-twitter"></i
+                      ></a>
+                    </li>
+                    <li>
+                      <a href="#" class="social-link"
+                        ><i class="fab fa-linkedin-in"></i
+                      ></a>
+                    </li>
+                    <li>
+                      <a href="#" class="social-link"
+                        ><i class="fab fa-youtube"></i
+                      ></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="right-header order-2">
+              <ul class="align-self-stretch">
+                <li>
+                  <a href="create.html" class="create-btn btn-hover">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Create Event</span>
+                  </a>
+                </li>
+                <li class="dropdown account-dropdown">
+                  <a
+                    href="#"
+                    class="account-link"
+                    role="button"
+                    id="accountClick"
+                    data-bs-auto-close="outside"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <img src="images/profile-imgs/img-13.jpg" alt="" />
+                    <i class="fas fa-caret-down arrow-icon"></i>
+                  </a>
+                  <ul
+                    class="dropdown-menu dropdown-menu-account dropdown-menu-end"
+                    aria-labelledby="accountClick"
+                  >
+                    <li>
+                      <div class="dropdown-account-header">
+                        <div class="account-holder-avatar">
+                          <img src="images/profile-imgs/img-13.jpg" alt="" />
+                        </div>
+                        <h5>John Doe</h5>
+                        <p>johndoe@example.com</p>
+                      </div>
+                    </li>
+                    <li class="profile-link">
+                      <a href="my_organisation_dashboard.html" class="link-item"
+                        >My Organisation</a
+                      >
+                      <a href="organiser_profile_view.html" class="link-item"
+                        >My Profile</a
+                      >
+                      <a href="sign_in.html" class="link-item">Sign Out</a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <div class="night_mode_switch__btn">
+                    <div id="night-mode" class="fas fa-moon fa-sun"></div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <div class="overlay"></div>
+      </div>
+    </header>
+    <!-- Header End-->
+    <!-- Body Start-->
+    <div class="wrapper">
+      <div class="breadcrumb-block">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12 col-md-10">
+              <div class="barren-breadcrumb">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a href="index.html">Home</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                      <a href="create.html">Create</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Create Online Event
+                    </li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="event-dt-block p-80">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-12 col-md-12">
+              <div class="main-title text-center">
+                <h3>編輯活動</h3>
+              </div>
+            </div>
+            <div class="col-xl-8 col-lg-9 col-md-12">
+              <div class="wizard-steps-block">
+                <div id="add-event-tab" class="step-app">
+                  <div >
+                    <div
+                      class="step-tab-panel step-tab-info active"
+                      id="tab_step1"
+                    >
+                      <div class="tab-from-content">
+                        <div class="main-card">
+                          <div class="bp-title">
+                            <h4>
+                              <i
+                                class="fa-solid fa-circle-info step_icon me-3"
+                              ></i
+                              >活動資訊
+                            </h4>
+                          </div>
+                          <div class="p-4 bp-form main-form">
+                            <div class="row">
+                              <div class="col-lg-12 col-md-12">
+                                <div class="form-group border_bottom pb_30">
+                                  <label class="form-label fs-16"
+                                    >活動名稱</label
+                                  >
+                                  <p class="mt-2 d-block fs-14 mb-3">
+                                    查看您的名字如何出現在活動頁面上<br />
+                                  
+                                  </p>
+                                  <input
+                                    class="form-control h_50"
+                                    type="text"
+                                    placeholder="輸入活動名稱"
+                                    value=""
+                                    id="aname"
+                                  />
+                                </div>
+                                <div
+                                  class="form-group border_bottom pt_30 pb_30"
+                                >
+                                  <label class="form-label fs-16"
+                                    >選擇活動類別</label
+                                  >
+                                  <p class="mt-2 d-block fs-14 mb-3">
+                                    選擇相關類別有助於提高活動曝光率。<br />
+                                  
+                                  </p>
+                                  <div>
+                                    <input
+                                    class="form-control h_50"
+                                    type="text"
+                                    placeholder="輸入欲新增的活動類別"
+                                    id="inputaclassname"
+                                  />
+                                        <button id="inputclassbtn" class=" main-btn btn-hover h_40 pe-4 ps-4">新增</button>
+                                  
+                                </div><br>
+                                   
+                                  <div id="typeList">
+                                    <select name="" id="aclass" class="btn  dropdown-toggle btn-light"  >
+                                      <option value="">節目類別</option>
+                                      
+                                    </select>
+                                  </div>
+                                 
+                                </div>
+                                <div class="form-group border_bottom pb_30">
+                                  <label class="form-label fs-16"
+                                    >表演者</label
+                                  >
+                                  <p class="mt-2 d-block fs-14 mb-3">
+                                    使否有表演者<br />
+                                  </p>
+                                  <div>
+                                    <input type="checkbox" name="performerTrueFalse" value="yes" id="yes">
+                                    <label for="">是</label>
+                                    <input type="checkbox" name="performerTrueFalse" value="no" id="no">
+                                    <label for="">否</label>
+                                  </div>
+                                  <div style="display: none;" id="typePerformer">
+                                  <p class="mt-2 d-block fs-14 mb-3">
+                                    若表演者為複數請加、<br />
+                                    如:蕭敬騰、周杰倫、林俊傑<br />
+                                  </p>
+                                  <input
+                                    class="form-control h_50"
+                                    type="text"
+                                    placeholder="請輸入表演者名稱"
+                                    value=""
+                                    id="aperformer"
+                                  />
+                                  </div>
+                                </div>
+                                <div
+                                class="form-group border_bottom pt_30 pb_30"
+                              >
+                                <label class="form-label fs-16"
+                                  >主辦單位</label
+                                >
+                                
+                                 
+                                <div>
+                                  <select name="" id="host" class="btn dropdown-toggle btn-light">
+                                    
+                                  </select>
+                                </div>
+                               
+                              </div>
+                                
+                                <div class="form-group pt_30 pb_30">
+                                  <label class="form-label fs-16"
+                                    >上傳活動圖片</label
+                                  >
+                                  <p class="mt-2 fs-14 d-block mb-3 pe_right">
+                                    *第一張圖片為主圖片<br />
+                                  
+                                  </p>
+                                  
+                                  <div class="content-holder mt-4" id="eventImgList">
+                                    <input type="file" accept="image/*" class="aimg" id="file1" value="1"/><br>
+                                    <div class="default-event-thumb">
+                                       <img id="img1"/>
+                                    </div>
+                                  </div>
+                                </div>
+                            
+                               
+                                </div>
+                                <div class="form-group mt-4">
+                                  <label class="form-label mb-2 fs-14">撰寫活動資訊</label>
+                                  <textarea class="form-textarea"
+                                  id="adiscrip"
+                                   ></textarea>
+                                </div>
+                                <div class="form-group mt-4">
+                                  <label class="form-label mb-2 fs-14">撰寫注意事項</label>
+                                  <textarea class="form-textarea"
+                                  id="anote"
+                                    ></textarea>
+                                </div>
+                                <div class="form-group mt-4">
+                                  <label class="form-label mb-2 fs-14">撰寫購票流程</label>
+                                  <textarea class="form-textarea"
+                                  id="aticketremind"
+                                    ></textarea>
+                                </div>
+                                </div>
+                                <div class="form-group pt_30 pb_30">
+                                  <label class="form-label fs-16"
+                                    >上傳票價區域示意圖</label
+                                  >
+                                  <div class="content-holder mt-4" id="seatImgBlock">
+                                    <input type="file" accept="image/*" id="seat" /><br>
+                                    <div class="default-event-thumb">
+                                       <img id="aseatimg"/>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group pt_30 pb-2">
+                              
+                                  <div class="stepper-data-set">
+                                    <div
+                                      class="content-holder template-selector"
+                                    >
+                                      <div class="row g-4">
+                                        <div class="col-md-12">
+                                          <div class="venue-event">
+                                            <div class="map">
+                                           
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                          <div class="form-group mt-1">
+                                            <label class="form-label fs-6"
+                                              >活動場地</label
+                                            >
+                                            <input
+                                              class="form-control h_50"
+                                              type="text"
+                                              placeholder="輸入場地名稱"
+                                              id="aplace"
+                                            />
+                                          </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                          <div class="form-group mt-1">
+                                            <label class="form-label fs-6"
+                                              >活動地址</label
+                                            >
+                                            <input
+                                              class="form-control h_50"
+                                              type="text"
+                                              placeholder="輸入活動地址"
+                                              id="aplaceaddress"
+                                            />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="step-tab-panel step-tab-gallery" id="tab_step2">
+                      <div class="tab-from-content">
+                        <div class="main-card">
+                          <div class="bp-title">
+                            <h4>
+                              <i class="fa-solid fa-ticket step_icon me-3"></i
+                              >區域票價
+                            </h4>
+                          </div>
+                          <div class="bp-form main-form">
+                            <div class="p-4 form-group border_bottom pb_30">
+                              <div class="">
+                                <div class="ticket-section">
+                                  <label class="form-label fs-16"
+                                    >編輯區域票價</label
+                                  >
+                                  <p class="mt-2 fs-14 d-block mb-3 pe_right">若此活動都不分區，請在輸入區域名稱寫為"全站"</p>
+                                </div>
+                                <div
+                                  class="d-flex align-items-center justify-content-between pt-4 pb-3 full-width"
+                                >
+                                  <h3 class="fs-18 mb-0">
+                                    <span
+                                      class="venue-event-ticket-counter"
+                                      >
+                                      <div>
+                                        <input type="checkbox" value="0" id="wetherseat">
+                                          <label for="">是否有座位</label>
+                                        </div>
+                                      </span
+                                    >
+                                  </h3>
+                                  <div
+                                    class="dropdown dropdown-default dropdown-normal btn-ticket-type-top"
+                                  >
+                                    <button
+                                      class=" main-btn btn-hover h_40 pe-4 ps-4"
+                                      type="button"
+                                      id="addBlockPriceBtn"
+                                    >
+                                      <span>增加票價區域</span>
+                                    </button>
+                                 
+                                  </div>
+                                </div>
+                                <div
+                                  class="ticket-type-item-empty d-none text-center p_30"
+                                >
+                                  <div class="ticket-list-icon d-inline-block">
+                                    <img src="images/ticket.png" alt="" />
+                                  </div>
+                                  <h4 class="color-black mt-4 mb-3 fs-18">
+                                    You have no tickets yet.
+                                  </h4>
+                                  <p class="mb-0">
+                                    You have not created a ticket yet. Please
+                                    click the button above to create your event
+                                    ticket.
+                                  </p>
+                                </div>
+                                <div class="ticket-type-item-list mt-4">
+                                  <div class="price-ticket-card mt-4" id="blockPriceList">
+                          
+                                    <div
+                                      class="price-ticket-card-body border_top p-4"
+                                    >
+                                    </div>
+                                  </div>
+  
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="step-tab-panel step-tab-location"
+                      id="tab_step3"
+                    >
+                      <div class="tab-from-content">
+                        <div class="main-card">
+                          <div class="bp-title">
+                            <h4>
+                              <i class="fa-solid fa-gear step_icon me-3"></i
+                              >上架時間設定
+                            </h4>
+                          </div>
+                          <div class="p_30 bp-form main-form">
+                            <div class="form-group">
+                              <div class="ticket-section">
+                                <label class="form-label fs-16"
+                                  ></label
+                                >
+
+                                <div class="content-holder">
+                                  <div
+                                    class="setting-item border_bottom pb_30 pt-4"
+                                  >
+                                
+                                    <div
+                                      class="booking-start-time-holder" 
+                                    >
+                                      <div class="form-group pt_30">
+                                        <label class="form-label fs-16"
+                                          ><b>活動上架時間</label
+                                        >
+                                        <div class="row g-3">
+                                          <div class="col-md-6">
+                                            <label class="form-label mt-3 fs-6"
+                                              >上架時間</label
+                                            >
+                                            <div
+                                              class="loc-group position-relative"
+                                            >
+                                              <input
+                                                type="text"
+                                                value=""
+                                                id="asdate"
+                                                placeholder="請輸入上架時間"
+                                              />
+                                            </div>
+                                          </div>
+                                          <div class="col-md-6">
+                                            
+                                              <label
+                                                class="form-label mt-3 fs-6"
+                                                >下架時間</label
+                                              >
+                                              <input
+                                              type="text"
+                                              value=""
+                                              id="aedate"
+                                              placeholder="請輸入下架時間"
+                                            />
+                                            
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                    <div
+                                      class="tags-holder"
+                                      style="display: none"
+                                    >
+                                      
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="step-footer step-tab-pager mt-4" style="display: flex; justify-content: center;">
+                   
+                    <button
+                      data-direction="finish"
+                      class="btn btn-default btn-hover steps_btn"
+                      id="finish"
+                    >
+                      編輯完成
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Body End-->
+    <!-- Footer Start-->
+    <footer class="footer mt-auto">
+      <div class="footer-top">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-3 col-md-6">
+              <div class="footer-content">
+                <h4>Company</h4>
+                <ul class="footer-link-list">
+                  <li>
+                    <a href="about_us.html" class="footer-link">About Us</a>
+                  </li>
+                  <li>
+                    <a href="help_center.html" class="footer-link"
+                      >Help Center</a
+                    >
+                  </li>
+                  <li><a href="faq.html" class="footer-link">FAQ</a></li>
+                  <li>
+                    <a href="contact_us.html" class="footer-link">Contact Us</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="footer-content">
+                <h4>Useful Links</h4>
+                <ul class="footer-link-list">
+                  <li>
+                    <a href="create.html" class="footer-link">Create Event</a>
+                  </li>
+                  <li>
+                    <a href="sell_tickets_online.html" class="footer-link"
+                      >Sell Tickets Online</a
+                    >
+                  </li>
+                  <li>
+                    <a href="privacy_policy.html" class="footer-link"
+                      >Privacy Policy</a
+                    >
+                  </li>
+                  <li>
+                    <a href="term_and_conditions.html" class="footer-link"
+                      >Terms & Conditions</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="footer-content">
+                <h4>Resources</h4>
+                <ul class="footer-link-list">
+                  <li>
+                    <a href="pricing.html" class="footer-link">Pricing</a>
+                  </li>
+                  <li><a href="our_blog.html" class="footer-link">Blog</a></li>
+                  <li>
+                    <a href="refer_a_friend.html" class="footer-link"
+                      >Refer a Friend</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="footer-content">
+                <h4>Follow Us</h4>
+                <ul class="social-links">
+                  <li>
+                    <a href="#" class="social-link"
+                      ><i class="fab fa-facebook-square"></i
+                    ></a>
+                  </li>
+                  <li>
+                    <a href="#" class="social-link"
+                      ><i class="fab fa-instagram"></i
+                    ></a>
+                  </li>
+                  <li>
+                    <a href="#" class="social-link"
+                      ><i class="fab fa-twitter"></i
+                    ></a>
+                  </li>
+                  <li>
+                    <a href="#" class="social-link"
+                      ><i class="fab fa-linkedin-in"></i
+                    ></a>
+                  </li>
+                  <li>
+                    <a href="#" class="social-link"
+                      ><i class="fab fa-youtube"></i
+                    ></a>
+                  </li>
+                </ul>
+              </div>
+              <div class="footer-content">
+                <h4>Download Mobile App</h4>
+                <div class="download-app-link">
+                  <a href="#" class="download-btn"
+                    ><img src="images/app-store.png" alt=""
+                  /></a>
+                  <a href="#" class="download-btn"
+                    ><img src="images/google-play.png" alt=""
+                  /></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <div class="footer-copyright-text">
+                <p class="mb-0">
+                  © 2022, <strong>Barren</strong>. All rights reserved. Powered
+                  by Gambolthemes
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Footer End-->
+
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/OwlCarousel/owl.carousel.js"></script>
+    <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="vendor/ckeditor5/ckeditor.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="js/night-mode.js"></script>
+    <script src="js/jquery-steps.min.js"></script>
+    <script src="js/datepicker.min.js"></script>
+    <script src="js/i18n/datepicker.en.js"></script>
+    <script src="js\jquery.datetimepicker.full.js"></script>
+    <link rel="stylesheet" type="text/css" href="css\jquery.datetimepicker.css" />
+    <script>
+      $("#add-event-tab").steps({
+        onFinish: function () {
+          alert("編輯完成");
+        },
+      });
+    </script>
+    <script>
+      // ClassicEditor.create(document.querySelector("#pd_editor"), {
+      //   toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
+      // })
+      //   .then((editor) => {
+      //     window.editor = editor;
+      //   })
+      //   .catch((err) => {
+      //     console.error(err.stack);
+      //   });
+    </script>
+ 
+    <!--是否有表演者-->>
+    <script>
+      $(document).ready(function(){
+
+          $("input[name=performerTrueFalse]").click( function () {
+            var Selected = $(this).val();
+            $("input[name=performerTrueFalse]").each(function(i){
+              if($(this).val() == Selected) $(this).prop("checked", true);
+              else $(this).prop("checked", false);
+              });
+            });
+          });
+          const performerYes=document.querySelector('#yes');
+          const performerNo=document.querySelector('#no');
+
+          const typePerformer=document.querySelector('#typePerformer')
+
+          
+          performerYes.addEventListener('change', () => {
+            if (performerYes.checked) {
+              typePerformer.style.display = 'block';
+            } else {
+              typePerformer.style.display = 'none';
+            }
+          });
+          performerNo.addEventListener('change', () => {
+            if (performerNo.checked) {
+              typePerformer.style.display = 'none';
+            } else {
+              typePerformer.style.display = 'block';
+            }
+          });
+
+    </script>
+     <!--動態生成活動圖片-->
+    <script>
+    document
+        .querySelector("#file1")
+        .addEventListener("change", changeListener);
+
+      function changeListener({ target }) {
+        const { id, files } = target;
+        const seq = id.substring(id.indexOf("file") + 4);
+        const img = document.querySelector("#img" + seq);
+        const file = files[0];
+        if (!file) {
+          img.src = "";
+          return;
+        }
+        img.src = URL.createObjectURL(file);
+
+        const nextSeq = +seq + 1;
+        if (!document.querySelector("#file" + nextSeq)) {
+          addNext(nextSeq);
+        }
+      }
+      let imgList=document.querySelector('#eventImgList');
+      function addNext(seq) {
+        const br=document.createElement("br");
+        imgList.append(br);
+        const div=document.createElement("div");
+        div.className="default-event-thumb";
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+        input.id = "file" + seq;
+        input.className="aimg";
+        input.addEventListener("change", changeListener);
+        div.append(input);
+        imgList.append(input);
+        imgList.append(div);
+        imgList.append(br);
+        const img = document.createElement("img");
+        img.id = "img" + seq;
+        // img.className="aimg";
+        div.append(img);
+        const deletebtn=document.createElement("button");
+        deletebtn.id="delete"+seq;
+        deletebtn.className="option-btn-1";
+        deletebtn.innerHTML="刪除"
+        imgList.append(deletebtn);
+        imgList.append(br);
+
+        deletebtn.addEventListener("click",()=>{
+          const deleteimg=document.getElementById("img"+seq); 
+          div.removeChild(deleteimg);
+          imgList.removeChild(div);
+          imgList.removeChild(input);
+          imgList.removeChild(deletebtn);
+          imgList.removeChild(br);
+        })
+       
+      }
+    </script>
+    <!--座位圖選擇-->
+    <script>
+    document
+        .querySelector("#seat")
+        .addEventListener("change", showPic);
+    function showPic({ target }) {
+        const { id, files } = target;
+        const seq = id.substring(id.indexOf("file") + 4);
+        const img = document.querySelector("#aseatimg");
+        const file = files[0];
+        if (!file) {
+          img.src = "";
+          return;
+        }
+        img.src = URL.createObjectURL(file);
+      } 
+    </script>
+    <!--活動類別顯示-->
+    <script>
+      // let aclass=document.querySelector('#aclass');
+
+      function aclassList(){
+        fetch(`http://localhost:8085/Aclass/findAll`)
+        .then((Response) => Response.json())
+        .then((data) => {
+         let str="";
+          for(i of data){
+          str+=`
+                <option value="${i.aclassNo}">${i.aclassName}</option>`;
+           }
+          aclass.innerHTML=str;
+        });
+      }
+      
+    
+        fetch(`http://localhost:8085/Aclass/findAll`)
+        .then((Response) => Response.json())
+        .then((data) => {
+         let str="";
+          for(i of data){
+          str+=`
+                <option value="${i.aclassNo}">${i.aclassName}</option>`;
+           }
+          aclass.innerHTML=str;
+        });
+      
+      
+    </script>
+
+    <script>  
+               $('#asdate').datetimepicker({
+                  theme: '',          //theme: 'dark',
+                  timepicker: true,   //timepicker: false,
+                  step: 15,
+                  format: 'Y/m/d H:i',
+                  // defaultDate: '-1969-12-17', //disable 15天後才能選擇天數
+                  // minDate: '-1969-12-17' //選擇時預設值在15天後
+                });
+                $('#aedate').datetimepicker({
+                  theme: '',          //theme: 'dark',
+                  timepicker: true,   //timepicker: false,
+                  step: 15,
+                  format: 'Y/m/d H:i',
+                  // defaultDate: '-1969-12-17', //disable 15天後才能選擇天數
+                  // minDate: '-1969-12-17' //選擇時預設值在15天後
+                });
+                $.datetimepicker.setLocale('zh'); // kr ko ja en
+    </script>
+    <!--主辦單位顯示-->
+    <script>
+      let host=document.querySelector('#host');
+      fetch(`http://localhost:8085/host/gh`)
+      .then((Response) => Response.json())
+      .then((data) => {
+        let str="";
+        for(i of data){
+          str+=`
+                <option value="${i.hostno}">${i.hostname}</option>`;
+
+        }
+        host.innerHTML=str;
+      });
+    </script>
+    </script>
+<!--區域票價動態顯示-->>
+   <script>
+      const addBlockPriceBtn=document.querySelector("#addBlockPriceBtn");
+      const blockPriceList=document.querySelector("#blockPriceList");
+      let count=1;
+      addBlockPriceBtn.addEventListener("click",()=>{
+        let str=`          <div
+                                      class="price-ticket-card-head d-md-flex flex-wrap align-items-start justify-content-between position-relative p-4"
+                                    id="blockDiv${count}">
+                                      <div
+                                        class="d-flex align-items-center top-name"
+                                      >
+                                        <div class="icon-box">
+                                          <span
+                                            class="icon-big rotate-icon icon icon-purple"
+                                          >
+                                            <i class="fa-solid fa-ticket"></i>
+                                          </span>
+                                          <div>
+                                            <span class="text-145">請輸入區域名稱</span>
+                                          </div>
+                                        <input type="text" class="blockname" id="blockname${count}">
+                                         
+                                        </div>
+                                      </div>
+                                      <div
+                                      class="d-flex align-items-center top-name"
+                                    >
+                                      <div class="icon-box">
+                                        <span
+                                        class="icon-big  icon icon-purple"
+                                      >
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 17 20">
+                                        <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z"/>
+                                      </svg>
+                                      </span>
+                                        <div>
+                                          <span class="text-145">請輸入區域票價</span>
+                                        </div>
+                                      <input type="text" class="blockprice" id="blockprice${count}">
+                                       
+                                      </div>
+                                    </div>
+                                    <div >
+                                      <input type="checkbox" id="blocktype${count}" class="blocktype">
+                                        <label for="">此區是否有座位</label>
+                                      </div>
+                                      <div class="d-flex align-items-center">
+                                       <div
+                                          class="dropdown dropdown-default dropdown-text dropdown-icon-item"
+                                        >
+                                          <button class="option-btn-1" id="deleteBlockPriceBtn${count}">
+                                          刪除
+                                          </button>    
+                                        </div>
+                                      </div>
+                                    </div>`
+                                    blockPriceList.insertAdjacentHTML('beforeend',str);                                  
+                                  let deleteBlockPriceBtn=document.querySelector(`#deleteBlockPriceBtn${count}`);                                 
+                                  let blockDivId =`blockDiv${count}`;
+                                  deleteBlockPriceBtn.addEventListener("click",()=>{
+                                    document.getElementById(blockDivId).remove();
+                                  } );
+
+                                  count++;                           
+      }); 
+                                   
+      const wetherseat=document.querySelector('#wetherseat');
+
+      wetherseat.addEventListener('change',()=>{
+        if(wetherseat.checked){
+          wetherseat.value=1;
+        }else{
+          wetherseat.value=0;
+        }
+      });
+
+   </script>
+      <!--活動類別新增-->>
+      <script>
+        document.querySelector("#inputclassbtn").addEventListener("click",()=>{
+         const inputaclassname=document.querySelector("#inputaclassname");
+         const aclassData={aclassName:inputaclassname.value};
+         fetch('http://localhost:8085/Aclass/saveAclass', {
+          method: 'POST', 
+          headers: {
+                  'Content-Type': 'application/json'
+                   },
+                    body: JSON.stringify(aclassData),
+          }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(response => window.location.replace(window.location.href)); 
+            // aclassList();
+            
+         });
+      </script>
+
+<!--活動新增開始-->
+   <script>
+    let urlParams = new URLSearchParams(window.location.search);
+		const activityNo = urlParams.get('activityNo');
+    console.log(activityNo);
+
+
+      document.querySelector("#finish").addEventListener("click", () => {
+        const formData = new FormData();
+        formData.append('activityNo', 1014);
+        formData.append('aname', $("#aname").val());
+        formData.append('aclass', $("#aclass").find(":selected").val());
+        formData.append('aperformer', $("#aperformer").val());
+        formData.append('host', $("#host").find(":selected").val());
+        formData.append('adiscrip', $("#adiscrip").val());
+        formData.append('anote', $("#anote").val());
+        formData.append('aticketremind', $("#aticketremind").val());
+        formData.append('aplace', $("#aplace").val());
+        formData.append('aplaceaddress', $("#aplaceaddress").val());
+        formData.append('asdate', $("#asdate").val());
+        formData.append('aedate', $("#aedate").val());
+        formData.append('wetherseat', $("#wetherseat").val());
+        console.log($("#asdate").val())
+        console.log($("#aname").val());
+        console.log($("#aclass").find(":selected").val());
+        console.log($("#aperformer").val());
+        console.log($("#host").find(":selected").val());
+        console.log($("#adiscrip").val());
+        console.log($("#anote").val());
+        console.log($("#aticketremind").val());
+        console.log($("#aplace").val());
+        console.log($("#aplaceaddress").val());
+        console.log($("#asdate").val());
+        console.log($("#aedate").val());
+        console.log($("#wetherseat").val());
+        
+        const fileInput = document.querySelector("#seat");
+        formData.append("aseatimg", fileInput.files[0]);
+        console.log(fileInput.files[0]);
+        fetch('http://localhost:8085/Activity/updateActivity', {
+          method: 'POST',
+          body: formData,
+        }).then(resp => resp.json())
+          .then(data => {
+            console.log(data.activityNo);
+           
+        
+//======================================================================================================
+    const fileInput2= document.querySelectorAll(".aimg");
+    const formData2 = new FormData()
+    formData2.append("activityno",data.activityNo);
+    for (let i = 0; i < fileInput2.length; i++) {
+      formData2.append("images", fileInput2[i].files[0]);
+      if(fileInput2.value===1){
+        formData2.append("aimgmain",$("#file1").val())
+      }
+    }
+     fetch('http://localhost:8085/Aimgt/saveAimgt', {
+         method: 'POST',
+         body: formData2,
+        }).then(resp => resp.json())
+          .then(data => {
+           });
+    //==========================================================================================================
+    const blockName= document.querySelectorAll(".blockname");
+    const blockPrice= document.querySelectorAll(".blockprice");
+    const blockType= document.querySelectorAll(".blocktype");
+
+const formData3 = new FormData()
+let blockDataArray = [];
+for (let i = 0; i < blockName.length; i++) {
+  let blockData = {
+    blockName: blockName[i].value,
+    activityNo: data.activityNo,
+    blockPrice: blockPrice[i].value,
+    blockType: blockType[i].checked ? 1 : 0
+  };
+  blockDataArray.push(blockData);
+}
+
+console.log(blockDataArray);
+fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
+  method: 'POST', 
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(blockDataArray),
+}).then(res => res.json())
+  .catch(error => console.error('Error:', error))
+  .then(response => console.log('Success:', response)); 
+
+
+          });
+         
+
+    });
+		//判斷式結束		
+   </script>
+<!--活動新增結束-->
+
+<!--活動複製新增開始-->
+<script>
+  fetch(`http://localhost:8085/Activity/findByactivityNo?activityNo=${1}`)
+    .then(resp => resp.json())
+    .then(data => {
+      $("#aname").val(data.aname);
+      $("#aclass option:selected").val(data.aclass);
+      if(data.performer!=null){
+        $("#yes").attr('checked',true);
+        typePerformer.style.display = 'block';
+      }
+      console.log(data);
+      $("#aperformer").val(data.performer);
+      $("#host option:selected").val(data.host);
+      $("#adiscrip").val(data.adiscrip);
+      $("#anote").val(data.anote);
+      $("#aticketremind").val(data.aticketRemind);
+      $("#aplace").val(data.aplace);
+      $("#aplaceaddress").val(data.aplaceAdress);
+      $("#asdate").val(data.asdate);
+      $("#aedate").val(data.aedate);
+      $("#wetherseat").attr('checked', !!data.wetherSeat);
+      $("#wetherseat").val(data.wetherSeat);
+      $("#seat").val(data.aseatimg); 
+      $("#aseatimg").attr("src", `data:image/jpeg;base64,${data.aseatsImg}`); 
+
+
+    })
+
+    
+      fetch(`http://localhost:8085/BlockPrice/findByActNo?activityNo=${1}`)
+        .then(resp => resp.json())
+        .then(data => {
+          let str="";
+          let count=1001;
+          for(i of data){
+            console.log(i);
+             str+=`<div
+              class="price-ticket-card-head d-md-flex flex-wrap align-items-start justify-content-between position-relative p-4"
+              id="blockDiv${count}">
+              <div
+                class="d-flex align-items-center top-name"
+              >
+                <div class="icon-box">
+                  <span
+                    class="icon-big rotate-icon icon icon-purple"
+                  >
+                    <i class="fa-solid fa-ticket"></i>
+                  </span>
+                  <div>
+                    <span class="text-145">請輸入區域名稱</span>
+                  </div>
+                  <input type="text" class="blockname" id="blockname${count}" value="${i.blockName}">
+
+                </div>
+              </div>
+              <div
+                class="d-flex align-items-center top-name"
+              >
+                <div class="icon-box">
+                  <span
+                    class="icon-big  icon icon-purple"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 17 20">
+                      <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z" />
+                    </svg>
+                  </span>
+                  <div>
+                    <span class="text-145">請輸入區域票價</span>
+                  </div>
+                  <input type="text" class="blockprice" id="blockprice${count}" value="${i.blockPrice}">
+
+                </div>
+              </div>
+              <div >
+                <input type="checkbox" id="blocktype${count}" class="blocktype" value="${i.blockType}">
+                  <label for="">此區是否有座位</label>
+              </div>
+              <div class="d-flex align-items-center">
+                <div
+                  class="dropdown dropdown-default dropdown-text dropdown-icon-item"
+                >
+                  <button class="option-btn-1" id="deleteBlockPriceBtn${count}">
+                    刪除
+                  </button>
+                </div>
+              </div>
+            </div>`;
+            
+      
+            
+            count++;
+          }
+          blockPriceList.insertAdjacentHTML('beforeend', str);
+          let deletebtnArray=document.querySelectorAll(".option-btn-1");
+          let count2=1001;
+          for(let i=1001;i<count;i++){
+            let deleteBlockPriceBtn = document.querySelector(`#deleteBlockPriceBtn${i}`);
+            let blockDivId = `blockDiv${i}`;
+             $(`#blocktype${i}`).attr('checked', !!$(`#blocktype${i}`).val());
+            deleteBlockPriceBtn.addEventListener("click", () => {
+            document.getElementById(blockDivId).remove();
+           
+            });
+          
+          }
+          // $("#blockname").val(data.blockname);
+          // $("#blockprice").val(data.blockprice);
+          
+        })  
+
+      fetch(`http://localhost:8085/Aimgt/findAllByActivityNo?activityNo=${1}`
+        ).then(resp => resp.json())
+        .then(data => {
+          
+          let str="";
+          let count=2;
+    console.log(data)
+          for(let i=1;i<data.length;i++){
+            if((i-1)==0){
+              const file1=document.querySelector("#file1");
+              $(`#img1`).attr("src", `data:image/jpeg;base64,${data[i-1].aimg}`);
+              // conosle.log(data[i-1].aimg)
+              //   var base64Image = data[i - 1].aimg;
+              // conosle.log(data[i - 1].aimg)
+              // var byteCharacters = atob(base64Image);
+              // conosle.log(byteCharacters)
+              // var byteNumbers = new Array(byteCharacters.length);
+              // for (var j = 0; i < byteCharacters.length; i++) {
+              //   byteNumbers[j] = byteCharacters.charCodeAt(j);
+              // }
+              // var byteArray = new Uint8Array(byteNumbers);
+
+              // var imageFile = new File([byteArray], "image.jpeg", { type: "image/jpeg" });
+              // file1.files[0] = data[i-1].aimg;
+              // console.log("檔案已設定成功：", file1.files[0]);
+              // file1.onchange = function () {
+              //   if (file1.files[0]) {
+                  
+              //   } else {
+              //     console.log("檔案設定失敗");
+              //   }
+              // };
+              //  const imageFile = new File([data[i-1].aimg], "image.jepg", { type: "image/jepg" });
+              // file1.files[0] = imageFile;
+              // $(`#file1`).attr("src", `data:image/jpeg;base64,${data[i - 1].aimg}`); 
+            }
+            const br = document.createElement("br");
+            imgList.append(br);
+            const div = document.createElement("div");
+            div.className = "default-event-thumb";
+            const input = document.createElement("input");
+            input.type = "file";
+            input.accept = "image/*";
+            input.id = "file" + count;
+            input.className = "aimg";
+            input.addEventListener("change", changeListener);
+            div.append(input);
+            imgList.append(input);
+            imgList.append(div);
+            imgList.append(br);
+            const img = document.createElement("img");
+            img.id = "img" + count;
+            // img.className="aimg";
+            div.append(img);
+            const deletebtn = document.createElement("button");
+            deletebtn.id = "delete" + count;
+            deletebtn.className = "option-btn-1";
+            deletebtn.innerHTML = "刪除"
+            imgList.append(deletebtn);
+            imgList.append(br)
+            const deleteimg = document.getElementById(`img${count}`);
+            deletebtn.addEventListener("click", () => {
+              deleteimg.remove();
+              div.remove();
+              input.remove();
+              deletebtn.remove();
+              br.remove();     
+            })
+            $(`#img${count}`).attr("src", `data:image/jpeg;base64,${data[i].aimg}`);
+            count++;
+            }       
+
+        })  
+        // $(`#img${count}`).attr("src", `data:image/jpeg;base64,${i. aimg}`); 
+
+        //  formData.append('aname', $("#aname").val());
+        //   formData.append('aclass', $("#aclass").find(":selected").val());
+        //   formData.append('aperformer', $("#aperformer").val());
+        //   formData.append('host', $("#host").find(":selected").val());
+        //   formData.append('adiscrip', $("#adiscrip").val());
+        //   formData.append('anote', $("#anote").val());
+        //   formData.append('aticketremind', $("#aticketremind").val());
+        //   formData.append('aplace', $("#aplace").val());
+        //   formData.append('aplaceaddress', $("#aplaceaddress").val());
+        //   formData.append('asdate', $("#asdate").val());
+        //   formData.append('aedate', $("#aedate").val());
+        //   formData.append('wetherseat', $("#wetherseat").val());
+        //   console.log($("#asdate").val())
+
+        //   const fileInput = document.querySelector("#seat");
+        //   formData.append("aseatimg", fileInput.files[0]);
+</script>
+<!--活動複製新增結束-->
+
+
+  </body>
+</html>
