@@ -76,8 +76,10 @@
 						<div class="col-xl-5 col-lg-6 col-md-7">
 							<div class="registration">
 								<form>
-									<h2 class="registration-title">會員登入&nbsp;&nbsp;<p id="statusfalse" style="color: red; display: inline-block; margin: 0;"></p></h2>
-									
+									<h2 class="registration-title">會員登入&nbsp;&nbsp;<p id="statusfalse"
+											style="color: red; display: inline-block; margin: 0;"></p>
+									</h2>
+
 									<div class="form-group mt-5">
 										<label class="form-label">帳號 Email</label>
 										<input id="memEmail" class="form-control h_50" type="email"
@@ -94,18 +96,18 @@
 											<span class="pass-show-eye"><i class="fas fa-eye-slash"></i></span>
 										</div>
 									</div>
-									<button id="loginButton" class="main-btn btn-hover w-100 mt-4" type="button">登入 Login<i
-											class="fas fa-sign-in-alt ms-2"></i></button>
+									<button id="loginButton" class="main-btn btn-hover w-100 mt-4" type="button">登入
+										Login<i class="fas fa-sign-in-alt ms-2"></i></button>
 								</form>
 								<div class="app-top-right-link">
 									<p class="signup" style="text-align: center;">還未加入會員嗎? <a
 											class="sidebar-register-link signup"
 											href="front-users-sign-up.html">註冊會員</a></p>
 								</div>
-								<div class="divider">
+								<!-- <div class="divider">
 									<span>or</span>
-								</div>
-								<div class="social-btns-list">
+								</div> -->
+								<!-- <div class="social-btns-list">
 									<button class="social-login-btn">
 										<svg class="me-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
 											viewBox="0 0 26.488 27.029">
@@ -139,10 +141,6 @@
 										</svg>
 										Facebook 登入
 									</button>
-								</div>
-								<!-- <div class="new-sign-link">
-									<p class="signup">第一次來嗎?<a class="signup-link signup" href="front-users-sign-up.html.html">註冊會員</a>
-									</p>
 								</div> -->
 							</div>
 						</div>
@@ -166,9 +164,7 @@
 <script>
 	$(document).ready(() => {
 
-		//檢查是否有refer
-		const referer = document.referrer;
-		// console.log(referer);
+
 
 		$("#loginButton").click(function (event) {
 			event.preventDefault();
@@ -177,7 +173,7 @@
 				memail: $("#memEmail").val(),
 				mpassword: $("#memPwd").val()
 			}
-			if(member.memail === "" || member.mpassword === ""){
+			if (member.memail === "" || member.mpassword === "") {
 				return;
 			}
 
@@ -189,12 +185,16 @@
 				.then(response => response.json())
 				.then(data => {
 					if (data.successful) {
-						//如果有就導回前一頁
-						if (referer) {
-							window.location.href = referer;
-							return;
+						// 獲取之前存儲的當前頁面的 URL
+						const currentUrl = localStorage.getItem('currentUrl');
+
+						// 根據需要將使用者重定向回之前的頁面或首頁
+						if (currentUrl && currentUrl !== '' && currentUrl.indexOf('login.html') === -1) {
+							window.location.href = currentUrl;
+						} else {
+							window.location.href = 'index.html';
 						}
-						window.location.href = 'index.html';
+						
 					} else {
 						$("#statusfalse").text("請輸入正確的帳號或密碼!");
 						return;

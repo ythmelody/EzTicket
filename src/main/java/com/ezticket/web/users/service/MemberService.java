@@ -199,5 +199,14 @@ public class MemberService {
         }
     }
 
-
+    public Member updateMemberPwd(String email,String password){
+        Optional<Member> oldMember = Optional.ofNullable(memberRepository.findByMemail(email));
+        if(oldMember.isPresent()){
+            Member updateTheMember = oldMember.get();
+            updateTheMember.setMpassword(password);
+            return  memberRepository.save(updateTheMember);
+        }else {
+            throw new RuntimeException("Member not found with email: " + email);
+        }
+    }
 }

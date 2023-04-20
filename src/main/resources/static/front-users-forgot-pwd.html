@@ -69,9 +69,11 @@
 						<div class="col-xl-5 col-lg-6 col-md-7">
 							<div class="registration">
 								<form style="margin-bottom: 20px;">
-									<h2 class="registration-title">重新設定密碼&nbsp;&nbsp;<p id="statusfalse" style="color: red; display: inline-block; margin: 0;"></p></h2>
+									<h2 style="width: 400px;" class="registration-title">重新設定密碼&nbsp;&nbsp;<p
+											id="statusfalse" style="color: red; display: inline-block; margin: 0;"></p>
+									</h2>
 									<div class="form-group mt-5">
-										<label class="form-label">我們將會發送一封信件，請點擊信件中的連結以重設密碼。</label>
+										<label class="form-label">我們將會發送一封信件，請輸入信件中的驗證碼以重設密碼。</label>
 										<input id="email" class="form-control h_50" type="email"
 											placeholder="請輸入您註冊時的Email" value="" style="margin-bottom: 10px;">
 									</div>
@@ -106,86 +108,141 @@
 		$("form").submit(function (event) {
 			event.preventDefault();
 			const email = $("#email").val();
-			if(email === ""){
+			if (email === "") {
 				$("#statusfalse").text("請填寫您的Email!");
 			} else if (email !== "") {
 				$("#statusfalse").text("");
 
 				//以下之後要用fetch包住連去controller驗證有無此帳號
 				//有的話用redis生成驗證碼,並執行下列程式碼
+				fetch(`member/checkemail/${email}`)
+					.then(response => response.text())
+					.then(result => {
+						// console.log(result);
+						const validEmail = JSON.parse(result);
+						if (validEmail) {
+							$("#reset").remove();
+							$("#email").prop("readonly", true);
+							$("#email").addClass("input-disabled");
+							$("<input>").attr({
+								type: 'text',
+								id: 'verification',
+								class: 'form-control h_50',
+								placeholder: '請輸入驗證碼'
+							}).insertAfter($("#email"));
 
-				$("#reset").remove();
-				$("#email").prop("readonly", true);
-				$("#email").addClass("input-disabled");
-				$("<input>").attr({
-					type: 'text',
-					id: 'verification',
-					class: 'form-control h_50',
-					placeholder: '請輸入驗證碼'
-				}).insertAfter($("#email"));
+							//設定幾秒不能按
+							let seconds = 15;
+							$("<button>").attr({
+								type: 'button',
+								id: 'resend',
+								class: 'main-btn w-100 mt-4 disablebtn',
+							}).text(`重新發送(${seconds})`).prop('disabled', true).insertAfter($("#verification"));
+							//設定按下後的按鈕狀態改變
+							let s = setInterval(() => {
+								seconds--;
+								if (secoㄋnds > 0) {
+									$("#resend").text(`重新發送(${seconds})`);
+									$("#resend").removeClass("btn-hover");
+									$("#resend").addClass("disablebtn");
+								} else {
+									$("#resend").prop('disabled', false);
+									$("#resend").text('重新發送');
+									$("#resend").addClass("btn-hover");
+									$("#resend").removeClass("disablebtn");
+									clearInterval(s);
+								}
+							}, 1000);
 
-				//設定幾秒不能按
-				let seconds = 15;
-				$("<button>").attr({
-					type: 'button',
-					id: 'resend',
-					class: 'main-btn w-100 mt-4 disablebtn',
-				}).text(`重新發送(${seconds})`).prop('disabled', true).insertAfter($("#verification"));
-				//設定按下後的按鈕狀態改變
-				let s = setInterval(() => {
-					seconds--;
-					if (seconds > 0) {
-						$("#resend").text(`重新發送(${seconds})`);
-						$("#resend").removeClass("btn-hover");
-						$("#resend").addClass("disablebtn");
-					} else {
-						$("#resend").prop('disabled', false);
-						$("#resend").text('重新發送');
-						$("#resend").addClass("btn-hover");
-						$("#resend").removeClass("disablebtn");
-						clearInterval(s);
-					}
-				}, 1000);
-
-				$("<button>").attr({
-					type: 'button',
-					id: 'send',
-					class: 'main-btn btn-hover w-100 mt-4'
-				}).text("確定送出").insertAfter($("#resend"));
+							$("<button>").attr({
+								type: 'button',
+								id: 'send',
+								class: 'main-btn btn-hover w-100 mt-4'
+							}).text("確定送出").insertAfter($("#resend"));
 
 
-				//重新發送按鈕
-				$("#resend").click(() => {
-					//15秒後才能再按
-					seconds = 15;
-					$("#resend").prop('disabled', true);
-					$("#resend").text(`重新發送(${seconds})`);
-					$("#resend").removeClass("btn-hover");
-					$("#resend").addClass("disablebtn");
-					console.log("test")
-					let s = setInterval(() => {
-						seconds--;
-						if (seconds > 0) {
-							$("#resend").prop('disabled', true);
-							$("#resend").text(`重新發送(${seconds})`);
-							$("#resend").removeClass("btn-hover");
-							$("#resend").addClass("disablebtn");
+							//重新發送按鈕
+							$("#resend").click(() => {
+								//15秒後才能再按
+								seconds = 15;
+								$("#resend").prop('disabled', true);
+								$("#resend").text(`重新發送(${seconds})`);
+								$("#resend").removeClass("btn-hover");
+								$("#resend").addClass("disablebtn");
+								console.log("test")
+								let s = setInterval(() => {
+									seconds--;
+									if (seconds > 0) {
+										$("#resend").prop('disabled', true);
+										$("#resend").text(`重新發送(${seconds})`);
+										$("#resend").removeClass("btn-hover");
+										$("#resend").addClass("disablebtn");
+									} else {
+										$("#resend").prop('disabled', false);
+										$("#resend").text('重新發送');
+										$("#resend").addClass("btn-hover");
+										$("#resend").removeClass("disablebtn");
+										clearInterval(s);
+									}
+								}, 1000);
+								//利用fetch去重新生成驗證碼
+								fetch(`member/checkemail/${email}`)
+									.then(response => response.text())
+									.then(result => {
+										console.log("再次生成驗證碼!")
+									})
+
+							});
 						} else {
-							$("#resend").prop('disabled', false);
-							$("#resend").text('重新發送');
-							$("#resend").addClass("btn-hover");
-							$("#resend").removeClass("disablebtn");
-							clearInterval(s);
+							$("#statusfalse").text("查無此帳號，請註冊會員!")
 						}
-					}, 1000);
-					//利用fetch去生成驗證碼
 
 
-				});
+						//確定送出按鈕 ->驗證驗證碼的是否正確
+						$("#send").click(() => {
+							const formData = new FormData();
+							formData.append('email', $("#email").val());
+							formData.append('code', $("#verification").val());
+							
+							if ($("#verification").val() === "") {
+								$("#statusfalse").text("請輸入驗證碼!")
+								return;
+							}
+							fetch('member/verify', {
+								method: 'POST',
+								body: formData,
+							})
+								.then(response => response.json())
+								.then(result => {
+									console.log(result);
+									if (result) {
+										localStorage.setItem("email", email);
+										window.location.href = "front-users-reset-pwd.html"
+									} else {
+										$("#statusfalse").text("驗證碼錯誤，請再次確認或重新發送!")
+									}
 
 
-				//確定送出按鈕 ->驗證驗證碼的是否正確
-				$("#send").click();
+
+								})
+								.catch(error => console.error(error));
+						});
+
+
+
+
+
+
+
+
+
+
+
+
+					});
+
+
+
 
 
 

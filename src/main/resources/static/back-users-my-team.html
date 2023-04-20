@@ -32,6 +32,8 @@
 	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<!-- style.css  改4309行 height: 930px; 新加的 -->
 	<style>
 		.allInput {
 			border: 1px solid white;
@@ -82,7 +84,7 @@
 		}
 
 		.btn-activate {
-			background-color: #31cf56;
+			background-color: #0e1354;
 			color: #fff;
 			border: none;
 			border-radius: 4px;
@@ -94,7 +96,25 @@
 		}
 
 		.btn-activate:hover {
-			background-color: #218838;
+			background-color: #60aee2;
+		}
+
+		.fontsize {
+			font-size: 15px;
+			color: black;
+		}
+
+		.role-header {
+			display: flex;
+			align-items: center;
+		}
+
+		.roleAuthButton {
+			margin-left: 140px;
+		}
+		.removefunc,
+		.addfunc {
+			margin-left: 105px;
 		}
 	</style>
 </head>
@@ -113,40 +133,33 @@
 				<div class="modal-body">
 					<div class="model-content main-form">
 						<div class="form-group mt-30">
-							<label class="form-label">姓名 &emsp;&emsp;<p id="errorbaname"
+							<label class="form-label fontsize">姓名 &emsp;&emsp;<p id="errorbaname"
 									style="color: red; display: inline-block; margin: 0;"></p></label></label>
 							<input id="baname" class="form-control h_40" type="text" placeholder="請輸入姓名.." value="">
 						</div>
 						<div class="form-group mt-30">
-							<label class="form-label">帳號(預設)</label>
+							<label class="form-labe fontsize">帳號(預設)</label>
 							<input id="baaccount" class="form-control h_40" type="text" placeholder="請輸入帳號.." value=""
 								readonly>
 						</div>
 						<div class="form-group mt-30">
-							<label class="form-label">E-mail &emsp;&emsp;<p id="errorbaemail"
+							<label class="form-label fontsize">E-mail &emsp;&emsp;<p id="errorbaemail"
 									style="color: red; display: inline-block; margin: 0;"></p></label></label>
 							<input id="baemail" class="form-control h_40" type="email" placeholder="請輸入email.."
 								value="">
 						</div>
 						<div class="form-group mt-30">
-							<label class="form-label">電話 &emsp;&emsp;<p id="errorbacell"
+							<label class="form-label fontsize">電話 &emsp;&emsp;<p id="errorbacell"
 									style="color: red; display: inline-block; margin: 0;"></p></label></label>
 							<input id="bacell" class="form-control h_40" type="tel" placeholder="請輸入email.." value="">
 						</div>
 						<div class="form-group mt-30">
-							<label class="form-label">密碼(預設)</label>
+							<label class="form-label fontsize">密碼(預設)</label>
 							<input id="bapassword" class="form-control h_40" type="text" value="Aa123456" readonly>
 						</div>
 						<div class="form-group mt-30">
-							<label class="form-label">權限指派</label>
-							<select id="baroleno" class="selectpicker" title="Select Role">
-								<option value="1">業務統籌</option>
-								<option value="2">商品管理者</option>
-								<option value="3">節目管理者</option>
-								<option value="4">後台管理者</option>
-								<option value="5">客服人員</option>
-								<option value="6">驗票人員</option>
-								<option value="7">後台使用者</option>
+							<label class="form-label fontsize">權限指派</label>
+							<select id="baroleno" class="form-control h_40" title="Select Role">
 							</select>
 						</div>
 					</div>
@@ -247,10 +260,10 @@
 					</button>
 					<a class="navbar-brand order-1 order-lg-0 ml-lg-0 ml-2 me-auto" href="index.html">
 						<div class="res-main-logo">
-							<img src="images/logo-icon.svg" alt="">
+							<img src="images/ezTicket-icon.svg" alt="">
 						</div>
 						<div class="main-logo" id="logo">
-							<img src="images/logo.svg" alt="">
+							<img src="images/ezTicket.svg" alt="">
 							<img class="logo-inverse" src="images/dark-logo.svg" alt="">
 						</div>
 					</a>
@@ -258,7 +271,7 @@
 						aria-labelledby="offcanvasNavbarLabel">
 						<div class="offcanvas-header">
 							<div class="offcanvas-logo" id="offcanvasNavbarLabel">
-								<img src="images/logo-icon.svg" alt="">
+								<img src="images/ezTicket-icon.svg" alt="">
 							</div>
 							<button type="button" class="close-btn" data-bs-dismiss="offcanvas" aria-label="Close">
 								<i class="fa-solid fa-xmark"></i>
@@ -276,7 +289,7 @@
 					</div>
 					<div class="right-header order-2">
 						<ul class="align-self-stretch">
-							<li>
+							<li class="6">
 								<a href="back-activity-ticket-inspec.html" class="create-btn btn-hover">
 									<i class="fa-solid fa-ticket"></i>
 									<span>票務</span>
@@ -296,7 +309,7 @@
 												<img src="images/profile-imgs/img-13.jpg" class="D-baimg" alt="">
 											</div>
 											<h5 class="D-baname"><!-- 姓名 --></h5>
-											<p class="D-baemail"><!-- Email --></p>
+											<p class="D-baemail"><!-- email --></p>
 										</div>
 									</li>
 									<li class="profile-link">
@@ -318,127 +331,138 @@
 		<div class="left_section menu_left" id="js-menu">
 			<div class="left_section">
 				<ul>
-					<li class="menu--item">
+					<div id="havefunc"
+						style="text-align: center; margin-top: 10px; background-color: rgb(187, 199, 228);">
+						<p class="D-barole" style="color: black;"></p>
+					</div>
+					<li class="menu--item 10">
+						<!-- 缺網址 -->
 						<a href="#" class="menu--link" title="最新消息管理" data-bs-toggle="tooltip"
 							data-bs-placement="right">
 							<i class="fa-solid fa-newspaper menu--icon"></i>
 							<span class="menu--label">最新消息管理</span>
 						</a>
 					</li>
-					<li class="menu--item">
+					<li class="menu--item 19">
+						<!-- 缺網址 -->
 						<a href="#" class="menu--link" title="節目管理" data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-solid fa-calendar-days menu--icon"></i>
 							<span class="menu--label">節目管理</span>
 						</a>
 					</li>
-					<li class="menu--item">
+					<li class="menu--item 19">
+						<!-- 缺網址 -->
 						<a href="#" class="menu--link" title="節目類別管理" data-bs-toggle="tooltip"
 							data-bs-placement="right">
 							<i class="fa-solid fa-folder menu--icon"></i>
 							<span class="menu--label">節目類別管理</span>
 						</a>
 					</li>
-					<li class="menu--item">
+					<li class="menu--item 21">
 						<a href="back-activity-seatmgt-allactivity.html" class="menu--link" title="節目座位管理"
 							data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-solid fa-chair menu--icon"></i>
 							<span class="menu--label">節目座位管理</span>
 						</a>
 					</li>
-					<li class="menu--item">
+					<li class="menu--item 20">
 						<a href="back-activity-commentmgt.html" class="menu--link" title="節目評論管理"
 							data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-solid fa-comments menu--icon"></i>
 							<span class="menu--label">節目評論管理</span>
 						</a>
 					</li>
-					<li class="menu--item">
+					<li class="menu--item 22">
 						<a href="back-activity-model-place.html" class="menu--link" title="場地模板管理"
 							data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-solid fa-couch menu--icon"></i>
 							<span class="menu--label">場地模板管理</span>
 						</a>
 					</li>
-					<li class="menu--item">
+					<li class="menu--item 17">
 						<a href="back-product-product_manage.html" class="menu--link" title="商品管理"
 							data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-solid fa-bag-shopping menu--icon"></i>
 							<span class="menu--label">商品管理</span>
 						</a>
 					</li>
-					<li class="menu--item">
+					<li class="menu--item 17">
 						<a href="back-product-pclass_manager.html" class="menu--link" title="商品類別管理"
 							data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-regular fa-folder menu--icon"></i>
 							<span class="menu--label">商品類別管理</span>
 						</a>
 					</li>
-					<li class="menu--item">
+					<li class="menu--item 12">
 						<a href="back-product-coupon_manage.html" class="menu--link" title="商品優惠券管理"
 							data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-solid fa-percent menu--icon"></i>
 							<span class="menu--label">商品優惠券管理</span>
 						</a>
 					</li>
-					<li class="menu--item">
+					<li class="menu--item 16">
 						<a href="back-product-comment_manager.html" class="menu--link" title="商品評論管理"
 							data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-regular fa-comments menu--icon"></i>
 							<span class="menu--label">商品評論管理</span>
 						</a>
 					</li>
-					<li class="menu--item">
+					<li class="menu--item 15">
 						<a href="back-product-order_manage.html" class="menu--link" title="訂單管理"
 							data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-solid fa-file-invoice menu--icon"></i>
 							<span class="menu--label">訂單管理</span>
 						</a>
 					</li>
-					<li class="menu--item">
+					<li class="menu--item 13">
+						<!-- 缺網址 -->
 						<a href="#" class="menu--link" title="帳務管理" data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-solid fa-coins menu--icon"></i>
 							<span class="menu--label">帳務管理</span>
 						</a>
 					</li>
-					<li class="menu--item">
+					<li class="menu--item 4">
+						<!-- 缺網址 -->
 						<a href="#" class="menu--link" title="常見問題管理" data-bs-toggle="tooltip"
 							data-bs-placement="right">
 							<i class="fa-solid fa-question-circle menu--icon"></i>
 							<span class="menu--label">常見問題管理</span>
 						</a>
 					</li>
-					<li class="menu--item">
+					<li class="menu--item 5">
+						<!-- 缺網址 -->
 						<a href="#" class="menu--link" title="客服即時通" data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-solid fa-headset menu--icon"></i>
 							<span class="menu--label">客服即時通</span>
 						</a>
 					</li>
-					<li class="menu--item">
+					<li class="menu--item 14">
 						<a href="back-users-host.html" class="menu--link" title="主辦單位管理" data-bs-toggle="tooltip"
 							data-bs-placement="right">
 							<i class="fa-solid fa-square-plus menu--icon"></i>
 							<span class="menu--label">主辦單位管理</span>
 						</a>
 					</li>
-					<li class="menu--item">
+					<li class="menu--item 3">
 						<a href="back-users-member.html" class="menu--link" title="會員資料管理" data-bs-toggle="tooltip"
 							data-bs-placement="right">
 							<i class="fa-solid fa-user-group menu--icon"></i>
 							<span class="menu--label">會員資料管理</span>
 						</a>
 					</li>
-					<li class="menu--item">
-						<a href="back-users-my-team.html" class="menu--link active" title="使用者帳號權限管理" data-bs-toggle="tooltip"
-							data-bs-placement="right">
+					<li class="menu--item 9">
+						<a href="back-users-my-team.html" class="menu--link active" title="後台帳號權限管理"
+							data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-solid fa-user-secret menu--icon"></i>
-							<span class="menu--label">使用者帳號權限管理</span>
+							<span class="menu--label">後台帳號及權限管理</span>
 						</a>
 					</li>
-					<li class="menu--item">
+					<li class="menu--item 7">
+						<!-- 缺網址 -->
 						<a href="#" class="menu--link" title="系統參數管理" data-bs-toggle="tooltip"
 							data-bs-placement="right">
 							<i class="fa-solid fa-gear menu--icon"></i>
-							<span class="menu--label">系統參數管理</span>
+							<span class="menu--label ">系統參數管理</span>
 						</a>
 					</li>
 				</ul>
@@ -599,7 +623,7 @@
 	<script src="js/night-mode.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<!-- Kai  backuserData -->
-    <script src="js/backuserData.js"></script>
+	<script src="js/backuserData.js"></script>
 
 </body>
 <script>
@@ -1168,6 +1192,20 @@
 				})
 		}).catch(error => console.error("Error:", error));
 	})
+
+
+	//有的角色加入選單
+	fetch('role/garf')
+		.then(response => response.json())
+		.then(roleData => {
+			roleData.forEach(role => {
+				console.log(`${role.roleno}`)
+				console.log(`${role.rolename}`)
+				if(role.rolestatus === 1){
+					$("#baroleno").append(`<option value="${role.roleno}">${role.rolename}</option>`);
+				}
+			});
+		}).catch(error => console.error(error));
 
 
 	// 當輸入框改變時觸發搜尋

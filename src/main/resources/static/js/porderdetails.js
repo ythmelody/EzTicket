@@ -81,7 +81,16 @@ function renewModal(porderno, productno) {
   const id = urlParams.get('id');
   fetch(`/pdetails/byPorderno?porderno=${porderno}&productno=${productno}`, {
     method: 'GET',
-  }).then(resp => resp.json())
+  }).then(function (response) {
+    //驗證會員是否登入
+    if (response.redirected) {
+      window.location.href = 'front-users-mem-sign-in.html';
+    } else {
+      // console.log("有登入狀態，進入到下一步");
+      return response.json();
+      
+    }
+  })
     .then(item => {
       console.log(item);
 
@@ -112,7 +121,7 @@ function showcomment(commentno) {
     if (response.redirected) {
       window.location.href = 'front-users-mem-sign-in.html';
     } else {
-      console.log("有登入狀態，進入到下一步");
+      // console.log("有登入狀態，進入到下一步");
       return response.json();
       
     }
@@ -130,7 +139,7 @@ function showcomment(commentno) {
         $('#title_oldRate').append(`&nbsp;<i class="fa-solid fa-star" style="color: #ffad21!important;"></i>`);
       }
 
-      $('#pcommentcont').text(item.pcommentcont);
+      $('#pcommentcont_update').text(item.pcommentcont);
 
       if (item.pcommentstatus === -1) {
         $("#cstatus>option[value='-1']").prop("selected", true);
@@ -144,6 +153,7 @@ function showcomment(commentno) {
   return commentno;
 }
 
+
 // 修改單一評論狀態
 function confirm_update() {
   fetch('ProductCommentServlet', {
@@ -151,7 +161,7 @@ function confirm_update() {
     body: new URLSearchParams({
       'pcommentno': $('#pcommentno').val(),
       'prate': $("#prate").val(),
-      'pcommentcont': $('#pcommentcont').val(),
+      'pcommentcont': $('#pcommentcont_update').val(),
       'action': "updateOneproductComment"
     })
   }).then(function (response) {
@@ -181,3 +191,10 @@ function confirm_update() {
       }
     })
 }
+
+//返回先前頁面
+localStorage.setItem('currentUrl', window.location.href);
+//關閉頁面時將currentUrl清空
+// $(window).bind('beforeunload', function(){
+//   localStorage.removeItem('currentUrl');
+// })

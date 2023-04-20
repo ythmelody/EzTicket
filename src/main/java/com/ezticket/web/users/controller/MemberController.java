@@ -1,16 +1,24 @@
 package com.ezticket.web.users.controller;
 
+import com.ezticket.core.service.EmailServiceImpl;
+import com.ezticket.core.service.RedisService;
+import com.ezticket.core.service.VerificationCodeService;
 import com.ezticket.web.users.dto.MemberDTO;
 import com.ezticket.web.users.dto.MemberImgDTO;
+import com.ezticket.web.users.pojo.Backuser;
 import com.ezticket.web.users.pojo.Member;
 import com.ezticket.web.users.repository.MemberRepository;
 import com.ezticket.web.users.service.MemberService;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +36,15 @@ public class MemberController {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @Autowired
+    private VerificationCodeService verificationCodeService;
+
+    @Autowired
+    private EmailServiceImpl emailServiceImpl;
+
+    @Autowired
+    private RedisService redisService;
 
     //拿到所有會員的資料
     @GetMapping("/ga")
@@ -79,6 +96,7 @@ public class MemberController {
             member.setSuccessful(true);
             System.out.println("登入驗證成功");
         } else {
+            session.setAttribute("loggedin", false);
             member.setSuccessful(false);
             member.setMessage("查無此帳號或密碼");
             System.out.println("查無此帳號或密碼");
@@ -90,16 +108,19 @@ public class MemberController {
     @GetMapping("/getMemberInfo")
     @ResponseBody
     public Member getMemberInfo(HttpSession session, HttpServletResponse response) throws IOException {
-        Member member = (Member) session.getAttribute("member");
-        if (member != null) {
-            member = memberService.getMemberInfo(member.getMemail());
+        Member loginMember = (Member) session.getAttribute("member");
+        Boolean status = (Boolean) session.getAttribute("loggedin");
+        Member member = new Member();
+        if (status != null && status.booleanValue()) {
+            // 已登入
+            member = memberService.getMemberInfo(loginMember.getMemail());
+            member.setMpassword("I don't know.");
             member.setSuccessful(true);
-            member.setMpassword("第二組everybody年薪百萬!");
+            System.out.println("會員已登入: " + member.getMname());
         } else {
-            Member nomember = new Member();
-            nomember.setSuccessful(false);
-            nomember.setMessage("會員未通過認證");
-            response.sendRedirect("/front-users-mem-sign-in.html");
+            member.setSuccessful(false);
+            System.out.println("會員未登入");
+            // 未登入
         }
         return member;
     }
@@ -123,19 +144,19 @@ public class MemberController {
     @PostMapping("/changePwd")
     @ResponseBody
     public Map<String, String> changePassword(@RequestParam("oldpassword") String oldPassword,
-                                 @RequestParam("newpassword") String newPassword,
-                                 @RequestParam("confirmpassword") String confirmPassword,
-                                 HttpSession session) {
-        System.out.println("收到改密碼請求:"+ "(舊)"+ oldPassword +" (新)"+newPassword);
+                                              @RequestParam("newpassword") String newPassword,
+                                              @RequestParam("confirmpassword") String confirmPassword,
+                                              HttpSession session) {
+        System.out.println("收到改密碼請求:" + "(舊)" + oldPassword + " (新)" + newPassword);
         Map<String, String> resultMap = new HashMap<>();
         Member member = (Member) session.getAttribute("member");
         if (member == null) {
             System.out.println("會員未登入!");
-            resultMap.put("noSessionError","會員未登入!");
+            resultMap.put("noSessionError", "會員未登入!");
             return resultMap;
         }
         //進Service驗證
-        resultMap = memberService.updateMpassword(member.getMemail(),oldPassword,newPassword,confirmPassword);
+        resultMap = memberService.updateMpassword(member.getMemail(), oldPassword, newPassword, confirmPassword);
         return resultMap;
     }
 
@@ -147,7 +168,7 @@ public class MemberController {
         Member member = (Member) session.getAttribute("member");
         if (member == null) {
             System.out.println("會員未登入!");
-            resultMap.put("noSessionError","會員未登入!");
+            resultMap.put("noSessionError", "會員未登入!");
             return resultMap;
         }
         String comrecipient = data.get("comrecipient");
@@ -164,11 +185,11 @@ public class MemberController {
     //會員自己編輯資料更新儲存
     @PostMapping("/saveMemberEdit")
     @ResponseBody
-    public ResponseEntity<?> updateMember(@Valid @RequestBody MemberDTO memberDTO,BindingResult bindingResult, HttpSession session) {
+    public ResponseEntity<?> updateMember(@Valid @RequestBody MemberDTO memberDTO, BindingResult bindingResult, HttpSession session) {
         Map<String, String> errors = new HashMap<>();
         Member member = (Member) session.getAttribute("member");
         if (member == null) {
-            errors.put("noSessionError","會員未登入!");
+            errors.put("noSessionError", "會員未登入!");
             System.out.println("Session找不到登入的會員資料");
             return ResponseEntity.badRequest().body(errors);
         }
@@ -185,12 +206,47 @@ public class MemberController {
     }
 
 
-    //登出按鈕
+    //登出按鈕,讓session失效
     @GetMapping("/logout")
     public ResponseEntity<String> logout(HttpSession session) {
         session.invalidate();
-        return ResponseEntity.ok("Logout success");
+        return ResponseEntity.ok("會員登出成功!");
     }
 
+    @RequestMapping("/checkemail/{email}")
+    public boolean checkEmail(@PathVariable String email) throws MessagingException {
+        Member member = memberService.getMemberInfo(email);
+        if (member == null) {
+            System.out.println("查無此會員!");
+            return false;
+        }
 
+        System.out.println("會員驗證碼已送出!");
+        String code = verificationCodeService.generateCode(email);
+        emailServiceImpl.sendVerificationCode(email, code);
+        return true;
+
+
+    }
+
+    @RequestMapping("/verify")
+    public boolean verificationCode(@RequestParam String email, @RequestParam String code) {
+        System.out.println(code);
+        System.out.println(email);
+        if (redisService.checkCode(email, code)) {
+            System.out.println("驗證碼正確!");
+            return true;
+        }
+        System.out.println("驗證碼錯誤!");
+        return false;
+    }
+
+    //前台已驗證過直接儲存進去新密碼(忘記密碼)
+    @PostMapping("/resetPwd")
+    public void register(@RequestParam("email") String email, @RequestParam("password") String password) {
+        System.out.println("資料已進來");
+        System.out.println(email);
+        System.out.println(password);
+        Member member =memberService.updateMemberPwd(email,password);
+    }
 }

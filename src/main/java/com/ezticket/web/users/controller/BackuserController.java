@@ -142,13 +142,6 @@ public class BackuserController {
 
 
 
-    //測試可不可以根據後台角色的baroleno拿到該角色有的功能和沒有的功能
-    @GetMapping("/test")
-    public RoleDTO getRoleFuncs(){
-        RoleDTO roleDTO = backuserService.getBaRolesWithFuncs(String.valueOf(1001));
-        return roleDTO;
-    }
-
     //後台成員上傳更新自己的大頭貼
     @PostMapping("/upload-baimg")
     public ResponseEntity<String> uploadBaimg(@ModelAttribute BackuserImgDTO backuserImgDTO, @RequestParam("file") MultipartFile file, @RequestParam("baaccount") String baaccount){

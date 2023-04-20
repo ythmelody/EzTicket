@@ -1,8 +1,10 @@
 package com.ezticket.web.users.controller;
 
+import com.ezticket.web.users.pojo.Backuser;
 import com.ezticket.web.users.pojo.Host;
 import com.ezticket.web.users.repository.HostRepository;
 import com.ezticket.web.users.service.HostService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -56,5 +58,18 @@ public class HostController {
             newhost = hostRepository.save(newhost);
             return ResponseEntity.ok(newhost);
         }
+    }
+
+    //如果後台使用者是驗票人員的話,拿取host資料
+    @GetMapping("/getBuHostInfo")
+    public Host getBuHostInfo(HttpSession session){
+        Backuser backuser = (Backuser) session.getAttribute("backuser");
+        Host host = hostService.getBuHost(backuser.getBaaccount());
+        if (host != null){
+            System.out.println("此後台人員為驗票人員,並回傳廠商資料!");
+            return host;
+        }
+        System.out.println("此後台人員非驗票人員!");
+        return host;
     }
 }

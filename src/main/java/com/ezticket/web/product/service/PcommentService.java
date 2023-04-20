@@ -117,11 +117,11 @@ public class PcommentService {
         return pcomment;
     }
 
-    //節目評論按讚
+    //商品評論按讚
     @Transactional
     public boolean addThumpUp(Integer memberno, Integer pcommentno) {
         try {
-            pcommentRedisDAO.addKeyValue("thumbup:product:" + memberno, String.valueOf(pcommentno));
+            pcommentRedisDAO.addKeyValue("thumbup:product:"+ memberno, String.valueOf(pcommentno));
             updatePcomment(pcommentno, 1);
             return true;
         } catch (Exception e) {

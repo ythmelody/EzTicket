@@ -22,6 +22,11 @@ public class BlockModelController {
         return blockModelService.findByModelno(modelno);
     }
 
+    @GetMapping("/Get/{blockno}")
+    public BlockModelDTO getOne(@PathVariable("blockno") Integer blockno) {
+        return blockModelService.findByIdDTO(blockno);
+    }
+
     @PostMapping("/insert")
     @ResponseBody
     public ResponseEntity<?> insertModel(@RequestBody BlockModelDTO blockModelDTO){

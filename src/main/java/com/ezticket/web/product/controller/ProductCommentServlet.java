@@ -8,7 +8,10 @@ import com.ezticket.web.product.service.PcommentService;
 import com.ezticket.web.product.service.PdetailsService;
 import com.ezticket.web.product.service.ProductService;
 import com.ezticket.web.product.util.PageResult;
+import com.ezticket.web.users.pojo.Backuser;
 import com.ezticket.web.users.pojo.Member;
+import com.ezticket.web.users.service.BackuserService;
+import com.ezticket.web.users.service.MemberService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import jakarta.servlet.ServletException;
@@ -30,9 +33,12 @@ public class ProductCommentServlet extends HttpServlet {
     private PcommentService pcommentSvc;
     private ProductService productSvc;
     private PdetailsService pdetailSvc;
-
-    //    @Autowired
     private PdetailsPK pdetailsPK;
+    private MemberService memberSvc;
+    private BackuserService backuserSvc;
+    Member newMember;
+
+    Backuser newbackuser;
 
     @Override
     public void init() throws ServletException {
@@ -40,11 +46,9 @@ public class ProductCommentServlet extends HttpServlet {
         pcommentSvc = applicationContext.getBean(PcommentService.class);
         productSvc = applicationContext.getBean(ProductService.class);
         pdetailSvc = applicationContext.getBean(PdetailsService.class);
-
-//        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(RootConfig.class);
-//        pdetailsPK = applicationContext.getBean(PdetailsPK.class);
-
         pdetailsPK = applicationContext.getBean(PdetailsPK.class);
+        memberSvc = applicationContext.getBean(MemberService.class);
+        backuserSvc =applicationContext.getBean(BackuserService.class);
 
     }
 
@@ -57,9 +61,22 @@ public class ProductCommentServlet extends HttpServlet {
 
 
         String action = request.getParameter("action");
-        HttpSession session =request.getSession();
-        Boolean loggedin = (Boolean) session.getAttribute("loggedin");
+        //從請求得到session
+        HttpSession session = request.getSession();
+        //確認是否為登入狀態
+        Boolean isMember = false;
+        Boolean isAdmin = false;
         Member member = (Member) session.getAttribute("member");
+        Backuser backuser = (Backuser) session.getAttribute("backuser");
+        if (member != null) {
+            isMember = true;
+            newMember = memberSvc.getMemberInfo(member.getMemail());
+        }
+        if (backuser != null) {
+            isAdmin = true;
+            newbackuser = backuserSvc.getBackuserInfo(backuser.getBaaccount());
+        }
+
 
         //取得所有商品評論
         if ("productCommentList".equals(action)) {
@@ -79,15 +96,15 @@ public class ProductCommentServlet extends HttpServlet {
             list2json(pcommentList, response);
         }
 
-        //新增商品評論 (同時更新商品總評星)
+        //新增商品評論 (同時更新商品總評星) --> 會員綁定才可以新增
         if ("addProductComment".equals(action)) {
-            if (loggedin == null || loggedin == false) {
+            if (!isMember) {
                 response.sendRedirect("front-users-mem-sign-in.html");
                 return;
             }
+            //取得會員編號
+            Integer memberno = newMember.getMemberno();
             Integer productno = Integer.valueOf(request.getParameter("productno"));
-//            Integer memberno = Integer.valueOf(request.getParameter("memberno"));
-            Integer memberno = member.getMemberno();
             Integer prate = Integer.valueOf(request.getParameter("prate"));
             String pcommentcont = request.getParameter("pcommentcont");
             Pcomment pcomment = pcommentSvc.addProductComment(productno, pcommentcont, prate, memberno);
@@ -97,11 +114,10 @@ public class ProductCommentServlet extends HttpServlet {
 
             //同時更新訂單明細評論狀態
             Integer porderno = Integer.valueOf(request.getParameter("porderno"));
-//            PdetailsPK pdetailsPK =new PdetailsPK();
             pdetailsPK.setPorderno(porderno);
             pdetailsPK.setProductno(productno);
-            //用怪方法存進pcommentno
-            pdetailSvc.updateByID(pdetailsPK, pcomment.getPcommentno()); //0是未評論，1是已評論
+            //用怪方法存進pcommentno(記得要去改SQL型別)
+            pdetailSvc.updateByID(pdetailsPK, pcomment.getPcommentno()); //0是未評論，其餘數字是評論編號
 
             Gson gson = new Gson();
             String json = gson.toJson(pcomment);
@@ -112,9 +128,9 @@ public class ProductCommentServlet extends HttpServlet {
             pw.flush();
         }
 
-        //取得單一筆評論
+        //取得單一筆評論 --> 會員綁定才可以查看 (查看已評論的才會跳出會員登入驗證，如果是還沒有評論要加上去的話要改pdtailController)
         if ("getOneproductComment".equals(action)) {
-            if (loggedin == null || loggedin == false) {
+            if (!isMember) {
                 response.sendRedirect("front-users-mem-sign-in.html");
                 return;
             }
@@ -150,9 +166,13 @@ public class ProductCommentServlet extends HttpServlet {
             list2json(commentList, response);
         }
 
-        //取得會員按讚的商品編號(判斷會員是否按讚依據)
+        //取得會員按讚的商品編號(判斷會員是否按讚依據) --> 會員綁定才可以看的到，但不強制登入
         if ("getThumpupPcommentno".equals(action)) {
-            Integer memberno = Integer.valueOf(request.getParameter("memberno"));
+            if (!isMember) {
+                return;
+            }
+            //用session取得會員編號
+            Integer memberno = newMember.getMemberno();
             Set<Integer> set = pcommentSvc.getPcommentnosByMemberno(memberno);
             Gson gson = new Gson();
             String json = gson.toJson(set);
@@ -165,9 +185,23 @@ public class ProductCommentServlet extends HttpServlet {
 
         }
 
-        //評論按讚
+        //評論按讚　--> 會員綁定才可以點讚，用swal詢問是否導到登入畫面
         if ("thumpupPcomment".equals(action)) {
-            Integer memberno = Integer.valueOf(request.getParameter("memberno"));
+            if (!isMember) {
+                Map map = new HashMap();
+                map.put("status", 302);
+                map.put("location", "front-users-mem-sign-in.html");
+                Gson gson = new Gson();
+                String json = gson.toJson(map);
+                response.setCharacterEncoding("UTF-8");
+                response.setContentType("application/json");
+                PrintWriter pw = response.getWriter();
+                pw.print(json);
+                pw.flush();
+                return;
+            }
+            //用session取得會員編號
+            Integer memberno = newMember.getMemberno();
             Integer pcommentno = Integer.valueOf(request.getParameter("pcommentno"));
             Boolean thumpup = pcommentSvc.addThumpUp(memberno, pcommentno);
             Gson gson = new Gson();
@@ -177,11 +211,26 @@ public class ProductCommentServlet extends HttpServlet {
             PrintWriter pw = response.getWriter();
             pw.print(json);
             pw.flush();
+            return;
         }
 
-        //評論取消按讚
+        //評論取消按讚 --> 會員綁定才可以取消點讚，用swal詢問是否導到登入畫面
         if ("thumpdownPcomment".equals(action)) {
-            Integer memberno = Integer.valueOf(request.getParameter("memberno"));
+            if (!isMember) {
+                Map map = new HashMap();
+                map.put("status", 302);
+                map.put("location", "front-users-mem-sign-in.html");
+                Gson gson = new Gson();
+                String json = gson.toJson(map);
+                response.setCharacterEncoding("UTF-8");
+                response.setContentType("application/json");
+                PrintWriter pw = response.getWriter();
+                pw.print(json);
+                pw.flush();
+                return;
+            }
+            //用session取得會員編號
+            Integer memberno = newMember.getMemberno();
             Integer pcommentno = Integer.valueOf(request.getParameter("pcommentno"));
             pcommentSvc.removeThumpUp(memberno, pcommentno);
             return;
@@ -201,16 +250,16 @@ public class ProductCommentServlet extends HttpServlet {
             out.flush();
         }
 
-        //提供客人更改評論內容
+        //提供客人更改評論內容 --> 會員綁定才可以修改評論
         if ("updateOneproductComment".equals(action)) {
-            if (loggedin == null || loggedin == false) {
+            if (!isMember) {
                 response.sendRedirect("front-users-mem-sign-in.html");
                 return;
             }
             Integer pcommentno = Integer.valueOf(request.getParameter("pcommentno"));
             Integer prate = Integer.valueOf(request.getParameter("prate"));
             String pcommentcont = request.getParameter("pcommentcont");
-            Boolean updateOK = pcommentSvc.updateProductComment(pcommentno, prate,pcommentcont);
+            Boolean updateOK = pcommentSvc.updateProductComment(pcommentno, prate, pcommentcont);
             Gson gson = new Gson();
             String json = gson.toJson(updateOK);
             response.setContentType("application/json");

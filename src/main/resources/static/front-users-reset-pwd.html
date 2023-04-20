@@ -19,7 +19,7 @@
 		href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
 		rel="stylesheet">
 	<link href='vendor/unicons-2.0.1/css/unicons.css' rel='stylesheet'>
-	<link href="css/style.css" rel="stylesheet">  
+	<link href="css/style.css" rel="stylesheet">
 	<link href="css/responsive.css" rel="stylesheet">
 	<link href="css/night-mode.css" rel="stylesheet">
 
@@ -36,13 +36,13 @@
 			text-align: center;
 			margin: 0;
 		}
+
 		.app-top-right-link {
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			margin-top: 10px;
 		}
-		
 	</style>
 </head>
 
@@ -76,14 +76,16 @@
 						<div class="col-xl-5 col-lg-6 col-md-7">
 							<div class="registration">
 								<form>
-									<h2 class="registration-title">XXXXXX@gmail.com歡迎回來，請重新設定密碼!</h2>
-									<div class="form-group mt-4">
+									<h2 style="width: 360px;" class="registration-title">XXXXXX@gmail.com歡迎回來，請重新設定密碼!
+									</h2>
+									<p id="statusfalse" style="color: red; display: inline-block; margin: 0;"></p>
+									<div class="form-group mt-4" id="style">
 										<div class="field-password">
 											<label class="form-label">設定密碼</label>
 										</div>
 										<div class="loc-group position-relative">
-											<input class="form-control h_50" type="password"
-												placeholder="請輸入您要設定的密碼">
+											<input id="mpassword" class="form-control h_50" type="password"
+												placeholder="請輸入您要設定的密碼">&nbsp;&nbsp;
 											<span class="pass-show-eye"><i class="fas fa-eye-slash"></i></span>
 										</div>
 									</div>
@@ -92,13 +94,15 @@
 											<label class="form-label">確認密碼</label>
 										</div>
 										<div class="loc-group position-relative">
-											<input class="form-control h_50" type="password"
-												placeholder="請確認您的新密碼">
+											<input id="checkPwd" class="form-control h_50" type="password"
+												placeholder="請確認您的新密碼">&nbsp;&nbsp;
 											<span class="pass-show-eye"><i class="fas fa-eye-slash"></i></span>
 										</div>
+										<p id="alert" style="margin: 0; color: black; font-size: 10px;">
+											密碼需由英文及數字組成，並且至少包含一個大寫字母、一個小寫字母，長度為8~12個字元。</p>
 									</div>
-									<button class="main-btn btn-hover w-100 mt-4" type="button"
-										onclick="window.location.href='front-users-mem-sign-in.html'">修改送出  Submit</button>
+									<button id="submit" style="margin-bottom: 20px;"
+										class="main-btn btn-hover w-100 mt-4" type="button">修改送出</button>
 								</form>
 							</div>
 						</div>
@@ -119,5 +123,63 @@
 	<script src="js/night-mode.js"></script>
 
 </body>
+<script>
+	const email = localStorage.getItem("email");
+	console.log(email)
+	$(".registration-title").html(`${email}<br>歡迎回來，請重新設定密碼!`)
+
+
+
+
+	$("#submit").click(() => {
+		const pwdReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,12}$/;
+		const pwd = $("#mpassword").val();
+		const checkPwd = $("#checkPwd").val();
+		const errorMessages = [];
+
+		if (pwd === "" || checkPwd === "") {
+			errorMessages.push("密碼請勿空白!");
+		}
+		if (!pwdReg.test(pwd) || !pwdReg.test(checkPwd)) {
+			errorMessages.push("密碼或確認密碼格式錯誤!");
+			console.log(!pwdReg.test(pwd))
+			console.log(!pwdReg.test(checkPwd))
+			console.log(pwd)
+			console.log(checkPwd)
+		}
+		if (pwd !== checkPwd) {
+			errorMessages.push("請檢查密碼與確認密碼是否相同!");
+		}
+		
+		if (errorMessages.length > 0) {
+			$("#statusfalse").html(errorMessages.join("&nbsp;&nbsp;"));
+			$("#style").css("margin", "0");
+		} else {
+			$("#statusfalse").html("");
+			$("#style").css("margin", "");
+
+			const formData = new FormData();
+			formData.append('email', email);
+			formData.append('password', checkPwd);
+
+			fetch('member/resetPwd', {
+				method: 'POST',
+				body: formData,
+			})
+				.then(response => window.location.href = "front-users-mem-sign-in")
+				.catch(error => {
+					console.log(error);
+					$("#statusfalse").text("伺服器錯誤，請稍後再試。");
+				});
+
+
+
+		}
+
+	})
+
+
+
+</script>
 
 </html>
