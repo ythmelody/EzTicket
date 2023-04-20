@@ -53,7 +53,7 @@ public class OrderService {
     private SessionRepository sessionRepository;
 
 
-    public String ecpayCheckout(Integer proderno) {
+    public String ecpayCheckout(Integer porderno) {
 
 		// 綠界的方法裡面都有註解，可以點進去看
 

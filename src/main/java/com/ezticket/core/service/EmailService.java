@@ -1,6 +1,7 @@
 package com.ezticket.core.service;
 
 import com.ezticket.core.pojo.EmailDetails;
+import jakarta.mail.MessagingException;
 
 public interface EmailService {
     // Method
