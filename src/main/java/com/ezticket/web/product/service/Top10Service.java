@@ -1,5 +1,6 @@
 package com.ezticket.web.product.service;
 
+import com.ezticket.web.product.pojo.Pimgt;
 import com.ezticket.web.product.pojo.Product;
 import com.ezticket.web.product.repository.Top10DAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class Top10Service {
     @Autowired
     private  ProductService productSvc;
 
+    @Autowired
+    Pimgt pimgt;
+
     public List top10List(){
         List results = new ArrayList();
         Set<ZSetOperations.TypedTuple<String>> top10set = top10DAO.findAllValues();
@@ -30,6 +34,10 @@ public class Top10Service {
             result.put("productno", product.getProductno());
             result.put("pname", product.getPname());
             result.put("sale_num", num);
+            List<Pimgt> pimgts= product.getPimgts();
+//            for(int i = 0;;){
+//                result.put("pimg", pimgts[i]);
+//            }
             results.add(result);
         }
         return results;
