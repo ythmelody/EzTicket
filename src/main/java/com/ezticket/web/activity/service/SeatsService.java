@@ -109,47 +109,52 @@ public class SeatsService {
 
         List<Integer> returnedList = new ArrayList<Integer>();
 
-        switch (ticketQTY) {
-            case 1:
-                returnedList.clear();
-                returnedList.add(toSellSeats.get(0));
-                break;
-            case 2:
-                returnedList.clear();
-
-                for (int i = 0; i < toSellSeats.size() - 1; i++) {
+        try {
+            switch (ticketQTY) {
+                case 1:
                     returnedList.clear();
-                    returnedList.add(toSellSeats.get(i));
-                    returnedList.add(toSellSeats.get(i + 1));
-                    if(seatsRedisDAO.setFindAllValues("Session" + sessionNo + ":Set:2").contains(returnedList.toString()) == true)
-                        break;
-                }
-                break;
-            case 3:
-                returnedList.clear();
-
-                for (int i = 0; i < toSellSeats.size() - 2; i++) {
+                    returnedList.add(toSellSeats.get(0));
+                    break;
+                case 2:
                     returnedList.clear();
-                    returnedList.add(toSellSeats.get(i));
-                    returnedList.add(toSellSeats.get(i + 1));
-                    returnedList.add(toSellSeats.get(i + 2));
-                    if(seatsRedisDAO.setFindAllValues("Session" + sessionNo + ":Set:3").contains(returnedList.toString()) == true)
-                        break;
-                }
-                break;
-            case 4:
-                returnedList.clear();
 
-                for (int i = 0; i < toSellSeats.size() - 3; i++) {
+                    for (int i = 0; i < toSellSeats.size() - 1; i++) {
+                        returnedList.clear();
+                        returnedList.add(toSellSeats.get(i));
+                        returnedList.add(toSellSeats.get(i + 1));
+                        if(seatsRedisDAO.setFindAllValues("Session" + sessionNo + ":Set:2").contains(returnedList.toString()) == true)
+                            break;
+                    }
+                    break;
+                case 3:
                     returnedList.clear();
-                    returnedList.add(toSellSeats.get(i));
-                    returnedList.add(toSellSeats.get(i + 1));
-                    returnedList.add(toSellSeats.get(i + 2));
-                    returnedList.add(toSellSeats.get(i + 3));
-                    if(seatsRedisDAO.setFindAllValues("Session" + sessionNo + ":Set:4").contains(returnedList.toString()) == true)
-                        break;
-                }
-                break;
+
+                    for (int i = 0; i < toSellSeats.size() - 2; i++) {
+                        returnedList.clear();
+                        returnedList.add(toSellSeats.get(i));
+                        returnedList.add(toSellSeats.get(i + 1));
+                        returnedList.add(toSellSeats.get(i + 2));
+                        if(seatsRedisDAO.setFindAllValues("Session" + sessionNo + ":Set:3").contains(returnedList.toString()) == true)
+                            break;
+                    }
+                    break;
+                case 4:
+                    returnedList.clear();
+
+                    for (int i = 0; i < toSellSeats.size() - 3; i++) {
+                        returnedList.clear();
+                        returnedList.add(toSellSeats.get(i));
+                        returnedList.add(toSellSeats.get(i + 1));
+                        returnedList.add(toSellSeats.get(i + 2));
+                        returnedList.add(toSellSeats.get(i + 3));
+                        if(seatsRedisDAO.setFindAllValues("Session" + sessionNo + ":Set:4").contains(returnedList.toString()) == true)
+                            break;
+                    }
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println("無足夠數量票券");
+            return null;
         }
 
         return returnedList;
