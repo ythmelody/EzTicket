@@ -17,9 +17,12 @@ public class TorderDto {
     @JsonFormat(pattern = "yyyy/MM/dd kk:mm:ss", timezone = "GMT+8")
     private Timestamp torderDate;
     private Integer tpaymentStatus;
-    private String tprocessStatus;
+    private Integer tprocessStatus;
 
     private Member member;
+
+//    Add by Shawn on 04/17
+    private Integer ttotal;
 
 
 

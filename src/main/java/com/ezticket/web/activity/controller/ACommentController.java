@@ -61,24 +61,24 @@ public class ACommentController {
     @GetMapping("/ActAComments")
     public List<ACommentDto> getACommentByActNo(@RequestParam Integer actNo){ return aCommentService.getACommentByActNo(actNo); }
 
-//    @PostMapping("/insert")
-//    public Boolean insertAComment(@RequestBody String jsonData){
-//        Gson gson = new Gson();
-//        AComment aComment = gson.fromJson(jsonData, AComment.class);
-//        return aCommentService.insertAComment(aComment);
-//    }
-
     @PostMapping("/insert")
-    public ResponseEntity<?> insertAComment(@Valid @RequestBody AComment aNewComment, BindingResult bindingResult){
-        if (bindingResult.hasErrors()) {
-            Map<String, String> errors = new HashMap<>();
-            bindingResult.getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
-            return ResponseEntity.badRequest().body(errors);
-        } else {
-            aCommentService.insertAComment(aNewComment);
-            return  ResponseEntity.ok(aNewComment);
-        }
+    public Boolean insertAComment(@RequestBody String jsonData) {
+        Gson gson = new Gson();
+        AComment aComment = gson.fromJson(jsonData, AComment.class);
+        return aCommentService.insertAComment(aComment);
     }
+
+//    @PostMapping("/insert")
+//    public ResponseEntity<?> insertAComment(@Valid @RequestBody AComment aNewComment, BindingResult bindingResult){
+//        if (bindingResult.hasErrors()) {
+//            Map<String, String> errors = new HashMap<>();
+//            bindingResult.getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
+//            return ResponseEntity.badRequest().body(errors);
+//        } else {
+//            aCommentService.insertAComment(aNewComment);
+//            return  ResponseEntity.ok(aNewComment);
+//        }
+//    }
 
     @GetMapping("/getThumbUpCmtNos")
     public Set<Integer> getACommentNosByMemberNo(@RequestParam Integer memberNo){

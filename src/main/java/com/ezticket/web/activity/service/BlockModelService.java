@@ -1,6 +1,7 @@
 package com.ezticket.web.activity.service;
 
 import com.ezticket.web.activity.dto.BlockModelDTO;
+import com.ezticket.web.activity.dto.PlaceModelDTO;
 import com.ezticket.web.activity.dto.PlaceToBlockModelDTO;
 import com.ezticket.web.activity.pojo.BlockModel;
 import com.ezticket.web.activity.pojo.PlaceModel;
@@ -10,6 +11,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class BlockModelService {
@@ -27,13 +30,22 @@ public class BlockModelService {
         return ptb;
     }
 
-    //    新增/修改區域
+    public BlockModelDTO findByIdDTO(Integer blockno) {
+        Optional<BlockModel> optional = blockModelRepository.findById(blockno);
+        BlockModel blockModel = optional.get();
+        BlockModelDTO blockModelDTO= new BlockModelDTO();
+        BeanUtils.copyProperties(blockModel, blockModelDTO);
+        return blockModelDTO;
+    }
+
+
+        //    新增/修改區域
     @Transactional
     public BlockModelDTO saveBlockModel(BlockModelDTO blockModelDTO) {
         BlockModel blockModel;
-        if (blockModelDTO.getModelno() != null) {
+        if (blockModelDTO.getBlockno() != null) {
             //      findById 有找到修改、沒找到新增
-            blockModel = blockModelRepository.findById(blockModelDTO.getModelno()).orElse(new BlockModel());
+            blockModel = blockModelRepository.findById(blockModelDTO.getBlockno()).orElse(new BlockModel());
         } else {
             blockModel = new BlockModel();
         }

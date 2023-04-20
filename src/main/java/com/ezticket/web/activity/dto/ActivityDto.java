@@ -33,7 +33,7 @@ public class ActivityDto {
     private String aPlaceAdress;
     private String aNote;
     private String aTicketRemind;
-//    private List<Session> session;
+    private List<Session> session;
     private List<Aimgt> aimgt;
     private List <BlockPrice> blockPrice;
 

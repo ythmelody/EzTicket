@@ -22,8 +22,8 @@ public class ActivityService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public List<ActivityDto> findByOrderByActivityNoDesc(){
-        return activityRepository.findByOrderByActivityNoDesc()
+    public List<ActivityDto> findAllByOrderByActivityNoDesc(){
+        return activityRepository.findAllByOrderByActivityNoDesc()
                 .stream()
                 .map(this::entityToDTO)
                 .collect(Collectors.toList());
@@ -97,5 +97,47 @@ public class ActivityService {
         Activity activity1 = activityRepository.save(activity);
         activity1.setActivityNo(activityRepository.findLastInsert());
         return activity1;
+    }
+
+
+    public void updateActivity(Activity activity) {
+        activityRepository.update(activity.getActivityNo(), activity.getAName(), activity.getAClassNo(), activity.getPerformer(), activity.getHostNo(), activity.getADiscrip(), activity.getANote(), activity.getATicketRemind(), activity.getAPlace(), activity.getAPlaceAdress(), activity.getASDate(), activity.getAEDate(), activity.getWetherSeat(), activity.getASeatsImg());
+    }
+
+
+    public void deleteActivity(Integer activityNo, Integer aStatus) {
+            activityRepository.deleteActivity(activityNo,aStatus);
+
+    }
+//    public Activity updateActivityById(Integer activityNo, Activity activity) {
+//        Optional<Activity> optionalActivity = activityRepository.findById(activityNo);
+//
+//        if (optionalActivity.isPresent()) {
+//            Activity activityObj = optionalActivity.get();
+//            activityObj.setAName(activity.getAName());
+//            activityObj.setAClassNo(activity.getAClassNo());
+//            activityObj.setPerformer(activity.getPerformer());
+//            activityObj.setHostNo(activity.getHostNo());
+//            activityObj.setADiscrip(activity.getADiscrip());
+//            activityObj.setANote(activity.getANote());
+//            activityObj.setATicketRemind(activity.getATicketRemind());
+//            activityObj.setAPlace(activity.getAPlace());
+//            activityObj.setAPlaceAdress(activity.getAPlaceAdress());
+//            activityObj.setASDate(activity.getASDate());
+//            activityObj.setAEDate(activity.getAEDate());
+//            activityObj.setWetherSeat(activity.getWetherSeat());
+//            activityObj.setAStatus(activity.getAStatus());
+//
+//            // Save updated activity object to database
+//            return activityRepository.save(activityObj);
+//        } else {
+//            throw new RuntimeException("Activity with id " + activityNo + " not found");
+//        }
+//    }
+
+
+    //    Add by Shawn on 04/19
+    public List<Integer> findActNosByWetherSeatIsTrue(){
+        return activityRepository.findActNosByWetherSeatIsTrue();
     }
 }

@@ -28,18 +28,22 @@ public class AimgtController {
         return aimgtService.findAll();
     }
 
-    @GetMapping("/findAllByActivityNo/{activityNo}")
-    public ResponseEntity<byte[]> getImage(@PathVariable Integer activityNo) {
-        List<AimgtDto> aimgtDtos = aimgtService.findAllByActivityNo(activityNo);
-        if (!aimgtDtos.isEmpty()) {
-            AimgtDto aimgtDto = aimgtDtos.get(0);
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.IMAGE_JPEG);
-            headers.setContentLength(aimgtDto.getAimg().length);
-            return new ResponseEntity<>(aimgtDto.getAimg(), headers, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+//    @GetMapping("/findAllByActivityNo/{activityNo}")
+//    public ResponseEntity<byte[]> getImage(@PathVariable Integer activityNo) {
+//        List<AimgtDto> aimgtDtos = aimgtService.findAllByActivityNo(activityNo);
+//        if (!aimgtDtos.isEmpty()) {
+//            AimgtDto aimgtDto = aimgtDtos.get(0);
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.setContentType(MediaType.IMAGE_JPEG);
+//            headers.setContentLength(aimgtDto.getAimg().length);
+//            return new ResponseEntity<>(aimgtDto.getAimg(), headers, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
+    @GetMapping("/findAllByActivityNo")
+    public List<Aimgt> findAllByActivityNo(@RequestParam Integer activityNo) {
+        return aimgtService.findAllByActivityNo(activityNo);
     }
 
 

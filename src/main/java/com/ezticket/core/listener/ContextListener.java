@@ -2,6 +2,7 @@ package com.ezticket.core.listener;
 
 import com.ezticket.web.activity.repository.SeatsRepository;
 import com.ezticket.web.activity.repository.SessionRepository;
+import com.ezticket.web.activity.service.SeatsService;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,34 +17,17 @@ import java.util.Set;
 @Component
 public class ContextListener implements ServletContextListener {
 
-//    @Autowired
-//    private SessionRepository sessionRepository;
-//    @Autowired
-//    private SeatsRepository seatsRepository;
-//    @Autowired
-//    private RedisTemplate<String, String> redisTemplate;
+    @Autowired
+    private SeatsService seatsService;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-//        04/10: Redis 改為儲存鎖定座位
-//        Set<Integer> sessions = sessionRepository.getToSellSessions();
-//        for(int session: sessions){
-//            SetOperations<String, String> set = redisTemplate.opsForSet();
-//            Set<Integer> toSellSeats = seatsRepository.getToSellSeatsBySession(session);
-//            for(int toSellSeat: toSellSeats){
-//                set.add(("Session" + session), String.valueOf(toSellSeat));
-//            }
-//        }
+        seatsService.saveSeatsSets();
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
 
-//        04/10: Redis 改為儲存鎖定座位
-//        Set<Integer> sessions = sessionRepository.getToSellSessions();
-//        for(int session: sessions){
-//            redisTemplate.delete("Session" + session);
-//        }
     }
 
 }

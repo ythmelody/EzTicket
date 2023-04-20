@@ -58,14 +58,14 @@ public class Activity {
     private String aNote;
     @Column(name = "ATICKETREMIND")
     private String aTicketRemind;
-//    @JsonManagedReference
-//    @OneToMany(mappedBy = "activity")
-//    private List<Session> session;
     @JsonManagedReference
     @OneToMany(mappedBy = "activity")
+    private List<Session> session;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "activity", fetch = FetchType.EAGER)
     private List<Aimgt> aimgt;
     @JsonManagedReference
-    @OneToMany(mappedBy = "activity")
+    @OneToMany(mappedBy = "activity", fetch = FetchType.EAGER)
     private List <BlockPrice> blockPrice;
 
 

@@ -181,6 +181,8 @@
 											<th scope="col">場次時間</th>
 											<th scope="col">座位區域</th>
 											<th scope="col">票價</th>
+											<th scope="col">評星與評論</th>
+											
 									
 										
 										</tr>
@@ -193,6 +195,13 @@
 											<td>2023/01/05 12:23:00</td>
 											<td>紅區 3排1號</td>
 											<td>200</td>
+											<td>
+												<div id="commentContainer_5" style="text-align:center">
+													<button id="cmtbtn" style="border: none;  background-color:transparent" data-bs-toggle="modal"
+														data-bs-target="#couponModal"><img src="images/cmtbtn.png"></button>
+												</div>
+											
+											</td>
 
 										</tr>
 										
@@ -243,7 +252,7 @@
 				const topArea = document.querySelector("#topArea");
 				const urlParams = new URLSearchParams(window.location.search);
 				const memberNo = urlParams.get("memberNo");
-		fetch(`http://localhost:8085/Torder/findById?torderNo=${10005}`)
+		fetch(`http://localhost:8085/Torder/findById?torderNo=${10003}`)
 				.then((resp) => resp.json())
 				.then((data) => {
 					let tpayDate="";
@@ -266,7 +275,7 @@
 					topArea.innerHTML=str;					
 				})	
 
-		fetch(`http://localhost:8085/TorderDetailsView/findAllBytorderNo?torderNo=${10005}`)
+		fetch(`http://localhost:8085/TorderDetailsView/findAllBytorderNo?torderNo=${10003}`)
 				.then((resp) => resp.json())
 				.then((data) => {
 					let str="";

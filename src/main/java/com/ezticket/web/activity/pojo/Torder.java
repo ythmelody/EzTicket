@@ -49,6 +49,10 @@ public class Torder {
 	@JoinColumn(name = "MEMBERNO" ,insertable = false, updatable = false)
 	private Member member;
 
+//	@ManyToOne
+//	@JoinColumn(name = "MEMBERNO" ,insertable = false, updatable = false)
+//	private Member member;
+
 //	@OneToMany
 //	@JoinColumn(name = "TDETAILSNO",
 //			referencedColumnName = "torderno")

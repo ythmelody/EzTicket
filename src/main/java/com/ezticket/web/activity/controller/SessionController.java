@@ -10,10 +10,12 @@ import com.ezticket.web.activity.service.SessionService;
 import com.google.gson.Gson;
 import jakarta.servlet.http.Part;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,8 +63,23 @@ public class SessionController {
         return sessionService.findById(sessionNo);
     }
     @PostMapping("/saveSession")
-    public boolean saveSession(@RequestBody Session session) throws ParseException {
-        sessionService.saveSession(session);
+    public Session saveSession(@RequestBody Session session) throws ParseException {
+
+        return  sessionService.saveSession(session);
+    }
+    @DeleteMapping("deleteSession")
+    public void deleteSession(Integer sessionNo){
+        sessionService.deleteSession(sessionNo);
+    }
+
+    @PostMapping("/updateSession")
+    public boolean updateSession(@RequestParam("sessionNo") Integer sessionNo,
+                                 @RequestParam("sessionsTime") Timestamp sessionsTime,
+                                 @RequestParam("sessioneTime") Timestamp sessioneTime,
+                                 @RequestParam("maxSeatsQty") Integer maxSeatsQty,
+                                 @RequestParam("maxStandingQty") Integer maxStandingQty
+    ) {
+        sessionService.updateSession(sessionNo, sessionsTime,sessioneTime,maxSeatsQty,maxStandingQty);
         return true;
     }
 

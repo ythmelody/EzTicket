@@ -41,6 +41,23 @@ public class PlaceModelService {
                 .collect(Collectors.toList());
     }
 
+//    取得啟用中模板
+    public List<PlaceModelDTO> getActive() {
+        return placeModelRepository.findAll()
+                .stream()
+                .filter(p -> p.getModelStatus() == 1)
+                .map(this::EntityToDTO)
+                .collect(Collectors.toList());
+    }
+
+//    取得停用中模板
+    public List<PlaceModelDTO> getDisabled() {
+        return placeModelRepository.findAll()
+                .stream()
+                .filter(p -> p.getModelStatus() == 0)
+                .map(this::EntityToDTO)
+                .collect(Collectors.toList());
+    }
 
     public Optional<PlaceModel> findById(Integer modelno) {
         return placeModelRepository.findById(modelno);
