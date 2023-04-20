@@ -49,7 +49,10 @@ public interface SessionRepository extends JpaRepository<Session,Integer> {
     public void update(@Param("sessionNo") Integer sessionNo, @Param("sessionsTime") Timestamp sessionsTime, @Param("sessioneTime") Timestamp sessioneTime, @Param("maxSeatsQty") Integer maxSeatsQty, @Param("maxStandingQty") Integer maxStandingQty);
 
 
-
+    //    Add by Shawn on 04/08
+    @Transactional
+    @Modifying
+    @Query("UPDATE Session SET standingQty = standingQty + :ticketChange where sessionNo = :sessionNo")
     public int updateStandingQtyById(@Param("ticketChange") Integer ticketChange, @Param("sessionNo") Integer sessionNo);
 
 }

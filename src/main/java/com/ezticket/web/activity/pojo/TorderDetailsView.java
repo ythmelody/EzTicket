@@ -51,5 +51,4 @@ public class TorderDetailsView {
     private byte[] aimg;
 
 
-
 }

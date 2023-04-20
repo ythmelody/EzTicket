@@ -776,6 +776,7 @@
         fetch(`http://localhost:8085/Activity/ByActName?actName=${search.value}`)
         .then((Response) => Response.json())
         .then((data) => {
+          data.reverse();
           let str = "";
           let sTime = "";
           let countDays = "";
