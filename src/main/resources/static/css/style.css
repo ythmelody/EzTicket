@@ -4306,6 +4306,8 @@ body {
 
 .role-body-content {
     padding: 25px;
+    height: 930px;
+    /* height 新加的 */
 }
 
 .role-item {
