@@ -21,7 +21,17 @@ public class PlaceModelController {
         return placeModelService.getAllDTO();
     }
 
-    @GetMapping("/get/{modelno}")
+    @GetMapping("/GetActive")
+    public List<PlaceModelDTO> getActive() {
+        return placeModelService.getActive();
+    }
+
+    @GetMapping("/GetDisabled")
+    public List<PlaceModelDTO> getDisabled() {
+        return placeModelService.getDisabled();
+    }
+
+    @GetMapping("/Get/{modelno}")
     public PlaceModelDTO getOne(@PathVariable("modelno") Integer modelno) {
         return placeModelService.findByIdDTO(modelno);
     }

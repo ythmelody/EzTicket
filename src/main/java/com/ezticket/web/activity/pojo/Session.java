@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Proxy;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -15,7 +16,6 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "`SESSION`")
-
 public class Session {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

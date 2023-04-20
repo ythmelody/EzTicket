@@ -36,8 +36,8 @@ public class Seats {
 //    @ManyToOne
 //    @JoinColumn(name = "sessionNo", insertable = false, updatable = false)
 //    private Session session;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "blockNo", insertable = false, updatable = false)
-//    private BlockPrice blockPrice;
+
+    @ManyToOne
+    @JoinColumn(name = "BLOCKNO", insertable = false, updatable = false)
+    private BlockPrice blockPrice;
 }

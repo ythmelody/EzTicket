@@ -26,13 +26,13 @@ public interface SessionRepository extends JpaRepository<Session,Integer> {
     List<Session> findByactivityNo(Integer activityNo);
 
 
-//    Add by Shawn on 4/3
+    //    Add by Shawn on 4/3
     public List<Session> findByActivityNo(Integer actNo);
 
     @Query("SELECT s.sessionNo FROM Session s JOIN Activity act WHERE act.aEDate > current_date")
     public Set<Integer> getToSellSessions();
 
-//    Add by Shawn on 04/08
+    //    Add by Shawn on 04/08
     @Transactional
     @Modifying
     @Query("UPDATE Session SET standingQty = standingQty + :ticketChange where sessionNo = :sessionNo")
@@ -49,5 +49,7 @@ public interface SessionRepository extends JpaRepository<Session,Integer> {
     public void update(@Param("sessionNo") Integer sessionNo, @Param("sessionsTime") Timestamp sessionsTime, @Param("sessioneTime") Timestamp sessioneTime, @Param("maxSeatsQty") Integer maxSeatsQty, @Param("maxStandingQty") Integer maxStandingQty);
 
 
+
+    public int updateStandingQtyById(@Param("ticketChange") Integer ticketChange, @Param("sessionNo") Integer sessionNo);
 
 }

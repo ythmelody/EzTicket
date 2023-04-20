@@ -131,4 +131,9 @@ public class ActivityService {
 //        }
 //    }
 
+
+    //    Add by Shawn on 04/19
+    public List<Integer> findActNosByWetherSeatIsTrue(){
+        return activityRepository.findActNosByWetherSeatIsTrue();
+    }
 }

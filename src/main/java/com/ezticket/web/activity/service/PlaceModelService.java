@@ -41,6 +41,23 @@ public class PlaceModelService {
                 .collect(Collectors.toList());
     }
 
+//    取得啟用中模板
+    public List<PlaceModelDTO> getActive() {
+        return placeModelRepository.findAll()
+                .stream()
+                .filter(p -> p.getModelStatus() == 1)
+                .map(this::EntityToDTO)
+                .collect(Collectors.toList());
+    }
+
+//    取得停用中模板
+    public List<PlaceModelDTO> getDisabled() {
+        return placeModelRepository.findAll()
+                .stream()
+                .filter(p -> p.getModelStatus() == 0)
+                .map(this::EntityToDTO)
+                .collect(Collectors.toList());
+    }
 
     public Optional<PlaceModel> findById(Integer modelno) {
         return placeModelRepository.findById(modelno);
@@ -55,13 +72,13 @@ public class PlaceModelService {
     //    新增/修改模板
     @Transactional
     public PlaceModelDTO savePlaceModel(PlaceModelDTO placeModelDTO) {
-        PlaceModel placeModel;
-        if (placeModelDTO.getModelno()!=null) {
-            //      findById 有找到修改、沒找到新增
-            placeModel = placeModelRepository.findById(placeModelDTO.getModelno()).orElse(new PlaceModel());
-        } else {
-            placeModel = new PlaceModel();
-        }
+        PlaceModel placeModel = new PlaceModel();
+//        if (placeModelDTO.getModelno()!=null) {
+//            //      findById 有找到修改、沒找到新增
+//            placeModel = placeModelRepository.findById(placeModelDTO.getModelno()).orElse(new PlaceModel());
+//        } else {
+//            placeModel = new PlaceModel();
+//        }
         BeanUtils.copyProperties(placeModelDTO, placeModel);
         PlaceModel savedPlaceModel = placeModelRepository.save(placeModel);
         BeanUtils.copyProperties(savedPlaceModel, placeModelDTO);

@@ -358,10 +358,10 @@
                                             class="form-control h_40" style="display: inline-block!important; width: 200px;" disabled></h5>
 
                     </div>
-                    <div class="mt-5" style="display: inline-block;">
-                            <a href="#" class="main-btn btn-hover"
-                               style="background-color: orange; border: orange;" onmousedown="clearSeats()">清空座位</a>
-                    </div>
+<!--                    <div class="mt-5" style="display: inline-block;">-->
+<!--                            <a href="#" class="main-btn btn-hover"-->
+<!--                               style="background-color: orange; border: orange;" onmousedown="clearSeats()">清空座位</a>-->
+<!--                    </div>-->
                 </div>
                 <div class="col-md-12">
                     <div class="main-card mt-5">
@@ -374,22 +374,27 @@
                                     <button class="statusBtn toSell pressed" style="margin: 5px;" onclick="changeStatus(this)" value="toSell">可出售</button>
                                     <button class="statusBtn sold" style="margin: 5px;" onclick="changeStatus(this)" value="sold">已售出</button>
                                 </div>
-                                <div style="margin: 47.5px 25px;">
-                                    舞台方向：
-                                    <select name="" id="" style="margin: 5px; border-color: #f1f1f1; width: 75px;">
-                                        <option value="front" selected>前</option>
-                                        <option value="back">後</option>
-                                        <option value="left">左</option>
-                                        <option value="right">右</option>
-                                    </select>
-                                </div>
-                                <div style="margin: 36px 0px;">
+<!--                                <div style="margin: 47.5px 25px;">-->
+<!--                                    舞台方向：-->
+<!--                                    <select name="" id="" style="margin: 5px; border-color: #f1f1f1; width: 75px;">-->
+<!--                                        <option value="front" selected>前</option>-->
+<!--                                        <option value="back">後</option>-->
+<!--                                        <option value="left">左</option>-->
+<!--                                        <option value="right">右</option>-->
+<!--                                    </select>-->
+<!--                                </div>-->
+                                <div style="margin: 43px 0px;">
                                     <form id="rowAndColumns">
                                         排數：<input type="text" class="form-control h_40" style="display: inline-block!important; margin: 5px; width: 75px;
                                                 border-color: #f1f1f1; text-align: center;" value="" disabled>
                                         座位數：<input type="text" class="form-control h_40" style="display: inline-block!important; margin: 5px; width: 75px;
                                                       border-color: #f1f1f1; text-align: center;" value="" disabled>
                                     </form>
+                                </div>
+
+                                <div class="mt-5" style="display: inline-block; margin-left: 30px">
+                                    <a href="#" class="main-btn btn-hover"
+                                       style="background-color: orange; border: orange;" onmousedown="clearSeats()">清空座位</a>
                                 </div>
                             </div>
 
@@ -646,6 +651,8 @@
             }
         })
     }
+
+    window.history.pushState(null, null, "back-activity-seatmgt-sessioncanmodi.html");
 
 </script>
 

@@ -67,4 +67,8 @@ public interface ActivityRepository extends JpaRepository <Activity,Integer>{
     @Query("UPDATE Activity SET aStatus = :aStatus WHERE activityNo = :activityNo")
     public void deleteActivity(@Param("activityNo") Integer activityNo, @Param("aStatus") Integer aStatus);
 
+
+    //    Add by Shawn on 04/19
+    @Query("SELECT act.activityNo FROM Activity act WHERE act.wetherSeat = 1")
+    public List<Integer> findActNosByWetherSeatIsTrue();
 }

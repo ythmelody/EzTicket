@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequestMapping("/seats")
@@ -79,18 +76,23 @@ public class SeatsController {
     }
 
     @GetMapping("/copySessionSeats")
-    public boolean copySessionSeats (@RequestParam int copiedSessionNo, @RequestParam int sessionNo, @RequestParam int activityNo){ // HTML 對應 back-activity-seatmgt-existed.html
+    public boolean copySessionSeats (@RequestParam int copiedSessionNo, @RequestParam int sessionNo, @RequestParam int activityNo){ // HTML 對應 back-activity-seatmgt-sessioncanmodi.html
         return seatsService.copySessionSeats(copiedSessionNo, sessionNo, activityNo);
     }
 
     @GetMapping("/copyModelSeats")
-    public boolean copyModelSeats (@RequestParam int modelNo, @RequestParam int sessionNo, @RequestParam int activityNo){ // HTML 對應 back-activity-seatmgt-existed.html
+    public boolean copyModelSeats (@RequestParam int modelNo, @RequestParam int sessionNo, @RequestParam int activityNo){ // HTML 對應 back-activity-seatmgt-sessioncanmodi.html
         return seatsService.copyModelSeats(modelNo, sessionNo, activityNo);
     }
 
     @GetMapping("/deleteSeats")
     public boolean deleteSeats(@RequestParam Integer sessionNo, @RequestParam Integer blockNo){
         return seatsService.deleteSeats(sessionNo, blockNo);
+    }
+
+    @GetMapping("/findById")
+    public Optional<Seats> findById(@RequestParam Integer seatNo){
+        return seatsService.findById(seatNo);
     }
 
 }
