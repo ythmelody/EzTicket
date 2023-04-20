@@ -40,10 +40,16 @@
 			height: 50px;
 			display: inline-block;
 			line-height: 49px;
-			padding: 0 23px;
+			padding: 0 13px;
 			border-radius: 3px;
 			border: 1px solid #102743;
 		}
+
+		.btn-hover:hover {
+	color: #fff !important;
+	background: #0444BF;
+	border: 1px solid #0444BF;
+}
 	</style>
 </head>
 
@@ -126,7 +132,7 @@
 									<a class="nav-link active" aria-current="page" href="#"
 										style="color:black !important">最新消息</a>
 								</li>
-								
+
 							</ul>
 						</div>
 						<div class="offcanvas-footer">
@@ -160,7 +166,7 @@
 							<li class="dropdown account-dropdown">
 								<a href="#" class="account-link" role="button" id="accountClick"
 									data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
-									<img src="images/profile-imgs/img-13.jpg" alt="">
+									<img class="D-mimg" src="images/profile-imgs/img-13.jpg" alt="">
 									<i class="fas fa-caret-down arrow-icon"></i>
 								</a>
 								<ul class="dropdown-menu dropdown-menu-account dropdown-menu-end"
@@ -409,6 +415,8 @@
 		<script src="vendor/mixitup/dist/mixitup.min.js"></script>
 		<script src="js/custom.js"></script>
 		<script src="js/night-mode.js"></script>
+		<!-- kai 會員登入狀態驗證(無導向版) -->
+		<script src="js/memberLoginCheck.js"></script>
 		<script>
 			var containerEl = document.querySelector('[data-ref~="event-filter-content"]');
 
@@ -432,7 +440,7 @@
 				}).then(function () {
 					$('.selectpicker').selectpicker('refresh');
 				})
-			
+
 		</script>
 
 		<script>
@@ -530,8 +538,8 @@
 					</div>
 				</div>
 				<div class="event-footer">
-						<a onclick="buyNow(${item.productno})" class="main-btn btn-hover w-45" style="width:48%;">Buy Now</a>
-						<button type="button" class="main-btn btn-hover w-45" style="width:48%;" onclick="addCart(${item.productno})" id="product-incart"><i class="fa-solid fa-cart-shopping"></i></button>
+						<a onclick="buyNow(${item.productno})" class="main-btn btn-hover w-45" style="width:48%;">立即購買 <i class="fa-solid fa-right-from-bracket"></i></a>
+						<button type="button" class="main-btn btn-hover w-45" style="width:48%;" onclick="addCart(${item.productno})" id="product-incart">購物車<i class="fa-solid fa-cart-shopping"></i></button>
 				</div>
 			</div>
 		</div>`);
@@ -579,40 +587,40 @@
 
 				const btnClass = event.target.className;
 
-			if (btnClass === 'bookmark-icon') {
+				if (btnClass === 'bookmark-icon') {
 
-				fetch("FollowproductController", {
-					method: "POST",
-					body: new URLSearchParams({
-						'productno': productno,
-						'action': "addOneProductFollow"
-					})
-				}).then(resp => resp.json())
-					.then(item => {
-						console.log(item);
-						if (item) {
-							console.log(productno);
-							$('#followProduct_' + productno).addClass("bookmarked");
-							
-						}
-					})
-			} else if (btnClass === 'bookmark-icon bookmarked') {
+					fetch("FollowproductController", {
+						method: "POST",
+						body: new URLSearchParams({
+							'productno': productno,
+							'action': "addOneProductFollow"
+						})
+					}).then(resp => resp.json())
+						.then(item => {
+							console.log(item);
+							if (item) {
+								console.log(productno);
+								$('#followProduct_' + productno).addClass("bookmarked");
 
-				fetch("FollowproductController", {
-					method: "POST",
-					body: new URLSearchParams({
-						'productno': productno,
-						'action': "unfollowOneProduct"
-					})
-				}).then(resp => resp.json())
-					.then(item => {
-						console.log(item);
-						if (item) {
-							console.log(productno);
-							$('#followProduct_' + productno).removeClass("bookmarked");
-						}
-					})
-			}
+							}
+						})
+				} else if (btnClass === 'bookmark-icon bookmarked') {
+
+					fetch("FollowproductController", {
+						method: "POST",
+						body: new URLSearchParams({
+							'productno': productno,
+							'action': "unfollowOneProduct"
+						})
+					}).then(resp => resp.json())
+						.then(item => {
+							console.log(item);
+							if (item) {
+								console.log(productno);
+								$('#followProduct_' + productno).removeClass("bookmarked");
+							}
+						})
+				}
 			}
 		</script>
 </body>
