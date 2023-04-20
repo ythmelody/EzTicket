@@ -10,6 +10,8 @@ import com.ezticket.web.activity.repository.impl.SeatsModelDAOImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
 
@@ -332,6 +334,14 @@ public class SeatsService {
                 toSaveSets.add(seats.get(i + 3).getSeatNo());
                 seatsRedisDAO.setAddKV("Session" + session.getSessionNo() + ":Set:4", toSaveSets.toString());
             }
+        }
+    }
+
+    public boolean deleteSeatsBySession(Integer sessionNo){
+        if(seatsRepository.deleteBySessionNo(sessionNo) > 0){
+            return true;
+        } else {
+            return false;
         }
     }
 

@@ -37,7 +37,7 @@ public class ACommentController {
     }
 
     @GetMapping("/UpdateOneAComment")
-    public int updateAReport(@RequestParam int commentId, @RequestParam int commentStatus){
+    public int updateAComment(@RequestParam int commentId, @RequestParam int commentStatus){
         return aCommentService.updateAComment(commentId, commentStatus);
     }
 
@@ -61,11 +61,24 @@ public class ACommentController {
     @GetMapping("/ActAComments")
     public List<ACommentDto> getACommentByActNo(@RequestParam Integer actNo){ return aCommentService.getACommentByActNo(actNo); }
 
+    @GetMapping("/getByMemberAndActNo")
+    public AComment getACommentByMemberNoAndActivityNo(@RequestParam Integer memberNo, @RequestParam Integer activityNo){
+        return aCommentService.getACommentByMemberNoAndActivityNo(memberNo, activityNo);
+    }
+
     @PostMapping("/insert")
     public Boolean insertAComment(@RequestBody String jsonData) {
         Gson gson = new Gson();
         AComment aComment = gson.fromJson(jsonData, AComment.class);
         return aCommentService.insertAComment(aComment);
+    }
+
+    @PostMapping("/update")
+    public Boolean updateAComment(@RequestBody String jsonData){
+        Gson gson = new Gson();
+        AComment aComment = gson.fromJson(jsonData, AComment.class);
+        System.out.println(aComment);
+        return aCommentService.updateAComment(aComment);
     }
 
 //    @PostMapping("/insert")

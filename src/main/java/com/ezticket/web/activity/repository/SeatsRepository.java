@@ -76,4 +76,7 @@ public interface SeatsRepository extends JpaRepository<Seats, Integer> {
     @Query("SELECT COUNT(s.seatNo) FROM Seats s WHERE s.x IS NULL AND s.seatStatus = 2 AND s.sessionNo = :sessionNo")
     public int findSoldStandingQtyBySessionNo(@Param("sessionNo") Integer sessionNo);
 
+    @Modifying
+    @Transactional
+    public int deleteBySessionNo(Integer sessionNo);
 }

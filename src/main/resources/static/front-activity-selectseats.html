@@ -1015,12 +1015,27 @@
             .then(resp => resp.json())
             .then(jsondata => {
                 if (jsondata.wetherSeat != 1) { // 若節目完全沒有座位區分，將要購買的票券數量存在 SessionStorage
+                    console.log("進到非屬對號入座區");
                     sessionStorage.setItem("toBuyTickets", $('#ticketDecr').val());
-                    window.location.href = "/front-activity-checkout.html";
+                    // window.location.href = "/front-activity-checkout.html";
                 } else { // 若節目有座位區分，發送請求到後端取得座位陣列
-                    fetch("/seats/getTicketsBystem" + `?ticketQTY=${$('#ticketDecr').val()}&blockNo=${sessionStorage.getItem("blockNo")}&sessionNo=${sessionStorage.getItem("sessionNo")}`)
+                    console.log("進到對號入座區");
+                    fetch("/seats/getTicketsBysystem" + `?ticketQTY=${$('#ticketDecr').val()}&blockNo=${sessionStorage.getItem("blockNo")}&sessionNo=${sessionStorage.getItem("sessionNo")}`)
                         .then(resp => resp.json())
                         .then(jsondata => {
+
+                                if (jsondata.length === 0) {
+                                    $('#toBeVerified').val("");
+
+
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: '無對應數量票券'
+                                    })
+
+                                    return;
+                                }
+
                                 if (jsondata) {
                                     let seatNos = [];
                                     for (let j of jsondata) {
@@ -1034,14 +1049,9 @@
 
                                     // 將要購買的座位編號以陣列的格式存在 SessionStorage
                                     sessionStorage.setItem("toBuySeats", JSON.stringify(seatNos));
-                                    window.location.href = "/front-activity-checkout.html";
+                                    // window.location.href = "/front-activity-checkout.html";
                                     return;
                                 }
-
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: '無對應數量票券'
-                                })
                             }
                         )
                 }
