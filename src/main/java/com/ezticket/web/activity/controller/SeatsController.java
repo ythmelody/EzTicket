@@ -60,7 +60,7 @@ public class SeatsController {
         return seatsService.setSessionSeats(seatStatus, seatNo, sessionNo);
     }
 
-    @GetMapping("/getTicketsBystem")
+    @GetMapping("/getTicketsBysystem")
     public List<Integer> getTicketsBySystem(@RequestParam int ticketQTY, @RequestParam int blockNo, @RequestParam int sessionNo) {
         return seatsService.getSeatsBySystem(ticketQTY,blockNo,sessionNo);
     }
@@ -94,5 +94,11 @@ public class SeatsController {
     public Optional<Seats> findById(@RequestParam Integer seatNo){
         return seatsService.findById(seatNo);
     }
+
+    @GetMapping("/deleteSeatsBySession")
+    public boolean deleteSeatsBySession(@RequestParam Integer sessionNo){
+        return seatsService.deleteSeatsBySession(sessionNo);
+    }
+
 
 }
