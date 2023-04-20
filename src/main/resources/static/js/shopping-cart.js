@@ -7,22 +7,25 @@ $(document).ready(async () => {
   const response = await fetch('member/getMemberInfo', {
     method: 'GET',
   });
+  if(response.redirected == true){
+    window.location.href = 'front-users-mem-sign-in.html';
+  }
   const data = await response.json();
   memberno = data.memberno;
   if(memberno){
-    // let address = data.comreaddress;
-    // let twz = new TWzipcode();
-    // let result = twz.find(address);
+    let address = data.comreaddress;
+    const twzipcode = new TWzipcode({combine: false});
+    const result = twzipcode.parseAddress(address);
+    twzipcode.district(result.district);
+    twzipcode.zipcode(result.zipcode);
+    twzipcode.county(result.county);
+    const startIndex = address.indexOf(result.district) + result.district.length;
+    const secondPart = address.slice(startIndex);
+    $('#readdress4').val(secondPart);
     $('#recipient').val(data.comrecipient);
     $('#rephone').val(data.comrephone);
     $('#email').val(data.memail);
-    // $('#readdress2').val(result.county);
-    // $('#readdress3').val(result.district);
-    // $('#readdress4').val(result.address);
     getcart();
-  } else {
-    // 請前往登入
-    window.location.href = 'front-users-mem-sign-in.html';
   }
 });
 
@@ -48,30 +51,29 @@ async function getcart() {
   } else {
     let index = 0;
     let totalPay = 0;
-    let imagesrc = '';
     const itembody = cartItems.map(item => {
       totalPay += (item.data.pspecialprice * item.quantity);
-      imagesrc = `data:image/png;base64,${item.data.pimgts[0].pimg}`;
+      const imagesrc = item.data.pimgts[0].pimgno;   
       return `<tr>
                 <td>${++index}</td>
-                <td><img src="${imagesrc}" width="100" height="100" alt=""></td>
+                <td><img src="ProductImg?pimgno=${imagesrc}" width="100" height="100" alt=""></td>
                 <td><a href="front-product-product_detail.html?productno=${item.data.productno}" target="_blank">${item.data.pname}</a></td>
                 <td>
                   <span class="number-top">$<s>${item.data.pprice}</s></span>
                   <span class="number-bottom">$${item.data.pspecialprice}</span>
                 </td>
-                <td><input style="width: 25%;" class="form-control h_50" type="number" value="${item.quantity}" min="1" max="${item.data.pqty}"></td>
+                <td><input style="width:35%;" class="form-control h_50" type="number" value="${item.quantity}" min="1" max="${item.data.pqty}" onkeydown="return false" onkeyup="this.value='';"></td>
                 <td>$${item.data.pspecialprice * item.quantity}</td>
                 <td><a href="#" onClick="removeItem(${(index - 1)})">移除</a></td>
               </tr>`
     }).join('');
     const couponuse = await getpcouponlist(memberno);
     // 定義運費 滿499免運
-    let delivery = totalPay > 499 ? 0 : 100;
+    let delivery = totalPay >= 499 ? 0 : 100;
     let pdiscount = 0;
     const coupon = `<tr>
                       <td colspan="3">
-                        <label class="form-label">優惠券</label>
+                        <label class="form-label"><h2>優惠券</h2></label><span id="coupon-error-msg" class="error-msg"></span>
                         <div class="position-relative">
                           <select id="couponCode" class="form-select h_50" onchange="disCoupon()">
                             <option value="">請選擇</option>
@@ -109,7 +111,7 @@ async function getcart() {
       tr.querySelector('td:nth-last-child(2)').innerText = `$${item.data.pspecialprice * item.quantity}`;
     });
     // 定義運費 滿499免運
-    let delivery = totalPay > 499 ? 0 : 100;
+    let delivery = totalPay >= 499 ? 0 : 100;
     itemlist.querySelector('.product-fee span').innerText = totalPay;
     $('.delivery-fee span').text(delivery);
     $('.totalinv2 span').text(totalPay + delivery);
@@ -125,11 +127,13 @@ function disCoupon() {
   const minimum = +couponCode.data('minimum');
   let delivery = Number(productpay > 499 ? 0 : 100);
   if(productpay > minimum){
+    $('#coupon-error-msg').text("");
     $('.pdiscount-fee span').text(discount);
     $('.totalinv2 span').text(productpay + delivery - discount);
     $('#TWD').text(`應支付總金額 : $${productpay + delivery - discount}`);
   }
   else{
+    $('#coupon-error-msg').text("");
     $('.pdiscount-fee span').text(0);
     $('.totalinv2 span').text(productpay + delivery);
     $('#TWD').text(`應支付總金額 : $${productpay + delivery}`);
@@ -137,14 +141,22 @@ function disCoupon() {
 }
 
 function useCoupon(){
-  // 获取下拉选项框
   const couponCode = $('#couponCode');
-  // 点击按钮时切换下拉选项框的禁用状态
-  if (couponCode.prop('disabled')) {
-    couponCode.prop('disabled', false);
-  } else {
-    couponCode.prop('disabled', true);
-  };
+  const productpay = Number($('.product-fee span').text());
+  const minimum = +$('#couponCode option:selected').data('minimum');
+  if (productpay >= minimum){
+    if (couponCode.prop('disabled')) {
+      couponCode.prop('disabled', false);
+    } else {
+      couponCode.prop('disabled', true);
+    }
+  } else{
+    if (couponCode.val() >= 3) {
+      $('#coupon-error-msg').text('不符使用規則!!!');
+    } else {
+      $('#coupon-error-msg').text('請選擇優惠券!!!');
+    }
+  }
 }
 
 function addPorder() {
@@ -173,7 +185,7 @@ function addPorder() {
     'pcouponno': pcouponno,
     'recipient': $("#recipient").val(),
     'rephone': $("#rephone").val(),
-    'readdress': ($("#readdress1").val() + ',' + $("#readdress2").val() + $("#readdress3").val() + $("#readdress4").val()),
+    'readdress': ($("#readdress1").val() + $("#readdress2").val() + $("#readdress3").val() + $("#readdress4").val()),
     'orderProducts': products,
   }
   swal({
@@ -184,15 +196,19 @@ function addPorder() {
   }).then((confirm) => {
     if (confirm) {
       $.ajax({
-        url: '/porder/addtest',
+        url: '/porder/add',
         type: 'POST',
         data: JSON.stringify(porderbody),
         contentType: 'application/json',
         async: false,
         success: function(data) {
           localStorage.clear();
+          swal("訂單建立成功，等待前往綠界金流付款", {
+            icon: "success",
+            buttons: false,
+            timer: 3000,
+          });
           $('body').append(data);
-          $('#allPayAPIForm').submit();
         },
         error: function() {
           swal({
@@ -206,49 +222,12 @@ function addPorder() {
       return Promise.reject('取消操作');
     }
   });
-  // swal({
-  //   title: "是否建立訂單?",
-  //   icon: "warning",
-  //   buttons: true,
-  //   dangerMode: true
-  // }).then((confirm) => {
-  //   if (confirm) {
-  //     fetch('/porder/add', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify(porderbody)
-  //     }).then(response => {
-  //       if (response.ok) {
-  //         response.json().then(porderno => {
-  //           swal({
-  //             title: "建立成功",
-  //             icon: "success",
-  //             closeOnClickOutside: false,
-  //           }).then(() => {
-  //             localStorage.clear();
-  //             window.location.href = `front-product-order_confirmed.html?id=${porderno}`;
-  //           })
-  //         });
-  //       } else {
-  //         swal({
-  //           title: "建立失敗",
-  //           icon: "error",
-  //           closeOnClickOutside: false,
-  //         });
-  //       }
-  //     });
-  //   } else {
-  //     return Promise.reject('取消操作');
-  //   }
-  // });
 }
 
 function removeItem(e) {
   // 從 localStorage 取出 item 的值
   let itemData = JSON.parse(localStorage.getItem('cartItems'));
-  if (e?.length === 0) {
+  if (e === undefined) {
     // 若未傳入參數，則清除所有項目
     itemData = [];
   } else {

@@ -41,14 +41,14 @@ public class PorderController {
         porderService.updateByID(ps.getPorderno(), ps.getPprocessstatus());
         return true;
     }
+//    @PostMapping("/add")
+//    @ResponseBody
+//    public Integer addPorder(@RequestBody AddPorderDTO addPorderDTO){
+//        return porderService.addPorder(addPorderDTO).getPorderno();
+//    }
     @PostMapping("/add")
     @ResponseBody
-    public Integer addPorder(@RequestBody AddPorderDTO addPorderDTO){
-        return porderService.addPorder(addPorderDTO).getPorderno();
-    }
-    @PostMapping("/addtest")
-    @ResponseBody
-    public String addPorder1(@RequestBody AddPorderDTO addPorderDTO){
+    public String addPorder(@RequestBody AddPorderDTO addPorderDTO){
         return orderService.ecpayCheckout(porderService.addPorder(addPorderDTO).getPorderno());
     }
 }

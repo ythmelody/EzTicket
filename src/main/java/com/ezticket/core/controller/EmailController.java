@@ -2,8 +2,8 @@ package com.ezticket.core.controller;
 
 import com.ezticket.core.pojo.EmailDetails;
 import com.ezticket.core.service.EmailService;
-import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.MessagingException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;

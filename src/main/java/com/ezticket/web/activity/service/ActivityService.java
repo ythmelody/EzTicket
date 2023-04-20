@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,7 +37,8 @@ public class ActivityService {
 
         @Scheduled(cron = "0 0 * * * *")
     public void checkExpiredActivity() {
-        LocalDate today = LocalDate.now();
+            Date date = new java.util.Date();
+            Timestamp today = new Timestamp(date.getTime());
         List<Activity> offStatus = activityRepository.findExpiredActivity(today);
 
         for (Activity activity : offStatus) {
@@ -46,7 +49,8 @@ public class ActivityService {
 
     @Scheduled(cron = "0 0 * * * *")
     public void checkActiveActivity() {
-        LocalDate today = LocalDate.now();
+        Date date = new java.util.Date();
+        Timestamp today = new Timestamp(date.getTime());
         List<Activity> onStatus = activityRepository.findActiveActivity(today);
 
         for (Activity activity : onStatus) {

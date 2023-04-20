@@ -60,41 +60,20 @@ public class PcouponService {
     }
 
     @Transactional
-    public boolean addPcoupon(AddPcouponDTO couponBody) {
-        Pcoupon pcoupon = pcouponRepository.findByPcouponname(couponBody.getPcouponname());
-        if (pcoupon == null) {
-            pcoupon = new Pcoupon();
-        }
-        pcoupon.setPcouponname(couponBody.getPcouponname());
-        pcoupon.setPdiscount(couponBody.getPdiscount());
-        pcoupon.setPreachprice(couponBody.getPreachprice());
-        pcoupon.setPcoupnsdate(couponBody.getPcoupnsdate());
-        pcoupon.setPcoupnedate(couponBody.getPcoupnedate());
-        Pcoupon savedPcoupon = pcouponRepository.save(pcoupon);
-        Pfitcoupon pfitcoupon = new Pfitcoupon();
-        PfitcouponPK pfitcouponPK = new PfitcouponPK();
-        pfitcouponPK.setPcouponno(savedPcoupon.getPcouponno());
-        pfitcouponPK.setProductno(couponBody.getProductno());
-        pfitcoupon.setPfitcouponNo(pfitcouponPK);
-        pfitcouponRepository.save(pfitcoupon);
-        checkPouconStatus();
-        return true;
-    }
-    @Transactional
     public ResponseEntity<?> addPcouponError(AddPcouponDTO couponBody, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             Map<String, String> errors = new HashMap<>();
             bindingResult.getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
-            System.out.println("資料格式,將錯誤返回前端!");
             return ResponseEntity.badRequest().body(errors);
         } else {
             // 執行新增操作
-            System.out.println("開始新增資料!");
             Pcoupon pcoupon = new Pcoupon();
             pcoupon.setPcouponholdings(null);
             pcoupon.setPcouponname(couponBody.getPcouponname());
             pcoupon.setPdiscount(couponBody.getPdiscount());
             pcoupon.setPreachprice(couponBody.getPreachprice());
+            System.out.println(couponBody.getPcoupnsdate());
+            System.out.println(couponBody.getPcoupnedate());
             pcoupon.setPcoupnsdate(couponBody.getPcoupnsdate());
             pcoupon.setPcoupnedate(couponBody.getPcoupnedate());
             Pcoupon savedPcoupon = pcouponRepository.save(pcoupon);
@@ -112,29 +91,35 @@ public class PcouponService {
 
 
     @Transactional
-    public boolean editPcoupon(AddPcouponDTO couponBody) {
-        Pcoupon pcoupon = pcouponRepository.getReferenceById(couponBody.getPcouponno());
-        pcoupon.setPcouponname(couponBody.getPcouponname());
-        pcoupon.setPdiscount(couponBody.getPdiscount());
-        pcoupon.setPreachprice(couponBody.getPreachprice());
-        pcoupon.setPcoupnsdate(couponBody.getPcoupnsdate());
-        pcoupon.setPcoupnedate(couponBody.getPcoupnedate());
-        pcouponRepository.save(pcoupon);
+    public ResponseEntity<?> editPcouponError(AddPcouponDTO couponBody, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(errors);
+        } else {
+            Pcoupon pcoupon = pcouponRepository.getReferenceById(couponBody.getPcouponno());
+            pcoupon.setPcouponname(couponBody.getPcouponname());
+            pcoupon.setPdiscount(couponBody.getPdiscount());
+            pcoupon.setPreachprice(couponBody.getPreachprice());
+            pcoupon.setPcoupnsdate(couponBody.getPcoupnsdate());
+            pcoupon.setPcoupnedate(couponBody.getPcoupnedate());
+            pcouponRepository.save(pcoupon);
 
-        // 搞不懂，為啥不能用更新的只能刪除重新新增
-        // 先刪除目前的 pfitcoupon 記錄
-        Pfitcoupon pfitcoupon = pfitcouponRepository.findByPcouponno(couponBody.getPcouponno());
-        if (pfitcoupon != null){
-            pfitcouponRepository.deleteById(pfitcoupon.getPfitcouponNo());
+            // 搞不懂，為啥不能用更新的只能刪除重新新增
+            // 先刪除目前的 pfitcoupon 記錄
+            Pfitcoupon pfitcoupon = pfitcouponRepository.findByPcouponno(couponBody.getPcouponno());
+            if (pfitcoupon != null) {
+                pfitcouponRepository.deleteById(pfitcoupon.getPfitcouponNo());
+            }
+            // 新增一筆符合修改後條件的 pfitcoupon 記錄
+            PfitcouponPK PfitcouponPK = new PfitcouponPK(couponBody.getPcouponno(), couponBody.getProductno());
+            Pfitcoupon Pfitcoupon = new Pfitcoupon();
+            Pfitcoupon.setPfitcouponNo(PfitcouponPK);
+
+            pfitcouponRepository.save(Pfitcoupon);
+            checkPouconStatus();
+            return ResponseEntity.ok().build();
         }
-        // 新增一筆符合修改後條件的 pfitcoupon 記錄
-        PfitcouponPK PfitcouponPK = new PfitcouponPK(couponBody.getPcouponno(), couponBody.getProductno());
-        Pfitcoupon Pfitcoupon = new Pfitcoupon();
-        Pfitcoupon.setPfitcouponNo(PfitcouponPK);
-
-        pfitcouponRepository.save(Pfitcoupon);
-        checkPouconStatus();
-        return true;
     }
 
 

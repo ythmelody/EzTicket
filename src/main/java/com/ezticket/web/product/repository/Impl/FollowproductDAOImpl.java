@@ -40,6 +40,14 @@ public class FollowproductDAOImpl implements FollowproductDAO {
 		return session.get(Followproduct.class,followproductPK);
 	}
 
+	@Override
+	public List<Followproduct> getFollowProductByProductno(Integer productno) {
+		final String hql = "FROM Followproduct WHERE followproductPK.productno = :productno";
+		Query<Followproduct> query =session.createQuery(hql, Followproduct.class);
+		query.setParameter("productno",productno);
+		return query.getResultList();
+	}
+
 
 	@Override
 	public List<Followproduct> getAll() {

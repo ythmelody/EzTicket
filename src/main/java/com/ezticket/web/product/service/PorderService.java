@@ -1,14 +1,18 @@
 package com.ezticket.web.product.service;
 
+import com.ezticket.core.service.EmailService;
 import com.ezticket.ecpay.service.OrderService;
-import com.ezticket.web.product.dto.*;
+import com.ezticket.web.product.dto.AddPorderDTO;
+import com.ezticket.web.product.dto.OrderProductDTO;
+import com.ezticket.web.product.dto.PorderDTO;
+import com.ezticket.web.product.dto.PorderDetailsDTO;
 import com.ezticket.web.product.pojo.*;
-import com.ezticket.web.product.repository.PcouponholdingRepository;
-import com.ezticket.web.product.repository.PdetailsRepository;
-import com.ezticket.web.product.repository.PorderRepository;
-import com.ezticket.web.product.repository.ProductDAO;
+import com.ezticket.web.product.repository.*;
+import com.ezticket.web.users.pojo.Member;
+import com.ezticket.web.users.repository.MemberRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,9 +32,16 @@ public class PorderService {
     @Autowired
     private PcouponholdingRepository pcouponholdingRepository;
     @Autowired
+    private MemberRepository memberRepository;
+    @Autowired
     private OrderService ecpayorderService;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private EmailService emailService;
+    @Autowired
+    private Top10DAO top10Dao;
+
 
     // GetPordersByID
     public List<PorderDTO> getPordersByID(Integer id) {
@@ -61,14 +72,41 @@ public class PorderService {
     @Transactional
     public PorderDTO updateByID(Integer id, Integer processStatus) {
         Porder porder = porderRepository.getReferenceById(id);
-        // 付款狀態 Ppaymentstatus 0 未付款 1 已付款 2 已退款
-        // 訂單狀態 Pprocessstatus 0 未處理 1 配送中 2 已結案 3 取消
-        if (porder.getPpaymentstatus() == 0 && processStatus != 3) {
-            throw new IllegalStateException("未付款的訂單只能取消");
+        // 付款狀態 Ppaymentstatus
+        // 0 未付款 1 已付款 2 已退款 3 付款失敗
+        // 訂單狀態 Pprocessstatus
+        // 0 未處理 1 已出貨 2 已結案 3 已取消 4 取消申請
+        Integer paymentStatus = porder.getPpaymentstatus();
+
+        if (paymentStatus == 0) {
+            // 如果訂單未付款，只能取消訂單，不能執行其他操作
+            if (processStatus != 3) {
+                throw new IllegalStateException("未付款的訂單只能取消");
+            }
+        } else if (paymentStatus == 1) {
+            // 如果訂單已付款
+            if (processStatus == 3) {
+                // 如果要取消訂單，則付款狀態改為退款
+                porder.setPpaymentstatus(2);
+                porder.setPprocessstatus(3);
+            } else if (processStatus == 4) {
+                // 如果要將訂單標記為“取消申請”狀態
+                porder.setPprocessstatus(4);
+            } else if (processStatus == 1) {
+                // 如果訂單付款，則可以出貨
+                porder.setPprocessstatus(2);
+            } else if (processStatus == 2) {
+                // 如果訂單已出貨，則可以結案
+                porder.setPprocessstatus(2);
+            } else {
+                // 其他狀態都不允許
+                throw new IllegalStateException("訂單已付款，不能執行此操作");
+            }
+        } else {
+            // 其他付款狀態都不允許
+            throw new IllegalStateException("未知的訂單付款狀態");
         }
-        if (porder.getPprocessstatus() == 2 && processStatus == 3) {
-            throw new IllegalStateException("已結案的訂單不能取消");
-        }
+
         switch (processStatus) {
             case 1:
                 porder.setPshipdate(LocalDateTime.now());
@@ -126,6 +164,8 @@ public class PorderService {
             pcouponholding.setPcouponstatus((byte) 1);
         }
         Porder porderno = porderRepository.save(porder);
+        Member member = memberRepository.getReferenceById(porderno.getMemberno());
+        emailService.sendOrderMail(member.getMname(),member.getMemail(),porder.getPorderno().toString(), String.valueOf(1));
         List<OrderProductDTO> orderProducts = addPorderDTO.getOrderProducts();
         for (int i = 0; i < orderProducts.size(); i++) {
             Pdetails pdetails = new Pdetails();
@@ -138,9 +178,52 @@ public class PorderService {
             pdetails.setPcommentstatus(0);
             pdetailsRepository.save(pdetails);
             Product product = dao.getByPrimaryKey(orderProducts.get(i).getProductno());
+            if(product.getPqty() < orderProducts.get(i).getQuantity()){
+                throw new RuntimeException("庫存不足");
+            }
             product.setPqty(product.getPqty() - orderProducts.get(i).getQuantity());
             dao.update(product);
+            top10Dao.addKeyValue(String.valueOf(product.getProductno()),orderProducts.get(i).getQuantity());
+
         }
         return EntityToDTO(porder);
     }
+
+
+    @Scheduled(cron = "0 0 * * * *")
+    @Transactional
+    public void checkOrderPayStatus() {
+        List<Porder> porders = porderRepository.findAll();
+        for (Porder porder : porders) {
+            // 取得訂單成立時間
+            LocalDateTime start = porder.getPorderdate();
+            // 設定成立的11分後
+            LocalDateTime end = start.plusMinutes(11);
+            //  當付款狀態為0 未付款且已超過11分鐘
+            if (porder.getPpaymentstatus() == 0 && LocalDateTime.now().isAfter(end)) {
+                // 在這裡執行超過11分鐘的動作
+                // 設定付款失敗
+                // 0 未付款 1 已付款 2 已退款 3 付款失敗
+                porder.setPpaymentstatus(3);
+                // 0 未處理 1 已出貨 2 已結案 3 已取消 4 取消確認
+                porder.setPprocessstatus(3);
+                porder.setPclosedate(LocalDateTime.now());
+                porderRepository.save(porder);
+                // 取得訂單明細
+                List<Pdetails> pdetailsList = pdetailsRepository.findByPorderno(porder.getPorderno());
+                for (Pdetails pdetails : pdetailsList){
+                    // 取得商品
+                    Product product = dao.getByPrimaryKey(pdetails.getPdetailsNo().getProductno());
+                    // 返回庫存
+                    product.setPqty(product.getPqty() + pdetails.getPorderqty());
+                    dao.update(product);
+                }
+                // 寄送取消通知信
+                // status 1 成立 2 付款 3 取消
+                Member member = memberRepository.getReferenceById(porder.getMemberno());
+                emailService.sendOrderMail(member.getMname(),member.getMemail(),porder.getPorderno().toString(), String.valueOf(3));
+            }
+        }
+    }
+
 }

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
@@ -33,10 +34,10 @@ public interface ActivityRepository extends JpaRepository <Activity,Integer>{
     public List<Activity> getByBlurActName(@Param("1") String actName);
 
     @Query("SELECT a FROM Activity a WHERE a.aEDate < :today AND a.aStatus = 1")
-    List<Activity> findExpiredActivity(@Param("today") LocalDate today);
+    List<Activity> findExpiredActivity(@Param("today") Timestamp today);
 
     @Query("SELECT a FROM Activity a WHERE a.aSDate >= :today AND a.aStatus = 0")
-    List<Activity> findActiveActivity(@Param("today") LocalDate today);
+    List<Activity> findActiveActivity(@Param("today") Timestamp today);
 
     Optional <Activity> findByactivityNo(Integer activityNo);
 

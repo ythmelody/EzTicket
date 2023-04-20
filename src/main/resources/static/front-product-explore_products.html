@@ -30,6 +30,27 @@
 	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
 
+	<style>
+		.main-btn {
+			font-size: 16px;
+			color: #fff;
+			font-weight: 400;
+			text-align: center;
+			background: #102743;
+			height: 50px;
+			display: inline-block;
+			line-height: 49px;
+			padding: 0 13px;
+			border-radius: 3px;
+			border: 1px solid #102743;
+		}
+
+		.btn-hover:hover {
+	color: #fff !important;
+	background: #0444BF;
+	border: 1px solid #0444BF;
+}
+	</style>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -111,7 +132,7 @@
 									<a class="nav-link active" aria-current="page" href="#"
 										style="color:black !important">最新消息</a>
 								</li>
-								
+
 							</ul>
 						</div>
 						<div class="offcanvas-footer">
@@ -145,7 +166,7 @@
 							<li class="dropdown account-dropdown">
 								<a href="#" class="account-link" role="button" id="accountClick"
 									data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
-									<img src="images/profile-imgs/img-13.jpg" alt="">
+									<img class="D-mimg" src="images/profile-imgs/img-13.jpg" alt="">
 									<i class="fas fa-caret-down arrow-icon"></i>
 								</a>
 								<ul class="dropdown-menu dropdown-menu-account dropdown-menu-end"
@@ -153,10 +174,10 @@
 									<li>
 										<div class="dropdown-account-header">
 											<div class="account-holder-avatar">
-												<img src="images/profile-imgs/img-13.jpg" alt="">
+												<img class="D-mimg" src="images/profile-imgs/img-13.jpg" alt="">
 											</div>
-											<h5>會員名稱</h5>
-											<p>johndoe@example.com</p>
+											<h5 class="D-mname">會員名稱</h5>
+											<p class="D-memail">johndoe@example.com</p>
 										</div>
 									</li>
 									<li class="profile-link">
@@ -394,6 +415,8 @@
 		<script src="vendor/mixitup/dist/mixitup.min.js"></script>
 		<script src="js/custom.js"></script>
 		<script src="js/night-mode.js"></script>
+		<!-- kai 會員登入狀態驗證(無導向版) -->
+		<script src="js/memberLoginCheck.js"></script>
 		<script>
 			var containerEl = document.querySelector('[data-ref~="event-filter-content"]');
 
@@ -417,7 +440,7 @@
 				}).then(function () {
 					$('.selectpicker').selectpicker('refresh');
 				})
-			
+
 		</script>
 
 		<script>
@@ -504,7 +527,7 @@
 						<img src="ProductImg?pimgno=${image}" alt="">
 
 					</a>
-					<span class="bookmark-icon" title="Bookmark" onclick="followProduct(${item.productno})"></span>
+					<span id="followProduct_${item.productno}" class="bookmark-icon" title="Bookmark" onclick="followProduct(${item.productno})"></span>
 				</div>
 				<div class="event-content">
 					<a href="front-product-product_detail.html?productno=${item.productno}" class="event-title">${item.pname}</a>
@@ -515,18 +538,39 @@
 					</div>
 				</div>
 				<div class="event-footer">
-						<a onclick="buyNow(${item.productno})" class="main-btn btn-hover w-45" style="width:48%;">Buy Now</a>
-						<button type="button" class="main-btn btn-hover w-45" style="width:48%;" onclick="addCart(${item.productno})" id="product-incart"><i class="fa-solid fa-cart-shopping"></i></button>
+						<a onclick="buyNow(${item.productno})" class="main-btn btn-hover w-45" style="width:48%;">立即購買 <i class="fa-solid fa-right-from-bracket"></i></a>
+						<button type="button" class="main-btn btn-hover w-45" style="width:48%;" onclick="addCart(${item.productno})" id="product-incart">購物車<i class="fa-solid fa-cart-shopping"></i></button>
 				</div>
 			</div>
 		</div>`);
 					if (item.prateqty < 1) {
-						$("#rateAvg" + item.productno).text('尚無評論')
+						$("#rateAvg" + item.productno).text('尚無評星')
 					}
 					else if (item.prateqty >= 1) {
 						$("#rateAvg" + item.productno).text((item.pratetotal / item.prateqty).toFixed(1)).append(`&nbsp;<i class="fa-solid fa-star" style="color: #ffad21!important;"></i>`);
 					}
 				}
+
+				// Document load 的時候顯示追蹤過的商品，$(`#followProduct_${i}`) 要新增在空讚的圖片中
+				$.ajax({
+					url: "FollowproductController",
+					cache: false,
+					async: false,
+					type: 'POST',
+					dataType: "json",
+					data: {
+						"action": "getFollowProductList",
+						// "memberno": info.memberno,
+					},
+					success: function (jsondata) {
+						// console.log(jsondata);
+						for (let item of jsondata) {
+							// console.log(item.followproductPK.productno);
+							$(`#followProduct_${item.followproductPK.productno}`).addClass("bookmarked");
+						}
+					}
+
+				})
 			}
 		</script>
 		<script src="js/my_porder.js"></script>
@@ -536,26 +580,47 @@
 			//新增商品追蹤
 			//會員不知道該怎麼辦先寫死
 			const info = {
-				memberNo: 85346
+				// memberNo: 85346
 			}
 
 			function followProduct(productno) {
 
-				fetch("FollowproductController", {
-					method: "POST",
-					body: new URLSearchParams({
-						'memberno': info.memberNo,
-						'productno': productno,
-						'action': "addOneProductFollow"
-					})
-				}).then(resp => resp.json())
-					.then(item => {
-						swal({
-							title: "加入成功",
-							icon: "success",
-							closeOnClickOutside: false
-						});
-					})
+				const btnClass = event.target.className;
+
+				if (btnClass === 'bookmark-icon') {
+
+					fetch("FollowproductController", {
+						method: "POST",
+						body: new URLSearchParams({
+							'productno': productno,
+							'action': "addOneProductFollow"
+						})
+					}).then(resp => resp.json())
+						.then(item => {
+							console.log(item);
+							if (item) {
+								console.log(productno);
+								$('#followProduct_' + productno).addClass("bookmarked");
+
+							}
+						})
+				} else if (btnClass === 'bookmark-icon bookmarked') {
+
+					fetch("FollowproductController", {
+						method: "POST",
+						body: new URLSearchParams({
+							'productno': productno,
+							'action': "unfollowOneProduct"
+						})
+					}).then(resp => resp.json())
+						.then(item => {
+							console.log(item);
+							if (item) {
+								console.log(productno);
+								$('#followProduct_' + productno).removeClass("bookmarked");
+							}
+						})
+				}
 			}
 		</script>
 </body>
