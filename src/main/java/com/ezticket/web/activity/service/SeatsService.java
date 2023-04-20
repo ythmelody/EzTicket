@@ -1,25 +1,17 @@
 package com.ezticket.web.activity.service;
 
-import com.ezticket.web.activity.pojo.BlockModelVO;
-import com.ezticket.web.activity.pojo.BlockPrice;
-import com.ezticket.web.activity.pojo.Seats;
-import com.ezticket.web.activity.pojo.SeatsModelVO;
-import com.ezticket.web.activity.repository.SeatsModelDAO;
+import com.ezticket.web.activity.dto.SessionDto;
+import com.ezticket.web.activity.pojo.*;
 import com.ezticket.web.activity.repository.SeatsRedisDAO;
 import com.ezticket.web.activity.repository.SeatsRepository;
+import com.ezticket.web.activity.repository.SessionRepository;
 import com.ezticket.web.activity.repository.impl.BlockModelDAOImpl;
 import com.ezticket.web.activity.repository.impl.SeatsModelDAOImpl;
-import com.ezticket.web.activity.repository.impl.SeatsRedisDAOImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.repository.query.Param;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class SeatsService {
@@ -36,12 +28,15 @@ public class SeatsService {
     @Autowired
     private BlockPriceService blockPriceService;
 
+    @Autowired
+    private SessionRepository sessionRepository;
+
     public List<Seats> getSeatsBySessionAndBlockNo(Integer sessionNo, Integer blockNo) {
         return seatsRepository.findBySessionNoAndBlockNo(sessionNo, blockNo);
     }
 
-    public List<Integer> getToSellSeatsByBlock(int blockNo, int seatStatus) {
-        return seatsRepository.getIdsByBlockNoAndSeatStatus(blockNo, seatStatus);
+    public List<Integer> getToSellSeatsBySessionAndBlock(int sessionNo, int blockNo, int seatStatus) {
+        return seatsRepository.getIdsBySessionNoANDBlockNoAndSeatStatus(sessionNo, blockNo, seatStatus);
     }
 
     public int updateOneSeat(String blockName, String realX, String realY, int seatStatus, int seatNo) {
@@ -61,8 +56,8 @@ public class SeatsService {
         return seatsRepository.getActBlockHasSeats(actNo);
     }
 
-    public boolean isSessionBlockSeatsExist(int sessionNo, int blockNo){
-        if (!seatsRepository.getSessionBlockSeatsExist(sessionNo, blockNo).isEmpty()){
+    public boolean isSessionBlockSeatsExist(int sessionNo, int blockNo) {
+        if (!seatsRepository.getSessionBlockSeatsExist(sessionNo, blockNo).isEmpty()) {
             return true;
         }
         return false;
@@ -100,7 +95,7 @@ public class SeatsService {
     }
 
     public List<Integer> getSeatsBySystem(int ticketQTY, int blockNo, int sessionNo) {
-        List<Integer> toSellSeats = getToSellSeatsByBlock(blockNo, 1);
+        List<Integer> toSellSeats = getToSellSeatsBySessionAndBlock(sessionNo, blockNo, 1);
 
         Set<String> lockedSeats = getLockedSeatsBySession(sessionNo);
 
@@ -112,10 +107,49 @@ public class SeatsService {
             }
         }
 
-        List<Integer> returnedList = new LinkedList<Integer>();
+        List<Integer> returnedList = new ArrayList<Integer>();
 
-        for (int i = 0; i < ticketQTY; i++) {
-            returnedList.add(toSellSeats.get(i));
+        switch (ticketQTY) {
+            case 1:
+                returnedList.clear();
+                returnedList.add(toSellSeats.get(0));
+                break;
+            case 2:
+                returnedList.clear();
+
+                for (int i = 0; i < toSellSeats.size() - 1; i++) {
+                    returnedList.clear();
+                    returnedList.add(toSellSeats.get(i));
+                    returnedList.add(toSellSeats.get(i + 1));
+                    if(seatsRedisDAO.setFindAllValues("Session" + sessionNo + ":Set:2").contains(returnedList.toString()) == true)
+                        break;
+                }
+                break;
+            case 3:
+                returnedList.clear();
+
+                for (int i = 0; i < toSellSeats.size() - 2; i++) {
+                    returnedList.clear();
+                    returnedList.add(toSellSeats.get(i));
+                    returnedList.add(toSellSeats.get(i + 1));
+                    returnedList.add(toSellSeats.get(i + 2));
+                    if(seatsRedisDAO.setFindAllValues("Session" + sessionNo + ":Set:3").contains(returnedList.toString()) == true)
+                        break;
+                }
+                break;
+            case 4:
+                returnedList.clear();
+
+                for (int i = 0; i < toSellSeats.size() - 3; i++) {
+                    returnedList.clear();
+                    returnedList.add(toSellSeats.get(i));
+                    returnedList.add(toSellSeats.get(i + 1));
+                    returnedList.add(toSellSeats.get(i + 2));
+                    returnedList.add(toSellSeats.get(i + 3));
+                    if(seatsRedisDAO.setFindAllValues("Session" + sessionNo + ":Set:4").contains(returnedList.toString()) == true)
+                        break;
+                }
+                break;
         }
 
         return returnedList;
@@ -156,7 +190,7 @@ public class SeatsService {
             newSeat.setRealX(seat.getRealX());
             newSeat.setRealY(seat.getRealY());
 
-            if(seat.getSeatStatus() != (-1))
+            if (seat.getSeatStatus() != (-1))
                 newSeat.setSeatStatus(1);
 
             seatsRepository.save(newSeat);
@@ -234,17 +268,66 @@ public class SeatsService {
 
         // 將異動完成的座位存起來
         for (Seats seat : returendList) {
+            System.out.println(seat);
             seatsRepository.save(seat);
         }
 
         return true;
     }
 
-    public boolean deleteSeats(Integer sessionNo, Integer blockNo){
-        if(seatsRepository.deleteBySessionNoAndBlockNo(sessionNo, blockNo) > 0){
+    public boolean deleteSeats(Integer sessionNo, Integer blockNo) {
+        if (seatsRepository.deleteBySessionNoAndBlockNo(sessionNo, blockNo) > 0) {
             return true;
         }
         return false;
+    }
+
+    public Optional<Seats> findById(Integer seatNo) {
+        return seatsRepository.findById(seatNo);
+    }
+
+    public Map<String, Integer> getSessionInfo(Integer sessionNo) {
+        Map<String, Integer> returnedMap = new HashMap<String, Integer>();
+        returnedMap.put("maxSeatsQty", seatsRepository.findSeatQtyBySessionNo(sessionNo));
+        returnedMap.put("maxStandingQty", seatsRepository.findStandingQtyBySessionNo(sessionNo));
+        returnedMap.put("seatsQty", seatsRepository.findSoldSeatQtyBySessionNo(sessionNo));
+        returnedMap.put("standingQty", seatsRepository.findSoldStandingQtyBySessionNo(sessionNo));
+        return returnedMap;
+    }
+
+    @Scheduled(cron = "0 0 0 * * *")
+    public void saveSeatsSets() {
+        List<Session> sessions = sessionRepository.findAll();
+        for (Session session : sessions) {
+            List<Seats> seats = seatsRepository.findOrderedSeatsBySessionNo(session.getSessionNo());
+
+            // 取得兩個座位的組合
+            for (int i = 0; i < seats.size() - 1; i++) {
+                List<Integer> toSaveSets = new ArrayList<Integer>();
+                toSaveSets.add(seats.get(i).getSeatNo());
+                toSaveSets.add(seats.get(i + 1).getSeatNo());
+                seatsRedisDAO.setAddKV("Session" + session.getSessionNo() + ":Set:2", toSaveSets.toString());
+            }
+
+            // 取得三個座位的組合
+            for (int i = 0; i < seats.size() - 2; i++) {
+                List<Integer> toSaveSets = new ArrayList<Integer>();
+                toSaveSets.add(seats.get(i).getSeatNo());
+                toSaveSets.add(seats.get(i + 1).getSeatNo());
+                toSaveSets.add(seats.get(i + 2).getSeatNo());
+                seatsRedisDAO.setAddKV("Session" + session.getSessionNo() + ":Set:3", toSaveSets.toString());
+            }
+
+            // 取得四個座位的組合
+            for (int i = 0; i < seats.size() - 3; i++) {
+                List<Integer> toSaveSets = new ArrayList<Integer>();
+                toSaveSets.add(seats.get(i).getSeatNo());
+                toSaveSets.add(seats.get(i + 1).getSeatNo());
+                toSaveSets.add(seats.get(i + 2).getSeatNo());
+                toSaveSets.add(seats.get(i + 3).getSeatNo());
+                seatsRedisDAO.setAddKV("Session" + session.getSessionNo() + ":Set:4", toSaveSets.toString());
+            }
+        }
     }
 
 

@@ -23,7 +23,7 @@ public interface SeatsRepository extends JpaRepository<Seats, Integer> {
     @Transactional
     @Modifying
     @Query("UPDATE Seats SET blockName=:blockname, realX=:realx, realY=:realy, seatStatus=:seatstatus  WHERE seatNo=:seatno ")
-    public int update(@Param("blockname") String blockName,@Param("realx") String realX, @Param("realy") String realY, @Param("seatstatus") int seatStatus, @Param("seatno") int seatNo);
+    public int update(@Param("blockname") String blockName, @Param("realx") String realX, @Param("realy") String realY, @Param("seatstatus") int seatStatus, @Param("seatno") int seatNo);
 
     @Transactional
     @Modifying
@@ -36,10 +36,14 @@ public interface SeatsRepository extends JpaRepository<Seats, Integer> {
     @Query("SELECT DISTINCT s.seatNo FROM Seats s WHERE s.sessionNo = :sessionNo AND s.blockNo = :blockNo")
     public List<Integer> getSessionBlockSeatsExist(@Param("sessionNo") int sessionNo, @Param("blockNo") int blockNo);
 
-    @Query("SELECT s.seatNo FROM Seats s WHERE s.blockNo = :blockNo AND s.seatStatus = :seatStatus")
-    public List<Integer> getIdsByBlockNoAndSeatStatus(@Param("blockNo") int blockNo, @Param("seatStatus") int seatStatus);
+    @Query("SELECT s.seatNo FROM Seats s WHERE s.sessionNo = :sessionNo AND s.blockNo = :blockNo AND s.seatStatus = :seatStatus ORDER BY s.x asc, s.y asc")
+    public List<Integer> getIdsBySessionNoANDBlockNoAndSeatStatus(@Param("sessionNo") int sessionNo, @Param("blockNo") int blockNo, @Param("seatStatus") int seatStatus);
 
     public List<Seats> findBySessionNo(int sessionNo);
+
+
+    @Query("SELECT s FROM Seats s WHERE s.sessionNo = :sessionNo ORDER BY s.blockNo asc, s.x asc, s.y asc")
+    public List<Seats> findOrderedSeatsBySessionNo(@Param("sessionNo") int sessionNo);
 
     @Query(value = "SELECT COUNT(seatNo) FROM Seats WHERE seatStatus = 1 AND sessionNo = :sessionNo AND blockNo = :blockNo", nativeQuery = true)
     public int getToSellNumber(@Param("sessionNo") int sessionNo, @Param("blockNo") int blockNo);
@@ -53,5 +57,23 @@ public interface SeatsRepository extends JpaRepository<Seats, Integer> {
     @Modifying
     @Transactional
     public int deleteBySessionNoAndBlockNo(Integer sessionNo, Integer blockNo);
+
+
+    //    Add on 04/19
+    //    計算座位席總數量
+    @Query("SELECT COUNT(s.seatNo) FROM Seats s WHERE s.x IS NOT NULL AND s.sessionNo = :sessionNo")
+    public int findSeatQtyBySessionNo(@Param("sessionNo") Integer sessionNo);
+
+    //    計算站席總數量
+    @Query("SELECT COUNT(s.seatNo) FROM Seats s WHERE s.x IS NULL AND s.sessionNo = :sessionNo")
+    public int findStandingQtyBySessionNo(@Param("sessionNo") Integer sessionNo);
+
+    //    計算座位席售出總數量(不含保留及場地限制)
+    @Query("SELECT COUNT(s.seatNo) FROM Seats s WHERE s.x IS NOT NULL AND s.seatStatus = 2 AND s.sessionNo = :sessionNo")
+    public int findSoldSeatQtyBySessionNo(@Param("sessionNo") Integer sessionNo);
+
+    //    計算站席總數量(不含保留及場地限制)
+    @Query("SELECT COUNT(s.seatNo) FROM Seats s WHERE s.x IS NULL AND s.seatStatus = 2 AND s.sessionNo = :sessionNo")
+    public int findSoldStandingQtyBySessionNo(@Param("sessionNo") Integer sessionNo);
 
 }

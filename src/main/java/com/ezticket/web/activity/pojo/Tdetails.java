@@ -26,10 +26,7 @@ public class Tdetails {
     @Column(name = "ACOMMENTSTATUS")
     private Integer acommentStatus;
 
-
-//    @ManyToOne
-//    @JoinColumn(name = "SESSIONNO",insertable = false, updatable = false)
-//    private Session session;
-
-
+    @ManyToOne
+    @JoinColumn(name = "SESSIONNO",insertable = false, updatable = false)
+    private Session session;
 }

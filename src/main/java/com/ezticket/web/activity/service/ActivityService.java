@@ -94,4 +94,9 @@ public class ActivityService {
         activity1.setActivityNo(activityRepository.findLastInsert());
         return activity1;
     }
+
+    //    Add by Shawn on 04/19
+    public List<Integer> findActNosByWetherSeatIsTrue(){
+        return activityRepository.findActNosByWetherSeatIsTrue();
+    }
 }

@@ -17,7 +17,7 @@ public class TdetailsService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public List<TdetailsDto> findAll(){
+    public List<TdetailsDto> findAll() {
         return adetailsRepository.findAll()
                 .stream()
                 .map(this::entityToDTO)
@@ -25,7 +25,12 @@ public class TdetailsService {
 
     }
 
-    private TdetailsDto entityToDTO(Tdetails adetails){
-        return modelMapper.map(adetails,TdetailsDto.class);
+    private TdetailsDto entityToDTO(Tdetails adetails) {
+        return modelMapper.map(adetails, TdetailsDto.class);
+    }
+
+    // Add by Shawn on 04/19
+    public List<Tdetails> getByOrderNo(Integer torderNo) {
+        return adetailsRepository.findByTorderno(torderNo);
     }
 }
