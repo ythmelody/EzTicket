@@ -1,5 +1,6 @@
 package com.ezticket.web.users.service;
 
+import com.ezticket.web.users.pojo.Backuser;
 import com.ezticket.web.users.pojo.Host;
 import com.ezticket.web.users.repository.HostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,10 @@ import java.util.Optional;
 public class HostService {
     @Autowired
     private HostRepository hostRepository;
+
+    @Autowired
+    private BackuserService backuserService;
+
     public List<Host> getAllHost(){
         return hostRepository.findAll()
                 .stream().toList();
@@ -29,6 +34,13 @@ public class HostService {
         } else {
             throw new RuntimeException("Host not found with hostno: " + hostno);
         }
+    }
+
+    //如果後台使用者是驗票人員的話,拿取host資料
+    public Host getBuHost(String baacount){
+        Backuser backuser = backuserService.getBackuserInfo(baacount);
+        Host host = hostRepository.findByHostemail(backuser.getBaemail());
+        return host;
     }
 
 

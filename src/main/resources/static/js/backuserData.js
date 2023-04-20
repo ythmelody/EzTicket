@@ -19,7 +19,7 @@ fetch("backuser/getBackuserInfo", {
     .then(response => response.json())
     .then(response => {
         //測試檢視拿到的資料
-        console.log(response);
+        // console.log(response);
     
         //姓名
         $(".D-baname").text(`${response.baname}`);
@@ -28,8 +28,13 @@ fetch("backuser/getBackuserInfo", {
         $(".D-baemail").text(`${response.baemail}`);
         $(".D-baemail").val(`${response.baemail}`);
         //大頭貼
-        const url = `data:image/png;base64,${response.baimg}`;
-        $('.D-baimg').attr('src', url);
+        if(response.baimg === null){
+            $('.D-baimg').attr('src', "images/profile-imgs/img-13.jpg");
+        }else{
+            const url = `data:image/png;base64,${response.baimg}`;
+            $('.D-baimg').attr('src', url);
+
+        }
         
     
         
@@ -46,4 +51,11 @@ fetch("backuser/getBackuserAuthInfo", {
         //角色
         $(".D-barole").text(`${response.rolename}`);
         $(".D-barole").val(`${response.rolename}`);
+
+        //抓出該角色沒有的權限刪除
+        const keys = Object.keys(response.nofuncs);
+        for (let key of keys) {
+            // console.log(key)
+            $(`.${key}`).remove();
+        }
     })

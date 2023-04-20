@@ -1,6 +1,7 @@
 package com.ezticket.core.service;
 
 import com.ezticket.core.pojo.EmailDetails;
+import jakarta.mail.MessagingException;
 
 public interface EmailService {
     // Method
@@ -10,4 +11,6 @@ public interface EmailService {
     // Method
     // To send an email with attachment
     String sendMailWithAttachment(EmailDetails details);
+
+    void sendVerificationCode(String email, String code) throws MessagingException;
 }

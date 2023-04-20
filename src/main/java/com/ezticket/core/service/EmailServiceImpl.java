@@ -91,4 +91,21 @@ public class EmailServiceImpl implements EmailService {
             return "Error while sending mail!!!";
         }
     }
+
+
+
+
+    //驗證碼信件
+    @Override
+    public void sendVerificationCode(String email, String code) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setFrom(sender);
+        helper.setTo(email);
+        helper.setSubject("Welcome to ezTicket,請盡快領取您的驗證碼!");
+        helper.setText("您的驗證碼是: " + code + "<br> 請於五分鐘內返回頁面驗證!",true);
+
+        javaMailSender.send(message);
+    }
 }

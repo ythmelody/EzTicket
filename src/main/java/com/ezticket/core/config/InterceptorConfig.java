@@ -13,8 +13,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(authenticationInterceptor).addPathPatterns(
-                "/back-**/**");
+        registry.addInterceptor(authenticationInterceptor)
+                .addPathPatterns("/back-**/**");
 
     }
 
