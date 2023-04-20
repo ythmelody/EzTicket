@@ -364,18 +364,21 @@
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                           </svg></i>
                         </div>
+                        
                       </div>
                     </div>
                     <div style="margin-left: 20px">
                       <div class="nav custom2-tabs btn-group" role="tablist">
-             
+                        <div>
+                            <a  class=" main-btn btn-hover h_40 pe-4 ps-4" href="back-activity-create-event.html">建立活動</a>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>		
               </div>
               <div class="event-list">
-                <div class="tab-content">
+                <div class="tab-content" >
                   <div
                     class="tab-pane fade show active"
                     id="all-tab"
@@ -435,9 +438,9 @@
        fetch("http://localhost:8085/Activity/findAll")
         .then((Response) => Response.json())
         .then((data) => {
-          let str="";
+           let str="";
            let status=" ";
-
+           let count = 1;
           for(i of data){             
     
           switch(i.astatus){
@@ -447,9 +450,11 @@
             break;
             case 2: status="已下架";
             break;
+            case 3: status = "已刪除";
+            break;
           }
-         
-          str+=`<div class="contact-list" >
+          if(i.astatus!=3){
+          str+=`<div class="contact-list" value="${i.astatus}">
                         <div
                           class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between"
                         >
@@ -472,18 +477,14 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
                               <a href="#" class="dropdown-item"
-                                ><i class="fa-solid fa-gear me-3"></i>編輯活動</a
+                                ><i class="fa-solid fa-gear me-3" id="editbtn${count}"></i>編輯活動</a
                               >
-                              <a href="#" class="dropdown-item"
-                                ><i class="fa-solid fa-eye me-3"></i>預覽活動
+                              <a href="front-activity-event-detail.html?activityNo=${i.activityNo}" class="dropdown-item")"
+                                ><i class="fa-solid fa-eye me-3" ></i>預覽活動
                                 </a
                               >
-                              <a href="#" class="dropdown-item"
-                                ><i class="fa-solid fa-clone me-3"></i
-                                >複製活動</a
-                              >
-                              <a href="#" class="dropdown-item delete-event"
-                                ><i class="fa-solid fa-trash-can me-3"></i
+                              <a href="#" class="dropdown-item delete-event" onclick="deleteActivity(${i.activityNo})"
+                                ><i class="fa-solid fa-trash-can me-3" id="deletebtn${count}"></i
                                 >刪除活動</a
                               >
                             </div>
@@ -526,11 +527,34 @@
                      
                         </div>
                         </div>`
+                        count++;
+                      }
                     
                     }
                     listTab.innerHTML=str;
+                    // const eventList = document.querySelectorAll(".contact-list");
+                    // console.log(eventList)
+                    //   for (i of eventList)
+                    //      if (i.value === 3) {
+                    //         i.style.display = "none";
+                    // }
                   })
-    
+                  
+                  //刪除活動
+                     function deleteActivity(e) {
+                       const formData = new FormData();
+                       formData.append('activityNo', e);
+                       formData.append('aStatus', 3);
+                      console.log(e)
+                        fetch(`http://localhost:8085/Activity/deleteActivity`, {
+                         method: 'POST',
+                         body: formData,
+                       })
+                          .then((Response) => Response.json())
+                          .then((data) => {})
+                          
+                      }
+                     
         const search = document.querySelector("#search");
         search.addEventListener("input", () => {
         fetch(`http://localhost:8085/Activity/ByActName?actName=${search.value}`)
@@ -549,7 +573,10 @@
             break;
             case 2: status="已下架";
             break;
+            case 3: status = "已刪除";
+            break;
           }
+          if (i.astatus != 3) {
               str+=`<div class="contact-list" >
                         <div
                           class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between"
@@ -580,11 +607,7 @@
                                 ><i class="fa-solid fa-eye me-3" id="previewbtn${count}"></i>預覽活動
                                 </a
                               >
-                              <a href="#" class="dropdown-item"
-                                ><i class="fa-solid fa-clone me-3" id="clonebtn${count}"></i
-                                >複製活動</a
-                              >
-                              <a href="#" class="dropdown-item delete-event"
+                              <a href="front-activity-event-detail.html?activity=${i.activityNo}" class="dropdown-item delete-event" )"
                                 ><i class="fa-solid fa-trash-can me-3" id="deletebtn${count}"></i
                                 >刪除活動</a
                               >
@@ -629,7 +652,7 @@
                         </div>
                       </div>`
                     count++
-                    
+              }
             }
             listTab.innerHTML=str;
           }
@@ -637,6 +660,8 @@
           )
           
         })
+
+       
 
     </script>
   </body>

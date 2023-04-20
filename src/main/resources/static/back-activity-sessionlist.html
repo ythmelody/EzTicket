@@ -36,6 +36,14 @@
       href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css"
       rel="stylesheet"
     />
+
+    <style>
+     .edit {
+  width:100%;
+  box-sizing:border-box; /* 使元素的寬度包括padding margin, border*/
+  -moz-box-sizing:border-box;
+}
+    </style>
   </head>
 
   <body class="d-flex flex-column h-100">
@@ -525,7 +533,7 @@
       tabindex="-1"
       aria-labelledby="couponModalLabel"
       aria-hidden="false"
-    >
+      >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -618,12 +626,13 @@
               提交
             </button>
           </div>
-        </div>
+        </div><input type="text" style="display: block;">
       </div>
       <a href=""></a>
-    </div>
+      </div>
     <!-- 新增場次結束-->
 
+    
     <!-- Body End -->
 
     <script src="js/vertical-responsive-menu.min.js"></script>
@@ -674,13 +683,9 @@
                               <i class="fa-solid fa-ellipsis-vertical"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
-                              <a href="#" class="dropdown-item"
+                              <a href="#" class="dropdown-item" onclick="editSession(${i.sessionNo})" 
                                 ><i class="fa-solid fa-gear me-3"></i>編輯場次</a
                               >                             
-                              <a href="#" class="dropdown-item"
-                                ><i class="fa-solid fa-clone me-3"></i
-                                >複製場次</a
-                              >
                               <a href="#" class="dropdown-item delete-event"
                                 ><i class="fa-solid fa-trash-can me-3"></i
                                 >刪除場次</a
@@ -703,21 +708,28 @@
                               <i class="fa-solid fa-calendar-days"></i>
                             </span>
                             <p>活動開始時間</p>
-                            <h6 class="coupon-status">${i.sessionsTime}</h6>
+                            <div><input type="number" class="edit${i.sessionNo}" style="display:none" id=editsessionsTime></div>
+                            
+                            <h6 class="coupon-status" style="display:block" id="sessionsTime${i.sessionNo}">${i.sessionsTime}</h6>
                           </div>
                           <div class="icon-box">
                             <span class="icon">
                               <i class="fa-solid fa-calendar-days"></i>
                             </span>
                             <p>活動結束時間</p>
-                            <h6 class="coupon-status">${i.sessioneTime}</h6>
+                             <div><input type="number" class="edit${i. sessionNo}" style="display:none" id=editsessioneTime></div>
+
+                            <h6 class="coupon-status" style="display:block" id="sessioneTime${i.sessionNo}">${i.sessioneTime}</h6>
                           </div>
                           <div class="icon-box">
                             <span class="icon" >
                               <i class="fa-solid fa-ticket"></i>
                             </span>
                             <p>票券張數</p>
-                            <h6 class="coupon-status">站${
+                            <div><input type="number" class="edit${i. sessionNo}" style="display:none" id=editmaxStandingQty></div>
+                            <div><input type="number" class="edit${i. sessionNo}" style="display:none" id=editmaxStandingQty></div>
+
+                            <h6 class="coupon-status" style="display:block">站${
                               i.maxStandingQty
                             }<br>座${i.maxSeatsQty}<br>——————<br>共${
                 i.maxSeatsQty + i.maxStandingQty
@@ -728,6 +740,7 @@
                               <i class="fa-solid fa-tag"></i>
                             </span>
                             <p>已售數量</p>
+                            
                             <h6 class="coupon-status">站${i.standingQty}<br>座${
                 i.seatsQty
               }<br>——————<br>共${i.seatsQty + i.standingQty}</h6>
@@ -759,13 +772,9 @@
                               <i class="fa-solid fa-ellipsis-vertical"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
-                              <a href="#" class="dropdown-item"
+                              <a href="#" class="dropdown-item" onclick=editSession(${i.sessionNo})
                                 ><i class="fa-solid fa-gear me-3"></i>編輯場次</a
                               >                             
-                              <a href="#" class="dropdown-item"
-                                ><i class="fa-solid fa-clone me-3"></i
-                                >複製場次</a
-                              >
                               <a href="#" class="dropdown-item delete-event"
                                 ><i class="fa-solid fa-trash-can me-3"></i
                                 >刪除場次</a
@@ -788,14 +797,14 @@
                               <i class="fa-solid fa-calendar-days"></i>
                             </span>
                             <p>活動開始時間</p>
-                            <h6 class="coupon-status">${i.sessionsTime}</h6>
+                            <h6 class="coupon-status" id="sessionsTime${i.sessionNo}">${i.sessionsTime}</h6>
                           </div>
                           <div class="icon-box">
                             <span class="icon">
                               <i class="fa-solid fa-calendar-days"></i>
                             </span>
                             <p>活動結束時間</p>
-                            <h6 class="coupon-status">${i.sessioneTime}</h6>
+                            <h6 class="coupon-status" id="sessioneTime${i.sessionNo}">${i.sessioneTime}</h6>
                           </div>
                           <div class="icon-box">
                             <span class="icon" >
@@ -822,48 +831,70 @@
             }
           }
           listTab.innerHTML = str;
+          
         });
+        function editSession(e) {
+          console.log(e)
+          let edit=document.querySelectorAll(`.edit${e}`);
+          for(i of edit){
+            $(".edit" + e).css("display", "block");
+          }
+          // const formData = new FormData();
+          // formData.append('sessionNo', e);
+          // formData.append('sessionsTime', 3);
+          // formData.append('sessioneTime', 3);
+          // formData.append('maxSeatsQty', 3);
+          // formData.append('maxStandingQty', 3);
+          // console.log(e)
+          // fetch(`http://localhost:8085/Activity/deleteActivity`, {
+          //   method: 'POST',
+          //   body: formData,
+          // })
+          //   .then((Response) => Response.json())
+          //   .then((data) => { })
+
+        }
     </script>
     <script>
    
 
 
 
-   Date.prototype.format = function(format) {
-  const monthNames = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-  ];
-  const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  //  Date.prototype.format = function(format) {
+  // const monthNames = ["January", "February", "March", "April", "May", "June",
+  //   "July", "August", "September", "October", "November", "December"
+  // ];
+  // const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-  const padZero = (value) => {
-    return (value < 10) ? "0" + value : value;
-  };
+//   const padZero = (value) => {
+//     return (value < 10) ? "0" + value : value;
+//   };
 
-  const year = this.getFullYear();
-  const month = this.getMonth();
-  const day = this.getDate();
-  const dayOfWeek = this.getDay();
-  const hours = this.getHours();
-  const minutes = this.getMinutes();
-  const seconds = this.getSeconds();
-  const timezoneOffset = this.getTimezoneOffset();
-  const timezoneOffsetHours = Math.floor(Math.abs(timezoneOffset) / 60);
-  const timezoneOffsetMinutes = Math.abs(timezoneOffset) % 60;
-  const timezoneOffsetString = (timezoneOffset >= 0 ? '+' : '-') +
-    padZero(timezoneOffsetHours) +
-    padZero(timezoneOffsetMinutes);
+//   const year = this.getFullYear();
+//   const month = this.getMonth();
+//   const day = this.getDate();
+//   const dayOfWeek = this.getDay();
+//   const hours = this.getHours();
+//   const minutes = this.getMinutes();
+//   const seconds = this.getSeconds();
+//   const timezoneOffset = this.getTimezoneOffset();
+//   const timezoneOffsetHours = Math.floor(Math.abs(timezoneOffset) / 60);
+//   const timezoneOffsetMinutes = Math.abs(timezoneOffset) % 60;
+//   const timezoneOffsetString = (timezoneOffset >= 0 ? '+' : '-') +
+//     padZero(timezoneOffsetHours) +
+//     padZero(timezoneOffsetMinutes);
 
-  return format
-    .replace("yyyy", year)
-    .replace("MMMM", monthNames[month])
-    .replace("MM", padZero(month + 1))
-    .replace("dd", padZero(day))
-    .replace("EEEE", dayNames[dayOfWeek])
-    .replace("kk", padZero(hours))
-    .replace("mm", padZero(minutes))
-    .replace("ss", padZero(seconds))
-    .replace("ZZZZ", timezoneOffsetString);
-};
+//   return format
+//     .replace("yyyy", year)
+//     .replace("MMMM", monthNames[month])
+//     .replace("MM", padZero(month + 1))
+//     .replace("dd", padZero(day))
+//     .replace("EEEE", dayNames[dayOfWeek])
+//     .replace("kk", padZero(hours))
+//     .replace("mm", padZero(minutes))
+//     .replace("ss", padZero(seconds))
+//     .replace("ZZZZ", timezoneOffsetString);
+// };
   
       document.querySelector("#addSession").addEventListener("click",()=>{
    

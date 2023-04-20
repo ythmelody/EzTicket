@@ -114,7 +114,10 @@
             min-width: 745px;
         }
 
-        #mycanvas{cursor: pointer;text-align:center}
+        #mycanvas {
+            cursor: pointer;
+            text-align: center
+        }
 
     </style>
 </head>
@@ -355,12 +358,12 @@
                     <button class="statusBtn selected" style="margin: 5px;" disabled>已選擇</button>
                 </div>
                 <div style="margin: 35px 0px; position: relative; right: 0;">
-                        <button class="main-btn btn-hover"
-                                style="background-color: gray;" onclick="seatsmgt.cancel();">重設選位
-                        </button>
-                        <button class="main-btn btn-hover"
-                                onclick="seatsmgt.save()">確定選位
-                        </button>
+                    <button class="main-btn btn-hover"
+                            style="background-color: gray;" onclick="seatsmgt.cancel();">重設選位
+                    </button>
+                    <button class="main-btn btn-hover"
+                            onclick="seatsmgt.save()">確定選位
+                    </button>
                 </div>
             </div>
             <!-- (A) SEAT LAYOUT -->
@@ -392,7 +395,7 @@
                                 <input id="blockNo" type="hidden" value="">
                                 <label class="form-label">選擇張數</label>
                                 <select id="ticketDecr" class="form-control" data-size="5" title="Nothing selected"
-                                        data-live-search="true" >
+                                        data-live-search="true">
                                     <option value="1" selected>1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -410,7 +413,8 @@
                         <div class="col-lg-6 col-md-12">
                             <div class="form-group mt-4">
                                 <label class="form-label">請輸入驗證碼</label>
-                                <input id="toBeVerified" class="form-control h_40" type="text" placeholder="" value="" maxlength="6">
+                                <input id="toBeVerified" class="form-control h_40" type="text" placeholder="" value=""
+                                       maxlength="6">
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-12">
@@ -1003,7 +1007,7 @@
     // 系統選位 => 購票
     function TicketBySystem() {
 
-        if(verify() === false){
+        if (verify() === false) {
             return;
         }
 
@@ -1034,7 +1038,10 @@
                                     return;
                                 }
 
-                                alert("無對應數量票券");
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: '無對應數量票券'
+                                })
                             }
                         )
                 }

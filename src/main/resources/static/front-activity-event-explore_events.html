@@ -695,21 +695,46 @@
       });
     </script>
     <script>
+      let now = new Date();
+      const options = {
+          year: 'numeric',    // 年: 使用4位數
+          month: '2-digit',   // 月: 使用2數位
+          day: '2-digit',     // 日: 使用2數位
+          hour12: false,      // 12小時制: 不使用
+          hour: '2-digit',    // 時: 使用2數位
+          minute: '2-digit'  // 分: 使用2數位 
+        };
+        let nowDate=new Intl.DateTimeFormat('zh-TW', options).format(now);
+        console.log(nowDate)
       function dateDiffer(date1, date2) {
   const diffInMs = Math.abs(date2 - date1);
   const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
   const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60) % 24);
-  return { days: diffInDays, hours: diffInHours };
+  return `倒數 ${diffInDays}天又${diffInHours}小時`;
 }
+
+
       const listTab = document.querySelector("#listTab");
       fetch("http://localhost:8085/Activity/findAll")
         .then((Response) => Response.json())
         .then((data) => {
           let str = "";
-          const curDate=new Date();
+          let sTime="";
+          let countDays="";
           for (i of data) {
-       
-
+            
+            console.log(i.session[0]);
+            if(i.astatus!=3){
+              if( i.session[0]==null){
+                sTime="全站";
+                countDays="售完為止"
+              }else{
+                sTime= i.session[0].sessionsTime;
+                const date = new Date(i.session[0].sessionsTime);
+                console.log(dateDiffer(nowDate, date))
+               countDays = dateDiffer(now, date);
+                
+              }
 
             str += `<div
                       class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mix arts concert workshops volunteer sports health_Wellness"
@@ -718,31 +743,31 @@
                       <div class="main-card mt-4">
                         <div class="event-thumbnail">
                           <a
-                            href="Shawn_venue_event_detail_view.html?activityNo=${i.activityNo}"
+                            href="front-activity-event-detail.html?activityNo=${i.activityNo}"
                             class="thumbnail-img"
                           >
-                            <img src="http://localhost:8085/Aimgt/findAllByActivityNo/${i.activityNo}" alt="" />
+                            <img src="data:image/jpeg;base64,${i.aimgt[0].aimg }" alt="" />
                           </a>
                           <span class="bookmark-icon" title="Bookmark"></span>
                         </div>
                         <div class="event-content">
                           <a
-                            href="Shawn_venue_event_detail_view.html?activityNo=${i.activityNo}"
+                            href="front-activity-event-detail.html?activityNo=${i.activityNo}"
                             class="event-title"
                             >${i.aname}</a
                           >
                         </div>
                         <div class="event-footer">
                           <div class="event-timing">
-                            <h6 class="coupon-status"></h6>
+                            <h6 class="coupon-status">${sTime}</h6>
                             <span class="publish-time"
-                              ><i class="fa-solid fa-clock me-2"></i>倒數 小時</span
+                              ><i class="fa-solid fa-clock me-2"></i>${countDays}</span
                             >
                           </div>  
                         </div>
                       </div>
                     </div>`;
-           
+                  }
           }
           listTab.innerHTML = str;
         });
@@ -752,16 +777,20 @@
         .then((Response) => Response.json())
         .then((data) => {
           let str = "";
-          const curDate=new Date();
+          let sTime = "";
+          let countDays = "";
            
               for(i of data){
-                
-            i.session.forEach(session => {
-                sessionsTime.push(session.sessionsTime);
-            });
-        
-       
-          
+                if(i.astatus!==3){
+                  if (i.session[0] == null) {
+                    sTime = "全站";
+                    countDays = "售完為止"
+                  } else {
+                    sTime = i.session[0].sessionsTime;
+                    console.log(dateDiffer(nowDate, i.session[0].sessionsTime))
+                    //  countDays = dateDiffer(now, i.session[0].sessionsTime);
+
+                  }
                 str+=`<div
                       class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mix arts concert workshops volunteer sports health_Wellness"
                       data-ref="mixitup-target"
@@ -769,23 +798,23 @@
                       <div class="main-card mt-4">
                         <div class="event-thumbnail">
                           <a
-                            href="Shawn_venue_event_detail_view.html?activityNo=${i.activityNo}"
+                            href="front-activity-event-detail.html?activityNo=${i.activityNo}"
                             class="thumbnail-img"
                           >
-                            <img src="http://localhost:8085/Aimgt/findAllByActivityNo/${i.activityNo}" alt="" />
+                            <img src="data:image/jpeg;base64,${i.aimgt[0].aimg}" alt="" />
                           </a>
                           <span class="bookmark-icon" title="Bookmark"></span>
                         </div>
                         <div class="event-content">
                           <a
-                            href="Shawn_venue_event_detail_view.html?activityNo=${i.activityNo}"
+                            href="front-activity-event-detail.html?activityNo=${i.activityNo}"
                             class="event-title"
                             >${i.aname}</a
                           >
                         </div>
                         <div class="event-footer">
                           <div class="event-timing">
-                            <h6 class="coupon-status"></h6>
+                            <h6 class="coupon-status">${sTime}</h6>
                             <span class="publish-time"
                               ><i class="fa-solid fa-clock me-2"></i>倒數 小時</span
                             >
@@ -793,6 +822,7 @@
                         </div>
                       </div>
                     </div>`;
+                    }
                 listTab.innerHTML=str;
               
             }

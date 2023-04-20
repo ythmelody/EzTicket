@@ -1205,7 +1205,7 @@
           <div class="row justify-content-center">
             <div class="col-lg-12 col-md-12">
               <div class="main-title text-center">
-                <h3>建立活動</h3>
+                <h3>編輯活動</h3>
               </div>
             </div>
             <div class="col-xl-8 col-lg-9 col-md-12">
@@ -1892,7 +1892,7 @@
       
       
     </script>
-  <!--日期選擇-->
+
     <script>  
                $('#asdate').datetimepicker({
                   theme: '',          //theme: 'dark',
@@ -2027,29 +2027,46 @@
 
 <!--活動新增開始-->
    <script>
-  
+    let urlParams = new URLSearchParams(window.location.search);
+		const activityNo = urlParams.get('activityNo');
+    console.log(activityNo);
 
-    document.querySelector("#finish").addEventListener("click",()=>{
-       const formData = new FormData();
-     formData.append('aname',$("#aname").val());
-     formData.append('aclass',$("#aclass").find(":selected").val());
-     formData.append('aperformer',$("#aperformer").val());
-     formData.append('host',$("#host").find(":selected").val());
-     formData.append('adiscrip', $("#adiscrip").val());
-     formData.append('anote', $("#anote").val());
-     formData.append('aticketremind', $("#aticketremind").val());
-     formData.append('aplace', $("#aplace").val());
-     formData.append('aplaceaddress', $("#aplaceaddress").val());
-     formData.append('asdate', $("#asdate").val());
-     formData.append('aedate',$("#aedate").val());
-     formData.append('wetherseat', $("#wetherseat").val());
-     console.log($("#asdate").val())
- 
-      const fileInput = document.querySelector("#seat");
-     formData.append("aseatimg", fileInput.files[0]);
-     fetch('http://localhost:8085/Activity/saveActivity', {
-         method: 'POST',
-         body: formData,
+
+      document.querySelector("#finish").addEventListener("click", () => {
+        const formData = new FormData();
+        formData.append('activityNo', 1014);
+        formData.append('aname', $("#aname").val());
+        formData.append('aclass', $("#aclass").find(":selected").val());
+        formData.append('aperformer', $("#aperformer").val());
+        formData.append('host', $("#host").find(":selected").val());
+        formData.append('adiscrip', $("#adiscrip").val());
+        formData.append('anote', $("#anote").val());
+        formData.append('aticketremind', $("#aticketremind").val());
+        formData.append('aplace', $("#aplace").val());
+        formData.append('aplaceaddress', $("#aplaceaddress").val());
+        formData.append('asdate', $("#asdate").val());
+        formData.append('aedate', $("#aedate").val());
+        formData.append('wetherseat', $("#wetherseat").val());
+        console.log($("#asdate").val())
+        console.log($("#aname").val());
+        console.log($("#aclass").find(":selected").val());
+        console.log($("#aperformer").val());
+        console.log($("#host").find(":selected").val());
+        console.log($("#adiscrip").val());
+        console.log($("#anote").val());
+        console.log($("#aticketremind").val());
+        console.log($("#aplace").val());
+        console.log($("#aplaceaddress").val());
+        console.log($("#asdate").val());
+        console.log($("#aedate").val());
+        console.log($("#wetherseat").val());
+        
+        const fileInput = document.querySelector("#seat");
+        formData.append("aseatimg", fileInput.files[0]);
+        console.log(fileInput.files[0]);
+        fetch('http://localhost:8085/Activity/updateActivity', {
+          method: 'POST',
+          body: formData,
         }).then(resp => resp.json())
           .then(data => {
             console.log(data.activityNo);
@@ -2104,12 +2121,12 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
          
 
     });
-	//判斷式結束		
+		//判斷式結束		
    </script>
 <!--活動新增結束-->
 
 <!--活動複製新增開始-->
-<!-- <script>
+<script>
   fetch(`http://localhost:8085/Activity/findByactivityNo?activityNo=${1}`)
     .then(resp => resp.json())
     .then(data => {
@@ -2225,10 +2242,35 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
           
           let str="";
           let count=2;
-    
+    console.log(data)
           for(let i=1;i<data.length;i++){
             if((i-1)==0){
-              $(`#img1`).attr("src", `data:image/jpeg;base64,${data[i-1].aimg}`); 
+              const file1=document.querySelector("#file1");
+              $(`#img1`).attr("src", `data:image/jpeg;base64,${data[i-1].aimg}`);
+              // conosle.log(data[i-1].aimg)
+              //   var base64Image = data[i - 1].aimg;
+              // conosle.log(data[i - 1].aimg)
+              // var byteCharacters = atob(base64Image);
+              // conosle.log(byteCharacters)
+              // var byteNumbers = new Array(byteCharacters.length);
+              // for (var j = 0; i < byteCharacters.length; i++) {
+              //   byteNumbers[j] = byteCharacters.charCodeAt(j);
+              // }
+              // var byteArray = new Uint8Array(byteNumbers);
+
+              // var imageFile = new File([byteArray], "image.jpeg", { type: "image/jpeg" });
+              // file1.files[0] = data[i-1].aimg;
+              // console.log("檔案已設定成功：", file1.files[0]);
+              // file1.onchange = function () {
+              //   if (file1.files[0]) {
+                  
+              //   } else {
+              //     console.log("檔案設定失敗");
+              //   }
+              // };
+              //  const imageFile = new File([data[i-1].aimg], "image.jepg", { type: "image/jepg" });
+              // file1.files[0] = imageFile;
+              // $(`#file1`).attr("src", `data:image/jpeg;base64,${data[i - 1].aimg}`); 
             }
             const br = document.createElement("br");
             imgList.append(br);
@@ -2267,8 +2309,25 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
             }       
 
         })  
+        // $(`#img${count}`).attr("src", `data:image/jpeg;base64,${i. aimg}`); 
 
-</script> -->
+        //  formData.append('aname', $("#aname").val());
+        //   formData.append('aclass', $("#aclass").find(":selected").val());
+        //   formData.append('aperformer', $("#aperformer").val());
+        //   formData.append('host', $("#host").find(":selected").val());
+        //   formData.append('adiscrip', $("#adiscrip").val());
+        //   formData.append('anote', $("#anote").val());
+        //   formData.append('aticketremind', $("#aticketremind").val());
+        //   formData.append('aplace', $("#aplace").val());
+        //   formData.append('aplaceaddress', $("#aplaceaddress").val());
+        //   formData.append('asdate', $("#asdate").val());
+        //   formData.append('aedate', $("#aedate").val());
+        //   formData.append('wetherseat', $("#wetherseat").val());
+        //   console.log($("#asdate").val())
+
+        //   const fileInput = document.querySelector("#seat");
+        //   formData.append("aseatimg", fileInput.files[0]);
+</script>
 <!--活動複製新增結束-->
 
 

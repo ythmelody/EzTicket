@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.internal.util.stereotypes.Lazy;
 
 import java.util.Date;
 import java.util.List;
@@ -59,11 +58,9 @@ public class Activity {
     private String aNote;
     @Column(name = "ATICKETREMIND")
     private String aTicketRemind;
-//    @JsonManagedReference
-//    @OneToMany(mappedBy = "activity")
-//    private List<Session> session;
-
-//    加上 fetch = FetchType.EAGER 避免 LazyLoading
+    @JsonManagedReference
+    @OneToMany(mappedBy = "activity")
+    private List<Session> session;
     @JsonManagedReference
     @OneToMany(mappedBy = "activity", fetch = FetchType.EAGER)
     private List<Aimgt> aimgt;

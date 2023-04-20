@@ -5,9 +5,11 @@ import com.ezticket.web.activity.pojo.Session;
 import com.ezticket.web.activity.repository.SessionRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -81,5 +83,14 @@ public class SessionService {
                 sessionRepository.save(session);
             }
         }
+    }
+
+    public void deleteSession(Integer sessionNo){
+        sessionRepository.delete(sessionNo);
+    }
+
+    public void updateSession(Integer sessionNo, Timestamp sessionsTime, Timestamp sessioneTime, Integer maxSeatsQty, Integer maxStandingQty) {
+        sessionRepository.update(sessionNo,sessionsTime, sessioneTime, maxSeatsQty,maxStandingQty);
+
     }
 }
