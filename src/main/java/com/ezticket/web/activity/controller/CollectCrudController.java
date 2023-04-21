@@ -27,9 +27,20 @@ public class CollectCrudController {
         return collectCrudService.useTicket(collectno);
     }
 
+//    顯示票券 QRcode
     @GetMapping("/showQRcode/{collectno}")
     public String showQRcode(@PathVariable("collectno") Integer collecnto){
         return collectCrudService.getQRcode(collecnto);
+    }
+
+//    分票
+    @GetMapping("/transfer/{collectno}")
+    public boolean transferTicket(@PathVariable("collectno") Integer collectno, @RequestParam String memail){
+        System.out.println(memail);
+        if (memail == null || (memail.trim()).length() == 0) {
+            return false;
+        }
+        return collectCrudService.updateCollect(collectno, memail);
     }
 
 

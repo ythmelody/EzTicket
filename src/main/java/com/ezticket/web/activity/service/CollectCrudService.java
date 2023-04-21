@@ -7,6 +7,8 @@ import com.ezticket.web.activity.pojo.TorderDetailsView;
 import com.ezticket.web.activity.repository.CollectRedisRepository;
 import com.ezticket.web.activity.repository.CollectRepository;
 import com.ezticket.web.activity.repository.TorderDetailsViewRepository;
+import com.ezticket.web.users.pojo.Member;
+import com.ezticket.web.users.repository.MemberRepository;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -40,8 +42,13 @@ public class CollectCrudService {
     private TorderDetailsViewRepository tdvRepository;
     @Autowired
     private TorderDetailsViewService torderDetailsViewService;
+
+    @Autowired
+    private MemberRepository memberRepository;
+
     CollectService collectService = new CollectService();
     private final ResourceLoader resourceLoader;
+
     @Value("${checkin.ip}")
     private String checkinip;
 
@@ -85,7 +92,7 @@ public class CollectCrudService {
 //                票券到期時間
 //                時間要計算一下，只能設定從現在開始的差異時間
                 Timestamp current = new Timestamp(System.currentTimeMillis());
-                long timeDiff = (td.getSessioneTime().getTime()-current.getTime())/1000;
+                long timeDiff = (td.getSessioneTime().getTime() - current.getTime()) / 1000;
                 collectRedis.setExpirationInSeconds(timeDiff);
                 collectRedisRepository.save(collectRedis);
             }
@@ -131,7 +138,7 @@ public class CollectCrudService {
 
     }
 
-//    用來判斷此筆訂單可取消嗎？
+    //    用來判斷此筆訂單可取消嗎？
 //    查詢 Redis 票券狀態，退票前確認用
 //    MySQL 僅儲存出票及退票狀態，不須查詢
     public boolean isCancelable(Integer torderNo) {
@@ -226,15 +233,15 @@ public class CollectCrudService {
         return base64String;
     }
 
-//    由 Redis 取出 QR code 圖片
-    public String getQRcode(Integer collectno){
+    //    由 Redis 取出 QR code 圖片
+    public String getQRcode(Integer collectno) {
         Optional<CollectRedis> optCr = collectRedisRepository.findById(collectno.toString());
         String img = null;
-        if (optCr.isPresent()){
+        if (optCr.isPresent()) {
             img = optCr.get().getQrcode();
-            System.out.println("預設圖片");
+            System.out.println("取得圖片");
         } else {
-            Resource resource = resourceLoader.getResource("classpath:static/images/event-imgs/qmark.jpg");
+            Resource resource = resourceLoader.getResource("classpath:static/images/event-imgs/timeout.jpg");
             try (InputStream inputStream = resource.getInputStream()) {
                 // 讀取圖片的內容
                 byte[] imageBytes = inputStream.readAllBytes();
@@ -246,6 +253,28 @@ public class CollectCrudService {
             }
         }
         return img;
+    }
+
+    //    分票功能
+    @Transactional
+    public boolean updateCollect(Integer collectno, String memail) {
+//        Member mtest = memberRepository.findByMemail("member1@example.com");
+//        System.out.println(mtest);
+        Member member = memberRepository.findByMemail(memail);
+        if (member == null || member.getMemberstatus() != 1) {
+            System.out.println("查無會員/非啟用中會員");
+            return false;
+        }
+        Integer memberno = member.getMemberno();
+        Optional<Collect> optC = collectRepository.findById(collectno);
+        if (optC.isEmpty()) {
+            System.out.println("查無票券");
+            return false;
+        }
+        Collect newC = optC.get();
+        newC.setMemberno(memberno);
+        collectRepository.save(newC);
+        return true;
     }
 
 }
