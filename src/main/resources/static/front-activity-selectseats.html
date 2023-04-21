@@ -825,6 +825,21 @@
 
     // 頁面載入動作
     $(document).ready(function () {
+        localStorage.removeItem('currentUrl');
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: "/member/getMemberInfo",
+            dataType: "json",
+            success: function (jsondata) {
+                memberNo = jsondata['memberno'];
+                if (memberNo === null) {
+                    localStorage.setItem('currentUrl', window.location.href);
+                    window.location.href = "/front-users-mem-sign-in.html";
+                }
+            }
+        })
+
         // WebSocket 連線
         connect();
 
@@ -894,10 +909,10 @@
                         if (j.activityNo == sessionStorage.getItem("activityNo")) {
                             document.getElementById('selectBlocks').innerHTML += `
                                 <button name="selectOneBlock" value="${j.blockNo}"
-                                    class="main-btn btn-hover h_40 w-100 mt-5" type="button"
+                                    class="main-btn h_40 w-100 mt-5" type="button"
                                     data-bs-toggle="modal" data-bs-target="#orgSettings_system"
-                                    style="margin: 5px!important; background-color: rgb(230, 230, 107);
-											    border: none; font-size: 1rem; color: black;"
+                                    style="margin: 5px!important; background-color: #efedf5;
+											     border: 1px solid #102743; font-size: 1rem; color: black;"
                                     onMouseDown="setKV(this.value)" onclick="setBlockNoAndName()">${j.blockName}
                                 </button>`;
                         }
@@ -906,10 +921,10 @@
                     if (document.getElementById('selectBlocks').innerHTML === "") {
                         document.getElementById('selectBlocks').innerHTML += `
                                 <button name="selectOneBlock" value=""
-                                    class="main-btn btn-hover h_40 w-100 mt-5" type="button"
+                                    class="main-btn h_40 w-100 mt-5" type="button"
                                     data-bs-toggle="modal" data-bs-target="#orgSettings_system"
-                                    style="margin: 5px!important; background-color: rgb(230, 230, 107);
-							        border: none; font-size: 1rem; color: black;">
+                                    style="margin: 5px!important; background-color: #efedf5;
+											     border: 1px solid #102743; font-size: 1rem; color: black;">
 							        立即購票
                                 </button>`;
                     }
@@ -929,19 +944,19 @@
                             if (blockHasSeats.includes(j.blockNo)) {
                                 document.getElementById('selectBlocks').innerHTML += `
                                 <button name="selectOneBlock" value="${j.blockNo}"
-                                    class="main-btn btn-hover h_40 w-100 mt-5" type="button"
+                                    class="main-btn h_40 w-100 mt-5" type="button"
                                     data-bs-toggle="modal" data-bs-target="#orgSettings"
-                                    style="margin: 5px!important; background-color: rgb(230, 230, 107);
-											    border: none; font-size: 1rem; color: black;"
+                                    style="margin: 5px!important; background-color: #efedf5;
+											     border: 1px solid #102743; font-size: 1rem; color: black;"
                                     onMouseDown="setKV(this.value)" onclick="seatsmgt.init()">${j.blockName}
                                 </button>`;
                             } else {
                                 document.getElementById('selectBlocks').innerHTML += `
                                 <button name="selectOneBlock" value="${j.blockNo}"
-                                        class="main-btn btn-hover h_40 w-100 mt-5" type="button"
+                                        class="main-btn h_40 w-100 mt-5" type="button"
                                         data-bs-toggle="modal" data-bs-target="#orgSettings_system"
-                                        style="margin: 5px!important; background-color: rgb(230, 230, 107);
-											    border: none; font-size: 1rem; color: black;"
+                                        style="margin: 5px!important; background-color: #efedf5;
+											     border: 1px solid #102743; font-size: 1rem; color: black;"
                                         onMouseDown="setKV(this.value)">${j.blockName}
                                 </button>`
                             }
@@ -951,10 +966,10 @@
                     if (document.getElementById('selectBlocks').innerHTML === "") {
                         document.getElementById('selectBlocks').innerHTML += `
                                 <button name="selectOneBlock" value=""
-                                    class="main-btn btn-hover h_40 w-100 mt-5" type="button"
+                                    class="main-btn h_40 w-100 mt-5" type="button"
                                     data-bs-toggle="modal" data-bs-target="#orgSettings_system"
-                                    style="margin: 5px!important; background-color: rgb(230, 230, 107);
-							        border: none; font-size: 1rem; color: black;">
+                                    style="margin: 5px!important; background-color: #efedf5;
+											     border: 1px solid #102743; font-size: 1rem; color: black;">
 							        立即購票
                                 </button>`;
                     }
@@ -1049,7 +1064,7 @@
 
                                     // 將要購買的座位編號以陣列的格式存在 SessionStorage
                                     sessionStorage.setItem("toBuySeats", JSON.stringify(seatNos));
-                                    // window.location.href = "/front-activity-checkout.html";
+                                    window.location.href = "/front-activity-checkout.html";
                                     return;
                                 }
                             }
@@ -1059,8 +1074,8 @@
     }
 
 </script>
-<!--<script src="js/memberLoginCheck.js"></script>-->
-<script src="js/memberLoginCheck-location.href.js"></script>
+<script src="js/memberLoginCheck.js"></script>
+<!--<script src="js/memberLoginCheck-location.href.js"></script>-->
 <script src="js/verification.js"></script>
 
 

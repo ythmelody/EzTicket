@@ -214,8 +214,9 @@
                 <div class="col-lg-8 col-md-12">
                     <div class="main-title checkout-title">
                         <h3>節目訂單確認</h3>
-                        <h4 style="color: red">提醒：<input id="tOrderNo" type="text" style="color: red; background: transparent; border: 0px"
-                                            value="訂單尚未建立，請勿離開"></h4>
+                        <h4 style="color: red">提醒：<input id="tOrderNo" type="text"
+                                                           style="color: red; background: transparent; border: 0px"
+                                                           value="訂單尚未建立，請勿離開"></h4>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12">
@@ -431,6 +432,7 @@
 <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 <script src="js/custom.js"></script>
 <script>
+
     // Set the date we're counting down to
     let countDownDate = new Date();
     countDownDate.setMinutes(countDownDate.getMinutes() + 10);
@@ -456,8 +458,8 @@
         if (distance < 0) {
             clearInterval(x);
 
-            if(sessionStorage.getItem('toBuySeats')!= null){
-                for (let id of JSON.parse(sessionStorage.getItem('toBuySeats'))){
+            if (sessionStorage.getItem('toBuySeats') != null) {
+                for (let id of JSON.parse(sessionStorage.getItem('toBuySeats'))) {
                     jsonObj = {
                         "sessionNo": sessionStorage.getItem("sessionNo"),
                         "seatNo": id,
@@ -480,6 +482,13 @@
     let member_no;
 
     $(document).ready(function () {
+
+        window.addEventListener('beforeunload', function (event) {
+            event.preventDefault(); //chrome無效, ff有效, ie11有效
+            event.returnValue = ''; //chrome有效, ff無效, ie11有效
+            return ''; //chrome無效, ff無效, ie11有效
+        });
+
             $.ajax({
                     url: '/member/getMemberInfo',
                     type: 'GET',
@@ -638,8 +647,24 @@
         })
     }
 
-    // 禁止回到上一頁
-    // window.history.forward(1);
+    window.addEventListener('beforeunload', function() {
+        if (sessionStorage.getItem('toBuySeats') != null) {
+            for (let id of JSON.parse(sessionStorage.getItem('toBuySeats'))) {
+                jsonObj = {
+                    "sessionNo": sessionStorage.getItem("sessionNo"),
+                    "seatNo": id,
+                    "seatStatus": 1
+                };
+                fetch("seats/updateSeatStatus" + `?seatStatus=${jsonObj.seatStatus}&seatNo=${jsonObj.seatNo}&sessionNo=${jsonObj.sessionNo}`);
+            }
+        }
+
+        sessionStorage.removeItem("activityNo");
+        sessionStorage.removeItem("sessionNo");
+        sessionStorage.removeItem("blockNo");
+        sessionStorage.removeItem("toBuySeats");
+        sessionStorage.removeItem("toBuyTickets");
+    });
 
 </script>
 
