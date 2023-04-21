@@ -46,10 +46,10 @@
 		}
 
 		.btn-hover:hover {
-	color: #fff !important;
-	background: #0444BF;
-	border: 1px solid #0444BF;
-}
+			color: #fff !important;
+			background: #0444BF;
+			border: 1px solid #0444BF;
+		}
 	</style>
 </head>
 
@@ -313,7 +313,7 @@
 								<div class="row" data-ref="event-filter-content" id="productList">
 								</div>
 								<div class="browse-btn">
-									<a href="#" class="main-btn btn-hover ">See More</a>
+									<a href="#" class="main-btn btn-hover " style="padding:0 30px !important">瀏覽更多</a>
 								</div>
 
 							</div>
@@ -417,6 +417,7 @@
 		<script src="js/night-mode.js"></script>
 		<!-- kai 會員登入狀態驗證(無導向版) -->
 		<script src="js/memberLoginCheck.js"></script>
+
 		<script>
 			var containerEl = document.querySelector('[data-ref~="event-filter-content"]');
 
@@ -425,6 +426,9 @@
 					target: '[data-ref~="mixitup-target"]'
 				}
 			});
+
+			//返回先前頁面
+			localStorage.setItem('currentUrl', window.location.href);
 		</script>
 
 		<script>
@@ -595,7 +599,23 @@
 							'productno': productno,
 							'action': "addOneProductFollow"
 						})
-					}).then(resp => resp.json())
+					}).then(resp => {
+						//驗證會員是否登入
+						if (resp.redirected) {
+							swal({
+								title: "追蹤需要登入,是否要登入?",
+								icon: "warning",
+								buttons: true,
+								dangerMode: true
+							}).then((confirm) => {
+								if (confirm) {
+									window.location.href = "front-users-mem-sign-in.html";
+								}
+							})
+						} else {
+							return resp.json()
+						}
+					})
 						.then(item => {
 							console.log(item);
 							if (item) {
@@ -612,7 +632,23 @@
 							'productno': productno,
 							'action': "unfollowOneProduct"
 						})
-					}).then(resp => resp.json())
+					}).then(resp => {
+						//驗證會員是否登入
+						if (resp.redirected) {
+							swal({
+								title: "追蹤需要登入,是否要登入?",
+								icon: "warning",
+								buttons: true,
+								dangerMode: true
+							}).then((confirm) => {
+								if (confirm) {
+									window.location.href = "front-users-mem-sign-in.html";
+								}
+							})
+						} else {
+							return resp.json()
+						}
+					})
 						.then(item => {
 							console.log(item);
 							if (item) {
