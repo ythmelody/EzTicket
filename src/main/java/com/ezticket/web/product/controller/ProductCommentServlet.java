@@ -130,7 +130,7 @@ public class ProductCommentServlet extends HttpServlet {
 
         //取得單一筆評論 --> 會員綁定才可以查看 (查看已評論的才會跳出會員登入驗證，如果是還沒有評論要加上去的話要改pdtailController)
         if ("getOneproductComment".equals(action)) {
-            if (!isMember) {
+            if (!isMember && !isAdmin) {
                 response.sendRedirect("front-users-mem-sign-in.html");
                 return;
             }
@@ -232,7 +232,14 @@ public class ProductCommentServlet extends HttpServlet {
             //用session取得會員編號
             Integer memberno = newMember.getMemberno();
             Integer pcommentno = Integer.valueOf(request.getParameter("pcommentno"));
-            pcommentSvc.removeThumpUp(memberno, pcommentno);
+            Boolean thumpdown = pcommentSvc.removeThumpUp(memberno, pcommentno);
+            Gson gson = new Gson();
+            String json = gson.toJson(thumpdown);
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            PrintWriter pw = response.getWriter();
+            pw.print(json);
+            pw.flush();
             return;
         }
         //評論複合查詢搭配分頁(後台商品管理打這支)
