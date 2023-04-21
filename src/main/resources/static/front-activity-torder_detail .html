@@ -308,15 +308,13 @@
                     success: function () {
                         $(`.commentContainer_${i.activityNo}`).html('');
                         $(`.commentContainer_${i.activityNo}`).html(`<a id="editbtn" data-bs-toggle="modal" data-bs-target="#couponModal">已評論</a>`);
-                        console.log("更換為editbtn")
                     },
                     error: function (jsondata){
                         $(`.commentContainer_${i.activityNo}`).html(`
-                                <button className="cmtbtn_${i.activityNo}" style="border: none;
+                                <button class="cmtbtn_${i.activityNo}" style="border: none;
                                         background-color:transparent" data-bs-toggle="modal" data-bs-target="#couponModal">
                                         <img src="images/cmtbtn.png">
                                 </button>`);
-                        console.log("找不到相對應的評論資料");
                     }
                 })
 

@@ -32,7 +32,6 @@ $('.starRating span').click(function () {
 function submitComment() {
 
     if ($('#acommentNo').val() !== '') {
-        console.log('進到$(\'#acommentNo\').val() !== \'\'');
         Swal.fire({
             title: "是否更改節目評星及評論？",
             icon: 'warning',
@@ -51,7 +50,16 @@ function submitComment() {
                     aCommentCont: $('#aCommentCont').val(),
                 }
 
-                console.log(reqbody);
+                if (reqbody.aRate === '' || reqbody.aRate === null || reqbody.aRate === 0 ||
+                    reqbody.aCommentCont === '' || reqbody.aCommentCont === null ){
+                    Swal.fire({
+                        icon: 'error',
+                        title: '更改評論失敗',
+                        text: '評星或評論不得為空'
+                    })
+
+                    return;
+                }
 
                 fetch('acomment/update', {
                     method: "POST",
@@ -62,11 +70,18 @@ function submitComment() {
                 $(`.commentContainer_${activityNo}`).html('');
                 $(`.commentContainer_${activityNo}`).html(`<a id="editbtn" data-bs-toggle="modal" data-bs-target="#couponModal">已評論</a>`);
 
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: '更改評論成功',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+
                 // location.reload();
             }
         })
     } else {
-        console.log('進到$(\'#acommentNo\').val() === \'\'');
         Swal.fire({
             title: "是否新增節目評星及評論？",
             icon: 'warning',
@@ -84,6 +99,17 @@ function submitComment() {
                     aCommentCont: $('#aCommentCont').val(),
                 }
 
+                if (reqbody.aRate === '' || reqbody.aRate === null || reqbody.aRate === 0 ||
+                    reqbody.aCommentCont === '' || reqbody.aCommentCont === null ){
+                    Swal.fire({
+                        icon: 'error',
+                        title: '新增評論失敗',
+                        text: '評星或評論不得為空'
+                    })
+
+                    return;
+                }
+
                 fetch('acomment/insert', {
                     method: "POST",
                     headers: {'Content-Type': 'application/json'},
@@ -93,12 +119,18 @@ function submitComment() {
                 $(`.commentContainer_${activityNo}`).html('');
                 $(`.commentContainer_${activityNo}`).html(`<a id="editbtn" data-bs-toggle="modal" data-bs-target="#couponModal">已評論</a>`);
 
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: '新增評論成功',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+
                 // location.reload();
             }
         })
     }
-
-
 }
 
 function setKV(target) {
