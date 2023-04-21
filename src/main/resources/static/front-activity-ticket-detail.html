@@ -90,7 +90,7 @@
 				console.log('發生錯誤:', err);
 			});
 
-        function showDetails(ticket) {
+        async function showDetails(ticket) {
             details.innerHTML = `
                 <div>
                                     <div class="QR-dt p-4">
@@ -100,7 +100,7 @@
                                             <p>${ticket.aplace}</p>
                                         </div>
                                         <div style="text-align: center;">
-                                            <img src="images/qr.png" alt="QR-Ticket-Scanner"
+                                            <img id="qrcodeImg" alt="QR-Ticket-Scanner"
                                                 style="display:block; margin: 0 auto;">
                                             <p>Powered by EzTicket</p>
                                             <ul class="QR-counter-type">
@@ -232,8 +232,15 @@
                 const withSeatHeader = document.getElementById('withSeatHeader');
                 const withSeatContent = document.getElementById('withSeatContent');
                 withSeatHeader.textContent='非對號座';
-                withSeatContent.innerHTML=`<h6>對號座</h6>`;
+                withSeatContent.innerHTML=`<h6>非對號座</h6>`;
             }
+            await fetch(`/EditCollect/showQRcode/${ticket.collectno}`)
+            .then(response => response.text())
+            .then(res => {
+                const url = `data:image/png;base64,${res}`;
+				$('#qrcodeImg').attr('src', url);
+            });
+
         }
     </script>
 </body>

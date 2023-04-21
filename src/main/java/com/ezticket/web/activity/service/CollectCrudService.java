@@ -16,10 +16,14 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.sql.Timestamp;
@@ -37,6 +41,14 @@ public class CollectCrudService {
     @Autowired
     private TorderDetailsViewService torderDetailsViewService;
     CollectService collectService = new CollectService();
+    private final ResourceLoader resourceLoader;
+    @Value("${checkin.ip}")
+    private String checkinip;
+
+    public CollectCrudService(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
+
 
     //    新增
     @Transactional
@@ -175,9 +187,9 @@ public class CollectCrudService {
 
     public String urlToBase64(String collectno) throws WriterException, IOException {
 //                IP
-        StringBuilder urlFrag = new StringBuilder("http://localhost:8085/EditCollect");
+        StringBuilder urlFrag = new StringBuilder(checkinip);
 //                驗票 Controller 的網址
-        urlFrag.append("/checkin/");
+        urlFrag.append("EditCollect/checkin/");
         urlFrag.append(collectno);
         String url = urlFrag.toString();
         System.out.println(url);
@@ -212,6 +224,28 @@ public class CollectCrudService {
         String base64String = Base64.getEncoder().encodeToString(bytes);
         System.out.println("轉換後的Base64：" + base64String);
         return base64String;
+    }
+
+//    由 Redis 取出 QR code 圖片
+    public String getQRcode(Integer collectno){
+        Optional<CollectRedis> optCr = collectRedisRepository.findById(collectno.toString());
+        String img = null;
+        if (optCr.isPresent()){
+            img = optCr.get().getQrcode();
+            System.out.println("預設圖片");
+        } else {
+            Resource resource = resourceLoader.getResource("classpath:static/images/event-imgs/qmark.jpg");
+            try (InputStream inputStream = resource.getInputStream()) {
+                // 讀取圖片的內容
+                byte[] imageBytes = inputStream.readAllBytes();
+                // 將圖片的內容轉換為 Base64 字串
+                img = Base64.getEncoder().encodeToString(imageBytes);
+                System.out.println("預設圖片");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return img;
     }
 
 }

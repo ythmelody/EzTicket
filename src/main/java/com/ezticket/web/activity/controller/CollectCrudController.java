@@ -27,6 +27,11 @@ public class CollectCrudController {
         return collectCrudService.useTicket(collectno);
     }
 
+    @GetMapping("/showQRcode/{collectno}")
+    public String showQRcode(@PathVariable("collectno") Integer collecnto){
+        return collectCrudService.getQRcode(collecnto);
+    }
+
 
 /* **************************************
  *              以下為測試                *

@@ -51,7 +51,7 @@ public class TorderDetailsView {
     @Column(name = "REALY")
     private Integer realY;
     @Column(name = "ACTIVITYNO")
-    private String activityNo;
+    private Integer activityNo;
     @Column(name = "ANAME")
     private String aname;
     @Column(name = "AIMG")
