@@ -41,7 +41,6 @@ public class Top10Controller extends HttpServlet {
             List top10list = top10ServiceSvc.top10List();
             Gson gson = new Gson();
             String json = gson.toJson(top10list);
-            System.out.println("json="+json);
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();

@@ -110,6 +110,7 @@ function renewModal(porderno, productno) {
 
 // 點擊單一評論並顯示
 function showcomment(commentno) {
+  // $('.starRating').removeClass('starRated');
   fetch('ProductCommentServlet', {
     method: 'POST',
     body: new URLSearchParams({
@@ -135,7 +136,9 @@ function showcomment(commentno) {
 
       $('#pcommentno').val(item.pcommentno);
       $('#title_oldRate').html("原始商品評星");
+      // $('.starRating').addClass('starRated');
       for (let star = 0; star < item.prate; star++) {
+        // $(`.starRating span[${star}]`).addClass('active');
         $('#title_oldRate').append(`&nbsp;<i class="fa-solid fa-star" style="color: #ffad21!important;"></i>`);
       }
 

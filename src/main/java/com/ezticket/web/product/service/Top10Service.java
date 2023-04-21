@@ -27,13 +27,13 @@ public class Top10Service {
             Map result = new HashMap<>();
             String pno = item.getValue();
             Integer num = item.getScore().intValue();
-            System.out.println("pno: " + pno + " num: " + num);
             Product product = productSvc.getOneProduct(Integer.valueOf(pno));
             result.put("productno", product.getProductno());
             result.put("pname", product.getPname());
             result.put("sale_num", num);
+            result.put("pprice", product.getPprice());
+            result.put("pspecialprice", product.getPspecialprice());
             List<Pimgt> pimgts = product.getPimgts();
-            System.out.println(pimgts);
             result.put("pimgno", pimgts.get(0).getPimgno());
 
             results.add(result);
