@@ -80,7 +80,9 @@ public class PorderService {
 
         if (paymentStatus == 0) {
             // 如果訂單未付款，只能取消訂單，不能執行其他操作
-            if (processStatus != 3) {
+            if (processStatus == 4) {
+                processStatus = 3;
+            } else if (processStatus != 3 && processStatus != 4) {
                 throw new IllegalStateException("未付款的訂單只能取消");
             }
         } else if (paymentStatus == 1) {
@@ -189,8 +191,8 @@ public class PorderService {
         return EntityToDTO(porder);
     }
 
-
-    @Scheduled(cron = "0 0 * * * *")
+    // 每五分鐘掃描一次
+    @Scheduled(fixedRate = 300000)
     @Transactional
     public void checkOrderPayStatus() {
         List<Porder> porders = porderRepository.findAll();

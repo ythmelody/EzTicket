@@ -42,7 +42,7 @@ public class PcouponService {
                 .collect(Collectors.toList());
     }
     public PcouponDTO EntityToDTO(Pcoupon pcoupon){
-        pcoupon.getPcouponholdings().forEach(holding -> holding.setPcoupon(null));
+//        pcoupon.getPcouponholdings().forEach(holding -> holding.setPcoupon(null));
         return modelMapper.map(pcoupon, PcouponDTO.class);
     }
     public List<PcouponDTO> getAllPcoupon(){
