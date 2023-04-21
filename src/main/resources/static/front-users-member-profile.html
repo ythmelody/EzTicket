@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, shrink-to-fit=9">
 	<meta name="description" content="Gambolthemes">
 	<meta name="author" content="Gambolthemes">
-	<title>Barren - Simple Online Event Ticketing System</title>
+	<title>ezTicket - 會員資訊</title>
 
 	<!-- Favicon Icon -->
 	<link rel="icon" type="image/png" href="images/fav.png">
@@ -85,13 +85,12 @@
 								<li class="nav-item d-flex me-4">
 									<a class="nav-link px-0 pt-0 pb-3 active" id="pills-following-tab"
 										data-bs-toggle="pill" href="#following" role="tab" aria-controls="following"
-										aria-selected="true">Following <span class="following_count">(2)</span></a>
+										aria-selected="true">追蹤中 <span class="following_count">(2)</span></a>
 								</li>
-								<!-- <li class="nav-item d-flex">
-									<a class="nav-link px-0 pt-0 pb-3" id="pills-followers-tab" data-bs-toggle="pill"
-										href="#followers" role="tab" aria-controls="followers"
-										aria-selected="false">Followers </a>
-								</li> -->
+								<li class="nav-item d-flex">
+									<div class="follow-card-btn">
+										<button class="follow-btn" onclick="unfollowAllproduct()">取消全部追蹤</button>
+								</li>
 							</ul>
 							<div class="tab-content mt-4">
 								<div class="tab-pane fade active show" id="following" role="tabpanel"
@@ -344,210 +343,163 @@
 	</div>
 	<!-- About Details Model End-->
 	<!-- Header Start-->
-	<header class="header">
-		<div class="header-inner">
-			<nav
-				class="navbar navbar-expand-lg bg-barren barren-head navbar fixed-top justify-content-sm-start pt-0 pb-0">
-				<div class="container">
-					<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-						data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-						<span class="navbar-toggler-icon">
-							<i class="fa-solid fa-bars"></i>
-						</span>
-					</button>
-					<a class="navbar-brand order-1 order-lg-0 ml-lg-0 ml-2 me-auto" href="index.html">
-						<div class="res-main-logo">
-							<img src="images/logo-icon.svg" alt="">
-						</div>
-						<div class="main-logo" id="logo">
-							<img src="images/logo.svg" alt="">
-							<img class="logo-inverse" src="images/dark-logo.svg" alt="">
-						</div>
-					</a>
-					<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
-						aria-labelledby="offcanvasNavbarLabel">
-						<div class="offcanvas-header">
-							<div class="offcanvas-logo" id="offcanvasNavbarLabel">
-								<img src="images/logo-icon.svg" alt="">
-							</div>
-							<button type="button" class="close-btn" data-bs-dismiss="offcanvas" aria-label="Close">
-								<i class="fa-solid fa-xmark"></i>
-							</button>
-						</div>
-						<div class="offcanvas-body">
-							<div class="offcanvas-top-area">
-								<div class="create-bg">
-									<a href="create.html" class="offcanvas-create-btn">
-										<i class="fa-solid fa-calendar-days"></i>
-										<span>Create Event</span>
-									</a>
-								</div>
-							</div>
-							<ul class="navbar-nav justify-content-end flex-grow-1 pe_5">
-								<li class="nav-item">
-									<a class="nav-link active" aria-current="page" href="index.html">Home</a>
-								</li>
-								<li class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-										aria-expanded="false">
-										Explore Events
-									</a>
-									<ul class="dropdown-menu dropdown-submenu">
-										<li><a class="dropdown-item" href="explore_events.html">Explore Events</a></li>
-										<li><a class="dropdown-item" href="venue_event_detail_view.html">Venue Event
-												Detail View</a></li>
-										<li><a class="dropdown-item" href="online_event_detail_view.html">Online Event
-												Detail View</a></li>
-									</ul>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="pricing.html">Pricing</a>
-								</li>
-								<li class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-										aria-expanded="false">
-										Blog
-									</a>
-									<ul class="dropdown-menu dropdown-submenu">
-										<li><a class="dropdown-item" href="our_blog.html">Our Blog</a></li>
-										<li><a class="dropdown-item" href="blog_detail_view.html">Blog Detail View</a>
-										</li>
-									</ul>
-								</li>
-								<li class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-										aria-expanded="false">
-										Help
-									</a>
-									<ul class="dropdown-menu dropdown-submenu">
-										<li><a class="dropdown-item" href="faq.html">FAQ</a></li>
-										<li><a class="dropdown-item" href="help_center.html">Help Center</a></li>
-										<li><a class="dropdown-item" href="contact_us.html">Contact Us</a></li>
-									</ul>
-								</li>
-								<li class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-										aria-expanded="false">
-										Pages
-									</a>
-									<ul class="dropdown-menu dropdown-submenu">
-										<li>
-											<a class="dropdown-item submenu-item" href="#">Other Pages</a>
-											<ul class="submenu dropdown-menu">
-												<li><a class="dropdown-item pe-5"
-														href="front-users-mem-sign-in.html">Sign In</a></li>
-												<li><a class="dropdown-item pe-5" href="front-users-sign-up.html">Sign
-														Up</a></li>
-												<li><a class="dropdown-item pe-5"
-														href="front-users-forgot-pwd.html">Forgot
-														Password</a></li>
-												<li><a class="dropdown-item pe-5" href="about_us.html">About Us</a></li>
-												<li><a class="dropdown-item pe-5" href="checkout.html">Checkout</a></li>
-												<li><a class="dropdown-item pe-5" href="checkout_premium.html">Checkout
-														Premium</a></li>
-												<li><a class="dropdown-item pe-5" href="invoice.html">Invoice</a></li>
-												<li><a class="dropdown-item pe-5" href="coming_soon.html">Coming
-														Soon</a></li>
-												<li><a class="dropdown-item pe-5" href="error_404.html">Error 404</a>
-												</li>
-											</ul>
-										</li>
-										<li>
-											<a class="dropdown-item submenu-item" href="#">Create Event</a>
-											<ul class="submenu dropdown-menu">
-												<li><a class="dropdown-item pe-5" href="create.html">Create</a></li>
-												<li><a class="dropdown-item pe-5" href="create_venue_event.html">Create
-														Venue Event</a></li>
-												<li><a class="dropdown-item pe-5" href="create_online_event.html">Create
-														Online Event</a></li>
-											</ul>
-										</li>
-										<li>
-											<a class="dropdown-item submenu-item" href="#">Events View</a>
-											<ul class="submenu dropdown-menu">
-												<li><a class="dropdown-item pe-5"
-														href="online_event_detail_view.html">Online Event Detail
-														View</a></li>
-												<li><a class="dropdown-item pe-5"
-														href="venue_event_detail_view.html">Venue Event Detail View</a>
-												</li>
-											</ul>
-										</li>
-										<li><a class="dropdown-item" href="booking_confirmed.html">Booking Confirmed</a>
-										</li>
-										<li><a class="dropdown-item" href="attendee_profile_view.html">Attendee Profile
-												View</a></li>
-										<li><a class="dropdown-item" href="organiser_profile_view.html">Organiser
-												Profile View</a></li>
-										<li><a class="dropdown-item" href="my_organisation_dashboard.html">Organization
-												Dashboard</a></li>
-										<li><a class="dropdown-item" href="sell_tickets_online.html">Sell Tickets
-												Online</a></li>
-										<li><a class="dropdown-item" href="refer_a_friend.html">Refer a Friend</a></li>
-										<li><a class="dropdown-item" href="term_and_conditions.html">Terms &
-												Conditions</a></li>
-										<li><a class="dropdown-item" href="privacy_policy.html">Privacy Policy</a></li>
-									</ul>
-								</li>
-							</ul>
-						</div>
-						<div class="offcanvas-footer">
-							<div class="offcanvas-social">
-								<h5>Follow Us</h5>
-								<ul class="social-links">
-									<li><a href="#" class="social-link"><i class="fab fa-facebook-square"></i></a>
-									<li><a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-									<li><a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-									<li><a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-									<li><a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="right-header order-2">
-						<ul class="align-self-stretch">
-							<li>
-								<a href="create.html" class="create-btn btn-hover">
-									<i class="fa-solid fa-calendar-days"></i>
-									<span>Create Event</span>
-								</a>
-							</li>
-							<li class="dropdown account-dropdown">
-								<a href="#" class="account-link" role="button" id="accountClick"
-									data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
-									<img class="mimg" src="images/profile-imgs/img-13.jpg" alt="">
-									<i class="fas fa-caret-down arrow-icon"></i>
-								</a>
-								<ul class="dropdown-menu dropdown-menu-account dropdown-menu-end"
-									aria-labelledby="accountClick">
-									<li>
-										<div class="dropdown-account-header">
-											<div class="account-holder-avatar">
-												<img class="mimg" src="images/profile-imgs/img-13.jpg" alt="">
-											</div>
-											<h5 id="memname" class="un"><!-- 會員名 --></h5>
-											<p id="mememail"><!-- 會員email --></p>
-										</div>
-									</li>
-									<li class="profile-link">
-										<a href="index.html" class="link-item">回到首頁</a>
-										<a href="front-users-mem-sign-in.html" class="link-item">登出</a>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<div class="night_mode_switch__btn">
-									<div id="night-mode" class="fas fa-moon fa-sun"></div>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-			<div class="overlay"></div>
-		</div>
-	</header>
-	<!-- Header End-->
+    <header class="header">
+        <div class="header-inner">
+            <nav
+                class="navbar navbar-expand-lg bg-barren barren-head navbar fixed-top justify-content-sm-start pt-0 pb-0">
+                <div class="container">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                        <span class="navbar-toggler-icon">
+                            <i class="fa-solid fa-bars"></i>
+                        </span>
+                    </button>
+                    <a class="navbar-brand order-1 order-lg-0 ml-lg-0 ml-2 me-auto" href="index.html">
+                        <div class="res-main-logo">
+                            <img src="images/ezTicket-icon.svg" alt="">
+                        </div>
+                        <div class="main-logo" id="logo">
+                            <img src="images/ezTicket.svg" alt="">
+                            <img class="logo-inverse" src="images/dark-logo.svg" alt="">
+                        </div>
+                    </a>
+                    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
+                        aria-labelledby="offcanvasNavbarLabel">
+                        <div class="offcanvas-header">
+                            <div class="offcanvas-logo" id="offcanvasNavbarLabel">
+                                <img src="images/ezTicket-icon.svg" alt="">
+                            </div>
+                            <button type="button" class="close-btn" data-bs-dismiss="offcanvas" aria-label="Close">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav justify-content-end flex-grow-1 pe_5">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="index.html">首頁</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        探索活動
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-submenu">
+                                        <li><a class="dropdown-item" href="explore_events.html">探索活動</a></li>
+                                        <li><a class="dropdown-item" href="#">展覽</a></li>
+                                        <li><a class="dropdown-item" href="#">演唱會</a></li>
+                                        <li><a class="dropdown-item" href="#">音樂劇</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        探索周邊
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-submenu">
+                                        <li><a class="dropdown-item" href="front-product-explore_products.html">探索商品</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="#">演唱會聯名</a></li>
+                                        <li><a class="dropdown-item" href="#">Youtuber聯名</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="#">展覽聯名</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        幫助中心
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-submenu">
+                                        <li><a class="dropdown-item" href="#">常見問題</a></li>
+                                        <li><a class="dropdown-item" href="#">線上客服</a></li>
+                                        <li><a class="dropdown-item" href="#">聯絡我們</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#"
+                                        style="color:black !important">最新消息</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <div class="offcanvas-footer">
+                            <div class="offcanvas-social">
+                                <h5>Follow Us</h5>
+                                <ul class="social-links">
+                                    <li><a href="#" class="social-link"><i class="fab fa-facebook-square"></i></a>
+                                    <li><a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                                    <li><a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                                    <li><a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                                    <li><a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-header order-2">
+                        <ul class="align-self-stretch">
+                            <li>
+                                <a href="explore_events.html" class="create-btn btn-hover">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                    <span>活動訂票</span>
+                                </a>
+                                <a href="front-product-explore_products.html" class="create-btn btn-hover">
+                                    <i class="fa-sharp fa-solid fa-bag-shopping"></i>
+                                    <span>聯名商品</span>
+                                </a>
+                            </li>
+                            <li>
+
+                            </li>
+                            <li class="dropdown account-dropdown">
+                                <a href="#" class="account-link" role="button" id="accountClick"
+                                    data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img class="D-mimg" src="images/profile-imgs/img-13.jpg" alt="">
+                                    <i class="fas fa-caret-down arrow-icon"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-account dropdown-menu-end"
+                                    aria-labelledby="accountClick">
+                                    <li>
+                                        <div class="dropdown-account-header">
+                                            <div class="account-holder-avatar">
+                                                <img class="D-mimg" src="images/profile-imgs/img-13.jpg" alt="">
+                                            </div>
+                                            <h5 class="D-mname">會員名稱</h5>
+                                            <p class="D-memail">johndoe@example.com</p>
+                                        </div>
+                                    </li>
+                                    <li class="profile-link">
+                                        <a class="dropdown-item pe-5" href="front-users-member-profile.html">會員資訊</a>
+                                        <a class="dropdown-item pe-5" href="front-users-mem-sign-in.html">登入</a>
+                                        <a class="dropdown-item pe-5" href="front-users-sign-up.html">註冊</a>
+                                        <a class="dropdown-item pe-5" href="front-users-forgot-pwd.html">忘記密碼</a>
+
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="night_mode_switch__btn">
+                                    <div id="night-mode" class="fas fa-moon fa-sun"></div>
+                                </div>
+                            </li>
+
+                            <li class="dropdown account-dropdown">
+                                <a href="front-product-shopping_cart.html" class="account-link">
+                                    <div id="cart">
+                                        <img src="images/profile-imgs/cart2.jpg">
+                                        <span class="badge" style="color:#102743 ;">0</span>
+                                    </div>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="overlay"></div>
+        </div>
+    </header>
+    <!-- Header End-->
 	<!-- Body Start-->
 	<div class="wrapper">
 		<!-- <div class="profile-banner">
@@ -1056,81 +1008,82 @@
 	<!-- Jie JavaScript End-->
     <!-- kai 非會員導出修正版 -->
     <script src="js/forMemberProfile.js"></script>
+	<script src="js/myFollowProduct.js"></script>
 
 	<script>
-		//追蹤商品清單呈現&移除
-		$(document).ready(function () {
-			followproductList();
-		});
+		// //追蹤商品清單呈現&移除
+		// $(document).ready(function () {
+		// 	followproductList();
+		// });
 
-		const info = {
-			memberNo: 85346
-		}
+		// const info = {
+		// 	memberNo: 85346
+		// }
 
-		function followproductList() {
-			$("#productFollowing").empty();
-			fetch("FollowproductController", {
-				method: "POST",
-				body: new URLSearchParams({
-					'memberno': info.memberNo,
-					'action': "getFollowProductList"
-				})
-			}).then(resp => resp.json())
-				.then(list => {
-					console.log(list.length);
-					$(".ff-block").children("a").children("span").text(list.length);
-					$("#pills-following-tab").children("span").text("(" + list.length + ")");
-					for (let item of list) {
+		// function followproductList() {
+		// 	$("#productFollowing").empty();
+		// 	fetch("FollowproductController", {
+		// 		method: "POST",
+		// 		body: new URLSearchParams({
+		// 			'memberno': info.memberNo,
+		// 			'action': "getFollowProductList"
+		// 		})
+		// 	}).then(resp => resp.json())
+		// 		.then(list => {
+		// 			console.log(list.length);
+		// 			$(".ff-block").children("a").children("span").text(list.length);
+		// 			$("#pills-following-tab").children("span").text("(" + list.length + ")");
+		// 			for (let item of list) {
 
-						fetch("ProductInfoServlet", {
-							method: "POST",
-							body: new URLSearchParams({
-								'productno': item.followproductPK.productno,
-								'action': "singleProduct"
-							})
-						}).then(resp => resp.json())
-							.then(product => {
-								let image = product.pimgts && product.pimgts[0] && product.pimgts[0].pimgno;
-								if (image === undefined) { image = 70001; }
-								$("#productFollowing").append(`<div class="user-follow-card mb-4">
-											<div class="follow-card-left">
-												<div class="follow-avatar">
-													<img src="ProductImg?pimgno=${image}" alt="">
-												</div>
-												<div class="follow-name">
-													<h5>${product.pname}</h5>
-													<span>${product.pprice}</span>
-													<span>${product.pspecialprice}</span>
-												</div>
-											</div>
-											<div class="follow-card-btn">
-												<button name ="${product.productno}" class="follow-btn" onclick="unfollow(this.name)" >取消追蹤</button>
-											</div>
-											<div class="follow-card-btn">
-												<button class="follow-btn">加入購物車</button>
-											</div>
-										</div>`);
-							})
-					}
-				})
-		}
+		// 				fetch("ProductInfoServlet", {
+		// 					method: "POST",
+		// 					body: new URLSearchParams({
+		// 						'productno': item.followproductPK.productno,
+		// 						'action': "singleProduct"
+		// 					})
+		// 				}).then(resp => resp.json())
+		// 					.then(product => {
+		// 						let image = product.pimgts && product.pimgts[0] && product.pimgts[0].pimgno;
+		// 						if (image === undefined) { image = 70001; }
+		// 						$("#productFollowing").append(`<div class="user-follow-card mb-4">
+		// 									<div class="follow-card-left">
+		// 										<div class="follow-avatar">
+		// 											<img src="ProductImg?pimgno=${image}" alt="">
+		// 										</div>
+		// 										<div class="follow-name">
+		// 											<h5>${product.pname}</h5>
+		// 											<span>${product.pprice}</span>
+		// 											<span>${product.pspecialprice}</span>
+		// 										</div>
+		// 									</div>
+		// 									<div class="follow-card-btn">
+		// 										<button name ="${product.productno}" class="follow-btn" onclick="unfollow(this.name)" >取消追蹤</button>
+		// 									</div>
+		// 									<div class="follow-card-btn">
+		// 										<button class="follow-btn">加入購物車</button>
+		// 									</div>
+		// 								</div>`);
+		// 					})
+		// 			}
+		// 		})
+		// }
 
-		//追蹤商品移除
-		function unfollow(productno) {
-			fetch("FollowproductController", {
-				method: 'POST',
-				body: new URLSearchParams({
-					'memberno': info.memberNo,
-					'productno': productno,
-					'action': "unfollowOneProduct"
-				})
-			}).then(resp => resp.json())
-				.then(item => {
-					if (item) {
-						followproductList();
-					}
-				})
-		}
+		// //追蹤商品移除
+		// function unfollow(productno) {
+		// 	fetch("FollowproductController", {
+		// 		method: 'POST',
+		// 		body: new URLSearchParams({
+		// 			'memberno': info.memberNo,
+		// 			'productno': productno,
+		// 			'action': "unfollowOneProduct"
+		// 		})
+		// 	}).then(resp => resp.json())
+		// 		.then(item => {
+		// 			if (item) {
+		// 				followproductList();
+		// 			}
+		// 		})
+		// }
 
 
 

@@ -44,6 +44,27 @@
 			border-radius: 3px;
 			border: 1px solid #102743;
 		}
+
+		.btn-hover:hover {
+			color: #fff !important;
+			background: #0444BF;
+			border: 1px solid #0444BF;
+		}
+
+		#pageView{
+			background-color: #102743;
+			width: 250px;
+			height: 30px;
+			position: fixed;
+			right:10%;
+			top:35%;
+			color:#fff;
+			padding-left: 40px;
+			padding-top: 3px;
+			border-radius:10px;
+			z-index:1030;
+			font-size: 16px;
+		}
 	</style>
 </head>
 
@@ -246,6 +267,7 @@
 	</header>
 	<!-- Header End-->
 	<!-- Body Start-->
+	<div class="bp-title" id ="pageView"><h4></h4></div>
 	<div class="wrapper">
 		<div class="breadcrumb-block">
 			<div class="container">
@@ -552,7 +574,7 @@
 				pclass.textContent = item.pclass.pclassname;
 				psdate.textContent = item.psdate;
 				hostno.textContent = item.host.hostname;
-				pimg.innerHTML = `<img src="ProductImg?pimgno=${item.pimgts[0].pimgno}" alt="">`;
+				pimg.innerHTML = `<img id="mainImg"src="ProductImg?pimgno=${item.pimgts[0].pimgno}" alt="">`;
 				pdiscrip.textContent = item.pdiscrip;
 				pprice.textContent = item.pprice;
 				pspecialprice.textContent = item.pspecialprice;
@@ -570,8 +592,8 @@
 						`<div class="item">
 													<div class="main-card mt-4">
 														<div class="event-thumbnail">
-															<a href="front-product-product_detail.html?productno=${item.productno}" class="thumbnail-img">
-																<img src="ProductImg?pimgno=${pimgt.pimgno}" alt="">
+															<a name=${pimgt.pimgno} href="javascript:void(0);" class="thumbnail-img" onclick="showMainImg(this.name)">
+																<img src="ProductImg?pimgno=${pimgt.pimgno}" >
 															</a>
 										</div>
 									</div>
@@ -611,6 +633,10 @@
 				})
 			});
 
+		//點選圖片輪播更換主圖
+		function showMainImg(pimgno) {
+			$("#mainImg").attr("src", "ProductImg?pimgno=" + pimgno);
+		}
 
 
 		//相關聯商品
@@ -757,7 +783,7 @@
 																					onclick="chgthumbimg()">
 																			</button>
 																		</td>
-																		<td style="width: 30px;" id="plike_${item.pcommentno}">${item.plike}</td>
+																		<td name="plike_${item.pcommentno}" style="width: 30px;" >${item.plike}</td>
 																		<td><button  name="${item.pcommentno}" data-bs-toggle="modal"
 																				data-bs-target="#couponModal" 
 																				style="border: none; background-color: transparent" onclick="comment(this.name)">
@@ -961,7 +987,23 @@
 						'productno': productno,
 						'action': "addOneProductFollow"
 					})
-				}).then(resp => resp.json())
+				}).then(resp => {
+					//驗證會員是否登入
+					if (resp.redirected) {
+						swal({
+							title: "追蹤需要登入,是否要登入?",
+							icon: "warning",
+							buttons: true,
+							dangerMode: true
+						}).then((confirm) => {
+							if (confirm) {
+								window.location.href = "front-users-mem-sign-in.html";
+							}
+						})
+					} else {
+						return resp.json()
+					}
+				})
 					.then(item => {
 						console.log(item);
 						if (item) {
@@ -978,7 +1020,23 @@
 						'productno': productno,
 						'action': "unfollowOneProduct"
 					})
-				}).then(resp => resp.json())
+				}).then(resp => {
+					//驗證會員是否登入
+					if (resp.redirected) {
+						swal({
+							title: "取消追蹤需要登入,是否要登入?",
+							icon: "warning",
+							buttons: true,
+							dangerMode: true
+						}).then((confirm) => {
+							if (confirm) {
+								window.location.href = "front-users-mem-sign-in.html";
+							}
+						})
+					} else {
+						return resp.json()
+					}
+				})
 					.then(item => {
 						console.log(item);
 						if (item) {
@@ -995,6 +1053,9 @@
 		function chgthumbimg() {
 			const btnClass = event.target.className;
 			const pcommentno = event.target.id.replace("thumb_", "");
+
+			console.log(btnClass);
+			console.log(typeof (btnClass));
 
 			if (btnClass === '') {
 				event.target.src = 'images/thumbup_clicked.png';
@@ -1021,18 +1082,18 @@
 									window.location.href = jsondata.location;
 								}
 							})
+						} else {
+							$(`[name=plike_${pcommentno}]`).each(function () {
+								let num = Number($(this).text()) + 1;
+								$(this).text(num)
+							})
 						}
-						let plikeEl = $(`plike_${pcommentno}`)
-						// console.log(plikeEl);
-						let plikeOld = plikeEl.text();
-						// console.log(plikeOld);
-						// console.log(typeof plikeOld);
-						plikeEl.text(1 + plikeOld);
+
 
 					}
 				})
 			}
-			else {
+			if (btnClass === 'thumbbed') {
 				event.target.src = 'images/thumbup_blank.png';
 				event.target.classList.remove("thumbbed");
 				$.ajax({
@@ -1057,6 +1118,12 @@
 									window.location.href = jsondata.location;
 								}
 							})
+						} else {
+							console.log("plike--");
+							$(`[name=plike_${pcommentno}]`).each(function () {
+								let num = Number($(this).text()) - 1;
+								$(this).text(num)
+							})
 						}
 					}
 				})
@@ -1066,6 +1133,20 @@
 		//返回先前頁面
 		localStorage.setItem('currentUrl', window.location.href);
 
+	</script>
+
+	<script>
+		var webSocket =new WebSocket("ws://"+window.location.host+"/visitWS/"+productno)
+		console.log(productno);
+
+		webSocket.onmessage = function(event){
+			console.log(event);
+			$("#pageView").text(event.data);
+		}
+
+		window.onbeforeunload =function(){
+			webSocket.close();
+		}
 	</script>
 
 
