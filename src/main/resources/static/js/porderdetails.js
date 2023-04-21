@@ -7,10 +7,13 @@ $(document).ready(() => {
     method: 'GET',
   }).then(resp => resp.json())
     .then(data => {
-      console.log(data);
+      let patText = "未付款";
+      if(data.ppaydate){
+        patText = (moment(data.ppaydate).format('YYYY-MM-DD HH:mm:ss'));
+      }
       document.querySelectorAll('.vdt-list')[0].textContent = "訂單編號 : " + data.porderno;
       document.querySelectorAll('.vdt-list')[1].textContent = "訂單成立時間 : " + (moment(data.porderdate).format('YYYY-MM-DD HH:mm:ss'));
-      document.querySelectorAll('.vdt-list')[2].textContent = "訂單付款時間 : " + (moment(data.ppaydate).format('YYYY-MM-DD HH:mm:ss'));
+      document.querySelectorAll('.vdt-list')[2].textContent = "訂單付款時間 : " + patText;
       const detailsbody = document.querySelector('tbody');
       detailsbody.innerHTML = '';
       let total = 0;
@@ -65,7 +68,6 @@ $(document).ready(() => {
                                   <div class="delivery-fee">運費(滿499免運) : $<span>${delivery}</span></div>
                                   <div class="product-fee">商品金額 : $<span>${total}</span></div>
                                   <div class="totalinv2">結帳金額 : $<span>${total + delivery - couponCount}</span></div>
-                                  <p>通過信用卡支付</p>
                                 </div>
                               </td>
                             </tr>`;

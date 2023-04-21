@@ -45,7 +45,7 @@ public class PcouponholdingService {
         return EntityToDTO(pcouponholding);
     }
     public PcouponholdingDTO EntityToDTO(Pcouponholding pcouponholding){
-        pcouponholding.getPcoupon().getPcouponholdings().forEach(holding -> holding.getPcoupon().setPcouponholdings(null));
+//        pcouponholding.getPcoupon().getPcouponholdings().forEach(holding -> holding.getPcoupon().setPcouponholdings(null));
         return modelMapper.map(pcouponholding, PcouponholdingDTO.class);
     }
     public List<PcouponholdingDTO> getAllPcouponHolding(){
