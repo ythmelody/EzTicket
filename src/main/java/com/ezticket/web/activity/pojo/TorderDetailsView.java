@@ -41,6 +41,11 @@ public class TorderDetailsView {
     @JsonFormat(pattern = "yyyy/MM/dd kk:mm:ss", timezone = "GMT+8")
     @Column(name = "SESSIONSTIME")
     private Timestamp sessionsTime;
+    @JsonFormat(pattern = "yyyy/MM/dd kk:mm:ss", timezone = "GMT+8")
+    @Column(name = "SESSIONETIME")
+    private Timestamp sessioneTime;
+    @Column(name = "SESSIONNO")
+    private Integer sessionNo;
     @Column(name = "REALX")
     private Integer realX;
     @Column(name = "REALY")
@@ -51,7 +56,9 @@ public class TorderDetailsView {
     private String aname;
     @Column(name = "AIMG")
     private byte[] aimg;
-
-
+    @Column(name = "WETHERSEAT")
+    private Integer wetherseat;
+    @Column(name = "HOSTNO")
+    private Integer hostNo;
 
 }
