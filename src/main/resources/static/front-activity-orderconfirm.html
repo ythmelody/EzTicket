@@ -261,28 +261,28 @@
                                 <p class="ps-lg-4 pe-lg-4">我們很高興地通知您，您的訂單請求已經收到並確認。</p>
                             </div>
                             <div class="booking-confirmed-bottom">
-<!--                                <div class="booking-confirmed-bottom-bg p_30">-->
-<!--                                    <div class="event-order-dt">-->
-<!--                                        <div class="event-thumbnail-img">-->
-<!--                                            <img src="images/event-imgs/img-7.jpg" alt="">-->
-<!--                                        </div>-->
-<!--                                        <div class="event-order-dt-content">-->
-<!--                                            <h5>演唱會黑色T恤</h5>-->
-<!--                                            <span>16/02/2023</span>-->
-<!--                                            <div class="buyer-name">王小明</div>-->
-<!--                                            <div class="booking-total-tickets">-->
-<!--                                                <i class="fa-solid fa-ticket rotate-icon"></i>-->
-<!--                                                <span class="booking-count-tickets mx-2">1</span>x 商品-->
-<!--                                            </div>-->
-<!--                                            <div class="booking-total-grand">-->
-<!--                                                總金額 : <span>$500</span>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <a href="front-product-order_detail.html"-->
-<!--                                       class="main-btn btn-hover h_50 w-100 mt-5"><i-->
-<!--                                            class="fa-solid fa-ticket rotate-icon me-3"></i>檢視訂單</a>-->
-<!--                                </div>-->
+                                <!--                                <div class="booking-confirmed-bottom-bg p_30">-->
+                                <!--                                    <div class="event-order-dt">-->
+                                <!--                                        <div class="event-thumbnail-img">-->
+                                <!--                                            <img src="images/event-imgs/img-7.jpg" alt="">-->
+                                <!--                                        </div>-->
+                                <!--                                        <div class="event-order-dt-content">-->
+                                <!--                                            <h5>演唱會黑色T恤</h5>-->
+                                <!--                                            <span>16/02/2023</span>-->
+                                <!--                                            <div class="buyer-name">王小明</div>-->
+                                <!--                                            <div class="booking-total-tickets">-->
+                                <!--                                                <i class="fa-solid fa-ticket rotate-icon"></i>-->
+                                <!--                                                <span class="booking-count-tickets mx-2">1</span>x 商品-->
+                                <!--                                            </div>-->
+                                <!--                                            <div class="booking-total-grand">-->
+                                <!--                                                總金額 : <span>$500</span>-->
+                                <!--                                            </div>-->
+                                <!--                                        </div>-->
+                                <!--                                    </div>-->
+                                <!--                                    <a href="front-product-order_detail.html"-->
+                                <!--                                       class="main-btn btn-hover h_50 w-100 mt-5"><i-->
+                                <!--                                            class="fa-solid fa-ticket rotate-icon me-3"></i>檢視訂單</a>-->
+                                <!--                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -379,9 +379,9 @@
         let urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get('id');
 
+        let sessionNo;
         let aname;
         let sessionsTime;
-        let mname;
         let ticketQTY;
         let tcheckTotal;
         let aImgSrc;
@@ -404,17 +404,29 @@
             url: "/Tdetails/getById" + `?torderNo=${id}`,
             dataType: "json",
             success: function (jsondata) {
-                aname = jsondata[0].session.activity.aname;
+                console.log(jsondata);
+                console.log("sessionNo = " + jsondata[0].session['sessionNo']);
+                sessionNo = jsondata[0].session['sessionNo'];
                 sessionsTime = jsondata[0].session['sessionsTime'];
-                console.log(jsondata.length);
 
                 if (jsondata.length === 1) {
                     ticketQTY = jsondata[0].tqty;
                 } else {
                     ticketQTY = jsondata.length;
                 }
+            }
+        });
 
-                let showpic = jsondata[0].session.activity.aimgt;
+        // 查詢節目
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: "/Session/findById" + `?sessionNo=${sessionNo}`,
+            dataType: "json",
+            success: function (jsondata) {
+                aname = jsondata.activity.aname;
+
+                let showpic = jsondata.activity.aimgt;
 
                 for (let i = 0; i < showpic.length; i++) {
                     if (showpic[i].aimgMain == 1) {
