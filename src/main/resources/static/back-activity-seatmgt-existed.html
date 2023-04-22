@@ -50,6 +50,13 @@
             line-height: 27.5px
         }
 
+        .seat input {
+            width: 20px;
+            text-align: center;
+            border: 0;
+            background: transparent
+        }
+
         .banned {
             background: lightcoral;
         }
@@ -68,12 +75,14 @@
 
         /* (B) SEATS LAYOUT */
         #layout {
-            max-width: 1000px;
+            max-height: 60vh;
+            max-width: 100vw;
             display: grid;
             grid-gap: 10px;
             margin-bottom: 20px;
             overflow: auto;
         }
+
 
         /* (C) LEGEND */
         #legend {
@@ -98,8 +107,6 @@
         .pressed {
             box-shadow: inset 0 0 6px 3px dimgray;
         }
-
-
 
 
         /* (D) SAVE */
@@ -211,7 +218,7 @@
 <!-- Header End-->
 <!-- Left Sidebar Start -->
 <nav class="vertical_nav" style="overflow: auto!important;">
-    <div class="left_section menu_left" id="js-menu" >
+    <div class="left_section menu_left" id="js-menu">
         <div class="left_section">
             <ul>
                 <li class="menu--item">
@@ -354,14 +361,17 @@
                     <div class="d-main-title" style="display: inline-block; width: 85%">
                         <h3 id="actNameAndSession"></h3>
                         <p></p>
-                        <h5 style="width: 50%">區域名稱　<input id="blockName" type="text" placeholder="請輸入區域名稱" value=""
-                                            class="form-control h_40" style="display: inline-block!important; width: 200px;" disabled></h5>
+                        <h5 style="width: 50%">區域名稱　<input id="blockName" type="text" placeholder="請輸入區域名稱"
+                                                               value=""
+                                                               class="form-control h_40"
+                                                               style="display: inline-block!important; width: 200px;"
+                                                               disabled></h5>
 
                     </div>
-<!--                    <div class="mt-5" style="display: inline-block;">-->
-<!--                            <a href="#" class="main-btn btn-hover"-->
-<!--                               style="background-color: orange; border: orange;" onmousedown="clearSeats()">清空座位</a>-->
-<!--                    </div>-->
+                    <!--                    <div class="mt-5" style="display: inline-block;">-->
+                    <!--                            <a href="#" class="main-btn btn-hover"-->
+                    <!--                               style="background-color: orange; border: orange;" onmousedown="clearSeats()">清空座位</a>-->
+                    <!--                    </div>-->
                 </div>
                 <div class="col-md-12">
                     <div class="main-card mt-5">
@@ -369,20 +379,28 @@
                             <!-- 這邊加上座位狀態選擇器 -->
                             <div id="legend" style="display: flex;">
                                 <div style="margin: 20px 20px 20px 0px;">
-                                    <button class="statusBtn banned" style="margin: 5px;" onclick="changeStatus(this)" value="banned">場地限制</button>
-                                    <button class="statusBtn reserved " style="margin: 5px;" onclick="changeStatus(this)" value="reserved">保留席</button>
-                                    <button class="statusBtn toSell pressed" style="margin: 5px;" onclick="changeStatus(this)" value="toSell">可出售</button>
-                                    <button class="statusBtn sold" style="margin: 5px;" onclick="changeStatus(this)" value="sold">已售出</button>
+                                    <button class="statusBtn banned" style="margin: 5px;" onclick="changeStatus(this)"
+                                            value="banned">場地限制
+                                    </button>
+                                    <button class="statusBtn reserved " style="margin: 5px;"
+                                            onclick="changeStatus(this)" value="reserved">保留席
+                                    </button>
+                                    <button class="statusBtn toSell pressed" style="margin: 5px;"
+                                            onclick="changeStatus(this)" value="toSell">可出售
+                                    </button>
+                                    <button class="statusBtn sold" style="margin: 5px;" onclick="changeStatus(this)"
+                                            value="sold">已售出
+                                    </button>
                                 </div>
-<!--                                <div style="margin: 47.5px 25px;">-->
-<!--                                    舞台方向：-->
-<!--                                    <select name="" id="" style="margin: 5px; border-color: #f1f1f1; width: 75px;">-->
-<!--                                        <option value="front" selected>前</option>-->
-<!--                                        <option value="back">後</option>-->
-<!--                                        <option value="left">左</option>-->
-<!--                                        <option value="right">右</option>-->
-<!--                                    </select>-->
-<!--                                </div>-->
+                                <!--                                <div style="margin: 47.5px 25px;">-->
+                                <!--                                    舞台方向：-->
+                                <!--                                    <select name="" id="" style="margin: 5px; border-color: #f1f1f1; width: 75px;">-->
+                                <!--                                        <option value="front" selected>前</option>-->
+                                <!--                                        <option value="back">後</option>-->
+                                <!--                                        <option value="left">左</option>-->
+                                <!--                                        <option value="right">右</option>-->
+                                <!--                                    </select>-->
+                                <!--                                </div>-->
                                 <div style="margin: 43px 0px;">
                                     <form id="rowAndColumns">
                                         排數：<input type="text" class="form-control h_40" style="display: inline-block!important; margin: 5px; width: 75px;
@@ -394,7 +412,8 @@
 
                                 <div class="mt-5" style="display: inline-block; margin-left: 30px">
                                     <a href="#" class="main-btn btn-hover"
-                                       style="background-color: orange; border: orange;" onmousedown="clearSeats()">清空座位</a>
+                                       style="background-color: orange; border: orange;"
+                                       onmousedown="clearSeats()">清空座位</a>
                                 </div>
                             </div>
 
@@ -402,8 +421,8 @@
 
                             <!-- 座位圖 -->
                             <!-- (A) SEAT LAYOUT -->
-                            <div class="d-md-flex flex-wrap align-items-center">
-                                <div id="layout" style="margin: auto;" style="overflow:scroll-y"></div>
+                            <div class="d-md-flex flex-wrap align-items-center" style="justify-content: center;">
+                                <div id="layout" style="margin: auto;"></div>
                             </div>
                         </div>
                     </div>
@@ -434,7 +453,7 @@
 <!-- 選擇座位的JS -->
 <script>
     function changeStatus(btn) {
-        if(btn.value === 'sold'){
+        if (btn.value === 'sold') {
             alert('已售出座位無法變動!');
             return;
         }
@@ -469,31 +488,31 @@
     t_Column = seats[seats.length - 1].y;
 
     $('#blockName').val(seats[0].blockName);
-    $('#rowAndColumns input:eq(0)').val(t_Row+1);
-    $('#rowAndColumns input:eq(1)').val(t_Column+1);
+    $('#rowAndColumns input:eq(0)').val(t_Row + 1);
+    $('#rowAndColumns input:eq(1)').val(t_Column + 1);
 
     let seatsmgt = {
         // INIT
         init: () => {
 
-            layout.setAttribute("style", `grid-template-columns: repeat(${(t_Column + 1) * 2}, 1fr)`)
+            layout.setAttribute("style", `grid-template-columns: repeat(${(t_Column + 1) * 2}, 1fr)`);
 
             // GENERATE SEATS
             for (let i = 0; i <= t_Row; i++) {
                 for (let j = 0; j <= t_Column; j++) {
                     let seat = document.createElement("div");
                     // 設定座位於資料庫的編號(seatno)
-                    seat.id = seats[i * 10 + j].seatNo;
+                    seat.id = seats[i * (t_Column + 1) + j].seatNo;
 
                     seat.innerHTML = `
-						第<input value="${seats[i*10+j].realX}" style="width: 20px; text-align: center; border: 0; background: transparent">排<br>
-						第<input value="${seats[i*10+j].realY}" style="width: 20px; text-align: center; border: 0; background: transparent">位<br>
+						第<input value="${i + 1}" onblur="checkEmpty(this)">排<br>
+						第<input value="${j + 1}" onblur="checkEmpty(this)">位<br>
 						`;
 
                     seat.className = "seat";
                     seat.onclick = () => seatsmgt.toggle(seat);
 
-                    let seatStatus = seats[i*10+j].seatStatus;
+                    let seatStatus = seats[i * (t_Column + 1) + j].seatStatus;
 
                     switch (seatStatus) {
                         case (-1):
@@ -522,31 +541,31 @@
         // 若點選 "可出售" 按鈕，可將 "場地限制" 或 "保留席" 切換成 "可出售"
         // 若點選 "保留席" 按鈕，可將 "可出售" 切換成 "保留席"
         toggle: seat => {
-            if (seat.classList.contains("sold")){
+            if (seat.classList.contains("sold")) {
                 return;
-            } else{
-                if($('button[class*="pressed"]')[0].value === 'banned'){
-                    if(seat.classList.contains('reserved')){
+            } else {
+                if ($('button[class*="pressed"]')[0].value === 'banned') {
+                    if (seat.classList.contains('reserved')) {
                         seat.classList.remove("reserved");
                         seat.classList.add("banned");
-                    } else if (seat.classList.contains('toSell')){
+                    } else if (seat.classList.contains('toSell')) {
                         seat.classList.remove("toSell");
                         seat.classList.add("banned");
                     }
                     return;
                 }
-                if($('button[class*="pressed"]')[0].value === 'reserved' && !(seat.classList.contains('banned'))){
-                    if(seat.classList.contains('toSell')){
+                if ($('button[class*="pressed"]')[0].value === 'reserved' && !(seat.classList.contains('banned'))) {
+                    if (seat.classList.contains('toSell')) {
                         seat.classList.remove("toSell");
                         seat.classList.add("reserved");
                     }
                     return;
                 }
-                if($('button[class*="pressed"]')[0].value === 'toSell'){
-                    if(seat.classList.contains('reserved')){
+                if ($('button[class*="pressed"]')[0].value === 'toSell') {
+                    if (seat.classList.contains('reserved')) {
                         seat.classList.remove("reserved");
                         seat.classList.add("toSell");
-                    } else if(seat.classList.contains('banned')){
+                    } else if (seat.classList.contains('banned')) {
                         seat.classList.remove("banned");
                         seat.classList.add("toSell");
                     }
@@ -559,6 +578,21 @@
 
         // SAVE RESERVATION
         save: () => {
+
+            const seatsTBC = document.querySelectorAll("#layout div");
+
+            for (let i = 0; i < seatsTBC.length; i++) {
+                if ($(`#${seatsTBC[i].id} input:eq(0)`).val() === '' || $(`#${seatsTBC[i].id} input:eq(0)`).val() === null ||
+                    $(`#${seatsTBC[i].id} input:eq(1)`).val() === '' || $(`#${seatsTBC[i].id} input:eq(1)`).val() === null) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: '座位排和位不得為空，請再次確認'
+                    })
+                    return;
+                }
+            }
+
             // SweetAlert
             Swal.fire({
                 title: '確認儲存目前座位配置？',
@@ -570,15 +604,14 @@
                 if (result.isConfirmed) {
                     // GET SELECTED SEATS
                     let seats = document.querySelectorAll("#layout div");
-                    console.log(seats);
 
-                    for(let s of seats){
+                    for (let s of seats) {
                         let status;
-                        if(s.classList.contains("banned")){
+                        if (s.classList.contains("banned")) {
                             status = (-1);
-                        } else if(s.classList.contains("reserved")){
+                        } else if (s.classList.contains("reserved")) {
                             status = (0);
-                        } else if(s.classList.contains("toSell")){
+                        } else if (s.classList.contains("toSell")) {
                             status = (1);
                         } else {
                             status = (2);
@@ -586,9 +619,9 @@
 
                         const aSeatInfo = {
                             "blockName": $('#blockName').val(),
-                            "seatNo" : s.id,
-                            "realX" : $(`#${s.id} input:eq(0)`).val(),
-                            "realY" : $(`#${s.id} input:eq(1)`).val(),
+                            "seatNo": s.id,
+                            "realX": $(`#${s.id} input:eq(0)`).val(),
+                            "realY": $(`#${s.id} input:eq(1)`).val(),
                             "seatStatus": status
                         };
 
@@ -617,24 +650,32 @@
         }
     };
 
+    // 錯誤驗證
+    function checkEmpty(element) {
+        if (element.value === '' || element.value === null) {
+            element.parentElement.style.border = '3px solid red';
+        } else {
+            element.parentElement.style.border = '';
+        }
+    }
+
     window.addEventListener("DOMContentLoaded", seatsmgt.init);
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         $('#actNameAndSession').text('');
 
         $.ajax({
             async: false,
             type: 'GET',
-            url: "/Activity/findByActNo"+`?actNo=${sessionStorage.getItem("activityNo")}`,
+            url: "/Activity/findByActNo" + `?actNo=${sessionStorage.getItem("activityNo")}`,
             dataType: "json",
             success: function (jsondata) {
                 $('#actNameAndSession').text(`${jsondata.aname} (場次編號：${sessionStorage.getItem("sessionNo")})`);
             }
         });
-
     })
 
-    function clearSeats(){
+    function clearSeats() {
         // SweetAlert
         Swal.fire({
             title: '確認要清空座位？',

@@ -49,6 +49,13 @@
             line-height: 27.5px
         }
 
+        .seat input {
+            width: 20px;
+            text-align: center;
+            border: 0;
+            background: transparent
+        }
+
         .banned {
             background: lightcoral;
         }
@@ -67,7 +74,8 @@
 
         /* (B) SEATS LAYOUT */
         #layout {
-            max-width: 1000px;
+            max-height: 60vh;
+            max-width: 100vw;
             display: grid;
             grid-gap: 10px;
             margin-bottom: 20px;
@@ -446,14 +454,19 @@
                     // 設定座位於資料庫的編號(seatno)
                     seat.id = seats[i * 10 + j].seatNo;
 
+                    // seat.innerHTML = `
+					// 	第<input value="${seats[i * (t_Column+1) + j].realX}" style="width: 20px; text-align: center; border: 0; background: transparent" disabled>排<br>
+					// 	第<input value="${seats[i * (t_Column+1) + j].realY}" style="width: 20px; text-align: center; border: 0; background: transparent" disabled>位<br>
+					// 	`;
+
                     seat.innerHTML = `
-						第<input value="${seats[i*10+j].realX}" style="width: 20px; text-align: center; border: 0; background: transparent" disabled>排<br>
-						第<input value="${seats[i*10+j].realY}" style="width: 20px; text-align: center; border: 0; background: transparent" disabled>位<br>
+						第<input value="${i + 1}">排<br>
+						第<input value="${j + 1}">位<br>
 						`;
 
                     seat.className = "seat";
 
-                    let seatStatus = seats[i*10+j].seatStatus;
+                    let seatStatus = seats[i * (t_Column+1) + j].seatStatus;
 
                     switch (seatStatus) {
                         case (-1):
