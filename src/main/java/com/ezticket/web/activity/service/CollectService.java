@@ -25,11 +25,11 @@ public class CollectService {
     private TicketHolderDAO thdao;
 
 //  Field Injection 抓不到MemberRepository實體
-    @Autowired
-    private MemberRepository memberRepository;
-
-    @Autowired
-    private MemberService memberService;
+//    @Autowired
+//    private MemberRepository memberRepository;
+//
+//    @Autowired
+//    private MemberService memberService;
 //    @Autowired
 //    public CollectService(MemberRepository memberRepository) {
 //        this.memberRepository = memberRepository;
@@ -47,31 +47,31 @@ public class CollectService {
 
     //    欠會員的修改功能
 
-    public String updateCollect(Integer collectno, String memail) {
-
-        CollectDAO cdao = new CollectDAOImpl();
+//    public String updateCollect(Integer collectno, String memail) {
+//
+//        CollectDAO cdao = new CollectDAOImpl();
 // Step1:  用 email 查出會員編號
 //        取不到memberRepository......
 //        Member member = memberRepository.findByMemail(memail);
 //        Member member = findByMemail(memail);
-
-        Member member = memberService.getMemberInfo(memail);
-        if (member==null) {
-            return "查無此會員";
-        }
-        Integer memberno = member.getMemberno();
+//
+//        Member member = memberService.getMemberInfo(memail);
+//        if (member==null) {
+//            return "查無此會員";
+//        }
+//        Integer memberno = member.getMemberno();
 
 // Step2: 更新 collect 表格中的會員編號
-        CollectVO oldCollectVO = cdao.findByPK(collectno);
-        CollectVO collectVO = new CollectVO();
-        collectVO.setCollectno(collectno);
-        collectVO.setMemberno(memberno);
-        collectVO.settDetailsno(oldCollectVO.gettDetailsno());
-        collectVO.settStatus(oldCollectVO.gettStatus());
-        collectVO.setQrcode(oldCollectVO.getQrcode());
-        cdao.update(collectVO);
-        return "分票成功！";
-    }
+//        CollectVO oldCollectVO = cdao.findByPK(collectno);
+//        CollectVO collectVO = new CollectVO();
+//        collectVO.setCollectno(collectno);
+//        collectVO.setMemberno(memberno);
+//        collectVO.settDetailsno(oldCollectVO.gettDetailsno());
+//        collectVO.settStatus(oldCollectVO.gettStatus());
+//        collectVO.setQrcode(oldCollectVO.getQrcode());
+//        cdao.update(collectVO);
+//        return "分票成功！";
+//    }
 
 
     public TicketHolder getOneTicket(Integer collectno) {

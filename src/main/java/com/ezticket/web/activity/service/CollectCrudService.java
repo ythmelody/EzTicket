@@ -7,6 +7,8 @@ import com.ezticket.web.activity.pojo.TorderDetailsView;
 import com.ezticket.web.activity.repository.CollectRedisRepository;
 import com.ezticket.web.activity.repository.CollectRepository;
 import com.ezticket.web.activity.repository.TorderDetailsViewRepository;
+import com.ezticket.web.users.pojo.Member;
+import com.ezticket.web.users.repository.MemberRepository;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -16,10 +18,14 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.sql.Timestamp;
@@ -36,7 +42,20 @@ public class CollectCrudService {
     private TorderDetailsViewRepository tdvRepository;
     @Autowired
     private TorderDetailsViewService torderDetailsViewService;
+
+    @Autowired
+    private MemberRepository memberRepository;
+
     CollectService collectService = new CollectService();
+    private final ResourceLoader resourceLoader;
+
+    @Value("${checkin.ip}")
+    private String checkinip;
+
+    public CollectCrudService(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
+
 
     //    新增
     @Transactional
@@ -73,7 +92,7 @@ public class CollectCrudService {
 //                票券到期時間
 //                時間要計算一下，只能設定從現在開始的差異時間
                 Timestamp current = new Timestamp(System.currentTimeMillis());
-                long timeDiff = (td.getSessioneTime().getTime()-current.getTime())/1000;
+                long timeDiff = (td.getSessioneTime().getTime() - current.getTime()) / 1000;
                 collectRedis.setExpirationInSeconds(timeDiff);
                 collectRedisRepository.save(collectRedis);
             }
@@ -119,7 +138,7 @@ public class CollectCrudService {
 
     }
 
-//    用來判斷此筆訂單可取消嗎？
+    //    用來判斷此筆訂單可取消嗎？
 //    查詢 Redis 票券狀態，退票前確認用
 //    MySQL 僅儲存出票及退票狀態，不須查詢
     public boolean isCancelable(Integer torderNo) {
@@ -175,9 +194,9 @@ public class CollectCrudService {
 
     public String urlToBase64(String collectno) throws WriterException, IOException {
 //                IP
-        StringBuilder urlFrag = new StringBuilder("http://localhost:8085/EditCollect");
+        StringBuilder urlFrag = new StringBuilder(checkinip);
 //                驗票 Controller 的網址
-        urlFrag.append("/checkin/");
+        urlFrag.append("EditCollect/checkin/");
         urlFrag.append(collectno);
         String url = urlFrag.toString();
         System.out.println(url);
@@ -212,6 +231,50 @@ public class CollectCrudService {
         String base64String = Base64.getEncoder().encodeToString(bytes);
         System.out.println("轉換後的Base64：" + base64String);
         return base64String;
+    }
+
+    //    由 Redis 取出 QR code 圖片
+    public String getQRcode(Integer collectno) {
+        Optional<CollectRedis> optCr = collectRedisRepository.findById(collectno.toString());
+        String img = null;
+        if (optCr.isPresent()) {
+            img = optCr.get().getQrcode();
+            System.out.println("取得圖片");
+        } else {
+            Resource resource = resourceLoader.getResource("classpath:static/images/event-imgs/timeout.jpg");
+            try (InputStream inputStream = resource.getInputStream()) {
+                // 讀取圖片的內容
+                byte[] imageBytes = inputStream.readAllBytes();
+                // 將圖片的內容轉換為 Base64 字串
+                img = Base64.getEncoder().encodeToString(imageBytes);
+                System.out.println("預設圖片");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return img;
+    }
+
+    //    分票功能
+    @Transactional
+    public boolean updateCollect(Integer collectno, String memail) {
+//        Member mtest = memberRepository.findByMemail("member1@example.com");
+//        System.out.println(mtest);
+        Member member = memberRepository.findByMemail(memail);
+        if (member == null || member.getMemberstatus() != 1) {
+            System.out.println("查無會員/非啟用中會員");
+            return false;
+        }
+        Integer memberno = member.getMemberno();
+        Optional<Collect> optC = collectRepository.findById(collectno);
+        if (optC.isEmpty()) {
+            System.out.println("查無票券");
+            return false;
+        }
+        Collect newC = optC.get();
+        newC.setMemberno(memberno);
+        collectRepository.save(newC);
+        return true;
     }
 
 }
