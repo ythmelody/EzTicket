@@ -2,7 +2,69 @@
 let memberno;
 // 定義持有優惠券
 let fitlist;
-
+$(document).ready(function() {
+  // 使用 jQuery Validation 插件來進行表單驗證
+    $('#order-form').validate({
+      rules: {
+        recipient: {
+          required: true,
+          maxlength: 20
+        },
+        rephone: {
+          required: true,
+          minlength: 10,
+          maxlength: 10,
+          digits: true
+        },
+        readdress1: {
+          required: true
+        },
+        readdress2: {
+          required: true
+        },
+        readdress3: {
+          required: true
+        },
+        readdress4: {
+          required: true
+        }
+      },
+      messages: {
+        recipient: {
+          required: '請填寫收件人姓名',
+          maxlength: '收件人姓名不能超過 {0} 個字'
+        },
+        rephone: {
+          required: '請填寫收件人電話',
+          minlength: '收件人電話必須為 {0} 個數字',
+          maxlength: '收件人電話必須為 {0} 個數字',
+          digits: '收件人電話只能為數字'
+        },
+        readdress1: {
+          required: '請填寫郵遞區號'
+        },
+        readdress2: {
+          required: '請選擇縣市'
+        },
+        readdress3: {
+          required: '請選擇鄉鎮市區'
+        },
+        readdress4: {
+          required: '請填寫收件人地址'
+        }
+      },
+    errorPlacement: function(error, element) {
+      error.appendTo(element.closest('.form-group').find('.error-msg'));
+      console.log(error.text()); // 在控制台印出錯誤訊息，方便檢查
+    },
+    submitHandler: function(form) {
+      // 顯示成功訊息
+      alert("訂單建立成功！");
+      // 在這裡可以繼續執行其他操作，例如提交表單數據到後端
+      addPorder();
+    }
+  });
+});
 $(document).ready(async () => {
   const response = await fetch('member/getMemberInfo', {
     method: 'GET',
@@ -271,3 +333,5 @@ async function getpcouponlist(memberno) {
       });
   });
 }
+
+
