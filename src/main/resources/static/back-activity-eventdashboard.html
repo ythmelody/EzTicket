@@ -424,6 +424,7 @@
 	  </div>
     </div>
     <div style="display: flex;align-items: center;"> 
+      
     <!-- Body End -->
 
     <script src="js/vertical-responsive-menu.min.js"></script>
@@ -438,6 +439,7 @@
        fetch("http://localhost:8085/Activity/findAll")
         .then((Response) => Response.json())
         .then((data) => {
+          
            let str="";
            let status=" ";
            let count = 1;
@@ -532,12 +534,6 @@
                     
                     }
                     listTab.innerHTML=str;
-                    // const eventList = document.querySelectorAll(".contact-list");
-                    // console.log(eventList)
-                    //   for (i of eventList)
-                    //      if (i.value === 3) {
-                    //         i.style.display = "none";
-                    // }
                   })
                   
                   //刪除活動
@@ -560,6 +556,7 @@
         fetch(`http://localhost:8085/Activity/ByActName?actName=${search.value}`)
           .then((Response) => Response.json())
           .then((data) => {
+            data.reverse();
            let str="";
            let status="";
            let count=1;

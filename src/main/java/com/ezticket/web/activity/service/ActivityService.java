@@ -9,7 +9,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +20,9 @@ public class ActivityService {
     private ActivityRepository activityRepository;
     @Autowired
     private ModelMapper modelMapper;
+
+
+
 
     public List<ActivityDto> findAllByOrderByActivityNoDesc(){
         return activityRepository.findAllByOrderByActivityNoDesc()
@@ -82,8 +84,8 @@ public class ActivityService {
     }
 
 
-    public Optional<ActivityDto> findByactivityNo(Integer activityNo) {
-        return activityRepository.findByactivityNo(activityNo).map(this::entityToDTO);
+    public Optional<Activity> findByactivityNo(Integer activityNo) {
+        return activityRepository.findByactivityNo(activityNo);
 
     }
     public List<ActivityDto> findAllByActivityNo(Integer activityNo){
@@ -109,6 +111,12 @@ public class ActivityService {
             activityRepository.deleteActivity(activityNo,aStatus);
 
     }
+    public Activity findActivityByNo(Integer activityNo) {
+        return activityRepository.findById(activityNo).orElse(null);
+    }
+
+
+
 //    public Activity updateActivityById(Integer activityNo, Activity activity) {
 //        Optional<Activity> optionalActivity = activityRepository.findById(activityNo);
 //

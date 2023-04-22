@@ -68,19 +68,13 @@ public class SessionController {
         return  sessionService.saveSession(session);
     }
     @DeleteMapping("deleteSession")
-    public void deleteSession(Integer sessionNo){
-        sessionService.deleteSession(sessionNo);
+    public void deleteSession( @RequestBody Session session){
+        sessionService.deleteSession(session);
     }
 
     @PostMapping("/updateSession")
-    public boolean updateSession(@RequestParam("sessionNo") Integer sessionNo,
-                                 @RequestParam("sessionsTime") Timestamp sessionsTime,
-                                 @RequestParam("sessioneTime") Timestamp sessioneTime,
-                                 @RequestParam("maxSeatsQty") Integer maxSeatsQty,
-                                 @RequestParam("maxStandingQty") Integer maxStandingQty
-    ) {
-        sessionService.updateSession(sessionNo, sessionsTime,sessioneTime,maxSeatsQty,maxStandingQty);
-        return true;
+    public Session updateSession(@RequestBody Session session) {
+        return sessionService.updateSession(session);
     }
 
 }

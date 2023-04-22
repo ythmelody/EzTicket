@@ -356,6 +356,7 @@
             <div class="col-md-12">
               <div class="main-card mt-5">
                 <div class="dashboard-wrap-content p-4">
+                  
                   <div class="d-md-flex flex-wrap align-items-center">
                     <div class="dashboard-date-wrap">
                       <div class="form-group"></div>
@@ -525,6 +526,7 @@
         </div>
       </div>
     </div>
+    
 
     <!-- 新增場次開始-->
     <div
@@ -626,12 +628,11 @@
               提交
             </button>
           </div>
-        </div><input type="text" style="display: block;">
+        </div>
       </div>
-      <a href=""></a>
       </div>
     <!-- 新增場次結束-->
-
+      
     
     <!-- Body End -->
 
@@ -651,24 +652,28 @@
       )
         .then((resp) => resp.json())
         .then((data) => {
+          data.reverse();
           let str = "";
-          let status = " ";
+          let status = "";
           const curDate = new Date();
           for (i of data) {
-            // console.log(i.sessionsTime);
-            const date=new Date(i.sessionsTime);
-           
-            if (date > curDate) {
+            const sDate=new Date(i.sessionsTime);    
+            const eDate = new Date(i.sessioneTime);        
+            if (sDate < curDate && curDate<eDate ) {
+              status="開始中";
+            }else if(eDate<curDate){
+              status = "已結束";
+            }else{
+              status="未開始";
+            }
               str += `<div class="contact-list" >
                         <div
-                          class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between"
+                          class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between" 
                         >
                           <div
-                            class="d-md-flex align-items-center event-top-info"
-                          >
-
-                         
-                            <div class="card-event-dt">
+                            class="d-md-flex align-items-center event-top-info" id="sessionName${i.sessionNo}"
+                          >   
+                            <div class="card-event-dt" >
                               <h5>${i.activity.aname}</h5>
                             </div>
                           </div>
@@ -686,7 +691,7 @@
                               <a href="#" class="dropdown-item" onclick="editSession(${i.sessionNo})" 
                                 ><i class="fa-solid fa-gear me-3"></i>編輯場次</a
                               >                             
-                              <a href="#" class="dropdown-item delete-event"
+                              <a href="#" class="dropdown-item delete-event" onclick="deleting(${i.sessionNo})"
                                 ><i class="fa-solid fa-trash-can me-3"></i
                                 >刪除場次</a
                               >
@@ -701,35 +706,35 @@
                               <i class="fa-solid fa-location-dot"></i>
                             </span>
                             <p>狀態</p>
-                            <h6 class="coupon-status">未開始</h6>
+                            <h6 class="coupon-status">${status}</h6>
                           </div>
                           <div class="icon-box">
                             <span class="icon">
                               <i class="fa-solid fa-calendar-days"></i>
                             </span>
                             <p>活動開始時間</p>
-                            <div><input type="number" class="edit${i.sessionNo}" style="display:none" id=editsessionsTime></div>
+                            <div><input type="text" class="edit${i.sessionNo}" style="display:none" id="editsessionsTime${i.sessionNo}"  placeholder="編輯開始時間" value="${i.sessionsTime}"></div>
                             
-                            <h6 class="coupon-status" style="display:block" id="sessionsTime${i.sessionNo}">${i.sessionsTime}</h6>
+                            <h6 class="show${i.sessionNo}"  id="sessionsTime${i.sessionNo}">${i.sessionsTime}</h6>
                           </div>
                           <div class="icon-box">
                             <span class="icon">
                               <i class="fa-solid fa-calendar-days"></i>
                             </span>
                             <p>活動結束時間</p>
-                             <div><input type="number" class="edit${i. sessionNo}" style="display:none" id=editsessioneTime></div>
+                             <div><input type="text" class="edit${i. sessionNo}" style="display:none" id="editsessioneTime${i.sessionNo}" placeholder="編輯結束時間" value="${i.sessioneTime}"></div>
 
-                            <h6 class="coupon-status" style="display:block" id="sessioneTime${i.sessionNo}">${i.sessioneTime}</h6>
+                            <h6 class="show${i.sessionNo}" id="sessioneTime${i.sessionNo}">${i.sessioneTime}</h6>
                           </div>
                           <div class="icon-box">
                             <span class="icon" >
                               <i class="fa-solid fa-ticket"></i>
                             </span>
                             <p>票券張數</p>
-                            <div><input type="number" class="edit${i. sessionNo}" style="display:none" id=editmaxStandingQty></div>
-                            <div><input type="number" class="edit${i. sessionNo}" style="display:none" id=editmaxStandingQty></div>
+                            <div><input type="number" class="edit${i. sessionNo}" style="display:none" id="editmaxStandingQty${i.sessionNo}" placeholder="編輯站位數" value="${i.maxStandingQty}"></div>
+                            <div><input type="number" class="edit${i. sessionNo}" style="display:none" id="editmaxSeatsQty${i.sessionNo}" placeholder="編輯座位數" value="${i.maxSeatsQty}"></div>
 
-                            <h6 class="coupon-status" style="display:block">站${
+                            <h6 class="show${i.sessionNo}" style="display:block">站${
                               i.maxStandingQty
                             }<br>座${i.maxSeatsQty}<br>——————<br>共${
                 i.maxSeatsQty + i.maxStandingQty
@@ -747,157 +752,95 @@
                           </div>
                         </div>
                       </div>`;
-            } else {
-              str += `<div class="contact-list" >
-                        <div
-                          class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between"
-                        >
-                          <div
-                            class="d-md-flex align-items-center event-top-info"
-                          >
-
-                         
-                            <div class="card-event-dt">
-                              <h5>${i.activity.aname}</h5>
-                            </div>
-                          </div>
-                          <div class="dropdown">
-                            <button
-                              class="option-btn"
-                              type="button"
-                              data-bs-toggle="dropdown"
-                              aria-haspopup="true"
-                              aria-expanded="false"
-                            >
-                              <i class="fa-solid fa-ellipsis-vertical"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                              <a href="#" class="dropdown-item" onclick=editSession(${i.sessionNo})
-                                ><i class="fa-solid fa-gear me-3"></i>編輯場次</a
-                              >                             
-                              <a href="#" class="dropdown-item delete-event"
-                                ><i class="fa-solid fa-trash-can me-3"></i
-                                >刪除場次</a
-                              >
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="bottom d-flex flex-wrap justify-content-between align-items-center p-4"
-                         style="flex-wrap: nowrap!important;">
-                          <div class="icon-box">
-                            <span class="icon">
-                              <i class="fa-solid fa-location-dot"></i>
-                            </span>
-                            <p>狀態</p>
-                            <h6 class="coupon-status">已結束</h6>
-                          </div>
-                          <div class="icon-box">
-                            <span class="icon">
-                              <i class="fa-solid fa-calendar-days"></i>
-                            </span>
-                            <p>活動開始時間</p>
-                            <h6 class="coupon-status" id="sessionsTime${i.sessionNo}">${i.sessionsTime}</h6>
-                          </div>
-                          <div class="icon-box">
-                            <span class="icon">
-                              <i class="fa-solid fa-calendar-days"></i>
-                            </span>
-                            <p>活動結束時間</p>
-                            <h6 class="coupon-status" id="sessioneTime${i.sessionNo}">${i.sessioneTime}</h6>
-                          </div>
-                          <div class="icon-box">
-                            <span class="icon" >
-                              <i class="fa-solid fa-ticket"></i>
-                            </span>
-                            <p>票券張數</p>
-                            <h6 class="coupon-status">站${
-                              i.maxStandingQty
-                            }<br>座${i.maxSeatsQty}<br>——————<br>共${
-                i.maxSeatsQty + i.maxStandingQty
-              }</h6>
-                          </div>
-                          <div class="icon-box">
-                            <span class="icon">
-                              <i class="fa-solid fa-tag"></i>
-                            </span>
-                            <p>已售數量</p>
-                            <h6 class="coupon-status">站${i.standingQty}<br>座${
-                i.seatsQty
-              }<br>——————<br>共${i.seatsQty + i.standingQty}</h6>
-                          </div>
-                        </div>
-                      </div>`;
-            }
+            
           }
           listTab.innerHTML = str;
           
         });
         function editSession(e) {
-          console.log(e)
-          let edit=document.querySelectorAll(`.edit${e}`);
-          for(i of edit){
-            $(".edit" + e).css("display", "block");
+          console.log(e);
+          const createbtn=document.createElement("button");
+          const cancelbtn = document.createElement("button");
+          createbtn.id=`createbtn${e}`;
+          cancelbtn.id = `cancelbtn${e}`;
+          createbtn.textContent="確定編輯";
+          cancelbtn.textContent = "取消";
+          $(`#sessionName${e}`).append(createbtn);
+           $(`#sessionName${e}`).append(cancelbtn);
+          const editsessionsTime = document.querySelector(`#editsessionsTime${e}`);
+          const editsessioneTime = document.querySelector(`#editsessioneTime${e}`);
+          const editmaxSeatsQty = document.querySelector(`#editmaxSeatsQty${e}`);
+          const editmaxStandingQty = document.querySelector(`#editmaxStandingQty${e}`);
+          const edit=document.querySelectorAll(`.edit${e}`);
+          const show =document.querySelectorAll(`.show${e}`);
+          for(let i=0;i<edit.length;i++){
+            edit[i].style.display = "block";
           }
-          // const formData = new FormData();
-          // formData.append('sessionNo', e);
-          // formData.append('sessionsTime', 3);
-          // formData.append('sessioneTime', 3);
-          // formData.append('maxSeatsQty', 3);
-          // formData.append('maxStandingQty', 3);
-          // console.log(e)
-          // fetch(`http://localhost:8085/Activity/deleteActivity`, {
-          //   method: 'POST',
-          //   body: formData,
-          // })
-          //   .then((Response) => Response.json())
-          //   .then((data) => { })
+          for (let i = 0; i < show.length; i++) {
+            show[i].style.display = "none";
+          }
+          createbtn.addEventListener("click",()=>{
+            console.log($(`#editsessionsTime${e}`).val());
+             console.log($(`#editsessioneTime${e}`).val());
+              console.log($(`#editmaxStandingQty${e}`).val());
+               console.log($(`#editmaxSeatsQty${e}`).val());
+            fetch('http://localhost:8085/Session/updateSession', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                sessionsTime: $(`#editsessioneTime${e}`).val(),
+                sessioneTime: $(`#editsessioneTime${e}`).val(),
+                maxStandingQty: $(`#editmaxStandingQty${e}`).val(),
+                maxSeatsQty: $(`#editmaxSeatsQty${e}`).val(),
+                sessionNo: e
+              })
+            }).then(res => res.json())
+            for (let i = 0; i < edit.length; i++) {
+              edit[i].style.display = "none";
+            }
+            for (let i = 0; i < show.length; i++) {
+              show[i].style.display = "block";
+            }
+              createbtn.style.display = "none";
+              cancelbtn.style.display = "none";
+               location.reload() 
+          })
+              cancelbtn.addEventListener("click", () => {
+              for (let i = 0; i < edit.length; i++) {
+                  edit[i].style.display = "none";
+                }
+              for (let i = 0; i < show.length; i++) {
+                  show[i].style.display = "block";
+                }
+                createbtn.style.display = "none";
+                cancelbtn.style.display = "none";
+           
+          })
+          $(`#editsessionsTime${e}`).datetimepicker({
+            theme: '',          //theme: 'dark',
+            timepicker: true,   //timepicker: false,
+            step: 15,
+            format: 'Y/m/d H:i',
+            // defaultDate: '-1969-12-17', //disable 15天後才能選擇天數
+            // minDate: '-1969-12-17' //選擇時預設值在15天後
+          });
+          $(`#editsessioneTime${e}`).datetimepicker({
+            theme: '',          //theme: 'dark',
+            timepicker: true,   //timepicker: false,
+            step: 15,
+            format: 'Y/m/d H:i',
+            // defaultDate: '-1969-12-17', //disable 15天後才能選擇天數
+            // minDate: '-1969-12-17' //選擇時預設值在15天後
+          });
+          $.datetimepicker.setLocale('zh'); // kr ko ja en
 
         }
     </script>
     <script>
-   
-
-
-
-  //  Date.prototype.format = function(format) {
-  // const monthNames = ["January", "February", "March", "April", "May", "June",
-  //   "July", "August", "September", "October", "November", "December"
-  // ];
-  // const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
-//   const padZero = (value) => {
-//     return (value < 10) ? "0" + value : value;
-//   };
-
-//   const year = this.getFullYear();
-//   const month = this.getMonth();
-//   const day = this.getDate();
-//   const dayOfWeek = this.getDay();
-//   const hours = this.getHours();
-//   const minutes = this.getMinutes();
-//   const seconds = this.getSeconds();
-//   const timezoneOffset = this.getTimezoneOffset();
-//   const timezoneOffsetHours = Math.floor(Math.abs(timezoneOffset) / 60);
-//   const timezoneOffsetMinutes = Math.abs(timezoneOffset) % 60;
-//   const timezoneOffsetString = (timezoneOffset >= 0 ? '+' : '-') +
-//     padZero(timezoneOffsetHours) +
-//     padZero(timezoneOffsetMinutes);
-
-//   return format
-//     .replace("yyyy", year)
-//     .replace("MMMM", monthNames[month])
-//     .replace("MM", padZero(month + 1))
-//     .replace("dd", padZero(day))
-//     .replace("EEEE", dayNames[dayOfWeek])
-//     .replace("kk", padZero(hours))
-//     .replace("mm", padZero(minutes))
-//     .replace("ss", padZero(seconds))
-//     .replace("ZZZZ", timezoneOffsetString);
-// };
   
       document.querySelector("#addSession").addEventListener("click",()=>{
-   
       const sessionsTime=document.querySelector("#sessionsTime");
       const sessioneTime=document.querySelector("#sessioneTime");
       const maxSeatsQty=document.querySelector("#maxSeatsQty");
@@ -938,17 +881,28 @@
         
         }).then(res => res.json())
         .catch(error => console.error('Error:', error))
-        .then(response => window.location.replace(window.location.href))
+        location.reload();
+        
       })
     });
       
+    function deleting(e){
     
-      
-      // console.log(new Intl.DateTimeFormat('zh-TW', options).format(formatSDate));
-      // console.log(new Intl.DateTimeFormat('zh-TW', options).format(formatEDate));
-      // console.log(maxSeatsQty.value);
-      // console.log(maxStandingQty.value);
-      // console.log(activityNo);
+      fetch('http://localhost:8085/Session/deleteSession', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          sessionNo: e,
+        })
+
+      }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => window.location.replace(window.location.href))
+        location.reload();
+    }
+    
     </script>
   </body>
   <link rel="stylesheet" type="text/css" href="css\jquery.datetimepicker.css" />

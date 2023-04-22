@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -85,12 +87,22 @@ public class SessionService {
         }
     }
 
-    public void deleteSession(Integer sessionNo){
-        sessionRepository.delete(sessionNo);
+    public void deleteSession(Session session){
+
+        sessionRepository.deleteById(session.getSessionNo());
     }
 
-    public void updateSession(Integer sessionNo, Timestamp sessionsTime, Timestamp sessioneTime, Integer maxSeatsQty, Integer maxStandingQty) {
-        sessionRepository.update(sessionNo,sessionsTime, sessioneTime, maxSeatsQty,maxStandingQty);
+    public Session updateSession(Session session) {
+        Session existingSession = sessionRepository.findById(session.getSessionNo()).orElse(null);
+        if (existingSession == null) {
+            return null;
+        }
+        existingSession.setSessionsTime(session.getSessionsTime());
+        existingSession.setSessioneTime(session.getSessioneTime());
+        existingSession.setMaxStandingQty(session.getMaxStandingQty());
+        existingSession.setMaxSeatsQty(session.getMaxSeatsQty());
 
+        // save the updated session entity to the database
+        return sessionRepository.save(existingSession);
     }
 }

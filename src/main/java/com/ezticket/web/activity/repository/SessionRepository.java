@@ -46,7 +46,7 @@ public interface SessionRepository extends JpaRepository<Session,Integer> {
     @Transactional
     @Modifying
     @Query("UPDATE Session SET sessionNo = :sessionNo, sessionsTime = :sessionsTime, sessioneTime = :sessioneTime,maxSeatsQty=:maxSeatsQty,maxStandingQty=:maxStandingQty where sessionNo = :sessionNo")
-    public void update(@Param("sessionNo") Integer sessionNo, @Param("sessionsTime") Timestamp sessionsTime, @Param("sessioneTime") Timestamp sessioneTime, @Param("maxSeatsQty") Integer maxSeatsQty, @Param("maxStandingQty") Integer maxStandingQty);
+    public void update(@Param("sessionNo") Integer sessionNo,Session session);
 
 
     //    Add by Shawn on 04/08

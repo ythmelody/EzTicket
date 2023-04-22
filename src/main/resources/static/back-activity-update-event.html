@@ -1327,7 +1327,7 @@
                                   </p>
                                   
                                   <div class="content-holder mt-4" id="eventImgList">
-                                    <input type="file" accept="image/*" class="aimg" id="file1" value="1"/><br>
+                                    <input type="file" accept="image/*" class="oldaimg" id="file1" value="1"/><br>
                                     <div class="default-event-thumb">
                                        <img id="img1"/>
                                     </div>
@@ -1433,7 +1433,7 @@
                                   <label class="form-label fs-16"
                                     >編輯區域票價</label
                                   >
-                                  <p class="mt-2 fs-14 d-block mb-3 pe_right">若此活動都不分區，請在輸入區域名稱寫為"全站"</p>
+                                  <p class="mt-2 fs-14 d-block mb-3 pe_right">舊有票區不可更動，若不需要可直接忽略</p>
                                 </div>
                                 <div
                                   class="d-flex align-items-center justify-content-between pt-4 pb-3 full-width"
@@ -1786,63 +1786,63 @@
     </script>
      <!--動態生成活動圖片-->
     <script>
-    document
-        .querySelector("#file1")
-        .addEventListener("change", changeListener);
+   document
+      .querySelector("#file1")
+      .addEventListener("change", changeListener);
 
-      function changeListener({ target }) {
-        const { id, files } = target;
-        const seq = id.substring(id.indexOf("file") + 4);
-        const img = document.querySelector("#img" + seq);
-        const file = files[0];
-        if (!file) {
-          img.src = "";
-          return;
-        }
-        img.src = URL.createObjectURL(file);
-
-        const nextSeq = +seq + 1;
-        if (!document.querySelector("#file" + nextSeq)) {
-          addNext(nextSeq);
-        }
+    function changeListener({ target }) {
+      const { id, files } = target;
+      const seq = id.substring(id.indexOf("file") + 4);
+      const img = document.querySelector("#img" + seq);
+      const file = files[0];
+      if (!file) {
+        img.src = "";
+        return;
       }
-      let imgList=document.querySelector('#eventImgList');
-      function addNext(seq) {
-        const br=document.createElement("br");
-        imgList.append(br);
-        const div=document.createElement("div");
-        div.className="default-event-thumb";
-        const input = document.createElement("input");
-        input.type = "file";
-        input.accept = "image/*";
-        input.id = "file" + seq;
-        input.className="aimg";
-        input.addEventListener("change", changeListener);
-        div.append(input);
-        imgList.append(input);
-        imgList.append(div);
-        imgList.append(br);
-        const img = document.createElement("img");
-        img.id = "img" + seq;
-        // img.className="aimg";
-        div.append(img);
-        const deletebtn=document.createElement("button");
-        deletebtn.id="delete"+seq;
-        deletebtn.className="option-btn-1";
-        deletebtn.innerHTML="刪除"
-        imgList.append(deletebtn);
-        imgList.append(br);
+      img.src = URL.createObjectURL(file);
 
-        deletebtn.addEventListener("click",()=>{
-          const deleteimg=document.getElementById("img"+seq); 
-          div.removeChild(deleteimg);
-          imgList.removeChild(div);
-          imgList.removeChild(input);
-          imgList.removeChild(deletebtn);
-          imgList.removeChild(br);
-        })
-       
+      const nextSeq = +seq + 1;
+      if (!document.querySelector("#file" + nextSeq)) {
+        addNext(nextSeq);
       }
+    }
+    let imgList = document.querySelector('#eventImgList');
+    function addNext(seq) {
+      const br = document.createElement("br");
+      imgList.append(br);
+      const div = document.createElement("div");
+      div.className = "default-event-thumb";
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "image/*";
+      input.id = "file" + seq;
+      input.className = "aimg";
+      input.addEventListener("change", changeListener);
+      div.append(input);
+      imgList.append(input);
+      imgList.append(div);
+      imgList.append(br);
+      const img = document.createElement("img");
+      img.id = "img" + seq;
+      // img.className="aimg";
+      div.append(img);
+      const deletebtn = document.createElement("button");
+      deletebtn.id = "delete" + seq;
+      deletebtn.className = "option-btn-1";
+      deletebtn.innerHTML = "刪除"
+      imgList.append(deletebtn);
+      imgList.append(br);
+
+      deletebtn.addEventListener("click", () => {
+        const deleteimg = document.getElementById("img" + seq);
+        div.removeChild(deleteimg);
+        imgList.removeChild(div);
+        imgList.removeChild(input);
+        imgList.removeChild(deletebtn);
+        imgList.removeChild(br);
+      })
+
+    }
     </script>
     <!--座位圖選擇-->
     <script>
@@ -2034,7 +2034,7 @@
 
       document.querySelector("#finish").addEventListener("click", () => {
         const formData = new FormData();
-        formData.append('activityNo', 1014);
+        formData.append('activityNo', 1011);
         formData.append('aname', $("#aname").val());
         formData.append('aclass', $("#aclass").find(":selected").val());
         formData.append('aperformer', $("#aperformer").val());
@@ -2061,44 +2061,46 @@
         console.log($("#aedate").val());
         console.log($("#wetherseat").val());
         
+        
         const fileInput = document.querySelector("#seat");
-        formData.append("aseatimg", fileInput.files[0]);
+        if (fileInput.files.length > 0) {
+          formData.append("aseatimg", fileInput.files[0]);
+        }
         console.log(fileInput.files[0]);
-        fetch('http://localhost:8085/Activity/updateActivity', {
+        fetch(`http://localhost:8085/Activity/updateActivity/${1012}`, {
           method: 'POST',
           body: formData,
         }).then(resp => resp.json())
           .then(data => {
             console.log(data.activityNo);
+          
            
         
 //======================================================================================================
-    const fileInput2= document.querySelectorAll(".aimg");
-    const formData2 = new FormData()
-    formData2.append("activityno",data.activityNo);
-    for (let i = 0; i < fileInput2.length; i++) {
-      formData2.append("images", fileInput2[i].files[0]);
-      if(fileInput2.value===1){
-        formData2.append("aimgmain",$("#file1").val())
-      }
+    const fileInput4= document.querySelectorAll(".aimg");
+    const formData4 = new FormData()
+    formData4.append("activityno",1012);
+    for (let i = 0; i < fileInput4.length; i++) {
+      formData4.append("images", fileInput4[i].files[0]);
     }
      fetch('http://localhost:8085/Aimgt/saveAimgt', {
          method: 'POST',
-         body: formData2,
+         body: formData4,
         }).then(resp => resp.json())
           .then(data => {
            });
+
     //==========================================================================================================
     const blockName= document.querySelectorAll(".blockname");
     const blockPrice= document.querySelectorAll(".blockprice");
     const blockType= document.querySelectorAll(".blocktype");
-
+           console.log($("#blockName").val())
 const formData3 = new FormData()
 let blockDataArray = [];
 for (let i = 0; i < blockName.length; i++) {
   let blockData = {
     blockName: blockName[i].value,
-    activityNo: data.activityNo,
+    activityNo: 1012,
     blockPrice: blockPrice[i].value,
     blockType: blockType[i].checked ? 1 : 0
   };
@@ -2116,7 +2118,6 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
   .catch(error => console.error('Error:', error))
   .then(response => console.log('Success:', response)); 
 
-
           });
          
 
@@ -2125,20 +2126,20 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
    </script>
 <!--活動新增結束-->
 
-<!--活動複製新增開始-->
+<!--活動編輯開始-->
 <script>
-  fetch(`http://localhost:8085/Activity/findByactivityNo?activityNo=${1}`)
+  fetch(`http://localhost:8085/Activity/findByactivityNo?activityNo=${1012}`)
     .then(resp => resp.json())
     .then(data => {
       $("#aname").val(data.aname);
-      $("#aclass option:selected").val(data.aclass);
+      $("#aclass").val(data.aclassNo);
       if(data.performer!=null){
         $("#yes").attr('checked',true);
         typePerformer.style.display = 'block';
       }
       console.log(data);
       $("#aperformer").val(data.performer);
-      $("#host option:selected").val(data.host);
+      $("#host").val(data.hostNo);
       $("#adiscrip").val(data.adiscrip);
       $("#anote").val(data.anote);
       $("#aticketremind").val(data.aticketRemind);
@@ -2152,15 +2153,23 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
       $("#aseatimg").attr("src", `data:image/jpeg;base64,${data.aseatsImg}`); 
 
 
+      
+
     })
 
     
-      fetch(`http://localhost:8085/BlockPrice/findByActNo?activityNo=${1}`)
+      fetch(`http://localhost:8085/BlockPrice/findByActNo?activityNo=${1012}`)
         .then(resp => resp.json())
         .then(data => {
           let str="";
           let count=1001;
           for(i of data){
+            let seatable=""
+            if(i.blockType==0){
+              seatable="此區無座位";
+            }else{
+              seatable = "此區有座位";
+            }
             console.log(i);
              str+=`<div
               class="price-ticket-card-head d-md-flex flex-wrap align-items-start justify-content-between position-relative p-4"
@@ -2177,7 +2186,7 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
                   <div>
                     <span class="text-145">請輸入區域名稱</span>
                   </div>
-                  <input type="text" class="blockname" id="blockname${count}" value="${i.blockName}">
+                  <input type="text" class="oldblockname" id="blockname${count}" value="${i.blockName}">
 
                 </div>
               </div>
@@ -2195,83 +2204,66 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
                   <div>
                     <span class="text-145">請輸入區域票價</span>
                   </div>
-                  <input type="text" class="blockprice" id="blockprice${count}" value="${i.blockPrice}">
+                  <input type="text" class="oldblockprice" id="blockprice${count}" value="${i.blockPrice}">
 
                 </div>
               </div>
               <div >
-                <input type="checkbox" id="blocktype${count}" class="blocktype" value="${i.blockType}">
-                  <label for="">此區是否有座位</label>
+                <input type="checkbox" id="blocktype${count}" class="oldblocktype" value="${i.blockType}" checked  disabled>
+                  <label for="">${seatable}</label>
               </div>
               <div class="d-flex align-items-center">
                 <div
                   class="dropdown dropdown-default dropdown-text dropdown-icon-item"
                 >
-                  <button class="option-btn-1" id="deleteBlockPriceBtn${count}">
-                    刪除
-                  </button>
+           
                 </div>
               </div>
             </div>`;
-            
-      
-            
+                       
             count++;
           }
           blockPriceList.insertAdjacentHTML('beforeend', str);
           let deletebtnArray=document.querySelectorAll(".option-btn-1");
           let count2=1001;
-          for(let i=1001;i<count;i++){
-            let deleteBlockPriceBtn = document.querySelector(`#deleteBlockPriceBtn${i}`);
-            let blockDivId = `blockDiv${i}`;
-             $(`#blocktype${i}`).attr('checked', !!$(`#blocktype${i}`).val());
-            deleteBlockPriceBtn.addEventListener("click", () => {
-            document.getElementById(blockDivId).remove();
-           
-            });
-          
-          }
-          // $("#blockname").val(data.blockname);
-          // $("#blockprice").val(data.blockprice);
-          
-        })  
 
-      fetch(`http://localhost:8085/Aimgt/findAllByActivityNo?activityNo=${1}`
+        })  
+        function disableCheckbox(checkbox) {
+            checkbox.checked = true; // 確保checkbox一直保持打勾狀態
+            checkbox.disabled = true; // 禁用checkbox，使其無法再更動
+          }
+
+      fetch(`http://localhost:8085/Aimgt/findAllByActivityNo?activityNo=${1012}`
         ).then(resp => resp.json())
         .then(data => {
           
           let str="";
           let count=2;
     console.log(data)
-          for(let i=1;i<data.length;i++){
-            if((i-1)==0){
-              const file1=document.querySelector("#file1");
-              $(`#img1`).attr("src", `data:image/jpeg;base64,${data[i-1].aimg}`);
-              // conosle.log(data[i-1].aimg)
-              //   var base64Image = data[i - 1].aimg;
-              // conosle.log(data[i - 1].aimg)
-              // var byteCharacters = atob(base64Image);
-              // conosle.log(byteCharacters)
-              // var byteNumbers = new Array(byteCharacters.length);
-              // for (var j = 0; i < byteCharacters.length; i++) {
-              //   byteNumbers[j] = byteCharacters.charCodeAt(j);
-              // }
-              // var byteArray = new Uint8Array(byteNumbers);
+    
+    $(`#img1`).attr("src", `data:image/jpeg;base64,${data[0].aimg}`);  
+    $(`#file1`).attr("name",data[0].aimgNo)  
+    const file1=document.querySelector("#file1")
+    file1.addEventListener("change", function changeImg() {
+            const fileInput2 = document.querySelector(`#file1`);
+            const formData2 = new FormData()
+            console.log(1)
+            console.log(data[0].aimgNo)
 
-              // var imageFile = new File([byteArray], "image.jpeg", { type: "image/jpeg" });
-              // file1.files[0] = data[i-1].aimg;
-              // console.log("檔案已設定成功：", file1.files[0]);
-              // file1.onchange = function () {
-              //   if (file1.files[0]) {
-                  
-              //   } else {
-              //     console.log("檔案設定失敗");
-              //   }
-              // };
-              //  const imageFile = new File([data[i-1].aimg], "image.jepg", { type: "image/jepg" });
-              // file1.files[0] = imageFile;
-              // $(`#file1`).attr("src", `data:image/jpeg;base64,${data[i - 1].aimg}`); 
+            if (fileInput2.files[0]) {
+              formData2.append("image", fileInput2.files[0]);
+              formData2.append("aimgNo", data[0].aimgNo);
             }
+
+            fetch(`http://localhost:8085/Aimgt/updateAimgt`, {
+              method: 'POST',
+              body: formData2,
+            }).then(resp => resp.json())
+              .then(data => {
+              });
+
+          })     
+          for(let i=1;i<data.length;i++){
             const br = document.createElement("br");
             imgList.append(br);
             const div = document.createElement("div");
@@ -2280,8 +2272,28 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
             input.type = "file";
             input.accept = "image/*";
             input.id = "file" + count;
-            input.className = "aimg";
+            input.className = "oldaimg";
+            
             input.addEventListener("change", changeListener);
+            input.addEventListener("change", function changeImg() {
+              const fileInput2 = document.querySelector(`#file${count-1}`);
+              const formData2 = new FormData()
+              console.log(count-1)
+              console.log(data[i].aimgNo)
+
+              if (fileInput2.files[0]) {
+                formData2.append("image", fileInput2.files[0]);
+                formData2.append("aimgNo", data[i].aimgNo);
+              }
+
+              fetch(`http://localhost:8085/Aimgt/updateAimgt`, {
+                method: 'POST',
+                body: formData2,
+              }).then(resp => resp.json())
+                .then(data => {
+                });
+
+            });
             div.append(input);
             imgList.append(input);
             imgList.append(div);
@@ -2298,37 +2310,33 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
             imgList.append(br)
             const deleteimg = document.getElementById(`img${count}`);
             deletebtn.addEventListener("click", () => {
+              console.log(data[i].aimgNo)
+              fetch(`http://localhost:8085/Aimgt/deleteAimgt`, {
+                method: 'DELETE', 
+                body: JSON.stringify({
+                        aimgNo: data[i].aimgNo
+                      }),
+                headers: {
+                        'Content-Type': 'application/json'
+                      }
+              }).then(resp => resp.json())
+                .then(data => {})
+
               deleteimg.remove();
               div.remove();
               input.remove();
               deletebtn.remove();
               br.remove();     
             })
+           
             $(`#img${count}`).attr("src", `data:image/jpeg;base64,${data[i].aimg}`);
             count++;
-            }       
+          }       
 
-        })  
-        // $(`#img${count}`).attr("src", `data:image/jpeg;base64,${i. aimg}`); 
+      })  
 
-        //  formData.append('aname', $("#aname").val());
-        //   formData.append('aclass', $("#aclass").find(":selected").val());
-        //   formData.append('aperformer', $("#aperformer").val());
-        //   formData.append('host', $("#host").find(":selected").val());
-        //   formData.append('adiscrip', $("#adiscrip").val());
-        //   formData.append('anote', $("#anote").val());
-        //   formData.append('aticketremind', $("#aticketremind").val());
-        //   formData.append('aplace', $("#aplace").val());
-        //   formData.append('aplaceaddress', $("#aplaceaddress").val());
-        //   formData.append('asdate', $("#asdate").val());
-        //   formData.append('aedate', $("#aedate").val());
-        //   formData.append('wetherseat', $("#wetherseat").val());
-        //   console.log($("#asdate").val())
-
-        //   const fileInput = document.querySelector("#seat");
-        //   formData.append("aseatimg", fileInput.files[0]);
 </script>
-<!--活動複製新增結束-->
+<!--活動編輯結束-->
 
 
   </body>

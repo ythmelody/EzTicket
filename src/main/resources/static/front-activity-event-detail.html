@@ -776,110 +776,11 @@
 							<div class="more-events">
 								<div class="main-title position-relative">
 									<h3>更多節目</h3>
-									<a href="explore_events.html" class="view-all-link">more<i
+									<a href="front-activity-event-explore_events.html" class="view-all-link">more<i
 											class="fa-solid fa-right-long ms-2"></i></a>
 								</div>
-								<div class="owl-carousel moreEvents-slider owl-theme">
-									<div class="item">
-										<div class="main-card mt-4">
-											<div class="event-thumbnail">
-												<a href="Shawn_venue_event_detail_view.html" class="thumbnail-img">
-													<img src="images/event-imgs/1 .jpg" alt="">
-												</a>
-												<span class="bookmark-icon" title="Bookmark"></span>
-											</div>
-											<div class="event-content">
-												<a href="Shawn_venue_event_detail_view.html" class="event-title">太空港：蓋婭方舟</a>
-											
-											</div>
-											<div class="event-footer">
-												<div class="event-timing">
-													<span class="date"><i class="fa fa-calendar"></i> <!-- -->2023/3/24<span class="minor">(<!-- -->五<!-- -->)</span></span>
-													<span class="publish-time"><i class="fa-solid fa-clock me-2"></i>1h</span>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="item">
-										<div class="main-card mt-4">
-											<div class="event-thumbnail">
-												<a href="Shawn_venue_event_detail_view.html" class="thumbnail-img">
-													<img src="images/event-imgs/1 .jpg" alt="">
-												</a>
-												<span class="bookmark-icon" title="Bookmark"></span>
-											</div>
-											<div class="event-content">
-												<a href="Shawn_venue_event_detail_view.html" class="event-title">《黃明志大飛機世界巡迴演唱會》台北站</a>
-										
-											</div>
-											<div class="event-footer">
-												<div class="event-timing">
-													<span class="date"><i class="fa fa-calendar"></i> <!-- -->2023/3/24<span class="minor">(<!-- -->五<!-- -->)</span></span>	
-													<span class="publish-time"><i class="fa-solid fa-clock me-2"></i>2h</span>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="item">
-										<div class="main-card mt-4">
-											<div class="event-thumbnail">
-												<a href="Shawn_venue_event_detail_view.html" class="thumbnail-img">
-													<img src="images/event-imgs/1 .jpg" alt="">
-												</a>
-												<span class="bookmark-icon" title="Bookmark"></span>
-											</div>
-											<div class="event-content">
-												<a href="Shawn_venue_event_detail_view.html" class="event-title">《黃明志大飛機世界巡迴演唱會》台北站</a>
-										
-											</div>
-											<div class="event-footer">
-												<div class="event-timing">
-													<span class="date"><i class="fa fa-calendar"></i> <!-- -->2023/3/24<span class="minor">(<!-- -->五<!-- -->)</span></span>	
-													<span class="publish-time"><i class="fa-solid fa-clock me-2"></i>2h</span>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="item">
-										<div class="main-card mt-4">
-											<div class="event-thumbnail">
-												<a href="Shawn_venue_event_detail_view.html" class="thumbnail-img">
-													<img src="images/event-imgs/1 .jpg" alt="">
-												</a>
-												<span class="bookmark-icon" title="Bookmark"></span>
-											</div>
-											<div class="event-content">
-												<a href="Shawn_venue_event_detail_view.html" class="event-title">《黃明志大飛機世界巡迴演唱會》台北站</a>
-										
-											</div>
-											<div class="event-footer">
-												<div class="event-timing">
-													<span class="date"><i class="fa fa-calendar"></i> <!-- -->2023/3/24<span class="minor">(<!-- -->五<!-- -->)</span></span>	
-													<span class="publish-time"><i class="fa-solid fa-clock me-2"></i>2h</span>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="item">
-										<div class="main-card mt-4">
-											<div class="event-thumbnail">
-												<a href="Shawn_venue_event_detail_view.html" class="thumbnail-img">
-													<img src="images/event-imgs/1 .jpg" alt="">
-												</a>
-												<span class="bookmark-icon" title="Bookmark"></span>
-											</div>
-											<div class="event-content">
-												<a href="Shawn_venue_event_detail_view.html" class="event-title">《黃明志大飛機世界巡迴演唱會》台北站</a>
-										
-											</div>
-											<div class="event-footer">
-												<div class="event-timing">
-													<span class="date"><i class="fa fa-calendar"></i> <!-- -->2023/3/24<span class="minor">(<!-- -->五<!-- -->)</span></span>	
-													<span class="publish-time"><i class="fa-solid fa-clock me-2"></i>2h</span>
-												</div>
-											</div>
-										</div>
-									</div>
+								<div class="owl-carousel moreEvents-slider owl-theme owl-loaded owl-drag" id="moreEventList">
+									
 								</div>
 							</div>
 						</div>
@@ -1023,7 +924,7 @@
 			$("#intro").append(`<p>${data.adiscrip}</p>`);
 			$("#note").append(`<p>${data.anote}</p>`);
 			$("#buy-note").append(`<p>${data.aticketRemind}</p>`);
-			$("#imgPlace").append(`<img src="data:image/jpeg;base64,${data.aseatsImg }" alt="" style="max-width: 100%; ">`);
+			$("#imgPlace").append(`<img src="data:image/jpeg;base64,${data.aseatsImg }" alt="" style="max-width: 100%;">`);
 			
 		})
 
@@ -1031,19 +932,24 @@
 		.then((Response) => Response.json())
 		.then((data) => {
 			console.log(data);
-			$("#firstimg").append(`<img src="data:image/jpeg;base64,${data[0].aimg}" alt="">`);
+			$("#firstimg").append(`<img src="data:image/jpeg;base64,${data[0].aimg}" alt=""  id="mainimg">`);
 			for (let i of data) {
 					$("#moreaimg").append(
 						`<div class="item">
 										<div class="main-card mt-4">
 											<div class="event-thumbnail">
-												<a href="data:image/jpeg;base64,${i.aimg}" class="thumbnail-img">
+												<a name=${i.aimg} href="javascript:void(0)" class="thumbnail-img" onclick="changeimg(this.name)">
 													<img src="data:image/jpeg;base64,${i.aimg}" alt="">
 												</a>
 											</div>
 										</div>
 									</div>`);
+
+							
+
 				}
+
+				
 		})
 		.then(function () {
 			console.log("11111");
@@ -1077,7 +983,103 @@
 			});
 		});
 
+			function changeimg(e) {
+					console.log(e);
+					$("#mainimg").attr("src", `data:image/jpeg;base64,${e}`)
+				}
+		
 
+
+		      let now = new Date();
+				const options = {
+					year: 'numeric',    // 年: 使用4位數
+					month: '2-digit',   // 月: 使用2數位
+					day: '2-digit',     // 日: 使用2數位
+					hour12: false,      // 12小時制: 不使用
+					hour: '2-digit',    // 時: 使用2數位
+					minute: '2-digit'  // 分: 使用2數位 
+				};
+				let nowDate = new Intl.DateTimeFormat('zh-TW', options).format(now);
+				console.log(nowDate)
+				function dateDiffer(date1, date2) {
+					const diffInMs = Math.abs(date2 - date1);
+					const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+					const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60) % 24);
+					return `倒數 ${diffInDays}天又${diffInHours}小時`;
+				}
+
+		fetch(`http://localhost:8085/Activity/findAll`)
+				.then((Response) => Response.json())
+				.then((data) => {
+				
+					let sTime = "";
+					let countDays = "";
+					for(i of data){
+				if(i.astatus!=3){
+             		 if( i.session[0]==null){
+                		sTime="全站";
+                		countDays="售完為止"
+              		 }else{
+                		sTime= i.session[0].sessionsTime;
+                const date = new Date(i.session[0].sessionsTime);
+                console.log(dateDiffer(nowDate, date))
+                countDays = dateDiffer(now, date);
+                
+              }
+
+					$("#moreEventList").append(`
+									<div class="item">
+										<div class="main-card mt-4">
+											<div class="event-thumbnail">
+												<a href="front-activity-event-detail.html?activityNo=${i.activityNo}" class="thumbnail-img">
+													<img src="data:image/jpeg;base64,${i.aimgt[0].aimg}" alt="">
+												</a>
+												<span class="bookmark-icon" title="Bookmark"></span>
+											</div>
+											<div class="event-content">
+												<a href="front-activity-event-detail.html?activityNo=${i.activityNo}" class="event-title">${i.aname}</a>
+											
+											</div>
+											<div class="event-footer">
+												<div class="event-timing">
+													<span class="date"><i class="fa fa-calendar"></i>${sTime}</span></span>
+													<span class="publish-time"><i class="fa-solid fa-clock me-2"></i>${countDays}</span>
+												</div>
+											</div>
+										</div>
+									</div>`)
+								}
+							    }		
+				}).then(function () {
+					$('.moreEvents-slider').owlCarousel({
+						items: 7,
+						loop: false,
+						margin: 20,
+						nav: true,
+						dots: false,
+						navText: ["<i class='uil uil-angle-left'></i>", "<i class='uil uil-angle-right'></i>"],
+						responsive: {
+							0: {
+								items: 1
+							},
+							600: {
+								items: 2
+							},
+							800: {
+								items: 2
+							},
+							1000: {
+								items: 3
+							},
+							1200: {
+								items: 4
+							},
+							1400: {
+								items: 4
+							}
+						}
+					});
+				});
 		
 
 
