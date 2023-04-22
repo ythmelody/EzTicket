@@ -344,7 +344,7 @@ $(document).ready(function() {
   $('#orderInput').on('keyup', function () {
     orderTable.search(this.value).draw();
   });
-  });
+});
 
 function viewDelivery(no) {
   fetch(`/porder/getporderbyid?id=${no}`, {
@@ -365,7 +365,85 @@ function viewDelivery(no) {
           <label class="form-label">收貨人地址：</label>
           <p>${data.readdress}</p>`;
       deliverybody.innerHTML += deliverylist;
+      const tcatBody = document.querySelector('#tcat');
+      tcatBody.innerHTML = '';
+      const tcatButton = 
+      `<div>
+        <button onclick="tcatOrder(${data.porderno})" class="save-status main-btn btn-hover h_25 w-40">建立物流</button>
+        </div>
+        <p></p>
+        <div>
+        <button onclick="printOrder(${data.porderno})" class="save-status main-btn btn-hover h_25 w-40">列印單據</button>
+      </div>`;
+      tcatBody.innerHTML += tcatButton;
     });
+}
+
+function tcatOrder(e){
+  console.log(e);
+  swal({
+    title: "是否建立物流單據?",
+    icon: "warning",
+    buttons: true
+  }).then((confirm) => {
+    if (confirm) {
+      const requestData = { porderno: e };
+      $.ajax({
+        url: '/ecpay/tcat',
+        type: 'POST',
+        data: requestData,
+        contentType: 'application/x-www-form-urlencoded',
+        async: false,
+        success: function() {
+          swal("建立成功", {
+            icon: "success",
+            buttons: false,
+          });
+        },
+        error: function() {
+          swal({
+            title: "建立失敗",
+            icon: "error",
+            closeOnClickOutside: false,
+          });
+        }
+      });
+    } else {
+      return Promise.reject('取消操作');
+    }
+  });
+}
+function printOrder(e){
+  swal({
+    title: "查看物流單據?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: false
+  }).then((confirm) => {
+    if (confirm) {
+      const requestData = { porderno: e };
+      $.ajax({
+        url: '/ecpay/tcat/checkout',
+        type: 'POST',
+        contentType: 'application/x-www-form-urlencoded',
+        data: requestData,
+        async: false,
+        success: function(data) {
+            const newWindow = window.open('', '_blank');
+            newWindow.document.write(data);   
+        },
+        error: function() {
+          swal({
+            title: "建立失敗",
+            icon: "error",
+            closeOnClickOutside: false,
+          });
+        }
+      });
+    } else {
+      return Promise.reject('取消操作');
+    }
+  });
 }
 
 function saveStatus(button) {
@@ -417,7 +495,9 @@ function changeStatus(selectElem) {
       break;
   }
 }
+
 $('#reload').on('click', function() {
   let table = $('#orderTable').DataTable();
   table.ajax.reload();
 });
+

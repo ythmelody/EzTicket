@@ -63,7 +63,7 @@
 									<img src="images/icons/truck2.png" alt="">
 								</div>
 							</div>
-							<div class="col-lg-6 col-md-12">
+							<div class="col-lg-6 col-md-6">
 								<div class="form-group mt-4">
 									<label class="form-label">訂單編號</label>
 									<p>30001</p>
@@ -75,6 +75,15 @@
 									<p>0912345678</p>
 									<label class="form-label">收貨人地址：</label>
 									<p>台北市中正區忠孝東路一段1號</p>
+								</div>
+							</div>
+							<div id="tcat" class="col-lg-6 col-md-6">
+								<div>
+									<button onclick="tcatOrder(e)" class="save-status main-btn btn-hover h_25 w-40">建立物流</button>
+								</div>
+								<p></p>
+								<div>
+									<button onclick="printOrder(e)" class="save-status main-btn btn-hover h_25 w-40">列印單據</button>
 								</div>
 							</div>
 						</div>
@@ -331,7 +340,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="d-main-title">
-							<h3><i class="fa-solid fa-chart-pie me-3"></i>訂單資訊管理</h3>
+							<h3><i class="fa-solid fa-file-invoice me-3"></i>訂單資訊管理</h3>
 						</div>
 					</div>
 					<div class="col-md-12">

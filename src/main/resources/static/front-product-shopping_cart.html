@@ -29,6 +29,7 @@
 	<link href="vendor/OwlCarousel/assets/owl.theme.default.min.css" rel="stylesheet">
 	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.css" />
 
 	<style>
 		.number-cell {
@@ -276,7 +277,7 @@
 								<div class="bp-title">
 									<h4>配送資訊</h4>
 								</div>
-
+								<form id="order-form">
 								<div class="bp-content bp-form">
 
 									<div class="twzipcode row">
@@ -284,42 +285,42 @@
 											<div class="col-lg-6 col-md-12">
 												<div class="form-group mt-4">
 													<label class="form-label">收件人姓名</label><span class="error-msg"></span>
-													<input id="recipient" class="form-control h_50" type="text" placeholder="" value="劉寶傑">
+													<input id="recipient" name="recipient" class="form-control h_50" type="text" placeholder="" value="劉寶傑" required>
 												</div>
 											</div>
 
 											<div class="col-lg-6 col-md-12">
 												<div class="form-group mt-4">
 													<label class="form-label">收件人電話</label><span class="error-msg"></span>
-													<input id="rephone" class="form-control h_50" type="text" placeholder="" value="0912345678">
+													<input id="rephone" name="rephone" class="form-control h_50" type="text" placeholder="" value="0912345678" required>
 												</div>
 											</div>
 
-											<div class="col-lg-6 col-md-12">
+											<div class="col-lg-6 col-md-12 address-group">
 												<div class="form-group mt-4">
 													<label class="form-label">郵遞區號</label><span class="error-msg"></span>
-													<input id="readdress1" type="text" data-role="zipcode" class="form-control h_50" disabled>
+													<input id="readdress1" name="readdress1" type="text" data-role="zipcode" class="form-control h_50" disabled required>
 												</div>
 											</div>
 
 											<div class="col-lg-6 col-md-12">
-												<div class="form-group mt-4">
+												<div class="form-group mt-4 address-group">
 													<label class="form-label">縣市</label><span class="error-msg"></span>
-													<select id="readdress2" data-role="county" class="form-control h_50"></select>
+													<select id="readdress2" name="readdress2" data-role="county" class="form-control h_50"></select>
 												</div>
 											</div>
 
-											<div class="col-lg-6 col-md-12">
+											<div class="col-lg-6 col-md-12 address-group">
 												<div class="form-group main-form mt-4">
 													<label class="form-label">鄉鎮市區</label><span class="error-msg"></span>
-													<select id="readdress3" data-role="district" class="form-control h_50"></select>
+													<select id="readdress3" name="readdress3" data-role="district" class="form-control h_50"></select>
 												</div>
 											</div>
 
 											<div class="col-lg-6 col-md-12">
 												<div class="form-group mt-4">
 													<label class="form-label">收件人地址</label><span class="error-msg"></span>
-													<input id="readdress4" data-role="address" class="form-control h_50" type="text">
+													<input id="readdress4" name="readdress4" data-role="address" class="form-control h_50" type="text" required>
 												</div>
 											</div>
 									</div>
@@ -332,31 +333,13 @@
 								</div>
 								<div class="bp-content bp-form">
 									<div class="row">
-										<!-- <div class="col-lg-12 col-md-12">
-											<div class="form-group mt-4">
-												<label class="form-label">信用卡卡號</label>
-												<input class="form-control h_50" type="text" placeholder="" value="">
-											</div>
-										</div>
-										<div class="col-lg-6 col-md-12">
-											<div class="form-group mt-4">
-												<label class="form-label">信用卡到期日</label>
-												<input class="form-control h_50" type="text" placeholder="MM/YY" value="">
-											</div>
-										</div>
-										<div class="col-lg-6 col-md-12">
-											<div class="form-group mt-4">
-												<label class="form-label">信用卡安全碼(CVV)</label>
-												<input class="form-control h_50" type="text" placeholder="" value="">
-											</div>
-										</div> -->
 										<div class="col-lg-12 col-md-12">
-											<button class="main-btn btn-hover h_50 w-100 mt-5" type="button"
-												onclick="addPorder()">建立訂單並前往付款</button>
+											<button class="main-btn btn-hover h_50 w-100 mt-5" type="submit">建立訂單並前往付款</button>
 										</div>
 									</div>
 								</div>
 							</div>
+							<form>
 						</div>
 					</div>
 				</div>
@@ -436,6 +419,8 @@
 		</div>
 	</footer>
 <script src="js/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<script src="js/messages_zh_TW.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="vendor/OwlCarousel/owl.carousel.js"></script>
 <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
