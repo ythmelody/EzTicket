@@ -20,11 +20,18 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @WebServlet("/ProductCommentServlet")
@@ -48,10 +55,10 @@ public class ProductCommentServlet extends HttpServlet {
         pdetailSvc = applicationContext.getBean(PdetailsService.class);
         pdetailsPK = applicationContext.getBean(PdetailsPK.class);
         memberSvc = applicationContext.getBean(MemberService.class);
-        backuserSvc =applicationContext.getBean(BackuserService.class);
+        backuserSvc = applicationContext.getBean(BackuserService.class);
+
 
     }
-
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request, response);
@@ -77,12 +84,15 @@ public class ProductCommentServlet extends HttpServlet {
             newbackuser = backuserSvc.getBackuserInfo(backuser.getBaaccount());
         }
 
+        //建立一個使用Bean Validation的validator實例
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+
 
         //取得所有商品評論
         if ("productCommentList".equals(action)) {
             List<Pcomment> pcommentList = pcommentSvc.getAllProductComment();
             list2json(pcommentList, response);
-
         }
 
         //取得單一商品所有評論(用於前端商品單一詳情)
@@ -93,6 +103,14 @@ public class ProductCommentServlet extends HttpServlet {
             String pcommentstatus[] = {"0"};  //僅狀態顯示於前台的商品
             map.put("pcommentstatus", pcommentstatus);
             List<Pcomment> pcommentList = pcommentSvc.getAllBySearch(map);
+            //避免新增商品評論時注入攻擊(XSS)
+            for(Pcomment pcomment :pcommentList){
+                String rawCommentCont = pcomment.getPcommentcont();
+//                System.out.println("raw string: "+rawCommentCont);
+                String escapedHtml = StringEscapeUtils.escapeHtml4(rawCommentCont);
+//                System.out.println("safe string: "+escapedHtml);
+                pcomment.setPcommentcont(escapedHtml);
+            }
             list2json(pcommentList, response);
         }
 
@@ -104,9 +122,38 @@ public class ProductCommentServlet extends HttpServlet {
             }
             //取得會員編號
             Integer memberno = newMember.getMemberno();
-            Integer productno = Integer.valueOf(request.getParameter("productno"));
-            Integer prate = Integer.valueOf(request.getParameter("prate"));
+            Integer productno = request.getParameter("productno").length() != 0 ? Integer.valueOf(request.getParameter("productno")) : null;
+            Integer prate = request.getParameter("prate").length() != 0 ? Integer.valueOf(request.getParameter("prate")) : null;
             String pcommentcont = request.getParameter("pcommentcont");
+
+
+            //建立一個POJO,並設定屬性值
+            Pcomment pc = new Pcomment();
+            pc.setMemberno(memberno);
+            pc.setProductno(productno);
+            pc.setPrate(prate);
+            pc.setPcommentcont(pcommentcont);
+
+            //驗證POJO是否符合限制
+            Set<ConstraintViolation<Pcomment>> violations = validator.validate(pc);
+            if (!violations.isEmpty()) {
+                //如果有錯誤就回傳錯誤訊息
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                Map map = new HashMap();
+                for (ConstraintViolation<Pcomment> violation : violations) {
+                    System.out.println(violation);
+                    map.put(violation.getPropertyPath(), violation.getMessage());
+                }
+                Gson gson = new Gson();
+                String json = gson.toJson(map);
+                PrintWriter pw = response.getWriter();
+                pw.print(json);
+                pw.flush();
+                return;
+            }
+            //處理正常請求
             Pcomment pcomment = pcommentSvc.addProductComment(productno, pcommentcont, prate, memberno);
 
             //同時更新商品總評星
@@ -263,9 +310,36 @@ public class ProductCommentServlet extends HttpServlet {
                 response.sendRedirect("front-users-mem-sign-in.html");
                 return;
             }
-            Integer pcommentno = Integer.valueOf(request.getParameter("pcommentno"));
-            Integer prate = Integer.valueOf(request.getParameter("prate"));
+            Integer pcommentno = request.getParameter("pcommentno").length() != 0 ? Integer.valueOf(request.getParameter("pcommentno")) : null;
+            Integer prate = request.getParameter("prate").length() != 0 ? Integer.valueOf(request.getParameter("prate")) : null;
             String pcommentcont = request.getParameter("pcommentcont");
+
+            //建立一個POJO,並設定屬性值
+            Pcomment pc = pcommentSvc.getOneProductComment(pcommentno);
+            pc.setPrate(prate);
+            pc.setPcommentcont(pcommentcont);
+
+            //驗證POJO是否符合限制
+            Set<ConstraintViolation<Pcomment>> violations = validator.validate(pc);
+            if (!violations.isEmpty()) {
+                //如果有錯誤就回傳錯誤訊息
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                Map map = new HashMap();
+                for (ConstraintViolation<Pcomment> violation : violations) {
+                    System.out.println(violation);
+                    map.put(violation.getPropertyPath(), violation.getMessage());
+                }
+                Gson gson = new Gson();
+                String json = gson.toJson(map);
+                PrintWriter pw = response.getWriter();
+                pw.print(json);
+                pw.flush();
+                return;
+            }
+
+            //正常的話執行以下程式碼
             Boolean updateOK = pcommentSvc.updateProductComment(pcommentno, prate, pcommentcont);
             Gson gson = new Gson();
             String json = gson.toJson(updateOK);

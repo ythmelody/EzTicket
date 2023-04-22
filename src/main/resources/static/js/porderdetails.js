@@ -8,7 +8,7 @@ $(document).ready(() => {
   }).then(resp => resp.json())
     .then(data => {
       let patText = "未付款";
-      if(data.ppaydate){
+      if (data.ppaydate) {
         patText = (moment(data.ppaydate).format('YYYY-MM-DD HH:mm:ss'));
       }
       document.querySelectorAll('.vdt-list')[0].textContent = "訂單編號 : " + data.porderno;
@@ -79,6 +79,8 @@ $(document).ready(() => {
 
 //取得單筆明細資訊(porderno-productno)
 function renewModal(porderno, productno) {
+  $("span[name='prateErr']").empty();
+  $("span[name='pcommentcontErr']").empty();
   let urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get('id');
   fetch(`/pdetails/byPorderno?porderno=${porderno}&productno=${productno}`, {
@@ -90,7 +92,7 @@ function renewModal(porderno, productno) {
     } else {
       // console.log("有登入狀態，進入到下一步");
       return response.json();
-      
+
     }
   })
     .then(item => {
@@ -126,7 +128,6 @@ function showcomment(commentno) {
     } else {
       // console.log("有登入狀態，進入到下一步");
       return response.json();
-      
     }
   })
     .then(item => {
@@ -173,28 +174,45 @@ function confirm_update() {
     //驗證會員是否登入
     if (response.redirected) {
       window.location.href = 'front-users-mem-sign-in.html';
+    } else if (!response.ok) {
+      return response.json().then(errors => {
+        console.log("Error:", errors);
+        if (errors.prate) {
+          $("span[name='prateErr']").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>` + `${errors.prate}`)
+        } else {
+          $("span[name='prateErr']").empty();
+        }
+
+        if (errors.pcommentcont) {
+          $("span[name='pcommentcontErr']").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>` + `${errors.pcommentcont}`)
+        } else {
+          $("span[name='pcommentcontErr']").empty();
+        }
+      });
     } else {
-      return response.json();
+      $("span[name='prateErr']").empty();
+      $("span[name='pcommentcontErr']").empty();
+      return response.json().then((item) => {
+        console.log(item);
+        if (item) {
+          swal({
+            title: "更新成功",
+            icon: "success",
+            closeOnClickOutside: true,
+          }).then(() => {
+            window.location.reload();
+          })
+        } else {
+          swal({
+            title: "更新失敗",
+            icon: "error",
+            closeOnClickOutside: true,
+          });
+        }
+      });
     }
   })
-    .then((item) => {
-      console.log(item);
-      if (item) {
-        swal({
-          title: "更新成功",
-          icon: "success",
-          closeOnClickOutside: true,
-        }).then(() => {
-          window.location.reload();
-        })
-      } else {
-        swal({
-          title: "更新失敗",
-          icon: "error",
-          closeOnClickOutside: true,
-        });
-      }
-    })
+
 }
 
 //返回先前頁面
