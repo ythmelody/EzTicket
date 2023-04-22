@@ -553,9 +553,9 @@
 													</div>
 												</div>
 				`;
-				let realx = `${ticket.realx}`;
-				let realy = `${ticket.realy}`;
-				if (realx === null || realy === null) {
+				let realx = ticket.realx;
+				let realy = ticket.realy;
+				if (realx === null || realx === undefined || realy === null || realy === undefined) {
 					const withSeat = document.getElementById(`withSeat${ticketCount}`);
 					withSeat.textContent = '非對號座';
 				}
@@ -616,11 +616,11 @@
 													</div>
 												</div>
 				`;
-				let realx = `${ticket.realx}`;
+				let realx = ticket.realx;
 				// console.log(realx);
-				let realy = `${ticket.realy}`;
+				let realy = ticket.realy;
 				// console.log(realy);
-				if (realx === null || realy === null) {
+				if (realx === null || realx === undefined || realy === null || realy === undefined) {
 					const withSeat = document.getElementById(`withSeat${ticketCount}`);
 					withSeat.textContent = '非對號座';
 				}

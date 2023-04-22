@@ -55,7 +55,7 @@ public class CollectController extends HttpServlet {
 
         req.setCharacterEncoding("UTF-8");
         String action = req.getParameter("action");
-        System.out.println(action);
+//        System.out.println(action);
 
 
 
