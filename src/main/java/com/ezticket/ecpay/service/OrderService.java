@@ -8,6 +8,7 @@ import com.ezticket.web.activity.repository.SeatsRepository;
 import com.ezticket.web.activity.repository.SessionRepository;
 import com.ezticket.web.activity.repository.TdetailsRepository;
 import com.ezticket.web.activity.repository.TorderRepository;
+import com.ezticket.web.activity.service.CollectCrudService;
 import com.ezticket.web.product.pojo.Pdetails;
 import com.ezticket.web.product.pojo.Porder;
 import com.ezticket.web.product.pojo.Product;
@@ -51,6 +52,9 @@ public class OrderService {
 
     @Autowired
     private SessionRepository sessionRepository;
+
+    @Autowired
+    private CollectCrudService collectCrudService;
 
 
     public String ecpayCheckout(Integer porderno) {
@@ -230,6 +234,7 @@ public class OrderService {
                 torderRepository.save(torder);
 
                 // 票券 QR Code 產生應於此處 - 2 (Melody)
+                collectCrudService.insertCollect(torder);
 
             } else {
                 torder.setTpaymentStatus(3);
