@@ -59,7 +59,6 @@ $(document).ready(function() {
     },
     submitHandler: function(form) {
       // 顯示成功訊息
-      alert("訂單建立成功！");
       // 在這裡可以繼續執行其他操作，例如提交表單數據到後端
       addPorder();
     }

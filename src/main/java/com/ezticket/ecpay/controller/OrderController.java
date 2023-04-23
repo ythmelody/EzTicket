@@ -50,6 +50,9 @@ public class OrderController {
 	@PostMapping("/tcat/checkout")
 	public String printOrder (Integer porderno) {
 		Porder porder = porderRepository.getReferenceById(porderno);
+		if (porder.getLogisticsid() == null){
+			return "單據不存在或尚未建立單據";
+		}
 		String tcatOrder = tcatService.postPrintTradeDocumentOrder(porder.getLogisticsid());
 		return tcatOrder;
 	}
@@ -61,7 +64,7 @@ public class OrderController {
 		String porderno = request.getParameter("MerchantTradeNo").substring(15);
 		String allPayId = request.getParameter("AllPayLogisticsID");
 		Porder porder = porderRepository.getReferenceById(Integer.valueOf(porderno));
-		// 塞入付款日期 // 更改訂單狀態
+		// 塞入出貨日期 // 更改訂單狀態
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 		if(rtnCode.equals("300")){
 			porder.setPshipdate(LocalDateTime.parse(tcatDate, formatter));
@@ -69,6 +72,7 @@ public class OrderController {
 			porder.setLogisticsid(allPayId);
 			porderRepository.save(porder);
 		}
+		// 寄出貨信
 		Member member = memberRepository.getReferenceById(porder.getMemberno());
 		emailService.sendOrderMail(member.getMname(),member.getMemail(),porder.getPorderno().toString(), String.valueOf(4));
 		// 印出所有K,V，參考看看，單純看有哪些回傳值..可以註解掉

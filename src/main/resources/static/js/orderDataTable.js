@@ -394,13 +394,26 @@ function tcatOrder(e){
         data: requestData,
         contentType: 'application/x-www-form-urlencoded',
         async: false,
-        success: function() {
-          swal("建立成功", {
-            icon: "success",
-            buttons: false,
-          });
+        success: function(data) {
+          if (data.includes("AllPayLogisticsID")) {
+            swal("建立成功", {
+              icon: "success",
+              buttons: false,
+            });
+            printOrder(e);
+            return Promise.resolve('成功建立');
+          } else {
+            swal({
+              title: "建立失敗",
+              text: data,
+              icon: "error",
+              closeOnClickOutside: false,
+            });
+            return Promise.reject('建立失敗');
+          }
         },
-        error: function() {
+        error: function(data) {
+          console.log(data);
           swal({
             title: "建立失敗",
             icon: "error",
@@ -411,6 +424,7 @@ function tcatOrder(e){
     } else {
       return Promise.reject('取消操作');
     }
+    reload();
   });
 }
 function printOrder(e){
@@ -429,8 +443,19 @@ function printOrder(e){
         data: requestData,
         async: false,
         success: function(data) {
+          if (data.includes("單據不存在或尚未建立單據")) { 
+            swal({
+              title: "建立失敗",
+              text: data,
+              icon: "error",
+              closeOnClickOutside: false,
+            });
+            return Promise.resolve('建立失敗');
+          } else {
             const newWindow = window.open('', '_blank');
-            newWindow.document.write(data);   
+            newWindow.document.write(data);  
+            return Promise.reject('成功建立');
+          }
         },
         error: function() {
           swal({
@@ -443,6 +468,7 @@ function printOrder(e){
     } else {
       return Promise.reject('取消操作');
     }
+    reload();
   });
 }
 
@@ -474,6 +500,7 @@ function saveStatus(button) {
       }
     });
   }
+  reload();
 }
 
 function changeStatus(selectElem) {
@@ -497,7 +524,9 @@ function changeStatus(selectElem) {
 }
 
 $('#reload').on('click', function() {
+  reload();
+});
+function reload() {
   let table = $('#orderTable').DataTable();
   table.ajax.reload();
-});
-
+}
