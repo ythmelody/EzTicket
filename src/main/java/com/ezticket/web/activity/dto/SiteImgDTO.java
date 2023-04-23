@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ModelImgDTO {
+public class SiteImgDTO {
     private Integer modelno;
-    private MultipartFile modelImg;
+    private MultipartFile siteImg;
 }
