@@ -33,7 +33,7 @@ public class TcatService {
         obj.setSenderCellPhone("0987254088");
         obj.setReceiverName(porder.getRecipient());
         obj.setReceiverCellPhone(porder.getRephone());
-        String returnURL = "https://9ffb-220-134-181-136.jp.ngrok.io";
+        String returnURL = "https://0a37-220-134-181-136.jp.ngrok.io";
         // 設定接收回傳值的Https + Controller路徑
         obj.setServerReplyURL(returnURL + "/ecpay/tcat/return");
         // 擷取地址

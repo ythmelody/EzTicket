@@ -90,7 +90,7 @@ public class OrderService {
 		//	啟動本地伺服器，例如 Tomcat 或是 Spring Boot。
 		//	在命令列輸入 ngrok http 8080，其中 8080 是你本機伺服器的 Port，請依實際情況更改。
 		//	Ngrok 會顯示一個公開的 URL，例如 http://xxxxxx.ngrok.io，複製此 URL。
-		String returnURL = "https://e1e7-220-134-181-136.jp.ngrok.io";
+		String returnURL = "https://0a37-220-134-181-136.jp.ngrok.io";
 		// 設定接收回傳值的Https + Controller路徑
 		obj.setReturnURL(returnURL + "/ecpay/return");
 		// 設定商品明細路徑及返回商店路徑
