@@ -41,6 +41,20 @@ public class Top10Service {
         return results;
     }
 
+    public List<Object[]>  indexSearch(String keyword){
+        List results = new ArrayList();
+        List<Object[]> objs = top10DAO.search(keyword, 1, 10);
+        for (Object[] obj : objs) {
+//            System.out.println(obj[0]);
+            Map result = new HashMap();
+            result.put("name", obj[0]);
+            result.put("no", obj[1]);
+            result.put("type", obj[2]);
+            results.add(result);
+        }
+        return results;
+    }
+
 }
 
 

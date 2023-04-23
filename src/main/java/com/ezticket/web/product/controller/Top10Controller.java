@@ -49,6 +49,21 @@ public class Top10Controller extends HttpServlet {
             return;
         }
 
+        if("indexSearch".equals(action)){
+            String keyword =request.getParameter("keyword") !=null ? request.getParameter("keyword"): "";
+//            System.out.println("search keywords: " + keyword);
+            List<Object[]> list =top10ServiceSvc.indexSearch(keyword);
+//            System.out.println(list);
+            Gson gson = new Gson();
+            String json = gson.toJson(list);
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+            out.println(json);
+            out.flush();
+            return;
+        }
+
 
     }
 

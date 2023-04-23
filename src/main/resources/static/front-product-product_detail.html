@@ -575,7 +575,7 @@
 				psdate.textContent = item.psdate;
 				hostno.textContent = item.host.hostname;
 				pimg.innerHTML = `<img id="mainImg"src="ProductImg?pimgno=${item.pimgts[0].pimgno}" alt="">`;
-				pdiscrip.textContent = item.pdiscrip;
+				pdiscrip.innerHTML = item.pdiscrip;
 				pprice.textContent = item.pprice;
 				pspecialprice.textContent = item.pspecialprice;
 				$("#count").attr("max", item.pqty);

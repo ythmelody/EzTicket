@@ -22,6 +22,7 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/responsive.css" rel="stylesheet">
     <link href="css/night-mode.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     <!-- Vendor Stylesheets -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
@@ -96,7 +97,8 @@
                                         探索活動
                                     </a>
                                     <ul class="dropdown-menu dropdown-submenu">
-                                        <li><a class="dropdown-item" href="front-activity-event-explore_events.html">探索活動</a></li>
+                                        <li><a class="dropdown-item"
+                                                href="front-activity-event-explore_events.html">探索活動</a></li>
                                         <li><a class="dropdown-item" href="#">展覽</a></li>
                                         <li><a class="dropdown-item" href="#">演唱會</a></li>
                                         <li><a class="dropdown-item" href="#">音樂劇</a></li>
@@ -220,10 +222,12 @@
                     <div class="col-xl-7 col-lg-9 col-md-10">
                         <div class="hero-banner-content">
                             <h2>The Easiest and Most Powerful Online Event Booking and Ticketing System</h2>
-                            <p>Barren is an all-in-one event ticketing platform for event organisers, promoters, and
+                            <!-- <p>Barren is an all-in-one event ticketing platform for event organisers, promoters, and
                                 managers. Easily create, promote and manage your events of any type and size.</p>
                             <a href="create.html" class="main-btn btn-hover">Create Event <i
-                                    class="fa-solid fa-arrow-right ms-3"></i></a>
+                                    class="fa-solid fa-arrow-right ms-3"></i></a> -->
+                            <input id="itemSearch" class="form-control h_40" type="text" placeholder="搜尋活動及商品" value="">
+
                         </div>
                     </div>
                 </div>
@@ -1173,6 +1177,7 @@
     <script src="js/memberLoginCheck.js"></script>
     <script src="js/my_porder.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
 
     <script>
@@ -1185,6 +1190,8 @@
 
         // 儲存當前面頁面的 URL 到 localStorage 中,讓登入後能返回這頁
         localStorage.setItem('currentUrl', window.location.href);
+
+
     </script>
 
     <script>
@@ -1335,6 +1342,46 @@
                     })
             }
         }
+    </script>
+
+    <script>
+        $(function () {
+            let items = [];
+            $("#itemSearch").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "Top10Controller",
+                        dataType: "json",
+                        type: "POST",
+                        async: false,
+                        data: {
+                            "action": "indexSearch",
+                            "keyword": $("#itemSearch").val()
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            items = data;
+                            // response(data);
+                        }
+                    });
+                    response($.map(items,
+                        function (item) {
+                            return {
+                                label: item.name.toString(),
+                                value: JSON.stringify(item)
+                            }
+                        }))
+                },
+                minLength: 2,
+                select: function (event, ui) {
+                    console.log(ui);
+                    let temp = JSON.parse(ui.item.value);
+                    window.location.href = "front-product-product_detail.html?productno=" + temp.no;
+                }
+            }).focus(function () {
+                $(this).autocomplete("search");
+            });
+        });
     </script>
 
 
