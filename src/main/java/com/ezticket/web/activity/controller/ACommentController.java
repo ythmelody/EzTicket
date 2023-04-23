@@ -81,18 +81,6 @@ public class ACommentController {
         return aCommentService.updateAComment(aComment);
     }
 
-//    @PostMapping("/insert")
-//    public ResponseEntity<?> insertAComment(@Valid @RequestBody AComment aNewComment, BindingResult bindingResult){
-//        if (bindingResult.hasErrors()) {
-//            Map<String, String> errors = new HashMap<>();
-//            bindingResult.getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
-//            return ResponseEntity.badRequest().body(errors);
-//        } else {
-//            aCommentService.insertAComment(aNewComment);
-//            return  ResponseEntity.ok(aNewComment);
-//        }
-//    }
-
     @GetMapping("/getThumbUpCmtNos")
     public Set<Integer> getACommentNosByMemberNo(@RequestParam Integer memberNo){
         return aCommentService.getACommentNosByMemberNo(memberNo);
