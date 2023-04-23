@@ -73,7 +73,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                                           "back-activity-seatmgt-unsellsessions.html")); //場地座位管理
             htmlMap.put(22, Arrays.asList("back-activity-model-place.html",
                                           "back-activity-model-block.html",
-                                          "back-activity-model-seats.html")); //場地模板座位管理
+                                          "back-activity-model-seats-exist.html",
+                                          "back-activity-model-seats-notexist.html"));//場地模板座位管理
 //            htmlMap.put(23, Arrays.asList("")); //節目區域及票價管理V
 
             //拿到點選進入的網址

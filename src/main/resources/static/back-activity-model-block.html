@@ -471,7 +471,7 @@
                                 </button>
 
                                 <ul class="dropdown-menu">
-                                    <li><a id="${b.blockno}" href="back-activity-model-block.html" class="dropdown-item" onclick="manageSeatsModel(this.id)">編輯區域</a></li>
+                                    <li><a id="manageSeats${b.blockno}" href="back-activity-model-seats-exist.html" class="dropdown-item" onmousedown="sessionStorage.setItem('blockno', ${b.blockno})">編輯座位表</a></li>
 									<li><a id="edit${b.blockno}" class="dropdown-item" data-bs-toggle="modal"
 											data-bs-target="#couponModal" data-bs-blockno="${b.blockno}">修改區域名稱</a></li>
 									<li><a id="${b.blockno}" class="dropdown-item" onclick="deleteBlock(${b.blockno})">刪除區域</a></li>
@@ -482,10 +482,23 @@
                 </div>`;
 				const blockTypeN = document.getElementById(`blockType${b.blockno}`);
 				if (b.blockType === 1) {
-					blockTypeN.textContent = "區域種類：有座位"
+					blockTypeN.textContent = "區域種類：對號座"
 				} else if (b.blockType === 0) {
 					blockTypeN.textContent = "區域種類：無座位"
 				}
+
+				// 如果找不到座位就要導到 "back-activity-model-seats-notexist.html"
+				$.ajax({
+                async: false,
+                type: 'GET',
+                url: "/SeatsModel/ExistOrNot/" + `${b.blockno}`,
+                dataType: "json",
+                success: function (jsondata) {
+                    if (!jsondata) {
+                        document.getElementById(`manageSeats${b.blockno}`).href = "back-activity-model-seats-notexist.html"
+                    }
+                }
+            });
 
 			}
 
@@ -573,7 +586,7 @@
 					confirmButtonText: '確定',
 					reverseButtons: true
 				}).then(function (result) {
-					if (result.value) {
+					if (result.isConfirmed) {
 						const formData = {
 							"modelno": modelno,
 							"blockno": $("#hiddenBlockno").val(),
@@ -606,7 +619,7 @@
 							}, 1000)
 						});
 					} else {
-						Swal.fire({ text: "返回編輯", timer: 1500, showConfirmButton: true, confirmButtonColor: '#102743' });
+						return;
 					}
 				});
 			}
