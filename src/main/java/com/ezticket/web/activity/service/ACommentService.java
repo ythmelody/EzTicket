@@ -105,7 +105,7 @@ public class ACommentService {
 
     public boolean insertAComment(AComment aComment) {
         aComment.setACommentDate(new Date(System.currentTimeMillis()));
-        aComment.setACommentStatus(0);
+        aComment.setACommentStatus(1);
         aComment.setALike(0);
         aCommentRepository.save(aComment);
         return true;
@@ -113,7 +113,7 @@ public class ACommentService {
 
     public boolean updateAComment(AComment aComment) {
         aComment.setACommentDate(new Date(System.currentTimeMillis()));
-        aComment.setACommentStatus(0);
+        aComment.setACommentStatus(1);
         aComment.setALike(0);
         System.out.println(aComment);
         aCommentRepository.save(aComment);

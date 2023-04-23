@@ -97,8 +97,14 @@ let seatsmgt = {
 
         // 購買數量 < 選擇數量時，要求更新購買數量
         $('#quantity').change(function () {
-                if ($('#quantity').val() < count)
-                    alert("選擇座位數量已超出選購數量，請再次確認!!");
+                if ($('#quantity').val() < count){
+                    Swal.fire({
+                        icon: 'error',
+                        title: '選擇座位數量已超出選購數量，請再次確認'
+                    });
+
+                    return;
+                }
             }
         );
 
@@ -111,17 +117,17 @@ let seatsmgt = {
                 let seat = document.createElement("div");
 
                 // ID 為座位編號(seatno)
-                seat.id = seats[i * (t_Column+1) + j].seatNo;
+                seat.id = seats[i * (t_Column + 1) + j].seatNo;
 
                 seat.innerHTML = `
-        				第 <span>${seats[i * (t_Column+1) + j].realX}</span> 排<br>
-        				第 <span>${seats[i * (t_Column+1) + j].realY}</span> 位
+        				第 <span>${seats[i * (t_Column + 1) + j].realX}</span> 排<br>
+        				第 <span>${seats[i * (t_Column + 1) + j].realY}</span> 位
         				`;
 
                 seat.className = "seat";
                 seat.onclick = () => seatsmgt.toggle(seat);
 
-                let seatStatus = seats[i * (t_Column+1) + j].seatStatus;
+                let seatStatus = seats[i * (t_Column + 1) + j].seatStatus;
 
                 if (!lockedSeats.includes(String(seat.id))) {
                     switch (seatStatus) {
@@ -188,6 +194,15 @@ let seatsmgt = {
             seatNos.push(s.id);
         }
 
+        if (seats.length === 0 || seats.length < $('#quantity').val() || seats.length > $('#quantity').val()) {
+            Swal.fire({
+                icon: 'error',
+                title: '請確認是否已選擇對應數量的座位'
+            });
+
+            return;
+        }
+
         sessionStorage.setItem("toBuySeats", JSON.stringify(seatNos));
         window.location.href = "/front-activity-checkout.html";
     },
@@ -216,6 +231,9 @@ $.ajax({
         blockHasSeats = jsondata;
     }
 });
+
+let aType;
+let toSellTqy;
 
 // 頁面載入動作
 $(document).ready(function () {
@@ -266,9 +284,12 @@ $(document).ready(function () {
         })
 
     // 取得節目主視覺、座位圖並呈現於 HTML
-    fetch("/Activity/findByActNo" + `?actNo=${sessionStorage.getItem("activityNo")}`)
-        .then(resp => resp.json())
-        .then(jsondata => {
+    $.ajax({
+        async: false,
+        type: 'GET',
+        url: "/Activity/findByActNo" + `?actNo=${sessionStorage.getItem("activityNo")}`,
+        dataType: "json",
+        success: function (jsondata) {
             document.getElementById('seatsImg').src = `data:image/png;base64,${jsondata.aseatsImg}`;
 
             let showpic = jsondata.aimgt;
@@ -278,7 +299,31 @@ $(document).ready(function () {
                     document.getElementById('actImg').src = `data:image/png;base64,${showpic[i].aimg}`;
                 }
             }
-        })
+            aType = jsondata.wetherSeat;
+        }
+    });
+
+    if (aType === 1) {
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: "/seats/getBlockToSellQty" + `?activityNo=${sessionStorage.getItem("activityNo")}&sessionNo=${sessionStorage.getItem("sessionNo")}`,
+            dataType: "json",
+            success: function (jsondata) {
+                toSellTqy = jsondata;
+            }
+        });
+    } else {
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: "/Session/getBlockToSellQty" + `?activityNo=${sessionStorage.getItem("activityNo")}&sessionNo=${sessionStorage.getItem("sessionNo")}`,
+            dataType: "json",
+            success: function (jsondata) {
+                toSellTqy = jsondata;
+            }
+        });
+    }
 
     // 預設為系統選位
     selectBySystem();
@@ -309,6 +354,7 @@ function selectBySystem() {
                                     style="margin: 5px!important; background-color: #efedf5;
 											     border: 1px solid #102743; font-size: 1rem; color: black;"
                                     onMouseDown="setKV(this.value)" onclick="setBlockNoAndName()">${j.blockName}
+                                    <span style="color: red">&emsp;剩餘 ${toSellTqy[j.blockNo]} 張</span>
                                 </button>`;
                     }
                 }
@@ -344,6 +390,7 @@ function selectByMember() {
                                     style="margin: 5px!important; background-color: #efedf5;
 											     border: 1px solid #102743; font-size: 1rem; color: black;"
                                     onMouseDown="setKV(this.value)" onclick="seatsmgt.init()">${j.blockName}
+                                    <span style="color: red">&emsp;剩餘 ${toSellTqy[j.blockNo]} 張</span>
                                 </button>`;
                         } else {
                             document.getElementById('selectBlocks').innerHTML += `
@@ -353,6 +400,7 @@ function selectByMember() {
                                         style="margin: 5px!important; background-color: #efedf5;
 											     border: 1px solid #102743; font-size: 1rem; color: black;"
                                         onMouseDown="setKV(this.value)">${j.blockName}
+                                    <span style="color: red">&emsp;剩餘 ${toSellTqy[j.blockNo]} 張</span>
                                 </button>`
                         }
                     }
@@ -424,46 +472,52 @@ function TicketBySystem() {
     fetch("/Activity/findByActNo" + `?actNo=${sessionStorage.getItem("activityNo")}`)
         .then(resp => resp.json())
         .then(jsondata => {
-            if (jsondata.wetherSeat != 1) { // 若節目完全沒有座位區分，將要購買的票券數量存在 SessionStorage
-                console.log("進到非屬對號入座區");
+            if (aType != 1) { // 若節目完全沒有座位區分，將要購買的票券數量存在 SessionStorage
                 sessionStorage.setItem("toBuyTickets", $('#ticketDecr').val());
                 // window.location.href = "/front-activity-checkout.html";
             } else { // 若節目有座位區分，發送請求到後端取得座位陣列
-                console.log("進到對號入座區");
                 fetch("/seats/getTicketsBysystem" + `?ticketQTY=${$('#ticketDecr').val()}&blockNo=${sessionStorage.getItem("blockNo")}&sessionNo=${sessionStorage.getItem("sessionNo")}`)
                     .then(resp => resp.json())
                     .then(jsondata => {
 
-                            if (jsondata.length === 0) {
-                                $('#toBeVerified').val("");
+                        if (jsondata.length === 0) {
+                            $('#toBeVerified').val("");
 
+                            Swal.fire({
+                                icon: 'error',
+                                title: '無對應數量票券'
+                            })
 
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: '無對應數量票券'
-                                })
-
-                                return;
-                            }
-
-                            if (jsondata) {
-                                let seatNos = [];
-                                for (let j of jsondata) {
-                                    seatNos.push(j);
-                                    // 包裝取得的座位陣列，並送給 WebSocket 伺服器推播
-                                    let seat = document.createElement("div");
-                                    seat.id = j;
-                                    seat.classList.add("selected");
-                                    sendMessage(seat);
-                                }
-
-                                // 將要購買的座位編號以陣列的格式存在 SessionStorage
-                                sessionStorage.setItem("toBuySeats", JSON.stringify(seatNos));
-                                window.location.href = "/front-activity-checkout.html";
-                                return;
-                            }
+                            return;
                         }
-                    )
+
+                        if (jsondata) {
+                            let seatNos = [];
+                            for (let j of jsondata) {
+                                seatNos.push(j);
+                                // 包裝取得的座位陣列，並送給 WebSocket 伺服器推播
+                                let seat = document.createElement("div");
+                                seat.id = j;
+                                seat.classList.add("selected");
+                                sendMessage(seat);
+                            }
+
+                            // 將要購買的座位編號以陣列的格式存在 SessionStorage
+                            sessionStorage.setItem("toBuySeats", JSON.stringify(seatNos));
+                            window.location.href = "/front-activity-checkout.html";
+                            return;
+                        }
+                    })
+                    .catch(error => {
+                        $('#toBeVerified').val("");
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: '無對應數量票券'
+                        })
+
+                        return;
+                    })
             }
         })
 }

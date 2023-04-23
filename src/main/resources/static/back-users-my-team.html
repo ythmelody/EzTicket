@@ -7,10 +7,10 @@
 	<meta name="viewport" content="width=device-width, shrink-to-fit=9">
 	<meta name="description" content="Gambolthemes">
 	<meta name="author" content="Gambolthemes">
-	<title>Barren - Simple Online Event Ticketing System</title>
+	<title>ezTicket - 一站式購票體驗</title>
 
 	<!-- Favicon Icon -->
-	<link rel="icon" type="image/png" href="images/fav.png">
+	<link rel="icon" type="image/png" href="images/ezTicket.png">
 
 	<!-- Stylesheets -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -243,20 +243,20 @@
 	<header class="header">
 		<div class="header-inner">
 			<nav
-				class="navbar navbar-expand-lg bg-barren barren-head navbar fixed-top justify-content-sm-start pt-0 pb-0 ps-lg-0 pe-2">
+					class="navbar navbar-expand-lg bg-barren barren-head navbar fixed-top justify-content-sm-start pt-0 pb-0 ps-lg-0 pe-2">
 				<div class="container-fluid ps-0">
 					<button type="button" id="toggleMenu" class="toggle_menu">
 						<i class="fa-solid fa-bars-staggered"></i>
 					</button>
-					<button id="collapse_menu" class="collapse_menu me-4">
+					<button id="collapse_menu" class="collapse_menu me-4" disabled>
 						<i class="fa-solid fa-bars collapse_menu--icon "></i>
 						<span class="collapse_menu--label"></span>
 					</button>
 					<button class="navbar-toggler order-3 ms-2 pe-0" type="button" data-bs-toggle="offcanvas"
-						data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-						<span class="navbar-toggler-icon">
-							<i class="fa-solid fa-bars"></i>
-						</span>
+							data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                        <span class="navbar-toggler-icon">
+                            <i class="fa-solid fa-bars"></i>
+                        </span>
 					</button>
 					<a class="navbar-brand order-1 order-lg-0 ml-lg-0 ml-2 me-auto" href="index.html">
 						<div class="res-main-logo">
@@ -268,7 +268,7 @@
 						</div>
 					</a>
 					<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
-						aria-labelledby="offcanvasNavbarLabel">
+						 aria-labelledby="offcanvasNavbarLabel">
 						<div class="offcanvas-header">
 							<div class="offcanvas-logo" id="offcanvasNavbarLabel">
 								<img src="images/ezTicket-icon.svg" alt="">
@@ -297,7 +297,7 @@
 							</li>
 							<li class="dropdown account-dropdown order-3">
 								<a href="#" class="account-link" role="button" id="accountClick"
-									data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
+								   data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
 									<img src="images/profile-imgs/img-13.jpg" class="D-baimg" alt="">
 									<i class="fas fa-caret-down arrow-icon"></i>
 								</a>
@@ -331,90 +331,95 @@
 		<div class="left_section menu_left" id="js-menu">
 			<div class="left_section">
 				<ul>
-					<div id="havefunc"
-						style="text-align: center; margin-top: 10px; background-color: rgb(187, 199, 228);">
-						<p class="D-barole" style="color: black;"></p>
+					<div id="havefunc" style="background-color: #004895; display: flex; justify-content: center; align-items: center;">
+						<p class="D-barole" style="color: white; text-align: center; margin: 0;"></p>
 					</div>
 					<li class="menu--item 10">
 						<!-- 缺網址 -->
 						<a href="#" class="menu--link" title="最新消息管理" data-bs-toggle="tooltip"
-							data-bs-placement="right">
+						   data-bs-placement="right">
 							<i class="fa-solid fa-newspaper menu--icon"></i>
 							<span class="menu--label">最新消息管理</span>
 						</a>
 					</li>
 					<li class="menu--item 19">
-						<!-- 缺網址 -->
-						<a href="#" class="menu--link" title="節目管理" data-bs-toggle="tooltip" data-bs-placement="right">
+						<a href="back-activity-eventdashboard.html" class="menu--link" title="節目管理" data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-solid fa-calendar-days menu--icon"></i>
 							<span class="menu--label">節目管理</span>
 						</a>
 					</li>
-					<li class="menu--item 19">
+					<li class="menu--item 19" style="display: none;">
 						<!-- 缺網址 -->
 						<a href="#" class="menu--link" title="節目類別管理" data-bs-toggle="tooltip"
-							data-bs-placement="right">
+						   data-bs-placement="right">
 							<i class="fa-solid fa-folder menu--icon"></i>
 							<span class="menu--label">節目類別管理</span>
 						</a>
 					</li>
 					<li class="menu--item 21">
 						<a href="back-activity-seatmgt-allactivity.html" class="menu--link" title="節目座位管理"
-							data-bs-toggle="tooltip" data-bs-placement="right">
+						   data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-solid fa-chair menu--icon"></i>
 							<span class="menu--label">節目座位管理</span>
 						</a>
 					</li>
 					<li class="menu--item 20">
 						<a href="back-activity-commentmgt.html" class="menu--link" title="節目評論管理"
-							data-bs-toggle="tooltip" data-bs-placement="right">
+						   data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-solid fa-comments menu--icon"></i>
 							<span class="menu--label">節目評論管理</span>
 						</a>
 					</li>
+					<li class="menu--item 18">
+						<a href="back-activity-torder_manage.html" class="menu--link" title="票券訂單管理"
+						   data-bs-toggle="tooltip" data-bs-placement="right">
+							<i class="fa-solid fa-file-invoice menu--icon"></i>
+							<span class="menu--label">票券訂單管理</span>
+						</a>
+					</li>
 					<li class="menu--item 22">
 						<a href="back-activity-model-place.html" class="menu--link" title="場地模板管理"
-							data-bs-toggle="tooltip" data-bs-placement="right">
+						   data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-solid fa-couch menu--icon"></i>
 							<span class="menu--label">場地模板管理</span>
 						</a>
 					</li>
 					<li class="menu--item 17">
 						<a href="back-product-product_manage.html" class="menu--link" title="商品管理"
-							data-bs-toggle="tooltip" data-bs-placement="right">
+						   data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-solid fa-bag-shopping menu--icon"></i>
 							<span class="menu--label">商品管理</span>
 						</a>
 					</li>
 					<li class="menu--item 17">
 						<a href="back-product-pclass_manager.html" class="menu--link" title="商品類別管理"
-							data-bs-toggle="tooltip" data-bs-placement="right">
+						   data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-regular fa-folder menu--icon"></i>
 							<span class="menu--label">商品類別管理</span>
 						</a>
 					</li>
 					<li class="menu--item 12">
 						<a href="back-product-coupon_manage.html" class="menu--link" title="商品優惠券管理"
-							data-bs-toggle="tooltip" data-bs-placement="right">
+						   data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-solid fa-percent menu--icon"></i>
 							<span class="menu--label">商品優惠券管理</span>
 						</a>
 					</li>
 					<li class="menu--item 16">
 						<a href="back-product-comment_manager.html" class="menu--link" title="商品評論管理"
-							data-bs-toggle="tooltip" data-bs-placement="right">
+						   data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-regular fa-comments menu--icon"></i>
 							<span class="menu--label">商品評論管理</span>
 						</a>
 					</li>
 					<li class="menu--item 15">
-						<a href="back-product-order_manage.html" class="menu--link" title="訂單管理"
-							data-bs-toggle="tooltip" data-bs-placement="right">
+						<a href="back-product-order_manage.html" class="menu--link" title="商品訂單管理"
+						   data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-solid fa-file-invoice menu--icon"></i>
-							<span class="menu--label">訂單管理</span>
+							<span class="menu--label">商品訂單管理</span>
 						</a>
 					</li>
-					<li class="menu--item 13">
+					<li class="menu--item 13" style="display: none;">
 						<!-- 缺網址 -->
 						<a href="#" class="menu--link" title="帳務管理" data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-solid fa-coins menu--icon"></i>
@@ -424,12 +429,12 @@
 					<li class="menu--item 4">
 						<!-- 缺網址 -->
 						<a href="#" class="menu--link" title="常見問題管理" data-bs-toggle="tooltip"
-							data-bs-placement="right">
+						   data-bs-placement="right">
 							<i class="fa-solid fa-question-circle menu--icon"></i>
 							<span class="menu--label">常見問題管理</span>
 						</a>
 					</li>
-					<li class="menu--item 5">
+					<li class="menu--item 5" style="display: none;">
 						<!-- 缺網址 -->
 						<a href="#" class="menu--link" title="客服即時通" data-bs-toggle="tooltip" data-bs-placement="right">
 							<i class="fa-solid fa-headset menu--icon"></i>
@@ -438,29 +443,29 @@
 					</li>
 					<li class="menu--item 14">
 						<a href="back-users-host.html" class="menu--link" title="主辦單位管理" data-bs-toggle="tooltip"
-							data-bs-placement="right">
+						   data-bs-placement="right">
 							<i class="fa-solid fa-square-plus menu--icon"></i>
 							<span class="menu--label">主辦單位管理</span>
 						</a>
 					</li>
 					<li class="menu--item 3">
 						<a href="back-users-member.html" class="menu--link" title="會員資料管理" data-bs-toggle="tooltip"
-							data-bs-placement="right">
+						   data-bs-placement="right">
 							<i class="fa-solid fa-user-group menu--icon"></i>
 							<span class="menu--label">會員資料管理</span>
 						</a>
 					</li>
 					<li class="menu--item 9">
-						<a href="back-users-my-team.html" class="menu--link active" title="後台帳號權限管理"
-							data-bs-toggle="tooltip" data-bs-placement="right">
+						<a href="back-users-my-team.html" class="menu--link" title="後台帳號權限管理" data-bs-toggle="tooltip"
+						   data-bs-placement="right">
 							<i class="fa-solid fa-user-secret menu--icon"></i>
 							<span class="menu--label">後台帳號及權限管理</span>
 						</a>
 					</li>
-					<li class="menu--item 7">
+					<li class="menu--item 7" style="display: none;">
 						<!-- 缺網址 -->
 						<a href="#" class="menu--link" title="系統參數管理" data-bs-toggle="tooltip"
-							data-bs-placement="right">
+						   data-bs-placement="right">
 							<i class="fa-solid fa-gear menu--icon"></i>
 							<span class="menu--label ">系統參數管理</span>
 						</a>
