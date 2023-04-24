@@ -492,6 +492,9 @@
                     <div class="s-container-upper" style="height: 100%; border-bottom: 1px solid #EFEFEF;">
                         <div style="width: 100%; height: 100%; padding: 20px;">
                             <div
+                                id="showpic_${j.modelno}" style="width: 125px; height: 100%; background: url('') no-repeat; background-size: 130px ; border-radius: 5px; display: inline-block;">
+                            </div>
+                            <div
                                 style="width: 50%; height: 100%; display: inline-block; margin-left: 15px; vertical-align: top;">
                                 <h5 style="font-weight: bold;">${j.modelName}</h5>
                                 <div style="width: 50%; margin-top: 20px;">
@@ -522,6 +525,7 @@
                     </div>
                 </div>`;
 
+                document.getElementById(`showpic_${j.modelno}`).style.backgroundImage = `url(/ModelImg/${j.modelno})`;
         }
         ;
     }
@@ -565,6 +569,9 @@
                     <div class="s-container-upper" style="height: 100%; border-bottom: 1px solid #EFEFEF;">
                         <div style="width: 100%; height: 100%; padding: 20px;">
                             <div
+                                id="showpic_${j.modelno}" style="width: 125px; height: 100%; background: url('') no-repeat; background-size: 130px ; border-radius: 5px; display: inline-block;">
+                            </div>
+                            <div
                                 style="width: 50%; height: 100%; display: inline-block; margin-left: 15px; vertical-align: top;">
                                 <h5 style="font-weight: bold;">${j.modelName}</h5>
                                 <div style="width: 50%; margin-top: 20px;">
@@ -595,8 +602,9 @@
                     </div>
                 </div>`;
 
-        }
-        ;
+                document.getElementById(`showpic_${j.modelno}`).style.backgroundImage = `url(/ModelImg/${j.modelno})`;
+
+        };
     }
 
 
@@ -642,72 +650,72 @@
 
 </script>
 
-<!-- 新增/修改模板按鈕 -->
-<script>
-    function insertModel() {
-        if ($.trim($("#newModelName").val()) === "") {
-            Swal.fire(
-                {
-                    title: "內容不能空白！",
-                    text: "請再次檢查您輸入的字是否正確",
-                    icon: 'error',
-                    confirmButtonText: '確定'
-                }
-            );
-        } else {
-            Swal.fire({
-                title: "確定送出嗎？",
-                showCancelButton: true,
-                // cancelButtonColor: '#efedf5',
-                confirmButtonColor: '#102743',
-                cancelButtonText: "取消",
-                confirmButtonText: '確定',
-                reverseButtons: true
-            }).then(function (result) {
-                if (result.value) {
-                    // if ($("#copy").val === true) {
-                    //     const formData = {
-                    //         "copiedModelno": $("#copiedModelno").val(),
-                    //         "modelName": $("#newModelName").val(),
-                    //         "modelStatus": 1
-                    //     }
-                    // } else {
-                    const formData = {
-                        "modelno": $("#hiddenModelno").val(),
-                        "modelName": $("#newModelName").val(),
-                        "modelStatus": $("#newModelStatus").val()
-                    };
-                    fetch('/PlaceModel/insert', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(formData)
-                    })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Event not update');
-                            }
-                            return response.json()
-                        })
-                        .catch(error => {
-                            console.error('Error:', error.message);
-                        });
-                    // }
-                    Swal.fire({
-                        title: "已送出資料！",
-                        icon: 'success',
-                        confirmButtonText: '確定',
-                        confirmButtonColor: '#102743',
-                        preConfirm: setTimeout(() => {
-                            document.location.reload();
-                        }, 1000)
-                    });
-                } else {
-                    Swal.fire({text: "返回編輯", timer: 1500, showConfirmButton: true, confirmButtonColor: '#102743'});
-                }
-            });
-        }
+		<!-- 新增/修改模板按鈕 -->
+		<script>
+			function insertModel() {
+				if ($.trim($("#newModelName").val()) === "") {
+					Swal.fire(
+						{
+							title: "內容不能空白！",
+							text: "請再次檢查您輸入的字是否正確",
+							icon: 'error',
+							confirmButtonText: '確定'
+						}
+					);
+				} else {
+					Swal.fire({
+						title: "確定送出嗎？",
+						showCancelButton: true,
+						// cancelButtonColor: '#efedf5',
+						confirmButtonColor: '#102743',
+						cancelButtonText: "取消",
+						confirmButtonText: '確定',
+						reverseButtons: true
+					}).then(function (result) {
+						if (result.value) {
+							// if ($("#copy").val === true) {
+							//     const formData = {
+							//         "copiedModelno": $("#copiedModelno").val(),
+							//         "modelName": $("#newModelName").val(),
+							//         "modelStatus": 1
+							//     }
+							// } else {
+							const formData = {
+								"modelno": $("#hiddenModelno").val(),
+								"modelName": $("#newModelName").val(),
+								"modelStatus": $("#newModelStatus").val()
+							};
+							fetch('/PlaceModel/insert', {
+								method: 'POST',
+								headers: {
+									'Content-Type': 'application/json'
+								},
+								body: JSON.stringify(formData)
+							})
+								.then(response => {
+									if (!response.ok) {
+										throw new Error('Event not update');
+									}
+									return response.json()
+								})
+								.catch(error => {
+									console.error('Error:', error.message);
+								});
+							// }
+							Swal.fire({
+								title: "已送出資料！",
+								icon: 'success',
+								confirmButtonText: '確定',
+								confirmButtonColor: '#102743',
+								preConfirm: setTimeout(() => {
+									document.location.reload();
+								}, 1000)
+							});
+						} else {
+							return;
+						}
+					});
+				}
 
     };
 </script>

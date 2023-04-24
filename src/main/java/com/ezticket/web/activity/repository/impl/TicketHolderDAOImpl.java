@@ -20,7 +20,7 @@ public class TicketHolderDAOImpl implements TicketHolderDAO {
     private static final String GET_BY_MEM_STMT =
             "SELECT collectno, memberno, mname, memail, tdetailsno, tstatus, activityno, aname, "
                     + "wetherseat, aimg, sessionstime, sessionetime, blockname, realx, realy, anote, aticketremind, aplace, aplaceaddress "
-                    + "FROM ticketholder WHERE memberno = ? ORDER BY sessionstime";
+                    + "FROM ticketholder WHERE memberno = ?  AND tstatus != -1 ORDER BY sessionstime";
     private static final String GET_ALL_STMT =
             "SELECT collectno, memberno, mname, memail, tdetailsno, tstatus, activityno, aname, "
                     + "wetherseat, aimg, sessionstime, sessionetime, blockname, realx, realy, anote, aticketremind, aplace, aplaceaddress "
@@ -99,6 +99,7 @@ public class TicketHolderDAOImpl implements TicketHolderDAO {
         return ticketHolder;
     }
 
+//    取出該會員訂單沒有取消的票券
     @Override
     public List<TicketHolder> getByMemberno(Integer memberno) {
         List<TicketHolder> list = new ArrayList<>();

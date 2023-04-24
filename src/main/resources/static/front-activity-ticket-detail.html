@@ -111,7 +111,7 @@
                 <div>
                                     <div class="QR-dt p-4">
                                         <div>
-                                            <h4 id='withSeatHeader'>${ticket.aname}&nbsp;&nbsp;&nbsp;&nbsp;${ticket.blockname} ${ticket.realx}排 ${ticket.realy}號</h4>
+                                            <h4>${ticket.aname}&nbsp;&nbsp;&nbsp;&nbsp;<span id='withSeatHeader'>${ticket.blockname} ${ticket.realx}排 ${ticket.realy}號<span></h4>
                                             <p>${ticket.aplace}&nbsp;&nbsp;&nbsp;&nbsp;${ticket.aplaceAddress}</p>                                            
                                         </div>
                                         <div style="text-align: center;">
@@ -241,9 +241,12 @@
                                 </div>
                 `;
 
-            let realx = `${ticket.realx}`;
-            let realy = `${ticket.realy}`;
-            if (realx === null || realy === null) {
+            let realx = ticket.realx;
+            let realy = ticket.realy;
+            console.log("" + realx + realy);
+            if (realx === null || realx === undefined || realy === null || realy === undefined) {
+                console.log("有進來");
+                console.log("realx == null || realy == null" + (realx == null || realy == null));
                 const withSeatHeader = document.getElementById('withSeatHeader');
                 const withSeatContent = document.getElementById('withSeatContent');
                 withSeatHeader.textContent = '非對號座';
