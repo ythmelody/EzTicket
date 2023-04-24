@@ -22,9 +22,21 @@ public class CollectCrudController {
 
     //    驗票
     //    回傳代碼：-1 無票券；-2 已使用；-3 票券狀態異常；1 驗票成功
-    @GetMapping("/checkin/{collectno}")
-    public int checkin(@PathVariable("collectno") Integer collectno) {
-        return collectCrudService.useTicket(collectno);
+    @GetMapping("/checkin/{collectno}/{salt}")
+    public String checkin(@PathVariable("collectno") Integer collectno, @PathVariable("salt") String salt) {
+        int statusCode = collectCrudService.useTicket(collectno, salt);
+        switch (statusCode){
+            case 1:
+                return "驗票成功";
+            case -1:
+                return "查無票券";
+            case -2:
+                return "票券已使用";
+            case -3:
+                return "票券狀態異常";
+            default:
+                return "系統忙碌中請稍候再試";
+        }
     }
 
 //    顯示票券 QRcode
@@ -51,7 +63,7 @@ public class CollectCrudController {
     @PostMapping("/test/{collectno}")
     public boolean testRedisConnection(@PathVariable("collectno") Integer collectno) {
 //        long oneHourLater = System.currentTimeMillis()/1000+60*60;
-        CollectRedis cr = new CollectRedis(String.valueOf(collectno), "0", "givemesuccess", 1728000);
+        CollectRedis cr = new CollectRedis(String.valueOf(collectno), "0", "givemesuccess", "iamsalt", 1728000);
         collectRedisRepository.save(cr);
         System.out.println("新增/修改票券");
         return true;
@@ -97,9 +109,9 @@ public class CollectCrudController {
     }
 
     //    測試驗票
-    @GetMapping("/test7/{collectno}")
-    public boolean checkinTest(@PathVariable("collectno") Integer collectno) {
-        int result = collectCrudService.useTicket(collectno);
+    @GetMapping("/test7/{collectno}/{salt}")
+    public boolean checkinTest(@PathVariable("collectno") Integer collectno, @PathVariable("salt") String salt) {
+        int result = collectCrudService.useTicket(collectno, salt);
         return result == 1;
     }
 

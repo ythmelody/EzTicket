@@ -17,6 +17,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import jakarta.transaction.Transactional;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -81,9 +82,12 @@ public class CollectCrudService {
 //               新增一張票進 Redis
                 collectRedis.setCollectno(updatedCollectno);
                 collectRedis.setTstatus("0");
+//                增加亂數驗證碼
+                String salt = RandomStringUtils.randomAlphanumeric(20, 50);
+                collectRedis.setSalt(salt);
                 String qrcodeImg = "empty";
                 try {
-                    qrcodeImg = urlToBase64(updatedCollectno);
+                    qrcodeImg = urlToBase64(updatedCollectno, salt);
                 } catch (IOException | WriterException ioe) {
                     ioe.printStackTrace();
                     return false;
@@ -117,13 +121,17 @@ public class CollectCrudService {
     @Transactional
     //  驗票：更變 Redis 票券狀態為1 (狀態：0 未使用；1 已使用，取消直接刪除，不會使用此方法)
     //  回傳代碼：-1 無票券；-2 已使用；-3 票券狀態異常；1 驗票成功
-    public int useTicket(Integer collectno) {
+    public int useTicket(Integer collectno, String salt) {
         Optional<CollectRedis> optCR = collectRedisRepository.findById(collectno.toString());
         if (optCR.isEmpty()) {
             System.out.println("Redis 查無票券");
             return -1;
         }
         CollectRedis newCR = optCR.get();
+        if (!newCR.getSalt().equals(salt)){
+            System.out.println("驗證碼錯誤，Redis 查無票券");
+            return -1;
+        }
         if ("1".equals(newCR.getTstatus())) {
             System.out.println("票券已使用！");
             return -2;
@@ -192,12 +200,13 @@ public class CollectCrudService {
         return true;
     }
 
-    public String urlToBase64(String collectno) throws WriterException, IOException {
+    public String urlToBase64(String collectno, String salt) throws WriterException, IOException {
 //                IP
         StringBuilder urlFrag = new StringBuilder(checkinip);
 //                驗票 Controller 的網址
         urlFrag.append("EditCollect/checkin/");
         urlFrag.append(collectno);
+        urlFrag.append("/" + salt);
         String url = urlFrag.toString();
         System.out.println(url);
 
@@ -214,12 +223,12 @@ public class CollectCrudService {
 
         //      測試用：存入硬碟
         // 設置QRCode的存放目錄、檔名與圖片格式
-//        String filePath = "C:/Users/Tibame_T14/Documents/ezTicket/images/QRcodeTest/";
-//        String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date()) + ".jpg";
-//        Path path = FileSystems.getDefault().getPath(filePath, fileName);
-//        String format = "jpg";
-//        MatrixToImageWriter.writeToPath(matrix, format, path);
-//        System.out.println("path=" + path.toString());
+        String filePath = "C:/Users/Tibame_T14/Documents/ezTicket/images/QRcodeTest/";
+        String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date()) + ".jpg";
+        Path path = FileSystems.getDefault().getPath(filePath, fileName);
+        String format = "jpg";
+        MatrixToImageWriter.writeToPath(matrix, format, path);
+        System.out.println("path=" + path.toString());
 
 
         // 將 BitMatrix 轉換為 ByteArrayOutputStream

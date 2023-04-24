@@ -16,6 +16,7 @@ public class CollectRedis {
     private String collectno;
     private String tstatus;
     private String qrcode;
+    private String salt;
     //    過期時間，秒
     @TimeToLive
     private long expirationInSeconds;
