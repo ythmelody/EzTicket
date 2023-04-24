@@ -31,4 +31,6 @@ public interface ACommentRepository extends JpaRepository<AComment, Integer> {
 
     public List<AComment> getACommentByActivityNo(Integer actNo);
 
+    public AComment getACommentByMemberNoAndActivityNo(Integer memberNo, Integer activityNo);
+
 }

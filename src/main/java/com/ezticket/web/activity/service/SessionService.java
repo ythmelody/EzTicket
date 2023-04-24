@@ -7,6 +7,7 @@ import com.ezticket.web.activity.repository.SeatsRepository;
 import com.ezticket.web.activity.repository.SessionRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -33,6 +35,9 @@ public class SessionService {
     private SeatsService seatsService;
     @Autowired
     private SeatsRepository seatsRepository;
+
+    @Autowired
+    private BlockPriceService blockPriceService;
 
     public List<SessionDto> findAll() {
         return sessionRepository.findAll()
@@ -114,6 +119,21 @@ public class SessionService {
         sessionRepository.deleteById(sessionNo);
         System.out.println("ccccccccc");
 
+    public void updateSession(Integer sessionNo, Timestamp sessionsTime, Timestamp sessioneTime, Integer maxSeatsQty, Integer maxStandingQty) {
+        sessionRepository.update(sessionNo,sessionsTime, sessioneTime, maxSeatsQty,maxStandingQty);
+    }
 
+    //    Add by Shawn on 04/22
+    // 當使用者進到選頁面時，將顯示每個區域的剩餘可售票券數
+    public Map<Integer, Integer> getToSellTQty(Integer activityNo, Integer sessionNo){
+        List<BlockPrice> blockList = blockPriceService.getBlockPriceByActivityNo(activityNo);
+        Map<Integer, Integer> returnedMap = new HashMap<Integer, Integer>();
+        for(BlockPrice block: blockList){
+            int toSellTQty = sessionRepository.getToSellNumber(sessionNo);
+            returnedMap.put(block.getBlockNo(), toSellTQty);
         }
+
+        System.out.println(returnedMap);
+        return returnedMap;
+    }
 }

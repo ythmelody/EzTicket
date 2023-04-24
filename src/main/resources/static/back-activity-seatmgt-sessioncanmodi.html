@@ -660,7 +660,7 @@
             });
 
             // 節目類型為 0 (展覽類型)
-            if (j.blockName === "無區分") {
+            if (j.blockName === "全站") {
                 fetch('/Session/findById' + `?sessionNo=${sessionStorage.getItem("sessionNo")}`)
                     .then(resp => resp.json())
                     .then((jsondata) => {
@@ -701,6 +701,7 @@
                         .then(resp => resp.json())
                         .then((jsondata) => {
                             document.getElementById('noSeatTickets').value = jsondata.maxStandingQty;
+                            $('#modiSeatTickets').prev().html('');
                             $('#modiSeatTickets').prev().append(`<br><span style="color: red">此節目無任何座位需求，請至節目管理修改票券數量</span>`);
                             $('#modiSeatTickets').prop('disabled', 'true');
                             $('#clearBtn').prop('hidden', 'true');

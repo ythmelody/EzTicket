@@ -540,7 +540,7 @@
                 </div>`;
 
             // 節目類型為 0 (展覽類型)
-            if (j.blockName === "無區分") {
+            if (j.blockName === "全站") {
                 fetch('/Session/findById' + `?sessionNo=${sessionStorage.getItem("sessionNo")}`)
                     .then(resp => resp.json())
                     .then((jsondata) => {

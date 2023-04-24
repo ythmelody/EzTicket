@@ -1,5 +1,6 @@
 package com.ezticket.web.activity.controller;
 
+import com.ezticket.web.activity.pojo.BlockPrice;
 import com.ezticket.web.activity.pojo.Seats;
 import com.ezticket.web.activity.pojo.Session;
 import com.ezticket.web.activity.service.SeatsService;
@@ -61,7 +62,7 @@ public class SeatsController {
         return seatsService.setSessionSeats(seatStatus, seatNo, sessionNo);
     }
 
-    @GetMapping("/getTicketsBystem")
+    @GetMapping("/getTicketsBysystem")
     public List<Integer> getTicketsBySystem(@RequestParam int ticketQTY, @RequestParam int blockNo, @RequestParam int sessionNo) {
         return seatsService.getSeatsBySystem(ticketQTY,blockNo,sessionNo);
     }
@@ -97,5 +98,16 @@ public class SeatsController {
     }
 
 
+
+    @GetMapping("/deleteSeatsBySession")
+    public boolean deleteSeatsBySession(@RequestParam Integer sessionNo){
+        return seatsService.deleteSeatsBySession(sessionNo);
+    }
+
+    // 當使用者進到選頁面時，將顯示每個區域的剩餘可售票券數
+    @GetMapping("/getBlockToSellQty")
+    public Map<Integer, Integer> getToSellTQty(@RequestParam Integer activityNo, @RequestParam Integer sessionNo){
+        return seatsService.getToSellTQty(activityNo, sessionNo);
+    }
 
 }

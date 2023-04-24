@@ -1,5 +1,7 @@
 package com.ezticket.web.activity.pojo;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 public class CollectVO {
     private Integer collectno;
     private Integer memberno;
@@ -46,4 +48,10 @@ public class CollectVO {
     public void setQrcode(byte[] qrcode) {
         this.qrcode = qrcode;
     }
+
+//    測試 Apache Commons.lang3 工具，亂數產生字串
+//    public static void main(String[] args){
+//        String str = RandomStringUtils.randomAlphanumeric(10, 50);
+//        System.out.println(str);
+//    }
 }

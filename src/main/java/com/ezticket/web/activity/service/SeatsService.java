@@ -10,6 +10,8 @@ import com.ezticket.web.activity.repository.impl.SeatsModelDAOImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
 
@@ -333,6 +335,17 @@ public class SeatsService {
                 seatsRedisDAO.setAddKV("Session" + session.getSessionNo() + ":Set:4", toSaveSets.toString());
             }
         }
+    }
+
+    // 當使用者進到選頁面時，將顯示每個區域的剩餘可售票券數
+    public Map<Integer, Integer> getToSellTQty(Integer activityNo, Integer sessionNo){
+        List<BlockPrice> blockList = blockPriceService.getBlockPriceByActivityNo(activityNo);
+        Map<Integer, Integer> returnedMap = new HashMap<Integer, Integer>();
+        for(BlockPrice block: blockList){
+            int toSellTQty = seatsRepository.getToSellNumber(sessionNo, block.getBlockNo());
+            returnedMap.put(block.getBlockNo(), toSellTQty);
+        }
+        return returnedMap;
     }
 
 }

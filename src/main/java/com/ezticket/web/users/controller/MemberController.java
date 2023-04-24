@@ -110,6 +110,8 @@ public class MemberController {
     public Member getMemberInfo(HttpSession session, HttpServletResponse response) throws IOException {
         Member loginMember = (Member) session.getAttribute("member");
         Boolean status = (Boolean) session.getAttribute("loggedin");
+        System.out.println(status);
+
         Member member = new Member();
         if (status != null && status.booleanValue()) {
             // 已登入

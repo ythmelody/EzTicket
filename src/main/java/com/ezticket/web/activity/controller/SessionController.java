@@ -19,10 +19,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin("*")
 @RestController
@@ -78,6 +75,13 @@ public class SessionController {
         sessionService.deleteSessionTwo(sessionNo);
         return true;
     }
+
+    // 當使用者進到選頁面時，將顯示每個區域的剩餘可售票券數
+    @GetMapping("/getBlockToSellQty")
+    public Map<Integer, Integer> getToSellTQty(@RequestParam Integer activityNo, @RequestParam Integer sessionNo){
+        return sessionService.getToSellTQty(activityNo, sessionNo);
+    }
+
 
 }
 
