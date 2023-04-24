@@ -99,10 +99,7 @@ public class SeatsController {
 
 
 
-    @GetMapping("/deleteSeatsBySession")
-    public boolean deleteSeatsBySession(@RequestParam Integer sessionNo){
-        return seatsService.deleteSeatsBySession(sessionNo);
-    }
+
 
     // 當使用者進到選頁面時，將顯示每個區域的剩餘可售票券數
     @GetMapping("/getBlockToSellQty")

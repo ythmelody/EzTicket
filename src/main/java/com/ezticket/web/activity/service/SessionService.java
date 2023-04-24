@@ -1,6 +1,7 @@
 package com.ezticket.web.activity.service;
 
 import com.ezticket.web.activity.dto.SessionDto;
+import com.ezticket.web.activity.pojo.BlockPrice;
 import com.ezticket.web.activity.pojo.Seats;
 import com.ezticket.web.activity.pojo.Session;
 import com.ezticket.web.activity.repository.SeatsRepository;
@@ -118,10 +119,8 @@ public class SessionService {
         System.out.println("bbbbbbbbb");
         sessionRepository.deleteById(sessionNo);
         System.out.println("ccccccccc");
-
-    public void updateSession(Integer sessionNo, Timestamp sessionsTime, Timestamp sessioneTime, Integer maxSeatsQty, Integer maxStandingQty) {
-        sessionRepository.update(sessionNo,sessionsTime, sessioneTime, maxSeatsQty,maxStandingQty);
     }
+
 
     //    Add by Shawn on 04/22
     // 當使用者進到選頁面時，將顯示每個區域的剩餘可售票券數
