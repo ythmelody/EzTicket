@@ -474,11 +474,25 @@ function TicketBySystem() {
         .then(jsondata => {
             if (aType !== 1) { // 若節目完全沒有座位區分，將要購買的票券數量存在 SessionStorage
 
-                if($('#ticketDecr').val() > toSellTqy[sessionStorage.getItem("blockNo")]){
+                $.ajax({
+                    async: false,
+                    type: 'GET',
+                    url: "/Session/getBlockToSellQty" + `?activityNo=${sessionStorage.getItem("activityNo")}&sessionNo=${sessionStorage.getItem("sessionNo")}`,
+                    dataType: "json",
+                    success: function (jsondata) {
+                        realToSellTqy = jsondata;
+                    }
+                });
+
+                if($('#ticketDecr').val() > realToSellTqy[sessionStorage.getItem("blockNo")]){
                     Swal.fire({
                         icon: 'error',
                         title: '無對應數量票券'
                     })
+
+                    setTimeout(function() {
+                        location.reload();
+                    }, 3000);
 
                     return;
                 }
