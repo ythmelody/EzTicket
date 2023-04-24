@@ -258,7 +258,7 @@
 				const tdetailsList = document.querySelector("#tdetailsList");
 				const topArea = document.querySelector("#topArea");
 				const urlParams = new URLSearchParams(window.location.search);
-				const memberNo = urlParams.get("memberNo");
+				// const memberNo = urlParams.get("memberNo");
 				const torderNo= urlParams.get("torderNo");
 				console.log(torderNo);
 		fetch(`/Torder/findById?torderNo=${torderNo}`)
