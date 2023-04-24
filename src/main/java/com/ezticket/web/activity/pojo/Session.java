@@ -43,6 +43,7 @@ public class Session {
     @ManyToOne
     @JoinColumn(name = "ACTIVITYNO",insertable = false, updatable = false)
     private Activity activity;
+
 //    @JsonBackReference
 //    @ManyToOne
 //    @JoinColumn(name = "ACTIVITYNO",insertable = false, updatable = false)

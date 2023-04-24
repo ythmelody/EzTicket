@@ -1,6 +1,7 @@
 package com.ezticket.web.activity.repository;
 
 import com.ezticket.web.activity.pojo.Seats;
+import com.ezticket.web.activity.pojo.Session;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -75,5 +76,12 @@ public interface SeatsRepository extends JpaRepository<Seats, Integer> {
     //    計算站席總數量(不含保留及場地限制)
     @Query("SELECT COUNT(s.seatNo) FROM Seats s WHERE s.x IS NULL AND s.seatStatus = 2 AND s.sessionNo = :sessionNo")
     public int findSoldStandingQtyBySessionNo(@Param("sessionNo") Integer sessionNo);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Seats WHERE sessionNo = :sessionNo")
+    public void deleteBySessionNo(@Param("sessionNo")Integer sessionNo);
+
+    Seats findBySessionNoAndSeatNo(Integer sessionNo, Integer seatNo);
 
 }

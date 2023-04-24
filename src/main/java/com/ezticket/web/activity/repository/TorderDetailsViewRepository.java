@@ -11,4 +11,5 @@ import java.util.List;
 @Repository
 public interface TorderDetailsViewRepository extends JpaRepository<TorderDetailsView,Integer> {
     List<TorderDetailsView> findAllBytorderNo(Integer torderNo);
+    List<TorderDetailsView> findBymemberNo(Integer memberNo);
 }

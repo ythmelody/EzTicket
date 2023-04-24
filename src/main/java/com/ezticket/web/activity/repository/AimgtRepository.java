@@ -12,7 +12,7 @@ import java.util.List;
 public interface AimgtRepository extends JpaRepository <Aimgt,Integer> {
 
     List<Aimgt>findAllByActivityNo(Integer activityNo);
-
+    Aimgt findByActivityNo(Integer activityNo);
 
 
 }

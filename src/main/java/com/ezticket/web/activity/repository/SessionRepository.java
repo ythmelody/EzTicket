@@ -38,15 +38,12 @@ public interface SessionRepository extends JpaRepository<Session,Integer> {
     @Query("UPDATE Session SET standingQty = standingQty + :ticketChange where sessionNo = :sessionNo")
     public int updateById(@Param("ticketChange") Integer ticketChange, @Param("sessionNo") Integer sessionNo);
 
-    @Transactional
-    @Modifying
-    @Query("Delete Session  WHERE sessionNo = :sessionNo")
-    public void delete(@Param("sessionNo") Integer sessionNo);
+
 
     @Transactional
     @Modifying
     @Query("UPDATE Session SET sessionNo = :sessionNo, sessionsTime = :sessionsTime, sessioneTime = :sessioneTime,maxSeatsQty=:maxSeatsQty,maxStandingQty=:maxStandingQty where sessionNo = :sessionNo")
-    public void update(@Param("sessionNo") Integer sessionNo, @Param("sessionsTime") Timestamp sessionsTime, @Param("sessioneTime") Timestamp sessioneTime, @Param("maxSeatsQty") Integer maxSeatsQty, @Param("maxStandingQty") Integer maxStandingQty);
+    public void update(@Param("sessionNo") Integer sessionNo,Session session);
 
 
     //    Add by Shawn on 04/08
@@ -54,5 +51,11 @@ public interface SessionRepository extends JpaRepository<Session,Integer> {
     @Modifying
     @Query("UPDATE Session SET standingQty = standingQty + :ticketChange where sessionNo = :sessionNo")
     public int updateStandingQtyById(@Param("ticketChange") Integer ticketChange, @Param("sessionNo") Integer sessionNo);
+
+    //    Add by Shawn on 04/22
+    @Query("SELECT (s.maxStandingQty - s.standingQty) FROM Session s WHERE s.sessionNo = :sessionNo")
+    public int getToSellNumber(@Param("sessionNo") int sessionNo);
+
+
 
 }

@@ -88,9 +88,7 @@ public class ACommentService {
 
     public List<AComment> getACommentsBySelection(Map map) {
         return aCommentDao.getByCompositeQuery(map);
-    }
-
-    ;
+    };
 
     public List<ACommentDto> getACommentByActNo(Integer actNo) {
         modelMapper.getConfiguration()
@@ -101,9 +99,21 @@ public class ACommentService {
                 .collect(Collectors.toList());
     }
 
+    public AComment getACommentByMemberNoAndActivityNo(Integer memberNo, Integer activityNo){
+        return aCommentRepository.getACommentByMemberNoAndActivityNo(memberNo, activityNo);
+    }
+
     public boolean insertAComment(AComment aComment) {
         aComment.setACommentDate(new Date(System.currentTimeMillis()));
-        aComment.setACommentStatus(0);
+        aComment.setACommentStatus(1);
+        aComment.setALike(0);
+        aCommentRepository.save(aComment);
+        return true;
+    }
+
+    public boolean updateAComment(AComment aComment) {
+        aComment.setACommentDate(new Date(System.currentTimeMillis()));
+        aComment.setACommentStatus(1);
         aComment.setALike(0);
         System.out.println(aComment);
         aCommentRepository.save(aComment);

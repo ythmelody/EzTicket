@@ -4,6 +4,7 @@ import com.ezticket.core.service.EmailService;
 import com.ezticket.ecpay.service.OrderService;
 import com.ezticket.ecpay.service.TcatService;
 import com.ezticket.web.activity.pojo.Torder;
+import com.ezticket.web.activity.service.CollectCrudService;
 import com.ezticket.web.activity.service.TorderService;
 import com.ezticket.web.product.pojo.Porder;
 import com.ezticket.web.product.repository.PorderRepository;
@@ -36,6 +37,8 @@ public class OrderController {
 	MemberRepository memberRepository;
 	@Autowired
 	EmailService emailService;
+	@Autowired
+	CollectCrudService collectCrudService;
 
     @Autowired
     TorderService torderService;
@@ -141,6 +144,7 @@ public class OrderController {
         torderService.updateTorder(torder);
 
         // 票券 QR code 於此產生 - 1 (Melody)
+		collectCrudService.insertCollect(torder);
 
         // 印出所有K,V，參考看看
         while (parameterNames.hasMoreElements()) {

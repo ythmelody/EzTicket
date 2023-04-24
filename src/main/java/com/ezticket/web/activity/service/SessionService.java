@@ -1,15 +1,22 @@
 package com.ezticket.web.activity.service;
 
 import com.ezticket.web.activity.dto.SessionDto;
+import com.ezticket.web.activity.pojo.BlockPrice;
+import com.ezticket.web.activity.pojo.Seats;
 import com.ezticket.web.activity.pojo.Session;
+import com.ezticket.web.activity.repository.SeatsRepository;
 import com.ezticket.web.activity.repository.SessionRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -27,6 +34,11 @@ public class SessionService {
 
     @Autowired
     private SeatsService seatsService;
+    @Autowired
+    private SeatsRepository seatsRepository;
+
+    @Autowired
+    private BlockPriceService blockPriceService;
 
     public List<SessionDto> findAll() {
         return sessionRepository.findAll()
@@ -85,12 +97,42 @@ public class SessionService {
         }
     }
 
-    public void deleteSession(Integer sessionNo){
-        sessionRepository.delete(sessionNo);
+
+
+    public Session updateSession(Session session) {
+        Session existingSession = sessionRepository.findById(session.getSessionNo()).orElse(null);
+        if (existingSession == null) {
+            return null;
+        }
+        existingSession.setSessionsTime(session.getSessionsTime());
+        existingSession.setSessioneTime(session.getSessioneTime());
+        existingSession.setMaxStandingQty(session.getMaxStandingQty());
+        existingSession.setMaxSeatsQty(session.getMaxSeatsQty());
+
+        // save the updated session entity to the database
+        return sessionRepository.save(existingSession);
     }
 
-    public void updateSession(Integer sessionNo, Timestamp sessionsTime, Timestamp sessioneTime, Integer maxSeatsQty, Integer maxStandingQty) {
-        sessionRepository.update(sessionNo,sessionsTime, sessioneTime, maxSeatsQty,maxStandingQty);
+    public void deleteSessionTwo(Integer sessionNo) {
+        System.out.println("aaaaaaaaa");
+        seatsRepository.deleteBySessionNo(sessionNo);
+        System.out.println("bbbbbbbbb");
+        sessionRepository.deleteById(sessionNo);
+        System.out.println("ccccccccc");
+    }
 
+
+    //    Add by Shawn on 04/22
+    // 當使用者進到選頁面時，將顯示每個區域的剩餘可售票券數
+    public Map<Integer, Integer> getToSellTQty(Integer activityNo, Integer sessionNo){
+        List<BlockPrice> blockList = blockPriceService.getBlockPriceByActivityNo(activityNo);
+        Map<Integer, Integer> returnedMap = new HashMap<Integer, Integer>();
+        for(BlockPrice block: blockList){
+            int toSellTQty = sessionRepository.getToSellNumber(sessionNo);
+            returnedMap.put(block.getBlockNo(), toSellTQty);
+        }
+
+        System.out.println(returnedMap);
+        return returnedMap;
     }
 }

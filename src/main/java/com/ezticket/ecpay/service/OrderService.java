@@ -8,6 +8,7 @@ import com.ezticket.web.activity.repository.SeatsRepository;
 import com.ezticket.web.activity.repository.SessionRepository;
 import com.ezticket.web.activity.repository.TdetailsRepository;
 import com.ezticket.web.activity.repository.TorderRepository;
+import com.ezticket.web.activity.service.CollectCrudService;
 import com.ezticket.web.product.pojo.Pdetails;
 import com.ezticket.web.product.pojo.Porder;
 import com.ezticket.web.product.pojo.Product;
@@ -51,6 +52,9 @@ public class OrderService {
 
     @Autowired
     private SessionRepository sessionRepository;
+
+    @Autowired
+    private CollectCrudService collectCrudService;
 
 
     public String ecpayCheckout(Integer porderno) {
@@ -170,7 +174,7 @@ public class OrderService {
         //	啟動本地伺服器，例如 Tomcat 或是 Spring Boot。
         //	在命令列輸入 ngrok http 8080，其中 8080 是你本機伺服器的 Port，請依實際情況更改。
         //	Ngrok 會顯示一個公開的 URL，例如 https://xxxxxx.ngrok.io，複製此 URL。
-        String returnURL = "https://7810-2407-4b00-1c00-8929-507e-f5da-8a37-25b8.jp.ngrok.io";
+        String returnURL = "https://4b6a-111-249-19-118.jp.ngrok.io";
         obj.setReturnURL(returnURL + "/ecpay/Treturn");
 
         // 設定票券訂單明細路徑及返回商店路徑
@@ -230,6 +234,7 @@ public class OrderService {
                 torderRepository.save(torder);
 
                 // 票券 QR Code 產生應於此處 - 2 (Melody)
+                collectCrudService.insertCollect(torder);
 
             } else {
                 torder.setTpaymentStatus(3);

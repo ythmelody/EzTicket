@@ -3,16 +3,14 @@ package com.ezticket.web.activity.controller;
 import com.ezticket.web.activity.dto.AimgtDto;
 import com.ezticket.web.activity.pojo.Aimgt;
 import com.ezticket.web.activity.service.AimgtService;
+import jakarta.servlet.http.Part;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 
 @CrossOrigin("*")
@@ -80,6 +78,32 @@ public class AimgtController {
         aimgtService.saveAimgt(aimgts);
 
         return ResponseEntity.ok("Images uploaded successfully.");
+    }
+
+
+    @PostMapping("/updateAimgt")
+    public ResponseEntity<String> updateAimgt(@RequestParam Integer aimgNo,
+                                              @RequestParam(required = false) Part image) throws IOException {
+
+        Aimgt aimgt = aimgtService.findById(aimgNo);
+        if (image != null) {
+            byte[] imageBytes = image.getInputStream().readAllBytes();
+            aimgt.setAimg(imageBytes);
+            aimgtService.save(aimgt);
+        }
+        if (aimgt != null) {
+            return ResponseEntity.ok("Aimgt updated successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update Aimgt");
+        }
+    }
+
+
+
+    @DeleteMapping("/deleteAimgt")
+    public void deleteAimgt(@RequestBody Map<String, Integer> request) {
+        Integer aimgNo = request.get("aimgNo");
+        aimgtService.deleteAimgt(aimgNo);
     }
     }
 

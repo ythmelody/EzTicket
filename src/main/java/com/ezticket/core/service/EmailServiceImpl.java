@@ -208,4 +208,22 @@ public class EmailServiceImpl implements EmailService {
 
         javaMailSender.send(message);
     }
+
+    public String sendTicketNotification(String email, String mname) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setFrom(sender);
+        helper.setTo(email);
+        helper.setSubject("ezTicket 通知：獲得新票券");
+        String htmlContent = "<p>親愛的" + mname + "先生/小姐：</p>" +
+                "<p>此為系統通知信件：</p>" +
+                "<p>有人轉贈票券給您唷！</p>" +
+                "<p><a href='http://localhost:8085/front-activity-ticket-holder.html'>立即前往票夾看看吧！</a></p>" +
+                "<p>請勿直接回覆此信件。</p>" +
+                "<p>敬祝" + mname + "身體健康、事事如意！</p>" +
+                "<p>                                           ezTicket - 一站式購票體驗</p>";
+
+        helper.setText(htmlContent, true);
+        return "Email is sent";
+    }
 }

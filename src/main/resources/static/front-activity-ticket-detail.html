@@ -65,42 +65,57 @@
     <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script src="js/custom.js"></script>
     <script src="js/night-mode.js"></script>
+    <!-- kai 會員登入狀態驗證(導向版) -->
+    <script src="js/memberLoginCheck-location.href.js"></script>
 
     <script>
-        const memberno = new URLSearchParams(window.location.search).get("memberno");
+        // const memberno = new URLSearchParams(window.location.search).get("memberno");
         const collectno = new URLSearchParams(window.location.search).get("collectno");
-
+        let memberno = null;
+        const formData = new FormData();
         const details = document.getElementById('details');
         details.innerHTML = '';
-        fetch('collect', {
-            method: 'POST',
-            body: new URLSearchParams({
-                'action': 'ticketDetails',
-                'memberno': memberno,
-                'collectno': collectno
+        fetch('member/getMemberInfo')
+            .then(response => response.json())
+            .then(data => {
+                memberno = data.memberno;
+                // console.log(memberno);
+                formData.append('action', 'ticketDetails');
+                formData.append('memberno', memberno);
+                formData.append('collectno', collectno);
+                // console.log([...formData.entries()]);
+                return formData;
             })
-        })
-            // 測試用！測完要註解
-            // .then(() => console.log('fetch success'))
-            .then(resp => resp.json())
-            .then(ticket => {
-                showDetails(ticket);
-            })
-            .catch(err => {
-				console.log('發生錯誤:', err);
-			});
+            .then((formData) => {
+                getOneTicket(formData);
+            });
 
-        function showDetails(ticket) {
+        
+
+        function getOneTicket(formData) {
+            fetch(`/collect?action=ticketDetails&memberno=${formData.get('memberno')}&collectno=${formData.get('collectno')}`)
+                // 測試用！測完要註解
+                // .then(() => console.log('fetch success'))
+                .then(resp => resp.json())
+                .then(ticket => {
+                    // console.log(ticket);
+                    showDetails(ticket);
+                })
+                .catch(err => {
+                    console.log('發生錯誤:', err);
+                });
+        }
+
+        async function showDetails(ticket) {
             details.innerHTML = `
                 <div>
                                     <div class="QR-dt p-4">
                                         <div>
-                                            <h4 id='withSeatHeader'>${ticket.blockname} ${ticket.realx}排 ${ticket.realy}號</h4>
-                                            <p>${ticket.aplaceAddress}</p>
-                                            <p>${ticket.aplace}</p>
+                                            <h4>${ticket.aname}&nbsp;&nbsp;&nbsp;&nbsp;<span id='withSeatHeader'>${ticket.blockname} ${ticket.realx}排 ${ticket.realy}號<span></h4>
+                                            <p>${ticket.aplace}&nbsp;&nbsp;&nbsp;&nbsp;${ticket.aplaceAddress}</p>                                            
                                         </div>
                                         <div style="text-align: center;">
-                                            <img src="images/qr.png" alt="QR-Ticket-Scanner"
+                                            <img id="qrcodeImg" alt="QR-Ticket-Scanner"
                                                 style="display:block; margin: 0 auto;">
                                             <p>Powered by EzTicket</p>
                                             <ul class="QR-counter-type">
@@ -225,15 +240,33 @@
                                     </div>
                                 </div>
                 `;
-            
-            let realx = `${ticket.realx}`;
-            let realy = `${ticket.realy}`;
-            if ((realx ?? true) && (realy ?? true)) {
+
+            let realx = ticket.realx;
+            let realy = ticket.realy;
+            console.log("" + realx + realy);
+            if (realx === null || realx === undefined || realy === null || realy === undefined) {
+                console.log("有進來");
+                console.log("realx == null || realy == null" + (realx == null || realy == null));
                 const withSeatHeader = document.getElementById('withSeatHeader');
                 const withSeatContent = document.getElementById('withSeatContent');
-                withSeatHeader.textContent='非對號座';
-                withSeatContent.innerHTML=`<h6>對號座</h6>`;
+                withSeatHeader.textContent = '非對號座';
+                withSeatContent.innerHTML = `<h6>非對號座</h6>`;
             }
+            const sessionetime = new Date(ticket.sessionetime);
+            const now = new Date();
+            if (sessionetime.getTime() < now.getTime()) {
+                const url = "/images/event-imgs/timeout.jpg";
+                $('#qrcodeImg').attr('src', url);
+            } else {
+
+                await fetch(`/EditCollect/showQRcode/${ticket.collectno}`)
+                    .then(response => response.text())
+                    .then(res => {
+                        const url = `data:image/png;base64,${res}`;
+                        $('#qrcodeImg').attr('src', url);
+                    });
+            }
+
         }
     </script>
 </body>

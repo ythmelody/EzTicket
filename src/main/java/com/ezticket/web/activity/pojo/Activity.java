@@ -1,5 +1,6 @@
 package com.ezticket.web.activity.pojo;
 
+import com.ezticket.web.users.pojo.Host;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;

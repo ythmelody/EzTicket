@@ -23,7 +23,11 @@ public class TorderDetailsViewController {
         return torderDetailsViewService.findAllBytorderNo(torderNo);
     }
 
+    @GetMapping("/findBymemberNo")
+    public List<TorderDetailsView> findBymemberNo(@RequestParam Integer memberNo) {
 
+        return torderDetailsViewService.findBymemberNo(memberNo);
+    }
 }
 
 
