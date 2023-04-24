@@ -181,11 +181,11 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">活動圖片</th>
-                                    <th scope="col">活動名稱</th>
-                                    <th scope="col">場次時間</th>
-                                    <th scope="col">座位區域</th>
-                                    <th scope="col">票價</th>
-                                    <th scope="col">評星與評論</th>
+                                    <th scope="col" style="width: 20%">活動名稱</th>
+                                    <th scope="col" style="width: 15%">場次時間</th>
+                                    <th scope="col" style="width: 15%">座位區域</th>
+                                    <th scope="col" style="width: 10%">票價</th>
+                                    <th scope="col" style="width: 15%">評星與評論</th>
 
 
                                 </tr>
@@ -258,7 +258,7 @@
 				const tdetailsList = document.querySelector("#tdetailsList");
 				const topArea = document.querySelector("#topArea");
 				const urlParams = new URLSearchParams(window.location.search);
-				const memberNo = urlParams.get("memberNo");
+				// const memberNo = urlParams.get("memberNo");
 				const torderNo= urlParams.get("torderNo");
 				console.log(torderNo);
 		fetch(`/Torder/findById?torderNo=${torderNo}`)

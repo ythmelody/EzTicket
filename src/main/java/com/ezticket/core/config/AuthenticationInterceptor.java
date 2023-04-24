@@ -32,12 +32,11 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             return false;
         } else {
             Backuser backuser = (Backuser) session.getAttribute("backuser");
-            //還沒想好要怎麼攔截權限
             String baaccount = backuser.getBaaccount();
             Backuser orignbackuser = backuserService.getBackuserInfo(baaccount);
             List<Integer> baAllFuncno = roleauthorityService.getAllfuncno(orignbackuser.getBaroleno());
 
-            //Map 裝 funcno  :  html
+            //Map 裝 funcno 對應的 html
             Map<Integer, List<String>> htmlMap = new HashMap<>();
             htmlMap.put(1, Arrays.asList("back-index.html")); //後台首頁
             htmlMap.put(2, Arrays.asList("back-users-profile.html")); //後台使用者資訊管理
@@ -61,7 +60,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             htmlMap.put(18, Arrays.asList("back-activity-torder_manage.html")); //票券訂單管理V
             htmlMap.put(19, Arrays.asList("back-activity-create-event.html",
                                           "back-activity-eventdashboard.html",
-                                          "back-activity-sessionlist.html")); //節目管理
+                                          "back-activity-sessionlist.html",
+                                          "back-activity-update-event.html")); //節目管理
             htmlMap.put(20, Arrays.asList("back-activity-commentmgt.html")); //節目評論管理
             htmlMap.put(21, Arrays.asList("back-activity-seatmgt-allactivity.html",
                                           "back-activity-seatmgt-existed.html",
@@ -73,6 +73,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                                           "back-activity-seatmgt-unsellsessions.html")); //場地座位管理
             htmlMap.put(22, Arrays.asList("back-activity-model-place.html",
                                           "back-activity-model-block.html",
+                                          "back-activity-model-seats.html",
                                           "back-activity-model-seats-exist.html",
                                           "back-activity-model-seats-notexist.html"));//場地模板座位管理
 //            htmlMap.put(23, Arrays.asList("")); //節目區域及票價管理V
@@ -82,6 +83,9 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             int index = requestURI.lastIndexOf("/");
             String htmlName = requestURI.substring(index + 1);
             Integer funcno = null;
+
+            //目前登入的後台成員  擔任的角色所擁有的全部funcno
+            //而此funcno於上方Map所綁定的html頁面 → 來去比對點選進入的網址是否相符合
             for (Map.Entry<Integer, List<String>> entry : htmlMap.entrySet()) {
                 List<String> htmlList = entry.getValue();
                 for (String html : htmlList) {

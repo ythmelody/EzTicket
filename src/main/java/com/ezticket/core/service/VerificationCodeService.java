@@ -20,8 +20,8 @@ public class VerificationCodeService {
     public String generateCode(String email) {
         // 生成6位隨機字母數字驗證碼
         String code = RandomStringUtils.randomAlphanumeric(6);
-        // 將驗證碼存儲到 Redis 中，有效期為 1 分鐘
-        redisTemplate.opsForValue().set(email, code, 1, TimeUnit.MINUTES);
+        // 將驗證碼存儲到 Redis 中，有效期為 5 分鐘
+        redisTemplate.opsForValue().set(email, code, 5, TimeUnit.MINUTES);
         return code;
     }
 

@@ -1,6 +1,7 @@
 package com.ezticket.web.product.pojo;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,5 +35,6 @@ public class Pcoupon {
     @OneToMany(mappedBy = "pfitcouponNo.pcouponno", cascade = CascadeType.ALL)
     private List<Pfitcoupon> pfitcoupons;
     @OneToMany(mappedBy = "pcouponholdingPK.pcouponno", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JsonManagedReference
     private List<Pcouponholding> pcouponholdings;
 }

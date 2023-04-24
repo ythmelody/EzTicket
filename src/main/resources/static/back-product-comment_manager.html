@@ -289,9 +289,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="d-main-title">
-							<h3>
-								商品評論管理
-							</h3>
+							<h3><i class="fa-regular fa-comments menu--icon"></i>商品評論管理</h3>
 						</div>
 					</div>
 					<div class="col-md-12">
@@ -339,6 +337,12 @@
 												<select id="statusSelector" name="pcommentstatus"
 													class="form-select"></select>
 												<!-- 評論狀態選單顯示 -->
+											</div>
+										</div>
+										<div class="col-lg-3 col-md-6">
+											<div class="form-group" id="prateSelectorContainer">
+
+												<!-- 評星數選單顯示 -->
 											</div>
 										</div>
 									</div>
@@ -562,6 +566,7 @@
 	<script src="vendor/OwlCarousel/owl.carousel.js"></script>
 	<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 	<script src="js/custom.js"></script>
+	<script src="js/night-mode.js"></script>
 	<!-- Kai  backuserData -->
 	<script src="js/backuserData.js"></script>
 
@@ -588,6 +593,7 @@
 					body: new URLSearchParams({
 						'pname': $("[name='pname']").val(),
 						'pcommentstatus': $("[name='pcommentstatus']").val(),
+						'prate': $("[name='prate']").val(),
 						'action': "CommentSearchPage",
 						'pageNumber': pageNumber,
 						'pageSize': $("[name='pageSize']").val(),
@@ -652,13 +658,13 @@
 									</a>
 								</li>`);
 			}
-			
+
 			if ($('div .tab-pane.fade.active.show').attr('id') === 'orders-tab') {
 				displayPcomments(list.data);
-			}else{
+			} else {
 				displayPcommentReport(list.data);
 			}
-			
+
 		}
 
 		//選擇分頁數量後重新render
@@ -681,10 +687,20 @@
 
 			// 選單(狀態)呈現 <option value="1">置頂</option>
 			$('#statusSelector').html(`
-			    <option value="" selected>所有狀態</option>
+			<option value="" selected>所有狀態</option>
+				<option value="0">正常顯示</option>
 			    <option value="-1">取消顯示</option>
-			    <option value="0">正常顯示</option>
+
 			`);
+
+			$('#prateSelectorContainer').html(`
+			<select id="prateSelector" name="prate" class="form-select">
+			<option value="" selected>評星數篩選</option>
+			    <option value="1"><i class="fa-solid fa-star" style="color: #ffad21!important;"></i>一星</option>
+			    <option value="2"><i class="fa-solid fa-star" style="color: #ffad21!important;"></i><i class="fa-solid fa-star" style="color: #ffad21!important;"></i>二星</option>
+			    <option value="3"><i class="fa-solid fa-star" style="color: #ffad21!important;"></i><i class="fa-solid fa-star" style="color: #ffad21!important;"></i><i class="fa-solid fa-star" style="color: #ffad21!important;"></i>三星</option>
+			</select>
+				`);
 
 			fetchData(1).then(function (data) {
 				pagination(data, 1);
@@ -820,9 +836,11 @@
 				<option value="2">已處理(不顯示)</option>
 				`);
 
-				fetchData(1).then(function (data) {
-					pagination(data, 1);
-				});
+			$('#prateSelectorContainer').html('');
+
+			fetchData(1).then(function (data) {
+				pagination(data, 1);
+			});
 
 
 
@@ -991,7 +1009,7 @@
 
 		});
 
-		$('#statusSelector').change(function () {
+		$('#statusSelector,#prateSelector').change(function () {
 
 			fetchData(1).then(function (data) {
 				pagination(data, 1);

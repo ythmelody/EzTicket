@@ -12,32 +12,32 @@
     <!-- Favicon Icon -->
     <link rel="icon" type="image/png" href="images/ezTicket.png">
 
-    <!-- Stylesheets -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-            href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-            rel="stylesheet">
-    <link href='vendor/unicons-2.0.1/css/unicons.css' rel='stylesheet'>
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/datepicker.min.css" rel="stylesheet">
-    <link href="css/vertical-responsive-menu.min.css" rel="stylesheet">
-    <link href="css/responsive.css" rel="stylesheet">
-    <link href="css/night-mode.css" rel="stylesheet">
+	<!-- Stylesheets -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+		rel="stylesheet">
+	<link href='vendor/unicons-2.0.1/css/unicons.css' rel='stylesheet'>
+	<link href="css/style.css" rel="stylesheet">
+	<link href="css/datepicker.min.css" rel="stylesheet">
+	<link href="css/vertical-responsive-menu.min.css" rel="stylesheet">
+	<link href="css/responsive.css" rel="stylesheet">
+	<link href="css/night-mode.css" rel="stylesheet">
 
-    <!-- Vendor Stylesheets -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="vendor/OwlCarousel/assets/owl.carousel.css" rel="stylesheet">
-    <link href="vendor/OwlCarousel/assets/owl.theme.default.min.css" rel="stylesheet">
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+	<!-- Vendor Stylesheets -->
+	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+	<link href="vendor/OwlCarousel/assets/owl.carousel.css" rel="stylesheet">
+	<link href="vendor/OwlCarousel/assets/owl.theme.default.min.css" rel="stylesheet">
+	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
 
 </head>
 
 <body class="d-flex flex-column h-100">
-<!-- Header Start-->
-<!-- 請加上這行-->
-<link href="css/shawn-scroll-bar.css" rel="stylesheet">
+	<!-- Header Start-->
+	<!-- 請加上這行-->
+	<link href="css/shawn-scroll-bar.css" rel="stylesheet">
 
 <header class="header">
     <div class="header-inner">
@@ -321,270 +321,269 @@
                                     <input class="form-control h_40" type="text" placeholder="搜尋主辦單位" value=""
                                            id="hostname" name="hostname">
 
-                                    <label class="form-label mt-3 fs-5"><i class="uil uil-search"></i> 商品狀態：</label>
-                                    <input type="radio" name="pstatus" value="0">上架中
-                                    <input type="radio" name="pstatus" value="1">已下架
-                                </div>
-                                <!-- </div> -->
-                            </div>
-                            <div class="d-inline-flex flex-wrap align-items-center">
-                                <div class="dashboard-date-wrap" style="margin-left: 20px;margin-top:10px ;">
-                                    <div class="form-group">
-                                        <form>
-                                            <label for="productno" class="form-label mt-3 fs-5"><i
-                                                    class="uil uil-search"></i>商品編號：</label>
-                                            <input class="form-control h_40" type="text" placeholder="搜尋商品編號"
-                                                   value=""
-                                                   id="productno" name="productno">
+										<label class="form-label mt-3 fs-5"><i class="uil uil-search"></i>	商品狀態：</label>
+										<input type="radio" name="pstatus" value="0">上架中
+										<input type="radio" name="pstatus" value="1">已下架
+									</div>
+									<!-- </div> -->
+								</div>
+								<div class="d-inline-flex flex-wrap align-items-center">
+									<div class="dashboard-date-wrap" style="margin-left: 20px;margin-top:10px ;">
+										<div class="form-group">
+											<form>
+													<label for="productno" class="form-label mt-3 fs-5"><i class="uil uil-search"></i>商品編號：</label>
+													<input class="form-control h_40" type="text" placeholder="搜尋商品編號" value=""
+														id="productno" name="productno">
+												
+										</div>
+										<label class="form-label mt-3 fs-5"><i class="fa-solid fa-calendar-days"></i> 上架日期：</label>
+												<input class="form-control h_40 datepicker-here" data-language="en"
+													type="text" placeholder="YYYY/MM/DD" value="" name="start_date"
+													data-date-format="yyyy-mm-dd 00:00:00" autocomplete="off">
+										<label class="form-label mt-3 fs-5"><i class="fa-solid fa-calendar-days"></i> 下架日期*</label>
+										<div class="loc-group position-relative">
+											<input class="form-control h_40 datepicker-here" data-language="en"
+												type="text" placeholder="YYYY/MM/DD" value="" name="end_date"
+												data-date-format="yyyy-mm-dd 23:59:59" autocomplete="off">
+											<span class="absolute-icon"><i class="fa-solid fa-calendar-days"></i></span>
+										</div>
+										<!-- <div class="relative-input position-relative"> -->
+											<label for="pclass" 　 class="form-label mt-3 fs-5"><i class="uil uil-search"></i>商品類別：</label>
+											<select id="pclassSelector" name="pclass" class="selectpicker"></select>
+											<!-- 類別選單顯示 -->
+										<!-- </div> -->
+										<label class="form-label mt-3 fs-5"></label>
+										<input type="hidden" name="action" value="ProductSearchForm">
+										<button class="esv-btn me-2">查詢</button>
+									</div>
 
-                                    </div>
-                                    <label class="form-label mt-3 fs-5"><i class="fa-solid fa-calendar-days"></i> 上架日期：</label>
-                                    <input class="form-control h_40 datepicker-here" data-language="en"
-                                           type="text" placeholder="YYYY/MM/DD" value="" name="start_date"
-                                           data-date-format="yyyy-mm-dd 00:00:00" autocomplete="off">
-                                    <label class="form-label mt-3 fs-5"><i class="fa-solid fa-calendar-days"></i> 下架日期*</label>
-                                    <div class="loc-group position-relative">
-                                        <input class="form-control h_40 datepicker-here" data-language="en"
-                                               type="text" placeholder="YYYY/MM/DD" value="" name="end_date"
-                                               data-date-format="yyyy-mm-dd 23:59:59" autocomplete="off">
-                                        <span class="absolute-icon"><i class="fa-solid fa-calendar-days"></i></span>
-                                    </div>
-                                    <!-- <div class="relative-input position-relative"> -->
-                                    <label for="pclass" 　 class="form-label mt-3 fs-5"><i class="uil uil-search"></i>商品類別：</label>
-                                    <select id="pclassSelector" name="pclass" class="selectpicker"></select>
-                                    <!-- 類別選單顯示 -->
-                                    <!-- </div> -->
-                                    <label class="form-label mt-3 fs-5"></label>
-                                    <input type="hidden" name="action" value="ProductSearchForm">
-                                    <button class="esv-btn me-2">查詢</button>
-                                </div>
-
-                            </div>
-                        </div>
+								</div>
+							</div>
 
 
-                        </FORM>
 
 
-                    </div>
-                </div>
-            </div>
-
-            <div class="event-list">
-
-                <!-- <div class="tab-content"> -->
-                <!-- <div class="tab-pane fade show active" id="all-tab" role="tabpanel"> -->
-                <div class="main-card mt-4">
-                    <!-- 分頁區域 -->
-                    <div class="col-lg-1 col-md-12" style="float:right;margin-left:2px">
-                        <div class="form-group"><select name="pageSize" class="form-select form-select-lg mb-3"
-                                                        onchange="">
-                            <option value="10">一頁10筆</option>
-                            <option value="20">一頁20筆</option>
-                            <option value="30">一頁30筆</option>
-                        </select></div>
-                    </div>
+							</FORM>
 
 
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-end pagination-lg">
-                            <!-- <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li> -->
-                        </ul>
-                    </nav>
-                    <div class="contact-list" id="productList">
-                        <!-- 上架商品標籤顯示區 -->
-                    </div>
-                </div>
-                <!-- </div> -->
-                <!-- <div class="tab-pane fade active" id="online-tab" role="tabpanel">
-                                <div class="main-card d-none mt-4">
-                                    <div
-                                        class="d-flex align-items-center justify-content-center flex-column min-height-430">
-                                        <div class="event-list-icon">
-                                            <img src="images/calendar.png" alt="">
-                                        </div>
-                                        <p class="font-16 mt-4 text-light3">No Event found</p>
-                                    </div>
-                                </div>
-                                <div class="main-card mt-4">
-                                    <div class="contact-list" id="productList_off"> -->
-                <!-- 下架商品標籤顯示區 -->
-                <!-- </div>
-                                </div>
-                            </div> -->
+						</div>
+					</div>
+				</div>
 
-                <!-- </div> -->
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-<!-- Body End -->
+				<div class="event-list">
 
-<!-- 瀏覽所有商品 -->
-<script>
-    // fetch('ProductInfoServlet', {
-    // 	method: 'POST',
-    // 	body: new URLSearchParams({
-    // 		'action': "allProductList"
-    // 	})
-    // }).then(resp => resp.json())
-    // 	.then(list => {
-    // 		showProductList(list);
-    // 	})
-
-</script>
-
-<script src="js/jquery-3.6.0.min.js"></script>
+					<!-- <div class="tab-content"> -->
+					<!-- <div class="tab-pane fade show active" id="all-tab" role="tabpanel"> -->
+					<div class="main-card mt-4">
+						<!-- 分頁區域 -->
+						<div class="col-lg-1 col-md-12" style="float:right;margin-left:2px">
+							<div class="form-group"><select name="pageSize" class="form-select form-select-lg mb-3"
+									onchange="">
+									<option value="10">一頁10筆</option>
+									<option value="20">一頁20筆</option>
+									<option value="30">一頁30筆</option>
+								</select></div>
+						</div>
 
 
-<script>
+						<nav aria-label="Page navigation example">
+							<ul class="pagination justify-content-end pagination-lg">
+								<!-- <li class="page-item">
+									<a class="page-link" href="#" aria-label="Previous">
+										<span aria-hidden="true">&laquo;</span>
+									</a>
+								</li>
+								<li class="page-item"><a class="page-link" href="#">1</a></li>
+								<li class="page-item"><a class="page-link" href="#">2</a></li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item">
+									<a class="page-link" href="#" aria-label="Next">
+										<span aria-hidden="true">&raquo;</span>
+									</a>
+								</li> -->
+							</ul>
+						</nav>
+						<div class="contact-list" id="productList">
+							<!-- 上架商品標籤顯示區 -->
+						</div>
+					</div>
+					<!-- </div> -->
+					<!-- <div class="tab-pane fade active" id="online-tab" role="tabpanel">
+									<div class="main-card d-none mt-4">
+										<div
+											class="d-flex align-items-center justify-content-center flex-column min-height-430">
+											<div class="event-list-icon">
+												<img src="images/calendar.png" alt="">
+											</div>
+											<p class="font-16 mt-4 text-light3">No Event found</p>
+										</div>
+									</div>
+									<div class="main-card mt-4">
+										<div class="contact-list" id="productList_off"> -->
+					<!-- 下架商品標籤顯示區 -->
+					<!-- </div>
+									</div>
+								</div> -->
 
-    //帶入資料庫類別
-    $('#pclassSelector').append('<option value="" selected>所有類別</option>');
-    fetch("PclassController", {
-        method: "POST",
-        body: new URLSearchParams({'action': "productClassList"}),
+					<!-- </div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	</div>
+	<!-- Body End -->
 
-    }).then(resp => resp.json())
-        .then(list => {
-            for (let item of list) {
-                // console.log(item);
-                $('#pclassSelector').append(`<option value=${item.pclassno}>${item.pclassname}</option>`);
-            }
-        }).then(function () {
-        $('.selectpicker').selectpicker('refresh');
-    })
+	<!-- 瀏覽所有商品 -->
+	<script>
+		// fetch('ProductInfoServlet', {
+		// 	method: 'POST',
+		// 	body: new URLSearchParams({
+		// 		'action': "allProductList"
+		// 	})
+		// }).then(resp => resp.json())
+		// 	.then(list => {
+		// 		showProductList(list);
+		// 	})
 
-</script>
-<script>
+	</script>
 
-    //分頁開始
-    $(document).ready(() => {
-        //剛進來都會先執行第一頁
-        fetchData(1).then(function (data) {
-            pagination(data, 1);
-        });
-    });
+	<script src="js/jquery-3.6.0.min.js"></script>
 
-    function switchPage(pageNumber) {
-        //之後可以自由切頁
-        fetchData(pageNumber).then(function (data) {
-            pagination(data, pageNumber);
-        });
-    }
 
-    //執行，回傳Fetch得到的data(為獲得當前頁面並傳到另外一個函式)
-    function fetchData(pageNumber) {
-        return fetch("ProductInfoServlet", {
-                method: "post",
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                body: new URLSearchParams({
-                    'pname': $("[name='pname']").val(),
-                    'ptag': $("[name='ptag']").val(),
-                    'productno': $("[name='productno']").val(),
-                    'start_date': $("[name='start_date']").val(),
-                    'end_date': $("[name='end_date']").val(),
-                    'pclassno': $("[name='pclass']").val(),
-                    'pstatus': $("[name='pstatus']:checked").val() || '',
-                    'hostname': $("[name='hostname']").val(),
-                    'pageNumber': pageNumber,
-                    'pageSize': $("[name='pageSize']").val(),
-                    'action': "ProductSearchPage"
-                }),
-            }
-        ).then(resp => resp.json())
-    }
+	<script>
 
-    //長出實際分頁的樣子
-    function pagination(list, pageNumber) {
-        $(".pagination").empty();
+		//帶入資料庫類別
+		$('#pclassSelector').append('<option value="" selected>所有類別</option>');
+		fetch("PclassController", {
+			method: "POST",
+			body: new URLSearchParams({ 'action': "productClassList" }),
 
-        //判斷最前面的<< 可否執行，不可執行加上disabled
-        let totalPage = Math.ceil(list.totalCount / $("[name='pageSize']").val());
-        if (pageNumber - 1 < 1) {
-            $(".pagination").append(`<li class="page-item disabled" >
+		}).then(resp => resp.json())
+			.then(list => {
+				for (let item of list) {
+					// console.log(item);
+					$('#pclassSelector').append(`<option value=${item.pclassno}>${item.pclassname}</option>`);
+				}
+			}).then(function () {
+				$('.selectpicker').selectpicker('refresh');
+			})
+
+	</script>
+	<script>
+
+		//分頁開始
+		$(document).ready(() => {
+			//剛進來都會先執行第一頁
+			fetchData(1).then(function (data) {
+				pagination(data, 1);
+			});
+		});
+
+		function switchPage(pageNumber) {
+			//之後可以自由切頁
+			fetchData(pageNumber).then(function (data) {
+				pagination(data, pageNumber);
+			});
+		}
+
+		//執行，回傳Fetch得到的data(為獲得當前頁面並傳到另外一個函式)
+		function fetchData(pageNumber) {
+			return fetch("ProductInfoServlet", {
+				method: "post",
+				headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+				body: new URLSearchParams({
+					'pname': $("[name='pname']").val(),
+					'ptag': $("[name='ptag']").val(),
+					'productno': $("[name='productno']").val(),
+					'start_date': $("[name='start_date']").val(),
+					'end_date': $("[name='end_date']").val(),
+					'pclassno': $("[name='pclass']").val(),
+					'pstatus': $("[name='pstatus']:checked").val() || '',
+					'hostname': $("[name='hostname']").val(),
+					'pageNumber': pageNumber,
+					'pageSize': $("[name='pageSize']").val(),
+					'action': "ProductSearchPage"
+				}),
+			}
+			).then(resp => resp.json())
+		}
+
+		//長出實際分頁的樣子
+		function pagination(list, pageNumber) {
+			$(".pagination").empty();
+
+			//判斷最前面的<< 可否執行，不可執行加上disabled
+			let totalPage = Math.ceil(list.totalCount / $("[name='pageSize']").val());
+			if (pageNumber - 1 < 1) {
+				$(".pagination").append(`<li class="page-item disabled" >
 									<a class="page-link" href="javascript:void(0)" aria-label="Previous">
 										<span aria-hidden="true">&laquo;</span>
 									</a>
 								</li>`);
-        } else {
-            $(".pagination").append(`<li class="page-item" onclick="switchPage(${pageNumber - 1})">
+			} else {
+				$(".pagination").append(`<li class="page-item" onclick="switchPage(${pageNumber - 1})">
 									<a class="page-link" href="javascript:void(0)" aria-label="Previous">
 										<span aria-hidden="true">&laquo;</span>
 									</a>
 								</li>`);
-        }
+			}
 
-        //判斷是否為當前頁面，是當前頁面加上active
-        for (let item = 1; item <= Math.ceil(list.totalCount / $("[name='pageSize']").val()); item++) {
-            if (item === pageNumber) {
+			//判斷是否為當前頁面，是當前頁面加上active
+			for (let item = 1; item <= Math.ceil(list.totalCount / $("[name='pageSize']").val()); item++) {
+				if (item === pageNumber) {
 
-                $(".pagination").append(`<li class="page-item active" onclick="switchPage(${item})"><a class="page-link" href="javascript:void(0);" >${item}</a></li>`);
-            } else {
-                $(".pagination").append(`<li class="page-item" onclick="switchPage(${item})"><a class="page-link" href="javascript:void(0);" >${item}</a></li>`);
-            }
-        }
+					$(".pagination").append(`<li class="page-item active" onclick="switchPage(${item})"><a class="page-link" href="javascript:void(0);" >${item}</a></li>`);
+				} else {
+					$(".pagination").append(`<li class="page-item" onclick="switchPage(${item})"><a class="page-link" href="javascript:void(0);" >${item}</a></li>`);
+				}
+			}
 
-        //判斷最後面的>> 可否執行，不可執行加上disabled
-        if (pageNumber + 1 > totalPage) {
-            $(".pagination").append(`<li class="page-item disabled">
+			//判斷最後面的>> 可否執行，不可執行加上disabled
+			if (pageNumber + 1 > totalPage) {
+				$(".pagination").append(`<li class="page-item disabled">
 									<a class="page-link" href="javascript:void(0)" aria-label="Next">
 										<span aria-hidden="true">&raquo;</span>
 									</a>
 								</li>`);
-        } else {
-            $(".pagination").append(`<li class="page-item" onclick="switchPage(${pageNumber + 1})">
+			} else {
+				$(".pagination").append(`<li class="page-item" onclick="switchPage(${pageNumber + 1})">
 									<a class="page-link" href="javascript:void(0)" aria-label="Next">
 										<span aria-hidden="true">&raquo;</span>
 									</a>
 								</li>`);
-        }
+			}
 
 
-        showProductList(list.data);
-    }
+			showProductList(list.data);
+		}
 
-    //選擇分頁數量後重新render
-    $("[name='pageSize']").on(
-        'change', function () {
-            fetchData(1).then(function (data) {
-                pagination(data, 1);
-            });
-        }
-    )
+		//選擇分頁數量後重新render
+		$("[name='pageSize']").on(
+			'change', function () {
+				fetchData(1).then(function (data) {
+					pagination(data, 1);
+				});
+			}
+		)
 
 
-    //商品複合查詢
-    $('#ProductSearchForm').on('submit', function (e) {
-        e.preventDefault(); //取消跳轉頁面
 
-        fetchData(1).then(function (data) {
-            pagination(data, 1);
-        });
-    })
+		//商品複合查詢
+		$('#ProductSearchForm').on('submit', function (e) {
+			e.preventDefault(); //取消跳轉頁面
 
-    function showProductList(list) {
-        productList.innerHTML = '';
-        for (let item of list) {
-            let image = item.pimgts && item.pimgts[0] && item.pimgts[0].pimgno;
-            if (image === undefined) {
-                image = 70001;
-            }
-            $('#productList').append(`<div
+			fetchData(1).then(function (data) {
+				pagination(data, 1);
+			});
+		})
+
+		function showProductList(list) {
+			productList.innerHTML = '';
+			for (let item of list) {
+				let image = item.pimgts && item.pimgts[0] && item.pimgts[0].pimgno;
+				if (image === undefined) { image = 70001; }
+				$('#productList').append(`<div
 												class="card-top event-top p-4 align-items-center top d-md-flex flex-wrap justify-content-between">
 												<div class="d-md-flex align-items-center event-top-info">
 													<div class="card-event-img">
@@ -642,11 +641,13 @@
 													<h6 class="coupon-status">20</h6>
 												</div>
 											</div>`);
-        }
-    }
+			}
+		}
+
+		
 
 
-</script>
+	</script>
 
 <script src="js/vertical-responsive-menu.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

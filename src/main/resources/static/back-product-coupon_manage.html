@@ -546,6 +546,7 @@
 		</div>
 	</nav>
 	<!-- Left Sidebar End -->
+
 	<!-- Body Start -->
 	<div class="wrapper wrapper-body">
 		<div class="dashboard-body">
@@ -553,20 +554,31 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="d-main-title">
-							<h3><i class="fa-solid fa-rectangle-ad me-3"></i>優惠券管理</h3>
+							<h3><i class="fa-solid fa-percent me-3"></i>優惠券管理</h3>
 						</div>
 					</div>
 					<div class="col-md-12">
 						<div class="main-card mt-5">
 							<div class="dashboard-wrap-content p-4">
-								<h5 class="mb-4">優惠券 (2)</h5>
+								<div class="nav custom2-tabs btn-group" role="tablist">
+									<button class="tab-link ms-0 active" data-bs-toggle="tab" data-bs-target="#coupons-01" type="button"
+										role="tab" aria-controls="coupons-01" aria-selected="true">優惠券 (<span
+											class="total_event_counter">1</span>)</button>
+									<button class="tab-link" data-bs-toggle="tab" data-bs-target="#coupons-02" type="button" role="tab"
+										aria-controls="coupons-02" aria-selected="false">優惠中 (<span
+											class="total_event_counter">0</span>)</button>
+									<button class="tab-link" data-bs-toggle="tab" data-bs-target="#coupons-03" type="button" role="tab"
+										aria-controls="coupons-03" aria-selected="false">停用/過期 (<span
+											class="total_event_counter">1</span>)</button>
+								</div>
+								<h5 class="mb-4"></h5>
 								<div class="d-md-flex flex-wrap align-items-center">
 									<div class="dashboard-date-wrap">
 										<div class="form-group">
 											<div class="relative-input position-relative">
 												<input id="search-coupon" class="form-control h_40" type="text"
-													placeholder="Search by coupon name" value="">
-												<i class="uil uil-search"></i>
+													placeholder="Search" value="">
+												<i class="uil fa-search"></i>
 											</div>
 										</div>
 									</div>
@@ -578,72 +590,80 @@
 							</div>
 						</div>
 						<div class="all-promotion-list">
+							<div class="col-lg-12">
+								<div class="main-card mt-4">
+									<div class="tab-content">
+										<div class="tab-pane fade show active" id="coupons-01" role="tabpanel">
+											<!-- 優惠卷內容 -->
 
 
-
-
-							<div class="main-card mt-4">
-								<div class="contact-list coupon-active">
-									<div class="top d-flex flex-wrap justify-content-between align-items-center p-4 border_bottom">
-										<div class="icon-box">
-											<span class="icon-big rotate-icon icon icon-purple">
-												<i class="fa-solid fa-ticket"></i>
-											</span>
-											<h5 class="font-18 mb-1 mt-1 f-weight-medium">新年禮遇折扣<span class="font-weight-normal">- CODE -
-													40001</span></h5>
-											<p class="text-gray-50 m-0"><span class="visitor-date-time">2023-01-01 00:00:00
-												</span> - <span class="visitor-date-time">2023-01-31 00:00:00</span></p>
-										</div>
-										<div class="d-flex align-items-center">
-											<label class="btn-switch tfs-8 mb-0 me-4 mt-1">
-												<input type="checkbox" value="" checked>
-												<span class="checkbox-slider"></span>
-											</label>
-											<div class="dropdown dropdown-default dropdown-text dropdown-icon-item">
-												<button class="option-btn-1" type="button" data-bs-toggle="dropdown" aria-haspopup="true"
-													aria-expanded="false">
-													<i class="fa-solid fa-ellipsis-vertical"></i>
-												</button>
-												<div class="dropdown-menu dropdown-menu-right">
-													<a href="#" class="dropdown-item"><i class="fa-solid fa-pen me-3"></i>編輯</a>
-													<a href="#" class="dropdown-item"><i class="fa-solid fa-trash-can me-3"></i>刪除</a>
+											<div class="main-card mt-4">
+												<div class="contact-list coupon-active">
+													<div class="top d-flex flex-wrap justify-content-between align-items-center p-4 border_bottom">
+														<div class="icon-box">
+															<span class="icon-big rotate-icon icon icon-purple">
+																<i class="fa-solid fa-ticket"></i>
+															</span>
+															<h5 class="font-18 mb-1 mt-1 f-weight-medium">新年禮遇折扣<span class="font-weight-normal">- CODE -
+																	40001</span></h5>
+															<p class="text-gray-50 m-0"><span class="visitor-date-time">2023-01-01 00:00:00
+																</span> - <span class="visitor-date-time">2023-01-31 00:00:00</span></p>
+														</div>
+														<div class="d-flex align-items-center">
+															<label class="btn-switch tfs-8 mb-0 me-4 mt-1">
+																<input type="checkbox" value="" checked>
+																<span class="checkbox-slider"></span>
+															</label>
+															<div class="dropdown dropdown-default dropdown-text dropdown-icon-item">
+																<button class="option-btn-1" type="button" data-bs-toggle="dropdown" aria-haspopup="true"
+																	aria-expanded="false">
+																	<i class="fa-solid fa-ellipsis-vertical"></i>
+																</button>
+																<div class="dropdown-menu dropdown-menu-right">
+																	<a href="#" class="dropdown-item"><i class="fa-solid fa-pen me-3"></i>編輯</a>
+																	<a href="#" class="dropdown-item"><i class="fa-solid fa-trash-can me-3"></i>刪除</a>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="bottom d-flex flex-wrap justify-content-between align-items-center p-4">
+														<div class="icon-box ">
+															<span class="icon">
+																<i class="fa-regular fa-circle-dot"></i>
+															</span>
+															<p>狀態</p>
+															<h6 class="coupon-status">可使用</h6>
+														</div>
+														<div class="icon-box">
+															<span class="icon">
+																<i class="fa-solid fa-tag"></i>
+															</span>
+															<p>適用商品編號</p>
+															<h6 class="coupon-status">10001</h6>
+														</div>
+														<div class="icon-box">
+															<span class="icon">
+																<i class="fa-solid fa-money-bill"></i>
+															</span>
+															<p>消費金額</p>
+															<h6 class="coupon-status">500</h6>
+														</div>
+														<div class="icon-box">
+															<span class="icon">
+																<i class="fa-solid fa-money-bill"></i>
+															</span>
+															<p>折扣</p>
+															<h6 class="coupon-status">100</h6>
+														</div>
+													</div>
 												</div>
 											</div>
-										</div>
-									</div>
-									<div class="bottom d-flex flex-wrap justify-content-between align-items-center p-4">
-										<div class="icon-box ">
-											<span class="icon">
-												<i class="fa-regular fa-circle-dot"></i>
-											</span>
-											<p>狀態</p>
-											<h6 class="coupon-status">可使用</h6>
-										</div>
-										<div class="icon-box">
-											<span class="icon">
-												<i class="fa-solid fa-tag"></i>
-											</span>
-											<p>適用商品編號</p>
-											<h6 class="coupon-status">10001</h6>
-										</div>
-										<div class="icon-box">
-											<span class="icon">
-												<i class="fa-solid fa-money-bill"></i>
-											</span>
-											<p>消費金額</p>
-											<h6 class="coupon-status">500</h6>
-										</div>
-										<div class="icon-box">
-											<span class="icon">
-												<i class="fa-solid fa-money-bill"></i>
-											</span>
-											<p>折扣</p>
-											<h6 class="coupon-status">100</h6>
-										</div>
-									</div>
-								</div>
-							</div>
 
+
+
+										</div>
+										<div class="tab-pane fade" id="coupons-02" role="tabpanel">
+											<!-- 優惠中內容 -->
 
 
 
@@ -712,6 +732,19 @@
 									</div>
 								</div>
 							</div>
+
+										</div>
+										<div class="tab-pane fade" id="coupons-03" role="tabpanel">
+											<!-- 過期內容 -->
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+
+
+
 
 
 						</div>

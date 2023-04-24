@@ -3,6 +3,7 @@ package com.ezticket.web.users.controller;
 import com.ezticket.core.service.EmailServiceImpl;
 import com.ezticket.core.service.RedisService;
 import com.ezticket.core.service.VerificationCodeService;
+import com.ezticket.web.users.dto.MemSignUpDTO;
 import com.ezticket.web.users.dto.MemberDTO;
 import com.ezticket.web.users.dto.MemberImgDTO;
 import com.ezticket.web.users.pojo.Backuser;
@@ -111,7 +112,6 @@ public class MemberController {
         Member loginMember = (Member) session.getAttribute("member");
         Boolean status = (Boolean) session.getAttribute("loggedin");
         System.out.println(status);
-
         Member member = new Member();
         if (status != null && status.booleanValue()) {
             // 已登入
@@ -215,6 +215,7 @@ public class MemberController {
         return ResponseEntity.ok("會員登出成功!");
     }
 
+    //忘記密碼頁面  第一步:確認有無此會員,有的話就寄驗證碼到信箱
     @RequestMapping("/checkemail/{email}")
     public boolean checkEmail(@PathVariable String email) throws MessagingException {
         Member member = memberService.getMemberInfo(email);
@@ -231,6 +232,7 @@ public class MemberController {
 
     }
 
+    //確認驗證碼是否正確
     @RequestMapping("/verify")
     public boolean verificationCode(@RequestParam String email, @RequestParam String code) {
         System.out.println(code);
@@ -245,10 +247,64 @@ public class MemberController {
 
     //前台已驗證過直接儲存進去新密碼(忘記密碼)
     @PostMapping("/resetPwd")
-    public void register(@RequestParam("email") String email, @RequestParam("password") String password) {
+    public void savePassword(@RequestParam("email") String email, @RequestParam("password") String password) {
         System.out.println("資料已進來");
         System.out.println(email);
         System.out.println(password);
         Member member =memberService.updateMemberPwd(email,password);
     }
+
+
+    //忘記密碼頁面  第一步:確認有無此會員,有的話就寄驗證碼到信箱
+    @RequestMapping("/sendValidCode/{email}")
+    public void sendValidCode(@PathVariable String email) throws MessagingException {
+        System.out.println("會員驗證碼已送出!");
+        String code = verificationCodeService.generateCode(email);
+        emailServiceImpl.sendVerificationCode(email, code);
+    }
+
+
+    //驗證資料和驗證碼是否正確,並新增會員
+    @PostMapping("/insertMem")
+    public ResponseEntity<?> signUpMember(@Valid @RequestBody MemSignUpDTO memSignUpDTO, BindingResult bindingResult){
+        System.out.println("使用者註冊會員的提交資料:" + memSignUpDTO.toString());
+
+        //先確認驗證碼是否正確
+        boolean checkCode = redisService.checkCode(memSignUpDTO.getMemail(), memSignUpDTO.getValidcode());
+
+        //確認有無此會員
+        Member member = memberService.getMemberInfo(memSignUpDTO.getMemail());
+
+        //確認密碼與密碼是否相符合
+        String password = memSignUpDTO.getMpassword();
+        String chPassword = memSignUpDTO.getChpassword();
+
+        //驗證碼有錯 & 資料庫有此email 的話也加入錯誤訊息
+        if (bindingResult.hasErrors() || !checkCode || member != null || !password.equals(chPassword)) {
+            System.out.println("新增的資料格式有誤需調整");
+            Map<String, String> errors = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
+            if (!checkCode){
+                errors.put("validcode","驗證碼錯誤,請確認或重新發送!");
+                System.out.println("驗證碼錯誤!");
+            }
+            if(member != null){
+                errors.put("memail","此Email已註冊,請至登入頁面!");
+                System.out.println("此Email已註冊過!");
+            }
+            if(!password.equals(chPassword)){
+                errors.put("chpassword","確認密碼與密碼不符,請再次確認!");
+                System.out.println("確認密碼與密碼不符,請再次確認!");
+            }
+
+            return ResponseEntity.badRequest().body(errors);
+        } else {
+            System.out.println("新增成功");
+            memberService.insertMember(memSignUpDTO);
+            return  ResponseEntity.ok("success");
+        }
+    }
+
+
+
 }

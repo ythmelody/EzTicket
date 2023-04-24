@@ -1,6 +1,8 @@
 package com.ezticket.web.product.pojo;
 import com.ezticket.web.users.pojo.Member;
 import jakarta.persistence.*;
+import jakarta.validation.Constraint;
+import jakarta.validation.constraints.*;
 
 import java.sql.Timestamp;
 
@@ -11,7 +13,13 @@ public class Pcomment implements java.io.Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer pcommentno;
 	private Integer productno;
+
+	@NotEmpty(message = "評論內容不可為空")
 	private String pcommentcont;
+
+	@NotNull(message = "評論數不可為空")
+	@Min(value =1,message ="評星數不能小於{value}")
+	@Max(value =5,message ="評星數不能大於{value}")
 	private Integer prate;
 	private Timestamp pcommentdate;
 	private Integer memberno;

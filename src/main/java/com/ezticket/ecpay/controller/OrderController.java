@@ -2,7 +2,7 @@ package com.ezticket.ecpay.controller;
 
 import com.ezticket.core.service.EmailService;
 import com.ezticket.ecpay.service.OrderService;
-import com.ezticket.web.activity.dto.OrderTicketDTO;
+import com.ezticket.ecpay.service.TcatService;
 import com.ezticket.web.activity.pojo.Torder;
 import com.ezticket.web.activity.service.CollectCrudService;
 import com.ezticket.web.activity.service.TorderService;
@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Enumeration;
-import java.util.List;
 
 @RestController
 @RequestMapping("/ecpay")
@@ -42,7 +42,50 @@ public class OrderController {
 
     @Autowired
     TorderService torderService;
+	@Autowired
+	TcatService tcatService;
 
+	@PostMapping("/tcat")
+	public String createHomeOrder(Integer porderno) throws UnsupportedEncodingException {
+		String createTcatOrder = tcatService.postCreateHomeOrder(porderno);
+		return createTcatOrder;
+	}
+	@PostMapping("/tcat/checkout")
+	public String printOrder (Integer porderno) {
+		Porder porder = porderRepository.getReferenceById(porderno);
+		if (porder.getLogisticsid() == null){
+			return "單據不存在或尚未建立單據";
+		}
+		String tcatOrder = tcatService.postPrintTradeDocumentOrder(porder.getLogisticsid());
+		return tcatOrder;
+	}
+	@PostMapping("/tcat/return")
+	public String tcatReturn(HttpServletRequest request) {
+		Enumeration<String> parameterNames = request.getParameterNames();
+		String rtnCode = request.getParameter("RtnCode");
+		String tcatDate = request.getParameter("UpdateStatusDate");
+		String porderno = request.getParameter("MerchantTradeNo").substring(15);
+		String allPayId = request.getParameter("AllPayLogisticsID");
+		Porder porder = porderRepository.getReferenceById(Integer.valueOf(porderno));
+		// 塞入出貨日期 // 更改訂單狀態
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		if(rtnCode.equals("300")){
+			porder.setPshipdate(LocalDateTime.parse(tcatDate, formatter));
+			porder.setPprocessstatus(1);
+			porder.setLogisticsid(allPayId);
+			porderRepository.save(porder);
+		}
+		// 寄出貨信
+		Member member = memberRepository.getReferenceById(porder.getMemberno());
+		emailService.sendOrderMail(member.getMname(),member.getMemail(),porder.getPorderno().toString(), String.valueOf(4));
+		// 印出所有K,V，參考看看，單純看有哪些回傳值..可以註解掉
+		while (parameterNames.hasMoreElements()) {
+			String paramName = parameterNames.nextElement();
+			System.out.println(paramName + ": " + request.getParameter(paramName));
+		}
+		// 綠界規定如有收到回傳，回饋給他的值
+		return "1|OK";
+	}
 	@PostMapping("/checkout")
 	public String ecpayCheckout(Integer porderno) {
 		String aioCheckOutALLForm = orderService.ecpayCheckout(porderno);

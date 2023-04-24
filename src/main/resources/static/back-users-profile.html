@@ -1172,8 +1172,10 @@
 			$("#phone").val(`${response.bacell}`);
 
 			//頭貼圖片顯示
-			const url = `data:image/png;base64,${response.baimg}`;
-			$('.baimg').attr('src', url);
+			if(response.baimg){
+				const url = `data:image/png;base64,${response.baimg}`;
+				$('.baimg').attr('src', url);
+			}
 
 			//頭貼圖片上傳
 			$("#avatar-img").change((event) => {

@@ -24,15 +24,23 @@
 	<link href="css/responsive.css" rel="stylesheet">
 	<link href="css/night-mode.css" rel="stylesheet">
 
+
 	<!-- Vendor Stylesheets -->
 	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
 	<link href="vendor/OwlCarousel/assets/owl.carousel.css" rel="stylesheet">
 	<link href="vendor/OwlCarousel/assets/owl.theme.default.min.css" rel="stylesheet">
 	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/datatable.css">
 	<style>
 		.img-btn {
 			cursor: pointer;
+		}
+		.selectpicker {
+  		display: block !important;
+		}
+		.gray-row{
+			background-color: lavenderblush;
 		}
 	</style>
 </head>
@@ -55,7 +63,7 @@
 									<img src="images/icons/truck2.png" alt="">
 								</div>
 							</div>
-							<div class="col-lg-6 col-md-12">
+							<div class="col-lg-6 col-md-6">
 								<div class="form-group mt-4">
 									<label class="form-label">訂單編號</label>
 									<p>30001</p>
@@ -67,6 +75,15 @@
 									<p>0912345678</p>
 									<label class="form-label">收貨人地址：</label>
 									<p>台北市中正區忠孝東路一段1號</p>
+								</div>
+							</div>
+							<div id="tcat" class="col-lg-6 col-md-6">
+								<div>
+									<button onclick="tcatOrder(e)" class="save-status main-btn btn-hover h_25 w-40">建立物流</button>
+								</div>
+								<p></p>
+								<div>
+									<button onclick="printOrder(e)" class="save-status main-btn btn-hover h_25 w-40">列印單據</button>
 								</div>
 							</div>
 						</div>
@@ -315,6 +332,7 @@
 		</div>
 	</nav>
 	<!-- Left Sidebar End -->
+
 	<!-- Body Start -->
 	<div class="wrapper wrapper-body">
 		<div class="dashboard-body">
@@ -322,17 +340,17 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="d-main-title">
-							<h3><i class="fa-solid fa-chart-pie me-3"></i>訂單資訊管理</h3>
+							<h3><i class="fa-solid fa-file-invoice me-3"></i>訂單資訊管理</h3>
 						</div>
 					</div>
 					<div class="col-md-12">
 						<div class="main-card mt-5">
 							<div class="dashboard-wrap-content p-4">
 								<div class="nav custom2-tabs btn-group" role="tablist">
-									<button class="tab-link ms-0 active" data-bs-toggle="tab" data-bs-target="#orders-tab" type="button"
+									<!-- <button class="tab-link ms-0 active" data-bs-toggle="tab" data-bs-target="#orders-tab" type="button"
 										role="tab" aria-controls="orders-tab" aria-selected="true">訂單列表 (<span
-											class="total_event_counter">1</span>)</button>
-									<button class="tab-link" data-bs-toggle="tab" data-bs-target="#customers-tab" type="button" role="tab"
+											class="total_event_counter">1</span>)</button> -->
+									<!-- <button class="tab-link" data-bs-toggle="tab" data-bs-target="#customers-tab" type="button" role="tab"
 										aria-controls="customers-tab" aria-selected="false">Customers (<span
 											class="total_event_counter">0</span>)</button>
 									<button class="tab-link" data-bs-toggle="tab" data-bs-target="#tickets-tab" type="button" role="tab"
@@ -340,13 +358,13 @@
 											class="total_event_counter">1</span>)</button>
 									<button class="tab-link" data-bs-toggle="tab" data-bs-target="#payouts-tab" type="button" role="tab"
 										aria-controls="payouts-tab" aria-selected="false">Payouts (<span
-											class="total_event_counter">1</span>)</button>
+											class="total_event_counter">1</span>)</button> -->
 								</div>
 								<div class="d-md-flex flex-wrap align-items-center">
 									<div class="dashboard-date-wrap mt-4">
 										<div class="form-group">
 											<div class="relative-input position-relative">
-												<input class="form-control h_40" type="text" placeholder="Search by name" value="">
+												<input id="orderInput" class="form-control h_40" type="search" placeholder="Search" value="">
 												<i class="uil uil-search"></i>
 											</div>
 										</div>
@@ -354,9 +372,12 @@
 									<div class="rs ms-auto mt-4 mt_r4">
 										<a href="#" id="reload" class="pe-4 w-100 ps-4 text-center co-main-btn h_40 d-inline-block"><i
 												class="fa-solid fa-arrow-rotate-right me-3"></i>重新整理</a>
+												<div id="myPagination" class="dataTables_paginate paging_simple_numbers">
+													<!-- DataTable的分頁按鈕會顯示在這裡 -->
+												</div>
 									</div>
 								</div>
-								<div class="main-form mt-4">
+								<!-- <div class="main-form mt-4">
 									<div class="row g-3">
 										<div class="col-lg-3 col-md-6">
 											<div class="form-group">
@@ -401,7 +422,7 @@
 											</div>
 										</div>
 									</div>
-								</div>
+								</div> -->
 							</div>
 						</div>
 						<div class="event-list">
@@ -409,8 +430,8 @@
 								<div class="tab-pane fade show active" id="orders-tab" role="tabpanel">
 									<div class="table-card mt-4">
 										<div class="main-table">
-											<div class="table-responsive">
-												<table class="table" id="orderTable">
+											<div class="table-responsive dataTables_paginate paging_simple_numbers">
+												<table id="orderTable" class="table cell-border hover compact stripe">
 													<thead class="thead-dark">
 														<tr>
 															<th scope="col">商品訂單編號</th>
@@ -651,6 +672,8 @@
 	<script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+	<!-- <script src="js/porder.js"></script> -->
+	<script src="js/orderdatatable.js"></script>
 	<script src="js/porder.js"></script>
 	<!-- <script src="js/orderDataTable.js"></script> -->
 	<!-- Kai  backuserData -->
