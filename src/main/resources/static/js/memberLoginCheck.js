@@ -12,7 +12,9 @@ fetch('member/getMemberInfo')
 
             $(".D-mname").text(`${data.mname}`);
             $(".D-memail").text(`${data.memail}`);
-            $('.D-mimg').attr('src', `data:image/png;base64,${data.mimg}`);
+            if(data.mimg){
+                $('.D-mimg').attr('src', `data:image/png;base64,${data.mimg}`);
+            }
 
             $('li.profile-link').empty();
             $('li.profile-link').append('<a class="dropdown-item pe-5" href="front-users-member-profile.html">會員資訊</a>');

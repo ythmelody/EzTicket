@@ -1495,8 +1495,10 @@
 				$(".user-email").text(`${response.memail}`)
 
 				//頭貼圖片顯示
-				const url = `data:image/png;base64,${response.mimg}`;
-				$('.mimg').attr('src', url);
+				if(response.mimg){
+					const url = `data:image/png;base64,${response.mimg}`;
+					$('.mimg').attr('src', url);
+				}
 
 				//頭貼圖片上傳
 				$("#avatar-img").change((event) => {
@@ -1530,8 +1532,12 @@
 				$("#name").val(`${response.mname}`)
 				$("#birthday").val(`${response.birth}`)
 				$("#phone").val(`${response.mcell}`)
-				$("#alt_phone").val(`${response.mphone}`)
-				$("#address").val(`${response.address}`)
+				if(response.mphone){
+					$("#alt_phone").val(`${response.mphone}`);
+				}
+				if(response.address){
+					$("#address").val(`${response.address}`);
+				}
 				if (response.gender === 1) {
 					$("#male").prop("checked", true);
 				} else if (response.gender === 2) {
@@ -1541,9 +1547,15 @@
 				}
 
 				//顯示會員的備用收件人資料
-				$("#backupUser").val(`${response.comrecipient}`);
-				$("#backupUserPhone").val(`${response.comrephone}`);
-				$("#backupUserAddress").val(`${response.comreaddress}`);
+				if(response.comrecipient){
+					$("#backupUser").val(`${response.comrecipient}`);
+				}
+				if(response.comrephone){
+					$("#backupUserPhone").val(`${response.comrephone}`);
+				}
+				if(response.comreaddress){
+					$("#backupUserAddress").val(`${response.comreaddress}`);
+				}
 			})
 			.catch(error => {
 				console.log('發生錯誤:', error);
@@ -1604,6 +1616,8 @@
 				console.log('發生錯誤:', err);
 			});
 		});
+
+		
 		//按下儲存備用收件人時
 		$("#btn3").click(() => {
 			const comrecipient = $('#backupUser').val();
@@ -1720,8 +1734,6 @@
 				console.error('Error:', error);
 			});
 		})
-
-
 
 	</script>
 	<script>

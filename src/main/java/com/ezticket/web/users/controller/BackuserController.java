@@ -1,11 +1,16 @@
 package com.ezticket.web.users.controller;
 
+import com.ezticket.core.service.EmailServiceImpl;
+import com.ezticket.core.service.RedisService;
+import com.ezticket.core.service.VerificationCodeService;
 import com.ezticket.web.users.dto.BackuserDTO;
 import com.ezticket.web.users.dto.BackuserImgDTO;
 import com.ezticket.web.users.dto.RoleDTO;
 import com.ezticket.web.users.pojo.Backuser;
+import com.ezticket.web.users.pojo.Member;
 import com.ezticket.web.users.repository.BackuserRepository;
 import com.ezticket.web.users.service.BackuserService;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -28,6 +33,15 @@ public class BackuserController {
     private BackuserService backuserService;
     @Autowired
     private BackuserRepository backuserRepository;
+
+    @Autowired
+    private VerificationCodeService verificationCodeService;
+
+    @Autowired
+    private EmailServiceImpl emailServiceImpl;
+
+    @Autowired
+    private RedisService redisService;
 
     //拿到所有後台使用者資料
     @GetMapping("/ga")
@@ -64,10 +78,16 @@ public class BackuserController {
     @PostMapping("/insertBu")
     public ResponseEntity<?> createBackuser(@Valid @RequestBody Backuser newbackuser, BindingResult bindingResult){
         System.out.println("前台要求新增後台使用者資料:" + newbackuser.toString());
-        if (bindingResult.hasErrors()) {
+        Backuser backuser = backuserRepository.findByBaemail(newbackuser.getBaemail());
+        if (bindingResult.hasErrors() || backuser != null) {
             System.out.println("新增的資料格式有誤需調整");
             Map<String, String> errors = new HashMap<>();
             bindingResult.getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
+
+            if(backuser != null){
+                errors.put("baemail","此Email已註冊!");
+                System.out.println("此Email已註冊過!");
+            }
             return ResponseEntity.badRequest().body(errors);
         } else {
             System.out.println("新增成功");
@@ -84,7 +104,7 @@ public class BackuserController {
             if (request.getSession(false) != null) {
                 request.changeSessionId();
             }
-            session.setAttribute("loggedin", true);
+            session.setAttribute("BuLoggedin", true);
             session.setAttribute("backuser", backuser);
             backuser.setSuccessful(true);
             System.out.println("登入驗證成功");
@@ -208,7 +228,7 @@ public class BackuserController {
         return ResponseEntity.ok("Logout success");
     }
 
-
+    //看有沒有拿到showAlert,有的話就代表這個人沒權限所以要再backindex顯示警告
     @GetMapping("/noAuth")
     public  boolean  auth (HttpSession session) {
         session.getAttribute("showAlert");
@@ -218,4 +238,45 @@ public class BackuserController {
         session.removeAttribute("showAlert");
         return true;
     }
+
+    //忘記密碼頁面  第一步:確認有無此會員,有的話就寄驗證碼到信箱
+    @RequestMapping("/checkemail/{email}")
+    public boolean checkEmail(@PathVariable String email) throws MessagingException {
+        Backuser backuser = backuserRepository.findByBaemail(email);
+        if (backuser == null) {
+            System.out.println("查無此會員!");
+            return false;
+        }
+
+        System.out.println("後台驗證碼已送出!");
+        String code = verificationCodeService.generateCode(email);
+        emailServiceImpl.sendVerificationCode(email, code);
+        return true;
+
+
+    }
+
+    //確認驗證碼是否正確
+    @RequestMapping("/verify")
+    public boolean verificationCode(@RequestParam String email, @RequestParam String code) {
+        System.out.println(code);
+        System.out.println(email);
+        if (redisService.checkCode(email, code)) {
+            System.out.println("驗證碼正確!");
+            return true;
+        }
+        System.out.println("驗證碼錯誤!");
+        return false;
+    }
+
+    //前台已驗證過直接儲存進去新密碼(忘記密碼)
+    @PostMapping("/resetPwd")
+    public void savePassword(@RequestParam("email") String email, @RequestParam("password") String password) {
+        System.out.println("資料已進來");
+        System.out.println(email);
+        System.out.println(password);
+        Backuser backuser =backuserService.updateBuPwd(email,password);
+    }
+
+
 }
