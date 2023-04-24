@@ -28,18 +28,10 @@ fetch("backuser/getBackuserInfo", {
         $(".D-baemail").text(`${response.baemail}`);
         $(".D-baemail").val(`${response.baemail}`);
         //大頭貼
-        if(response.baimg === null){
-            $('.D-baimg').attr('src', "images/profile-imgs/img-13.jpg");
-        }else{
+        if(response.baimg){
             const url = `data:image/png;base64,${response.baimg}`;
             $('.D-baimg').attr('src', url);
-
         }
-        
-    
-        
-    
-    
     })
 
 fetch("backuser/getBackuserAuthInfo", {

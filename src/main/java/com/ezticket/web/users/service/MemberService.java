@@ -1,5 +1,6 @@
 package com.ezticket.web.users.service;
 
+import com.ezticket.web.users.dto.MemSignUpDTO;
 import com.ezticket.web.users.dto.MemberDTO;
 import com.ezticket.web.users.dto.MemberImgDTO;
 import com.ezticket.web.users.pojo.Member;
@@ -199,6 +200,7 @@ public class MemberService {
         }
     }
 
+    //更改密碼(忘記密碼頁面)
     public Member updateMemberPwd(String email,String password){
         Optional<Member> oldMember = Optional.ofNullable(memberRepository.findByMemail(email));
         if(oldMember.isPresent()){
@@ -208,5 +210,20 @@ public class MemberService {
         }else {
             throw new RuntimeException("Member not found with email: " + email);
         }
+    }
+
+    public Member insertMember(MemSignUpDTO memSignUpDTO){
+        Member member =new Member();
+        member.setMname(memSignUpDTO.getMname());
+        member.setMcell(memSignUpDTO.getMcell());
+        member.setAddress(memSignUpDTO.getAddress());
+        member.setBirth(memSignUpDTO.getBirth());
+        member.setMemail(memSignUpDTO.getMemail());
+        member.setMpassword(memSignUpDTO.getMpassword());
+        member.setMemberstatus(1);  //註冊直接啟用
+        memberRepository.save(member);
+        return member;
+
+
     }
 }

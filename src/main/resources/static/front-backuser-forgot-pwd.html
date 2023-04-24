@@ -61,8 +61,8 @@
 									</div>
 								</a>
 								<div class="app-top-right-link">
-									<a class="sidebar-register-link" href="front-users-mem-sign-in.html"><i
-											class="fa-regular fa-circle-left me-2"></i>返回會員登入</a>
+									<a class="sidebar-register-link" href="front-users-bu-sign-in.html"><i
+											class="fa-regular fa-circle-left me-2"></i>返回後台使用者登入</a>
 								</div>
 							</div>
 						</div>
@@ -80,7 +80,7 @@
 									<button id="reset" class="main-btn btn-hover w-100 mt-4" type="submit">重設密碼</button>
 								</form>
 								<div class="new-sign-link">
-									<a class="signup-link" href="front-users-mem-sign-in.html"><i
+									<a class="signup-link" href="front-users-bu-sign-in.html"><i
 											class="fa-regular fa-circle-left me-2"></i>Back to sign in</a>
 								</div>
 							</div>
@@ -113,7 +113,7 @@
 				$("#statusfalse").text("請稍候...");
 				//以下之後要用fetch包住連去controller驗證有無此帳號
 				//有的話用redis生成驗證碼,並執行下列程式碼
-				fetch(`member/checkemail/${email}`)
+				fetch(`backuser/checkemail/${email}`)
 					.then(response => response.text())
 					.then(result => {
 						// console.log(result);
@@ -185,7 +185,7 @@
 									}
 								}, 1000);
 								//利用fetch去重新生成驗證碼
-								fetch(`member/checkemail/${email}`)
+								fetch(`backuser/checkemail/${email}`)
 									.then(response => response.text())
 									.then(result => {
 										console.log("再次生成驗證碼!")
@@ -193,7 +193,7 @@
 
 							});
 						} else {
-							$("#statusfalse").text("查無此帳號，請註冊會員!")
+							$("#statusfalse").text("查無此帳號，請通知後台管理員!")
 						}
 
 
@@ -207,7 +207,7 @@
 								$("#statusfalse").text("請輸入驗證碼!")
 								return;
 							}
-							fetch('member/verify', {
+							fetch('backuser/verify', {
 								method: 'POST',
 								body: formData,
 							})

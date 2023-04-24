@@ -1,35 +1,50 @@
 ﻿<!DOCTYPE html>
 <html lang="en" class="h-100">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, shrink-to-fit=9">
-		<meta name="description" content="Gambolthemes">
-		<meta name="author" content="Gambolthemes">		
-		<title>Barren - Simple Online Event Ticketing System</title>
-		
-		<!-- Favicon Icon -->
-		<link rel="icon" type="image/png" href="images/fav.png">
-		
-		<!-- Stylesheets -->
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-		<link href='vendor/unicons-2.0.1/css/unicons.css' rel='stylesheet'>
-		<link href="css/style.css" rel="stylesheet">
-		<link href="css/responsive.css" rel="stylesheet">
-		<link href="css/night-mode.css" rel="stylesheet">
-		
-		<!-- Vendor Stylesheets -->
-		<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-		<link href="vendor/OwlCarousel/assets/owl.carousel.css" rel="stylesheet">
-		<link href="vendor/OwlCarousel/assets/owl.theme.default.min.css" rel="stylesheet">
-		<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">		
-		
-	</head>
 
-<body>				
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, shrink-to-fit=9">
+	<meta name="description" content="Gambolthemes">
+	<meta name="author" content="Gambolthemes">
+	<title>Barren - Simple Online Event Ticketing System</title>
+
+	<!-- Favicon Icon -->
+	<link rel="icon" type="image/png" href="images/fav.png">
+
+	<!-- Stylesheets -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+		rel="stylesheet">
+	<link href='vendor/unicons-2.0.1/css/unicons.css' rel='stylesheet'>
+	<link href="css/style.css" rel="stylesheet">
+	<link href="css/responsive.css" rel="stylesheet">
+	<link href="css/night-mode.css" rel="stylesheet">
+
+	<!-- Vendor Stylesheets -->
+	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+	<link href="vendor/OwlCarousel/assets/owl.carousel.css" rel="stylesheet">
+	<link href="vendor/OwlCarousel/assets/owl.theme.default.min.css" rel="stylesheet">
+	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+	<!-- style.css 1749行  改height: 45px;  line-height: 45px;(原來為50px) -->
+</head>
+
+<style>
+	.disablebtn {
+		color: black;
+		background-color: rgb(212, 212, 212);
+	}
+
+	.hi{
+		height: 99px;
+	}
+
+</style>
+
+<body>
 	<div class="form-wrapper">
 		<div class="app-form">
 			<div class="app-form-sidebar">
@@ -52,64 +67,118 @@
 									</div>
 								</a>
 								<div class="app-top-right-link">
-									已經有帳號了嗎?<a class="sidebar-register-link" href="front-users-mem-sign-in.html">會員登入</a>
+									已經有帳號了嗎?<a class="sidebar-register-link"
+										href="front-users-mem-sign-in.html">會員登入</a>
 								</div>
 							</div>
 						</div>
 						<div class="col-xl-5 col-lg-6 col-md-7">
-							<div class="registration">
+							<div class="registration" style="width: 500px;">
 								<form>
 									<h2 class="registration-title">註冊會員</h2>
 									<div class="row mt-3">
-										<div class="col-lg-12 col-md-12">
-											<div class="form-group mt-4">
-												<label class="form-label">姓名:&emsp;&emsp;<p id="mnameError" style="color: red; display: inline-block; margin: 0;"></p></label>
-												<input id="mname" class="form-control h_50" type="text" placeholder="" value="">																								
+										<div class="col-lg-6 col-md-6">
+											<div class="form-group mt-4 hi">
+												<label class="form-label">姓名:&emsp;&emsp;
+												</label>
+												<input id="mname" class="form-control h_50 ip" type="text"
+													placeholder="" value="">
+												<p id="mnameError"
+													style="color: red; display: inline-block; margin: 0;"></p>
 											</div>
 										</div>
-										<div class="col-lg-12 col-md-12">
-											<div class="form-group mt-4">
-												<label class="form-label">手機號碼:&emsp;&emsp;<p id="mcellError" style="color: red; display: inline-block; margin: 0;"></p></label>
-												<input id="mcell" class="form-control h_50" type="tel" placeholder="" value="">																								
+										<div class="col-lg-6 col-md-6">
+											<div class="form-group mt-4 hi">
+												<label class="form-label">手機號碼:&emsp;&emsp;
+												</label>
+												<input id="mcell" class="form-control h_50 ip" type="tel" placeholder=""
+													value="">
+												<p id="mcellError"
+													style="color: red; display: inline-block; margin: 0;"></p>
 											</div>
 										</div>
-										<div class="col-lg-12 col-md-12">
-											<div class="form-group mt-4">
-												<label class="form-label">E-mail帳號:&emsp;&emsp;<p id="mEmailError" style="color: red; display: inline-block; margin: 0;"></p></label>
-												<input id="memail" class="form-control h_50" type="email" placeholder="" value="">																								
+										<div class="col-lg-6 col-md-6">
+											<div class="form-group mt-4 hi">
+												<label class="form-label">生日:&emsp;&emsp;
+												</label>
+												<input id="birth" class="form-control h_50 ip" type="date" placeholder=""
+													value="">
+												<p id="birthError"
+													style="color: red; display: inline-block; margin: 0;"></p>
 											</div>
 										</div>
-										<div class="col-lg-12 col-md-12">	
-											<div class="form-group mt-4">
+										<div class="col-lg-6 col-md-6">
+											<div class="form-group mt-4 hi">
+												<label class="form-label">地址:&emsp;&emsp;
+												</label>
+												<input id="address" class="form-control h_50 ip" type="tel" placeholder=""
+													value="">
+												<p id="addressError"
+													style="color: red; display: inline-block; margin: 0;"></p>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6">
+											<div class="form-group mt-4 hi">
+												<label class="form-label">E-mail帳號:&emsp;&emsp;
+												</label>
+												<input id="memail" class="form-control h_50 ip" type="email"
+													placeholder="" value="">
+												<p id="mEmailError"
+													style="color: red; display: inline-block; margin: 0;"></p>	
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6">
+											<div class="form-group mt-4 hi">
 												<div class="field-password">
-													<label class="form-label">設定密碼:&emsp;&emsp;<p id="mPasswordError" style="color: red; display: inline-block; margin: 0;"></p></label>
+													<label class="form-label">設定密碼:&emsp;&emsp;
+													</label>
 												</div>
 												<div class="loc-group position-relative">
-													<input id="mpassword" class="form-control h_50" type="password" placeholder="">
-													<span class="pass-show-eye"><i class="fas fa-eye-slash"></i></span>
+													<input id="mpassword" class="form-control h_50 ip" type="password"
+														placeholder="">
+													<!-- <span class="pass-show-eye"><i class="fas fa-eye-slash"></i></span> -->
 												</div>
+												<p id="mPasswordError"
+															style="color: red; display: inline-block; margin: 0;"></p>
 											</div>
 										</div>
-										<div class="col-lg-12 col-md-12">	
-											<div class="form-group mt-4">
+										<div class="col-lg-6 col-md-6">
+											<div class="form-group mt-4 hi">
+												<label class="form-label">驗證碼:&emsp;&emsp;
+												</label>
+												<input id="validcode" class="form-control h_50 ip" type="text"
+													placeholder="" value="">
+												<p id="validError"
+													style="color: red; display: inline-block; margin: 0;"></p>
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6">
+											<div class="form-group mt-4 hi">
 												<div class="field-password">
-													<label class="form-label">確認密碼:&emsp;&emsp;<p id="chPasswordError" style="color: red; display: inline-block; margin: 0;"></p></label>
+													<label class="form-label">確認密碼:&emsp;&emsp;
+													</label>
 												</div>
 												<div class="loc-group position-relative">
-													<input id="chPassword" class="form-control h_50" type="password" placeholder="">
-													<span class="pass-show-eye"><i class="fas fa-eye-slash"></i></span>
+													<input id="chPassword" class="form-control h_50 ip" type="password"
+														placeholder="">
+													<!-- <span class="pass-show-eye"><i class="fas fa-eye-slash"></i></span> -->
 												</div>
+												<p id="chPasswordError"
+															style="color: red; display: inline-block; margin: 0;"></p>
 											</div>
 										</div>
-										<div class="col-lg-12 col-md-12">		
-											<button id="sign_upBtn" class="main-btn btn-hover w-100 mt-4" type="submit">立即註冊</button>
+										<div class="col-lg-6 col-md-6">
+											<button id="validBtn" class="main-btn btn-hover w-100 mt-4">發送驗證碼</button>
+										</div>
+										<div class="col-lg-6 col-md-6">
+											<button id="sign_upBtn" class="main-btn btn-hover w-100 mt-4">立即註冊</button>
 										</div>
 									</div>
 								</form>
 								<div class="agree-text" style="text-align: center;">
 									點選註冊時,即代表同意ezTicket<br>
 									<a href="#">客戶服務條款</a>與<a href="#">客戶隱私權政策</a>
-								</div>								
+									<!-- </div>								
 								<div class="divider">
 									<span>or</span>
 								</div>
@@ -122,44 +191,136 @@
 										<svg class="me-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 27 27"><g transform="translate(0)"><circle cx="13.5" cy="13.5" r="13.5" transform="translate(0 0)" fill="#3b5998"></circle><path d="M851.461,383.684h-3.1c-1.841,0-3.889.735-3.889,3.266.009.882,0,1.727,0,2.678h-2.13v3.215h2.2V402.1h4.035v-9.316h2.663l.241-3.163H848.5s.007-1.407,0-1.816c0-1,1.1-.943,1.164-.943.522,0,1.538,0,1.8,0v-3.176Z" transform="translate(-833.401 -379.385)" fill="#fff"></path></g></svg>
 										Sign in with Facebook
 									</button>
+								</div> -->
+									<div class="new-sign-link">
+										有經有帳號了嗎?<a class="signup-link" href="front-users-mem-sign-in.html">會員登入</a>
+									</div>
 								</div>
-								<div class="new-sign-link">
-									有經有帳號了嗎?<a class="signup-link" href="front-users-mem-sign-in.html">會員登入</a>
-								</div>
-							</div>							
+							</div>
 						</div>
 					</div>
+					<div class="copyright-footer">
+						&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;© 2022, Barren. All rights reserved. Powered by Gambolthemes
+					</div>
 				</div>
-				<div class="copyright-footer">
-					© 2022, Barren. All rights reserved. Powered by Gambolthemes
-				</div>
-			</div>			
+			</div>
 		</div>
-	</div>
-	
-	<script src="js/jquery-3.6.0.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="vendor/OwlCarousel/owl.carousel.js"></script>
-	<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>	
-	<script src="js/custom.js"></script>
-	<script src="js/night-mode.js"></script>
+
+		<script src="js/jquery-3.6.0.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="vendor/OwlCarousel/owl.carousel.js"></script>
+		<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/night-mode.js"></script>
 
 </body>
 <script>
-	$("#sign_upBtn").click(() => {
-		const signUpMember ={
-			mname : $("#mname").val(),
-			mcell : $("#mcell").val(),
+	$("#sign_upBtn").click((event) => {
+		event.preventDefault(); // 防止預設行為
+		const memail = $("#memail").val()
+		const signUpMember = {
+			mname: $("#mname").val(),
+			mcell: $("#mcell").val(),
 			memail: $("#memail").val(),
-			mpassword : $("#mpassword").val(),
-			chpassword: $("#chPassword").val()
+			address:$("#address").val(),
+			birth:$("#birth").val(),
+			mpassword: $("#mpassword").val(),
+			chpassword: $("#chPassword").val(),
+			validcode: $("#validcode").val()
 		}
-		
+
+		fetch("member/insertMem", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(signUpMember)
+		}).then(response => {
+			if (response.ok) {
+				localStorage.setItem('signUpSuccess','註冊成功!')
+				window.location.href="front-users-mem-sign-in.html";
+			} else {
+				return response.json().then(errors => {
+					console.log("Error:", errors);
+					if (errors.mname) {
+						$("#mnameError").text(`${errors.mname}`);
+					} else {
+						$("#mnameError").text("");
+					}
+					if (errors.mcell) {
+						$("#mcellError").text(`${errors.mcell}`);
+					} else {
+						$("#mcellError").text("");
+					}
+					if (errors.memail) {
+						$("#mEmailError").text(`${errors.memail}`);
+					} else {
+						$("#mEmailError").text("");
+					}
+					if (errors.address) {
+						$("#addressError").text(`${errors.address}`);
+					} else {
+						$("#addressError").text("");
+					}
+					if (errors.mpassword) {
+						$("#mPasswordError").text(`${errors.mpassword}`);
+					} else {
+						$("#mPasswordError").text("");
+					}
+					if (errors.chpassword) {
+						$("#chPasswordError").text(`${errors.chpassword}`);
+					} else {
+						$("#chPasswordError").text("");
+					}
+					if (errors.validcode) {
+						$("#validError").text(`${errors.validcode}`);
+					} else {
+						$("#validError").text("");
+					}
+				})
 
 
+			}
+
+		})
 
 	})
+	$("#validBtn").click((event) => {
+		event.preventDefault(); // 防止預設行為
+		const memail = $("#memail").val();
+		if(memail === ""){
+			$("#mEmailError").text("請輸入電子信箱!");
+		}else{
+			$("#mEmailError").text("");
 
+			//15秒後才能再按
+			seconds = 15;
+			$("#validBtn").prop('disabled', true);
+			$("#validBtn").text(`重新發送(${seconds})`);
+			$("#validBtn").removeClass("btn-hover");
+			$("#validBtn").addClass("disablebtn");
+			console.log("test")
+			let s = setInterval(() => {
+				seconds--;
+				if (seconds > 0) {
+					$("#validBtn").prop('disabled', true);
+					$("#validBtn").text(`重新發送(${seconds})`);
+					$("#validBtn").removeClass("btn-hover");
+					$("#validBtn").addClass("disablebtn");
+				} else {
+					$("#validBtn").prop('disabled', false);
+					$("#validBtn").text('重新發送');
+					$("#validBtn").addClass("btn-hover");
+					$("#validBtn").removeClass("disablebtn");
+					clearInterval(s);
+				}
+			}, 1000);
+			// 利用fetch去重新生成驗證碼
+			fetch(`member/sendValidCode/${memail}`)
+				.then(response => response.text())
+				.then(result => {
+					console.log("再次生成驗證碼!")
+				})
+		}
+	});
 
 
 </script>
