@@ -208,16 +208,19 @@ public class EmailServiceImpl implements EmailService {
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setFrom(sender);
         helper.setTo(email);
+        System.out.println("email系統測試");
+        System.out.println(sender);
         helper.setSubject("ezTicket 通知：獲得新票券");
+        System.out.println(sender);
         String htmlContent = "<p>親愛的" + mname + "先生/小姐：</p>" +
-                "<p>此為系統通知信件：</p>" +
                 "<p>有人轉贈票券給您唷！</p>" +
                 "<p><a href='http://localhost:8085/front-activity-ticket-holder.html'>立即前往票夾看看吧！</a></p>" +
-                "<p>請勿直接回覆此信件。</p>" +
-                "<p>敬祝" + mname + "身體健康、事事如意！</p>" +
+                "<p>此為系統通知信件，請勿直接回覆此信件。</p>" +
+                "<p>敬祝您身體健康、事事如意！</p>" +
                 "<p>                                           ezTicket - 一站式購票體驗</p>";
 
         helper.setText(htmlContent, true);
+        javaMailSender.send(message);
         return "Email is sent";
     }
 }
