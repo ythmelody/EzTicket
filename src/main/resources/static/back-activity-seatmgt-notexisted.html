@@ -460,7 +460,11 @@
 <script>
     function changeStatus(btn) {
         if (btn.value === 'sold') {
-            alert('已售出座位無法變動!');
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '已售出座位無法變動!'
+            })
             return;
         }
 

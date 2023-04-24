@@ -120,7 +120,7 @@ function submitComment() {
                 $(`.commentContainer_${activityNo}`).html(`<a id="editbtn" data-bs-toggle="modal" data-bs-target="#couponModal">已評論</a>`);
 
                 Swal.fire({
-                    position: 'top-end',
+                    position: 'center',
                     icon: 'success',
                     title: '新增評論成功',
                     showConfirmButton: false,

@@ -472,9 +472,19 @@ function TicketBySystem() {
     fetch("/Activity/findByActNo" + `?actNo=${sessionStorage.getItem("activityNo")}`)
         .then(resp => resp.json())
         .then(jsondata => {
-            if (aType != 1) { // 若節目完全沒有座位區分，將要購買的票券數量存在 SessionStorage
+            if (aType !== 1) { // 若節目完全沒有座位區分，將要購買的票券數量存在 SessionStorage
+
+                if($('#ticketDecr').val() > toSellTqy[sessionStorage.getItem("blockNo")]){
+                    Swal.fire({
+                        icon: 'error',
+                        title: '無對應數量票券'
+                    })
+
+                    return;
+                }
+
                 sessionStorage.setItem("toBuyTickets", $('#ticketDecr').val());
-                // window.location.href = "/front-activity-checkout.html";
+                window.location.href = "/front-activity-checkout.html";
             } else { // 若節目有座位區分，發送請求到後端取得座位陣列
                 fetch("/seats/getTicketsBysystem" + `?ticketQTY=${$('#ticketDecr').val()}&blockNo=${sessionStorage.getItem("blockNo")}&sessionNo=${sessionStorage.getItem("sessionNo")}`)
                     .then(resp => resp.json())

@@ -69,7 +69,7 @@ $(document).ready(function () {
             .then(resp => resp.json())
             .then(jsondata => {
                 if (jsondata.arateQty < 1) {
-                    $("#activityRate").children("h4").eq(0).text('尚無評論');
+                    $("#activityRate").children("h4").eq(0).text('尚無評星');
                 } else if (jsondata.arateQty >= 1) {
                     //.toFixed(2) 呈現至小數點後兩位數
                     $("#activityRate").children("h4").eq(0).text("節目評星：" + ((jsondata.arateTotal / jsondata.arateQty)).toFixed(1)).append(`&nbsp;<i class="fa-solid fa-star" style="color: #ffad21!important;"></i>`);
