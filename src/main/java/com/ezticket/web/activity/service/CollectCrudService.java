@@ -1,5 +1,6 @@
 package com.ezticket.web.activity.service;
 
+import com.ezticket.core.service.EmailServiceImpl;
 import com.ezticket.web.activity.pojo.Collect;
 import com.ezticket.web.activity.pojo.CollectRedis;
 import com.ezticket.web.activity.pojo.Torder;
@@ -43,6 +44,9 @@ public class CollectCrudService {
     private TorderDetailsViewRepository tdvRepository;
     @Autowired
     private TorderDetailsViewService torderDetailsViewService;
+
+    @Autowired
+    private EmailServiceImpl emailService;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -283,6 +287,12 @@ public class CollectCrudService {
         Collect newC = optC.get();
         newC.setMemberno(memberno);
         collectRepository.save(newC);
+        try {
+            emailService.sendTicketNotification(memail, member.getMname());
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("email 通知失敗");
+        }
         return true;
     }
 
