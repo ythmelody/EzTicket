@@ -221,7 +221,7 @@
                 <div class="row justify-content-center">
                     <div class="col-xl-7 col-lg-9 col-md-10">
                         <div class="hero-banner-content">
-                            <h2>The Easiest and Most Powerful Online Event Booking and Ticketing System</h2>
+                            <h2>快速尋找活動及商品</h2>
                             <!-- <p>Barren is an all-in-one event ticketing platform for event organisers, promoters, and
                                 managers. Easily create, promote and manage your events of any type and size.</p>
                             <a href="create.html" class="main-btn btn-hover">Create Event <i
@@ -1376,7 +1376,12 @@
                 select: function (event, ui) {
                     console.log(ui);
                     let temp = JSON.parse(ui.item.value);
-                    window.location.href = "front-product-product_detail.html?productno=" + temp.no;
+                    if(temp.no >10000){
+                        window.location.href = "front-product-product_detail.html?productno=" + temp.no;
+                    }else{
+                        window.location.href = "front-activity-event-detail.html?activityNo=" + temp.no;
+                    }
+                   
                 }
             }).focus(function () {
                 $(this).autocomplete("search");
