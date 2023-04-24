@@ -38,7 +38,7 @@ function fetchPorderList(e) {
         }).then(resp => resp.json())
           .then(data => {
             let imagesrc = '';
-            if (data.products[0].pimgts && data.products[0].pimgts[0]) {
+            if (data.products[0] && data.products[0].pimgts[0] && data.products[0].pimgts[0].pimg) {
               imagesrc = `data:image/png;base64,${data.products[0].pimgts[0].pimg}`;
             }
             let detailslist = '';
@@ -48,6 +48,7 @@ function fetchPorderList(e) {
             switch (obj.pprocessstatus) {
               case 1:
                 processstatus = '<span class="status-circle yellow-circle"></span>配送中';
+                orderButton = "";
                 cancelButtom = `<a onclick="cancelPorder(${obj.porderno})">取消申請</a>`;
                 break;
               case 2:
