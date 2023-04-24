@@ -31,6 +31,7 @@ public class RoleService {
         return roleRepository.findAll()
                 .stream().toList();
     }
+    //拿到所有角色的有的功能和沒有的功能
     public List<RoleDTO> getAllRolesWithFuncs() {
         List<Role> roles = roleRepository.findAll();
         return roles.stream().map(role -> {
@@ -38,20 +39,28 @@ public class RoleService {
             roleDTO.setRoleno(role.getRoleno());
             roleDTO.setRolename(role.getRolename());
             roleDTO.setRolestatus(role.getRolestatus());
+
+            //角色擁有的功能 裝進DTO
             Map<Integer, String> funcMap = new HashMap<>();
             List<Roleauthority> roleAuthorities = roleauthorityRepository.findByRoleno(role.getRoleno());
             for (Roleauthority roleAuthority : roleAuthorities) {
-                Function allFuncs = functionRepository.findByFuncno(roleAuthority.getFuncno());
-                funcMap.put(allFuncs.getFuncno(), allFuncs.getFuncname());
+                //直接省略顯示所有角色的funcno1跟2,因為是基本功能一定要有的,不需要被增加或減少
+                if(roleAuthority.getFuncno() != 1 && roleAuthority.getFuncno() != 2){
+                    Function allFuncs = functionRepository.findByFuncno(roleAuthority.getFuncno());
+                    funcMap.put(allFuncs.getFuncno(), allFuncs.getFuncname());
+                }
             }
             roleDTO.setFuncs(funcMap);
 
-            //role缺少的功能
+            //角色缺少的功能 裝進DTO
             Set<Integer> roleFuncKey = funcMap.keySet();  //取角色功能的所有key
             Set<Integer> allFuncKey = new HashSet<>();
             List<Function> allFuncs = functionRepository.findAll();
             for(Function funcs : allFuncs){
-                allFuncKey.add(funcs.getFuncno());
+                //直接省略顯示所有角色的funcno1跟2,因為是基本功能一定要有的,不需要被增加或減少
+                if(funcs.getFuncno() != 1 && funcs.getFuncno() != 2 ){
+                    allFuncKey.add(funcs.getFuncno());
+                }
             }
             Set<Integer> missFuncs = new HashSet<>(allFuncKey);
             missFuncs.removeAll(roleFuncKey);
@@ -64,6 +73,7 @@ public class RoleService {
         }).collect(Collectors.toList());
     }
 
+    //按鈕一鍵更換角色權限
     public  Role updateRoleStatus(Integer roleno){
         Optional<Role> oldRole =roleRepository.findById(roleno);
         if (oldRole.isPresent()){

@@ -7,9 +7,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,8 +27,8 @@ public List<AimgtDto> findAll(){
 
     }
 
-    public Optional<AimgtDto> findById(Integer aimgNo) {
-        return aimgtRepository.findById(aimgNo).map(this::entityToDTO);
+    public Aimgt findById(Integer aimgNo) {
+        return aimgtRepository.findById(aimgNo).orElse(null);
     }
 
     public List<Aimgt> findAllByActivityNo(Integer activityNo){
@@ -40,6 +37,12 @@ public List<AimgtDto> findAll(){
                 .stream()
                 .collect(Collectors.toList());
     }
+
+    public Aimgt findByActivityNo(Integer activityNo) {
+
+        return aimgtRepository.findByActivityNo(activityNo);
+    }
+
 
 
     private AimgtDto entityToDTO(Aimgt aimgt){
@@ -50,5 +53,34 @@ public List<AimgtDto> findAll(){
 
     public List<Aimgt> saveAimgt(List<Aimgt> aimgts) {
     return aimgtRepository.saveAll(aimgts);
+    }
+
+    public Aimgt saveOne(Aimgt aimgt) {
+        return aimgtRepository.save(aimgt);
+    }
+
+    public void updateAimgt(List<Aimgt> aimgts) {
+        aimgts.forEach(aimgt -> {
+            if (aimgt.getAimgNo() != null) {
+                // Update existing image in the database
+                Aimgt existingAimgt = aimgtRepository.findById(aimgt.getAimgNo())
+                        .orElseThrow(() -> new IllegalArgumentException("Invalid image number"));
+                existingAimgt.setAimg(aimgt.getAimg());
+                existingAimgt.setAimgMain(aimgt.getAimgMain());
+                aimgtRepository.save(existingAimgt);
+            } else {
+                // Insert new image into the database
+                aimgtRepository.save(aimgt);
+            }
+        });
+    }
+
+    public void deleteAimgt(Integer aimgNo) {
+        aimgtRepository.deleteById(aimgNo);
+    }
+
+
+    public void save(Aimgt aimgt) {
+        aimgtRepository.save(aimgt);
     }
 }

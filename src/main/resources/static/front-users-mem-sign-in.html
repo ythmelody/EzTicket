@@ -10,7 +10,7 @@
 	<title>Barren - Simple Online Event Ticketing System</title>
 
 	<!-- Favicon Icon -->
-	<link rel="icon" type="image/png" href="images/fav.png">
+	<link rel="icon" type="image/png" href="images/ezTicket.png">
 
 	<!-- Stylesheets -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -51,7 +51,7 @@
 		<div class="app-form">
 			<div class="app-form-sidebar">
 				<div class="sidebar-sign-logo">
-					<img src="images/sign-logo.svg" alt="">
+					<img style="height: 50px" src="images/dark-logo.svg" alt="">
 				</div>
 				<div class="sign_sidebar_text">
 					<h1>Welcome to ezTicket!</h1>
@@ -93,7 +93,7 @@
 										<div class="loc-group position-relative">
 											<input id="memPwd" class="form-control h_50" type="password"
 												placeholder="請輸入您的密碼">
-											<span class="pass-show-eye"><i class="fas fa-eye-slash"></i></span>
+											<!-- <span class="pass-show-eye"><i class="fas fa-eye-slash"></i></span> -->
 										</div>
 									</div>
 									<button id="loginButton" class="main-btn btn-hover w-100 mt-4" type="button">登入
@@ -147,7 +147,7 @@
 					</div>
 				</div>
 				<div class="copyright-footer">
-					© 2022, Barren. All rights reserved. Powered by Gambolthemes
+					© 2023, ezTicket. All rights reserved. Powered by Tibame CGA106 Group2
 				</div>
 			</div>
 		</div>
@@ -164,6 +164,26 @@
 <script>
 	$(document).ready(() => {
 
+		//如果是註冊頁面或重設密碼來的  就顯示註冊成功5秒
+		if (localStorage.getItem('signUpSuccess')) {
+			$("#statusfalse").text(localStorage.getItem('signUpSuccess'));
+			setTimeout(function() {
+				localStorage.removeItem('signUpSuccess');
+				$("#statusfalse").text('');
+			}, 10000);
+		}else if(localStorage.getItem('resetPwd')){
+			$("#statusfalse").text(localStorage.getItem('resetPwd'));
+			setTimeout(function() {
+				localStorage.removeItem('resetPwd');
+				$("#statusfalse").text('');
+			}, 5000);
+
+		}
+
+		window.addEventListener('beforeunload', function () {
+			localStorage.removeItem('signUpSuccess');
+			localStorage.removeItem('resetPwd');
+		});
 
 
 		$("#loginButton").click(function (event) {
@@ -189,7 +209,7 @@
 						const currentUrl = localStorage.getItem('currentUrl');
 
 						// 根據需要將使用者重定向回之前的頁面或首頁
-						if (currentUrl && currentUrl !== '' && currentUrl.indexOf('login.html') === -1) {
+						if (currentUrl && currentUrl !== '' && currentUrl.indexOf('front-users-mem-sign-in.html') === -1) {
 							window.location.href = currentUrl;
 						} else {
 							window.location.href = 'index.html';

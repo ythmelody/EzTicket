@@ -1,15 +1,15 @@
 ﻿<!DOCTYPE html>
 <html lang="en" class="h-100">
   <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, shrink-to-fit=9" />
-    <meta name="description" content="Gambolthemes" />
-    <meta name="author" content="Gambolthemes" />
-    <title>Barren - Simple Online Event Ticketing System</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=9">
+    <meta name="description" content="Gambolthemes">
+    <meta name="author" content="Gambolthemes">
+    <title>ezTicket - 一站式購票體驗</title>
 
     <!-- Favicon Icon -->
-    <link rel="icon" type="image/png" href="images/fav.png" />
+    <link rel="icon" type="image/png" href="images/ezTicket.png">
 
     <!-- Stylesheets -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -770,402 +770,73 @@
     </div>
     <!-- Create Group Ticket Model End-->
     <!-- Header Start-->
+    <!-- 請加上這行-->
+    <link href="css/shawn-scroll-bar.css" rel="stylesheet">
+
     <header class="header">
       <div class="header-inner">
         <nav
-          class="navbar navbar-expand-lg bg-barren barren-head navbar fixed-top justify-content-sm-start pt-0 pb-0"
-        >
-          <div class="container">
-            <button
-              class="navbar-toggler"
-              type="button"
-              data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasNavbar"
-              aria-controls="offcanvasNavbar"
-            >
-              <span class="navbar-toggler-icon">
-                <i class="fa-solid fa-bars"></i>
-              </span>
-            </button>
-            <a
-              class="navbar-brand order-1 order-lg-0 ml-lg-0 ml-2 me-auto"
-              href="index.html"
-            >
+                class="navbar navbar-expand-lg bg-barren barren-head navbar fixed-top justify-content-sm-start pt-0 pb-0 ps-lg-0 pe-2">
+          <div class="container-fluid ps-0">
+            <a class="navbar-brand order-1 order-lg-0 ml-lg-0 ml-2 me-auto" style="margin-left: 65px" href="index.html">
               <div class="res-main-logo">
-                <img src="images/logo-icon.svg" alt="" />
+                <img src="images/ezTicket-icon.svg" alt="">
               </div>
               <div class="main-logo" id="logo">
-                <img src="images/logo.svg" alt="" />
-                <img class="logo-inverse" src="images/dark-logo.svg" alt="" />
+                <img src="images/ezTicket.svg" alt="">
+                <img class="logo-inverse" src="images/dark-logo.svg" alt="">
               </div>
             </a>
-            <div
-              class="offcanvas offcanvas-start"
-              tabindex="-1"
-              id="offcanvasNavbar"
-              aria-labelledby="offcanvasNavbarLabel"
-            >
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
+                 aria-labelledby="offcanvasNavbarLabel">
               <div class="offcanvas-header">
                 <div class="offcanvas-logo" id="offcanvasNavbarLabel">
-                  <img src="images/logo-icon.svg" alt="" />
+                  <img src="images/ezTicket-icon.svg" alt="">
                 </div>
-                <button
-                  type="button"
-                  class="close-btn"
-                  data-bs-dismiss="offcanvas"
-                  aria-label="Close"
-                >
+                <button type="button" class="close-btn" data-bs-dismiss="offcanvas" aria-label="Close">
                   <i class="fa-solid fa-xmark"></i>
                 </button>
               </div>
               <div class="offcanvas-body">
-                <div class="offcanvas-top-area">
-                  <div class="create-bg">
-                    <a href="create.html" class="offcanvas-create-btn">
-                      <i class="fa-solid fa-calendar-days"></i>
-                      <span>Create Event</span>
-                    </a>
-                  </div>
-                </div>
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe_5">
                   <li class="nav-item">
-                    <a
-                      class="nav-link active"
-                      aria-current="page"
-                      href="index.html"
-                      >Home</a
-                    >
-                  </li>
-                  <li class="nav-item dropdown">
-                    <a
-                      class="nav-link dropdown-toggle"
-                      href="#"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      Explore Events
+                    <a class="nav-link" href="back-index.html">
+                      <i class="fa-solid fa-house me-2"></i>首頁
                     </a>
-                    <ul class="dropdown-menu dropdown-submenu">
-                      <li>
-                        <a class="dropdown-item" href="explore_events.html"
-                          >Explore Events</a
-                        >
-                      </li>
-                      <li>
-                        <a
-                          class="dropdown-item"
-                          href="venue_event_detail_view.html"
-                          >Venue Event Detail View</a
-                        >
-                      </li>
-                      <li>
-                        <a
-                          class="dropdown-item"
-                          href="online_event_detail_view.html"
-                          >Online Event Detail View</a
-                        >
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="pricing.html">Pricing</a>
-                  </li>
-                  <li class="nav-item dropdown">
-                    <a
-                      class="nav-link dropdown-toggle"
-                      href="#"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      Blog
-                    </a>
-                    <ul class="dropdown-menu dropdown-submenu">
-                      <li>
-                        <a class="dropdown-item" href="our_blog.html"
-                          >Our Blog</a
-                        >
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="blog_detail_view.html"
-                          >Blog Detail View</a
-                        >
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="nav-item dropdown">
-                    <a
-                      class="nav-link dropdown-toggle"
-                      href="#"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      Help
-                    </a>
-                    <ul class="dropdown-menu dropdown-submenu">
-                      <li><a class="dropdown-item" href="faq.html">FAQ</a></li>
-                      <li>
-                        <a class="dropdown-item" href="help_center.html"
-                          >Help Center</a
-                        >
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="contact_us.html"
-                          >Contact Us</a
-                        >
-                      </li>
-                    </ul>
-                  </li>
-                  <li class="nav-item dropdown">
-                    <a
-                      class="nav-link dropdown-toggle"
-                      href="#"
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      Pages
-                    </a>
-                    <ul class="dropdown-menu dropdown-submenu">
-                      <li>
-                        <a class="dropdown-item submenu-item" href="#"
-                          >Other Pages</a
-                        >
-                        <ul class="submenu dropdown-menu">
-                          <li>
-                            <a class="dropdown-item pe-5" href="sign_in.html"
-                              >Sign In</a
-                            >
-                          </li>
-                          <li>
-                            <a class="dropdown-item pe-5" href="sign_up.html"
-                              >Sign Up</a
-                            >
-                          </li>
-                          <li>
-                            <a
-                              class="dropdown-item pe-5"
-                              href="forgot_password.html"
-                              >Forgot Password</a
-                            >
-                          </li>
-                          <li>
-                            <a class="dropdown-item pe-5" href="about_us.html"
-                              >About Us</a
-                            >
-                          </li>
-                          <li>
-                            <a class="dropdown-item pe-5" href="checkout.html"
-                              >Checkout</a
-                            >
-                          </li>
-                          <li>
-                            <a
-                              class="dropdown-item pe-5"
-                              href="checkout_premium.html"
-                              >Checkout Premium</a
-                            >
-                          </li>
-                          <li>
-                            <a class="dropdown-item pe-5" href="invoice.html"
-                              >Invoice</a
-                            >
-                          </li>
-                          <li>
-                            <a
-                              class="dropdown-item pe-5"
-                              href="coming_soon.html"
-                              >Coming Soon</a
-                            >
-                          </li>
-                          <li>
-                            <a class="dropdown-item pe-5" href="error_404.html"
-                              >Error 404</a
-                            >
-                          </li>
-                        </ul>
-                      </li>
-                      <li>
-                        <a class="dropdown-item submenu-item" href="#"
-                          >Create Event</a
-                        >
-                        <ul class="submenu dropdown-menu">
-                          <li>
-                            <a class="dropdown-item pe-5" href="create.html"
-                              >Create</a
-                            >
-                          </li>
-                          <li>
-                            <a
-                              class="dropdown-item pe-5"
-                              href="create_venue_event.html"
-                              >建立活動</a
-                            >
-                          </li>
-                          <li>
-                            <a
-                              class="dropdown-item pe-5"
-                              href="create_online_event.html"
-                              >Create Online Event</a
-                            >
-                          </li>
-                        </ul>
-                      </li>
-                      <li>
-                        <a class="dropdown-item submenu-item" href="#"
-                          >Events View</a
-                        >
-                        <ul class="submenu dropdown-menu">
-                          <li>
-                            <a
-                              class="dropdown-item pe-5"
-                              href="online_event_detail_view.html"
-                              >Online Event Detail View</a
-                            >
-                          </li>
-                          <li>
-                            <a
-                              class="dropdown-item pe-5"
-                              href="venue_event_detail_view.html"
-                              >Venue Event Detail View</a
-                            >
-                          </li>
-                        </ul>
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="booking_confirmed.html"
-                          >Booking Confirmed</a
-                        >
-                      </li>
-                      <li>
-                        <a
-                          class="dropdown-item"
-                          href="attendee_profile_view.html"
-                          >Attendee Profile View</a
-                        >
-                      </li>
-                      <li>
-                        <a
-                          class="dropdown-item"
-                          href="organiser_profile_view.html"
-                          >Organiser Profile View</a
-                        >
-                      </li>
-                      <li>
-                        <a
-                          class="dropdown-item"
-                          href="my_organisation_dashboard.html"
-                          >Organization Dashboard</a
-                        >
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="sell_tickets_online.html"
-                          >Sell Tickets Online</a
-                        >
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="refer_a_friend.html"
-                          >Refer a Friend</a
-                        >
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="term_and_conditions.html"
-                          >Terms & Conditions</a
-                        >
-                      </li>
-                      <li>
-                        <a class="dropdown-item" href="privacy_policy.html"
-                          >Privacy Policy</a
-                        >
-                      </li>
-                    </ul>
                   </li>
                 </ul>
-              </div>
-              <div class="offcanvas-footer">
-                <div class="offcanvas-social">
-                  <h5>Follow Us</h5>
-                  <ul class="social-links">
-                    <li>
-                      <a href="#" class="social-link"
-                        ><i class="fab fa-facebook-square"></i
-                      ></a>
-                    </li>
-                    <li>
-                      <a href="#" class="social-link"
-                        ><i class="fab fa-instagram"></i
-                      ></a>
-                    </li>
-                    <li>
-                      <a href="#" class="social-link"
-                        ><i class="fab fa-twitter"></i
-                      ></a>
-                    </li>
-                    <li>
-                      <a href="#" class="social-link"
-                        ><i class="fab fa-linkedin-in"></i
-                      ></a>
-                    </li>
-                    <li>
-                      <a href="#" class="social-link"
-                        ><i class="fab fa-youtube"></i
-                      ></a>
-                    </li>
-                  </ul>
-                </div>
               </div>
             </div>
             <div class="right-header order-2">
               <ul class="align-self-stretch">
-                <li>
-                  <a href="create.html" class="create-btn btn-hover">
-                    <i class="fa-solid fa-calendar-days"></i>
-                    <span>Create Event</span>
+                <li class="6">
+                  <a href="back-activity-ticket-inspec.html" class="create-btn btn-hover">
+                    <i class="fa-solid fa-ticket"></i>
+                    <span>票務</span>
                   </a>
                 </li>
-                <li class="dropdown account-dropdown">
-                  <a
-                    href="#"
-                    class="account-link"
-                    role="button"
-                    id="accountClick"
-                    data-bs-auto-close="outside"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <img src="images/profile-imgs/img-13.jpg" alt="" />
+                <li class="dropdown account-dropdown order-3">
+                  <a href="#" class="account-link" role="button" id="accountClick"
+                     data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="images/profile-imgs/img-13.jpg" class="D-baimg" alt="">
                     <i class="fas fa-caret-down arrow-icon"></i>
                   </a>
-                  <ul
-                    class="dropdown-menu dropdown-menu-account dropdown-menu-end"
-                    aria-labelledby="accountClick"
-                  >
+                  <ul class="dropdown-menu dropdown-menu-account dropdown-menu-end"
+                      aria-labelledby="accountClick">
                     <li>
                       <div class="dropdown-account-header">
                         <div class="account-holder-avatar">
-                          <img src="images/profile-imgs/img-13.jpg" alt="" />
+                          <img src="images/profile-imgs/img-13.jpg" class="D-baimg" alt="">
                         </div>
-                        <h5>John Doe</h5>
-                        <p>johndoe@example.com</p>
+                        <h5 class="D-baname"><!-- 姓名 --></h5>
+                        <p class="D-baemail"><!-- email --></p>
                       </div>
                     </li>
                     <li class="profile-link">
-                      <a href="my_organisation_dashboard.html" class="link-item"
-                        >My Organisation</a
-                      >
-                      <a href="organiser_profile_view.html" class="link-item"
-                        >My Profile</a
-                      >
-                      <a href="sign_in.html" class="link-item">Sign Out</a>
+                      <a href="back-users-profile.html" class="link-item">個人資料管理</a>
+                      <a href="front-users-bu-sign-in.html" class="link-item logOut">登出</a>
                     </li>
                   </ul>
-                </li>
-                <li>
-                  <div class="night_mode_switch__btn">
-                    <div id="night-mode" class="fas fa-moon fa-sun"></div>
-                  </div>
                 </li>
               </ul>
             </div>
@@ -1327,7 +998,7 @@
                                   </p>
                                   
                                   <div class="content-holder mt-4" id="eventImgList">
-                                    <input type="file" accept="image/*" class="aimg" id="file1" value="1"/><br>
+                                    <input type="file" accept="image/*" class="oldaimg" id="file1" value="1"/><br>
                                     <div class="default-event-thumb">
                                        <img id="img1"/>
                                     </div>
@@ -1433,7 +1104,7 @@
                                   <label class="form-label fs-16"
                                     >編輯區域票價</label
                                   >
-                                  <p class="mt-2 fs-14 d-block mb-3 pe_right">若此活動都不分區，請在輸入區域名稱寫為"全站"</p>
+                                  <p class="mt-2 fs-14 d-block mb-3 pe_right">舊有票區不可更動，若不需要可直接忽略</p>
                                 </div>
                                 <div
                                   class="d-flex align-items-center justify-content-between pt-4 pb-3 full-width"
@@ -1786,63 +1457,63 @@
     </script>
      <!--動態生成活動圖片-->
     <script>
-    document
-        .querySelector("#file1")
-        .addEventListener("change", changeListener);
+   document
+      .querySelector("#file1")
+      .addEventListener("change", changeListener);
 
-      function changeListener({ target }) {
-        const { id, files } = target;
-        const seq = id.substring(id.indexOf("file") + 4);
-        const img = document.querySelector("#img" + seq);
-        const file = files[0];
-        if (!file) {
-          img.src = "";
-          return;
-        }
-        img.src = URL.createObjectURL(file);
-
-        const nextSeq = +seq + 1;
-        if (!document.querySelector("#file" + nextSeq)) {
-          addNext(nextSeq);
-        }
+    function changeListener({ target }) {
+      const { id, files } = target;
+      const seq = id.substring(id.indexOf("file") + 4);
+      const img = document.querySelector("#img" + seq);
+      const file = files[0];
+      if (!file) {
+        img.src = "";
+        return;
       }
-      let imgList=document.querySelector('#eventImgList');
-      function addNext(seq) {
-        const br=document.createElement("br");
-        imgList.append(br);
-        const div=document.createElement("div");
-        div.className="default-event-thumb";
-        const input = document.createElement("input");
-        input.type = "file";
-        input.accept = "image/*";
-        input.id = "file" + seq;
-        input.className="aimg";
-        input.addEventListener("change", changeListener);
-        div.append(input);
-        imgList.append(input);
-        imgList.append(div);
-        imgList.append(br);
-        const img = document.createElement("img");
-        img.id = "img" + seq;
-        // img.className="aimg";
-        div.append(img);
-        const deletebtn=document.createElement("button");
-        deletebtn.id="delete"+seq;
-        deletebtn.className="option-btn-1";
-        deletebtn.innerHTML="刪除"
-        imgList.append(deletebtn);
-        imgList.append(br);
+      img.src = URL.createObjectURL(file);
 
-        deletebtn.addEventListener("click",()=>{
-          const deleteimg=document.getElementById("img"+seq); 
-          div.removeChild(deleteimg);
-          imgList.removeChild(div);
-          imgList.removeChild(input);
-          imgList.removeChild(deletebtn);
-          imgList.removeChild(br);
-        })
-       
+      const nextSeq = +seq + 1;
+      if (!document.querySelector("#file" + nextSeq)) {
+        addNext(nextSeq);
       }
+    }
+    let imgList = document.querySelector('#eventImgList');
+    function addNext(seq) {
+      const br = document.createElement("br");
+      imgList.append(br);
+      const div = document.createElement("div");
+      div.className = "default-event-thumb";
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "image/*";
+      input.id = "file" + seq;
+      input.className = "aimg";
+      input.addEventListener("change", changeListener);
+      div.append(input);
+      imgList.append(input);
+      imgList.append(div);
+      imgList.append(br);
+      const img = document.createElement("img");
+      img.id = "img" + seq;
+      // img.className="aimg";
+      div.append(img);
+      const deletebtn = document.createElement("button");
+      deletebtn.id = "delete" + seq;
+      deletebtn.className = "option-btn-1";
+      deletebtn.innerHTML = "刪除"
+      imgList.append(deletebtn);
+      imgList.append(br);
+
+      deletebtn.addEventListener("click", () => {
+        const deleteimg = document.getElementById("img" + seq);
+        div.removeChild(deleteimg);
+        imgList.removeChild(div);
+        imgList.removeChild(input);
+        imgList.removeChild(deletebtn);
+        imgList.removeChild(br);
+      })
+
+    }
     </script>
     <!--座位圖選擇-->
     <script>
@@ -1866,7 +1537,7 @@
       // let aclass=document.querySelector('#aclass');
 
       function aclassList(){
-        fetch(`http://localhost:8085/Aclass/findAll`)
+        fetch(`/Aclass/findAll`)
         .then((Response) => Response.json())
         .then((data) => {
          let str="";
@@ -1879,7 +1550,7 @@
       }
       
     
-        fetch(`http://localhost:8085/Aclass/findAll`)
+        fetch(`/Aclass/findAll`)
         .then((Response) => Response.json())
         .then((data) => {
          let str="";
@@ -1915,7 +1586,7 @@
     <!--主辦單位顯示-->
     <script>
       let host=document.querySelector('#host');
-      fetch(`http://localhost:8085/host/gh`)
+      fetch(`/host/gh`)
       .then((Response) => Response.json())
       .then((data) => {
         let str="";
@@ -2011,7 +1682,7 @@
         document.querySelector("#inputclassbtn").addEventListener("click",()=>{
          const inputaclassname=document.querySelector("#inputaclassname");
          const aclassData={aclassName:inputaclassname.value};
-         fetch('http://localhost:8085/Aclass/saveAclass', {
+         fetch('/Aclass/saveAclass', {
           method: 'POST', 
           headers: {
                   'Content-Type': 'application/json'
@@ -2034,7 +1705,7 @@
 
       document.querySelector("#finish").addEventListener("click", () => {
         const formData = new FormData();
-        formData.append('activityNo', 1014);
+        formData.append('activityNo', 1011);
         formData.append('aname', $("#aname").val());
         formData.append('aclass', $("#aclass").find(":selected").val());
         formData.append('aperformer', $("#aperformer").val());
@@ -2061,44 +1732,46 @@
         console.log($("#aedate").val());
         console.log($("#wetherseat").val());
         
+        
         const fileInput = document.querySelector("#seat");
-        formData.append("aseatimg", fileInput.files[0]);
+        if (fileInput.files.length > 0) {
+          formData.append("aseatimg", fileInput.files[0]);
+        }
         console.log(fileInput.files[0]);
-        fetch('http://localhost:8085/Activity/updateActivity', {
+        fetch(`/Activity/updateActivity/${activityNo}`, {
           method: 'POST',
           body: formData,
         }).then(resp => resp.json())
           .then(data => {
             console.log(data.activityNo);
+          
            
         
 //======================================================================================================
-    const fileInput2= document.querySelectorAll(".aimg");
-    const formData2 = new FormData()
-    formData2.append("activityno",data.activityNo);
-    for (let i = 0; i < fileInput2.length; i++) {
-      formData2.append("images", fileInput2[i].files[0]);
-      if(fileInput2.value===1){
-        formData2.append("aimgmain",$("#file1").val())
-      }
+    const fileInput4= document.querySelectorAll(".aimg");
+    const formData4 = new FormData()
+    formData4.append("activityno",1012);
+    for (let i = 0; i < fileInput4.length; i++) {
+      formData4.append("images", fileInput4[i].files[0]);
     }
-     fetch('http://localhost:8085/Aimgt/saveAimgt', {
+     fetch('/Aimgt/saveAimgt', {
          method: 'POST',
-         body: formData2,
+         body: formData4,
         }).then(resp => resp.json())
           .then(data => {
            });
+
     //==========================================================================================================
     const blockName= document.querySelectorAll(".blockname");
     const blockPrice= document.querySelectorAll(".blockprice");
     const blockType= document.querySelectorAll(".blocktype");
-
+           console.log($("#blockName").val())
 const formData3 = new FormData()
 let blockDataArray = [];
 for (let i = 0; i < blockName.length; i++) {
   let blockData = {
     blockName: blockName[i].value,
-    activityNo: data.activityNo,
+    activityNo: 1012,
     blockPrice: blockPrice[i].value,
     blockType: blockType[i].checked ? 1 : 0
   };
@@ -2106,7 +1779,7 @@ for (let i = 0; i < blockName.length; i++) {
 }
 
 console.log(blockDataArray);
-fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
+fetch('/BlockPrice/saveBlockPrice', {
   method: 'POST', 
   headers: {
     'Content-Type': 'application/json'
@@ -2115,8 +1788,7 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
 }).then(res => res.json())
   .catch(error => console.error('Error:', error))
   .then(response => console.log('Success:', response)); 
-
-
+    location.href = `back-activity-eventdashboard.html`;
           });
          
 
@@ -2125,20 +1797,20 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
    </script>
 <!--活動新增結束-->
 
-<!--活動複製新增開始-->
+<!--活動編輯開始-->
 <script>
-  fetch(`http://localhost:8085/Activity/findByactivityNo?activityNo=${1}`)
+  fetch(`/Activity/findByactivityNo?activityNo=${activityNo}`)
     .then(resp => resp.json())
     .then(data => {
       $("#aname").val(data.aname);
-      $("#aclass option:selected").val(data.aclass);
+      $("#aclass").val(data.aclassNo);
       if(data.performer!=null){
         $("#yes").attr('checked',true);
         typePerformer.style.display = 'block';
       }
       console.log(data);
       $("#aperformer").val(data.performer);
-      $("#host option:selected").val(data.host);
+      $("#host").val(data.hostNo);
       $("#adiscrip").val(data.adiscrip);
       $("#anote").val(data.anote);
       $("#aticketremind").val(data.aticketRemind);
@@ -2152,15 +1824,23 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
       $("#aseatimg").attr("src", `data:image/jpeg;base64,${data.aseatsImg}`); 
 
 
+      
+
     })
 
     
-      fetch(`http://localhost:8085/BlockPrice/findByActNo?activityNo=${1}`)
+      fetch(`/BlockPrice/findByActNo?activityNo=${activityNo}`)
         .then(resp => resp.json())
         .then(data => {
           let str="";
           let count=1001;
           for(i of data){
+            let seatable=""
+            if(i.blockType==0){
+              seatable="此區無座位";
+            }else{
+              seatable = "此區有座位";
+            }
             console.log(i);
              str+=`<div
               class="price-ticket-card-head d-md-flex flex-wrap align-items-start justify-content-between position-relative p-4"
@@ -2177,7 +1857,7 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
                   <div>
                     <span class="text-145">請輸入區域名稱</span>
                   </div>
-                  <input type="text" class="blockname" id="blockname${count}" value="${i.blockName}">
+                  <input type="text" class="oldblockname" id="blockname${count}" value="${i.blockName}">
 
                 </div>
               </div>
@@ -2195,83 +1875,66 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
                   <div>
                     <span class="text-145">請輸入區域票價</span>
                   </div>
-                  <input type="text" class="blockprice" id="blockprice${count}" value="${i.blockPrice}">
+                  <input type="text" class="oldblockprice" id="blockprice${count}" value="${i.blockPrice}">
 
                 </div>
               </div>
               <div >
-                <input type="checkbox" id="blocktype${count}" class="blocktype" value="${i.blockType}">
-                  <label for="">此區是否有座位</label>
+                <input type="checkbox" id="blocktype${count}" class="oldblocktype" value="${i.blockType}" checked  disabled>
+                  <label for="">${seatable}</label>
               </div>
               <div class="d-flex align-items-center">
                 <div
                   class="dropdown dropdown-default dropdown-text dropdown-icon-item"
                 >
-                  <button class="option-btn-1" id="deleteBlockPriceBtn${count}">
-                    刪除
-                  </button>
+           
                 </div>
               </div>
             </div>`;
-            
-      
-            
+                       
             count++;
           }
           blockPriceList.insertAdjacentHTML('beforeend', str);
           let deletebtnArray=document.querySelectorAll(".option-btn-1");
           let count2=1001;
-          for(let i=1001;i<count;i++){
-            let deleteBlockPriceBtn = document.querySelector(`#deleteBlockPriceBtn${i}`);
-            let blockDivId = `blockDiv${i}`;
-             $(`#blocktype${i}`).attr('checked', !!$(`#blocktype${i}`).val());
-            deleteBlockPriceBtn.addEventListener("click", () => {
-            document.getElementById(blockDivId).remove();
-           
-            });
-          
-          }
-          // $("#blockname").val(data.blockname);
-          // $("#blockprice").val(data.blockprice);
-          
-        })  
 
-      fetch(`http://localhost:8085/Aimgt/findAllByActivityNo?activityNo=${1}`
+        })  
+        function disableCheckbox(checkbox) {
+            checkbox.checked = true; // 確保checkbox一直保持打勾狀態
+            checkbox.disabled = true; // 禁用checkbox，使其無法再更動
+          }
+
+      fetch(`/Aimgt/findAllByActivityNo?activityNo=${activityNo}`
         ).then(resp => resp.json())
         .then(data => {
           
           let str="";
           let count=2;
     console.log(data)
-          for(let i=1;i<data.length;i++){
-            if((i-1)==0){
-              const file1=document.querySelector("#file1");
-              $(`#img1`).attr("src", `data:image/jpeg;base64,${data[i-1].aimg}`);
-              // conosle.log(data[i-1].aimg)
-              //   var base64Image = data[i - 1].aimg;
-              // conosle.log(data[i - 1].aimg)
-              // var byteCharacters = atob(base64Image);
-              // conosle.log(byteCharacters)
-              // var byteNumbers = new Array(byteCharacters.length);
-              // for (var j = 0; i < byteCharacters.length; i++) {
-              //   byteNumbers[j] = byteCharacters.charCodeAt(j);
-              // }
-              // var byteArray = new Uint8Array(byteNumbers);
+    
+    $(`#img1`).attr("src", `data:image/jpeg;base64,${data[0].aimg}`);  
+    $(`#file1`).attr("name",data[0].aimgNo)  
+    const file1=document.querySelector("#file1")
+    file1.addEventListener("change", function changeImg() {
+            const fileInput2 = document.querySelector(`#file1`);
+            const formData2 = new FormData()
+            console.log(1)
+            console.log(data[0].aimgNo)
 
-              // var imageFile = new File([byteArray], "image.jpeg", { type: "image/jpeg" });
-              // file1.files[0] = data[i-1].aimg;
-              // console.log("檔案已設定成功：", file1.files[0]);
-              // file1.onchange = function () {
-              //   if (file1.files[0]) {
-                  
-              //   } else {
-              //     console.log("檔案設定失敗");
-              //   }
-              // };
-              //  const imageFile = new File([data[i-1].aimg], "image.jepg", { type: "image/jepg" });
-              // file1.files[0] = imageFile;
-              // $(`#file1`).attr("src", `data:image/jpeg;base64,${data[i - 1].aimg}`); 
+            if (fileInput2.files[0]) {
+              formData2.append("image", fileInput2.files[0]);
+              formData2.append("aimgNo", data[0].aimgNo);
             }
+
+            fetch(`/Aimgt/updateAimgt`, {
+              method: 'POST',
+              body: formData2,
+            }).then(resp => resp.json())
+              .then(data => {
+              });
+
+          })     
+          for(let i=1;i<data.length;i++){
             const br = document.createElement("br");
             imgList.append(br);
             const div = document.createElement("div");
@@ -2280,8 +1943,28 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
             input.type = "file";
             input.accept = "image/*";
             input.id = "file" + count;
-            input.className = "aimg";
+            input.className = "oldaimg";
+            
             input.addEventListener("change", changeListener);
+            input.addEventListener("change", function changeImg() {
+              const fileInput2 = document.querySelector(`#file${count-1}`);
+              const formData2 = new FormData()
+              console.log(count-1)
+              console.log(data[i].aimgNo)
+
+              if (fileInput2.files[0]) {
+                formData2.append("image", fileInput2.files[0]);
+                formData2.append("aimgNo", data[i].aimgNo);
+              }
+
+              fetch(`/Aimgt/updateAimgt`, {
+                method: 'POST',
+                body: formData2,
+              }).then(resp => resp.json())
+                .then(data => {
+                });
+
+            });
             div.append(input);
             imgList.append(input);
             imgList.append(div);
@@ -2298,37 +1981,31 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
             imgList.append(br)
             const deleteimg = document.getElementById(`img${count}`);
             deletebtn.addEventListener("click", () => {
+              console.log(data[i].aimgNo)
+              fetch(`/Aimgt/deleteAimgt`, {
+                method: 'DELETE', 
+                body: formData,
+                headers: {
+                        'Content-Type': 'application/json'
+                      }
+              }).then(resp => resp.json())
+                .then(data => {})
+
               deleteimg.remove();
               div.remove();
               input.remove();
               deletebtn.remove();
               br.remove();     
             })
+           
             $(`#img${count}`).attr("src", `data:image/jpeg;base64,${data[i].aimg}`);
             count++;
-            }       
+          }       
 
-        })  
-        // $(`#img${count}`).attr("src", `data:image/jpeg;base64,${i. aimg}`); 
+      })  
 
-        //  formData.append('aname', $("#aname").val());
-        //   formData.append('aclass', $("#aclass").find(":selected").val());
-        //   formData.append('aperformer', $("#aperformer").val());
-        //   formData.append('host', $("#host").find(":selected").val());
-        //   formData.append('adiscrip', $("#adiscrip").val());
-        //   formData.append('anote', $("#anote").val());
-        //   formData.append('aticketremind', $("#aticketremind").val());
-        //   formData.append('aplace', $("#aplace").val());
-        //   formData.append('aplaceaddress', $("#aplaceaddress").val());
-        //   formData.append('asdate', $("#asdate").val());
-        //   formData.append('aedate', $("#aedate").val());
-        //   formData.append('wetherseat', $("#wetherseat").val());
-        //   console.log($("#asdate").val())
-
-        //   const fileInput = document.querySelector("#seat");
-        //   formData.append("aseatimg", fileInput.files[0]);
 </script>
-<!--活動複製新增結束-->
+<!--活動編輯結束-->
 
 
   </body>

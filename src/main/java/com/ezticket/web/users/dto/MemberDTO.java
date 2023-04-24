@@ -28,8 +28,7 @@ public class MemberDTO {
     private String mcell;
     @NotBlank(message = "地址不可為空")
     private String address;
-    @NotBlank(message = "市內電話不可為空")
-    @Pattern(regexp = "^(0)([0-9]{1})([-]?)([0-9]{6,8})$", message = "室內電話格式錯誤")
+//    @Pattern(regexp = "^(0)([0-9]{1})([-]?)([0-9]{6,8})$", message = "室內電話格式錯誤")
     private String mphone;
     private Integer memberstatus;
 

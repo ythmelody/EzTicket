@@ -37,7 +37,7 @@ public class ACommentController {
     }
 
     @GetMapping("/UpdateOneAComment")
-    public int updateAReport(@RequestParam int commentId, @RequestParam int commentStatus){
+    public int updateAComment(@RequestParam int commentId, @RequestParam int commentStatus){
         return aCommentService.updateAComment(commentId, commentStatus);
     }
 
@@ -61,6 +61,11 @@ public class ACommentController {
     @GetMapping("/ActAComments")
     public List<ACommentDto> getACommentByActNo(@RequestParam Integer actNo){ return aCommentService.getACommentByActNo(actNo); }
 
+    @GetMapping("/getByMemberAndActNo")
+    public AComment getACommentByMemberNoAndActivityNo(@RequestParam Integer memberNo, @RequestParam Integer activityNo){
+        return aCommentService.getACommentByMemberNoAndActivityNo(memberNo, activityNo);
+    }
+
     @PostMapping("/insert")
     public Boolean insertAComment(@RequestBody String jsonData) {
         Gson gson = new Gson();
@@ -68,17 +73,13 @@ public class ACommentController {
         return aCommentService.insertAComment(aComment);
     }
 
-//    @PostMapping("/insert")
-//    public ResponseEntity<?> insertAComment(@Valid @RequestBody AComment aNewComment, BindingResult bindingResult){
-//        if (bindingResult.hasErrors()) {
-//            Map<String, String> errors = new HashMap<>();
-//            bindingResult.getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
-//            return ResponseEntity.badRequest().body(errors);
-//        } else {
-//            aCommentService.insertAComment(aNewComment);
-//            return  ResponseEntity.ok(aNewComment);
-//        }
-//    }
+    @PostMapping("/update")
+    public Boolean updateAComment(@RequestBody String jsonData){
+        Gson gson = new Gson();
+        AComment aComment = gson.fromJson(jsonData, AComment.class);
+        System.out.println(aComment);
+        return aCommentService.updateAComment(aComment);
+    }
 
     @GetMapping("/getThumbUpCmtNos")
     public Set<Integer> getACommentNosByMemberNo(@RequestParam Integer memberNo){

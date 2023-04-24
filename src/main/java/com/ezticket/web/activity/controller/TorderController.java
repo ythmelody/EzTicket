@@ -46,4 +46,10 @@ public class TorderController {
         return torderService.getById(torderNo);
     }
 
+    @PostMapping("/deleteTorder")
+    public void deleteTorder(@RequestParam Integer torderNo) {
+         torderService.deleteTorder(torderNo);
+
+    }
+
 }

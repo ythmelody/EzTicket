@@ -19,10 +19,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin("*")
 @RestController
@@ -67,21 +64,24 @@ public class SessionController {
 
         return  sessionService.saveSession(session);
     }
-    @DeleteMapping("deleteSession")
-    public void deleteSession(Integer sessionNo){
-        sessionService.deleteSession(sessionNo);
+    @PostMapping("/updateSession")
+    public Session updateSession(@RequestBody Session session) {
+        return sessionService.updateSession(session);
     }
 
-    @PostMapping("/updateSession")
-    public boolean updateSession(@RequestParam("sessionNo") Integer sessionNo,
-                                 @RequestParam("sessionsTime") Timestamp sessionsTime,
-                                 @RequestParam("sessioneTime") Timestamp sessioneTime,
-                                 @RequestParam("maxSeatsQty") Integer maxSeatsQty,
-                                 @RequestParam("maxStandingQty") Integer maxStandingQty
-    ) {
-        sessionService.updateSession(sessionNo, sessionsTime,sessioneTime,maxSeatsQty,maxStandingQty);
+    @PostMapping("deleteSession")
+    public boolean deleteSessionTwo( @RequestParam Integer sessionNo){
+
+        sessionService.deleteSessionTwo(sessionNo);
         return true;
     }
+
+    // 當使用者進到選頁面時，將顯示每個區域的剩餘可售票券數
+    @GetMapping("/getBlockToSellQty")
+    public Map<Integer, Integer> getToSellTQty(@RequestParam Integer activityNo, @RequestParam Integer sessionNo){
+        return sessionService.getToSellTQty(activityNo, sessionNo);
+    }
+
 
 }
 

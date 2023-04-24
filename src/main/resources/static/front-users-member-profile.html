@@ -1086,8 +1086,10 @@
 				$(".user-email").text(`${response.memail}`)
 
 				//頭貼圖片顯示
-				const url = `data:image/png;base64,${response.mimg}`;
-				$('.mimg').attr('src', url);
+				if(response.mimg){
+					const url = `data:image/png;base64,${response.mimg}`;
+					$('.mimg').attr('src', url);
+				}
 
 				//頭貼圖片上傳
 				$("#avatar-img").change((event) => {
@@ -1121,8 +1123,12 @@
 				$("#name").val(`${response.mname}`)
 				$("#birthday").val(`${response.birth}`)
 				$("#phone").val(`${response.mcell}`)
-				$("#alt_phone").val(`${response.mphone}`)
-				$("#address").val(`${response.address}`)
+				if(response.mphone){
+					$("#alt_phone").val(`${response.mphone}`);
+				}
+				if(response.address){
+					$("#address").val(`${response.address}`);
+				}
 				if (response.gender === 1) {
 					$("#male").prop("checked", true);
 				} else if (response.gender === 2) {
@@ -1132,9 +1138,15 @@
 				}
 
 				//顯示會員的備用收件人資料
-				$("#backupUser").val(`${response.comrecipient}`);
-				$("#backupUserPhone").val(`${response.comrephone}`);
-				$("#backupUserAddress").val(`${response.comreaddress}`);
+				if(response.comrecipient){
+					$("#backupUser").val(`${response.comrecipient}`);
+				}
+				if(response.comrephone){
+					$("#backupUserPhone").val(`${response.comrephone}`);
+				}
+				if(response.comreaddress){
+					$("#backupUserAddress").val(`${response.comreaddress}`);
+				}
 			})
 			.catch(error => {
 				console.log('發生錯誤:', error);
@@ -1195,6 +1207,8 @@
 				console.log('發生錯誤:', err);
 			});
 		});
+
+		
 		//按下儲存備用收件人時
 		$("#btn3").click(() => {
 			const comrecipient = $('#backupUser').val();
@@ -1312,8 +1326,6 @@
 			});
 		})
 
-
-
 	</script>
 	<script>
 			fetch('member/getMemberInfo', {
@@ -1327,7 +1339,7 @@
 					console.log((myCollect));
 					myCollect.innerHTML = '';
 					myCollect.innerHTML += `
-						<a href='/collect?action=myCollect&memberno=${member.memberno}'
+						<a href='/collect?action=myCollect'
 									class="co-main-btn co-btn-width min-width d-inline-block h_40">我的票夾</a>
 					`;
 				})
@@ -1361,17 +1373,18 @@
     </script>
 	<!-- 場次時間-->
 	<script>
-			const ticketsList = document.querySelector("#ticketsList");
-			const urlParams = new URLSearchParams(window.location.search);
-			const memberNo = urlParams.get("memberNo");
-			console.log(memberNo);
+			// const ticketsList = document.querySelector("#ticketsList");
+			// const urlParams = new URLSearchParams(window.location.search);
+			// const memberNo = urlParams.get("memberNo");
+			// console.log(memberNo);
 
 			fetch(
-				`http://localhost:8085/TorderView/findBymemberNo?memberNo=${85345}`
+				`/TorderDetailsView/findBymemberNo?memberNo=${85341}`
 			)
 				.then((resp) => resp.json())
 				.then((data) => {
           console.log(data);
+		  //排除重複值
           const filteredData = data.filter((obj, index, self) =>
             index === self.findIndex((t) => (
               t.torderNo === obj.torderNo
@@ -1380,13 +1393,26 @@
           console.log(filteredData);
 
 					let str="";
-          let status=""
+         		    let status=""
 					let count=0;
+					let deadline="";
 					for(i of filteredData){
-             switch (i.tpaymentStatus) {
+						const now = new Date();
+						const sessionDate = new Date(i.sessionsTime);
+						const threeDaysAgo = new Date(sessionDate.getTime() - 3 * 86400000);
+						if (now < threeDaysAgo) {
+							deadline = "true";
+						} else {
+							deadline = "false";
+						}
+						let cancelbtnShow="";
+						switch (i.tpaymentStatus) {
                 case 0: status = "未付款";
                  break;
                case 1: status = "已付款";
+							if(now < threeDaysAgo){
+								cancelbtnShow=`<button id="cancelbtn${i.torderNo}" onclick="cancelTorder(${i.torderNo},${deadline})">取消訂單</button>`
+							}
                  break;
                case 2: status = "已取消";
                  break;
@@ -1424,8 +1450,8 @@
                                   <div class="card-dt-text">
                                     <h6>訂單狀態</h6>
                                     <span class="tpaymentStatus" >${status}</span>
-                                    <button id="cancelbtn${count}">取消訂單</button>
-                                  </div>
+                                    ${cancelbtnShow}
+									</div>
                                 </div>
                                      <div class="card-bottom-item">
                                   <div class="card-icon">
@@ -1444,49 +1470,55 @@
                                   <div class="card-dt-text">
                                     <h6>訂單明細</h6>
                                     <div>
-                                      <button id="tdetails${count}">詳情</button>
+                                      <button id="tdetails${count}" onclick="location.href='front-activity-torder_detail .html?torderNo=${i.torderNo}';">詳情</button>
                                     </div>
                                   </div>
                                 </div>
 
                               </div>`;
-
+							 console.log(i.torderNo)
 							  count++;
 					}
 					ticketsList.innerHTML=str;
 
-          //================ 取消訂單開始==========================================
-          for(let i=0;i<data.length;i++){
-             document.querySelector(`#cancelbtn${i}`).addEventListener("click",()=>{
-            swal({
-                 title: "是否取消訂單?",
-                 icon: "warning",
-                 buttons: {
-                否: true,
-                是: true
-              },
-                 dangerMode: true
-               }).then((value) => {
-              switch (value) {
-                case "是":
-
-                  swal("訂單已取消", "", "success");
-                  break;
-              }
-            });
-             })
-          }
-//===========================訂單明細========================================
-
-
-
+					
+					
+					
 				});
+	//========================== 取消訂單開始==========================================
+		//取消訂單function
+		function cancelTorder(e,deadline) {
+		   console.log("eeeee")
+				   swal({
+					   title: "是否取消訂單?",
+					   text:"注意:僅能在活動開始前三天退款",
+					   icon: "warning",
+					   buttons: {
+						   否: true,
+						   是: true
+					   },
+					   dangerMode: true
+				   }).then((value) => {
+					   switch (value) {
+						   case "是":
+							 //開始向後端送出取消訂單請求
+					
+							if(deadline==true){
+									fetch(`/Torder/deleteTorder?torderNo=${e}`, {
+								   method: 'POST'
+							   })
+								   .then(response => response.json()) 
+								   .then(data => console.log(data)) 
+								   .catch(error => console.error(error));
+								    swal("訂單已取消，請留意款項是否退回", "", "success");
+							   		break;
+							}else{
+									swal("活動即將開始，訂單取消失敗", "", "error");
+							} 
+					   }
+				   });
+			   }
 
-  //=========取消訂單function===
-
-     //  function cancelOrder(e){
-       //   fetch()
-     //  }
 
 
 

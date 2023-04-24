@@ -3,8 +3,12 @@ package com.ezticket.web.activity.service;
 import com.ezticket.web.activity.dto.AddTorderDTO;
 import com.ezticket.web.activity.dto.OrderTicketDTO;
 import com.ezticket.web.activity.dto.TorderDto;
+import com.ezticket.web.activity.pojo.Seats;
+import com.ezticket.web.activity.pojo.Session;
 import com.ezticket.web.activity.pojo.Tdetails;
 import com.ezticket.web.activity.pojo.Torder;
+import com.ezticket.web.activity.repository.SeatsRepository;
+import com.ezticket.web.activity.repository.SessionRepository;
 import com.ezticket.web.activity.repository.TdetailsRepository;
 import com.ezticket.web.activity.repository.TorderRepository;
 import com.ezticket.web.product.dto.AddPorderDTO;
@@ -18,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,6 +44,10 @@ public class TorderService {
 
     @Autowired
     private SessionService sessionService;
+    @Autowired
+    SeatsRepository seatsRepository;
+    @Autowired
+    SessionRepository sessionRepository;
 
     public List<TorderDto> findByOrderByTorderNoDesc() {
         return torderRepository.findByOrderByTorderNoDesc()
@@ -98,6 +108,55 @@ public class TorderService {
 
     public Torder updateTorder(Torder torder){
         return torderRepository.save(torder);
+    }
+
+
+
+
+    public void deleteTorder(Integer torderNo) {
+        // 找到對應的tdetails
+        Tdetails tdetails = tdetailsRepository.findByTorderNo(torderNo);
+        System.out.println("hhhhhhhhhhh");
+        // 找到對應的session
+        Integer sessionNo = tdetails.getSessionNo();
+        Session session = sessionRepository.findById(sessionNo).get();
+        // 活動開始時間前三天才可退票
+        Date now = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(session.getSessionsTime());
+        calendar.add(Calendar.DATE, -3);
+        Date deadline = calendar.getTime();
+        if (now.before(deadline)) {
+            // 若有座位，更新座位狀態
+            if (tdetails.getSeatNo() != null) {
+                updateSeatStatus(sessionNo, tdetails.getSeatNo(), 1);
+            } else {
+                // 若無座位，更新無座位狀態
+                updateStandingQty(sessionNo, tdetails.getTqty());
+            }
+        }
+        // 更新torder狀態
+        Torder torder = torderRepository.findById(torderNo).get();
+        torder.setTpaymentStatus(2);
+        torder.setTprocessStatus(2);
+        torderRepository.save(torder);
+    }
+
+    private void updateSeatStatus(Integer sessionNo, Integer seatNo, Integer seatStatus) {
+        Seats seat = seatsRepository.findBySessionNoAndSeatNo(sessionNo, seatNo);
+        System.out.println("aaaaaaaa");
+        seat.setSeatStatus(seatStatus);
+        seatsRepository.save(seat);
+        Session session = sessionRepository.findById(sessionNo).get();
+        session.setSeatsQty(session.getSeatsQty() - 1);
+        sessionRepository.save(session);
+    }
+
+    private void updateStandingQty(Integer sessionNo, Integer tqty) {
+        Session session = sessionRepository.findById(sessionNo).get();
+        System.out.println("bbbbbbbbbbbbb");
+        session.setStandingQty(session.getStandingQty() - tqty);
+        sessionRepository.save(session);
     }
 
 

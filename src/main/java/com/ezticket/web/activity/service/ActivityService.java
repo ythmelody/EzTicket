@@ -9,7 +9,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +20,9 @@ public class ActivityService {
     private ActivityRepository activityRepository;
     @Autowired
     private ModelMapper modelMapper;
+
+
+
 
     public List<ActivityDto> findAllByOrderByActivityNoDesc(){
         return activityRepository.findAllByOrderByActivityNoDesc()
@@ -82,8 +84,8 @@ public class ActivityService {
     }
 
 
-    public Optional<ActivityDto> findByactivityNo(Integer activityNo) {
-        return activityRepository.findByactivityNo(activityNo).map(this::entityToDTO);
+    public Optional<Activity> findByactivityNo(Integer activityNo) {
+        return activityRepository.findByactivityNo(activityNo);
 
     }
     public List<ActivityDto> findAllByActivityNo(Integer activityNo){
@@ -109,35 +111,16 @@ public class ActivityService {
             activityRepository.deleteActivity(activityNo,aStatus);
 
     }
-//    public Activity updateActivityById(Integer activityNo, Activity activity) {
-//        Optional<Activity> optionalActivity = activityRepository.findById(activityNo);
-//
-//        if (optionalActivity.isPresent()) {
-//            Activity activityObj = optionalActivity.get();
-//            activityObj.setAName(activity.getAName());
-//            activityObj.setAClassNo(activity.getAClassNo());
-//            activityObj.setPerformer(activity.getPerformer());
-//            activityObj.setHostNo(activity.getHostNo());
-//            activityObj.setADiscrip(activity.getADiscrip());
-//            activityObj.setANote(activity.getANote());
-//            activityObj.setATicketRemind(activity.getATicketRemind());
-//            activityObj.setAPlace(activity.getAPlace());
-//            activityObj.setAPlaceAdress(activity.getAPlaceAdress());
-//            activityObj.setASDate(activity.getASDate());
-//            activityObj.setAEDate(activity.getAEDate());
-//            activityObj.setWetherSeat(activity.getWetherSeat());
-//            activityObj.setAStatus(activity.getAStatus());
-//
-//            // Save updated activity object to database
-//            return activityRepository.save(activityObj);
-//        } else {
-//            throw new RuntimeException("Activity with id " + activityNo + " not found");
-//        }
-//    }
-
+    public Activity findActivityByNo(Integer activityNo) {
+        return activityRepository.findById(activityNo).orElse(null);
+    }
 
     //    Add by Shawn on 04/19
     public List<Integer> findActNosByWetherSeatIsTrue(){
         return activityRepository.findActNosByWetherSeatIsTrue();
+    }
+
+    public List <Activity> findByaClassNo(Integer aclassNo) {
+      return activityRepository.findByaClassNo(aclassNo);
     }
 }

@@ -1,0 +1,237 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, shrink-to-fit=9">
+	<meta name="description" content="Gambolthemes">
+	<meta name="author" content="Gambolthemes">
+	<title>Barren - Simple Online Event Ticketing System</title>
+
+	<!-- Favicon Icon -->
+	<link rel="icon" type="image/png" href="images/fav.png">
+
+	<!-- Stylesheets -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+		rel="stylesheet">
+	<link href='vendor/unicons-2.0.1/css/unicons.css' rel='stylesheet'>
+	<link href="css/style.css" rel="stylesheet">
+	<link href="css/responsive.css" rel="stylesheet">
+	<link href="css/night-mode.css" rel="stylesheet">
+
+	<!-- Vendor Stylesheets -->
+	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+	<link href="vendor/OwlCarousel/assets/owl.carousel.css" rel="stylesheet">
+	<link href="vendor/OwlCarousel/assets/owl.theme.default.min.css" rel="stylesheet">
+	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+
+</head>
+<style>
+	.disablebtn {
+		color: black;
+		background-color: rgb(212, 212, 212);
+	}
+</style>
+
+<body>
+	<div class="form-wrapper">
+		<div class="app-form">
+			<div class="app-form-sidebar">
+				<div class="sidebar-sign-logo">
+					<img src="images/sign-logo.svg" alt="">
+				</div>
+				<div class="sign_sidebar_text">
+					<h1>Welcome to ezTicket!</h1>
+				</div>
+			</div>
+			<div class="app-form-content">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-lg-10 col-md-10">
+							<div class="app-top-items">
+								<a href="index.html">
+									<div class="sign-logo" id="logo">
+										<img src="images/logo.svg" alt="">
+										<img class="logo-inverse" src="images/dark-logo.svg" alt="">
+									</div>
+								</a>
+								<div class="app-top-right-link">
+									<a class="sidebar-register-link" href="front-users-bu-sign-in.html"><i
+											class="fa-regular fa-circle-left me-2"></i>返回後台使用者登入</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-5 col-lg-6 col-md-7">
+							<div class="registration">
+								<form style="margin-bottom: 20px;">
+									<h2 style="width: 400px;" class="registration-title">重新設定密碼&nbsp;&nbsp;<p
+											id="statusfalse" style="color: red; display: inline-block; margin: 0;"></p>
+									</h2>
+									<div class="form-group mt-5">
+										<label class="form-label">我們將會發送一封信件，請輸入信件中的驗證碼以重設密碼。</label>
+										<input id="email" class="form-control h_50" type="email"
+											placeholder="請輸入您註冊時的Email" value="" style="margin-bottom: 10px;">
+									</div>
+									<button id="reset" class="main-btn btn-hover w-100 mt-4" type="submit">重設密碼</button>
+								</form>
+								<div class="new-sign-link">
+									<a class="signup-link" href="front-users-bu-sign-in.html"><i
+											class="fa-regular fa-circle-left me-2"></i>Back to sign in</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="copyright-footer">
+					© 2022, Barren. All rights reserved. Powered by Gambolthemes
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="js/jquery-3.6.0.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="vendor/OwlCarousel/owl.carousel.js"></script>
+	<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+	<script src="js/custom.js"></script>
+	<script src="js/night-mode.js"></script>
+
+</body>
+<script>
+	$(document).ready(() => {
+		$("#reset").on("click", function (event) {
+			event.preventDefault();
+			const email = $("#email").val();
+			if (email === "") {
+				$("#statusfalse").text("請填寫您的Email!");
+			} else if (email !== "") {
+				$("#statusfalse").text("請稍候...");
+				//以下之後要用fetch包住連去controller驗證有無此帳號
+				//有的話用redis生成驗證碼,並執行下列程式碼
+				fetch(`backuser/checkemail/${email}`)
+					.then(response => response.text())
+					.then(result => {
+						// console.log(result);
+						const validEmail = JSON.parse(result);
+						if (validEmail) {
+							$("#statusfalse").text("");
+							$("#reset").remove();
+							$("#email").prop("readonly", true);
+							$("#email").addClass("input-disabled");
+							$("<input>").attr({
+								type: 'text',
+								id: 'verification',
+								class: 'form-control h_50',
+								placeholder: '請輸入驗證碼'
+							}).insertAfter($("#email"));
+
+							//設定幾秒不能按
+							let seconds = 15;
+							$("<button>").attr({
+								type: 'button',
+								id: 'resend',
+								class: 'main-btn w-100 mt-4 disablebtn',
+							}).text(`重新發送(${seconds})`).prop('disabled', true).insertAfter($("#verification"));
+							//設定按下後的按鈕狀態改變
+							let s = setInterval(() => {
+								seconds--;
+								if (seconds > 0) {
+									$("#resend").text(`重新發送(${seconds})`);
+									$("#resend").removeClass("btn-hover");
+									$("#resend").addClass("disablebtn");
+								} else {
+									$("#resend").prop('disabled', false);
+									$("#resend").text('重新發送');
+									$("#resend").addClass("btn-hover");
+									$("#resend").removeClass("disablebtn");
+									clearInterval(s);
+								}
+							}, 1000);
+
+							$("<button>").attr({
+								type: 'button',
+								id: 'send',
+								class: 'main-btn btn-hover w-100 mt-4'
+							}).text("確定送出").insertAfter($("#resend"));
+
+
+							//重新發送按鈕
+							$("#resend").click(() => {
+								//15秒後才能再按
+								seconds = 15;
+								$("#resend").prop('disabled', true);
+								$("#resend").text(`重新發送(${seconds})`);
+								$("#resend").removeClass("btn-hover");
+								$("#resend").addClass("disablebtn");
+								console.log("test")
+								let s = setInterval(() => {
+									seconds--;
+									if (seconds > 0) {
+										$("#resend").prop('disabled', true);
+										$("#resend").text(`重新發送(${seconds})`);
+										$("#resend").removeClass("btn-hover");
+										$("#resend").addClass("disablebtn");
+									} else {
+										$("#resend").prop('disabled', false);
+										$("#resend").text('重新發送');
+										$("#resend").addClass("btn-hover");
+										$("#resend").removeClass("disablebtn");
+										clearInterval(s);
+									}
+								}, 1000);
+								//利用fetch去重新生成驗證碼
+								fetch(`backuser/checkemail/${email}`)
+									.then(response => response.text())
+									.then(result => {
+										console.log("再次生成驗證碼!")
+									})
+
+							});
+						} else {
+							$("#statusfalse").text("查無此帳號，請通知後台管理員!")
+						}
+
+
+						//確定送出按鈕 ->驗證驗證碼的是否正確
+						$("#send").click(() => {
+							const formData = new FormData();
+							formData.append('email', $("#email").val());
+							formData.append('code', $("#verification").val());
+
+							if ($("#verification").val() === "") {
+								$("#statusfalse").text("請輸入驗證碼!")
+								return;
+							}
+							fetch('backuser/verify', {
+								method: 'POST',
+								body: formData,
+							})
+								.then(response => response.json())
+								.then(result => {
+									console.log(result);
+									if (result) {
+										localStorage.setItem("email", email);
+										window.location.href = "front-users-reset-pwd.html"
+									} else {
+										$("#statusfalse").text("驗證碼錯誤，請再次確認或重新發送!")
+									}
+								})
+								.catch(error => console.error(error));
+						});
+					});
+			}
+		});
+	});
+
+
+	
+
+
+</script>
+
+</html>

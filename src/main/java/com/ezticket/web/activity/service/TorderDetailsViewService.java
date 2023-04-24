@@ -1,6 +1,7 @@
 package com.ezticket.web.activity.service;
 
 import com.ezticket.web.activity.pojo.TorderDetailsView;
+import com.ezticket.web.activity.pojo.TorderView;
 import com.ezticket.web.activity.repository.TorderDetailsViewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,5 +22,9 @@ public class TorderDetailsViewService {
 
     public Optional<TorderDetailsView> getOne(Integer tdetailsNo){
         return torderDetailsViewRepository.findById(tdetailsNo);
+    }
+    public List<TorderDetailsView> findBymemberNo(Integer memberNo){
+        return torderDetailsViewRepository.findBymemberNo(memberNo)
+                .stream().collect(Collectors.toList());
     }
 }

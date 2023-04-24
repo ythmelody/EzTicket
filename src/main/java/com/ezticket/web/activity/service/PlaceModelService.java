@@ -1,8 +1,11 @@
 package com.ezticket.web.activity.service;
 
+import com.ezticket.web.activity.dto.ModelImgDTO;
 import com.ezticket.web.activity.dto.PlaceModelDTO;
+import com.ezticket.web.activity.dto.SiteImgDTO;
 import com.ezticket.web.activity.pojo.PlaceModel;
 import com.ezticket.web.activity.repository.PlaceModelRepository;
+import com.ezticket.web.users.dto.MemberImgDTO;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
@@ -11,6 +14,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
@@ -120,7 +124,53 @@ public class PlaceModelService {
         return img;
     }
 
-//    新增修改/刪除座位圖
+//    新增修改座位圖
+    @Transactional
+    public PlaceModel updateModelImg(ModelImgDTO modelImgDTO) throws IOException {
+        Optional<PlaceModel> optPm = placeModelRepository.findById(modelImgDTO.getModelno());
+        if (optPm.isEmpty()){
+            throw new RuntimeException("PlaceModel not found: " + modelImgDTO.getModelno());
+        } else {
+            PlaceModel placeModel = optPm.get();
+            placeModel.setModelImg(modelImgDTO.getModelImg().getBytes());
+            return placeModelRepository.save(placeModel);
+        }
+    }
 
+    //    場地外觀圖
+//    @Transactional
+//    public byte[] getSiteImg(Integer modelno) throws Exception {
+//
+//        byte[] img = null;
+//        try {
+//            img = placeModelRepository.findById(modelno).orElseThrow().getSiteImg();
+//            System.out.println(img + ".......................DB資料有進來 service");
+//            if (img != null) {
+//                System.out.println("............................有圖片");
+//                return img;
+//            }
+//        } catch (Exception e) {
+//            System.out.println("..................data base img error");
+//        }
+//        Resource resource = resourceLoader.getResource("classpath:static/images/event-imgs/qmark.jpg");
+//        try (InputStream inputStream = resource.getInputStream()) {
+//            img = inputStream.readAllBytes();
+//        }
+//        System.out.println("................................無圖片，顯示預設圖");
+//        return img;
+//    }
+
+    //    新增修改場地外觀
+//    @Transactional
+//    public PlaceModel updateSiteImg(SiteImgDTO siteImgDTO) throws IOException {
+//        Optional<PlaceModel> optPm = placeModelRepository.findById(siteImgDTO.getModelno());
+//        if (optPm.isEmpty()){
+//            throw new RuntimeException("PlaceModel not found: " + siteImgDTO.getModelno());
+//        } else {
+//            PlaceModel placeModel = optPm.get();
+//            placeModel.setSiteImg(siteImgDTO.getSiteImg().getBytes());
+//            return placeModelRepository.save(placeModel);
+//        }
+//    }
 //    複製模板：findAllSeatsByPlaceModelno -> insert
 }

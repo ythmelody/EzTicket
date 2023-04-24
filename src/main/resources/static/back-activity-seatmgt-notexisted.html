@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, shrink-to-fit=9">
     <meta name="description" content="Gambolthemes">
     <meta name="author" content="Gambolthemes">
-    <title>Barren - Simple Online Event Ticketing System</title>
+    <title>ezTicket - 一站式購票體驗</title>
 
     <!-- Favicon Icon -->
-    <link rel="icon" type="image/png" href="images/fav.png">
+    <link rel="icon" type="image/png" href="images/ezTicket.png">
 
     <!-- Stylesheets -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,6 +50,13 @@
             line-height: 27.5px
         }
 
+        .seat input {
+            width: 20px;
+            text-align: center;
+            border: 0;
+            background: transparent
+        }
+
         .banned {
             background: lightcoral;
         }
@@ -68,12 +75,14 @@
 
         /* (B) SEATS LAYOUT */
         #layout {
-            max-width: 1000px;
+            max-height: 60vh;
+            max-width: 100vw;
             display: grid;
             grid-gap: 10px;
             margin-bottom: 20px;
             overflow: auto;
         }
+
 
         /* (C) LEGEND */
         #legend {
@@ -124,27 +133,28 @@
 
 <header class="header">
     <div class="header-inner">
-        <nav class="navbar navbar-expand-lg bg-barren barren-head navbar fixed-top justify-content-sm-start pt-0 pb-0 ps-lg-0 pe-2">
+        <nav
+                class="navbar navbar-expand-lg bg-barren barren-head navbar fixed-top justify-content-sm-start pt-0 pb-0 ps-lg-0 pe-2">
             <div class="container-fluid ps-0">
                 <button type="button" id="toggleMenu" class="toggle_menu">
                     <i class="fa-solid fa-bars-staggered"></i>
                 </button>
-                <button id="collapse_menu" class="collapse_menu me-4">
+                <button id="collapse_menu" class="collapse_menu me-4" disabled>
                     <i class="fa-solid fa-bars collapse_menu--icon "></i>
                     <span class="collapse_menu--label"></span>
                 </button>
                 <button class="navbar-toggler order-3 ms-2 pe-0" type="button" data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-						<span class="navbar-toggler-icon">
-							<i class="fa-solid fa-bars"></i>
-						</span>
+                        <span class="navbar-toggler-icon">
+                            <i class="fa-solid fa-bars"></i>
+                        </span>
                 </button>
                 <a class="navbar-brand order-1 order-lg-0 ml-lg-0 ml-2 me-auto" href="index.html">
                     <div class="res-main-logo">
-                        <img src="images/logo-icon.svg" alt="">
+                        <img src="images/ezTicket-icon.svg" alt="">
                     </div>
                     <div class="main-logo" id="logo">
-                        <img src="images/logo.svg" alt="">
+                        <img src="images/ezTicket.svg" alt="">
                         <img class="logo-inverse" src="images/dark-logo.svg" alt="">
                     </div>
                 </a>
@@ -152,7 +162,7 @@
                      aria-labelledby="offcanvasNavbarLabel">
                     <div class="offcanvas-header">
                         <div class="offcanvas-logo" id="offcanvasNavbarLabel">
-                            <img src="images/logo-icon.svg" alt="">
+                            <img src="images/ezTicket-icon.svg" alt="">
                         </div>
                         <button type="button" class="close-btn" data-bs-dismiss="offcanvas" aria-label="Close">
                             <i class="fa-solid fa-xmark"></i>
@@ -170,7 +180,7 @@
                 </div>
                 <div class="right-header order-2">
                     <ul class="align-self-stretch">
-                        <li>
+                        <li class="6">
                             <a href="back-activity-ticket-inspec.html" class="create-btn btn-hover">
                                 <i class="fa-solid fa-ticket"></i>
                                 <span>票務</span>
@@ -179,7 +189,7 @@
                         <li class="dropdown account-dropdown order-3">
                             <a href="#" class="account-link" role="button" id="accountClick"
                                data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="images/profile-imgs/img-13.jpg" alt="">
+                                <img src="images/profile-imgs/img-13.jpg" class="D-baimg" alt="">
                                 <i class="fas fa-caret-down arrow-icon"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-account dropdown-menu-end"
@@ -187,15 +197,15 @@
                                 <li>
                                     <div class="dropdown-account-header">
                                         <div class="account-holder-avatar">
-                                            <img src="images/profile-imgs/img-13.jpg" alt="">
+                                            <img src="images/profile-imgs/img-13.jpg" class="D-baimg" alt="">
                                         </div>
-                                        <h5>林晉賢</h5>
-                                        <p>shawntest@example.com</p>
+                                        <h5 class="D-baname"><!-- 姓名 --></h5>
+                                        <p class="D-baemail"><!-- email --></p>
                                     </div>
                                 </li>
                                 <li class="profile-link">
                                     <a href="back-users-profile.html" class="link-item">個人資料管理</a>
-                                    <a href="sign_in.html" class="link-item">登出</a>
+                                    <a href="front-users-bu-sign-in.html" class="link-item logOut">登出</a>
                                 </li>
                             </ul>
                         </li>
@@ -209,133 +219,146 @@
 <!-- Header End-->
 <!-- Left Sidebar Start -->
 <nav class="vertical_nav" style="overflow: auto!important;">
-    <div class="left_section menu_left" id="js-menu" >
+    <div class="left_section menu_left" id="js-menu">
         <div class="left_section">
             <ul>
-                <li class="menu--item">
-                    <a href="#" class="menu--link" title="最新消息管理"
-                       data-bs-toggle="tooltip" data-bs-placement="right">
+                <div id="havefunc" style="background-color: #004895; display: flex; justify-content: center; align-items: center;">
+                    <p class="D-barole" style="color: white; text-align: center; margin: 0;"></p>
+                </div>
+                <li class="menu--item 10">
+                    <!-- 缺網址 -->
+                    <a href="#" class="menu--link" title="最新消息管理" data-bs-toggle="tooltip"
+                       data-bs-placement="right">
                         <i class="fa-solid fa-newspaper menu--icon"></i>
                         <span class="menu--label">最新消息管理</span>
                     </a>
                 </li>
-                <li class="menu--item">
-                    <a href="#" class="menu--link" title="節目管理"
-                       data-bs-toggle="tooltip" data-bs-placement="right">
+                <li class="menu--item 19">
+                    <a href="back-activity-eventdashboard.html" class="menu--link" title="節目管理" data-bs-toggle="tooltip" data-bs-placement="right">
                         <i class="fa-solid fa-calendar-days menu--icon"></i>
                         <span class="menu--label">節目管理</span>
                     </a>
                 </li>
-                <li class="menu--item">
-                    <a href="#" class="menu--link" title="節目類別管理"
-                       data-bs-toggle="tooltip" data-bs-placement="right">
+                <li class="menu--item 19" style="display: none;">
+                    <!-- 缺網址 -->
+                    <a href="#" class="menu--link" title="節目類別管理" data-bs-toggle="tooltip"
+                       data-bs-placement="right">
                         <i class="fa-solid fa-folder menu--icon"></i>
                         <span class="menu--label">節目類別管理</span>
                     </a>
                 </li>
-                <li class="menu--item">
+                <li class="menu--item 21">
                     <a href="back-activity-seatmgt-allactivity.html" class="menu--link" title="節目座位管理"
                        data-bs-toggle="tooltip" data-bs-placement="right">
                         <i class="fa-solid fa-chair menu--icon"></i>
                         <span class="menu--label">節目座位管理</span>
                     </a>
                 </li>
-                <li class="menu--item">
+                <li class="menu--item 20">
                     <a href="back-activity-commentmgt.html" class="menu--link" title="節目評論管理"
                        data-bs-toggle="tooltip" data-bs-placement="right">
                         <i class="fa-solid fa-comments menu--icon"></i>
                         <span class="menu--label">節目評論管理</span>
                     </a>
                 </li>
-                <li class="menu--item">
+                <li class="menu--item 18">
+                    <a href="back-activity-torder_manage.html" class="menu--link" title="票券訂單管理"
+                       data-bs-toggle="tooltip" data-bs-placement="right">
+                        <i class="fa-solid fa-file-invoice menu--icon"></i>
+                        <span class="menu--label">票券訂單管理</span>
+                    </a>
+                </li>
+                <li class="menu--item 22">
                     <a href="back-activity-model-place.html" class="menu--link" title="場地模板管理"
                        data-bs-toggle="tooltip" data-bs-placement="right">
                         <i class="fa-solid fa-couch menu--icon"></i>
                         <span class="menu--label">場地模板管理</span>
                     </a>
                 </li>
-                <li class="menu--item">
+                <li class="menu--item 17">
                     <a href="back-product-product_manage.html" class="menu--link" title="商品管理"
                        data-bs-toggle="tooltip" data-bs-placement="right">
                         <i class="fa-solid fa-bag-shopping menu--icon"></i>
                         <span class="menu--label">商品管理</span>
                     </a>
                 </li>
-                <li class="menu--item">
+                <li class="menu--item 17">
                     <a href="back-product-pclass_manager.html" class="menu--link" title="商品類別管理"
                        data-bs-toggle="tooltip" data-bs-placement="right">
                         <i class="fa-regular fa-folder menu--icon"></i>
                         <span class="menu--label">商品類別管理</span>
                     </a>
                 </li>
-                <li class="menu--item">
+                <li class="menu--item 12">
                     <a href="back-product-coupon_manage.html" class="menu--link" title="商品優惠券管理"
                        data-bs-toggle="tooltip" data-bs-placement="right">
                         <i class="fa-solid fa-percent menu--icon"></i>
                         <span class="menu--label">商品優惠券管理</span>
                     </a>
                 </li>
-                <li class="menu--item">
+                <li class="menu--item 16">
                     <a href="back-product-comment_manager.html" class="menu--link" title="商品評論管理"
                        data-bs-toggle="tooltip" data-bs-placement="right">
                         <i class="fa-regular fa-comments menu--icon"></i>
                         <span class="menu--label">商品評論管理</span>
                     </a>
                 </li>
-                <li class="menu--item">
-                    <a href="back-product-order_manage.html" class="menu--link" title="訂單管理"
+                <li class="menu--item 15">
+                    <a href="back-product-order_manage.html" class="menu--link" title="商品訂單管理"
                        data-bs-toggle="tooltip" data-bs-placement="right">
                         <i class="fa-solid fa-file-invoice menu--icon"></i>
-                        <span class="menu--label">訂單管理</span>
+                        <span class="menu--label">商品訂單管理</span>
                     </a>
                 </li>
-                <li class="menu--item">
-                    <a href="#" class="menu--link" title="帳務管理"
-                       data-bs-toggle="tooltip" data-bs-placement="right">
+                <li class="menu--item 13" style="display: none;">
+                    <!-- 缺網址 -->
+                    <a href="#" class="menu--link" title="帳務管理" data-bs-toggle="tooltip" data-bs-placement="right">
                         <i class="fa-solid fa-coins menu--icon"></i>
                         <span class="menu--label">帳務管理</span>
                     </a>
                 </li>
-                <li class="menu--item">
-                    <a href="#" class="menu--link" title="常見問題管理"
-                       data-bs-toggle="tooltip" data-bs-placement="right">
+                <li class="menu--item 4">
+                    <!-- 缺網址 -->
+                    <a href="#" class="menu--link" title="常見問題管理" data-bs-toggle="tooltip"
+                       data-bs-placement="right">
                         <i class="fa-solid fa-question-circle menu--icon"></i>
                         <span class="menu--label">常見問題管理</span>
                     </a>
                 </li>
-                <li class="menu--item">
-                    <a href="#" class="menu--link" title="客服即時通"
-                       data-bs-toggle="tooltip" data-bs-placement="right">
+                <li class="menu--item 5" style="display: none;">
+                    <!-- 缺網址 -->
+                    <a href="#" class="menu--link" title="客服即時通" data-bs-toggle="tooltip" data-bs-placement="right">
                         <i class="fa-solid fa-headset menu--icon"></i>
                         <span class="menu--label">客服即時通</span>
                     </a>
                 </li>
-                <li class="menu--item">
-                    <a href="back-users-host.html" class="menu--link"
-                       title="主辦單位管理" data-bs-toggle="tooltip" data-bs-placement="right">
+                <li class="menu--item 14">
+                    <a href="back-users-host.html" class="menu--link" title="主辦單位管理" data-bs-toggle="tooltip"
+                       data-bs-placement="right">
                         <i class="fa-solid fa-square-plus menu--icon"></i>
                         <span class="menu--label">主辦單位管理</span>
                     </a>
                 </li>
-                <li class="menu--item">
-                    <a href="back-users-member.html" class="menu--link" title="會員資料管理"
-                       data-bs-toggle="tooltip" data-bs-placement="right">
+                <li class="menu--item 3">
+                    <a href="back-users-member.html" class="menu--link" title="會員資料管理" data-bs-toggle="tooltip"
+                       data-bs-placement="right">
                         <i class="fa-solid fa-user-group menu--icon"></i>
                         <span class="menu--label">會員資料管理</span>
                     </a>
                 </li>
-                <li class="menu--item">
-                    <a href="back-users-my-team.html" class="menu--link" title="使用者帳號管理"
-                       data-bs-toggle="tooltip" data-bs-placement="right">
+                <li class="menu--item 9">
+                    <a href="back-users-my-team.html" class="menu--link" title="後台帳號權限管理" data-bs-toggle="tooltip"
+                       data-bs-placement="right">
                         <i class="fa-solid fa-user-secret menu--icon"></i>
-                        <span class="menu--label">使用者帳號權限管理</span>
+                        <span class="menu--label">後台帳號及權限管理</span>
                     </a>
                 </li>
-                <li class="menu--item">
-                    <a href="#" class="menu--link" title="系統參數管理"
-                       data-bs-toggle="tooltip" data-bs-placement="right">
+                <li class="menu--item 7" style="display: none;">
+                    <!-- 缺網址 -->
+                    <a href="#" class="menu--link" title="系統參數管理" data-bs-toggle="tooltip"
+                       data-bs-placement="right">
                         <i class="fa-solid fa-gear menu--icon"></i>
-                        <span class="menu--label">系統參數管理</span>
+                        <span class="menu--label ">系統參數管理</span>
                     </a>
                 </li>
             </ul>
@@ -355,7 +378,8 @@
                         <!--這邊區域名稱應該要從 blockPrice 抓-->
                         <h5>區域名稱　<input id="blockName" type="text" placeholder="請輸入區域名稱" value=""
                                             class="form-control h_40"
-                                            style="display: inline-block!important; width: 200px;" disabled></h5>
+                                            style="display: inline-block!important; width: 200px;" disabled>
+                        </h5>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -377,15 +401,15 @@
                                             value="sold">已售出
                                     </button>
                                 </div>
-<!--                                <div style="margin: 47.5px 25px;">-->
-<!--                                    舞台方向：-->
-<!--                                    <select name="" id="" style="margin: 5px; border-color: #f1f1f1; width: 75px;">-->
-<!--                                        <option value="front" selected>前</option>-->
-<!--                                        <option value="back">後</option>-->
-<!--                                        <option value="left">左</option>-->
-<!--                                        <option value="right">右</option>-->
-<!--                                    </select>-->
-<!--                                </div>-->
+                                <!--                                <div style="margin: 47.5px 25px;">-->
+                                <!--                                    舞台方向：-->
+                                <!--                                    <select name="" id="" style="margin: 5px; border-color: #f1f1f1; width: 75px;">-->
+                                <!--                                        <option value="front" selected>前</option>-->
+                                <!--                                        <option value="back">後</option>-->
+                                <!--                                        <option value="left">左</option>-->
+                                <!--                                        <option value="right">右</option>-->
+                                <!--                                    </select>-->
+                                <!--                                </div>-->
                                 <div style="margin: 43px 0px;">
                                     <form id="rowAndColumns">
                                         排數：<input id="inputRow" type="text" class="form-control h_40" style="display: inline-block!important; margin: 5px; width: 75px;
@@ -400,8 +424,8 @@
 
                             <!-- 座位圖 -->
                             <!-- (A) SEAT LAYOUT -->
-                            <div class="d-md-flex flex-wrap align-items-center">
-                                <div id="layout" style="margin: auto;" style="overflow:auto!important;"></div>
+                            <div class="d-md-flex flex-wrap align-items-center" style="justify-content: center;">
+                                <div id="layout" style="margin: auto;"></div>
                             </div>
                         </div>
                     </div>
@@ -413,8 +437,8 @@
         <div class="text-center mt-5">
             <a href="back-activity-seatmgt-sessioncanmodi.html" class="main-btn btn-hover"
                style="background-color: gray; border: gray;" onclick="seatsmgt.goBack()">　返回　</a>
-<!--            <a href="back-activity-seatmgt-sessioncanmodi.html" class="main-btn btn-hover"-->
-<!--               onclick="seatsmgt.save()">儲存變更</a>-->
+            <!--            <a href="back-activity-seatmgt-sessioncanmodi.html" class="main-btn btn-hover"-->
+            <!--               onclick="seatsmgt.save()">儲存變更</a>-->
             <button class="main-btn btn-hover" onclick="seatsmgt.save()">儲存變更</button>
         </div>
     </div>
@@ -429,12 +453,18 @@
 <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 <script src="js/custom.js"></script>
 <script src="js/night-mode.js"></script>
+<!-- Kai  backuserData -->
+<script src="js/backuserData.js"></script>
 
 <!-- 選擇座位的JS -->
 <script>
     function changeStatus(btn) {
         if (btn.value === 'sold') {
-            alert('已售出座位無法變動!');
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '已售出座位無法變動!'
+            })
             return;
         }
 
@@ -496,8 +526,8 @@
                     let seat = document.createElement("div");
 
                     seat.innerHTML = `
-						第<input value="${i + 1}" style="width: 20px; text-align: center; border: 0; background: transparent">排<br>
-						第<input value="${j + 1}" style="width: 20px; text-align: center; border: 0; background: transparent">位<br>
+						第<input value="${i + 1}" onblur="checkEmpty(this)">排<br>
+						第<input value="${j + 1}" onblur="checkEmpty(this)">位<br>
 						`;
 
                     seat.className = "seat";
@@ -508,7 +538,6 @@
                         <input type="hidden" name="X" value="${i}">
                         <input type="hidden" name="Y" value="${j}">
                     `;
-
 
                     // 這行怪怪的，要注意
                     layout.appendChild(document.createElement("br"));
@@ -557,6 +586,23 @@
 
         // SAVE RESERVATION
         save: () => {
+
+            const seatsTBC = document.querySelectorAll("#layout div");
+
+            for (let i = 0; i < seatsTBC.length; i++) {
+                const inputTBC = seatsTBC[i].querySelectorAll('input');
+
+                if (inputTBC[0].value === '' || inputTBC[0].value === null ||
+                    inputTBC[1].value === '' || inputTBC[1].value === null) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: '座位排和位不得為空，請再次確認'
+                    })
+                    return;
+                }
+            }
+
             // GET SELECTED SEATS
             let seats = document.querySelectorAll("#layout div");
 
@@ -599,7 +645,7 @@
                 timer: 1500
             });
 
-            setTimeout(function(){
+            setTimeout(function () {
                 document.location.href = "back-activity-seatmgt-sessioncanmodi.html";
             }, 1500);
 
@@ -610,13 +656,22 @@
         }
     };
 
-    $(document).ready(function(){
+    // 錯誤驗證
+    function checkEmpty(element) {
+        if (element.value === '' || element.value === null) {
+            element.parentElement.style.border = '3px solid red';
+        } else {
+            element.parentElement.style.border = '';
+        }
+    }
+
+    $(document).ready(function () {
         $('#actNameAndSession').text('');
 
         $.ajax({
             async: false,
             type: 'GET',
-            url: "/Activity/findByActNo"+`?actNo=${sessionStorage.getItem("activityNo")}`,
+            url: "/Activity/findByActNo" + `?actNo=${sessionStorage.getItem("activityNo")}`,
             dataType: "json",
             success: function (jsondata) {
                 $('#actNameAndSession').text(`${jsondata.aname} (場次編號：${sessionStorage.getItem("sessionNo")})`);
@@ -626,7 +681,7 @@
         $.ajax({
             async: false,
             type: 'GET',
-            url: "/BlockPrice/findById"+`?blockNo=${sessionStorage.getItem("blockNo")}`,
+            url: "/BlockPrice/findById" + `?blockNo=${sessionStorage.getItem("blockNo")}`,
             dataType: "json",
             success: function (jsondata) {
                 $('#blockName').val(`${jsondata.blockName}`);
