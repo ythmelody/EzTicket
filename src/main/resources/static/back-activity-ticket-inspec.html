@@ -28,6 +28,13 @@
 		<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">	
 		
+		<style>
+			#preview {
+				width: 500px;
+				height: 300px;
+				margin: 0px auto;
+			}
+		</style>
 	</head>
 
 <body class="d-flex flex-column h-100">
@@ -279,286 +286,31 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="d-main-title">
-							<h3><i class="fa-solid fa-chart-pie me-3"></i>驗票 - 黃金歲月演唱會</h3>
+							<h3><i class="fa-solid fa-chart-pie me-3"></i>驗票</h3>
 						</div>
 					</div>
-					<div class="col-md-12">
+					<!-- <div class="col-md-12">
 						<div class="main-card mt-5">
 							<div class="dashboard-wrap-content p-4">
-								<div class="nav custom2-tabs btn-group" role="tablist">
-									<button class="tab-link ms-0 active" data-bs-toggle="tab" data-bs-target="#orders-tab" type="button" role="tab" aria-controls="orders-tab" aria-selected="true">掃描 QR code</button>
-									<button class="tab-link" data-bs-toggle="tab" data-bs-target="#customers-tab" type="button" role="tab" aria-controls="customers-tab" aria-selected="false">參加名單</button>
-									<button class="tab-link" data-bs-toggle="tab" data-bs-target="#tickets-tab" type="button" role="tab" aria-controls="tickets-tab" aria-selected="false">票房統計</button>
-									<!-- <button class="tab-link" data-bs-toggle="tab" data-bs-target="#payouts-tab" type="button" role="tab" aria-controls="payouts-tab" aria-selected="false">Payouts (<span class="total_event_counter">1</span>)</button> -->
-								</div>
-								<div class="d-md-flex flex-wrap align-items-center">
-									<div class="dashboard-date-wrap mt-4">
-										<div class="form-group">
-											<div class="relative-input position-relative">
-												<input class="form-control h_40" type="text" placeholder="姓名 / email / 電話" value="">
-												<i class="uil uil-search"></i>
-											</div>
-										</div>
-									</div>
-									<div class="rs ms-auto mt-4 mt_r4">
-										<a href="#" class="pe-4 w-100 ps-4 text-center co-main-btn h_40 d-inline-block"><i class="fa-solid fa-arrow-rotate-right me-3"></i>Refresh</a>
-									</div>
-								</div>
-								<!-- <div class="main-form mt-4">
-									<div class="row g-3">
-										<div class="col-lg-3 col-md-6">
-											<div class="form-group">
-												<select class="selectpicker" data-size="5" data-live-search="true">
-													<option value="all events" selected>All Events</option>																									
-												</select>
-											</div>
-										</div>
-										<div class="col-lg-3 col-md-6">
-											<div class="form-group">
-												<select class="selectpicker">
-													<option value="Today">Today</option>																									
-													<option value="Yesterday">Yesterday</option>																									
-													<option value="Last 7 Days">Last 7 Days</option>																									
-													<option value="Last 30 Days" selected>Last 30 Days</option>																									
-													<option value="This Month">This Month</option>																									
-													<option value="Last Month">Last Month</option>																																																	
-													<option value="Custom Range">Custom Range</option>																																																	
-												</select>
-											</div>
-										</div>
-										<div class="col-lg-3 col-md-6">
-											<div class="form-group">
-												<select class="selectpicker">
-													<option value="All Orders" selected>All Orders</option>																									
-													<option value="Refunded">Refunded</option>																									
-													<option value="Refund Rejected">Refund Rejected</option>																									
-													<option value="Refund Requested">Refund Requested</option>																									
-													<option value="Partially Refunded">Partially Refunded</option>																																																	
-												</select>
-											</div>
-										</div>
-										<div class="col-lg-3 col-md-6">
-											<div class="form-group">
-												<select class="selectpicker">
-													<option value="all">All Orders</option>																									
-													<option value="1">Active</option>																									
-													<option value="0">Canceled</option>																																																		
-												</select>
-											</div>
-										</div>
-									</div>
-								</div> -->
+								<div class="nav custom2-tabs btn-group" role="tablist"> -->
+									<button class="tab-link ms-0 active" data-bs-toggle="tab" data-bs-target="#orders-tab" type="button" role="tab" aria-controls="orders-tab" aria-selected="true" disabled>請掃描 QR code</button>
+								<!-- </div>
 							</div>
 						</div>
 						<div class="event-list">
 							<div class="tab-content">
-								<!-- <div class="tab-pane fade show active" id="orders-tab" role="tabpanel">
-									<div class="table-card mt-4">
-										<div class="main-table">
-											<div class="table-responsive">
-												<table class="table">
-													<thead class="thead-dark">
-														<tr>
-															<th scope="col">ID</th>
-															<th scope="col">Name</th>
-															<th scope="col">Event Name</th>
-															<th scope="col">Date</th>
-															<th scope="col">Reference</th>
-															<th scope="col">Status</th>
-															<th scope="col">Total</th>
-														</tr>
-													</thead>
-													<tbody>
-														<tr>										
-															<td>5291</td>	
-															<td>Larry Paige</td>	
-															<td><a href="#" target="_blank">Astrology on sunday event</a></td>	
-															<td>04/22/2022</td>	
-															<td>E1021100NA8711001</td>
-															<td><span class="status-circle red-circle"></span>Canceled</td>
-															<td>AUD $0.00</td>
-														</tr>
-														<tr>										
-															<td>5290</td>	
-															<td>John Cena</td>	
-															<td><a href="#" target="_blank">Melbourne plant sale</a></td>	
-															<td>04/22/2022</td>	
-															<td>E1021100NA8711002</td>
-															<td><span class="status-circle green-circle"></span>Paid</td>
-															<td>AUD $0.00</td>
-														</tr>
-														<tr>										
-															<td>5289</td>	
-															<td>Gleen Smith</td>	
-															<td><a href="#" target="_blank">Testing Events</a></td>	
-															<td>04/21/2022</td>	
-															<td>E1021100NA8711003</td>
-															<td><span class="status-circle blue-circle"></span>Refunded</td>
-															<td>AUD $0.00</td>
-														</tr>
-													</tbody>									
-												</table>
-											</div>
-										</div>
+								<div class="tab-pane fade show active" id="orders-tab" role="tabpanel"> -->
+									<div style="text-align: center;">
+									<video id="preview"></video>
 									</div>
-								</div> -->
-								<div class="tab-pane fade" id="customers-tab" role="tabpanel">
-									<div class="table-card mt-4">
-										<div class="main-table">
-											<div class="table-responsive">
-												<table class="table">
-													<thead class="thead-dark">
-														<tr>
-															<th scope="col">票券持有人</th>
-															<th scope="col">會員帳號</th>
-															<th scope="col">電話</th>
-															<th scope="col">票券狀態</th>
-														</tr>
-													</thead>
-													<tbody>
-														<tr>										
-															<td>Larry Paige</td>	
-															<td>larry@example.com</td>	
-															<td>0912345678</td>	
-															<td>
-                                                                <div class="icon">
-                                                                    <i class="fa-solid fa-ticket fa-2xl"></i>
-                                                                </div>
-                                                            </td>	
-														</tr>
-														<tr>										
-															<td>John Cena</td>	
-															<td>johncena@example.com</td>	
-															<td>0922222222</td>	
-                                                            <td>
-                                                                <span class="icon">
-                                                                    <i class="fa-solid fa-ticket fa-2xl"></i>
-                                                                </span>
-                                                            </td>
-														</tr>
-														<tr>										
-															<td>Jassica William</td>	
-															<td>jassica@example.com</td>	
-															<td>0933333333</td>	
-                                                            <td>
-                                                                <span class="icon">
-                                                                    <i class="fa-solid fa-ticket fa-2xl"></i>
-                                                                </span>
-                                                            </td>
-														</tr>
-														<tr>										
-															<td>Rock William</td>	
-															<td>rockwilliam@example.com</td>	
-															<td>0944444444</td>	
-                                                            <td>
-                                                                <span class="icon">
-                                                                    <i class="fa-solid fa-ticket fa-2xl"></i>
-                                                                </span>
-                                                            </td>
-														</tr>
-														<tr>										
-															<td>Gleen Smith</td>	
-															<td>gleensmith@example.com</td>	
-															<td>0955555555</td>	
-                                                            <td>
-                                                                <span class="icon">
-                                                                    <i class="fa-solid fa-ticket fa-2xl"></i>
-                                                                </span>
-                                                            </td>
-														</tr>
-														<tr>										
-															<td>John Doe</td>	
-															<td>johndoe@example.com</td>	
-															<td>0966666666</td>	
-                                                            <td>
-                                                                <span class="icon">
-                                                                    <i class="fa-solid fa-ticket fa-2xl"></i>
-                                                                </span>
-                                                            </td>
-														</tr>
-													</tbody>									
-												</table>
-											</div>
-										</div>
+									<div>
+										<h3 style="color: #102743;" id="msg">驗票資訊</h3>
 									</div>
-								</div>
-								<!-- <div class="tab-pane fade" id="tickets-tab" role="tabpanel">
-									<div class="table-card mt-4">
-										<div class="main-table">
-											<div class="table-responsive">
-												<table class="table">
-													<thead class="thead-dark">
-														<tr>
-															<th scope="col">Order ID</th>
-															<th scope="col">Reference ID</th>
-															<th scope="col">Customer Name</th>
-															<th scope="col">Email Address</th>
-														</tr>
-													</thead>
-													<tbody>
-														<tr>										
-															<td>2356</td>	
-															<td>F6ACCM-R76MTK-1434658508</td>	
-															<td>Larry Paige</td>	
-															<td>larry@example.com</td>
-														</tr>
-														<tr>										
-															<td>2355</td>	
-															<td>F6ACCM-R76MTK-1434658508</td>	
-															<td>Gleen William</td>	
-															<td>gleenwilliam@example.com</td>
-														</tr>
-														<tr>										
-															<td>2354</td>	
-															<td>F6ACCM-R76MTK-1434658508</td>	
-															<td>Rock Smith</td>	
-															<td>rocksmith@example.com</td>
-														</tr>
-														<tr>										
-															<td>2353</td>	
-															<td>F6ACCM-R76MTK-1434658508</td>	
-															<td>John Cena</td>	
-															<td>johncena@example.com</td>
-														</tr>
-													</tbody>									
-												</table>
-											</div>
-										</div>
-									</div>
-								</div> -->
-								<!-- <div class="tab-pane fade" id="payouts-tab" role="tabpanel">
-									<div class="table-card mt-4">
-										<div class="main-table">
-											<div class="table-responsive">
-												<table class="table">
-													<thead class="thead-dark">
-														<tr>
-															<th scope="col">Remittance ID</th>
-															<th scope="col">Remittance Date</th>
-															<th scope="col">Date Paid</th>
-															<th scope="col">Date</th>
-															<th scope="col">Transaction ID</th>
-															<th scope="col">Actions</th>
-														</tr>
-													</thead>
-													<tbody>
-														<tr>										
-															<td>12475</td>	
-															<td>28/1.04/2022</td>	
-															<td>26/04/2022</td>	
-															<td>22/04/2022</td>	
-															<td>TXR21234123UX</td>	
-															<td><a href="#" class="a-link">Download</a></td>																
-														</tr>														
-													</tbody>									
-												</table>
-											</div>
-										</div>
-									</div>
-								</div> -->
+								<!-- </div>
+								
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -574,5 +326,54 @@
 	<script src="js/custom.js"></script>
 	<!-- Kai  backuserData -->
 	<script src="js/backuserData.js"></script>
+	
+	<!-- instascan -->
+	<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    <script type="text/javascript">
+        let scanner = new Instascan.Scanner({ video: document.getElementById('preview'), scanPeriod: 5, mirror: true });
+        scanner.addListener('scan', function (content) {
+			console.log(content);
+            // alert(content);
+            //window.location.href=content;
+			fetch(content)
+			.then(res => res.text())
+			.then(res => {
+				console.log(res);
+				const msg = document.getElementById("msg");
+				msg.textContent=res;
+			})
+			.catch(err =>{
+				console.error(err);
+			})
+
+        });
+        Instascan.Camera.getCameras().then(function (cameras) {
+            if (cameras.length > 0) {
+                scanner.start(cameras[0]);
+                $('[name="options"]').on('change', function () {
+                    if ($(this).val() == 1) {
+                        if (cameras[0] != "") {
+                            scanner.start(cameras[0]);
+                        } else {
+                            alert('No Front camera found!');
+                        }
+                    } else if ($(this).val() == 2) {
+                        if (cameras[1] != "") {
+                            scanner.start(cameras[1]);
+                        } else {
+                            alert('No Back camera found!');
+                        }
+                    }
+                });
+            } else {
+                console.error('No cameras found.');
+                alert('No cameras found.');
+            }
+        }).catch(function (e) {
+            console.error(e);
+            alert(e);
+        });
+    </script>
+
 </body>
 </html>
