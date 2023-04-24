@@ -47,7 +47,6 @@ public class FollowproductService {
 
 	public List<Followproduct> getFollowProductByMemberno(Integer memberno) {
 		List<Followproduct> followproductList =dao.getFollowProductByMemberno(memberno);
-		System.out.println(followproductList);
 		return  followproductList;
 
 

@@ -34,8 +34,8 @@ function followproductList() {
                                         </div>
                                         <div class="follow-name">
                                             <h5>${product.pname}</h5>
-                                            <span>${product.pprice}</span>
-                                            <span>${product.pspecialprice}</span>
+                                            <span style="text-decoration: line-through">${product.pprice}</span>
+                                            <span style="font-size: 20px;">${product.pspecialprice}</span>
                                         </div>
                                     </div>
                                     <div class="follow-card-btn">

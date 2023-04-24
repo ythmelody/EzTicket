@@ -100,7 +100,7 @@ public class EmailServiceImpl implements EmailService {
         // 收件人
         sendCancelOrder.setTo(to);
         // 標題
-        // status 1 成立 2 付款 3 取消
+        // status 1 成立 2 付款 3 取消 4 出貨
         String mailText = "";
         String mailTitle = "";
         if (status.equals("1")) {
@@ -120,6 +120,12 @@ public class EmailServiceImpl implements EmailService {
             mailText = "很抱歉地通知您，由於逾期未付款，您的訂單已被取消。\n" +
                     "\n" +
                     "如有需要，請重新下單。如有任何疑問，請隨時聯繫我們的客服人員。\n";
+        }
+        if (status.equals("4")) {
+            mailTitle = "訂單出貨";
+            mailText = "您的訂單已出貨，感謝您的購買。\n" +
+                    "\n" +
+                    "預計將於1-2個工作天配送，再麻煩您留意簡訊或手機未知來電喔。\n";
         }
         sendCancelOrder.setSubject("ezTicket： " + porderno + " " + mailTitle + "通知");
         sendCancelOrder.setText(

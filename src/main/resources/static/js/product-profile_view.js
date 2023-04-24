@@ -198,7 +198,7 @@ function fetchPcouponHoldingList(e) {
                 <div class="top d-flex flex-wrap justify-content-between align-items-center p-4 border_bottom">
                   <div class="icon-box">
                     <span class="icon-big rotate-icon icon icon-purple">
-                      <i class="fa-solid fa-ticket"></i>
+                      <i class="fa-solid fa-gift"></i>
                     </span>
                     <h5 class="font-18 mb-1 mt-1 f-weight-medium"><span class="font-weight-normal">
                     ${obj.pcouponname}</span></h5>
@@ -221,21 +221,21 @@ function fetchPcouponHoldingList(e) {
                   </div>
                   <div class="icon-box">
                     <span class="icon">
-                      <i class="fa-solid fa-tag"></i>
+                      <i class="fa-solid fa-box-open"></i>
                     </span>
                     <p>適用商品編號</p>
                     <h6 class="coupon-status">${obj.pfitcoupons && obj.pfitcoupons[0] && obj.pfitcoupons[0].pfitcouponNo.productno}</h6>
                   </div>
                   <div class="icon-box">
                     <span class="icon">
-                      <i class="fa-solid fa-money-bill"></i>
+                      <i class="fa-solid fa-dollar-sign"></i>
                     </span>
                     <p>消費金額</p>
                     <h6 class="coupon-status">${obj.preachprice}</h6>
                   </div>
                   <div class="icon-box">
                     <span class="icon">
-                      <i class="fa-solid fa-money-bill"></i>
+                      <i class="fa-solid fa-money-bill-wave"></i>
                     </span>
                     <p>折扣</p>
                     <h6 class="coupon-status">${obj.pdiscount}</h6>
