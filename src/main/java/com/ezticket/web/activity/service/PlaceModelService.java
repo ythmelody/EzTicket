@@ -138,39 +138,39 @@ public class PlaceModelService {
     }
 
     //    場地外觀圖
-    @Transactional
-    public byte[] getSiteImg(Integer modelno) throws Exception {
-
-        byte[] img = null;
-        try {
-            img = placeModelRepository.findById(modelno).orElseThrow().getSiteImg();
-            System.out.println(img + ".......................DB資料有進來 service");
-            if (img != null) {
-                System.out.println("............................有圖片");
-                return img;
-            }
-        } catch (Exception e) {
-            System.out.println("..................data base img error");
-        }
-        Resource resource = resourceLoader.getResource("classpath:static/images/event-imgs/qmark.jpg");
-        try (InputStream inputStream = resource.getInputStream()) {
-            img = inputStream.readAllBytes();
-        }
-        System.out.println("................................無圖片，顯示預設圖");
-        return img;
-    }
+//    @Transactional
+//    public byte[] getSiteImg(Integer modelno) throws Exception {
+//
+//        byte[] img = null;
+//        try {
+//            img = placeModelRepository.findById(modelno).orElseThrow().getSiteImg();
+//            System.out.println(img + ".......................DB資料有進來 service");
+//            if (img != null) {
+//                System.out.println("............................有圖片");
+//                return img;
+//            }
+//        } catch (Exception e) {
+//            System.out.println("..................data base img error");
+//        }
+//        Resource resource = resourceLoader.getResource("classpath:static/images/event-imgs/qmark.jpg");
+//        try (InputStream inputStream = resource.getInputStream()) {
+//            img = inputStream.readAllBytes();
+//        }
+//        System.out.println("................................無圖片，顯示預設圖");
+//        return img;
+//    }
 
     //    新增修改場地外觀
-    @Transactional
-    public PlaceModel updateSiteImg(SiteImgDTO siteImgDTO) throws IOException {
-        Optional<PlaceModel> optPm = placeModelRepository.findById(siteImgDTO.getModelno());
-        if (optPm.isEmpty()){
-            throw new RuntimeException("PlaceModel not found: " + siteImgDTO.getModelno());
-        } else {
-            PlaceModel placeModel = optPm.get();
-            placeModel.setSiteImg(siteImgDTO.getSiteImg().getBytes());
-            return placeModelRepository.save(placeModel);
-        }
-    }
+//    @Transactional
+//    public PlaceModel updateSiteImg(SiteImgDTO siteImgDTO) throws IOException {
+//        Optional<PlaceModel> optPm = placeModelRepository.findById(siteImgDTO.getModelno());
+//        if (optPm.isEmpty()){
+//            throw new RuntimeException("PlaceModel not found: " + siteImgDTO.getModelno());
+//        } else {
+//            PlaceModel placeModel = optPm.get();
+//            placeModel.setSiteImg(siteImgDTO.getSiteImg().getBytes());
+//            return placeModelRepository.save(placeModel);
+//        }
+//    }
 //    複製模板：findAllSeatsByPlaceModelno -> insert
 }

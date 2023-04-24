@@ -23,8 +23,8 @@ public class PlaceModel {
     private Integer modelStatus;
     @Column(name="modelimg")
     private byte[] modelImg;
-    @Column(name="siteimg")
-    private byte[] siteImg;
+//    @Column(name="siteimg")
+//    private byte[] siteImg;
     @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name="modelno", referencedColumnName = "modelno")
     private List<BlockModel> blockModels;
