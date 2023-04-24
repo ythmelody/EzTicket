@@ -1,6 +1,7 @@
 package com.ezticket.web.activity.controller;
 
 import com.ezticket.web.activity.pojo.Seats;
+import com.ezticket.web.activity.pojo.Session;
 import com.ezticket.web.activity.service.SeatsService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,5 +95,7 @@ public class SeatsController {
     public Optional<Seats> findById(@RequestParam Integer seatNo){
         return seatsService.findById(seatNo);
     }
+
+
 
 }

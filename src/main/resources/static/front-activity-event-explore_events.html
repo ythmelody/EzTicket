@@ -482,54 +482,10 @@
             <div class="col-xl-12 col-lg-12 col-md-12">
               <div class="event-filter-items">
                 <div class="featured-controls">
-                  <div class="controls">
-                    <button type="button" class="control" data-filter="all">
+                  <div class="controls" id="aclassList" style="display: flex; justify-content: space-evenly;">
+                    <button type="button" class="control" >
                       全部
-                    </button>
-                    <button type="button" class="control" data-filter=".arts">
-                      藝術
-                    </button>
-                    <button
-                      type="button"
-                      class="control"
-                      data-filter=".business"
-                    >
-                      商業
-                    </button>
-                    <button
-                      type="button"
-                      class="control"
-                      data-filter=".concert"
-                    >
-                      演唱會
-                    </button>
-                    <button
-                      type="button"
-                      class="control"
-                      data-filter=".workshops"
-                    >
-                      職業展
-                    </button>
-                    <button
-                      type="button"
-                      class="control"
-                      data-filter=".health_Wellness"
-                    >
-                      娛樂
-                    </button>
-                    <button type="button" class="control" data-filter=".sports">
-                      運動
-                    </button>
-                    <button
-                      type="button"
-                      class="control"
-                      data-filter=".volunteer"
-                    >
-                      免費
-                    </button>
-                    <button type="button" class="control" data-filter=".free">
-                      其他展覽
-                    </button>
+                    </button>                    
                   </div>
                   <div class="row" data-ref="event-filter-content" id="listTab">
                     
@@ -715,7 +671,7 @@
 
 
       const listTab = document.querySelector("#listTab");
-      fetch("http://localhost:8085/Activity/findAll")
+      fetch("/Activity/findAll")
         .then((Response) => Response.json())
         .then((data) => {
           let str = "";
@@ -724,7 +680,7 @@
           for (i of data) {
             
             console.log(i.session[0]);
-            if(i.astatus!=3){
+            if(i.astatus==1){
               if( i.session[0]==null){
                 sTime="全站";
                 countDays="售完為止"
@@ -773,26 +729,29 @@
         });
         const search=document.querySelector('#search');
          search.addEventListener('input',()=>{
-        fetch(`http://localhost:8085/Activity/ByActName?actName=${search.value}`)
+        fetch(`/Activity/ByActName?actName=${search.value}`)
         .then((Response) => Response.json())
         .then((data) => {
           data.reverse();
           let str = "";
           let sTime = "";
           let countDays = "";
-           
-              for(i of data){
-                if(i.astatus!==3){
-                  if (i.session[0] == null) {
-                    sTime = "全站";
-                    countDays = "售完為止"
-                  } else {
-                    sTime = i.session[0].sessionsTime;
-                    console.log(dateDiffer(nowDate, i.session[0].sessionsTime))
-                    //  countDays = dateDiffer(now, i.session[0].sessionsTime);
+          for (i of data) {
 
-                  }
-                str+=`<div
+            console.log(i.session[0]);
+            if (i.astatus == 1) {
+              if (i.session[0] == null) {
+                sTime = "全站";
+                countDays = "售完為止"
+              } else {
+                sTime = i.session[0].sessionsTime;
+                const date = new Date(i.session[0].sessionsTime);
+                console.log(dateDiffer(nowDate, date))
+                countDays = dateDiffer(now, date);
+
+              }
+
+              str += `<div
                       class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mix arts concert workshops volunteer sports health_Wellness"
                       data-ref="mixitup-target"
                     >
@@ -817,20 +776,96 @@
                           <div class="event-timing">
                             <h6 class="coupon-status">${sTime}</h6>
                             <span class="publish-time"
-                              ><i class="fa-solid fa-clock me-2"></i>倒數 小時</span
+                              ><i class="fa-solid fa-clock me-2"></i>${countDays}</span
                             >
                           </div>  
                         </div>
                       </div>
                     </div>`;
-                    }
-                listTab.innerHTML=str;
-              
             }
+          }
+          listTab.innerHTML = str;
             
         });
         });
+        //節目類別 搜尋開始
+         fetch(`/Aclass/findAll`)
+            .then((Response) => Response.json())
+            .then((data) => {
+              console.log(data);
+              for(i of data){
+                console.log("eee")
+                $("#aclassList").append(`<button class="control" id="aclass${i.aclassNo}" onclick="findClass(${i.aclassNo})">${i.aclassName}</button>`)
+              }
+            })
 
+
+             function findClass (e){
+              console.log(e)
+              fetch(`/Activity/findByaClassNo?aclassNo=${e}`,{
+                method:"POST",
+              })
+                 .then((Response) => Response.json())
+                 .then((data) => {
+                  console.log(data)
+                  data.reverse();
+                   let str = "";
+                   let sTime = "";
+                   let countDays = "";
+                   for (i of data) {
+
+                     console.log(i.session[0]);
+                     if (i.astatus == 1) {
+                       if (i.session[0] == null) {
+                         sTime = "全站";
+                         countDays = "售完為止"
+                       } else {
+                         sTime = i.session[0].sessionsTime;
+                         const date = new Date(i.session[0].sessionsTime);
+                         console.log(dateDiffer(nowDate, date))
+                         countDays = dateDiffer(now, date);
+
+                       }
+
+                       str += `<div
+                      class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mix arts concert workshops volunteer sports health_Wellness"
+                      data-ref="mixitup-target"
+                    >
+                      <div class="main-card mt-4">
+                        <div class="event-thumbnail">
+                          <a
+                            href="front-activity-event-detail.html?activityNo=${i.activityNo}"
+                            class="thumbnail-img"
+                          >
+                            <img src="data:image/jpeg;base64,${i.aimgt[0].aimg}" alt="" />
+                          </a>
+                          <span class="bookmark-icon" title="Bookmark"></span>
+                        </div>
+                        <div class="event-content">
+                          <a
+                            href="front-activity-event-detail.html?activityNo=${i.activityNo}"
+                            class="event-title"
+                            >${i.aname}</a
+                          >
+                        </div>
+                        <div class="event-footer">
+                          <div class="event-timing">
+                            <h6 class="coupon-status">${sTime}</h6>
+                            <span class="publish-time"
+                              ><i class="fa-solid fa-clock me-2"></i>${countDays}</span
+                            >
+                          </div>  
+                        </div>
+                      </div>
+                    </div>`;
+                     }
+                   }
+                   listTab.innerHTML = str;
+
+                   
+                  
+                 })
+             }
 
     </script>
   </body>

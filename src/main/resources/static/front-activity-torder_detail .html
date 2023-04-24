@@ -252,7 +252,9 @@
 				const topArea = document.querySelector("#topArea");
 				const urlParams = new URLSearchParams(window.location.search);
 				const memberNo = urlParams.get("memberNo");
-		fetch(`http://localhost:8085/Torder/findById?torderNo=${10003}`)
+				const torderNo= urlParams.get("torderNo");
+				console.log(torderNo);
+		fetch(`/Torder/findById?torderNo=${torderNo}`)
 				.then((resp) => resp.json())
 				.then((data) => {
 					let tpayDate="";
@@ -275,19 +277,28 @@
 					topArea.innerHTML=str;					
 				})	
 
-		fetch(`http://localhost:8085/TorderDetailsView/findAllBytorderNo?torderNo=${10003}`)
+		fetch(`/TorderDetailsView/findAllBytorderNo?torderNo=${torderNo}`)
 				.then((resp) => resp.json())
 				.then((data) => {
 					let str="";
 					let count=1;
+					let blockSeats="";
+					let blockPrice="";
 					for(i of data){
+						if(i.blockName==null){
+							blockSeats= `<td>無座位<br>X${i.tqty}張</td>`;
+							blockPrice= `<td>${i.tcheckTotal/ i.tqty}</td>`;
+						}else{
+							blockSeats = `<td>${i.blockName}區 ${i.realX}排${i.realY}號</td>`;
+							blockPrice = `<td>${i.blockPrice}</td>`;
+						}
 						str+=`<tr>
 									<td>${count}</td>
 									<td><img style="width: 80px;" src="data:image/jpeg;base64,${i.aimg }" ></td>
 									<td>${i.aname}</td>
 									<td>${i.sessionsTime}</td>
-									<td>${i.blockName}區 ${i.realX}排${i.realY}號</td>
-									<td>${i.tblockPrice}</td>
+									${blockSeats}
+									${blockPrice}
 									<td>
 												<div id="commentContainer_5" style="text-align:center">
 													<button id="cmtbtn" style="border: none;  background-color:transparent" data-bs-toggle="modal"

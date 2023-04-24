@@ -1731,6 +1731,7 @@
     <script src="js/i18n/datepicker.en.js"></script>
     <script src="js\jquery.datetimepicker.full.js"></script>
     <link rel="stylesheet" type="text/css" href="css\jquery.datetimepicker.css" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
       $("#add-event-tab").steps({
         onFinish: function () {
@@ -1866,7 +1867,7 @@
       // let aclass=document.querySelector('#aclass');
 
       function aclassList(){
-        fetch(`http://localhost:8085/Aclass/findAll`)
+        fetch(`/Aclass/findAll`)
         .then((Response) => Response.json())
         .then((data) => {
          let str="";
@@ -1879,7 +1880,7 @@
       }
       
     
-        fetch(`http://localhost:8085/Aclass/findAll`)
+        fetch(`/Aclass/findAll`)
         .then((Response) => Response.json())
         .then((data) => {
          let str="";
@@ -1915,7 +1916,7 @@
     <!--主辦單位顯示-->
     <script>
       let host=document.querySelector('#host');
-      fetch(`http://localhost:8085/host/gh`)
+      fetch(`/host/gh`)
       .then((Response) => Response.json())
       .then((data) => {
         let str="";
@@ -2011,7 +2012,7 @@
         document.querySelector("#inputclassbtn").addEventListener("click",()=>{
          const inputaclassname=document.querySelector("#inputaclassname");
          const aclassData={aclassName:inputaclassname.value};
-         fetch('http://localhost:8085/Aclass/saveAclass', {
+         fetch('/Aclass/saveAclass', {
           method: 'POST', 
           headers: {
                   'Content-Type': 'application/json'
@@ -2030,271 +2031,101 @@
   
 
     document.querySelector("#finish").addEventListener("click",()=>{
-       const formData = new FormData();
-     formData.append('aname',$("#aname").val());
-     formData.append('aclass',$("#aclass").find(":selected").val());
-     formData.append('aperformer',$("#aperformer").val());
-     formData.append('host',$("#host").find(":selected").val());
-     formData.append('adiscrip', $("#adiscrip").val());
-     formData.append('anote', $("#anote").val());
-     formData.append('aticketremind', $("#aticketremind").val());
-     formData.append('aplace', $("#aplace").val());
-     formData.append('aplaceaddress', $("#aplaceaddress").val());
-     formData.append('asdate', $("#asdate").val());
-     formData.append('aedate',$("#aedate").val());
-     formData.append('wetherseat', $("#wetherseat").val());
-     console.log($("#asdate").val())
- 
 
+      swal({
+        title: "創建節目是否完成?",
+        text: "",
+        icon: "warning",
+        buttons: {
+          否: true,
+          是: true
+        },
+        dangerMode: true
+      }).then((value) => {
+        switch (value) {
+          case "是":
+            //開始向後端送出請求
+    const formData = new FormData();
+    formData.append('aname',$("#aname").val());
+    formData.append('aclass',$("#aclass").find(":selected").val());
+    formData.append('aperformer',$("#aperformer").val());
+    formData.append('host',$("#host").find(":selected").val());
+    formData.append('adiscrip', $("#adiscrip").val());
+    formData.append('anote', $("#anote").val());
+    formData.append('aticketremind', $("#aticketremind").val());
+    formData.append('aplace', $("#aplace").val());
+    formData.append('aplaceaddress', $("#aplaceaddress").val());
+    formData.append('asdate', $("#asdate").val());
+    formData.append('aedate',$("#aedate").val());
+    formData.append('wetherseat', $("#wetherseat").val());
+    console.log($("#asdate").val())
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     
-      const fileInput = document.querySelector("#seat");
-     formData.append("aseatimg", fileInput.files[0]);
-     fetch('http://localhost:8085/Activity/saveActivity', {
-         method: 'POST',
-         body: formData,
-        }).then(resp => resp.json())
-          .then(data => {
-            console.log(data.activityNo);
-           
-        
+     const fileInput = document.querySelector("#seat");
+    formData.append("aseatimg", fileInput.files[0]);
+    fetch('/Activity/saveActivity', {
+        method: 'POST',
+        body: formData,
+       }).then(resp => resp.json())
+         .then(data => {
+           console.log(data.activityNo);
+          
+       
 //======================================================================================================
-    const fileInput2= document.querySelectorAll(".aimg");
-    const formData2 = new FormData()
-    formData2.append("activityno",data.activityNo);
-    for (let i = 0; i < fileInput2.length; i++) {
-      formData2.append("images", fileInput2[i].files[0]);
-      if(fileInput2.value===1){
-        formData2.append("aimgmain",$("#file1").val())
-      }
-    }
-     fetch('http://localhost:8085/Aimgt/saveAimgt', {
-         method: 'POST',
-         body: formData2,
-        }).then(resp => resp.json())
-          .then(data => {
-           });
-    //==========================================================================================================
-    const blockName= document.querySelectorAll(".blockname");
-    const blockPrice= document.querySelectorAll(".blockprice");
-    const blockType= document.querySelectorAll(".blocktype");
+   const fileInput2= document.querySelectorAll(".aimg");
+   const formData2 = new FormData()
+   formData2.append("activityno",data.activityNo);
+   for (let i = 0; i < fileInput2.length; i++) {
+     formData2.append("images", fileInput2[i].files[0]);
+     if(fileInput2.value===1){
+       formData2.append("aimgmain",$("#file1").val())
+     }
+   }
+    fetch('/Aimgt/saveAimgt', {
+        method: 'POST',
+        body: formData2,
+       }).then(resp => resp.json())
+         .then(data => {
+          });
+   //==========================================================================================================
+   const blockName= document.querySelectorAll(".blockname");
+   const blockPrice= document.querySelectorAll(".blockprice");
+   const blockType= document.querySelectorAll(".blocktype");
 
 const formData3 = new FormData()
 let blockDataArray = [];
 for (let i = 0; i < blockName.length; i++) {
-  let blockData = {
-    blockName: blockName[i].value,
-    activityNo: data.activityNo,
-    blockPrice: blockPrice[i].value,
-    blockType: blockType[i].checked ? 1 : 0
-  };
-  blockDataArray.push(blockData);
+ let blockData = {
+   blockName: blockName[i].value,
+   activityNo: data.activityNo,
+   blockPrice: blockPrice[i].value,
+   blockType: blockType[i].checked ? 1 : 0
+ };
+ blockDataArray.push(blockData);
 }
 
 console.log(blockDataArray);
-fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
-  method: 'POST', 
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(blockDataArray),
+fetch('/BlockPrice/saveBlockPrice', {
+ method: 'POST', 
+ headers: {
+   'Content-Type': 'application/json'
+ },
+ body: JSON.stringify(blockDataArray),
 }).then(res => res.json())
-  .catch(error => console.error('Error:', error))
-  .then(response => console.log('Success:', response)); 
+ .catch(error => console.error('Error:', error))
+ .then(response => console.log('Success:', response)); 
 
+    location.href = `back-activity-eventdashboard.html`;
+         });
 
-          });
-         
+              // swal("活動即將開始，訂單取消失敗", "", "error");
+            }
+        
+      });   
+        
 
-    });
-	//判斷式結束		
+   });
+	
    </script>
 <!--活動新增結束-->
-
-<!--活動複製新增開始-->
-<!-- <script>
-  fetch(`http://localhost:8085/Activity/findByactivityNo?activityNo=${1}`)
-    .then(resp => resp.json())
-    .then(data => {
-      $("#aname").val(data.aname);
-      $("#aclass option:selected").val(data.aclass);
-      if(data.performer!=null){
-        $("#yes").attr('checked',true);
-        typePerformer.style.display = 'block';
-      }
-      console.log(data);
-      $("#aperformer").val(data.performer);
-      $("#host option:selected").val(data.host);
-      $("#adiscrip").val(data.adiscrip);
-      $("#anote").val(data.anote);
-      $("#aticketremind").val(data.aticketRemind);
-      $("#aplace").val(data.aplace);
-      $("#aplaceaddress").val(data.aplaceAdress);
-      $("#asdate").val(data.asdate);
-      $("#aedate").val(data.aedate);
-      $("#wetherseat").attr('checked', !!data.wetherSeat);
-      $("#wetherseat").val(data.wetherSeat);
-      $("#seat").val(data.aseatimg); 
-      $("#aseatimg").attr("src", `data:image/jpeg;base64,${data.aseatsImg}`); 
-
-
-    })
-
-    
-      fetch(`http://localhost:8085/BlockPrice/findByActNo?activityNo=${1}`)
-        .then(resp => resp.json())
-        .then(data => {
-          let str="";
-          let count=1001;
-          for(i of data){
-            console.log(i);
-             str+=`<div
-              class="price-ticket-card-head d-md-flex flex-wrap align-items-start justify-content-between position-relative p-4"
-              id="blockDiv${count}">
-              <div
-                class="d-flex align-items-center top-name"
-              >
-                <div class="icon-box">
-                  <span
-                    class="icon-big rotate-icon icon icon-purple"
-                  >
-                    <i class="fa-solid fa-ticket"></i>
-                  </span>
-                  <div>
-                    <span class="text-145">請輸入區域名稱</span>
-                  </div>
-                  <input type="text" class="blockname" id="blockname${count}" value="${i.blockName}">
-
-                </div>
-              </div>
-              <div
-                class="d-flex align-items-center top-name"
-              >
-                <div class="icon-box">
-                  <span
-                    class="icon-big  icon icon-purple"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-currency-dollar" viewBox="0 0 17 20">
-                      <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z" />
-                    </svg>
-                  </span>
-                  <div>
-                    <span class="text-145">請輸入區域票價</span>
-                  </div>
-                  <input type="text" class="blockprice" id="blockprice${count}" value="${i.blockPrice}">
-
-                </div>
-              </div>
-              <div >
-                <input type="checkbox" id="blocktype${count}" class="blocktype" value="${i.blockType}">
-                  <label for="">此區是否有座位</label>
-              </div>
-              <div class="d-flex align-items-center">
-                <div
-                  class="dropdown dropdown-default dropdown-text dropdown-icon-item"
-                >
-                  <button class="option-btn-1" id="deleteBlockPriceBtn${count}">
-                    刪除
-                  </button>
-                </div>
-              </div>
-            </div>`;
-            
-      
-            
-            count++;
-          }
-          blockPriceList.insertAdjacentHTML('beforeend', str);
-          let deletebtnArray=document.querySelectorAll(".option-btn-1");
-          let count2=1001;
-          for(let i=1001;i<count;i++){
-            let deleteBlockPriceBtn = document.querySelector(`#deleteBlockPriceBtn${i}`);
-            let blockDivId = `blockDiv${i}`;
-             $(`#blocktype${i}`).attr('checked', !!$(`#blocktype${i}`).val());
-            deleteBlockPriceBtn.addEventListener("click", () => {
-            document.getElementById(blockDivId).remove();
-           
-            });
-          
-          }
-          // $("#blockname").val(data.blockname);
-          // $("#blockprice").val(data.blockprice);
-          
-        })  
-
-      fetch(`http://localhost:8085/Aimgt/findAllByActivityNo?activityNo=${1}`
-        ).then(resp => resp.json())
-        .then(data => {
-          
-          let str="";
-          let count=2;
-    
-          for(let i=1;i<data.length;i++){
-            if((i-1)==0){
-              $(`#img1`).attr("src", `data:image/jpeg;base64,${data[i-1].aimg}`); 
-            }
-            const br = document.createElement("br");
-            imgList.append(br);
-            const div = document.createElement("div");
-            div.className = "default-event-thumb";
-            const input = document.createElement("input");
-            input.type = "file";
-            input.accept = "image/*";
-            input.id = "file" + count;
-            input.className = "aimg";
-            input.addEventListener("change", changeListener);
-            div.append(input);
-            imgList.append(input);
-            imgList.append(div);
-            imgList.append(br);
-            const img = document.createElement("img");
-            img.id = "img" + count;
-            // img.className="aimg";
-            div.append(img);
-            const deletebtn = document.createElement("button");
-            deletebtn.id = "delete" + count;
-            deletebtn.className = "option-btn-1";
-            deletebtn.innerHTML = "刪除"
-            imgList.append(deletebtn);
-            imgList.append(br)
-            const deleteimg = document.getElementById(`img${count}`);
-            deletebtn.addEventListener("click", () => {
-              deleteimg.remove();
-              div.remove();
-              input.remove();
-              deletebtn.remove();
-              br.remove();     
-            })
-            $(`#img${count}`).attr("src", `data:image/jpeg;base64,${data[i].aimg}`);
-            count++;
-            }       
-
-        })  
-
-</script> -->
-<!--活動複製新增結束-->
-
-
   </body>
 </html>

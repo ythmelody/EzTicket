@@ -115,37 +115,12 @@ public class ActivityService {
         return activityRepository.findById(activityNo).orElse(null);
     }
 
-
-
-//    public Activity updateActivityById(Integer activityNo, Activity activity) {
-//        Optional<Activity> optionalActivity = activityRepository.findById(activityNo);
-//
-//        if (optionalActivity.isPresent()) {
-//            Activity activityObj = optionalActivity.get();
-//            activityObj.setAName(activity.getAName());
-//            activityObj.setAClassNo(activity.getAClassNo());
-//            activityObj.setPerformer(activity.getPerformer());
-//            activityObj.setHostNo(activity.getHostNo());
-//            activityObj.setADiscrip(activity.getADiscrip());
-//            activityObj.setANote(activity.getANote());
-//            activityObj.setATicketRemind(activity.getATicketRemind());
-//            activityObj.setAPlace(activity.getAPlace());
-//            activityObj.setAPlaceAdress(activity.getAPlaceAdress());
-//            activityObj.setASDate(activity.getASDate());
-//            activityObj.setAEDate(activity.getAEDate());
-//            activityObj.setWetherSeat(activity.getWetherSeat());
-//            activityObj.setAStatus(activity.getAStatus());
-//
-//            // Save updated activity object to database
-//            return activityRepository.save(activityObj);
-//        } else {
-//            throw new RuntimeException("Activity with id " + activityNo + " not found");
-//        }
-//    }
-
-
     //    Add by Shawn on 04/19
     public List<Integer> findActNosByWetherSeatIsTrue(){
         return activityRepository.findActNosByWetherSeatIsTrue();
+    }
+
+    public List <Activity> findByaClassNo(Integer aclassNo) {
+      return activityRepository.findByaClassNo(aclassNo);
     }
 }

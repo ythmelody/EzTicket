@@ -38,6 +38,8 @@ public class TorderDetailsView {
     private String blockName;
     @Column(name = "BLOCKPRICE")
     private Integer blockPrice;
+    @Column(name = "TPAYMENTSTATUS")
+    private Integer tpaymentStatus;
     @JsonFormat(pattern = "yyyy/MM/dd kk:mm:ss", timezone = "GMT+8")
     @Column(name = "SESSIONSTIME")
     private Timestamp sessionsTime;

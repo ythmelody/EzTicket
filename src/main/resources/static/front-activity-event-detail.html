@@ -341,11 +341,11 @@
 					
 							<section id="synopsis-container" class="position-relative bg-white">
 								<div class="container tabCommon">
-									<div class="nav custom2-tabs btn-group" role="tablist" style="flex-wrap: nowrap;" >
-										<button class="tab-link ms-0" data-bs-toggle="tab" data-bs-target="#orders-tab" type="button" role="tab" aria-controls="orders-tab" aria-selected="false">節目介紹 <span class="total_event_counter"></span></button>
+									<div class="nav custom2-tabs btn-group" role="tablist" style="display: flex;justify-content: space-evenly;" >
+										<button class="tab-link active" data-bs-toggle="tab" data-bs-target="#orders-tab" type="button" role="tab" aria-controls="orders-tab" aria-selected="true">節目介紹 <span class="total_event_counter"></span></button>
 										<button class="tab-link" data-bs-toggle="tab" data-bs-target="#customers-tab" type="button" role="tab" aria-controls="customers-tab" aria-selected="false">注意事項 <span class="total_event_counter"></span></button>
 										<button class="tab-link" data-bs-toggle="tab" data-bs-target="#tickets-tab" type="button" role="tab" aria-controls="tickets-tab" aria-selected="false">購票提醒 <span class="total_event_counter"></span></button>
-										<button class="tab-link active" data-bs-toggle="tab" data-bs-target="#payouts-tab" type="button" role="tab" aria-controls="payouts-tab" aria-selected="true">票價區示意圖<span class="total_event_counter"></span></button></div>
+										<button class="tab-link" data-bs-toggle="tab" data-bs-target="#payouts-tab" type="button" role="tab" aria-controls="payouts-tab" aria-selected="false">票價區示意圖<span class="total_event_counter"></span></button></div>
 										<div class="event-list">
 											<div class="tab-content">
 												<div class="tab-pane fade active show" id="orders-tab" role="tabpanel">
@@ -894,7 +894,7 @@
       		const activityNo = urlParams.get("activityNo");
 			const title=document.querySelector('#title');
 			
-        fetch(`http://localhost:8085/Session/findByactivityNo?activityNo=${activityNo}`)
+        fetch(`/Session/findByactivityNo?activityNo=${activityNo}`)
         .then((Response) => Response.json())
         .then((data) => {
 			console.log(data);
@@ -917,7 +917,7 @@
 						title.innerHTML=str;
 		})
 		const content=document.querySelector('#content');
-		fetch(`http://localhost:8085/Activity/findByactivityNo?activityNo=${activityNo}`)
+		fetch(`/Activity/findByactivityNo?activityNo=${activityNo}`)
         .then((Response) => Response.json())
         .then((data) => {
 
@@ -928,7 +928,7 @@
 			
 		})
 
-	fetch(`http://localhost:8085/Aimgt/findAllByActivityNo?activityNo=${activityNo}`)
+	fetch(`/Aimgt/findAllByActivityNo?activityNo=${activityNo}`)
 		.then((Response) => Response.json())
 		.then((data) => {
 			console.log(data);
@@ -1008,14 +1008,14 @@
 					return `倒數 ${diffInDays}天又${diffInHours}小時`;
 				}
 
-		fetch(`http://localhost:8085/Activity/findAll`)
+		fetch(`/Activity/findAll`)
 				.then((Response) => Response.json())
 				.then((data) => {
 				
 					let sTime = "";
 					let countDays = "";
 					for(i of data){
-				if(i.astatus!=3){
+				if(i.astatus == 1){
              		 if( i.session[0]==null){
                 		sTime="全站";
                 		countDays="售完為止"
@@ -1085,7 +1085,7 @@
 
 
 		const showSession=document.querySelector('#showSession')
-		fetch(`http://localhost:8085/Session/findByactivityNo?activityNo=${activityNo}`)
+		fetch(`/Session/findByactivityNo?activityNo=${activityNo}`)
         .then((Response) => Response.json())
         .then((data) => {
 	
@@ -1100,12 +1100,21 @@
 			const edate = new Date(i.sessioneTime);
 			const ehour = edate.getHours();
 			const eminute = edate.getMinutes().toString().padStart(2, '0');
+                let href=`<a href="Shawn_choose_seat.html?activityNo=${activityNo}&sessionNo=${i.sessionNo}" >`;
+                let soldout="";
+            if(i.maxSeatsQty==i.seatsQty&&i.maxStandingQty==i.standingQty){
+                href=`<a>`;
+                soldout="售完";
+            }
 		
-			 str+=`<a href="Shawn_choose_seat.html?activityNo=${activityNo}&sessionNo=${i.sessionNo}">
+			 str+=`${href}
 							<div class="event-dt-right-group"style="flex-direction: column; align-items:center; border-style:dashed;border-color: #6ac045;">
 								<div class="event-dt-right-content" >
 									<h1 style="font-style: oblique;">${syear}/${smonth}/${sday}</h1>
 								</div>
+                                <div>
+                                    <h3>${soldout}</h3>
+                                </div>
 								<div style="color: #000000;">
 									<span class="info-desc"><i class="fa fa-calendar"></i><span class="timezoneSuffix">${shour}:${sminute}~${ehour}:${eminute}</span>
 									</span>																		

@@ -67,14 +67,16 @@ public class SessionController {
 
         return  sessionService.saveSession(session);
     }
-    @DeleteMapping("deleteSession")
-    public void deleteSession( @RequestBody Session session){
-        sessionService.deleteSession(session);
-    }
-
     @PostMapping("/updateSession")
     public Session updateSession(@RequestBody Session session) {
         return sessionService.updateSession(session);
+    }
+
+    @PostMapping("deleteSession")
+    public boolean deleteSessionTwo( @RequestParam Integer sessionNo){
+
+        sessionService.deleteSessionTwo(sessionNo);
+        return true;
     }
 
 }

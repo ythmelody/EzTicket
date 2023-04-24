@@ -465,74 +465,6 @@
                         </div>
                       </div>
                     </div>
-                    <div class="rs ms-auto mt-4 mt_r4">
-                      <a
-                        href="#"
-                        class="pe-4 w-100 ps-4 text-center co-main-btn h_40 d-inline-block"
-                        ><i class="fa-solid fa-arrow-rotate-right me-3"></i
-                        >重新整理</a
-                      >
-                    </div>
-                  </div>
-                  <div class="main-form mt-4">
-                    <div class="row g-3">
-                      <div class="col-lg-3 col-md-6">
-                        <div class="form-group">
-                          <select
-                            class="selectpicker"
-                            data-size="5"
-                            data-live-search="true"
-                          >
-                            <option value="all events" selected>
-                              All Events
-                            </option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-lg-3 col-md-6">
-                        <div class="form-group">
-                          <select class="selectpicker">
-                            <option value="Today">Today</option>
-                            <option value="Yesterday">Yesterday</option>
-                            <option value="Last 7 Days">Last 7 Days</option>
-                            <option value="Last 30 Days" selected>
-                              Last 30 Days
-                            </option>
-                            <option value="This Month">This Month</option>
-                            <option value="Last Month">Last Month</option>
-                            <option value="Custom Range">Custom Range</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-lg-3 col-md-6">
-                        <div class="form-group">
-                          <select class="selectpicker">
-                            <option value="All Orders" selected>
-                              All Orders
-                            </option>
-                            <option value="Refunded">Refunded</option>
-                            <option value="Refund Rejected">
-                              Refund Rejected
-                            </option>
-                            <option value="Refund Requested">
-                              Refund Requested
-                            </option>
-                            <option value="Partially Refunded">
-                              Partially Refunded
-                            </option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-lg-3 col-md-6">
-                        <div class="form-group">
-                          <select class="selectpicker">
-                            <option value="all">All Orders</option>
-                            <option value="1">Active</option>
-                            <option value="0">Canceled</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -874,47 +806,32 @@
       let showTicketOrders = document.querySelector("#showTicketOrders");
       let TicketPannel = document.querySelector("#TicketPannel");
 
-      fetch("http://localhost:8085/Torder/findAll")
+      fetch("/Torder/findAll")
         .then((Response) => Response.json())
         .then((data) => {
           showTicketOrders.addEventListener("click", () => {
             let str = "";
+            let paymentStatus="";
+            let processStatus="";
+            let paymentColor="";
+            let processColor="";
             for (i of data) {
-              if (i.tpaymentStatus == 0 && i.tprocessStatus == 2) {
-                str += `<tr>
-                                            <td>${i.torderNo}</td>
-                                            <td>${i.member.memberno}</td>
-                                            <td>${i.member.mname}</td>
-                                            <td>${i.tcheckTotal}</td>
-                                            <td>${i.torderDate}</td>
-                                            <td>
-                                              <span class="status-circle blue-circle"></span
-                                              >未付款
-                                            </td>
-                                            <td>
-                                              <span class="status-circle red-circle"></span
-                                              >已取消
-                                            </td>
-                                          </tr>
-                  `;
-              } else if (i.tpaymentStatus == 1 && i.tprocessStatus == 1) {
-                str += `<tr>
-                                            <td>${i.torderNo}</td>
-                                            <td>${i.member.memberno}</td>
-                                            <td>${i.member.mname}</td>
-                                            <td>${i.tcheckTotal}</td>
-                                            <td>${i.torderDate}</td>
-                                            <td>
-                                              <span class="status-circle green-circle"></span
-                                              >已付款
-                                            </td>
-                                            <td>
-                                              <span class="status-circle green-circle"></span
-                                              >已出票
-                                            </td>
-                                          </tr>
-                  `;
+           if (i.tpaymentStatus == 0 && i.tprocessStatus == 2) {
+                paymentStatus = "未付款";
+                paymentColor = "blue"
+                processStatus = "已取消";
+                processColor = "red"
+              } else if ((i.tpaymentStatus == 1 && i.tprocessStatus == 1)) {
+                paymentStatus = "已付款";
+                paymentColor = "green"
+                processStatus = "已出票";
+                processColor = "green"
               } else if (i.tpaymentStatus == 2 && i.tprocessStatus == 2) {
+                paymentStatus = "已退款";
+                paymentColor = "red"
+                processStatus = "已取消";
+                processColor = "red"
+              } 
                 str += `<tr>
                                             <td>${i.torderNo}</td>
                                             <td>${i.member.memberno}</td>
@@ -922,16 +839,15 @@
                                             <td>${i.tcheckTotal}</td>
                                             <td>${i.torderDate}</td>
                                             <td>
-                                              <span class="status-circle red-circle"></span
-                                              >已退款
+                                              <span class="status-circle ${paymentColor}-circle"></span
+                                              >${paymentStatus}
                                             </td>
                                             <td>
-                                              <span class="status-circle red-circle"></span
-                                              >已取消
+                                              <span class="status-circle ${processColor}-circle"></span
+                                              >${processStatus}
                                             </td>
-                                          </tr>
-                  `;
-              }
+                                          </tr> `;
+
             }
             TicketPannel.innerHTML = str;
           });
@@ -941,65 +857,47 @@
       const search = document.querySelector("#search");
 
       search.addEventListener("input", () => {
-        fetch(`http://localhost:8085/Torder/findById?torderNo=${search.value}`)
+        fetch(`/Torder/findById?torderNo=${search.value}`)
           .then((Response) => Response.json())
           .then((data) => {
-            console.log(data);
             let str = "";
+            let paymentStatus = "";
+            let processStatus = "";
+            let paymentColor= "";
+            let processColor = "";
+            if (data.tpaymentStatus == 0 && data.tprocessStatus == 2) {
+              paymentStatus = "未付款";
+              paymentColor="yellow"
+              processStatus = "已取消";
+              processColor="red"
+            } else if ((data.tpaymentStatus == 1 && data.tprocessStatus == 1)) {
+              paymentStatus = "已付款";
+              paymentColor = "green"
+              processStatus = "已出票";
+              processColor = "green"
+            } else if (data.tpaymentStatus == 2 && data.tprocessStatus == 2) {
+              paymentStatus = "已退款";
+              paymentColor = "red"
+              processStatus = "已取消";
+              processColor = "red"
+            }
 
             if (search.value.match(data.torderNo)) {
-              if (data.tpaymentStatus == 0 && data.tprocessStatus == 2) {
                 str += `<tr>
-                                            <td>${data.torderNo}</td>
-                                            <td>${data.memberNo}</td>
-                                            <td>${data.member.mname}</td>
-                                            <td>${data.tcheckTotal}</td>
-                                            <td>${data.torderDate}</td>
-                                            <td>
-                                              <span class="status-circle blue-circle"></span
-                                              >未付款
-                                            </td>
-                                            <td>
-                                              <span class="status-circle red-circle"></span
-                                              >已取消
-                                            </td>
-                                          </tr>
-                  `;
-              } else if (data.tpaymentStatus == 1 && data.tprocessStatus == 1) {
-                str += `<tr>
-                                            <td>${data.torderNo}</td>
-                                            <td>${data.memberNo}</td>
-                                            <td>${data.member.mname}</td>
-                                            <td>${data.tcheckTotal}</td>
-                                            <td>${data.torderDate}</td>
-                                            <td>
-                                              <span class="status-circle green-circle"></span
-                                              >已付款
-                                            </td>
-                                            <td>
-                                              <span class="status-circle green-circle"></span
-                                              >已出票
-                                            </td>
-                                          </tr>
-                  `;
-              } else if (data.tpaymentStatus == 2 && data.tprocessStatus == 2) {
-                str += `<tr>
-                                            <td>${data.torderNo}</td>
-                                            <td>${data.memberNo}</td>
-                                            <td>${data.member.mname}</td>
-                                            <td>${data.tcheckTotal}</td>
-                                            <td>${data.torderDate}</td>
-                                            <td>
-                                              <span class="status-circle red-circle"></span
-                                              >已退款
-                                            </td>
-                                            <td>
-                                              <span class="status-circle red-circle"></span
-                                              >已取消
-                                            </td>
-                                          </tr>
-                  `;
-              }
+                             <td>${data.torderNo}</td>
+                             <td>${data.memberNo}</td>
+                             <td>${data.member.mname}</td>
+                             <td>${data.tcheckTotal}</td>
+                             <td>${data.torderDate}</td>
+                                <td>
+                                    <span class="status-circle ${paymentColor}-circle"></span
+                                    >${paymentStatus}
+                                 </td>
+                                 <td>
+                                    <span class="status-circle ${processColor}-circle"></span
+                                    >${processStatus}
+                                 </td>
+                                 </tr>`;                      
             }
 
             TicketPannel.innerHTML = str;

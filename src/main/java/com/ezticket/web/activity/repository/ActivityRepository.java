@@ -1,7 +1,6 @@
 package com.ezticket.web.activity.repository;
 
 import com.ezticket.web.activity.pojo.Activity;
-import com.ezticket.web.activity.pojo.Aimgt;
 import jakarta.persistence.OrderBy;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,8 +10,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -52,10 +49,6 @@ public interface ActivityRepository extends JpaRepository <Activity,Integer>{
     @Query("SELECT LAST_INSERT_ID()")
     Integer findLastInsert();
 
-    // Update activity by id
-//    public void updateActivityById(Integer activityNo, String aName, Integer aClassNo, String performer,
-//                            Integer hostNo, String aDiscrip, String aNote, String aTicketRemind, String aPlace,
-//                            String aPlaceAdress, Timestamp aSDate, Timestamp aEDate, Integer wetherSeat, Integer aStatus);
     @Transactional
     @Modifying
     @Query("UPDATE Activity SET aName = :aName, aClassNo = :aClassNo, performer = :performer, hostNo = :hostNo, aDiscrip = :aDiscrip, aNote = :aNote, aTicketRemind = :aTicketRemind, aPlace = :aPlace, aPlaceAdress = :aPlaceAdress, aSDate = :aSDate, aEDate = :aEDate, wetherSeat = :wetherSeat, aSeatsImg = :aSeatsImg WHERE activityNo = :activityNo")
@@ -71,4 +64,6 @@ public interface ActivityRepository extends JpaRepository <Activity,Integer>{
     //    Add by Shawn on 04/19
     @Query("SELECT act.activityNo FROM Activity act WHERE act.wetherSeat = 1")
     public List<Integer> findActNosByWetherSeatIsTrue();
+
+    public List <Activity> findByaClassNo(Integer aclassNo);
 }

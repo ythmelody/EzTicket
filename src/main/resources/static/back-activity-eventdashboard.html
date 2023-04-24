@@ -436,7 +436,7 @@
     <script src="js/night-mode.js"></script>
     <script>
       const listTab=document.querySelector("#listTab");
-       fetch("http://localhost:8085/Activity/findAll")
+       fetch("/Activity/findAll")
         .then((Response) => Response.json())
         .then((data) => {
           
@@ -478,12 +478,11 @@
                               <i class="fa-solid fa-ellipsis-vertical"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
-                              <a href="#" class="dropdown-item"
+                              <a href="back-activity-update-event.html?activityNo=${i.activityNo}" class="dropdown-item"
                                 ><i class="fa-solid fa-gear me-3" id="editbtn${count}"></i>編輯活動</a
                               >
-                              <a href="front-activity-event-detail.html?activityNo=${i.activityNo}" class="dropdown-item")"
-                                ><i class="fa-solid fa-eye me-3" ></i>預覽活動
-                                </a
+                              <a href="front-activity-event-detail.html?activityNo=${i.activityNo}" class="dropdown-item"
+                                ><i class="fa-solid fa-gear me-3" id="editbtn${count}"></i>預覽活動</a
                               >
                               <a href="#" class="dropdown-item delete-event" onclick="deleteActivity(${i.activityNo})"
                                 ><i class="fa-solid fa-trash-can me-3" id="deletebtn${count}"></i
@@ -542,18 +541,19 @@
                        formData.append('activityNo', e);
                        formData.append('aStatus', 3);
                       console.log(e)
-                        fetch(`http://localhost:8085/Activity/deleteActivity`, {
+                        fetch(`/Activity/deleteActivity`, {
                          method: 'POST',
                          body: formData,
                        })
                           .then((Response) => Response.json())
                           .then((data) => {})
+                          location.reload();
                           
                       }
                      
         const search = document.querySelector("#search");
         search.addEventListener("input", () => {
-        fetch(`http://localhost:8085/Activity/ByActName?actName=${search.value}`)
+        fetch(`/Activity/ByActName?actName=${search.value}`)
           .then((Response) => Response.json())
           .then((data) => {
             data.reverse();
@@ -597,13 +597,10 @@
                               <i class="fa-solid fa-ellipsis-vertical"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
-                              <a href="#" class="dropdown-item"
+                              <a href="back-activity-update-event.html?activityNo=${i.activityNo}" class="dropdown-item"
                                 ><i class="fa-solid fa-gear me-3" id="editbtn${count}"></i>編輯活動</a
                               >
-                              <a href="#" class="dropdown-item"
-                                ><i class="fa-solid fa-eye me-3" id="previewbtn${count}"></i>預覽活動
-                                </a
-                              >
+                            
                               <a href="front-activity-event-detail.html?activity=${i.activityNo}" class="dropdown-item delete-event" )"
                                 ><i class="fa-solid fa-trash-can me-3" id="deletebtn${count}"></i
                                 >刪除活動</a

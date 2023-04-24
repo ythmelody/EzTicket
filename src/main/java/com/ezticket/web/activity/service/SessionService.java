@@ -1,7 +1,9 @@
 package com.ezticket.web.activity.service;
 
 import com.ezticket.web.activity.dto.SessionDto;
+import com.ezticket.web.activity.pojo.Seats;
 import com.ezticket.web.activity.pojo.Session;
+import com.ezticket.web.activity.repository.SeatsRepository;
 import com.ezticket.web.activity.repository.SessionRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ public class SessionService {
 
     @Autowired
     private SeatsService seatsService;
+    @Autowired
+    private SeatsRepository seatsRepository;
 
     public List<SessionDto> findAll() {
         return sessionRepository.findAll()
@@ -87,10 +91,7 @@ public class SessionService {
         }
     }
 
-    public void deleteSession(Session session){
 
-        sessionRepository.deleteById(session.getSessionNo());
-    }
 
     public Session updateSession(Session session) {
         Session existingSession = sessionRepository.findById(session.getSessionNo()).orElse(null);
@@ -105,4 +106,14 @@ public class SessionService {
         // save the updated session entity to the database
         return sessionRepository.save(existingSession);
     }
+
+    public void deleteSessionTwo(Integer sessionNo) {
+        System.out.println("aaaaaaaaa");
+        seatsRepository.deleteBySessionNo(sessionNo);
+        System.out.println("bbbbbbbbb");
+        sessionRepository.deleteById(sessionNo);
+        System.out.println("ccccccccc");
+
+
+        }
 }

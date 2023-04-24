@@ -648,7 +648,7 @@
       const urlParams = new URLSearchParams(window.location.search);
       const activityNo = urlParams.get("activityNo");
       fetch(
-        `http://localhost:8085/Session/findByactivityNo?activityNo=${activityNo}`
+        `/Session/findByactivityNo?activityNo=${activityNo}`
       )
         .then((resp) => resp.json())
         .then((data) => {
@@ -784,13 +784,13 @@
              console.log($(`#editsessioneTime${e}`).val());
               console.log($(`#editmaxStandingQty${e}`).val());
                console.log($(`#editmaxSeatsQty${e}`).val());
-            fetch('http://localhost:8085/Session/updateSession', {
+            fetch('/Session/updateSession', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
               },
               body: JSON.stringify({
-                sessionsTime: $(`#editsessioneTime${e}`).val(),
+                sessionsTime: $(`#editsessionsTime${e}`).val(),
                 sessioneTime: $(`#editsessioneTime${e}`).val(),
                 maxStandingQty: $(`#editmaxStandingQty${e}`).val(),
                 maxSeatsQty: $(`#editmaxSeatsQty${e}`).val(),
@@ -864,7 +864,8 @@
       });
         $.datetimepicker.setLocale('zh'); // kr ko ja en
       submitbtn.addEventListener("click",()=>{
-          fetch('http://localhost:8085/Session/saveSession', {
+        
+          fetch('/Session/saveSession', {
           method: 'POST', 
           headers: {
             'Content-Type': 'application/json'
@@ -887,19 +888,13 @@
     });
       
     function deleting(e){
-    
-      fetch('http://localhost:8085/Session/deleteSession', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          sessionNo: e,
-        })
 
-      }).then(res => res.json())
-        .catch(error => console.error('Error:', error))
-        .then(response => window.location.replace(window.location.href))
+      console.log(e);
+         fetch(`/Session/deleteSession?sessionNo=${e}`, {
+        method: 'POST',
+      })
+        .then((Response) => Response.json())
+        .then((data) => { })
         location.reload();
     }
     

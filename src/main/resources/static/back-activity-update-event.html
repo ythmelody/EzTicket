@@ -1866,7 +1866,7 @@
       // let aclass=document.querySelector('#aclass');
 
       function aclassList(){
-        fetch(`http://localhost:8085/Aclass/findAll`)
+        fetch(`/Aclass/findAll`)
         .then((Response) => Response.json())
         .then((data) => {
          let str="";
@@ -1879,7 +1879,7 @@
       }
       
     
-        fetch(`http://localhost:8085/Aclass/findAll`)
+        fetch(`/Aclass/findAll`)
         .then((Response) => Response.json())
         .then((data) => {
          let str="";
@@ -1915,7 +1915,7 @@
     <!--主辦單位顯示-->
     <script>
       let host=document.querySelector('#host');
-      fetch(`http://localhost:8085/host/gh`)
+      fetch(`/host/gh`)
       .then((Response) => Response.json())
       .then((data) => {
         let str="";
@@ -2011,7 +2011,7 @@
         document.querySelector("#inputclassbtn").addEventListener("click",()=>{
          const inputaclassname=document.querySelector("#inputaclassname");
          const aclassData={aclassName:inputaclassname.value};
-         fetch('http://localhost:8085/Aclass/saveAclass', {
+         fetch('/Aclass/saveAclass', {
           method: 'POST', 
           headers: {
                   'Content-Type': 'application/json'
@@ -2067,7 +2067,7 @@
           formData.append("aseatimg", fileInput.files[0]);
         }
         console.log(fileInput.files[0]);
-        fetch(`http://localhost:8085/Activity/updateActivity/${1012}`, {
+        fetch(`/Activity/updateActivity/${activityNo}`, {
           method: 'POST',
           body: formData,
         }).then(resp => resp.json())
@@ -2083,7 +2083,7 @@
     for (let i = 0; i < fileInput4.length; i++) {
       formData4.append("images", fileInput4[i].files[0]);
     }
-     fetch('http://localhost:8085/Aimgt/saveAimgt', {
+     fetch('/Aimgt/saveAimgt', {
          method: 'POST',
          body: formData4,
         }).then(resp => resp.json())
@@ -2108,7 +2108,7 @@ for (let i = 0; i < blockName.length; i++) {
 }
 
 console.log(blockDataArray);
-fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
+fetch('/BlockPrice/saveBlockPrice', {
   method: 'POST', 
   headers: {
     'Content-Type': 'application/json'
@@ -2117,7 +2117,7 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
 }).then(res => res.json())
   .catch(error => console.error('Error:', error))
   .then(response => console.log('Success:', response)); 
-
+    location.href = `back-activity-eventdashboard.html`;
           });
          
 
@@ -2128,7 +2128,7 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
 
 <!--活動編輯開始-->
 <script>
-  fetch(`http://localhost:8085/Activity/findByactivityNo?activityNo=${1012}`)
+  fetch(`/Activity/findByactivityNo?activityNo=${activityNo}`)
     .then(resp => resp.json())
     .then(data => {
       $("#aname").val(data.aname);
@@ -2158,7 +2158,7 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
     })
 
     
-      fetch(`http://localhost:8085/BlockPrice/findByActNo?activityNo=${1012}`)
+      fetch(`/BlockPrice/findByActNo?activityNo=${activityNo}`)
         .then(resp => resp.json())
         .then(data => {
           let str="";
@@ -2233,7 +2233,7 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
             checkbox.disabled = true; // 禁用checkbox，使其無法再更動
           }
 
-      fetch(`http://localhost:8085/Aimgt/findAllByActivityNo?activityNo=${1012}`
+      fetch(`/Aimgt/findAllByActivityNo?activityNo=${activityNo}`
         ).then(resp => resp.json())
         .then(data => {
           
@@ -2255,7 +2255,7 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
               formData2.append("aimgNo", data[0].aimgNo);
             }
 
-            fetch(`http://localhost:8085/Aimgt/updateAimgt`, {
+            fetch(`/Aimgt/updateAimgt`, {
               method: 'POST',
               body: formData2,
             }).then(resp => resp.json())
@@ -2286,7 +2286,7 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
                 formData2.append("aimgNo", data[i].aimgNo);
               }
 
-              fetch(`http://localhost:8085/Aimgt/updateAimgt`, {
+              fetch(`/Aimgt/updateAimgt`, {
                 method: 'POST',
                 body: formData2,
               }).then(resp => resp.json())
@@ -2311,11 +2311,9 @@ fetch('http://localhost:8085/BlockPrice/saveBlockPrice', {
             const deleteimg = document.getElementById(`img${count}`);
             deletebtn.addEventListener("click", () => {
               console.log(data[i].aimgNo)
-              fetch(`http://localhost:8085/Aimgt/deleteAimgt`, {
+              fetch(`/Aimgt/deleteAimgt`, {
                 method: 'DELETE', 
-                body: JSON.stringify({
-                        aimgNo: data[i].aimgNo
-                      }),
+                body: formData,
                 headers: {
                         'Content-Type': 'application/json'
                       }

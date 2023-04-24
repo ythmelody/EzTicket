@@ -183,8 +183,8 @@ public class ActivityController {
     return true;
     }
 
-//    @PostMapping("/updateActivityById")
-//    public Activity updateActivityById(@PathVariable Integer activityNo, @RequestBody Activity activity) {
-//        return activityService.updateActivityById(activityNo, activity);
-//    }
+    @PostMapping("/findByaClassNo")
+    public List <Activity> findByaClassNo(@RequestParam Integer aclassNo){
+        return activityService.findByaClassNo(aclassNo);
+    }
 }
