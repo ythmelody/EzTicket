@@ -16,27 +16,27 @@ public class SiteImgController {
     @Autowired
     PlaceModelService placeModelService;
 
-    @GetMapping(value = "/{modelno}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public byte[] getSiteImg(@PathVariable("modelno") Integer modelno){
-        byte[] img = null;
-        try{
-            img = placeModelService.getSiteImg(modelno);
-        } catch (Exception e) {
-            System.out.println("...................default img error");
-        }
-        return img;
-    }
+//    @GetMapping(value = "/{modelno}", produces = MediaType.IMAGE_JPEG_VALUE)
+//    public byte[] getSiteImg(@PathVariable("modelno") Integer modelno){
+//        byte[] img = null;
+//        try{
+//            img = placeModelService.getSiteImg(modelno);
+//        } catch (Exception e) {
+//            System.out.println("...................default img error");
+//        }
+//        return img;
+//    }
 
-    @PostMapping("/upload")
-    public ResponseEntity<String> upload(@ModelAttribute SiteImgDTO siteImgDTO, @RequestParam("file") MultipartFile file, @RequestParam("modelno") Integer modelno){
-        try {
-            System.out.println("場地外觀圖上傳成功");
-            siteImgDTO.setSiteImg(file);
-            siteImgDTO.setModelno(modelno);
-            placeModelService.updateSiteImg(siteImgDTO);
-            return ResponseEntity.ok("上傳成功");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    @PostMapping("/upload")
+//    public ResponseEntity<String> upload(@ModelAttribute SiteImgDTO siteImgDTO, @RequestParam("file") MultipartFile file, @RequestParam("modelno") Integer modelno){
+//        try {
+//            System.out.println("場地外觀圖上傳成功");
+//            siteImgDTO.setSiteImg(file);
+//            siteImgDTO.setModelno(modelno);
+//            placeModelService.updateSiteImg(siteImgDTO);
+//            return ResponseEntity.ok("上傳成功");
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 }
