@@ -238,7 +238,7 @@ public class OrderService {
 
             } else {
                 torder.setTpaymentStatus(3);
-                torder.setTprocessStatus(4);
+                torder.setTprocessStatus(3);
                 torderRepository.save(torder);
 
                 List<Tdetails> toBeModiDetails = tdetailsRepository.findByTorderno(torder.getTorderNo());
