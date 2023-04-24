@@ -1,6 +1,5 @@
 package com.ezticket.web.activity.controller;
 
-import com.ezticket.web.activity.dto.ModelImgDTO;
 import com.ezticket.web.activity.dto.SiteImgDTO;
 import com.ezticket.web.activity.service.PlaceModelService;
 import org.springframework.beans.factory.annotation.Autowired;
