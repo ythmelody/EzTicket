@@ -20,16 +20,16 @@ public class TorderController {
     @Autowired
     private TorderService torderService;
     @Autowired
-    private OrderService orderService;
+    private TorderService torderService;
 
     @GetMapping("/findAll")
-    public List<TorderDto> findByOrderByTorderNoDesc() {
+    public List<TorderDto> findAll() {
 
-        return torderService.findByOrderByTorderNoDesc();
+        return torderService.findAll();
     }
 
     @GetMapping("/findById")
-    public Optional<Torder> findById(Integer torderNo) {
+    public List<Torder> findById(@RequestParam Integer torderNo) {
         return torderService.findById(torderNo);
     }
 
@@ -37,7 +37,7 @@ public class TorderController {
     @PostMapping("/addTorder")
     @ResponseBody
     public String addTOrder(@RequestBody AddTorderDTO addTorderDTO) {
-        return orderService.ecpayTCheckout(torderService.addTOrder(addTorderDTO).getTorderNo());
+        return torderService.ecpayTCheckout(torderService.addTOrder(addTorderDTO).getTorderNo());
     }
 
     // Add by Shawn on 04/19
