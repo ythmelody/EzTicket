@@ -524,6 +524,71 @@
 
 		}
 
+		// 呈現所有場次
+		function displayOneBlock(b) {
+			const blockList = document.getElementById("blockList");
+			// const blockModels = jsondata.blockModels;
+			blockList.innerHTML = "";
+			// for (let i = 0; i < blockModels.length; i++) {
+				// const b = blockModels[i];
+				blockList.innerHTML += `
+                <div class="s-container"
+                     style="border: 1px solid #EFEFEF; width: 100%; height: 120px; border-radius: 5px; background-color: white; margin-top: 10px">
+                    <div class="s-container-upper" style="height: 100%; border-bottom: 1px solid #EFEFEF;">
+                        <div style="width: 100%; height: 100%; padding: 20px;">
+                            <div style="width: 50%; height: 100%; display: inline-block; margin-left: 15px; vertical-align: top;">
+                                <h5 style="font-weight: bold;" id="blockName${b.blockno}">${b.blockName}</h5>
+                                <div style="width: 100%; margin-top: 20px;">
+                                    <div style="display: inline-block; vertical-align: middle; width: 60%;">
+                                        <h6 style="color: #717171;">區域編號：${b.blockno}</h6>
+                                        <h6 style="color: #717171;" id="blockType${b.blockno}"></h6>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="dropdown" style="width: 40px; float:right;">
+                                <button
+                                    class="" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                    style="float:right; border: 0; background-color: transparent;">
+                                    <div
+                                        style="border: 1px solid gray; height: 40px; width: 40px; display: inline-block; background: url('images/icons/shawn-selection.png') center no-repeat; background-size: 20px; border-radius: 5px; float:right;">
+                                    </div>
+                                </button>
+
+                                <ul class="dropdown-menu">
+                                    <li><a id="manageSeats${b.blockno}" href="back-activity-model-seats-exist.html" class="dropdown-item" onmousedown="sessionStorage.setItem('blockno', ${b.blockno})">編輯座位表</a></li>
+									<li><a id="edit${b.blockno}" class="dropdown-item" data-bs-toggle="modal"
+											data-bs-target="#couponModal" data-bs-blockno="${b.blockno}">修改區域名稱</a></li>
+									<li><a id="${b.blockno}" class="dropdown-item" onclick="deleteBlock(${b.blockno})">刪除區域</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+				const blockTypeN = document.getElementById(`blockType${b.blockno}`);
+				if (b.blockType === 1) {
+					blockTypeN.textContent = "區域種類：對號座"
+				} else if (b.blockType === 0) {
+					blockTypeN.textContent = "區域種類：無座位"
+				}
+
+				// 如果找不到座位就要導到 "back-activity-model-seats-notexist.html"
+				$.ajax({
+					async: false,
+					type: 'GET',
+					url: "/SeatsModel/ExistOrNot/" + `${b.blockno}`,
+					dataType: "json",
+					success: function (jsondata) {
+						if (!jsondata) {
+							document.getElementById(`manageSeats${b.blockno}`).href = "back-activity-model-seats-notexist.html"
+						}
+					}
+				});
+
+			// }
+
+		}
+
 		// 下拉式選單查詢
 		blockSelector.addEventListener('change', function () {
 
@@ -544,7 +609,7 @@
 				.then((jsondata) => {
 					let array = [jsondata];
 
-					displayBlocks();
+					displayOneBlock(jsondata);
 
 				})
 		})
