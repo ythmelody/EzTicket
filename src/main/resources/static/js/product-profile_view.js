@@ -189,10 +189,13 @@ function fetchPcouponHoldingList(e) {
         return fetch(`/pcoupon?id=${obj.pcouponholdingPK.pcouponno}`, {
           method: 'GET',
         }).then(resp => resp.json())
-          .then(obj => {
+          .then(async obj => {
+            const productno = obj.pfitcoupons && obj.pfitcoupons[0] && obj.pfitcoupons[0].pfitcouponNo.productno;
+            const productStatus = await getProductStatus(productno);
+            console.log(productStatus);
             const now = new Date();
             const couponEndDate = new Date(obj.pcoupnedate);
-            if (obj.pcouponstatus === 1 && obj.pcouponholdings[0].pcouponstatus === 0 && couponEndDate > now) {
+            if (obj.pcouponstatus === 1 && obj.pcouponholdings[0].pcouponstatus === 0 && couponEndDate > now && productStatus === 0) {
               const couponHoldingHtml = `
               <div class="main-card mt-4">
               <div class="contact-list coupon-active">
@@ -351,3 +354,21 @@ function takeCoupon(memberno,pcouponno){
       };
     });
 }
+
+async function getProductStatus(productno){
+  return new Promise((resolve, reject) => {
+    fetch('ProductInfoServlet', {
+      method: 'POST',
+      body: new URLSearchParams({
+        'action': "singleProduct",
+        'productno': productno
+      })
+    }).then(resp => resp.json())
+      .then(item => {
+        resolve(item.pstatus);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+};
