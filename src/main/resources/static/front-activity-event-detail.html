@@ -534,22 +534,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="js/s-eventdetails.js"></script>
 
-		<!-- 點讚換圖 -->
-		<script>
-
-			function chgthumbimg() {
-				const btnClass = event.target.className;
-				if (btnClass === '') {
-					event.target.src = 'images/thumbup_clicked.png';
-					event.target.classList.add("thumbbed");
-				}
-				else {
-					event.target.src = 'images/thumbup_blank.png';
-					event.target.classList.remove("thumbbed");
-				}
-			}
-
-		</script>
 		<script>
 			const urlParams = new URLSearchParams(window.location.search);
       		const activityNo = urlParams.get("activityNo");

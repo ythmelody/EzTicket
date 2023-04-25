@@ -38,8 +38,10 @@ public class Torder {
 	@JsonFormat(pattern = "yyyy/MM/dd kk:mm:ss", timezone = "GMT+8")
 	private Timestamp torderDate;
 	@Column(name = "tpaydate")
+	@JsonFormat(pattern = "yyyy/MM/dd kk:mm:ss", timezone = "GMT+8")
 	private Timestamp tpayDate;
 	@Column(name = "treceivedate")
+	@JsonFormat(pattern = "yyyy/MM/dd kk:mm:ss", timezone = "GMT+8")
 	private Timestamp treceiveDate;
 	@Column(name = "tpaymentstatus")
 	private Integer tpaymentStatus;

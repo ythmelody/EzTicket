@@ -264,11 +264,16 @@
 		fetch(`/Torder/findById?torderNo=${torderNo}`)
 				.then((resp) => resp.json())
 				.then((data) => {
-					let tpayDate="";
-					if(data.tpayDate==null){
-						tpayDate="未付款";
-					}else{
-						tpayDate= data.tpayDate;
+					let status="";
+						switch (data.tpaymentStatus) {
+						case 0: status = "未付款";
+							break;
+						case 1: status = `${data.tpayDate}`;
+							break;
+						case 2: status = "已取消";
+							break;
+						case 3: status = "付款失敗";
+							break;
 					}
 					let str=`<ul>
 											<li>
@@ -278,7 +283,7 @@
 												<div class="vdt-list">訂單成立時間 : ${data.torderDate}</div>
 											</li>
 											<li>
-												<div class="vdt-list">訂單付款時間 : ${tpayDate}</div>
+												<div class="vdt-list">訂單付款時間 : ${data.tpayDate}</div>
 											</li>
 										</ul>`;
             topArea.innerHTML = str;

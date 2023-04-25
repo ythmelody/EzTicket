@@ -1402,6 +1402,7 @@
     <script src="js/i18n/datepicker.en.js"></script>
     <script src="js\jquery.datetimepicker.full.js"></script>
     <link rel="stylesheet" type="text/css" href="css\jquery.datetimepicker.css" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
       $("#add-event-tab").steps({
         onFinish: function () {
@@ -1702,8 +1703,21 @@
 		const activityNo = urlParams.get('activityNo');
     console.log(activityNo);
 
-
       document.querySelector("#finish").addEventListener("click", () => {
+          swal({
+              title: "編輯節目是否完成?",
+              text: "",
+              icon: "warning",
+              buttons: {
+                否: true,
+                是: true
+              },
+              dangerMode: true
+            }).then((value) => {
+              switch (value) {
+                case "是":
+
+     
         const formData = new FormData();
         formData.append('activityNo', 1011);
         formData.append('aname', $("#aname").val());
@@ -1766,39 +1780,49 @@
     const blockPrice= document.querySelectorAll(".blockprice");
     const blockType= document.querySelectorAll(".blocktype");
            console.log($("#blockName").val())
-const formData3 = new FormData()
-let blockDataArray = [];
-for (let i = 0; i < blockName.length; i++) {
-  let blockData = {
-    blockName: blockName[i].value,
-    activityNo: 1012,
-    blockPrice: blockPrice[i].value,
-    blockType: blockType[i].checked ? 1 : 0
-  };
-  blockDataArray.push(blockData);
-}
+           const formData3 = new FormData()
+            let blockDataArray = [];
+            for (let i = 0; i < blockName.length; i++) {
+              let blockData = {
+                blockName: blockName[i].value,
+                activityNo: 1012,
+                blockPrice: blockPrice[i].value,
+                blockType: blockType[i].checked ? 1 : 0
+              };
+              blockDataArray.push(blockData);
+            }
 
-console.log(blockDataArray);
-fetch('/BlockPrice/saveBlockPrice', {
-  method: 'POST', 
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(blockDataArray),
-}).then(res => res.json())
-  .catch(error => console.error('Error:', error))
-  .then(response => console.log('Success:', response)); 
-    location.href = `back-activity-eventdashboard.html`;
+            console.log(blockDataArray);
+            fetch('/BlockPrice/saveBlockPrice', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(blockDataArray),
+            }).then(res => res.json())
+              .catch(error => console.error('Error:', error))
+              .then(response => console.log('Success:', response));
+            location.href = `back-activity-eventdashboard.html`;
           });
-         
+              }
 
-    });
+            });
+      });
+
+
+             
+
+           
+
+
 		//判斷式結束		
    </script>
 <!--活動新增結束-->
 
 <!--活動編輯開始-->
 <script>
+
+
   fetch(`/Activity/findByactivityNo?activityNo=${activityNo}`)
     .then(resp => resp.json())
     .then(data => {

@@ -17,4 +17,6 @@ public interface TdetailsRepository extends JpaRepository<Tdetails,Integer> {
     List<Tdetails> findByTorderno(@Param("torderno") Integer torderno);
 
     Tdetails findByTorderNo(Integer torderNo);
+
+    List <Tdetails> findAllByTorderNo(Integer torderNo);
 }

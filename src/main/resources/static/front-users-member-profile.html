@@ -1378,7 +1378,14 @@
 			// const memberNo = urlParams.get("memberNo");
 			// console.log(memberNo);
 
-			fetch(
+			fetch('member/getMemberInfo', {
+					method: 'GET',
+				})
+					.then(response => response.json())
+					.then(response => {
+						let memberNo= response.memberno;
+						console.log(memberNo)
+						fetch(
 				`/TorderDetailsView/findBymemberNo?memberNo=${85341}`
 			)
 				.then((resp) => resp.json())
@@ -1416,6 +1423,8 @@
                  break;
                case 2: status = "已取消";
                  break;
+				case 3: status = "付款失敗";
+				 break;
             }
 						str+=`<div class="card-top p-4">
                                 <div class="card-event-img">
@@ -1485,6 +1494,19 @@
 					
 					
 				});
+
+
+
+
+
+
+						
+
+					})
+
+
+
+			
 	//========================== 取消訂單開始==========================================
 		//取消訂單function
 		function cancelTorder(e,deadline) {

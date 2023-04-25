@@ -520,7 +520,7 @@
                     }
                 })
 
-            fetch("/PlaceModel/GetAll")
+            fetch("/PlaceModel/GetActive")
                 .then(resp => resp.json())
                 .then((jsondata) => {
                     for (let j of jsondata) {
