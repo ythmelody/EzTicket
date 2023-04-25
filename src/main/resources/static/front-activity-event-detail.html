@@ -532,16 +532,18 @@
     <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script src="js/custom.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="js/s-eventdetails.js"></script>
 
 		<script>
 			const urlParams = new URLSearchParams(window.location.search);
       		const activityNo = urlParams.get("activityNo");
 			const title=document.querySelector('#title');
 			
-        fetch(`http://localhost:8085/Session/findByactivityNo?activityNo=${activityNo}`)
+        fetch(`/Session/findByactivityNo?activityNo=${activityNo}`)
         .then((Response) => Response.json())
         .then((data) => {
+
+            sessionStorage.setItem("activityNo", `${activityNo}`);
+
 			console.log(data);
 			const date =new Date(data[0].sessionsTime);
 			const month = date.toLocaleDateString('en-US', { month: 'short' });
@@ -745,7 +747,8 @@
 			const edate = new Date(i.sessioneTime);
 			const ehour = edate.getHours();
 			const eminute = edate.getMinutes().toString().padStart(2, '0');
-                let href=`<a href="Shawn_choose_seat.html?activityNo=${activityNo}&sessionNo=${i.sessionNo}" >`;
+                // let href=`<a href="front-activity-selectseats.html?activityNo=${activityNo}&sessionNo=${i.sessionNo}" >`;
+                let href=`<a id="${i.sessionNo}" href="front-activity-selectseats.html" onmousedown="setKV(this.id)">`;
                 let soldout="";
             if(i.maxSeatsQty==i.seatsQty&&i.maxStandingQty==i.standingQty){
                 href=`<a>`;
@@ -784,6 +787,8 @@
         }
 
     </script>
+    <script src="js/s-eventdetails.js"></script>
+
 </body>
 
 </html>
