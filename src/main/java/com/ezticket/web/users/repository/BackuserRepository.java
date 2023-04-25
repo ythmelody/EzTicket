@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface BackuserRepository extends JpaRepository<Backuser, Integer> {
 
     Backuser findByBaaccount(String baacount);
+
+    Backuser findByBaemail(String email);
 }

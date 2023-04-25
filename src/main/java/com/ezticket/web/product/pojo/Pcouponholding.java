@@ -1,7 +1,11 @@
 package com.ezticket.web.product.pojo;
 
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,5 +21,6 @@ public class Pcouponholding {
     private byte pcouponstatus;
     @ManyToOne
     @JoinColumn(name = "PCOUPONNO", insertable = false, updatable = false)
+    @JsonBackReference
     private Pcoupon pcoupon;
 }

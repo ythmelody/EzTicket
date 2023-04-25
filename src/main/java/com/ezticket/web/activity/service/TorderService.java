@@ -48,6 +48,8 @@ public class TorderService {
     SeatsRepository seatsRepository;
     @Autowired
     SessionRepository sessionRepository;
+    @Autowired
+    private CollectCrudService collectCrudService;
 
     public List<TorderDto> findByOrderByTorderNoDesc() {
         return torderRepository.findByOrderByTorderNoDesc()
@@ -141,7 +143,7 @@ public class TorderService {
                 torder.setTpaymentStatus(2);
                 torder.setTprocessStatus(2);
                 torderRepository.save(torder);
-
+                collectCrudService.cancelTicket(torderNo);
             }
         }
 

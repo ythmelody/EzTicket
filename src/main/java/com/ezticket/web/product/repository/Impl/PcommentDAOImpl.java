@@ -97,7 +97,7 @@ public class PcommentDAOImpl implements PcommentDAO {
 
     public static Predicate getPredicateForDB(CriteriaBuilder builder, Root<Pcomment> root, String columnName, String value) {
         Predicate predicate = null;
-        if ("pcommentstatus".equals(columnName) || "productno".equals(columnName)) {
+        if ("pcommentstatus".equals(columnName) || "productno".equals(columnName) || "prate".equals(columnName)) {
             predicate = builder.equal(root.get(columnName), Integer.valueOf(value));
         } else if ("pname".equals(columnName)) {
             predicate = builder.like(root.get("product").get("pname"), "%" + value + "%");

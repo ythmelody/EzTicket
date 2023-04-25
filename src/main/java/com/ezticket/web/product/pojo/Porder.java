@@ -47,6 +47,7 @@ public class Porder {
     private Integer ppaymentstatus;
     @JoinColumn(insertable = false,updatable = false)
     private Integer pprocessstatus;
+    private String logisticsid;
 
     @ManyToMany
     @JoinTable(

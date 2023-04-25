@@ -106,10 +106,13 @@ public class BackuserService {
         Map<Integer,String> funcMap = new HashMap<>();
         //把角色的所有功能{funcno:funcname}放進List
         List<Roleauthority> roleauthorities = roleauthorityRepository.findByRoleno(role.get().getRoleno());
+        //透過角色的所有功能的funcno來找到funcno和funcname並放入funcMap
         for (Roleauthority roleauthority : roleauthorities){
-            //透過角色的所有功能的funcno來找到funcno和funcname並放入funcMap
-            Function allfuncs = functionRepository.findByFuncno(roleauthority.getFuncno());
-            funcMap.put(allfuncs.getFuncno(),allfuncs.getFuncname());
+            if (roleauthority.getFuncno() != 1 && roleauthority.getFuncno() != 2) {
+                //直接省略顯示所有角色的funcno1跟2,因為是基本功能一定要有的,不需要被增加或減少
+                Function allfuncs = functionRepository.findByFuncno(roleauthority.getFuncno());
+                funcMap.put(allfuncs.getFuncno(),allfuncs.getFuncname());
+            }
         }
         //存入roleDTO
         roleDTO.setFuncs(funcMap);
@@ -123,7 +126,10 @@ public class BackuserService {
         Set<Integer> allFuncKey = new HashSet<>();
         List<Function> allFuncs = functionRepository.findAll();
         for(Function funcs : allFuncs){
-            allFuncKey.add(funcs.getFuncno());
+            //直接省略顯示所有角色的funcno1跟2,因為是基本功能一定要有的,不需要被增加或減少
+            if (funcs.getFuncno() != 1 && funcs.getFuncno() != 2){
+                allFuncKey.add(funcs.getFuncno());
+            }
         }
 
         //把所有功能的funcno 去移除掉  該角色擁有的funcno = 該角色沒有的funcno
@@ -205,6 +211,20 @@ public class BackuserService {
         }
     }
 
+
+    //更改密碼(忘記密碼頁面)
+    public Backuser updateBuPwd(String email,String password){
+        Optional<Backuser> backuser = Optional.ofNullable(backuserRepository.findByBaemail(email));
+        if(backuser.isPresent()){
+            Backuser updateTheBackuser = backuser.get();
+            updateTheBackuser.setBapassword(password);
+            System.out.println("密碼已修改完成!");
+            return  backuserRepository.save(updateTheBackuser);
+        }else {
+            System.out.println("密碼無法修改!");
+            throw new RuntimeException("Backuser not found with email: " + email);
+        }
+    }
 
 
 }

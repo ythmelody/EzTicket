@@ -100,7 +100,7 @@ public class EmailServiceImpl implements EmailService {
         // 收件人
         sendCancelOrder.setTo(to);
         // 標題
-        // status 1 成立 2 付款 3 取消
+        // status 1 成立 2 付款 3 取消 4 出貨
         String mailText = "";
         String mailTitle = "";
         if (status.equals("1")) {
@@ -120,6 +120,12 @@ public class EmailServiceImpl implements EmailService {
             mailText = "很抱歉地通知您，由於逾期未付款，您的訂單已被取消。\n" +
                     "\n" +
                     "如有需要，請重新下單。如有任何疑問，請隨時聯繫我們的客服人員。\n";
+        }
+        if (status.equals("4")) {
+            mailTitle = "訂單出貨";
+            mailText = "您的訂單已出貨，感謝您的購買。\n" +
+                    "\n" +
+                    "預計將於1-2個工作天配送，再麻煩您留意簡訊或手機未知來電喔。\n";
         }
         sendCancelOrder.setSubject("ezTicket： " + porderno + " " + mailTitle + "通知");
         sendCancelOrder.setText(
@@ -201,5 +207,26 @@ public class EmailServiceImpl implements EmailService {
         helper.setText("您的驗證碼是: " + code + "<br> 請於五分鐘內返回頁面驗證!",true);
 
         javaMailSender.send(message);
+    }
+
+    public String sendTicketNotification(String email, String mname) throws MessagingException {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        helper.setFrom(sender);
+        helper.setTo(email);
+        System.out.println("email系統測試");
+        System.out.println(sender);
+        helper.setSubject("ezTicket 通知：獲得新票券");
+        System.out.println(sender);
+        String htmlContent = "<p>親愛的" + mname + "先生/小姐：</p>" +
+                "<p>有人轉贈票券給您唷！</p>" +
+                "<p><a href='http://localhost:8085/front-activity-ticket-holder.html'>立即前往票夾看看吧！</a></p>" +
+                "<p>此為系統通知信件，請勿直接回覆此信件。</p>" +
+                "<p>敬祝您身體健康、事事如意！</p>" +
+                "<p>                                           ezTicket - 一站式購票體驗</p>";
+
+        helper.setText(htmlContent, true);
+        javaMailSender.send(message);
+        return "Email is sent";
     }
 }
