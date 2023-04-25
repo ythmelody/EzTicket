@@ -227,12 +227,12 @@ public class CollectCrudService {
 
         //      測試用：存入硬碟
         // 設置QRCode的存放目錄、檔名與圖片格式
-        String filePath = "C:/Users/Tibame_T14/Documents/ezTicket/images/QRcodeTest/";
-        String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date()) + ".jpg";
-        Path path = FileSystems.getDefault().getPath(filePath, fileName);
-        String format = "jpg";
-        MatrixToImageWriter.writeToPath(matrix, format, path);
-        System.out.println("path=" + path.toString());
+//        String filePath = "C:/Users/Tibame_T14/Documents/ezTicket/images/QRcodeTest/";
+//        String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new java.util.Date()) + ".jpg";
+//        Path path = FileSystems.getDefault().getPath(filePath, fileName);
+//        String format = "jpg";
+//        MatrixToImageWriter.writeToPath(matrix, format, path);
+//        System.out.println("path=" + path.toString());
 
 
         // 將 BitMatrix 轉換為 ByteArrayOutputStream
