@@ -20,7 +20,7 @@ public class TorderController {
     @Autowired
     private TorderService torderService;
     @Autowired
-    private TorderService torderService;
+    private OrderService orderService;
 
     @GetMapping("/findAll")
     public List<TorderDto> findAll() {
@@ -37,7 +37,7 @@ public class TorderController {
     @PostMapping("/addTorder")
     @ResponseBody
     public String addTOrder(@RequestBody AddTorderDTO addTorderDTO) {
-        return torderService.ecpayTCheckout(torderService.addTOrder(addTorderDTO).getTorderNo());
+        return orderService.ecpayTCheckout(torderService.addTOrder(addTorderDTO).getTorderNo());
     }
 
     // Add by Shawn on 04/19
