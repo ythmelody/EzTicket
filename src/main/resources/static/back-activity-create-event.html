@@ -902,25 +902,26 @@
                                                     <div class="col-lg-12 col-md-12">
                                                         <div class="form-group border_bottom pb_30">
                                                             <label class="form-label fs-16"
-                                                            >活動名稱</label
-                                                            >
+                                                            >活動名稱 <i id="anameWarning" class="warning" style="color: red; " ></i></label
+                                                            > 
                                                             <p class="mt-2 d-block fs-14 mb-3">
                                                                 查看您的名字如何出現在活動頁面上<br/>
 
                                                             </p>
                                                             <input
-                                                                    class="form-control h_50"
+                                                                    class="form-control h_50 input"
                                                                     type="text"
                                                                     placeholder="輸入活動名稱"
                                                                     value=""
                                                                     id="aname"
+                                                                    required
                                                             />
                                                         </div>
                                                         <div
                                                                 class="form-group border_bottom pt_30 pb_30"
                                                         >
                                                             <label class="form-label fs-16"
-                                                            >選擇活動類別</label
+                                                            >選擇活動類別 <i id="aclassWarning" class="warning" style="color: red;"></i></label
                                                             >
                                                             <p class="mt-2 d-block fs-14 mb-3">
                                                                 選擇相關類別有助於提高活動曝光率。<br/>
@@ -942,7 +943,7 @@
 
                                                             <div id="typeList">
                                                                 <select name="" id="aclass"
-                                                                        class="btn  dropdown-toggle btn-light">
+                                                                        class="btn  dropdown-toggle btn-light input">
                                                                     <option value="">節目類別</option>
 
                                                                 </select>
@@ -951,7 +952,7 @@
                                                         </div>
                                                         <div class="form-group border_bottom pb_30">
                                                             <label class="form-label fs-16"
-                                                            >表演者</label
+                                                            >表演者 <i id="aperformerWarning" class="warning" style="color: red;"></i></label
                                                             >
                                                             <p class="mt-2 d-block fs-14 mb-3">
                                                                 使否有表演者<br/>
@@ -970,7 +971,7 @@
                                                                     如:蕭敬騰、周杰倫、林俊傑<br/>
                                                                 </p>
                                                                 <input
-                                                                        class="form-control h_50"
+                                                                        class="form-control h_50 "
                                                                         type="text"
                                                                         placeholder="請輸入表演者名稱"
                                                                         value=""
@@ -982,13 +983,13 @@
                                                                 class="form-group border_bottom pt_30 pb_30"
                                                         >
                                                             <label class="form-label fs-16"
-                                                            >主辦單位</label
+                                                            >主辦單位 <i id="hostWarning" class="warning" style="color: red;"></i></label
                                                             >
 
 
                                                             <div>
                                                                 <select name="" id="host"
-                                                                        class="btn dropdown-toggle btn-light">
+                                                                        class="btn dropdown-toggle btn-light input">
 
                                                                 </select>
                                                             </div>
@@ -997,7 +998,7 @@
 
                                                         <div class="form-group pt_30 pb_30">
                                                             <label class="form-label fs-16"
-                                                            >上傳活動圖片</label
+                                                            >上傳活動圖片 <i id="aimgWarning" class="warning" style="color: red;"></i></label
                                                             >
                                                             <p class="mt-2 fs-14 d-block mb-3 pe_right">
                                                                 *第一張圖片為主圖片<br/>
@@ -1008,7 +1009,7 @@
                                                                 <input type="file" accept="image/*" class="aimg"
                                                                        id="file1" value="1"/><br>
                                                                 <div class="default-event-thumb">
-                                                                    <img id="img1"/>
+                                                                    <img id="img1" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1016,27 +1017,27 @@
 
                                                     </div>
                                                     <div class="form-group mt-4">
-                                                        <label class="form-label mb-2 fs-14">撰寫活動資訊</label>
-                                                        <textarea class="form-textarea"
+                                                        <label class="form-label mb-2 fs-14">撰寫活動資訊 <i id="adiscripWarning" class="warning" style="color: red;"></i></label>
+                                                        <textarea class="form-textarea input"
                                                                   id="adiscrip"
                                                         ></textarea>
                                                     </div>
                                                     <div class="form-group mt-4">
-                                                        <label class="form-label mb-2 fs-14">撰寫注意事項</label>
-                                                        <textarea class="form-textarea"
+                                                        <label class="form-label mb-2 fs-14">撰寫注意事項<i id="anoteWarning" class="warning"style="color: red;"></i></label>
+                                                        <textarea class="form-textarea input"
                                                                   id="anote"
                                                         ></textarea>
                                                     </div>
                                                     <div class="form-group mt-4">
-                                                        <label class="form-label mb-2 fs-14">撰寫購票流程</label>
-                                                        <textarea class="form-textarea"
+                                                        <label class="form-label mb-2 fs-14">撰寫購票流程<i id="aticketRemindWarning" class="warning" style="color: red;"></i></label>
+                                                        <textarea class="form-textarea input"
                                                                   id="aticketremind"
                                                         ></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-group pt_30 pb_30">
                                                     <label class="form-label fs-16"
-                                                    >上傳票價區域示意圖</label
+                                                    >上傳票價區域示意圖<i id="aseatimgWarning" class="warning" style="color: red;"></i></label
                                                     >
                                                     <div class="content-holder mt-4" id="seatImgBlock">
                                                         <input type="file" accept="image/*" id="seat"/><br>
@@ -1062,10 +1063,10 @@
                                                                 <div class="col-md-12">
                                                                     <div class="form-group mt-1">
                                                                         <label class="form-label fs-6"
-                                                                        >活動場地</label
+                                                                        >活動場地 <i id="aplaceWarning" class="warning" style="color: red;"></i></label
                                                                         >
                                                                         <input
-                                                                                class="form-control h_50"
+                                                                                class="form-control h_50 input"
                                                                                 type="text"
                                                                                 placeholder="輸入場地名稱"
                                                                                 id="aplace"
@@ -1075,10 +1076,10 @@
                                                                 <div class="col-md-6">
                                                                     <div class="form-group mt-1">
                                                                         <label class="form-label fs-6"
-                                                                        >活動地址</label
+                                                                        >活動地址<i id="aplaceAddressWarning" class="warning" style="color: red;"></i></label
                                                                         >
                                                                         <input
-                                                                                class="form-control h_50"
+                                                                                class="form-control h_50 input"
                                                                                 type="text"
                                                                                 placeholder="輸入活動地址"
                                                                                 id="aplaceaddress"
@@ -1110,7 +1111,7 @@
                                             <div class="">
                                                 <div class="ticket-section">
                                                     <label class="form-label fs-16"
-                                                    >編輯區域票價</label
+                                                    >編輯區域票價<i id="ablockPriceWarning" class="warning" style="color: red;"></i></label
                                                     >
                                                     <p class="mt-2 fs-14 d-block mb-3 pe_right">
                                                         若此活動都不分區，請在輸入區域名稱寫為"全站"</p>
@@ -1158,11 +1159,49 @@
                                                     </p>
                                                 </div>
                                                 <div class="ticket-type-item-list mt-4">
+                                                  
                                                     <div class="price-ticket-card mt-4" id="blockPriceList">
+                                                      <div class="price-ticket-card-head d-md-flex flex-wrap align-items-start justify-content-between position-relative p-4"
+                                                        id="blockDiv${count}">
+                                                        <div class="d-flex align-items-center top-name">
+                                                          <div class="icon-box">
+                                                            <span class="icon-big rotate-icon icon icon-purple">
+                                                              <i class="fa-solid fa-ticket"></i>
+                                                            </span>
+                                                            <div>
+                                                              <span class="text-145">請輸入區域名稱</span>
+                                                            </div>
+                                                            <input type="text" class="blockname input" id="frstBlockname" >
+                                                      
+                                                          </div>
+                                                        </div>
+                                                        <div class="d-flex align-items-center top-name">
+                                                          <div class="icon-box">
+                                                            <span class="icon-big  icon icon-purple">
+                                                              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-currency-dollar"
+                                                                viewBox="0 0 17 20">
+                                                                <path
+                                                                  d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z" />
+                                                              </svg>
+                                                            </span>
+                                                            <div>
+                                                              <span class="text-145">請輸入區域票價</span>
+                                                            </div>
+                                                            <input type="number" class="blockprice input" id="firstBlockprice">
+                                                      
+                                                          </div>
+                                                        </div>
+                                                        <div>
+                                                          <input type="checkbox" id="firstBlocktype" class="blocktype input">
+                                                          <label for="">此區是否有座位</label>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                         
+                                                        </div>
+                                                      </div>
 
-                                                        <div
-                                                                class="price-ticket-card-body border_top p-4"
-                                                        >
+                                                        <div class="price-ticket-card-body border_top p-4" id="blockPriceList">
+
                                                         </div>
                                                     </div>
 
@@ -1207,13 +1246,14 @@
                                                                 <div class="row g-3">
                                                                     <div class="col-md-6">
                                                                         <label class="form-label mt-3 fs-6"
-                                                                        >上架時間</label
+                                                                        >上架時間<i id="asdateWarning" class="warning" style="color: red;"></i></label
                                                                         >
                                                                         <div
                                                                                 class="loc-group position-relative"
                                                                         >
                                                                             <input
                                                                                     type="text"
+                                                                                    class="input"
                                                                                     value=""
                                                                                     id="asdate"
                                                                                     placeholder="請輸入上架時間"
@@ -1224,10 +1264,11 @@
 
                                                                         <label
                                                                                 class="form-label mt-3 fs-6"
-                                                                        >下架時間</label
+                                                                        >下架時間<i id="aedateWarning" class="warning" style="color: red;"></i></label
                                                                         >
                                                                         <input
                                                                                 type="text"
+                                                                                class="input"
                                                                                 value=""
                                                                                 id="aedate"
                                                                                 placeholder="請輸入下架時間"
@@ -1651,7 +1692,7 @@
                                         <div>
                                           <span class="text-145">請輸入區域票價</span>
                                         </div>
-                                      <input type="text" class="blockprice" id="blockprice${count}">
+                                      <input type="number" class="blockprice" id="blockprice${count}">
                                        
                                       </div>
                                     </div>
@@ -1725,8 +1766,111 @@
         },
         dangerMode: true
       }).then((value) => {
+
         switch (value) {
           case "是":
+            //錯誤處理開始
+            if ($("#aname").val().trim() == "") {
+              $("#anameWarning").text("請輸入活動名稱")
+              // return;
+            } else {
+              $("#anameWarning").text("")
+            }
+            console.log($("#aclass").val())
+            if ($("#aclass").val().trim() == "") {
+              $("#aclassWarning").text("請選擇活動類別")
+              // return;
+            } else {
+              $("#aclassWarning").text("")
+            }
+            if ($("#yes").is(":checked") || $("#no").is(":checked")) {
+              $("#aperformerWarning").text("")
+              // return;
+            } else {
+              $("#aperformerWarning").text("請勾選是否有表演者")
+            }
+
+            if ($("#yes").is(":checked") && $("#aperformer").val().trim() == "") {
+              $("#aperformerWarning").text("請輸入表演者名稱")
+            } else {
+              $("#aperformerWarning").text("")
+            }
+            if ($("#host").val().trim() == "") {
+              $("#hostWarning").text("請選擇主辦單位")
+              // return;
+            } else {
+              $("#hostWarning").text("")
+            }
+
+            if ($("#file1").fileSize < 0) {
+              $("#aimgWarning").text("請選擇至少一張活動圖片")
+            } else {
+              $("#aimgWarning").text("")
+              // return;
+            }
+            if ($("#adiscrip").val().trim().length < 300 || $("#adiscrip").val().trim().length>3000) {
+              $("#adiscripWarning").text("請輸入至少300字活動資訊，且不得超過3000字")
+            } else {
+              $("#adiscripWarning").text("")
+              // return;
+            }
+            if ($("#anote").val().trim().length < 300 || $("#anote").val().trim().length>3000) {
+              $("#anoteWarning").text("請輸入至少300字注意事項，且不得超過3000字")
+            } else {
+              $("#anoteWarning").text("")
+              // return;
+            }
+            if ($("#aticketremind").val().trim().length < 300 || $("#aticketremind").val().trim().length > 3000) {
+              $("#aticketRemindWarning").text("請輸入至少300字購票流程，且不得超過3000字")
+            } else {
+              $("#aticketRemindWarning").text("")
+              // return;
+            }
+            if ($("#aseatimg").attr("src") == "") {
+              $("#aseatimgWarning").text("請選擇票價示意圖")
+            } else {
+              $("#aseatimgWarning").text("")
+              // return;
+            }
+            if ($("#aplace").val().trim() == "") {
+              $("#aplaceWarning").text("請輸入活動地點")
+            } else {
+              $("#aplaceWarning").text("")
+              // return;
+            }
+            if ($("#aplaceaddress").val().trim() == "") {
+              $("#aplaceAddressWarning").text("請輸入活動地址")
+            } else {
+              $("#aplaceAddressWarning").text("")
+              // return;
+            }
+            if ($("#firstBlockname").val() == "" || $("#firstBlockprice").val() == "") {
+              $("#ablockPriceWarning").text("請輸入至少一組票價區域")
+            } else {
+              $("#ablockPriceWarning").text("")
+              // return;
+            }
+            if ($("#asdate").val().trim() == "") {
+              $("#asdateWarning").text("請輸入活動上架時間")
+            } else {
+              $("#asdateWarning").text("")
+              // return;
+            }
+            if ($("#aedate").val().trim() == "") {
+              $("#aedateWarning").text("請輸入活動下架時間")
+            } else {
+              $("#aedateWarning").text("")
+              // return;
+            }
+            const warningArray = document.querySelectorAll(".warning");
+            console.log(warningArray);
+            for (i of warningArray) {
+              if (i.textContent.trim()!== "") {
+                console.log(i.text)
+                return;
+              }
+            }
+         //錯誤處理結束
             //開始向後端送出請求
     const formData = new FormData();
     formData.append('aname',$("#aname").val());
@@ -1810,5 +1954,8 @@ fetch('/BlockPrice/saveBlockPrice', {
 
    </script>
 <!--活動新增結束-->
+
+
+
   </body>
 </html>

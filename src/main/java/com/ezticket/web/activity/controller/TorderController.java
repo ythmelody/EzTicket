@@ -29,7 +29,7 @@ public class TorderController {
     }
 
     @GetMapping("/findById")
-    public Optional<TorderDto> findById(Integer torderNo) {
+    public Optional<Torder> findById(Integer torderNo) {
         return torderService.findById(torderNo);
     }
 
@@ -49,7 +49,6 @@ public class TorderController {
     @PostMapping("/deleteTorder")
     public void deleteTorder(@RequestParam Integer torderNo) {
          torderService.deleteTorder(torderNo);
-
     }
 
 }

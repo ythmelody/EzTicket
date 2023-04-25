@@ -507,6 +507,9 @@
                       id="sessionsTime"
                       placeholder="請輸入開始時間"
                     />
+                    <i id="sessionsTimeWarning" class="warning" style="color: red;">
+                      
+                    </i>
                     
                   </div>
                   </div>
@@ -521,7 +524,9 @@
                       id="sessioneTime"
                       placeholder="請輸入結束時間"
                     />
-                    
+                    <i id="sessioneTimeWarning" class="warning" style="color: red;">
+                      
+                    </i>
                   </div>
                   </div>
                   <div class="form-group mt-4">
@@ -536,7 +541,9 @@
                       id="maxSeatsQty"
                       placeholder="請輸入座位數"
                     />
-                    
+                    <i id="maxSeatsQtyWarning" class="warning " style="color: red;">
+                      
+                    </i>
                   </div>
                   </div>
                   <div class="form-group mt-4">
@@ -551,6 +558,9 @@
                       id="maxStandingQty"
                       placeholder="請輸入站位數"
                     />
+                    <i id="maxStandingQtyWarning" class="warning" style="color: red;">
+                      
+                    </i>
                   </div>
                  
                 </div>
@@ -707,6 +717,10 @@
           const cancelbtn = document.createElement("button");
           createbtn.id=`createbtn${e}`;
           cancelbtn.id = `cancelbtn${e}`;
+          createbtn.className = `main-btn  h_40 pe-4 ps-4`;
+          cancelbtn.className = `main-btn  h_40 pe-4 ps-4`;
+          cancelbtn.style="margin-left:30px"
+          createbtn.style ="margin-left:500px"
           createbtn.textContent="確定編輯";
           cancelbtn.textContent = "取消";
           $(`#sessionName${e}`).append(createbtn);
@@ -808,7 +822,34 @@
       });
         $.datetimepicker.setLocale('zh'); // kr ko ja en
       submitbtn.addEventListener("click",()=>{
-        
+
+           if ($("#sessionsTime").val().trim() == "") {
+          $("#sessionsTimeWarning").text("請輸入場次開始時間")
+        } else {
+          $("#sessionsTimeWarning").text("")
+        }
+          if ($("#sessioneTime").val().trim() == "") {
+          $("#sessioneTimeWarning").text("請輸入場次結束時間")
+        } else {
+          $("#sessioneTimeWarning").text("")
+        }
+         if ($("#maxSeatsQty").val().trim() == "") {
+          $("#maxSeatsQtyWarning").text("請輸入座位數")
+        } else {
+          $("#maxSeatsQtyWarning").text("")
+        }
+         if ($("#maxStandingQty").val().trim() == "") {
+          $("#maxStandingQtyWarning").text("請輸入站票數")
+        } else {
+          $("#maxStandingQtyWarning").text("")
+        }
+           const warningArray = document.querySelectorAll(".warning");
+        for (i of warningArray) {
+          if (i.textContent.trim() !== "") {
+            console.log(i.text)
+            return;
+          }
+        }
           fetch('/Session/saveSession', {
           method: 'POST', 
           headers: {

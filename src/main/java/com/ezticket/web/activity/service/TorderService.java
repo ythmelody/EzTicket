@@ -56,8 +56,8 @@ public class TorderService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<TorderDto> findById(Integer torderNo) {
-        return torderRepository.findById(torderNo).map(this::entityToDTO);
+    public Optional<Torder> findById(Integer torderNo) {
+        return torderRepository.findById(torderNo);
     }
 
     private TorderDto entityToDTO(Torder torder) {
@@ -115,31 +115,37 @@ public class TorderService {
 
     public void deleteTorder(Integer torderNo) {
         // 找到對應的tdetails
-        Tdetails tdetails = tdetailsRepository.findByTorderNo(torderNo);
+        List<Tdetails> tdetails = tdetailsRepository.findAllByTorderNo(torderNo);
         System.out.println("hhhhhhhhhhh");
-        // 找到對應的session
-        Integer sessionNo = tdetails.getSessionNo();
-        Session session = sessionRepository.findById(sessionNo).get();
-        // 活動開始時間前三天才可退票
-        Date now = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(session.getSessionsTime());
-        calendar.add(Calendar.DATE, -3);
-        Date deadline = calendar.getTime();
-        if (now.before(deadline)) {
-            // 若有座位，更新座位狀態
-            if (tdetails.getSeatNo() != null) {
-                updateSeatStatus(sessionNo, tdetails.getSeatNo(), 1);
-            } else {
-                // 若無座位，更新無座位狀態
-                updateStandingQty(sessionNo, tdetails.getTqty());
+
+        for (Tdetails i : tdetails ){
+            // 找到對應的session
+            Integer sessionNo = i.getSessionNo();
+            Session session = sessionRepository.findById(sessionNo).get();
+            // 活動開始時間前三天才可退票
+            Date now = new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(session.getSessionsTime());
+            calendar.add(Calendar.DATE, -3);
+            Date deadline = calendar.getTime();
+            if (now.before(deadline)) {
+                // 若有座位，更新座位狀態
+                if (i.getSeatNo() != null) {
+                    updateSeatStatus(sessionNo, i.getSeatNo(), 1);
+                } else {
+                    // 若無座位，更新無座位狀態
+                    updateStandingQty(sessionNo, i.getTqty());
+                }
+                // 更新torder狀態
+                Torder torder = torderRepository.findById(torderNo).get();
+                torder.setTpaymentStatus(2);
+                torder.setTprocessStatus(2);
+                torderRepository.save(torder);
+
             }
         }
-        // 更新torder狀態
-        Torder torder = torderRepository.findById(torderNo).get();
-        torder.setTpaymentStatus(2);
-        torder.setTprocessStatus(2);
-        torderRepository.save(torder);
+
+
     }
 
     private void updateSeatStatus(Integer sessionNo, Integer seatNo, Integer seatStatus) {

@@ -776,6 +776,11 @@
                 paymentColor = "red"
                 processStatus = "已取消";
                 processColor = "red"
+              } else if (i.tpaymentStatus == 3 && i.tprocessStatus == 3) {
+                paymentStatus = "付款失敗";
+                paymentColor = "red"
+                processStatus = "已結案";
+                processColor = "red"
               } 
                 str += `<tr>
                                             <td>${i.torderNo}</td>

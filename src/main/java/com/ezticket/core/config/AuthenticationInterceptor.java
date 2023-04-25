@@ -61,7 +61,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             htmlMap.put(18, Arrays.asList("back-activity-torder_manage.html")); //票券訂單管理V
             htmlMap.put(19, Arrays.asList("back-activity-create-event.html",
                                           "back-activity-eventdashboard.html",
-                                          "back-activity-sessionlist.html")); //節目管理
+                                          "back-activity-sessionlist.html",
+                                          "back-activity-update-event.html")); //節目管理
             htmlMap.put(20, Arrays.asList("back-activity-commentmgt.html")); //節目評論管理
             htmlMap.put(21, Arrays.asList("back-activity-seatmgt-allactivity.html",
                                           "back-activity-seatmgt-existed.html",

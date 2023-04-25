@@ -39,7 +39,7 @@ public interface ActivityRepository extends JpaRepository <Activity,Integer>{
     @Query("SELECT a FROM Activity a WHERE a.aEDate < :today AND a.aStatus = 1")
     List<Activity> findExpiredActivity(@Param("today") Timestamp today);
 
-    @Query("SELECT a FROM Activity a WHERE a.aSDate >= :today AND a.aStatus = 0")
+    @Query("SELECT a FROM Activity a WHERE a.aSDate <= :today AND a.aStatus = 0")
     List<Activity> findActiveActivity(@Param("today") Timestamp today);
 
     Optional <Activity> findByactivityNo(Integer activityNo);
