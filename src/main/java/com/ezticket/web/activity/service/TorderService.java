@@ -1,5 +1,6 @@
 package com.ezticket.web.activity.service;
 
+import com.ezticket.core.service.EmailService;
 import com.ezticket.web.activity.dto.AddTorderDTO;
 import com.ezticket.web.activity.dto.OrderTicketDTO;
 import com.ezticket.web.activity.dto.TorderDto;
@@ -15,6 +16,8 @@ import com.ezticket.web.product.dto.AddPorderDTO;
 import com.ezticket.web.product.dto.OrderProductDTO;
 import com.ezticket.web.product.dto.PorderDTO;
 import com.ezticket.web.product.pojo.*;
+import com.ezticket.web.users.pojo.Member;
+import com.ezticket.web.users.repository.MemberRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +53,10 @@ public class TorderService {
     SessionRepository sessionRepository;
     @Autowired
     private CollectCrudService collectCrudService;
+    @Autowired
+    private MemberRepository memberRepository;
+    @Autowired
+    private EmailService emailService;
 
     public List<TorderDto> findByOrderByTorderNoDesc() {
         return torderRepository.findByOrderByTorderNoDesc()
@@ -80,6 +87,9 @@ public class TorderService {
         torder.setTprocessStatus(0);
 
         Torder savedTorder = torderRepository.save(torder);
+
+        Member member = memberRepository.getReferenceById(savedTorder.getMemberNo());
+        emailService.sendTOrderMail(member.getMname(), member.getMemail(), savedTorder.getTorderNo().toString(), String.valueOf(0));
 
         List<OrderTicketDTO> orderTickets = addTorderDTO.getOrderTickets();
 

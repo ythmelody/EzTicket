@@ -239,6 +239,11 @@ let toSellTqy;
 $(document).ready(function () {
     localStorage.removeItem('currentUrl');
 
+    let activityNo = sessionStorage.getItem("activityNo");
+    if (activityNo === null || activityNo === "") {
+        location.href = `front-activity-event-explore_events.html`;
+    }
+
     $.ajax({
         async: false,
         type: 'GET',
@@ -484,7 +489,8 @@ function TicketBySystem() {
                     }
                 });
 
-                if($('#ticketDecr').val() > realToSellTqy[sessionStorage.getItem("blockNo")]){
+
+                if($('#ticketDecr').val() > realToSellTqy[sessionStorage.getItem("blockNo")] || Object.keys(realToSellTqy).length === 0){
                     Swal.fire({
                         icon: 'error',
                         title: '無對應數量票券'

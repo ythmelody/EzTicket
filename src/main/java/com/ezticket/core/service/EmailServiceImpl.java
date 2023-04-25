@@ -229,4 +229,61 @@ public class EmailServiceImpl implements EmailService {
         javaMailSender.send(message);
         return "Email is sent";
     }
+
+    // 票券訂單成立信件發送
+    @Override
+    public String sendTOrderMail(String mName, String receiverMail, String torderNo, String paymentStatus){
+        SimpleMailMessage sendCancelOrder = new SimpleMailMessage();
+        sendCancelOrder.setFrom(sender);
+        sendCancelOrder.setTo(receiverMail);
+
+        String mailText = "";
+        String mailTitle = "";
+
+        if (paymentStatus.equals("0")) {
+            mailTitle = "票券訂單成立";
+            mailText = "票券訂單已成立，請盡速前往綠界金流完成付款手續。\n" +
+                    "\n" +
+                    "若有任何疑問，請隨時聯繫我們的客服人員。\n";
+        }
+
+        if (paymentStatus.equals("1")) {
+            mailTitle = "票券訂單付款";
+            mailText = "票券訂單已完成付款，感謝您的購買，我們已將票券歸戶至您的票夾。\n" +
+                    "\n" +
+                    "若有任何疑問，請隨時聯繫我們的客服人員。\n";
+        }
+
+        if (paymentStatus.equals("2")) {
+            mailTitle = "票券訂單取消";
+            mailText = "非常遺憾此票券訂單已取消，我們已將本款項退刷，再請您於十四天後確認是否收到退款。\n" +
+                    "\n" +
+                    "若有任何疑問，請隨時聯繫我們的客服人員。\n";
+        }
+
+        if (paymentStatus.equals("3")) {
+            mailTitle = "票券訂單失敗";
+            mailText = "非常抱歉，由於逾期未付款，您的訂單已被取消。\n" +
+                    "\n" +
+                    "如有需要，請重新下單。若有任何疑問，請隨時聯繫我們的客服人員。\n";
+        }
+
+        sendCancelOrder.setSubject("ezTicket： " + torderNo + " " + mailTitle + "通知");
+        sendCancelOrder.setText(
+                "親愛的 " + mName + " 先生/小姐：\n" +
+                        "\n" +
+                        "此為系統通知信件：\n" +
+                        "\n" +
+                        mailText +
+                        "\n" +
+                        "再次感謝您對我們網站的支持。祝您購票愉快！\n" +
+                        "\n" +
+                        "請勿直接回覆此信件。\n" +
+                        "\n" +
+                        "敬祝 " + mName + " 先生/小姐身體健康、事事如意！\n" +
+                        "\n" +
+                        "                                  ezTicket - 一站式購票體驗");
+        javaMailSender.send(sendCancelOrder);
+        return "sending mail!!!";
+    }
 }
