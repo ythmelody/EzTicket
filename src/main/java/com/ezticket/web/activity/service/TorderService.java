@@ -51,15 +51,17 @@ public class TorderService {
     @Autowired
     private CollectCrudService collectCrudService;
 
-    public List<TorderDto> findByOrderByTorderNoDesc() {
-        return torderRepository.findByOrderByTorderNoDesc()
+    public List<TorderDto> findAll() {
+        return torderRepository.findAll()
                 .stream()
                 .map(this::entityToDTO)
                 .collect(Collectors.toList());
     }
 
-    public Optional<Torder> findById(Integer torderNo) {
-        return torderRepository.findById(torderNo);
+    public List<Torder> findById(Integer torderNo) {
+        System.out.println("aaaa");
+        List <Torder> torderObj=torderRepository.findByTorderNo(torderNo);
+        return torderObj;
     }
 
     private TorderDto entityToDTO(Torder torder) {

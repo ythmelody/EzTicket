@@ -347,51 +347,7 @@
               <div class="main-card mt-5">
                 <div class="dashboard-wrap-content p-4">
                   <div class="nav custom2-tabs btn-group" role="tablist">
-                    <button
-                      class="tab-link ms-0 active"
-                      data-bs-toggle="tab"
-                      data-bs-target="#orders-tab"
-                      type="button"
-                      role="tab"
-                      aria-controls="orders-tab"
-                      aria-selected="true"
-                    >
-                      訂單列表 (<span class="total_event_counter">1</span>)
-                    </button>
-                    <button
-                      class="tab-link"
-                      data-bs-toggle="tab"
-                      data-bs-target="#customers-tab"
-                      type="button"
-                      role="tab"
-                      aria-controls="customers-tab"
-                      aria-selected="false"
-                    >
-                      Customers (<span class="total_event_counter">0</span>)
-                    </button>
-                    <button
-                      id="showTicketOrders"
-                      class="tab-link"
-                      data-bs-toggle="tab"
-                      data-bs-target="#tickets-tab"
-                      type="button"
-                      role="tab"
-                      aria-controls="tickets-tab"
-                      aria-selected="false"
-                    >
-                      票券訂單列表 <span class="total_event_counter"></span>
-                    </button>
-                    <button
-                      class="tab-link"
-                      data-bs-toggle="tab"
-                      data-bs-target="#payouts-tab"
-                      type="button"
-                      role="tab"
-                      aria-controls="payouts-tab"
-                      aria-selected="false"
-                    >
-                      Payouts (<span class="total_event_counter">1</span>)
-                    </button>
+           
                   </div>
                   <div class="d-md-flex flex-wrap align-items-center">
                     <div class="dashboard-date-wrap mt-4">
@@ -413,217 +369,8 @@
               </div>
               <div class="event-list">
                 <div class="tab-content">
-                  <div
-                    class="tab-pane fade show active"
-                    id="orders-tab"
-                    role="tabpanel"
-                  >
-                    <div class="table-card mt-4">
-                      <div class="main-table">
-                        <div class="table-responsive">
-                          <table class="table">
-                            <thead class="thead-dark">
-                              <tr>
-                                <th scope="col">商品訂單編號</th>
-                                <th scope="col">會員編號</th>
-                                <th scope="col">總價</th>
-                                <th scope="col">訂單日期</th>
-                                <th scope="col">配送資訊</th>
-                                <th scope="col">付款狀態</th>
-                                <th scope="col">訂單狀態</th>
-                                <th scope="col">編輯訂單狀態</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td><a href="invoice.html">30001</a></td>
-                                <td>85341</td>
-                                <td>500</td>
-                                <td>16/02/2023</td>
-                                <td>
-                                  <div
-                                    class="img-btn"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#DeliveryModal"
-                                  >
-                                    <img
-                                      src="images/icons/truck2.png"
-                                      alt="配送資訊"
-                                    />
-                                  </div>
-                                </td>
-                                <td>
-                                  <span class="status-circle red-circle"></span
-                                  >未付款
-                                </td>
-                                <td>
-                                  <span class="status-circle red-circle"></span
-                                  >取消
-                                </td>
-                                <td>
-                                  <select onchange="changeStatus(this)">
-                                    <option value="0">未處理</option>
-                                    <option value="1">已出貨</option>
-                                    <option value="2">已結案</option>
-                                    <option value="3" selected>已取消</option>
-                                  </select>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>30002</td>
-                                <td>85342</td>
-                                <td>800</td>
-                                <td>16/02/2023</td>
-                                <td>
-                                  <div
-                                    class="img-btn"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#DeliveryModal"
-                                  >
-                                    <img
-                                      src="images/icons/truck2.png"
-                                      alt="配送資訊"
-                                    />
-                                  </div>
-                                </td>
-                                <td>
-                                  <span
-                                    class="status-circle green-circle"
-                                  ></span
-                                  >已付款
-                                </td>
-                                <td>
-                                  <span
-                                    class="status-circle green-circle"
-                                  ></span
-                                  >結案
-                                </td>
-                                <td>
-                                  <select onchange="changeStatus(this)">
-                                    <option value="0">未處理</option>
-                                    <option value="1">已出貨</option>
-                                    <option value="2" selected>已結案</option>
-                                    <option value="3">已取消</option>
-                                  </select>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>30003</td>
-                                <td>85343</td>
-                                <td>1200</td>
-                                <td>16/02/2023</td>
-                                <td>
-                                  <div
-                                    class="img-btn"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#DeliveryModal"
-                                  >
-                                    <img
-                                      src="images/icons/truck2.png"
-                                      alt="配送資訊"
-                                    />
-                                  </div>
-                                </td>
-                                <td>
-                                  <span class="status-circle blue-circle"></span
-                                  >已退款
-                                </td>
-                                <td>
-                                  <span
-                                    class="status-circle green-circle"
-                                  ></span
-                                  >結案
-                                </td>
-                                <td>
-                                  <select onchange="changeStatus(this)">
-                                    <option value="0">未處理</option>
-                                    <option value="1">已出貨</option>
-                                    <option value="2" selected>已結案</option>
-                                    <option value="3">已取消</option>
-                                  </select>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tab-pane fade" id="customers-tab" role="tabpanel">
-                    <div class="table-card mt-4">
-                      <div class="main-table">
-                        <div class="table-responsive">
-                          <table class="table">
-                            <thead class="thead-dark">
-                              <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Email address</th>
-                                <th scope="col">Address</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>2356</td>
-                                <td>Larry Paige</td>
-                                <td>larry@example.com</td>
-                                <td>
-                                  140 St Kilda Rd, St Kilda, Victoria,
-                                  Melbourne, Victoria, 3000, Australia
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>2355</td>
-                                <td>John Cena</td>
-                                <td>johncena@example.com</td>
-                                <td>
-                                  140 St Kilda Rd, St Kilda, Victoria,
-                                  Melbourne, Victoria, 3000, Australia
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>2354</td>
-                                <td>Jassica William</td>
-                                <td>jassica@example.com</td>
-                                <td>
-                                  140 St Kilda Rd, St Kilda, Victoria,
-                                  Melbourne, Victoria, 3000, Australia
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>2353</td>
-                                <td>Rock William</td>
-                                <td>rockwilliam@example.com</td>
-                                <td>
-                                  140 St Kilda Rd, St Kilda, Victoria,
-                                  Melbourne, Victoria, 3000, Australia
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>2352</td>
-                                <td>Gleen Smith</td>
-                                <td>gleensmith@example.com</td>
-                                <td>
-                                  140 St Kilda Rd, St Kilda, Victoria,
-                                  Melbourne, Victoria, 3000, Australia
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>2351</td>
-                                <td>John Doe</td>
-                                <td>johndoe@example.com</td>
-                                <td>
-                                  140 St Kilda Rd, St Kilda, Victoria,
-                                  Melbourne, Victoria, 3000, Australia
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="tab-pane fade" id="tickets-tab" role="tabpanel">
+         
+                  <div class="tab-pane active" id="tickets-tab" role="tabpanel">
                     <div class="table-card mt-4">
                       <div class="main-table">
                         <div class="table-responsive">
@@ -643,15 +390,6 @@
                           </table>
                         </div>
                       </div>
-                    </div>
-                    <div style="display: flex; justify-content: space-evenly">
-                      <input type="button" id="firstPage" value="第一頁" />
-                      <input type="button" id="btnPrev" value="上一頁" />
-                      <div style="display: flex; justify-content: space-evenly">
-                        <a href="">1 </a><a href="">2 </a><a href=""> 3</a>
-                      </div>
-                      <input type="button" id="btnNext" value="下一頁" />
-                      <input type="button" id="lastPage" value="最後一頁" />
                     </div>
                   </div>
                   <div class="tab-pane fade" id="payouts-tab" role="tabpanel">
@@ -747,14 +485,13 @@
       //   body:JSON.stringify(data)
       // }
 
-      let ticketsTab = document.querySelector("#tickets-tab");
-      let showTicketOrders = document.querySelector("#showTicketOrders");
+
       let TicketPannel = document.querySelector("#TicketPannel");
 
       fetch("/Torder/findAll")
         .then((Response) => Response.json())
         .then((data) => {
-          showTicketOrders.addEventListener("click", () => {
+          data.reverse();
             let str = "";
             let paymentStatus="";
             let processStatus="";
@@ -801,7 +538,6 @@
             }
             TicketPannel.innerHTML = str;
           });
-        });
 
 
       const search = document.querySelector("#search");
@@ -810,35 +546,39 @@
         fetch(`/Torder/findById?torderNo=${search.value}`)
           .then((Response) => Response.json())
           .then((data) => {
+            data.reverse();
+            for(i of data){
+
+            
             let str = "";
             let paymentStatus = "";
             let processStatus = "";
             let paymentColor= "";
             let processColor = "";
-            if (data.tpaymentStatus == 0 && data.tprocessStatus == 2) {
+            if (i.tpaymentStatus == 0 && i.tprocessStatus == 2) {
               paymentStatus = "未付款";
               paymentColor="yellow"
               processStatus = "已取消";
               processColor="red"
-            } else if ((data.tpaymentStatus == 1 && data.tprocessStatus == 1)) {
+            } else if ((i.tpaymentStatus == 1 && i.tprocessStatus == 1)) {
               paymentStatus = "已付款";
               paymentColor = "green"
               processStatus = "已出票";
               processColor = "green"
-            } else if (data.tpaymentStatus == 2 && data.tprocessStatus == 2) {
+            } else if (i.tpaymentStatus == 2 && i.tprocessStatus == 2) {
               paymentStatus = "已退款";
               paymentColor = "red"
               processStatus = "已取消";
               processColor = "red"
             }
 
-            if (search.value.match(data.torderNo)) {
+            if (search.value.match(i.torderNo)) {
                 str += `<tr>
-                             <td>${data.torderNo}</td>
-                             <td>${data.memberNo}</td>
-                             <td>${data.member.mname}</td>
-                             <td>${data.tcheckTotal}</td>
-                             <td>${data.torderDate}</td>
+                             <td>${i.torderNo}</td>
+                             <td>${i.memberNo}</td>
+                             <td>${i.member.mname}</td>
+                             <td>${i.tcheckTotal}</td>
+                             <td>${i.torderDate}</td>
                                 <td>
                                     <span class="status-circle ${paymentColor}-circle"></span
                                     >${paymentStatus}
@@ -849,9 +589,10 @@
                                  </td>
                                  </tr>`;                      
             }
-
+            }
             TicketPannel.innerHTML = str;
           });
+          
       });
     </script>
   </body>
