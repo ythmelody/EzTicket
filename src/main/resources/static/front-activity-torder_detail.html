@@ -1,0 +1,347 @@
+﻿<!DOCTYPE html>
+<html lang="zh" class="h-100">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=9">
+    <meta name="description" content="Gambolthemes">
+    <meta name="author" content="Gambolthemes">
+    <title>ezTicket - Ticketing and Merchandise</title>
+
+    <!-- Favicon Icon -->
+    <link rel="icon" type="image/png" href="images/fav.png">
+
+    <!-- Stylesheets -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+            rel="stylesheet">
+    <link href='vendor/unicons-2.0.1/css/unicons.css' rel='stylesheet'>
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/responsive.css" rel="stylesheet">
+    <link href="css/night-mode.css" rel="stylesheet">
+
+    <!-- Vendor Stylesheets -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="vendor/OwlCarousel/assets/owl.carousel.css" rel="stylesheet">
+    <link href="vendor/OwlCarousel/assets/owl.theme.default.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+
+
+    <style>
+        /* 評星 style */
+        .starRating span {
+            color: #888888;
+            cursor: pointer;
+        }
+
+        .starRating i {
+            transition: opacity 0.4s;
+        }
+
+        .starRating .fa-star {
+            color: #ffc000;
+            left: 0;
+            opacity: 0;
+        }
+
+        .starRating span:hover ~ span,
+        .starRated span.active ~ span {
+            color: #888888!important;
+        }
+
+        .starRating:hover .fa-star,
+        .starRating span:hover ~ span .fa-star-o {
+            opacity: 1 !important;
+        }
+
+        .starRating:hover .fa-star-o,
+        .starRating span:hover ~ span .fa-star {
+            opacity: 0 !important;
+        }
+
+        .starRated .fa-star,
+        .starRated span.active ~ span .fa-star-o {
+            opacity: 1;
+        }
+
+        .starRated .fa-star-o,
+        .starRated span.active ~ span .fa-star {
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column h-100">
+<!-- 評星及評論開始 -->
+<div class="modal fade" id="couponModal" tabindex="-1" aria-labelledby="couponModalLabel" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="couponModalLabel">評論與評星</h5>
+                <button type="button" class="close-model-btn" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="uil uil-multiply"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="model-content main-form">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12">
+                            <div class="gift-coupon-icon mt-5 pb-5">
+                                <label class="form-label" style="font-weight: bold"
+                                       id="title_prate">請為此節目評星</label>
+                                <form id="ratingForm">
+<!--                                    <input id="activityNo" type="hidden" value="">-->
+                                    <input id="acommentNo" type="hidden" value="">
+<!--                                    <input id="pcommentstatus" type="hidden" value="">-->
+                                    <div class="form-textarea">
+                                        <div class="card-body">
+                                            <div class="starRating">
+												<span class="star"><i class="fa fa-star-o fa-2x"></i><i
+                                                            class="fa fa-star fa-2x"></i></span>
+                                                <span class="star"><i class="fa fa-star-o fa-2x"></i><i
+                                                        class="fa fa-star fa-2x"></i></span>
+                                                <span class="star"><i class="fa fa-star-o fa-2x"></i><i
+                                                        class="fa fa-star fa-2x"></i></span>
+                                                <span class="star"><i class="fa fa-star-o fa-2x"></i><i
+                                                        class="fa fa-star fa-2x"></i></span>
+                                                <span class="star"><i class="fa fa-star-o fa-2x"></i><i
+                                                        class="fa fa-star fa-2x"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input id="aRate" type="hidden" value="">
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12">
+                            <div class="gift-coupon-icon mt-5 pb-5">
+                                <label class="form-label" style="font-weight: bold;"
+                                       id="title_pcomment">請為此節目評論</label>
+                                <textarea id="aCommentCont" class="form-textarea"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="co-main-btn min-width btn-hover h_40" data-bs-target="#couponModal"
+                        data-bs-toggle="modal" 	data-bs-dismiss="modal">取消
+                </button>
+                <button class="main-btn min-width btn-hover h_40" type="submit" data-bs-target="#couponModal"
+                        data-bs-toggle="modal" 	data-bs-dismiss="modal" onclick="submitComment()">提交
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 評星及評論結束 -->
+<!-- Invoice Start-->
+<div class="invoice clearfix">
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="invoice-header justify-content-between">
+                    <div class="invoice-header-logo">
+                        <img src="images/dark-logo.svg" alt="invoice-logo">
+                    </div>
+                    <div class="invoice-header-text">
+                        <a href="#" class="download-link">Download</a>
+                    </div>
+                </div>
+                <div class="invoice-body">
+                    <div class="invoice_dts">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2 class="invoice_title">訂單明細</h2>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="vhls140" id="topArea">
+                                    <ul>
+                                        <li>
+                                            <div class="vdt-list">訂單編號 : 30001</div>
+                                        </li>
+                                        <li>
+                                            <div class="vdt-list">訂單成立時間 : 16/02/2023</div>
+                                        </li>
+                                        <li>
+                                            <div class="vdt-list">訂單付款時間 : 16/02/2023</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-table bt_40">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">活動圖片</th>
+                                    <th scope="col" style="width: 20%">活動名稱</th>
+                                    <th scope="col" style="width: 15%">場次時間</th>
+                                    <th scope="col" style="width: 15%">座位區域</th>
+                                    <th scope="col" style="width: 10%">票價</th>
+                                    <th scope="col" style="width: 15%">評星與評論</th>
+
+
+                                </tr>
+                                </thead>
+                                <tbody id="tdetailsList">
+                                <tr>
+                                    <td>1</td>
+                                    <td><img src="" alt=""></td>
+                                    <td>周杰倫</td>
+                                    <td>2023/01/05 12:23:00</td>
+                                    <td>紅區 3排1號</td>
+                                    <td>200</td>
+                                    <td>
+                                        <div id="commentContainer_5" style="text-align:center">
+                                            <button id="cmtbtn" style="border: none;  background-color:transparent"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#couponModal"><img src="images/cmtbtn.png"></button>
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td colspan="1"></td>
+                                    <td colspan="5">
+                                        <div class="user_dt_trans text-end pe-xl-4">
+                                            <div class="totalinv2">總金額 : TWD $500</div>
+                                            <p>通過信用卡支付</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <img src="" style="width: 30px;" alt=""> -->
+<!-- Invoice End-->
+
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="vendor/OwlCarousel/owl.carousel.js"></script>
+<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+<script src="js/custom.js"></script>
+<script src="js/night-mode.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="js/s-torderdetails.js"></script>
+<script src="js/memberLoginCheck.js"></script>
+
+<script>
+    $('.starRating span').click(function () {
+        $(this).siblings().removeClass('active');
+        $(this).addClass('active');
+        $(this).parent().addClass('starRated');
+
+        // Added for Demo
+        let rating = $(this).index() + 1;
+        $('#currentRating').html("<small>Rating: <b>" + rating + "</b></small>");
+    });
+</script>
+<!--   動態明細開始-->
+		<script>
+				const tdetailsList = document.querySelector("#tdetailsList");
+				const topArea = document.querySelector("#topArea");
+				const urlParams = new URLSearchParams(window.location.search);
+				// const memberNo = urlParams.get("memberNo");
+				const torderNo= urlParams.get("torderNo");
+				console.log(torderNo);
+		fetch(`/Torder/findById?torderNo=${torderNo}`)
+				.then((resp) => resp.json())
+				.then((data) => {
+					let status="";
+						switch (data.tpaymentStatus) {
+						case 0: status = "未付款";
+							break;
+						case 1: status = `${data.tpayDate}`;
+							break;
+						case 2: status = "已取消";
+							break;
+						case 3: status = "付款失敗";
+							break;
+					}
+					let str=`<ul>
+											<li>
+												<div class="vdt-list">訂單編號 : ${data.torderNo}</div>
+											</li>
+											<li>
+												<div class="vdt-list">訂單成立時間 : ${data.torderDate}</div>
+											</li>
+											<li>
+												<div class="vdt-list">訂單付款時間 : ${status}</div>
+											</li>
+										</ul>`;
+            topArea.innerHTML = str;
+        })
+
+		fetch(`/TorderDetailsView/findAllBytorderNo?torderNo=${torderNo}`)
+				.then((resp) => resp.json())
+				.then((data) => {
+					let str="";
+					let count=1;
+					let blockSeats="";
+					let blockPrice="";
+					for(i of data){
+						if(i.blockName==null){
+							blockSeats= `<td>無座位<br>X${i.tqty}張</td>`;
+							blockPrice= `<td>${i.tcheckTotal/ i.tqty}</td>`;
+						}else{
+							blockSeats = `<td>${i.blockName}區 ${i.realX}排${i.realY}號</td>`;
+							blockPrice = `<td>${i.blockPrice}</td>`;
+						}
+						str+=`<tr>
+									<td>${count}</td>
+									<td><img style="width: 80px;" src="data:image/jpeg;base64,${i.aimg}" ></td>
+									<td>${i.aname}</td>
+									<td>${i.sessionsTime}</td>
+									${blockSeats}
+									${blockPrice}
+									<td>
+									    <div class="commentContainer_${i.activityNo}" style="text-align:center" onclick="setKV(this)">
+                                        </div>
+                                    </td>
+							  </tr>`;
+
+                $.ajax({
+                    async: true,
+                    type: 'GET',
+                    url: "/acomment/getByMemberAndActNo" + `?memberNo=${memberNo}&activityNo=${i.activityNo}`,
+                    dataType: "json",
+                    success: function () {
+                        $(`.commentContainer_${i.activityNo}`).html('');
+                        $(`.commentContainer_${i.activityNo}`).html(`<a id="editbtn" data-bs-toggle="modal" data-bs-target="#couponModal">已評論</a>`);
+                    },
+                    error: function (jsondata){
+                        $(`.commentContainer_${i.activityNo}`).html(`
+                                <button class="cmtbtn_${i.activityNo}" style="border: none;
+                                        background-color:transparent" data-bs-toggle="modal" data-bs-target="#couponModal">
+                                        <img src="images/cmtbtn.png">
+                                </button>`);
+                    }
+                })
+
+                count++
+            }
+            tdetailsList.innerHTML = str;
+        })
+
+</script>
+
+</body>
+
+</html>
