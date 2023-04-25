@@ -28,7 +28,7 @@ public class Top10DAOImpl implements Top10DAO {
     @Override
     public Set<ZSetOperations.TypedTuple<String>> findAllValues() {
 //        Set<String> set = redisTemplate.opsForZSet().reverseRange("SALE_TOP10", 0, 10);
-        Set<ZSetOperations.TypedTuple<String>> set = redisTemplate.opsForZSet().reverseRangeWithScores("SALE_TOP10", 0, 10);
+        Set<ZSetOperations.TypedTuple<String>> set = redisTemplate.opsForZSet().reverseRangeWithScores("SALE_TOP10", 0, 7);
         return set;
     }
 

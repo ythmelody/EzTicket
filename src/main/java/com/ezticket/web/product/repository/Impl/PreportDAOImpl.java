@@ -109,6 +109,7 @@ public class PreportDAOImpl implements PreportDAO {
             }
         }
         criteriaQuery.where(predicateList.toArray(new Predicate[predicateList.size()]));
+        criteriaQuery.orderBy(builder.desc(root.get("preportno")));
 
         //取得總筆數
         Query countQuery = session.createQuery(criteriaQuery);

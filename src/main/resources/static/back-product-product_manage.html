@@ -39,6 +39,11 @@
     background-color: #004895;
     border-color: #004895;
 }
+.event-top .card-event-img {
+    width: 130px;
+    height: 130px;
+}
+
 	</style>
 </head>
 
@@ -621,7 +626,7 @@
 												class="bottom d-flex flex-wrap justify-content-between align-items-center p-4">
 												<div class="icon-box ">
 													<span class="icon">
-														<i class="fa-solid fa-location-dot"></i>
+														<i class="fa-solid fa-toggle-off"></i>
 													</span>
 													<p>商品狀態</p>
 													<h6 class="coupon-status">${item.pstatus === 0 ? '上架中' : '已下架'}</h6>
@@ -630,23 +635,16 @@
 													<span class="icon">
 														<i class="fa-solid fa-calendar-days"></i>
 													</span>
-													<p>下架時間</p>
+													<p>上下架時間</p>
 													<h6 class="coupon-status">${item.psdate}</h6>
 													<h6 class="coupon-status">${item.pedate}</h6>
 												</div>
 												<div class="icon-box">
 													<span class="icon">
-														<i class="fa-solid fa-ticket"></i>
+														<i class="fa-solid fa-ranking-star"></i>
 													</span>
 													<p>可售數量</p>
 													<h6 class="coupon-status">${item.pqty}</h6>
-												</div>
-												<div class="icon-box">
-													<span class="icon">
-														<i class="fa-solid fa-tag"></i>
-													</span>
-													<p>已售數量</p>
-													<h6 class="coupon-status">20</h6>
 												</div>
 											</div>`);
 			}
