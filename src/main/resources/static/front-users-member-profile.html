@@ -248,6 +248,7 @@
 									<input class="form-control h_40" type="text" placeholder="" value="">
 								</div>
 							</div>
+						
 							<div class="col-lg-6 col-md-12">
 								<div class="form-group main-form mt-4">
 									<label class="form-label">Country*</label>
@@ -1386,11 +1387,12 @@
 						let memberNo= response.memberno;
 						console.log(memberNo)
 						fetch(
-				`/TorderDetailsView/findBymemberNo?memberNo=${85341}`
+				`/TorderDetailsView/findBymemberNo?memberNo=${memberNo}`
 			)
 				.then((resp) => resp.json())
 				.then((data) => {
           console.log(data);
+		  data.reverse();
 		  //排除重複值
           const filteredData = data.filter((obj, index, self) =>
             index === self.findIndex((t) => (
@@ -1479,7 +1481,7 @@
                                   <div class="card-dt-text">
                                     <h6>訂單明細</h6>
                                     <div>
-                                      <button id="tdetails${count}" onclick="location.href='front-activity-torder_detail .html?torderNo=${i.torderNo}';">詳情</button>
+                                      <button id="tdetails${count}" onclick="location.href='front-activity-torder_detail.html?torderNo=${i.torderNo}';">詳情</button>
                                     </div>
                                   </div>
                                 </div>

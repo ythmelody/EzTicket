@@ -539,7 +539,7 @@
       		const activityNo = urlParams.get("activityNo");
 			const title=document.querySelector('#title');
 			
-        fetch(`http://localhost:8085/Session/findByactivityNo?activityNo=${activityNo}`)
+        fetch(`/Session/findByactivityNo?activityNo=${activityNo}`)
         .then((Response) => Response.json())
         .then((data) => {
 			console.log(data);
