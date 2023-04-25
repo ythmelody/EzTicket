@@ -17,6 +17,44 @@ function comment(commentNo) {
     $('#memberNo').val(memberNo);
 }
 
+function chgthumbimg() {
+    verifyMember();
+    let thumbQtyTd = event.target.parentElement.parentElement.nextElementSibling;
+
+    if(memberNo === null){
+        return;
+    }
+
+    const btnClass = event.target.className
+
+    if (btnClass === '') {
+        event.target.src = 'images/thumbup_clicked.png';
+        event.target.classList.add("thumbbed");
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: 'acomment/thumbUpCmtNo' + `?memberNo=${memberNo}&aCommentNo=${event.target.id.replace("thumb_", "")}`,
+            dataType: "json"
+        })
+
+        let after_thumb = Number(thumbQtyTd.textContent) + 1;
+        thumbQtyTd.textContent = after_thumb;
+
+    } else {
+        event.target.src = 'images/thumbup_blank.png';
+        event.target.classList.remove("thumbbed");
+        $.ajax({
+            async: false,
+            type: 'GET',
+            url: 'acomment/thumbDownCmtNo' + `?memberNo=${memberNo}&aCommentNo=${event.target.id.replace("thumb_", "")}`,
+            dataType: "json"
+        })
+
+        let after_thumb = Number(thumbQtyTd.textContent) - 1;
+        thumbQtyTd.textContent = after_thumb;
+    }
+}
+
 function submitComment() {
 
     if ($('#aWhy').val() === null) {
@@ -108,10 +146,10 @@ $(document).ready(function () {
                                                             <img id="thumb_${j.acommentNo}" name="thumbbtn"
                                                                  style="width: 30px;"
                                                                  src="images/thumbup_blank.png"
-                                                                 onClick="chgthumbimg()">
+                                                                 onclick="chgthumbimg()">
                                                         </button>
                                                     </td>
-                                                    <td id="alike_${j.acommentNo}" style="width: 30px;">${j.alike}</td>
+                                                    <td id="alike_${j.acommentNo}" name="alike_${j.acommentNo}" style="width: 30px;">${j.alike}</td>
                                                     <td>
                                                         <button name="${j.acommentNo}" data-bs-toggle="modal"
                                                                 data-bs-target="#couponModal"
@@ -190,47 +228,12 @@ $(document).ready(function () {
     }
 )
 
-function chgthumbimg() {
-    verifyMember();
 
-    if(memberNo === null){
-        return;
-    }
-
-    const btnClass = event.target.className
-
-    if (btnClass === '') {
-        event.target.src = 'images/thumbup_clicked.png';
-        event.target.classList.add("thumbbed");
-        $.ajax({
-            async: false,
-            type: 'GET',
-            url: 'acomment/thumbUpCmtNo' + `?memberNo=${memberNo}&aCommentNo=${event.target.id.replace("thumb_", "")}`,
-            dataType: "json"
-        })
-
-        let after_thumb = Number($(`#alike_${event.target.id.replace("thumb_", "")}`).text()) + 1;
-        $(`#alike_${event.target.id.replace("thumb_", "")}`).text(`${after_thumb}`);
-
-    } else {
-        event.target.src = 'images/thumbup_blank.png';
-        event.target.classList.remove("thumbbed");
-        $.ajax({
-            async: false,
-            type: 'GET',
-            url: 'acomment/thumbDownCmtNo' + `?memberNo=${memberNo}&aCommentNo=${event.target.id.replace("thumb_", "")}`,
-            dataType: "json"
-        })
-
-        let after_thumb = Number($(`#alike_${event.target.id.replace("thumb_", "")}`).text()) - 1;
-        $(`#alike_${event.target.id.replace("thumb_", "")}`).text(`${after_thumb}`);
-    }
-}
 
 function verifyMember(){
     if (memberNo === null) {
         Swal.fire({
-            title: "點讚需要登入，是否前往登入？",
+            title: "點讚或評論需要登入，\n是否前往登入？",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

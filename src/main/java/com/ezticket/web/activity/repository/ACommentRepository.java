@@ -29,7 +29,8 @@ public interface ACommentRepository extends JpaRepository<AComment, Integer> {
     @Query("SELECT DISTINCT act.activityNo, act.aName FROM AComment ac JOIN ac.activity act")
     public List getACommentANames();
 
-    public List<AComment> getACommentByActivityNo(Integer actNo);
+    @Query("SELECT ac FROM AComment ac WHERE ac.activityNo = :actNo AND ac.aCommentStatus = 0")
+    public List<AComment> getACommentByActivityNo(@Param("actNo") Integer actNo);
 
     public AComment getACommentByMemberNoAndActivityNo(Integer memberNo, Integer activityNo);
 
