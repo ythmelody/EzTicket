@@ -7,7 +7,12 @@ $('#search-coupon').on('input', function () {
 	if ($(this).val() !== "" && parseInt($(this).val())) {
 		let couponno = $(this).val();
 		fetchPcouponList(`/pcoupon/getbyno?id=${couponno}`);
-	} else {
+	} 
+	else if ($(this).val() !== "" && !parseInt($(this).val())){
+		let couponno = $(this).val();
+		fetchPcouponList(`/pcoupon/getbystring?pcouponname=${couponno}`);
+	}
+	else {
 		fetchPcouponList(`/pcoupon/list`);
 	};
 });
