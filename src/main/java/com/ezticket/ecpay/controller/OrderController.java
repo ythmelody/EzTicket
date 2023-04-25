@@ -139,12 +139,15 @@ public class OrderController {
         torder.setTpayDate(Timestamp.valueOf(LocalDateTime.parse(paymentDate, formatter)));
         // 更改付款狀態
         torder.setTpaymentStatus(Integer.valueOf(rtnCode));
+		System.out.println("有更改到付款狀態");
         // 更改處理狀態
         torder.setTprocessStatus(Integer.valueOf(rtnCode));
         torderService.updateTorder(torder);
 
         // 票券 QR code 於此產生 - 1 (Melody)
 		collectCrudService.insertCollect(torder);
+		Member member = memberRepository.getReferenceById(torder.getMemberNo());
+		emailService.sendTOrderMail(member.getMname(),member.getMemail(),torder.getTorderNo().toString(), String.valueOf(1));
 
         // 印出所有K,V，參考看看
         while (parameterNames.hasMoreElements()) {

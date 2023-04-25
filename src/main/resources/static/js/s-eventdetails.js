@@ -233,7 +233,7 @@ $(document).ready(function () {
 function verifyMember(){
     if (memberNo === null) {
         Swal.fire({
-            title: "點讚或評論需要登入，\n是否前往登入？",
+            title: "此功能需要登入，\n是否前往登入？",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
