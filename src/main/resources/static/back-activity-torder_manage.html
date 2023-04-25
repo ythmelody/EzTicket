@@ -470,23 +470,10 @@
       }
     </script>
     <script>
-      // const data={
-      //     torderNo: 'torderNo',
-      //     memberNo: 'memberNo',
-      //     mname: 'maname',
-      //     tcheckTotal: 'tcheckTotal',
-      //     torderDate: "torderDate",
-      //     tpaymentStatus: 'tpaymentStatus',
-      //     tprocessStatus: 'tprocessStatus'
-      // }
-      // const option={
-      //   method:'POST',
-      //   headers:{'ContentType':'application/json;charset=utf-8'},
-      //   body:JSON.stringify(data)
-      // }
-
-
-      let TicketPannel = document.querySelector("#TicketPannel");
+    const search = document.querySelector("#search");
+      const TicketPannel = document.querySelector("#TicketPannel");
+   
+   
 
       fetch("/Torder/findAll")
         .then((Response) => Response.json())
@@ -538,47 +525,108 @@
             }
             TicketPannel.innerHTML = str;
           });
+    
+      
 
+        
+   
 
-      const search = document.querySelector("#search");
-
-      search.addEventListener("input", () => {
-        fetch(`/Torder/findById?torderNo=${search.value}`)
-          .then((Response) => Response.json())
-          .then((data) => {
-            data.reverse();
-            for(i of data){
+      // search.addEventListener("input", () => {
+      //   fetch(`/Torder/findById?torderNo=${search.value}`)
+      //     .then((Response) => Response.json())
+      //     .then((data) => {
+      //       data.reverse();
+      //       for(i of data){
 
             
-            let str = "";
-            let paymentStatus = "";
-            let processStatus = "";
-            let paymentColor= "";
-            let processColor = "";
-            if (i.tpaymentStatus == 0 && i.tprocessStatus == 2) {
-              paymentStatus = "未付款";
-              paymentColor="yellow"
-              processStatus = "已取消";
-              processColor="red"
-            } else if ((i.tpaymentStatus == 1 && i.tprocessStatus == 1)) {
-              paymentStatus = "已付款";
-              paymentColor = "green"
-              processStatus = "已出票";
-              processColor = "green"
-            } else if (i.tpaymentStatus == 2 && i.tprocessStatus == 2) {
-              paymentStatus = "已退款";
-              paymentColor = "red"
-              processStatus = "已取消";
-              processColor = "red"
-            }
+      //       let str = "";
+      //       let paymentStatus = "";
+      //       let processStatus = "";
+      //       let paymentColor= "";
+      //       let processColor = "";
+      //        if (i.tpaymentStatus == 0 && i.tprocessStatus == 2) {
+      //           paymentStatus = "未付款";
+      //           paymentColor = "blue"
+      //           processStatus = "已取消";
+      //           processColor = "red"
+      //         } else if ((i.tpaymentStatus == 1 && i.tprocessStatus == 1)) {
+      //           paymentStatus = "已付款";
+      //           paymentColor = "green"
+      //           processStatus = "已出票";
+      //           processColor = "green"
+      //         } else if (i.tpaymentStatus == 2 && i.tprocessStatus == 2) {
+      //           paymentStatus = "已退款";
+      //           paymentColor = "red"
+      //           processStatus = "已取消";
+      //           processColor = "red"
+      //         } else if (i.tpaymentStatus == 3 && i.tprocessStatus == 3) {
+      //           paymentStatus = "付款失敗";
+      //           paymentColor = "red"
+      //           processStatus = "已結案";
+      //           processColor = "red"
+      //         } 
 
-            if (search.value.match(i.torderNo)) {
-                str += `<tr>
-                             <td>${i.torderNo}</td>
-                             <td>${i.memberNo}</td>
-                             <td>${i.member.mname}</td>
-                             <td>${i.tcheckTotal}</td>
-                             <td>${i.torderDate}</td>
+      //       if (search.value.match(i.torderNo)) {
+      //           str += `<tr>
+      //                        <td>${i.torderNo}</td>
+      //                        <td>${i.memberNo}</td>
+      //                        <td>${i.member.mname}</td>
+      //                        <td>${i.tcheckTotal}</td>
+      //                        <td>${i.torderDate}</td>
+      //                           <td>
+      //                               <span class="status-circle ${paymentColor}-circle"></span
+      //                               >${paymentStatus}
+      //                            </td>
+      //                            <td>
+      //                               <span class="status-circle ${processColor}-circle"></span
+      //                               >${processStatus}
+      //                            </td>
+      //                            </tr>`;                      
+      //       }
+      //       }
+      //       TicketPannel.innerHTML = str;
+      //     });
+          
+      // });
+      search.addEventListener("input", () => {
+          fetch(`/Torder/findById?torderNo=${search.value}`)
+            .then((Response) => Response.json())
+            .then((data) => {
+        
+                let str = "";
+                let paymentStatus = "";
+                let processStatus = "";
+                let paymentColor = "";
+                let processColor = "";
+                if (data.tpaymentStatus == 0 && data.tprocessStatus == 2) {
+                  paymentStatus = "未付款";
+                  paymentColor = "blue"
+                  processStatus = "已取消";
+                  processColor = "red"
+                } else if (data.tpaymentStatus == 1 && data.tprocessStatus == 1) {
+                  paymentStatus = "已付款";
+                  paymentColor = "green"
+                  processStatus = "已出票";
+                  processColor = "green"
+                } else if (data.tpaymentStatus == 2 && data.tprocessStatus == 2) {
+                  paymentStatus = "已退款";
+                  paymentColor = "red"
+                  processStatus = "已取消";
+                  processColor = "red"
+                } else if (data.tpaymentStatus == 3 && data.tprocessStatus == 3) {
+                  paymentStatus = "付款失敗";
+                  paymentColor = "red"
+                  processStatus = "已結案";
+                  processColor = "red"
+                }
+
+                if (search.value.match(i.torderNo)) {
+                  str += `<tr>
+                             <td>${data.torderNo}</td>
+                             <td>${data.memberNo}</td>
+                             <td>${data.member.mname}</td>
+                             <td>${data.tcheckTotal}</td>
+                             <td>${data.torderDate}</td>
                                 <td>
                                     <span class="status-circle ${paymentColor}-circle"></span
                                     >${paymentStatus}
@@ -587,13 +635,64 @@
                                     <span class="status-circle ${processColor}-circle"></span
                                     >${processStatus}
                                  </td>
-                                 </tr>`;                      
-            }
-            }
-            TicketPannel.innerHTML = str;
-          });
-          
-      });
+                                 </tr>`;
+                
+              }else{
+                fetch("/Torder/findAll")
+                    .then((Response) => Response.json())
+                    .then((data) => {
+                      data.reverse();
+                      let str = "";
+                      let paymentStatus = "";
+                      let processStatus = "";
+                      let paymentColor = "";
+                      let processColor = "";
+                      for (i of data) {
+                        if (i.tpaymentStatus == 0 && i.tprocessStatus == 2) {
+                          paymentStatus = "未付款";
+                          paymentColor = "blue"
+                          processStatus = "已取消";
+                          processColor = "red"
+                        } else if ((i.tpaymentStatus == 1 && i.tprocessStatus == 1)) {
+                          paymentStatus = "已付款";
+                          paymentColor = "green"
+                          processStatus = "已出票";
+                          processColor = "green"
+                        } else if (i.tpaymentStatus == 2 && i.tprocessStatus == 2) {
+                          paymentStatus = "已退款";
+                          paymentColor = "red"
+                          processStatus = "已取消";
+                          processColor = "red"
+                        } else if (i.tpaymentStatus == 3 && i.tprocessStatus == 3) {
+                          paymentStatus = "付款失敗";
+                          paymentColor = "red"
+                          processStatus = "已結案";
+                          processColor = "red"
+                        }
+                        str += `<tr>
+                                            <td>${i.torderNo}</td>
+                                            <td>${i.member.memberno}</td>
+                                            <td>${i.member.mname}</td>
+                                            <td>${i.tcheckTotal}</td>
+                                            <td>${i.torderDate}</td>
+                                            <td>
+                                              <span class="status-circle ${paymentColor}-circle"></span
+                                              >${paymentStatus}
+                                            </td>
+                                            <td>
+                                              <span class="status-circle ${processColor}-circle"></span
+                                              >${processStatus}
+                                            </td>
+                                          </tr> `;
+
+                      }
+                      TicketPannel.innerHTML = str;
+                    });
+              }
+              TicketPannel.innerHTML = str;
+            });
+
+        });
     </script>
   </body>
 </html>

@@ -58,10 +58,8 @@ public class TorderService {
                 .collect(Collectors.toList());
     }
 
-    public List<Torder> findById(Integer torderNo) {
-        System.out.println("aaaa");
-        List <Torder> torderObj=torderRepository.findByTorderNo(torderNo);
-        return torderObj;
+    public Optional<Torder> findById(Integer torderNo) {
+        return torderRepository.findById(torderNo);
     }
 
     private TorderDto entityToDTO(Torder torder) {
