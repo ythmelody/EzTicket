@@ -27,8 +27,9 @@ public class MemSignUpDTO {
     @NotBlank(message = "手機不可為空")
     @Pattern(regexp = "^09\\d{8}$", message = "手機必須為09開頭的10位數字")
     private String mcell;
-    private Date birth;
+//    private Date birth;
 
+    @Pattern(regexp = "^\\d{3}.*", message = "開頭必須為郵遞區號，請選取縣市區域!")
     @NotBlank(message = "地址不可為空")
     private String address;
     @NotBlank(message = "密碼不得為空")

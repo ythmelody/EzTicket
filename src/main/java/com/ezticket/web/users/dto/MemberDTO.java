@@ -27,6 +27,7 @@ public class MemberDTO {
     @Pattern(regexp = "^09\\d{8}$", message = "手機必須為09開頭的10位數字")
     private String mcell;
     @NotBlank(message = "地址不可為空")
+    @Pattern(regexp = "^\\d{3}.*", message = "開頭必須為郵遞區號，請選取縣市區域!")
     private String address;
 //    @Pattern(regexp = "^(0)([0-9]{1})([-]?)([0-9]{6,8})$", message = "室內電話格式錯誤")
     private String mphone;

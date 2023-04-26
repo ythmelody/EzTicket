@@ -29,8 +29,8 @@ public class VerificationCodeService {
         // 從 Redis 中取得驗證碼
         String value = redisTemplate.opsForValue().get(email);
         if (value != null) {
-            // 刪除 Redis 中的驗證碼
-            redisTemplate.delete(email);
+            // 刪除 Redis 中的驗證碼(先不刪除)
+//            redisTemplate.delete(email);
             return true;
         }
         return false;

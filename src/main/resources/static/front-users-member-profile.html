@@ -48,7 +48,7 @@
 		form input[type="tel"],
 		form input[type="date"] {
 			display: inline-block;
-			width: 200px;
+			width: 230px;
 			/* 設定輸入框的寬度 */
 			border: 1px solid gray;
 		}
@@ -89,7 +89,7 @@
 								</li>
 								<li class="nav-item d-flex">
 									<div class="follow-card-btn">
-										<button class="follow-btn" onclick="unfollowAllproduct()">取消全部追蹤</button>
+										<button class="follow-btn" onclick="unfollowAllproduct()">取消全部追蹤</button></div>
 								</li>
 							</ul>
 							<div class="tab-content mt-4">
@@ -413,7 +413,7 @@
 						<li class="dropdown account-dropdown">
 							<a href="#" class="account-link" role="button" id="accountClick"
 								data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
-								<img class="D-mimg" src="images/profile-imgs/img-13.jpg" alt="">
+								<img class="mimg" src="images/profile-imgs/img-13.jpg" alt="">
 								<i class="fas fa-caret-down arrow-icon"></i>
 							</a>
 							<ul class="dropdown-menu dropdown-menu-account dropdown-menu-end"
@@ -421,10 +421,10 @@
 								<li>
 									<div class="dropdown-account-header">
 										<div class="account-holder-avatar">
-											<img class="D-mimg" src="images/profile-imgs/img-13.jpg" alt="">
+											<img class="mimg" src="images/profile-imgs/img-13.jpg" alt="">
 										</div>
-										<h5 class="D-mname">會員名稱</h5>
-										<p class="D-memail">johndoe@example.com</p>
+										<h5 class="un">會員名稱</h5>
+										<p id="mememail">johndoe@example.com</p>
 									</div>
 								</li>
 								<li class="profile-link">
@@ -596,12 +596,16 @@
 																		</p><br><br>
 
 																		<label class="lab" for="address">地址：</label>
-																		<input type="text" id="address" name="address"
+																		<select id="city" placeholder="選擇縣市"></select>
+																		<select id="dist" placeholder="選擇區域"></select>
+																		<input class="js-demeter-tw-zipcode-selector select1" data-city="#city" data-dist="#dist" type="text" placeholder="" value="" style="display: none;">
+																		<br>
+																		<input type="text" id="address" name="address" style="margin-left: 135px; margin-top: 10px;"
 																			required>
 																		<p id="maddressError"
 																			style="color: red; display: inline-block; margin: 0;">
-																		</p><br><br>
-
+																		</p>
+																		<br><br>
 																		<div>
 																			<button id="btn1" type="button"
 																				class="btn btn-primary">儲存</button>&nbsp;
@@ -679,10 +683,13 @@
 																		style="color: red; display: inline-block; margin: 0;">
 																	</p><br><br>
 
-																	<label class="lab"
-																		for="backupUserAddress">常用收件人地址:</label>
+																	<label class="lab" for="backupUserAddress">常用收件人地址:</label>
+																	<select id="city2" placeholder="選擇縣市"></select>
+																	<select id="dist2" placeholder="選擇區域"></select>
+																	<input class="js-demeter-tw-zipcode-selector select1" data-city="#city2" data-dist="#dist2" type="text" placeholder="" value="" style="display: none;">
+																	<br>
 																	<input type="text" id="backupUserAddress"
-																		name="backupUserAddress">
+																		name="backupUserAddress" style="margin-left: 135px; margin-top: 10px;">
 																	<p id="caddressNullError"
 																		style="color: red; display: inline-block; margin: 0;">
 																	</p><br><br>
@@ -939,9 +946,10 @@
 	<!-- Jie JavaScript End-->
     <!-- kai 非會員導出修正版 -->
     <script src="js/forMemberProfile.js"></script>
-    <script src="js/memberLoginCheck-location.href.js"></script>
 	<script src="js/myFollowProduct.js"></script>
 	<script src="js/my_porder.js"></script>
+	<!-- 郵遞區號 -->
+	<script src="https://demeter.5fpro.com/tw/zipcode-selector.js"></script>
 
 
 	<script>
@@ -1276,6 +1284,23 @@
 				console.error('Error:', error);
 			});
 		})
+
+		$('#dist').change(() => {
+		const cityValue = $('#city').val();
+		const distValue = $('#dist').val();
+		const zipcode = $('#dist').find(':selected').data('zipcode');
+
+		$("#address").val(zipcode + cityValue + distValue);
+		})
+		
+		$('#dist2').change(() => {
+		const cityValue2 = $('#city2').val();
+		const distValue2 = $('#dist2').val();
+		const zipcode2 = $('#dist2').find(':selected').data('zipcode');
+
+		$("#backupUserAddress").val(zipcode2 + cityValue2 + distValue2);
+		})
+
 
 	</script>
 	<script>

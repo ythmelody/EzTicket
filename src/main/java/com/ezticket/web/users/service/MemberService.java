@@ -217,7 +217,7 @@ public class MemberService {
         member.setMname(memSignUpDTO.getMname());
         member.setMcell(memSignUpDTO.getMcell());
         member.setAddress(memSignUpDTO.getAddress());
-        member.setBirth(memSignUpDTO.getBirth());
+//        member.setBirth(memSignUpDTO.getBirth());
         member.setMemail(memSignUpDTO.getMemail());
         member.setMpassword(memSignUpDTO.getMpassword());
         member.setMemberstatus(1);  //註冊直接啟用

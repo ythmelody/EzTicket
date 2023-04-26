@@ -97,7 +97,7 @@
 													style="color: red; display: inline-block; margin: 0;"></p>
 											</div>
 										</div>
-										<div class="col-lg-6 col-md-6">
+										<!-- <div class="col-lg-6 col-md-6">
 											<div class="form-group mt-4 hi">
 												<label class="form-label">生日:&emsp;&emsp;
 												</label>
@@ -109,14 +109,45 @@
 										</div>
 										<div class="col-lg-6 col-md-6">
 											<div class="form-group mt-4 hi">
-												<label class="form-label">地址:&emsp;&emsp;
+												<label class="form-label" >地址:&emsp;
+													<select id="city" placeholder="選擇縣市"></select>
+													<select id="dist" placeholder="選擇區域"></select>
+													<input class="js-demeter-tw-zipcode-selector" 
+															data-city="#city" data-dist="#dist" type="text" placeholder="" value="" style="display: none;">
 												</label>
-												<input id="address" class="form-control h_50 ip" type="tel" placeholder=""
-													value="">
+												<input  class="form-control h_50 ip" type="text" placeholder="" value="">
+												<input id="address" class="form-control h_50 ip" type="text" placeholder="" value="">
+												<p id="addressError"
+													style="color: red; display: inline-block; margin: 0;"></p>
+											</div>
+										</div> -->
+
+
+										<div class="col-lg-3 col-md-3">
+											<div class="form-group mt-4 hi">
+												<label class="form-label" >地址:</label>
+												<select id="city" class="form-control h_50 ip" placeholder="選擇縣市"></select>
+											</div>
+										</div>
+										<div class="col-lg-3 col-md-3" style="padding-left: 0px;">
+											<div class="form-group mt-4 hi">
+												<label class="form-label" >&emsp;&emsp;</label>
+												<select id="dist" class="form-control h_50 ip" placeholder="選擇區域"></select>
+												<input class="js-demeter-tw-zipcode-selector" 
+														data-city="#city" data-dist="#dist" type="text" placeholder="" value="" style="display: none;">
+											</div>
+										</div>
+										<div class="col-lg-6 col-md-6" style="padding-left: 0px;">
+											<div class="form-group mt-4 hi">
+												<label class="form-label" >&emsp;&emsp;</label>
+												<input id="address" class="form-control h_50 ip" type="text" placeholder="" value="">
 												<p id="addressError"
 													style="color: red; display: inline-block; margin: 0;"></p>
 											</div>
 										</div>
+
+
+
 										<div class="col-lg-6 col-md-6">
 											<div class="form-group mt-4 hi">
 												<label class="form-label">E-mail帳號:&emsp;&emsp;
@@ -205,14 +236,16 @@
 				</div>
 			</div>
 		</div>
-
+	</div>
 		<script src="js/jquery-3.6.0.min.js"></script>
 		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 		<script src="vendor/OwlCarousel/owl.carousel.js"></script>
 		<script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 		<script src="js/custom.js"></script>
 		<script src="js/night-mode.js"></script>
-
+		<!-- 郵遞區號 -->
+		<script src="https://demeter.5fpro.com/tw/zipcode-selector.js"></script>
+	
 </body>
 <script>
 	$("#sign_upBtn").click((event) => {
@@ -223,7 +256,7 @@
 			mcell: $("#mcell").val(),
 			memail: $("#memail").val(),
 			address:$("#address").val(),
-			birth:$("#birth").val(),
+			// birth:$("#birth").val(),
 			mpassword: $("#mpassword").val(),
 			chpassword: $("#chPassword").val(),
 			validcode: $("#validcode").val()
@@ -321,6 +354,16 @@
 				})
 		}
 	});
+
+	
+	
+	$('#dist').change(() => {
+		const cityValue = $('#city').val();
+		const distValue = $('#dist').val();
+		const zipcode = $('#dist').find(':selected').data('zipcode');
+
+		$("#address").val(zipcode + cityValue + distValue);
+	})
 
 
 </script>
