@@ -23,13 +23,13 @@ public class TorderController {
     private OrderService orderService;
 
     @GetMapping("/findAll")
-    public List<TorderDto> findByOrderByTorderNoDesc() {
+    public List<TorderDto> findAll() {
 
-        return torderService.findByOrderByTorderNoDesc();
+        return torderService.findAll();
     }
 
     @GetMapping("/findById")
-    public Optional<Torder> findById(Integer torderNo) {
+    public Optional<Torder> findById(@RequestParam("torderNo") Integer torderNo) {
         return torderService.findById(torderNo);
     }
 

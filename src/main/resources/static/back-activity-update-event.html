@@ -1719,7 +1719,7 @@
 
      
         const formData = new FormData();
-        formData.append('activityNo', 1011);
+        formData.append('activityNo', activityNo);
         formData.append('aname', $("#aname").val());
         formData.append('aclass', $("#aclass").find(":selected").val());
         formData.append('aperformer', $("#aperformer").val());
@@ -1764,7 +1764,7 @@
 //======================================================================================================
     const fileInput4= document.querySelectorAll(".aimg");
     const formData4 = new FormData()
-    formData4.append("activityno",1012);
+    formData4.append("activityno", activityNo);
     for (let i = 0; i < fileInput4.length; i++) {
       formData4.append("images", fileInput4[i].files[0]);
     }
@@ -1785,7 +1785,7 @@
             for (let i = 0; i < blockName.length; i++) {
               let blockData = {
                 blockName: blockName[i].value,
-                activityNo: 1012,
+                activityNo: activityNo,
                 blockPrice: blockPrice[i].value,
                 blockType: blockType[i].checked ? 1 : 0
               };

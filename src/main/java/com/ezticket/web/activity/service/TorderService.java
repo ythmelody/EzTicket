@@ -58,8 +58,8 @@ public class TorderService {
     @Autowired
     private EmailService emailService;
 
-    public List<TorderDto> findByOrderByTorderNoDesc() {
-        return torderRepository.findByOrderByTorderNoDesc()
+    public List<TorderDto> findAll() {
+        return torderRepository.findAll()
                 .stream()
                 .map(this::entityToDTO)
                 .collect(Collectors.toList());

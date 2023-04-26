@@ -705,8 +705,17 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 fetch("/seats/deleteSeats" + `?sessionNo=${sessionStorage.getItem("sessionNo")}&blockNo=${sessionStorage.getItem("blockNo")}`);
-                location.href = "back-activity-seatmgt-notexisted.html";
+                Swal.fire({
+                    title: "已刪除！",
+                    icon: 'success',
+                    confirmButtonText: '確定',
+                    confirmButtonColor: '#102743',
+                    preConfirm: setTimeout(() => {
+                        location.href = "back-activity-seatmgt-notexisted.html";
+                    }, 1500)
+                });
             } else if (result.isDenied) {
+                Swal.fire({ title: "取消操作", icon: "info", timer: 1500, showConfirmButton: false });
                 return;
             }
         })
