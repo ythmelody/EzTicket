@@ -1,37 +1,17 @@
 package com.ezticket.web.activity.controller;
 
-import com.ezticket.core.util.ImageUtil;
-import com.ezticket.web.activity.pojo.CollectVO;
 import com.ezticket.web.activity.pojo.TicketHolder;
-import com.ezticket.web.activity.repository.CollectDAO;
-import com.ezticket.web.activity.repository.impl.CollectDAOImpl;
 import com.ezticket.web.activity.service.CollectService;
-import com.ezticket.web.product.pojo.PdetailsPK;
-import com.ezticket.web.product.service.PcommentService;
-import com.ezticket.web.product.service.PdetailsService;
-import com.ezticket.web.product.service.ProductService;
-import com.ezticket.web.users.pojo.Member;
-import com.ezticket.web.users.repository.MemberRepository;
-import com.ezticket.web.users.service.MemberService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import java.io.*;
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet("/collect")
@@ -211,8 +191,8 @@ public class CollectController extends HttpServlet {
             res.setContentType("image/jpeg");
 
             if (img != null) {
-                byte[] shrinkImg = ImageUtil.shrink(img, 300);
-                try (InputStream inputStream = new ByteArrayInputStream(shrinkImg);
+//                byte[] shrinkImg = ImageUtil.shrink(img, 500);
+                try (InputStream inputStream = new ByteArrayInputStream(img);
                      OutputStream out = res.getOutputStream()) {
                     byte[] buffer = new byte[4096];
                     int bytesRead;
