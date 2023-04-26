@@ -186,7 +186,7 @@
               <div class="event-filter-items">
                 <div class="featured-controls">
                   <div class="controls" id="aclassList" style="display: flex; justify-content: space-evenly;">
-                    <button type="button" class="control" >
+                    <button type="button" class="control" id="allEventbtn" >
                       全部
                     </button>                    
                   </div>
@@ -564,7 +564,64 @@
                    listTab.innerHTML = str;
                  })
              }
+             $("#allEventbtn").on("click",()=>{
+                 fetch("/Activity/findAll")
+                 .then((Response) => Response.json())
+                 .then((data) => {
+                   let str = "";
+                   let sTime = "";
+                   let countDays = "";
+                   for (i of data) {
 
+                     console.log(i.session[0]);
+                     if (i.astatus == 1) {
+                       if (i.session[0] == null) {
+                         sTime = "全站";
+                         countDays = "售完為止"
+                       } else {
+                         sTime = i.session[0].sessionsTime;
+                         const date = new Date(i.session[0].sessionsTime);
+                         console.log(dateDiffer(nowDate, date))
+                         countDays = dateDiffer(now, date);
+
+                       }
+
+                       str += `<div
+                      class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mix arts concert workshops volunteer sports health_Wellness"
+                      data-ref="mixitup-target"
+                    >
+                      <div class="main-card mt-4">
+                        <div class="event-thumbnail">
+                          <a
+                            href="front-activity-event-detail.html?activityNo=${i.activityNo}"
+                            class="thumbnail-img"
+                          >
+                            <img src="data:image/jpeg;base64,${i.aimgt[0].aimg}" alt="" />
+                          </a>
+                          <span class="bookmark-icon" title="Bookmark"></span>
+                        </div>
+                        <div class="event-content">
+                          <a
+                            href="front-activity-event-detail.html?activityNo=${i.activityNo}"
+                            class="event-title"
+                            >${i.aname}</a
+                          >
+                        </div>
+                        <div class="event-footer">
+                          <div class="event-timing">
+                            <h6 class="coupon-status">${sTime}</h6>
+                            <span class="publish-time"
+                              ><i class="fa-solid fa-clock me-2"></i>${countDays}</span
+                            >
+                          </div>  
+                        </div>
+                      </div>
+                    </div>`;
+                     }
+                   }
+                   listTab.innerHTML = str;
+                 });
+             })
     </script>
   </body>
 </html>

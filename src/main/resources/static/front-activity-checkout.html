@@ -439,11 +439,16 @@
 
     $(document).ready(function () {
 
-        window.addEventListener('beforeunload', function (event) {
-            event.preventDefault(); //chrome無效, ff有效, ie11有效
-            event.returnValue = ''; //chrome有效, ff無效, ie11有效
-            return ''; //chrome無效, ff無效, ie11有效
-        });
+            let activityNo = sessionStorage.getItem("activityNo");
+            if (activityNo === null || activityNo === "") {
+                location.href = `front-activity-event-explore_events.html`;
+            }
+
+            window.addEventListener('beforeunload', function (event) {
+                event.preventDefault(); //chrome無效, ff有效, ie11有效
+                event.returnValue = ''; //chrome有效, ff無效, ie11有效
+                return ''; //chrome無效, ff無效, ie11有效
+            });
 
             $.ajax({
                     url: '/member/getMemberInfo',
@@ -525,6 +530,7 @@
         let toBuyTickets = sessionStorage.getItem("toBuyTickets");
         let toBuySeats = JSON.parse(sessionStorage.getItem("toBuySeats"));
 
+
         if (toBuyTickets) { // 節目為非對號入座
             torderbody = {
                 "memberno": member_no,
@@ -603,7 +609,7 @@
         })
     }
 
-    window.addEventListener('beforeunload', function() {
+    window.addEventListener('beforeunload', function () {
         if (sessionStorage.getItem('toBuySeats') != null) {
             for (let id of JSON.parse(sessionStorage.getItem('toBuySeats'))) {
                 jsonObj = {

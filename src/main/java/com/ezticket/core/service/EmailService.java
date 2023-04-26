@@ -19,4 +19,7 @@ public interface EmailService {
     String sendFollowProductSale(String name, String to, String pname, String specialPrice,String productno) throws MessagingException;
 
     public String sendTicketNotification(String email, String mname) throws MessagingException;
+
+    // 票券訂單成立信件發送
+    String sendTOrderMail(String mName, String receiverMail, String torderNo, String paymentStatus);
 }
