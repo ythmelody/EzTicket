@@ -501,7 +501,7 @@
 				`;
 					let realx = ticket.realx;
 					let realy = ticket.realy;
-					if (realx === null || realx === undefined || realy === null || realy === undefined) {
+					if (realx === undefined || realy === undefined || realx === null || realy === null) {
 						const withSeat = document.getElementById(`withSeat${ticketCount}`);
 						withSeat.textContent = '非對號座';
 					}
@@ -566,7 +566,7 @@
 					// console.log(realx);
 					let realy = ticket.realy;
 					// console.log(realy);
-					if (realx === null || realx === undefined || realy === null || realy === undefined) {
+					if (realx === undefined || realy === undefined || realx === null || realy === null) {
 						const withSeat = document.getElementById(`withSeat${ticketCount}`);
 						withSeat.textContent = '非對號座';
 					}

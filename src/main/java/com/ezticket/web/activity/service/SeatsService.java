@@ -1,5 +1,6 @@
 package com.ezticket.web.activity.service;
 
+import com.ezticket.web.activity.dto.PlaceToBlockModelDTO;
 import com.ezticket.web.activity.dto.SessionDto;
 import com.ezticket.web.activity.pojo.*;
 import com.ezticket.web.activity.repository.SeatsRedisDAO;
@@ -10,8 +11,6 @@ import com.ezticket.web.activity.repository.impl.SeatsModelDAOImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
 
@@ -26,6 +25,9 @@ public class SeatsService {
 
     @Autowired
     private SeatsRedisDAO seatsRedisDAO;
+
+    @Autowired
+    private BlockModelService blockModelService;
 
     @Autowired
     private BlockPriceService blockPriceService;
@@ -207,79 +209,153 @@ public class SeatsService {
     }
 
     public boolean copyModelSeats(int modelNo, int sessionNo, int activityNo) {
-        // 取得所有模板區域
-        List<BlockModelVO> modelBlocks = blockModelDAOImpl.getAll();
+        // 取得欲複製模板的相關資訊
+        PlaceToBlockModelDTO modelInfo = blockModelService.findByModelno(modelNo);
+        List<BlockModel> modelBlockInfo = modelInfo.getBlockModels();
+        // 取得節目的區域票價資訊
+        List<BlockPrice> actBlockInfo = blockPriceService.getBlockPriceByActivityNo(activityNo);
 
-        // 取得所有模板的座位
-        List<SeatsModelVO> modelSeats = seatsModelDAOImpl.getAll();
-
-        // 排除非所需模板的區域
-        List<BlockModelVO> targetmodelBlocks = new ArrayList<BlockModelVO>();
-
-        for (BlockModelVO modelblock : modelBlocks) {
-            if (modelblock.getModelno() == modelNo) {
-                targetmodelBlocks.add(modelblock);
-            }
-        }
-
-        List<Integer> blockArr = new ArrayList<Integer>();
-        for (int i = 0; i < targetmodelBlocks.size(); i++) {
-            blockArr.add(targetmodelBlocks.get(i).getBlockno());
-        }
-
-        // 排除非所需模板區域的座位
-        List<SeatsModelVO> targetModelSeats = new ArrayList<SeatsModelVO>();
-
-        for (SeatsModelVO modelSeat : modelSeats) {
-            if (blockArr.contains(modelSeat.getBlockno())) {
-                targetModelSeats.add(modelSeat);
-            }
-        }
-
-        // 取得節目區域票價詳情
-        List<BlockPrice> actBlocks = blockPriceService.getBlockPriceByActivityNo(activityNo);
-
-        // 只要模板的區塊與節目的區塊數量相等就可以直接複製
-        int totalModelBlocks = targetmodelBlocks.size();
-        int totalActBlocks = actBlocks.size();
-
-        if (totalModelBlocks != totalActBlocks) {
+        // 若欲複製模板的區域數量不等於節目區域數量，回傳 false
+        if(modelBlockInfo.size() != actBlockInfo.size()){
             return false;
         }
 
-        // 確認兩個區塊編號的差異並修改模板中的區塊編號(從 1 開始)
-        int firstModelBlockNo = blockArr.get(0);
-        int firstActBlockNo = actBlocks.get(0).getBlockNo();
-        int countDiff = firstActBlockNo - firstModelBlockNo;
+        // 確認節目複製當前的區域皆數對號入座 (blockType = 1)
+        for(BlockPrice blockPrice: actBlockInfo){
+            if(blockPrice.getBlockType() != 1){
+                return false;
+            }
+        }
 
         // 新增一個 ArrayList 預備回傳到資料庫
         List<Seats> returendList = new ArrayList<Seats>();
 
-        for (SeatsModelVO modelSeat : targetModelSeats) {
+        System.out.println("modelBlockInfo.size()=" + modelBlockInfo.size());
 
-            int blockNo = modelSeat.getBlockno() + countDiff;
-            String blockName = actBlocks.get(blockNo - (countDiff + 1)).getBlockName();
+        // 依序取得模板區域
+        for(int blockCount = 0; blockCount < modelBlockInfo.size(); blockCount++){
 
-            Seats seat = new Seats();
-            seat.setSessionNo(sessionNo);
-            seat.setBlockNo(blockNo);
-            seat.setBlockName(blockName);
-            seat.setX(modelSeat.getX());
-            seat.setY(modelSeat.getY());
-            seat.setRealX(modelSeat.getRealx());
-            seat.setRealY(modelSeat.getRealy());
-            seat.setSeatStatus(modelSeat.getSeatStatus());
+            // 取得第 n 個模板區域的模板座位
+            List<SeatsModel> seatsModels = modelBlockInfo.get(blockCount).getSeatsModels();
 
-            returendList.add(seat);
+            // 取得節目區域的編號及名稱
+            int toBlockNo = actBlockInfo.get(blockCount).getBlockNo();
+            String toBlockName = actBlockInfo.get(blockCount).getBlockName();
+
+            System.out.println("toBlockNo=" + toBlockNo);
+            System.out.println("toBlockName=" + toBlockName);
+
+            for(SeatsModel sm: seatsModels){
+                Seats seat = new Seats();
+                seat.setSessionNo(sessionNo);
+                seat.setBlockNo(toBlockNo);
+                seat.setBlockName(toBlockName);
+                seat.setX(sm.getX());
+                seat.setY(sm.getY());
+                seat.setRealX(sm.getRealx());
+                seat.setRealY(sm.getRealy());
+                seat.setSeatStatus(sm.getSeatStatus());
+
+                returendList.add(seat);
+            }
         }
+
+
 
         // 將異動完成的座位存起來
-        for (Seats seat : returendList) {
-            System.out.println(seat);
-            seatsRepository.save(seat);
-        }
+        returendList.stream()
+                .sorted(Comparator.comparing(Seats::getX).thenComparing(Seats::getY))
+                .forEach(seatsRepository::save);
+//        for (Seats seat : returendList) {
+//            System.out.println(seat);
+//            seatsRepository.save(seat);
+//        }
 
         return true;
+
+        // 取得所有模板區域
+        // List<BlockModelVO> modelBlocks = blockModelDAOImpl.getAll();
+
+        // 取得所有模板的座位
+        // List<SeatsModelVO> modelSeats = seatsModelDAOImpl.getAll();
+
+        // 排除非所需模板的區域
+        // List<BlockModelVO> targetmodelBlocks = new ArrayList<BlockModelVO>();
+
+        // for (BlockModelVO modelblock : modelBlocks) {
+        //     if (modelblock.getModelno() == modelNo) {
+        //         targetmodelBlocks.add(modelblock);
+        //     }
+        // }
+
+        // List<Integer> blockArr = new ArrayList<Integer>();
+        // for (int i = 0; i < targetmodelBlocks.size(); i++) {
+        //     blockArr.add(targetmodelBlocks.get(i).getBlockno());
+        // }
+
+        // 排除非所需模板區域的座位
+        // List<SeatsModelVO> targetModelSeats = new ArrayList<SeatsModelVO>();
+
+        // for (SeatsModelVO modelSeat : modelSeats) {
+        //     if (blockArr.contains(modelSeat.getBlockno())) {
+        //         targetModelSeats.add(modelSeat);
+        //     }
+        // }
+
+        // 取得節目區域票價詳情
+        // List<BlockPrice> actBlocks = blockPriceService.getBlockPriceByActivityNo(activityNo);
+        // System.out.println("actBlocks=" + actBlocks);
+
+        // 只要模板的區塊與節目的區塊數量相等就可以直接複製
+        // int totalModelBlocks = targetmodelBlocks.size();
+        // int totalActBlocks = actBlocks.size();
+
+        // if (totalModelBlocks != totalActBlocks) {
+        //     return false;
+        // }
+
+        // 確認兩個區塊編號的差異並修改模板中的區塊編號(從 1 開始)
+        // int firstModelBlockNo = blockArr.get(0);
+        // int firstActBlockNo = actBlocks.get(0).getBlockNo();
+        // int countDiff = firstActBlockNo - firstModelBlockNo;
+
+        // 新增一個 ArrayList 預備回傳到資料庫
+        // List<Seats> returendList = new ArrayList<Seats>();
+
+        // for (SeatsModelVO modelSeat : targetModelSeats) {
+
+        //     int blockNo = modelSeat.getBlockno() + countDiff; //11 + 99993 = 100004
+        //     System.out.println("blockNo= " + blockNo);
+        //     String blockName = null;
+
+        //     for(BlockPrice blockPrice: actBlocks){
+        //         if(blockPrice.getBlockNo() == blockNo){
+        //             blockName = blockPrice.getBlockName();
+        //         }
+        //     }
+        //     String blockName = actBlocks.get(blockNo - (countDiff + 1)).getBlockName(); //100004-(99993+1) = 10
+        //     System.out.println("blockName= " + blockName);
+
+        //     Seats seat = new Seats();
+        //     seat.setSessionNo(sessionNo);
+        //     seat.setBlockNo(blockNo);
+        //     seat.setBlockName(blockName);
+        //     seat.setX(modelSeat.getX());
+        //     seat.setY(modelSeat.getY());
+        //     seat.setRealX(modelSeat.getRealx());
+        //     seat.setRealY(modelSeat.getRealy());
+        //     seat.setSeatStatus(modelSeat.getSeatStatus());
+
+        //     returendList.add(seat);
+        // }
+
+        // 將異動完成的座位存起來
+        // for (Seats seat : returendList) {
+        //     System.out.println(seat);
+        //     seatsRepository.save(seat);
+        // }
+
+        // return true;
     }
 
     public boolean deleteSeats(Integer sessionNo, Integer blockNo) {

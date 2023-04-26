@@ -32,6 +32,17 @@ $('.starRating span').click(function () {
 function submitComment() {
 
     if ($('#acommentNo').val() !== '') {
+
+        if($('#aCommentCont').val().includes("script")){
+            Swal.fire({
+                icon: 'error',
+                title: '更新評論失敗',
+                text: '禁止輸入特殊涵義文字'
+            })
+
+            return;
+        }
+
         Swal.fire({
             title: "是否更改節目評星及評論？",
             icon: 'warning',
@@ -82,6 +93,17 @@ function submitComment() {
             }
         })
     } else {
+
+        if($('#aCommentCont').val().includes("script")){
+            Swal.fire({
+                icon: 'error',
+                title: '新增評論失敗',
+                text: '禁止輸入特殊涵義文字'
+            })
+
+            return;
+        }
+
         Swal.fire({
             title: "是否新增節目評星及評論？",
             icon: 'warning',

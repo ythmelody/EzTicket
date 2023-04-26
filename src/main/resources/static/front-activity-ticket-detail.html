@@ -244,7 +244,7 @@
             let realx = ticket.realx;
             let realy = ticket.realy;
             console.log("" + realx + realy);
-            if (realx === null || realx === undefined || realy === null || realy === undefined) {
+            if (realx === undefined || realy === undefined || realx === null || realy === null) {
                 console.log("有進來");
                 console.log("realx == null || realy == null" + (realx == null || realy == null));
                 const withSeatHeader = document.getElementById('withSeatHeader');
