@@ -7,7 +7,12 @@ $('#search-coupon').on('input', function () {
 	if ($(this).val() !== "" && parseInt($(this).val())) {
 		let couponno = $(this).val();
 		fetchPcouponList(`/pcoupon/getbyno?id=${couponno}`);
-	} else {
+	} 
+	else if ($(this).val() !== "" && !parseInt($(this).val())){
+		let couponno = $(this).val();
+		fetchPcouponList(`/pcoupon/getbystring?pcouponname=${couponno}`);
+	}
+	else {
 		fetchPcouponList(`/pcoupon/list`);
 	};
 });
@@ -177,7 +182,7 @@ function fetchPcouponList(e) {
                       </div>
 											<div class="ms-auto">
                       <div class="d-flex align-items-center">
-												<button class="main-btn btn-hover h_40 w-30" onclick="takeCouponForMember(${obj.pcouponno})">發送</button>
+												<button class="main-btn btn-hover h_40 w-30" onclick="takeCouponForMember(${obj.pcouponno})" disabled>發送</button>
                         <label class="btn-switch tfs-8 mb-0 me-4 mt-1">
                         <input type="checkbox" onchange="changeStatus(this)" value="" ${obj.pcouponstatus === 1 ? 'checked' : 'false'}>
                           <span class="checkbox-slider"></span>

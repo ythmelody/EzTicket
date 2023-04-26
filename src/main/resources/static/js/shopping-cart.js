@@ -190,8 +190,9 @@ function disCoupon() {
   if(productpay > minimum){
     $('#coupon-error-msg').text("");
     $('.pdiscount-fee span').text(discount);
-    $('.totalinv2 span').text(productpay + delivery - discount);
-    $('#TWD').text(`應支付總金額 : $${productpay + delivery - discount}`);
+    $('.totalinv2 span').text((productpay + delivery - discount <= 0) ? 100 : (productpay + delivery - discount));
+    $('#TWD').text(`應支付總金額 : $${(productpay + delivery - discount <= 0) ? 100 : (productpay + delivery - discount)}`);
+    // $('#TWD').text(`應支付總金額 : $${productpay + delivery - discount}`);
   }
   else{
     $('#coupon-error-msg').text("");
@@ -236,7 +237,7 @@ function addPorder() {
   let delivery = pdiscounttotal > 499 ? 0 : 100;
   let pcoupontotal = +$('.pdiscount-fee span').text();
   let pcouponno = $('#couponCode').val() ? +$('#couponCode').val() : null;  
-  let pchecktotal = (pdiscounttotal - pcoupontotal + delivery);
+  let pchecktotal = ((productpay + delivery - discount <= 0) ? 100 : (productpay + delivery - discount));
   const porderbody = {
     'memberno': memberno,
     'ptotal': ptotal,

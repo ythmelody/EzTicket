@@ -104,7 +104,7 @@ public class ProductCommentServlet extends HttpServlet {
             map.put("pcommentstatus", pcommentstatus);
             List<Pcomment> pcommentList = pcommentSvc.getAllBySearch(map);
             //避免新增商品評論時注入攻擊(XSS)
-            for(Pcomment pcomment :pcommentList){
+            for (Pcomment pcomment : pcommentList) {
                 String rawCommentCont = pcomment.getPcommentcont();
 //                System.out.println("raw string: "+rawCommentCont);
                 String escapedHtml = StringEscapeUtils.escapeHtml4(rawCommentCont);
@@ -295,6 +295,12 @@ public class ProductCommentServlet extends HttpServlet {
             Integer pageNumebr = Integer.valueOf(request.getParameter("pageNumber"));
             Integer pageSize = Integer.valueOf(request.getParameter("pageSize"));
             PageResult<Pcomment> pcommentList = pcommentSvc.getAllBySearch(map, pageNumebr, pageSize);
+            List<Pcomment> rawdata = pcommentList.getData();
+            for (Pcomment pcomment : rawdata) {
+                String rawCommentCont = pcomment.getPcommentcont();
+                String escapedHtml = StringEscapeUtils.escapeHtml4(rawCommentCont);
+                pcomment.setPcommentcont(escapedHtml);
+            }
             Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
             String json = gson.toJson(pcommentList);
             response.setCharacterEncoding("UTF-8");

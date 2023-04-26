@@ -19,7 +19,7 @@ public class RedisService {
             return false;
         }
         if (storedCode.equals(code)) {
-            redisTemplate.delete(key);
+//            redisTemplate.delete(key);
             return true;
         }
         return false;

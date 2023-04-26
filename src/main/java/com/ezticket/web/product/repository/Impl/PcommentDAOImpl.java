@@ -162,6 +162,8 @@ public class PcommentDAOImpl implements PcommentDAO {
             }
         }
         criteriaQuery.where(predicateList.toArray(new Predicate[predicateList.size()]));
+        //DESC產生
+        criteriaQuery.orderBy(builder.desc(root.get("pcommentno")));
 
         //取得總筆數
         Query countQuery = session.createQuery(criteriaQuery);

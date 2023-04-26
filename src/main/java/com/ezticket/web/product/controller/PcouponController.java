@@ -32,12 +32,10 @@ public class PcouponController {
         return pcouponService.getPcouponsByID(id);
     }
 
-
-//    @PostMapping("/add")
-//    @ResponseBody
-//    public boolean postAddPcoupon(@RequestBody AddPcouponDTO couponBody){
-//        return pcouponService.addPcoupon(couponBody);
-//    }
+    @GetMapping("/getbystring")
+    public List<PcouponDTO> getPcouponsByString(@RequestParam String pcouponname){
+        return pcouponService.getPcouponsByName(pcouponname);
+    }
 
     @PostMapping("/add")
     public ResponseEntity<?> addPcoupon (@Valid @RequestBody AddPcouponDTO couponBody, BindingResult bindingResult) {

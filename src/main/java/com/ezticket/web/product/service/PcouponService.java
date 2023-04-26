@@ -35,6 +35,12 @@ public class PcouponService {
         Pcoupon pcoupon = pcouponRepository.getReferenceById(id);
         return EntityToDTO(pcoupon);
     }
+    public List<PcouponDTO> getPcouponsByName(String pcouponname) {
+        return pcouponRepository.findByPcouponnameContaining(pcouponname)
+                .stream()
+                .map(this::EntityToDTO)
+                .collect(Collectors.toList());
+    }
     public List<PcouponDTO> getPcouponsByID(Integer id) {
         return pcouponRepository.findById(id)
                 .stream()

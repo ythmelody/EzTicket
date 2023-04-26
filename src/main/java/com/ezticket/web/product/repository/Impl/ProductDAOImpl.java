@@ -290,6 +290,8 @@ public class ProductDAOImpl implements ProductDAO {
             }
         }
         criteriaQuery.where(predicateList.toArray(new Predicate[predicateList.size()]));
+        //DESC產生
+        criteriaQuery.orderBy(builder.desc(root.get("productno")));
 
         //這個是查第一次(total)
         Query countQuery = session.createQuery(criteriaQuery);
