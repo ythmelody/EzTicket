@@ -31,7 +31,7 @@ public interface SeatsRepository extends JpaRepository<Seats, Integer> {
     @Query("UPDATE Seats SET seatStatus=:seatstatus  WHERE seatNo=:seatno ")
     public int updateStatus(@Param("seatstatus") int seatStatus, @Param("seatno") int seatNo);
 
-    @Query("SELECT DISTINCT s.blockNo FROM Seats s JOIN Session ss WHERE ss.activityNo = :actNo AND s.blockNo IS NOT NULL")
+    @Query(value = "SELECT DISTINCT s.blockNo FROM Seats s JOIN Session ss ON (s.sessionNo = ss.activityNo) WHERE ss.activityNo = :actNo", nativeQuery = true)
     public List<Integer> getActBlockHasSeats(@Param("actNo") int actNo);
 
     @Query("SELECT DISTINCT s.seatNo FROM Seats s WHERE s.sessionNo = :sessionNo AND s.blockNo = :blockNo")
@@ -46,8 +46,11 @@ public interface SeatsRepository extends JpaRepository<Seats, Integer> {
     @Query("SELECT s FROM Seats s WHERE s.sessionNo = :sessionNo ORDER BY s.blockNo asc, s.x asc, s.y asc")
     public List<Seats> findOrderedSeatsBySessionNo(@Param("sessionNo") int sessionNo);
 
-    @Query(value = "SELECT COUNT(seatNo) FROM Seats WHERE seatStatus = 1 AND sessionNo = :sessionNo AND blockNo = :blockNo", nativeQuery = true)
+    @Query(value = "SELECT COUNT(seatNo) FROM Seats WHERE sessionNo = :sessionNo AND blockNo = :blockNo", nativeQuery = true)
     public int getToSellNumber(@Param("sessionNo") int sessionNo, @Param("blockNo") int blockNo);
+
+    @Query(value = "SELECT COUNT(seatNo) FROM Seats WHERE seatStatus = 1 AND sessionNo = :sessionNo AND blockNo = :blockNo", nativeQuery = true)
+    public int getToSellingNumber(@Param("sessionNo") int sessionNo, @Param("blockNo") int blockNo);
 
     @Query(value = "SELECT COUNT(seatNo) FROM Seats WHERE seatStatus = 2 AND sessionNo = :sessionNo AND blockNo = :blockNo", nativeQuery = true)
     public int getSoldNumber(@Param("sessionNo") int sessionNo, @Param("blockNo") int blockNo);

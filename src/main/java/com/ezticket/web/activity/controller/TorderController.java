@@ -37,7 +37,9 @@ public class TorderController {
     @PostMapping("/addTorder")
     @ResponseBody
     public String addTOrder(@RequestBody AddTorderDTO addTorderDTO) {
-        return orderService.ecpayTCheckout(torderService.addTOrder(addTorderDTO).getTorderNo());
+        torderService.addTOrder(addTorderDTO);
+        return "";
+//        return orderService.ecpayTCheckout(torderService.addTOrder(addTorderDTO).getTorderNo());
     }
 
     // Add by Shawn on 04/19

@@ -33,7 +33,7 @@ function submitComment() {
 
     if ($('#acommentNo').val() !== '') {
 
-        if($('#aCommentCont').val().includes("script")){
+        if ($('#aCommentCont').val().includes("script")) {
             Swal.fire({
                 icon: 'error',
                 title: '更新評論失敗',
@@ -62,7 +62,7 @@ function submitComment() {
                 }
 
                 if (reqbody.aRate === '' || reqbody.aRate === null || reqbody.aRate === 0 ||
-                    reqbody.aCommentCont === '' || reqbody.aCommentCont === null ){
+                    reqbody.aCommentCont === '' || reqbody.aCommentCont === null) {
                     Swal.fire({
                         icon: 'error',
                         title: '更改評論失敗',
@@ -94,7 +94,7 @@ function submitComment() {
         })
     } else {
 
-        if($('#aCommentCont').val().includes("script")){
+        if ($('#aCommentCont').val().includes("script")) {
             Swal.fire({
                 icon: 'error',
                 title: '新增評論失敗',
@@ -122,7 +122,7 @@ function submitComment() {
                 }
 
                 if (reqbody.aRate === '' || reqbody.aRate === null || reqbody.aRate === 0 ||
-                    reqbody.aCommentCont === '' || reqbody.aCommentCont === null ){
+                    reqbody.aCommentCont === '' || reqbody.aCommentCont === null) {
                     Swal.fire({
                         icon: 'error',
                         title: '新增評論失敗',

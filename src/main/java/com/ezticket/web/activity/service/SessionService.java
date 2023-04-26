@@ -80,7 +80,8 @@ public class SessionService {
     }
 
     //    Add by Shawn on 04/19
-    @Scheduled(cron = "0 30 * * * *")
+//    @Scheduled(cron = "0 30 * * * *")
+    @Scheduled(fixedRate = 180000)
     public void updateSessionInfo(){
         List<Integer> actNos = activityService.findActNosByWetherSeatIsTrue();
 

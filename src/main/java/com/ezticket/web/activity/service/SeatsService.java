@@ -418,7 +418,7 @@ public class SeatsService {
         List<BlockPrice> blockList = blockPriceService.getBlockPriceByActivityNo(activityNo);
         Map<Integer, Integer> returnedMap = new HashMap<Integer, Integer>();
         for(BlockPrice block: blockList){
-            int toSellTQty = seatsRepository.getToSellNumber(sessionNo, block.getBlockNo());
+            int toSellTQty = seatsRepository.getToSellingNumber(sessionNo, block.getBlockNo());
             returnedMap.put(block.getBlockNo(), toSellTQty);
         }
         return returnedMap;
