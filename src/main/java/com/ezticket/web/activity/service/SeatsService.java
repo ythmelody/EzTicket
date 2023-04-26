@@ -260,11 +260,16 @@ public class SeatsService {
             }
         }
 
+
+
         // 將異動完成的座位存起來
-        for (Seats seat : returendList) {
-            System.out.println(seat);
-            seatsRepository.save(seat);
-        }
+        returendList.stream()
+                .sorted(Comparator.comparing(Seats::getX).thenComparing(Seats::getY))
+                .forEach(seatsRepository::save);
+//        for (Seats seat : returendList) {
+//            System.out.println(seat);
+//            seatsRepository.save(seat);
+//        }
 
         return true;
 
