@@ -688,7 +688,8 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="footer-copyright-text">
-                            <p class="mb-0">© 2023, <strong>ezTicket</strong>. All rights reserved. Powered by CGA106Group2</p>
+                            <p class="mb-0">© 2023, <strong>ezTicket</strong>. All rights reserved. Powered by
+                                CGA106Group2</p>
                         </div>
                     </div>
                 </div>
@@ -897,31 +898,43 @@
                         success: function (data) {
                             console.log(data);
                             items = data;
+                            sessionStorage.setItem('keyword', JSON.stringify(items));
                             // response(data);
                         }
                     });
                     response($.map(items,
                         function (item) {
                             return {
-                                label: item.name.toString(),
-                                value: JSON.stringify(item)
+                                value: item.name.toString(),
                             }
                         }))
                 },
                 minLength: 2,
                 select: function (event, ui) {
                     console.log(ui);
-                    let temp = JSON.parse(ui.item.value);
-                    if (temp.no > 10000) {
-                        window.location.href = "front-product-product_detail.html?productno=" + temp.no;
-                    } else {
-                        window.location.href = "front-activity-event-detail.html?activityNo=" + temp.no;
-                    }
+                    let selected = ui.item.value
+                    let keyword = JSON.parse(sessionStorage.getItem('keyword'));
+                    keyword.forEach(function (el) {
+                        console.log(el)
+                        if (el.name === selected) {
+                            if (el.type === "product") {
+                                window.location.href = "front-product-product_detail.html?productno=" + el.no;
+                            }
+                            if (el.type === "activity") {
+                                window.location.href = "front-activity-event-detail.html?activityNo=" + el.no;
+                            }
 
+                        }
+                    });
                 }
             }).focus(function () {
                 $(this).autocomplete("search");
             });
+        });
+
+
+        $(window).bind('beforeunload', function(){
+          sessionStorage.removeItem("keyword");
         });
     </script>
 
