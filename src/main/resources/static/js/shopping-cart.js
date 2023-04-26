@@ -76,18 +76,22 @@ $(document).ready(async () => {
   if(memberno){
     let address = data.comreaddress;
     const twzipcode = new TWzipcode({combine: false});
-    const result = twzipcode.parseAddress(address);
-    twzipcode.district(result.district);
-    twzipcode.zipcode(result.zipcode);
-    twzipcode.county(result.county);
-    const startIndex = address.indexOf(result.district) + result.district.length;
-    const secondPart = address.slice(startIndex);
-    $('#readdress4').val(secondPart);
-    $('#recipient').val(data.comrecipient);
-    $('#rephone').val(data.comrephone);
-    $('#email').val(data.memail);
-    getcart();
-  }
+    if(!address.trim()) { // 如果 comreaddress 是空值或格式不正確
+      twzipcode.setCounty('臺北市'); // 設定預設縣市
+    } else {
+      const result = twzipcode.parseAddress(address);
+      twzipcode.district(result.district);
+      twzipcode.zipcode(result.zipcode);
+      twzipcode.county(result.county);
+      const startIndex = address.indexOf(result.district) + result.district.length;
+      const secondPart = address.slice(startIndex);
+      $('#readdress4').val(secondPart);
+      $('#recipient').val(data.comrecipient);
+      $('#rephone').val(data.comrephone);
+      $('#email').val(data.memail);
+      getcart();
+    }
+  }  
 });
 
 async function getcart() {
@@ -236,8 +240,8 @@ function addPorder() {
   }
   let delivery = pdiscounttotal > 499 ? 0 : 100;
   let pcoupontotal = +$('.pdiscount-fee span').text();
-  let pcouponno = $('#couponCode').val() ? +$('#couponCode').val() : null;  
-  let pchecktotal = ((productpay + delivery - discount <= 0) ? 100 : (productpay + delivery - discount));
+  let pcouponno = $('#couponCode').val() ? +$('#couponCode').val() : null;
+  let pchecktotal = (pdiscounttotal - pcoupontotal + delivery);
   const porderbody = {
     'memberno': memberno,
     'ptotal': ptotal,
