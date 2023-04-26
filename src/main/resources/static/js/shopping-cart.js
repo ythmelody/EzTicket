@@ -74,25 +74,39 @@ $(document).ready(async () => {
   const data = await response.json();
   memberno = data.memberno;
   if(memberno){
-    let address = data.comreaddress;
     const twzipcode = new TWzipcode({combine: false});
-    if(!address.trim()) { // 如果 comreaddress 是空值或格式不正確
-      twzipcode.setCounty('臺北市'); // 設定預設縣市
+    let result = '';
+    let address = '';
+    if(data.address && data.address.trim()) {
+      address = data.address;
+      result = twzipcode.parseAddress(address);
+      console.log(result);
+    } else if(data.comreaddress && data.comreaddress.trim()) {
+      address = data.comreaddress;
+      result = twzipcode.parseAddress(address);
+      console.log(result);
     } else {
-      const result = twzipcode.parseAddress(address);
+      address = '320桃園市中壢區復興路46號9樓'; // 設定預設地址
+      result = twzipcode.parseAddress(address);
+      console.log(result);
+    }
+
+    if(result) {
       twzipcode.district(result.district);
       twzipcode.zipcode(result.zipcode);
       twzipcode.county(result.county);
       const startIndex = address.indexOf(result.district) + result.district.length;
       const secondPart = address.slice(startIndex);
       $('#readdress4').val(secondPart);
-      $('#recipient').val(data.comrecipient);
-      $('#rephone').val(data.comrephone);
-      $('#email').val(data.memail);
-      getcart();
     }
+
+    $('#recipient').val(data.comrecipient);
+    $('#rephone').val(data.comrephone);
+    $('#email').val(data.memail);
+    getcart();
   }  
 });
+
 
 async function getcart() {
   let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -181,6 +195,9 @@ async function getcart() {
     $('.delivery-fee span').text(delivery);
     $('.totalinv2 span').text(totalPay + delivery);
     $('#TWD').text(`應支付總金額 : $${totalPay + delivery}`);
+    if ($('#couponCode').prop('disabled')) {
+      $('#couponCode').prop('disabled', false);
+    }
     $('#couponCode').val('');
   });
 }
