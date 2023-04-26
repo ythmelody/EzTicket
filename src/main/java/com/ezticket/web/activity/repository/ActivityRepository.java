@@ -20,7 +20,7 @@ public interface ActivityRepository extends JpaRepository <Activity,Integer>{
     Optional<Activity> findByaName(String aName);
     @OrderBy("activityNo DESC")
     List<Activity> findAll();
-    @OrderBy("activityNo DESC")
+    @Query("SELECT act FROM Activity act WHERE aStatus !=3 ")
     List <Activity> findAllByOrderByActivityNoDesc();
 
     // Add by Shawn on 4/3

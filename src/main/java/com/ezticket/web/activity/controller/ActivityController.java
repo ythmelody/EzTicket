@@ -31,7 +31,7 @@ public class ActivityController {
     private ActivityService activityService;
 
     @GetMapping("/findAll")
-    public List<ActivityDto> findAllByOrderByActivityNoDesc(){
+    public List<ActivityDto> findAll(){
 
         return activityService.findAllByOrderByActivityNoDesc();
     }

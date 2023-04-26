@@ -63,10 +63,10 @@ public class Activity {
     @OneToMany(mappedBy = "activity")
     private List<Session> session;
     @JsonManagedReference
-    @OneToMany(mappedBy = "activity", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "activity", fetch = FetchType.LAZY)
     private List<Aimgt> aimgt;
     @JsonManagedReference
-    @OneToMany(mappedBy = "activity", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "activity", fetch = FetchType.LAZY)
     private List <BlockPrice> blockPrice;
 
 
