@@ -1,5 +1,6 @@
 package com.ezticket.web.activity.controller;
 
+import com.ezticket.core.util.ImageUtil;
 import com.ezticket.web.activity.pojo.CollectVO;
 import com.ezticket.web.activity.pojo.TicketHolder;
 import com.ezticket.web.activity.repository.CollectDAO;
@@ -210,7 +211,8 @@ public class CollectController extends HttpServlet {
             res.setContentType("image/jpeg");
 
             if (img != null) {
-                try (InputStream inputStream = new ByteArrayInputStream(img);
+                byte[] shrinkImg = ImageUtil.shrink(img, 300);
+                try (InputStream inputStream = new ByteArrayInputStream(shrinkImg);
                      OutputStream out = res.getOutputStream()) {
                     byte[] buffer = new byte[4096];
                     int bytesRead;
