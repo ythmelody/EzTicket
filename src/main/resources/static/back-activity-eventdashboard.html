@@ -390,12 +390,12 @@
        fetch("/Activity/findAll")
         .then((Response) => Response.json())
         .then((data) => {
-
+          data.reverse();
            let str="";
            let status=" ";
            let count = 1;
           for(i of data){             
-    
+
           switch(i.astatus){
             case 0: status="未上架";
             break;

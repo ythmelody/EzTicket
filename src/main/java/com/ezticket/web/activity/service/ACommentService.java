@@ -4,9 +4,11 @@ import com.ezticket.web.activity.dto.ACommentDto;
 import com.ezticket.web.activity.dto.AReportDto;
 import com.ezticket.web.activity.pojo.AComment;
 import com.ezticket.web.activity.pojo.AReport;
+import com.ezticket.web.activity.pojo.Activity;
 import com.ezticket.web.activity.repository.ACommentDao;
 import com.ezticket.web.activity.repository.ACommentRedisDAO;
 import com.ezticket.web.activity.repository.ACommentRepository;
+import com.ezticket.web.activity.repository.ActivityRepository;
 import com.google.gson.Gson;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +37,8 @@ public class ACommentService {
     private ACommentDao aCommentDao;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private ActivityRepository activityRepository;
 
     public List<ACommentDto> getAllAComments() {
         modelMapper.getConfiguration()
@@ -163,5 +168,28 @@ public class ACommentService {
         }
     }
 
+    // 每一分鐘計算節目所獲得的星星數及人數
+    @Scheduled(fixedRate = 60000)
+    public boolean aRateTotalAndQty(){
+        List<Activity> actList = activityRepository.findAll();
+        List<AComment> aCommentList = aCommentRepository.findAll();
+
+        for(Activity act: actList){
+            int aRateTotal = 0;
+            int aRateQty = 0;
+
+            for(AComment aComment: aCommentList){
+                if(aComment.getActivityNo() == act.getActivityNo() && aComment.getACommentStatus() == 1){
+                    aRateQty++;
+                    aRateTotal += aComment.getARate();
+                }
+            }
+
+            act.setARateTotal(aRateTotal);
+            act.setARateQty(aRateQty);
+            activityRepository.save(act);
+        }
+        return true;
+    }
 
 }

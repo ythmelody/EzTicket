@@ -397,7 +397,7 @@
 
                             <!-- 座位圖 -->
                             <!-- (A) SEAT LAYOUT -->
-                            <div class="d-md-flex flex-wrap align-items-center">
+                            <div class="d-md-flex flex-wrap align-items-center" style="justify-content: center;">
                                 <div id="layout" style="margin: auto;" style="overflow:scroll-y"></div>
                             </div>
                         </div>
@@ -467,7 +467,7 @@
                 for (let j = 0; j <= t_Column; j++) {
                     let seat = document.createElement("div");
                     // 設定座位於資料庫的編號(seatno)
-                    seat.id = seats[i * 10 + j].seatNo;
+                    seat.id = seats[i * (t_Column + 1) + j].seatNo;
 
                     // seat.innerHTML = `
 					// 	第<input value="${seats[i * (t_Column+1) + j].realX}" style="width: 20px; text-align: center; border: 0; background: transparent" disabled>排<br>
@@ -475,8 +475,8 @@
 					// 	`;
 
                     seat.innerHTML = `
-						第<input value="${i + 1}">排<br>
-						第<input value="${j + 1}">位<br>
+						第<input value="${i + 1}" onblur="checkEmpty(this)">排<br>
+						第<input value="${j + 1}" onblur="checkEmpty(this)">位<br>
 						`;
 
                     seat.className = "seat";
@@ -527,8 +527,6 @@
         });
 
     })
-
-
 
 </script>
 

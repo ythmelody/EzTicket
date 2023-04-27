@@ -388,229 +388,34 @@
     <script src="vendor/OwlCarousel/owl.carousel.js"></script>
     <script src="vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script src="js/custom.js"></script>
+    <script src="js/memberLoginCheck.js"></script>
     <script>
 
-        // Set the date we're counting down to
-        let countDownDate = new Date();
-        countDownDate.setMinutes(countDownDate.getMinutes() + 10);
+    // Set the date we're counting down to
+    let countDownDate = new Date();
+    countDownDate.setMinutes(countDownDate.getMinutes() + 10);
 
-        // Update the countdown every 1 second
-        let x = setInterval(function () {
+    // Update the countdown every 1 second
+    let x = setInterval(function () {
 
-            // Get today's date and time
-            let now = new Date().getTime();
+        // Get today's date and time
+        let now = new Date().getTime();
 
-            // Find the distance between now and the countdown date
-            let distance = countDownDate - now;
+        // Find the distance between now and the countdown date
+        let distance = countDownDate - now;
 
-            // Time calculations for days, hours, minutes and seconds
-            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        // Time calculations for days, hours, minutes and seconds
+        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Output the result in an element with id="demo"
-            document.getElementById('minute').textContent = minutes;
-            document.getElementById('second').textContent = seconds;
+        // Output the result in an element with id="demo"
+        document.getElementById('minute').textContent = minutes;
+        document.getElementById('second').textContent = seconds;
 
-            // If the countdown is over, write some text
-            if (distance < 0) {
-                clearInterval(x);
+        // If the countdown is over, write some text
+        if (distance < 0) {
+            clearInterval(x);
 
-                if (sessionStorage.getItem('toBuySeats') != null) {
-                    for (let id of JSON.parse(sessionStorage.getItem('toBuySeats'))) {
-                        jsonObj = {
-                            "sessionNo": sessionStorage.getItem("sessionNo"),
-                            "seatNo": id,
-                            "seatStatus": 1
-                        };
-                        fetch("seats/updateSeatStatus" + `?seatStatus=${jsonObj.seatStatus}&seatNo=${jsonObj.seatNo}&sessionNo=${jsonObj.sessionNo}`);
-                    }
-                }
-
-                sessionStorage.removeItem("activityNo");
-                sessionStorage.removeItem("sessionNo");
-                sessionStorage.removeItem("blockNo");
-                sessionStorage.removeItem("toBuySeats");
-                sessionStorage.removeItem("toBuyTickets");
-
-                window.location.href = "/index.html";
-            }
-        }, 1000);
-
-        let member_no;
-
-        $(document).ready(function () {
-
-            let activityNo = sessionStorage.getItem("activityNo");
-            if (activityNo === null || activityNo === "") {
-                location.href = `front-activity-event-explore_events.html`;
-            }
-
-            window.addEventListener('beforeunload', function (event) {
-                event.preventDefault(); //chrome無效, ff有效, ie11有效
-                event.returnValue = ''; //chrome有效, ff無效, ie11有效
-                return ''; //chrome無效, ff無效, ie11有效
-            });
-
-            $.ajax({
-                url: '/member/getMemberInfo',
-                type: 'GET',
-                contentType: 'application/json',
-                async: false,
-                success: function (member) {
-                    member_no = member['memberno'];
-                    $('#lastName').val(`${member.mname.substr(0, 1)}`);
-                    $('#firstName').val(`${member.mname.substr(1)}`);
-                    $('#email').val(`${member.memail}`);
-                    $('#address').val(`${member.address}`);
-                }
-            }
-            )
-        }
-        )
-
-        let totalAmount = 0;
-
-        fetch("/Session/findById" + `?sessionNo=${sessionStorage.getItem("sessionNo")}`)
-            .then(resp => resp.json())
-            .then((jsondata) => {
-                $('#aName').text(`${jsondata.activity.aname}`);
-                $('#sessionSTime').text(`${jsondata.sessionsTime}`);
-
-                let showpic = jsondata.activity.aimgt;
-
-                for (let i = 0; i < showpic.length; i++) {
-                    if (showpic[i].aimgMain == 1) {
-                        $('#aMainImg').attr("src", `data:image/png;base64,${showpic[i].aimg}`);
-                    }
-                }
-
-                if (jsondata.activity.wetherSeat === 0) {
-                    $('#ticketQTY').text(`${sessionStorage.getItem("toBuyTickets")}`);
-
-                    fetch("/BlockPrice/findById" + `?blockNo=${sessionStorage.getItem("blockNo")}`)
-                        .then(resp => resp.json())
-                        .then((jsondata) => {
-                            totalAmount = Number(sessionStorage.getItem("toBuyTickets")) * Number(jsondata.blockPrice);
-                            $('#totalAmount').text(`TWD ${totalAmount}`);
-                        })
-
-                } else {
-                    let toBuySeats = JSON.parse(sessionStorage.getItem("toBuySeats"));
-                    $('#ticketQTY').text(`${toBuySeats.length}`);
-
-                    let counter = 0;
-                    for (let tBS of toBuySeats) {
-                        ++counter;
-
-                        $.ajax({
-                            async: false,
-                            type: 'GET',
-                            url: "/seats/findById" + `?seatNo=${tBS}`,
-                            dataType: "json",
-                            success: function (jsondata) {
-                                document.getElementById('ticketContainer').innerHTML += `
-                            <div class="order-total-dt">
-                                <div id="ticketDetail_${counter}" class="order-text">${jsondata.blockName} 第${jsondata.realX}排 第${jsondata.realY}位</div>
-                                <div id="ticketAmount_${counter}" class="order-number">TWD ${jsondata.blockPrice.blockPrice}</div>
-                            </div>
-                            `;
-
-                                totalAmount += jsondata.blockPrice.blockPrice;
-                            }
-                        });
-
-                    }
-
-                    $('#totalAmount').text(`TWD ${totalAmount}`);
-                }
-            })
-
-
-        function addtorder() {
-            let torderbody;
-            let toBuyTickets = sessionStorage.getItem("toBuyTickets");
-            let toBuySeats = JSON.parse(sessionStorage.getItem("toBuySeats"));
-
-
-            if (toBuyTickets) { // 節目為非對號入座
-                torderbody = {
-                    "memberno": member_no,
-                    "ttotal": totalAmount,
-                    "tcheckTotal": totalAmount,
-                    "orderTickets": [{
-                        "sessionNo": sessionStorage.getItem("sessionNo"),
-                        "seatNo": null,
-                        "tqty": toBuyTickets,
-                    }]
-                }
-            } else { // 節目為對號入座
-                let tTotal = totalAmount;
-                let seats = [];
-
-                for (seatNo of toBuySeats) {
-                    $.ajax({
-                        async: false,
-                        type: 'GET',
-                        url: "/seats/findById" + `?seatNo=${seatNo}`,
-                        dataType: "json",
-                        success: function (jsondata) {
-                            seats.push({
-                                "sessionNo": jsondata.sessionNo,
-                                "seatNo": seatNo,
-                                "tqty": 1,
-                            })
-                        }
-                    });
-                }
-
-                torderbody = {
-                    "memberno": member_no,
-                    "ttotal": tTotal,
-                    "tcheckTotal": tTotal,
-                    "orderTickets": seats
-                }
-            }
-
-            Swal.fire({
-                title: '是否建立訂單？',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: '是',
-                cancelButtonText: '否'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: '/Torder/addTorder',
-                        type: 'POST',
-                        data: JSON.stringify(torderbody),
-                        contentType: 'application/json',
-                        async: false,
-                        success: function (data) {
-                            sessionStorage.removeItem("activityNo");
-                            sessionStorage.removeItem("sessionNo");
-                            sessionStorage.removeItem("blockNo");
-                            sessionStorage.removeItem("toBuySeats");
-                            sessionStorage.removeItem("toBuyTickets");
-                            $('body').append(data);
-                            $('#allPayAPIForm').submit();
-                        },
-                        error: function () {
-                            swal({
-                                title: "建立失敗",
-                                icon: "error",
-                                closeOnClickOutside: false,
-                            });
-                        }
-                    });
-                } else {
-                    return Promise.reject('取消操作');
-                }
-            })
-        }
-
-        window.addEventListener('beforeunload', function () {
             if (sessionStorage.getItem('toBuySeats') != null) {
                 for (let id of JSON.parse(sessionStorage.getItem('toBuySeats'))) {
                     jsonObj = {
@@ -627,9 +432,210 @@
             sessionStorage.removeItem("blockNo");
             sessionStorage.removeItem("toBuySeats");
             sessionStorage.removeItem("toBuyTickets");
-        });
 
-    </script>
+            window.location.href = "/index.html";
+        }
+    }, 1000);
+
+    let member_no;
+
+    $(document).ready(function () {
+
+            let activityNo = sessionStorage.getItem("activityNo");
+            if (activityNo === null || activityNo === "") {
+                location.href = `front-activity-event-explore_events.html`;
+            }
+
+            window.addEventListener('beforeunload', function (event) {
+                event.preventDefault(); //chrome無效, ff有效, ie11有效
+                event.returnValue = ''; //chrome有效, ff無效, ie11有效
+                return ''; //chrome無效, ff無效, ie11有效
+            });
+
+            $.ajax({
+                    url: '/member/getMemberInfo',
+                    type: 'GET',
+                    contentType: 'application/json',
+                    async: false,
+                    success: function (member) {
+                        member_no = member['memberno'];
+                        $('#lastName').val(`${member.mname.substr(0, 1)}`);
+                        $('#firstName').val(`${member.mname.substr(1)}`);
+                        $('#email').val(`${member.memail}`);
+                        $('#address').val(`${member.address}`);
+                    }
+                }
+            )
+        }
+    )
+
+    let totalAmount = 0;
+
+    fetch("/Session/findById" + `?sessionNo=${sessionStorage.getItem("sessionNo")}`)
+        .then(resp => resp.json())
+        .then((jsondata) => {
+            $('#aName').text(`${jsondata.activity.aname}`);
+            $('#sessionSTime').text(`${jsondata.sessionsTime}`);
+
+            let showpic = jsondata.activity.aimgt;
+
+            for (let i = 0; i < showpic.length; i++) {
+                if (showpic[i].aimgMain == 1) {
+                    $('#aMainImg').attr("src", `data:image/png;base64,${showpic[i].aimg}`);
+                }
+            }
+
+            if (jsondata.activity.wetherSeat === 0) {
+                $('#ticketQTY').text(`${sessionStorage.getItem("toBuyTickets")}`);
+
+                fetch("/BlockPrice/findById" + `?blockNo=${sessionStorage.getItem("blockNo")}`)
+                    .then(resp => resp.json())
+                    .then((jsondata) => {
+                        totalAmount = Number(sessionStorage.getItem("toBuyTickets")) * Number(jsondata.blockPrice);
+                        $('#totalAmount').text(`TWD ${totalAmount}`);
+                    })
+
+            } else {
+                let toBuySeats = JSON.parse(sessionStorage.getItem("toBuySeats"));
+                $('#ticketQTY').text(`${toBuySeats.length}`);
+
+                let counter = 0;
+                for (let tBS of toBuySeats) {
+                    ++counter;
+
+                    $.ajax({
+                        async: false,
+                        type: 'GET',
+                        url: "/seats/findById" + `?seatNo=${tBS}`,
+                        dataType: "json",
+                        success: function (jsondata) {
+                            document.getElementById('ticketContainer').innerHTML += `
+                            <div class="order-total-dt">
+                                <div id="ticketDetail_${counter}" class="order-text">${jsondata.blockName} 第${jsondata.realX}排 第${jsondata.realY}位</div>
+                                <div id="ticketAmount_${counter}" class="order-number">TWD ${jsondata.blockPrice.blockPrice}</div>
+                            </div>
+                            `;
+
+                            totalAmount += jsondata.blockPrice.blockPrice;
+
+                            if(jsondata.realX === null){
+
+                                $(`#ticketDetail_${counter}`).text(`${jsondata.blockName} 1 位`);
+                            }
+                        }
+                    });
+
+                }
+
+                $('#totalAmount').text(`TWD ${totalAmount}`);
+            }
+        })
+
+
+    function addtorder() {
+        let torderbody;
+        let toBuyTickets = sessionStorage.getItem("toBuyTickets");
+        let toBuySeats = JSON.parse(sessionStorage.getItem("toBuySeats"));
+
+
+        if (toBuyTickets) { // 節目為非對號入座
+            torderbody = {
+                "memberno": member_no,
+                "ttotal": totalAmount,
+                "tcheckTotal": totalAmount,
+                "orderTickets": [{
+                    "sessionNo": sessionStorage.getItem("sessionNo"),
+                    "seatNo": null,
+                    "tqty": toBuyTickets,
+                }]
+            }
+        } else { // 節目為對號入座
+            let tTotal = totalAmount;
+            let seats = [];
+
+            for (seatNo of toBuySeats) {
+                $.ajax({
+                    async: false,
+                    type: 'GET',
+                    url: "/seats/findById" + `?seatNo=${seatNo}`,
+                    dataType: "json",
+                    success: function (jsondata) {
+                        seats.push({
+                            "sessionNo": jsondata.sessionNo,
+                            "seatNo": seatNo,
+                            "tqty": 1,
+                        })
+                    }
+                });
+            }
+
+            torderbody = {
+                "memberno": member_no,
+                "ttotal": tTotal,
+                "tcheckTotal": tTotal,
+                "orderTickets": seats
+            }
+        }
+
+        Swal.fire({
+            title: '是否建立訂單？',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '是',
+            cancelButtonText: '否'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/Torder/addTorder',
+                    type: 'POST',
+                    data: JSON.stringify(torderbody),
+                    contentType: 'application/json',
+                    async: false,
+                    success: function (data) {
+                        sessionStorage.removeItem("activityNo");
+                        sessionStorage.removeItem("sessionNo");
+                        sessionStorage.removeItem("blockNo");
+                        sessionStorage.removeItem("toBuySeats");
+                        sessionStorage.removeItem("toBuyTickets");
+                        $('body').append(data);
+                        $('#allPayAPIForm').submit();
+                    },
+                    error: function () {
+                        swal({
+                            title: "建立失敗",
+                            icon: "error",
+                            closeOnClickOutside: false,
+                        });
+                    }
+                });
+            } else {
+                return Promise.reject('取消操作');
+            }
+        })
+    }
+
+    window.addEventListener('beforeunload', function () {
+        if (sessionStorage.getItem('toBuySeats') != null) {
+            for (let id of JSON.parse(sessionStorage.getItem('toBuySeats'))) {
+                jsonObj = {
+                    "sessionNo": sessionStorage.getItem("sessionNo"),
+                    "seatNo": id,
+                    "seatStatus": 1
+                };
+                fetch("seats/updateSeatStatus" + `?seatStatus=${jsonObj.seatStatus}&seatNo=${jsonObj.seatNo}&sessionNo=${jsonObj.sessionNo}`);
+            }
+        }
+
+        sessionStorage.removeItem("activityNo");
+        sessionStorage.removeItem("sessionNo");
+        sessionStorage.removeItem("blockNo");
+        sessionStorage.removeItem("toBuySeats");
+        sessionStorage.removeItem("toBuyTickets");
+    });
+
+</script>
 
 </body>
 
