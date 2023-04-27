@@ -165,12 +165,13 @@ function setKV(target) {
         fetch("/acomment/getByMemberAndActNo" + `?memberNo=${memberNo}&activityNo=${activityNo}`)
             .then(resp => resp.json())
             .then((jsondata) => {
+
                 $('#acommentNo').val(`${jsondata.acommentNo}`);
 
-                $('#aRate').val(`${jsondata.arate}`);
+                let arate = $('#aRate').val(`${jsondata.arate}`);
 
                 $('.starRating').addClass('starRated');
-                for (let i = 0; i < jsondata.arate; i++) {
+                for (let i = 0; i < arate; i++) {
                     $(`.starRating span[${i}]`).addClass('active');
                 }
 
