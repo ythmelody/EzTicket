@@ -451,7 +451,7 @@
                             <div
                                 style="height: 100%; width: 70%; display: inline-block; font-size: 13px; vertical-align: top; margin-left: 10px;">
                                 <div style="vertical-align: top; color: #717171;">票券總數量</div>
-                                <div style="vertical-align: top;">${j.maxSeatsQty + j.maxStandingQty}</div>
+                                <div id="toSellNumber_${j.sessionNo}" style="vertical-align: top;">${j.maxSeatsQty + j.maxStandingQty}</div>
                             </div>
                         </div>
                         <div style="height: 100%; width: 24%; padding: 20px; display: inline-block;">
@@ -474,6 +474,12 @@
                     document.getElementById(`showpic_${j.sessionNo}`).style.backgroundImage= `url(data:image/png;base64,${showpic[i].aimg})`;
                 }
             }
+
+            // 錯誤提醒
+            if (Number($(`#toSellNumber_${j.sessionNo}`).text()) === 0) {
+                $(`#toSellNumber_${j.sessionNo}`).html(`<span style="color: red">無票券或座位資訊</span>`);
+            }
+            ;
         }
         ;
     }

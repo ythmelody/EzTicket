@@ -9,4 +9,5 @@ public class BlockPriceDto {
     private String blockName;
     private Integer activityNo;
     private Integer blockPrice;
+    private Integer blockType;
 }

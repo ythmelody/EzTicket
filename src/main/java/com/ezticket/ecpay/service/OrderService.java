@@ -102,7 +102,7 @@ public class OrderService {
 		//	啟動本地伺服器，例如 Tomcat 或是 Spring Boot。
 		//	在命令列輸入 ngrok http 8080，其中 8080 是你本機伺服器的 Port，請依實際情況更改。
 		//	Ngrok 會顯示一個公開的 URL，例如 http://xxxxxx.ngrok.io，複製此 URL。
-		String returnURL = "https://f102-2407-4b00-1c00-8929-5c32-3653-1df7-311f.jp.ngrok.io";
+		String returnURL = "https://3ac6-111-249-12-115.jp.ngrok.io";
 		// 設定接收回傳值的Https + Controller路徑
 		obj.setReturnURL(returnURL + "/ecpay/return");
 		// 設定商品明細路徑及返回商店路徑
@@ -182,7 +182,7 @@ public class OrderService {
         //	啟動本地伺服器，例如 Tomcat 或是 Spring Boot。
         //	在命令列輸入 ngrok http 8080，其中 8080 是你本機伺服器的 Port，請依實際情況更改。
         //	Ngrok 會顯示一個公開的 URL，例如 https://xxxxxx.ngrok.io，複製此 URL。
-        String returnURL = "https://f102-2407-4b00-1c00-8929-5c32-3653-1df7-311f.jp.ngrok.io";
+        String returnURL = "https://3ac6-111-249-12-115.jp.ngrok.io";
         obj.setReturnURL(returnURL + "/ecpay/Treturn");
 
         // 設定票券訂單明細路徑及返回商店路徑
