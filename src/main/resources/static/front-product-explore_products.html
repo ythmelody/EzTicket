@@ -355,6 +355,7 @@
 					</div>
 				</div>
 			</div>
+
 		</footer>
 		<!-- Footer End-->
 
@@ -433,7 +434,7 @@
 					})
 
 				//商品名稱搜尋
-				$("#pnameSearch").keypress(function () {
+				$("#pnameSearch").keyup(function () {
 					fetch("ProductInfoServlet", {
 						method: 'POST',
 						body: new URLSearchParams({
