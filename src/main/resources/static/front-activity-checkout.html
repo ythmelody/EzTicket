@@ -516,6 +516,11 @@
                             `;
 
                             totalAmount += jsondata.blockPrice.blockPrice;
+
+                            if(jsondata.realX === null){
+
+                                $(`#ticketDetail_${counter}`).text(`${jsondata.blockName} 1 位`);
+                            }
                         }
                     });
 

@@ -168,7 +168,7 @@ public class ACommentService {
         }
     }
 
-    // 定期加總節目所獲得的星星數及人數
+    // 每一分鐘計算節目所獲得的星星數及人數
     @Scheduled(fixedRate = 60000)
     public boolean aRateTotalAndQty(){
         List<Activity> actList = activityRepository.findAll();
@@ -179,7 +179,7 @@ public class ACommentService {
             int aRateQty = 0;
 
             for(AComment aComment: aCommentList){
-                if(aComment.getActivityNo() == act.getActivityNo()){
+                if(aComment.getActivityNo() == act.getActivityNo() && aComment.getACommentStatus() == 1){
                     aRateQty++;
                     aRateTotal += aComment.getARate();
                 }

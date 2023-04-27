@@ -9,6 +9,7 @@ import com.ezticket.web.activity.repository.SessionRepository;
 import com.ezticket.web.activity.repository.impl.BlockModelDAOImpl;
 import com.ezticket.web.activity.repository.impl.SeatsModelDAOImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,9 @@ public class SeatsService {
 
     @Autowired
     private SessionRepository sessionRepository;
+
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
     public List<Seats> getSeatsBySessionAndBlockNo(Integer sessionNo, Integer blockNo) {
         return seatsRepository.findBySessionNoAndBlockNo(sessionNo, blockNo);
@@ -378,14 +382,23 @@ public class SeatsService {
         return returnedMap;
     }
 
-    @Scheduled(cron = "0 0 0 * * *")
+//    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(fixedRate = 300000)
     public void saveSeatsSets() {
         List<Session> sessions = sessionRepository.findAll();
         for (Session session : sessions) {
+
             List<Seats> seats = seatsRepository.findOrderedSeatsBySessionNo(session.getSessionNo());
+            redisTemplate.delete("Session" + session.getSessionNo() + ":Set:2");
+            redisTemplate.delete("Session" + session.getSessionNo() + ":Set:3");
+            redisTemplate.delete("Session" + session.getSessionNo() + ":Set:4");
 
             // 取得兩個座位的組合
             for (int i = 0; i < seats.size() - 1; i++) {
+                if(seats.get(i).getX() != seats.get(i + 1).getX()){
+                    continue;
+                }
+
                 List<Integer> toSaveSets = new ArrayList<Integer>();
                 toSaveSets.add(seats.get(i).getSeatNo());
                 toSaveSets.add(seats.get(i + 1).getSeatNo());
@@ -394,6 +407,10 @@ public class SeatsService {
 
             // 取得三個座位的組合
             for (int i = 0; i < seats.size() - 2; i++) {
+                if(seats.get(i).getX() != seats.get(i + 1).getX() && seats.get(i + 1).getX() != seats.get(i + 2).getX()){
+                    continue;
+                }
+
                 List<Integer> toSaveSets = new ArrayList<Integer>();
                 toSaveSets.add(seats.get(i).getSeatNo());
                 toSaveSets.add(seats.get(i + 1).getSeatNo());
@@ -403,6 +420,12 @@ public class SeatsService {
 
             // 取得四個座位的組合
             for (int i = 0; i < seats.size() - 3; i++) {
+                if(seats.get(i).getX() != seats.get(i + 1).getX() &&
+                        seats.get(i + 1).getX() != seats.get(i + 2).getX() &&
+                            seats.get(i + 2).getX() != seats.get(i + 3).getX() ){
+                    continue;
+                }
+
                 List<Integer> toSaveSets = new ArrayList<Integer>();
                 toSaveSets.add(seats.get(i).getSeatNo());
                 toSaveSets.add(seats.get(i + 1).getSeatNo());
