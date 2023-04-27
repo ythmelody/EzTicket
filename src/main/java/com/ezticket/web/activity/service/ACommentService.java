@@ -169,7 +169,7 @@ public class ACommentService {
     }
 
     // 每一分鐘計算節目所獲得的星星數及人數
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 30000)
     public boolean aRateTotalAndQty(){
         List<Activity> actList = activityRepository.findAll();
         List<AComment> aCommentList = aCommentRepository.findAll();
