@@ -130,7 +130,7 @@
 			<div class="left_section">
 				<ul>
 					<div id="havefunc"
-						style="text-align: center; margin-top: 10px; background-color: rgb(187, 199, 228);">
+						style="text-align: center; margin-top: 10px; background-color: #004895;">
 						<p class="D-barole" style="color: black;"></p>
 					</div>
 					<li class="menu--item 10">
@@ -1232,7 +1232,7 @@
 		})
 
 		function judgePprice() {
-			if (pprice.value === '' || pprice.value < 0) {
+			if (Number(pprice.value) === '' || Number(pprice.value) < 0) {
 				$("#ppriceErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品原價為必填欄位且不得為負數`);
 				return;
 			} else {
@@ -1248,7 +1248,7 @@
 		})
 
 		function judgePspecialprice() {
-			if (pspecialprice.value === '' || pspecialprice.value > $("#pprice").val() || pspecialprice.value < 0) {
+			if (Number(pspecialprice.value) === '' || Number(pspecialprice.value) > Number($("#pprice").val()) || Number(pspecialprice.value) < 0) {
 				$("#pspecialpriceErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品特價為必填欄位且不得大於原價且不得為負數`);
 				return;
 			} else {
