@@ -38,7 +38,7 @@ public class TorderController {
     @ResponseBody
     public String addTOrder(@RequestBody AddTorderDTO addTorderDTO) {
         torderService.addTOrder(addTorderDTO);
-        return "XXXXX";
+        return "";
 //        return orderService.ecpayTCheckout(torderService.addTOrder(addTorderDTO).getTorderNo());
     }
 

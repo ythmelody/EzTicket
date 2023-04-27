@@ -239,7 +239,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="js/s-torderdetails.js"></script>
 <script src="js/memberLoginCheck.js"></script>
 
 <script>
@@ -317,6 +316,16 @@
                                     </td>
 							  </tr>`;
 
+
+                        fetch("/Torder/getById" + `?torderNo=${torderNo}`)
+                            .then(resp => resp.json())
+                            .then((jsondata) => {
+                                if(jsondata.tpaymentStatus !== 1){
+                                    $(`.commentContainer_${i.activityNo}`).html('');
+                                    $(`.commentContainer_${i.activityNo}`).html(`<p>無法評論</p>`);
+                                }
+                            })
+
                 $.ajax({
                     async: true,
                     type: 'GET',
@@ -341,6 +350,7 @@
         })
 
 </script>
+<script src="js/s-torderdetails.js"></script>
 
 </body>
 

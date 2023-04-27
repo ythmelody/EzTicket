@@ -97,7 +97,7 @@ let seatsmgt = {
 
         // 購買數量 < 選擇數量時，要求更新購買數量
         $('#quantity').change(function () {
-                if ($('#quantity').val() < count){
+                if ($('#quantity').val() < count) {
                     Swal.fire({
                         icon: 'error',
                         title: '選擇座位數量已超出選購數量，請再次確認'
@@ -218,19 +218,6 @@ let seatsmgt = {
         }
     }
 };
-
-// 取得場次的擁有座位的區域
-let blockHasSeats;
-
-$.ajax({
-    async: false,
-    type: 'GET',
-    url: '/seats/getBlockHasSeats' + `?actNo=${sessionStorage.getItem("activityNo")}`,
-    dataType: "json",
-    success: function (jsondata) {
-        blockHasSeats = jsondata;
-    }
-});
 
 let aType;
 let toSellTqy;
@@ -387,7 +374,7 @@ function selectByMember() {
         .then(jsondata => {
                 for (let j of jsondata) {
                     if (j.activityNo == sessionStorage.getItem("activityNo")) {
-                        if (blockHasSeats.includes(j.blockNo)) {
+                        if (j.blockType === 1) {
                             document.getElementById('selectBlocks').innerHTML += `
                                 <button name="selectOneBlock" value="${j.blockNo}"
                                     class="main-btn h_40 w-100 mt-5" type="button"
@@ -490,13 +477,13 @@ function TicketBySystem() {
                 });
 
 
-                if($('#ticketDecr').val() > realToSellTqy[sessionStorage.getItem("blockNo")] || Object.keys(realToSellTqy).length === 0){
+                if ($('#ticketDecr').val() > realToSellTqy[sessionStorage.getItem("blockNo")] || Object.keys(realToSellTqy).length === 0) {
                     Swal.fire({
                         icon: 'error',
                         title: '無對應數量票券'
                     })
 
-                    setTimeout(function() {
+                    setTimeout(function () {
                         location.reload();
                     }, 3000);
 

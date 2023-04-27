@@ -27,7 +27,8 @@ public interface SessionRepository extends JpaRepository<Session,Integer> {
 
 
     //    Add by Shawn on 4/3
-    public List<Session> findByActivityNo(Integer actNo);
+    @Query("SELECT s FROM Session s WHERE s.activityNo = :actNo ORDER BY s.sessionsTime asc")
+    public List<Session> findByActivityNo(@Param("actNo") Integer actNo);
 
     @Query("SELECT s.sessionNo FROM Session s JOIN Activity act WHERE act.aEDate > current_date")
     public Set<Integer> getToSellSessions();
