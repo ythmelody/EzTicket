@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, shrink-to-fit=9">
 	<meta name="description" content="Gambolthemes">
 	<meta name="author" content="Gambolthemes">
-	<title>Barren - Simple Online Event Ticketing System</title>
+	<title>ezTicket - 一站式購票體驗</title>
 
 	<!-- Favicon Icon -->
 	<link rel="icon" type="image/png" href="images/fav.png">
@@ -38,10 +38,9 @@
 		background-color: rgb(212, 212, 212);
 	}
 
-	.hi{
+	.hi {
 		height: 99px;
 	}
-
 </style>
 
 <body>
@@ -49,7 +48,7 @@
 		<div class="app-form">
 			<div class="app-form-sidebar">
 				<div class="sidebar-sign-logo">
-					<img src="images/sign-logo.svg" alt="">
+					<img style="height: 50px" src="images/dark-logo.svg" alt="">
 				</div>
 				<div class="sign_sidebar_text">
 					<h1>Welcome to ezTicket!</h1>
@@ -101,8 +100,8 @@
 											<div class="form-group mt-4 hi">
 												<label class="form-label">生日:&emsp;&emsp;
 												</label>
-												<input id="birth" class="form-control h_50 ip" type="date" placeholder=""
-													value="">
+												<input id="birth" class="form-control h_50 ip" type="date"
+													placeholder="" value="">
 												<p id="birthError"
 													style="color: red; display: inline-block; margin: 0;"></p>
 											</div>
@@ -112,7 +111,7 @@
 												<label class="form-label" >地址:&emsp;
 													<select id="city" placeholder="選擇縣市"></select>
 													<select id="dist" placeholder="選擇區域"></select>
-													<input class="js-demeter-tw-zipcode-selector" 
+													<input class="js-demeter-tw-zipcode-selector"
 															data-city="#city" data-dist="#dist" type="text" placeholder="" value="" style="display: none;">
 												</label>
 												<input  class="form-control h_50 ip" type="text" placeholder="" value="">
@@ -133,7 +132,7 @@
 											<div class="form-group mt-4 hi">
 												<label class="form-label" >&emsp;&emsp;</label>
 												<select id="dist" class="form-control h_50 ip" placeholder="選擇區域"></select>
-												<input class="js-demeter-tw-zipcode-selector" 
+												<input class="js-demeter-tw-zipcode-selector"
 														data-city="#city" data-dist="#dist" type="text" placeholder="" value="" style="display: none;">
 											</div>
 										</div>
@@ -155,7 +154,7 @@
 												<input id="memail" class="form-control h_50 ip" type="email"
 													placeholder="" value="">
 												<p id="mEmailError"
-													style="color: red; display: inline-block; margin: 0;"></p>	
+													style="color: red; display: inline-block; margin: 0;"></p>
 											</div>
 										</div>
 										<div class="col-lg-6 col-md-6">
@@ -170,7 +169,7 @@
 													<!-- <span class="pass-show-eye"><i class="fas fa-eye-slash"></i></span> -->
 												</div>
 												<p id="mPasswordError"
-															style="color: red; display: inline-block; margin: 0;"></p>
+													style="color: red; display: inline-block; margin: 0;"></p>
 											</div>
 										</div>
 										<div class="col-lg-6 col-md-6">
@@ -195,7 +194,7 @@
 													<!-- <span class="pass-show-eye"><i class="fas fa-eye-slash"></i></span> -->
 												</div>
 												<p id="chPasswordError"
-															style="color: red; display: inline-block; margin: 0;"></p>
+													style="color: red; display: inline-block; margin: 0;"></p>
 											</div>
 										</div>
 										<div class="col-lg-6 col-md-6">
@@ -231,7 +230,8 @@
 						</div>
 					</div>
 					<div class="copyright-footer">
-						&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;© 2022, Barren. All rights reserved. Powered by Gambolthemes
+						&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;© 2023, ezTicket. All
+						rights reserved. Powered by Tibame CGA106 Group2
 					</div>
 				</div>
 			</div>
@@ -245,7 +245,7 @@
 		<script src="js/night-mode.js"></script>
 		<!-- 郵遞區號 -->
 		<script src="https://demeter.5fpro.com/tw/zipcode-selector.js"></script>
-	
+
 </body>
 <script>
 	$("#sign_upBtn").click((event) => {
@@ -268,8 +268,8 @@
 			body: JSON.stringify(signUpMember)
 		}).then(response => {
 			if (response.ok) {
-				localStorage.setItem('signUpSuccess','註冊成功!')
-				window.location.href="front-users-mem-sign-in.html";
+				localStorage.setItem('signUpSuccess', '註冊成功!')
+				window.location.href = "front-users-mem-sign-in.html";
 			} else {
 				return response.json().then(errors => {
 					console.log("Error:", errors);
@@ -319,9 +319,9 @@
 	$("#validBtn").click((event) => {
 		event.preventDefault(); // 防止預設行為
 		const memail = $("#memail").val();
-		if(memail === ""){
+		if (memail === "") {
 			$("#mEmailError").text("請輸入電子信箱!");
-		}else{
+		} else {
 			$("#mEmailError").text("");
 
 			//15秒後才能再按
@@ -355,8 +355,8 @@
 		}
 	});
 
-	
-	
+
+
 	$('#dist').change(() => {
 		const cityValue = $('#city').val();
 		const distValue = $('#dist').val();
