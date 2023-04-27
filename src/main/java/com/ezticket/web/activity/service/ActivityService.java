@@ -1,7 +1,9 @@
 package com.ezticket.web.activity.service;
 
+import com.ezticket.core.util.ImageUtil;
 import com.ezticket.web.activity.dto.ActivityDto;
 import com.ezticket.web.activity.pojo.Activity;
+import com.ezticket.web.activity.pojo.Aimgt;
 import com.ezticket.web.activity.repository.ActivityRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -25,10 +28,20 @@ public class ActivityService {
 
 
     public List<ActivityDto> findAllByOrderByActivityNoDesc(){
-        return activityRepository.findAllByOrderByActivityNoDesc()
-                .stream()
-                .map(this::entityToDTO)
-                .collect(Collectors.toList());
+        List<ActivityDto> activityList=activityRepository.findAllByOrderByActivityNoDesc()
+                                       .stream()
+                                       .map(this::entityToDTO)
+                                       .collect(Collectors.toList());
+
+        for(ActivityDto act: activityList){
+            for(Aimgt aimgt :act.getAimgt() ){
+                byte[] shrinkAimg=ImageUtil.shrink(aimgt.getAimg(),500);
+                aimgt.setAimg(shrinkAimg);
+            }
+
+        }
+        return activityList;
+
     }
     public Optional<ActivityDto> findByaName(String aName){
         return activityRepository.findByaName(aName).map(this::entityToDTO);
