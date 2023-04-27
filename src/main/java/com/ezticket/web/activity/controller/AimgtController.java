@@ -99,10 +99,42 @@ public class AimgtController {
     }
 
 
+    @PostMapping("/updateNewAimgt")
+    public ResponseEntity<String> updateNewAimgt(@RequestParam("activityno") Integer activityNo,
+                                            @RequestParam("images") MultipartFile[] images,
+                                            @RequestParam(value = "aimgmain", required = false) Integer mainImageIndex) throws IOException {
+
+        // Instantiate a list of Aimgt objects
+        List<Aimgt> aimgts = new ArrayList<>();
+
+        // Convert mainImageIndex to an integer if it's not null or empty
+        Integer mainIndex = null;
+        if (mainImageIndex != null) {
+            mainIndex = mainImageIndex;
+        }
+
+        // Loop through each image and create a new Aimgt object with the activityNo and image bytes
+        for (int i = 0; i < images.length; i++) {
+            byte[] imageBytes = images[i].getBytes();
+            Aimgt aimgt = new Aimgt();
+            aimgt.setActivityNo(activityNo);
+            aimgt.setAimg(imageBytes);
+
+            aimgt.setAimgMain(0);
+
+            aimgts.add(aimgt);
+        }
+
+        // Save the list of Aimgt objects to the database using the service method
+        aimgtService.saveAimgt(aimgts);
+
+        return ResponseEntity.ok("Images uploaded successfully.");
+    }
+
+
 
     @DeleteMapping("/deleteAimgt")
-    public void deleteAimgt(@RequestBody Map<String, Integer> request) {
-        Integer aimgNo = request.get("aimgNo");
+    public void deleteAimgt(@RequestParam("aimgNo") Integer aimgNo) {
         aimgtService.deleteAimgt(aimgNo);
     }
     }
