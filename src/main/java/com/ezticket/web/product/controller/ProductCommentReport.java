@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.aspectj.weaver.NewMemberClassTypeMunger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -133,6 +134,13 @@ public class ProductCommentReport extends HttpServlet {
             Integer pageNumber = Integer.valueOf(request.getParameter("pageNumber"));
             Integer pageSize = Integer.valueOf(request.getParameter("pageSize"));
             PageResult<Preport> commentReportList = preportSvc.getAllBySearch(map, pageNumber, pageSize); //轉交進行複合查詢
+            List<Preport> rawdata = commentReportList.getData();
+            for (Preport preport : rawdata) {
+                String rawCommentCont = preport.getPcomment().getPcommentcont();
+                String escapedHtml = StringEscapeUtils.escapeHtml4(rawCommentCont);
+                preport.getPcomment().setPcommentcont(escapedHtml);
+            }
+
             Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd").create();
             String json = gson.toJson(commentReportList);
             response.setCharacterEncoding("UTF-8");

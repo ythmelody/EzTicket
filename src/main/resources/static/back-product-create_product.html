@@ -864,7 +864,7 @@
 		})
 
 		function judgePprice() {
-			if (Number(pprice.value) === '' || Number(pprice.value) < 0) {
+			if (pprice.value === '' || Number(pprice.value) < 0) {
 				$("#ppriceErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品原價為必填欄位且不得為負數`);
 				return;
 			} else {
@@ -880,7 +880,7 @@
 		})
 
 		function judgePspecialprice() {
-			if (Number(pspecialprice.value) === '' || Number(pspecialprice.value) >  Number($("#pprice").val()) || Number(pspecialprice.value) < 0) {
+			if (pspecialprice.value === '' || Number(pspecialprice.value) >  Number($("#pprice").val()) || Number(pspecialprice.value) < 0) {
 				$("#pspecialpriceErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品特價為必填欄位且不得大於原價且不得為負數`);
 				return;
 			} else {
