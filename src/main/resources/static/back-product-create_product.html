@@ -864,7 +864,7 @@
 		})
 
 		function judgePprice() {
-			if (pprice.value === '' || pprice.value < 0) {
+			if (pprice.value === '' || Number(pprice.value) < 0) {
 				$("#ppriceErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品原價為必填欄位且不得為負數`);
 				return;
 			} else {
@@ -880,7 +880,7 @@
 		})
 
 		function judgePspecialprice() {
-			if (pspecialprice.value === '' || pspecialprice.value > $("#pprice").val() || pspecialprice.value < 0) {
+			if (pspecialprice.value === '' || Number(pspecialprice.value) >  Number($("#pprice").val()) || Number(pspecialprice.value) < 0) {
 				$("#pspecialpriceErr").html(`<i class="fa-sharp fa-solid fa-circle-exclamation"></i>商品特價為必填欄位且不得大於原價且不得為負數`);
 				return;
 			} else {
@@ -1013,16 +1013,16 @@
 					$("[name='pname']").val(item.pname);
 					$("[name='ptag']").val(item.ptag);
 					$("[name='pclassno']").val(item.pclassno);
-					// $("select[name='pclassno']").selectpicker('refresh');
+					$("select[name='pclassno']").selectpicker('refresh');
 					$("select[name='hostno']").val(item.hostno);
-					// $("select[name='hostno']").selectpicker('refresh');
+					$("select[name='hostno']").selectpicker('refresh');
 					$("[name='pprice']").val(item.pprice);
 					$("[name='pspecialprice']").val(item.pspecialprice);
 					$("[name='pqty']").val(item.pqty);
 					$("[name='psdate']").val(item.psdate);
 					$("[name='pedate']").val(item.pedate);
 					$("[name='pstatus']").val(item.pstatus);
-					// $("select[name='pstatus']").selectpicker('refresh');
+					$("select[name='pstatus']").selectpicker('refresh');
 
 					editor.setData(item.pdiscrip);
 

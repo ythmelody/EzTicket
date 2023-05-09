@@ -710,6 +710,7 @@
 			.then(resp => resp.json())
 			.then(list => {
 				for (let item of list) {
+					console.log(item);
 					productComment.innerHTML += `<div class="item">
 													<div class="main-card">
 														<div class=" testimonial-content">
