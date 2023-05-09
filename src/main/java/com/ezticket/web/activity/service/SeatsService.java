@@ -203,7 +203,11 @@ public class SeatsService {
             newSeat.setRealX(seat.getRealX());
             newSeat.setRealY(seat.getRealY());
 
-            if (seat.getSeatStatus() != (-1))
+            if (seat.getSeatStatus() == (-1))
+                newSeat.setSeatStatus(-1);
+            if (seat.getSeatStatus() == 0)
+                newSeat.setSeatStatus(0);
+            if (seat.getSeatStatus() == 1)
                 newSeat.setSeatStatus(1);
 
             seatsRepository.save(newSeat);
@@ -407,7 +411,7 @@ public class SeatsService {
 
             // 取得三個座位的組合
             for (int i = 0; i < seats.size() - 2; i++) {
-                if(seats.get(i).getX() != seats.get(i + 1).getX() && seats.get(i + 1).getX() != seats.get(i + 2).getX()){
+                if(seats.get(i).getX() != seats.get(i + 1).getX() || seats.get(i + 1).getX() != seats.get(i + 2).getX()){
                     continue;
                 }
 
@@ -420,9 +424,9 @@ public class SeatsService {
 
             // 取得四個座位的組合
             for (int i = 0; i < seats.size() - 3; i++) {
-                if(seats.get(i).getX() != seats.get(i + 1).getX() &&
-                        seats.get(i + 1).getX() != seats.get(i + 2).getX() &&
-                            seats.get(i + 2).getX() != seats.get(i + 3).getX() ){
+                if(seats.get(i).getX() != seats.get(i + 1).getX() ||
+                        seats.get(i + 1).getX() != seats.get(i + 2).getX() ||
+                            seats.get(i + 2).getX() != seats.get(i + 3).getX()){
                     continue;
                 }
 

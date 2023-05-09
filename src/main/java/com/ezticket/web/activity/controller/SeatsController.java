@@ -53,6 +53,7 @@ public class SeatsController {
     public boolean insertNewSeats(@RequestBody String jsonData) {
         Gson gson = new Gson();
         Seats seat = gson.fromJson(jsonData, Seats.class);
+        System.out.println(seat);
         seatsService.insertNewSeat(seat);
         return true;
     }
