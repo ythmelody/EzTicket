@@ -134,4 +134,24 @@ public class CollectCrudController {
         }
     }
 
+    //    測試由訂單編號、票券編號更新Redis票券
+    //    訂單編號用來設定存活時間
+    @PostMapping("/test9/{torderno}/{collectno}")
+    public boolean createRedisTickets(@PathVariable("torderno") Integer torderno, @PathVariable("collectno") Integer collectno) {
+        Optional<Torder> optTo = torderRepository.findById(torderno);
+        if (optTo.isEmpty()) {
+            System.out.println("查無訂單");
+            return false;
+        } else {
+            Torder torder = optTo.get();
+            String strCollectno = collectno.toString();
+            boolean result = collectCrudService.insertRedisForDemo(torder, strCollectno);
+            if (!result) {
+                System.out.println("新增失敗");
+                return false;
+            }
+            return true;
+        }
+    }
+
 }

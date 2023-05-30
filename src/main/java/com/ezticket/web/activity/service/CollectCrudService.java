@@ -298,6 +298,46 @@ public class CollectCrudService {
         return true;
     }
 
+    //    由訂單編號、票券編號更新Redis票券
+//    訂單編號用來設定存活時間
+    @Transactional
+    public boolean insertRedisForDemo(Torder torder, String collectno) {
+        Integer torderno = torder.getTorderNo();
+        //    	該筆訂單所有明細
+        List<TorderDetailsView> newDetails = torderDetailsViewService.findAllBytorderNo(torderno);
+        for (int i = 0; i < newDetails.size(); i++) {
+//      取訂單新增後的其中一筆 tdetail
+            TorderDetailsView td = newDetails.get(i);
+//        	一筆明細有幾張票
+            Integer ticketnum = td.getTqty();
+//            j為一筆明細的票券數量
+            for (int j = 0; j < ticketnum; j++) {
+//               新增一張票進 Redis
+                CollectRedis collectRedis = new CollectRedis();
+                collectRedis.setCollectno(collectno);
+                collectRedis.setTstatus("0");
+//                增加亂數驗證碼
+                String salt = RandomStringUtils.randomAlphanumeric(20, 50);
+                collectRedis.setSalt(salt);
+                String qrcodeImg = "empty";
+                try {
+                    qrcodeImg = urlToBase64(collectno, salt);
+                } catch (IOException | WriterException ioe) {
+                    ioe.printStackTrace();
+                    return false;
+                }
+                collectRedis.setQrcode(qrcodeImg);
+//                票券到期時間
+//                時間要計算一下，只能設定從現在開始的差異時間
+                Timestamp current = new Timestamp(System.currentTimeMillis());
+                long timeDiff = (td.getSessioneTime().getTime() - current.getTime()) / 1000;
+                collectRedis.setExpirationInSeconds(timeDiff);
+                collectRedisRepository.save(collectRedis);
+            }
+        }
+        return true;
+    }
+
 }
 
 
